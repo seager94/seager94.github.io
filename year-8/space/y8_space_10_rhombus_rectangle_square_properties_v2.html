@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Properties of Rhombuses, Rectangles &amp; Squares — Year 8</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* RECAP TWO-COLUMN */
+  .recap-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 18px; align-items: stretch;
+  }
+  .recap-col {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 18px;
+    border: 1px solid var(--border);
+  }
+  .recap-col.now { background: var(--coral-soft); border-color: var(--coral); }
+  .recap-col h3 {
+    margin: 0 0 10px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1.05rem;
+  }
+  .recap-col.now h3 { color: var(--coral); }
+  .recap-col ul { padding-left: 20px; margin: 6px 0 10px; line-height: 1.7; }
+  .recap-col li { margin-bottom: 4px; }
+  .recap-figure { display: flex; justify-content: center; margin-top: 12px; }
+  @media (max-width: 600px) {
+    .recap-grid { grid-template-columns: 1fr; }
+  }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 210px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.93rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PROPERTY SORT (drag) */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.3;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.rhombus { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.rectangle { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 100px;
+    text-align: left;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .rh { color: var(--coral); }
+  .bucket .rc { color: var(--navy); }
+  .bucket-contents { min-height: 60px; display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; }
+  .terms-source { min-height: 70px; padding: 12px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .worked-figure { display: flex; justify-content: center; margin: 4px 0 18px; }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem;
+    overflow-x: auto;
+    line-height: 1.65;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .reason {
+    color: var(--muted); font-family: -apple-system, sans-serif;
+    font-size: 0.85rem; font-style: italic;
+  }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING PAIRS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 10px;
+    text-align: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 60px;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.4; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Properties of Rhombuses, Rectangles &amp; Squares</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Geometric Reasoning</div>
+  </div>
+  <div class="badge">Proof with congruent triangles</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: RECAP / WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>From last lesson — what we already know</h2>
+  <p class="sec-desc">A rhombus, a rectangle, and a square are all <strong>special parallelograms</strong>. So whatever we proved about parallelograms last lesson, they inherit for free.</p>
+
+  <div class="recap-grid">
+    <div class="recap-col">
+      <h3>What we proved about <em>parallelograms</em></h3>
+      <ul>
+        <li>Opposite sides are <strong>equal</strong> in length</li>
+        <li>Opposite angles are <strong>equal</strong></li>
+        <li>Co-interior angles are <strong>supplementary</strong> (add to 180°)</li>
+        <li>Diagonals <strong>bisect each other</strong></li>
+      </ul>
+      <div class="recap-figure">
+        <svg viewBox="0 0 200 110" width="190" height="110" aria-hidden="true">
+          <polygon points="40,15 180,15 160,95 20,95" fill="rgba(29,43,94,0.06)" stroke="#1D2B5E" stroke-width="2"/>
+          <line x1="40" y1="15" x2="160" y2="95" stroke="#1D2B5E" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <line x1="180" y1="15" x2="20" y2="95" stroke="#1D2B5E" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <circle cx="100" cy="55" r="2.5" fill="#1D2B5E"/>
+        </svg>
+      </div>
+      <p style="font-size:0.85rem; color:var(--muted); margin:0; text-align:center;">All proved using <strong>congruent triangles</strong>.</p>
+    </div>
+
+    <div class="recap-col now">
+      <h3>What we'll prove <em>today</em></h3>
+      <p style="margin:0 0 8px;">Special parallelograms have <strong>extra</strong> properties. We'll prove three of them using the same technique:</p>
+      <ul>
+        <li>A <strong>rhombus</strong> has perpendicular diagonals</li>
+        <li>A <strong>rhombus</strong> diagonal bisects the corner angles</li>
+        <li>A <strong>rectangle</strong> has diagonals of equal length</li>
+      </ul>
+      <div class="recap-figure">
+        <svg viewBox="0 0 220 110" width="220" height="110" aria-hidden="true">
+          <!-- rhombus -->
+          <polygon points="50,15 90,55 50,95 10,55" fill="rgba(232,72,90,0.10)" stroke="#E8485A" stroke-width="2"/>
+          <line x1="50" y1="15" x2="50" y2="95" stroke="#E8485A" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <line x1="10" y1="55" x2="90" y2="55" stroke="#E8485A" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <rect x="50" y="49" width="6" height="6" fill="none" stroke="#E8485A" stroke-width="1"/>
+          <!-- rectangle -->
+          <rect x="120" y="25" width="90" height="60" fill="rgba(29,43,94,0.06)" stroke="#1D2B5E" stroke-width="2"/>
+          <line x1="120" y1="25" x2="210" y2="85" stroke="#1D2B5E" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <line x1="210" y1="25" x2="120" y2="85" stroke="#1D2B5E" stroke-width="1.2" stroke-dasharray="3,3"/>
+        </svg>
+      </div>
+      <p style="font-size:0.85rem; color:var(--coral); margin:0; text-align:center;"><strong>A square is both</strong> — so it gets everything.</p>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Definitions, the family of quadrilaterals, then a sort.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These are the five words you need today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Rhombus<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A parallelogram with <strong>all four sides equal</strong> in length.<div class="vocab-example">Think of a "<strong>diamond</strong>" — the sides are all the same, but the angles aren't necessarily right angles.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Rectangle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A parallelogram with <strong>all four angles 90°</strong>.<div class="vocab-example">A door, a phone screen, a textbook — anything with four <strong>right-angle</strong> corners.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Square<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A parallelogram that is <strong>both a rhombus and a rectangle</strong>.<div class="vocab-example">All sides equal <strong>and</strong> all angles 90° — a floor tile, a chessboard square.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Perpendicular<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Two lines that meet at a <strong>right angle</strong> (90°).<div class="vocab-example">Symbol: <strong>AC ⊥ BD</strong> means line AC is perpendicular to line BD.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">CPCTC<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>C</strong>orresponding <strong>P</strong>arts of <strong>C</strong>ongruent <strong>T</strong>riangles are <strong>C</strong>ongruent.<div class="vocab-example">Once two triangles are congruent, <strong>every</strong> matching side and angle is equal. This is how we get new facts.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: PROPERTY SORT -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Whose property is it?</h2>
+  <p class="sec-desc">Drag each property below into the correct bucket — is it special to a <strong style="color:var(--coral)">rhombus</strong>, or special to a <strong style="color:var(--navy)">rectangle</strong>? (A square has all of them — but here we're looking at the <em>distinguishing</em> features.)</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort each property into its bucket</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="rhombus">All four sides equal</span>
+      <span class="term-chip" data-type="rectangle">All four angles equal to 90°</span>
+      <span class="term-chip" data-type="rhombus">Diagonals are perpendicular</span>
+      <span class="term-chip" data-type="rectangle">Diagonals are equal in length</span>
+      <span class="term-chip" data-type="rhombus">Diagonals bisect the corner angles</span>
+      <span class="term-chip" data-type="rectangle">Lines of symmetry through midpoints of opposite sides</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="rhombus">
+        <h4 class="rh">Special to a rhombus</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="rectangle">
+        <h4 class="rc">Special to a rectangle</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The rhombus properties all flow from <em>equal sides</em>. The rectangle properties all flow from <em>right angles</em>. A square gets both bundles.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the shape to its defining property</h2>
+  <p class="sec-desc">Click two chips that go together to match them. Five pairs in total. Each shape (or property) has exactly one partner.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll prove one property out loud, naming each step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — diagonals of a rhombus are perpendicular</h2>
+  <p class="sec-desc"><strong>Theorem.</strong> In rhombus ABCD with diagonals meeting at E, <span class="expr">AC ⊥ BD</span> (i.e. <span class="expr">∠AEB = 90°</span>).</p>
+
+  <div class="worked">
+    <div class="worked-figure">
+      <svg viewBox="0 0 200 200" width="220" height="220" aria-hidden="true">
+        <!-- highlighted triangles -->
+        <polygon points="100,30 170,100 100,100" fill="rgba(232,72,90,0.18)" stroke="none"/>
+        <polygon points="100,170 170,100 100,100" fill="rgba(29,43,94,0.18)" stroke="none"/>
+        <!-- rhombus outline -->
+        <polygon points="100,30 170,100 100,170 30,100" fill="none" stroke="#1D2B5E" stroke-width="2"/>
+        <!-- diagonals -->
+        <line x1="100" y1="30" x2="100" y2="170" stroke="#1D2B5E" stroke-width="1.5"/>
+        <line x1="30" y1="100" x2="170" y2="100" stroke="#1D2B5E" stroke-width="1.5"/>
+        <!-- centre dot -->
+        <circle cx="100" cy="100" r="3" fill="#1D2B5E"/>
+        <!-- labels -->
+        <text x="100" y="24" text-anchor="middle" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">A</text>
+        <text x="180" y="105" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">B</text>
+        <text x="100" y="188" text-anchor="middle" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">C</text>
+        <text x="14" y="105" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">D</text>
+        <text x="106" y="116" font-family="Georgia" font-size="13" fill="#1D2B5E" font-style="italic">E</text>
+        <!-- triangle key -->
+        <text x="135" y="80" font-family="Georgia" font-size="11" fill="#E8485A" font-style="italic">△AEB</text>
+        <text x="118" y="142" font-family="Georgia" font-size="11" fill="#1D2B5E" font-style="italic">△CEB</text>
+      </svg>
+    </div>
+
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Pick the two triangles to compare</div>
+        <div class="step-desc">The diagonals split the rhombus into four small triangles. Compare two that share the diagonal BE and meet at E.</div>
+        <div class="calc-box">
+          Compare <span class="red">△AEB</span> and <span class="blue">△CEB</span>.<br>
+          We want to show they're congruent — then ∠AEB will equal ∠CEB.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Find three matching pairs of sides — SSS</div>
+        <div class="step-desc">List the parts we know are equal, with a <em>reason</em> for each.</div>
+        <div class="calc-box">
+          <span class="red">AB</span> = <span class="blue">CB</span> &nbsp; <span class="reason">(all sides of a rhombus are equal)</span><br>
+          <span class="red">AE</span> = <span class="blue">CE</span> &nbsp; <span class="reason">(diagonals of a parallelogram bisect each other — last lesson)</span><br>
+          <span class="red">BE</span> = <span class="blue">BE</span> &nbsp; <span class="reason">(common side)</span><br>
+          ∴ <span class="red">△AEB</span> ≅ <span class="blue">△CEB</span> &nbsp; <span class="reason">(SSS)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Use CPCTC and the straight angle</div>
+        <div class="step-desc">Once the triangles are congruent, corresponding angles must be equal. Combine that with the straight line AEC.</div>
+        <div class="calc-box">
+          ∠AEB = ∠CEB &nbsp; <span class="reason">(CPCTC)</span><br>
+          ∠AEB + ∠CEB = 180° &nbsp; <span class="reason">(angles on a straight line AEC)</span><br>
+          So 2 × ∠AEB = 180°, giving ∠AEB = 90°.<br>
+          ∴ AC ⊥ BD. ∎
+        </div>
+        <div class="summary-banner">
+          <span class="label">Result</span>
+          The diagonals of a rhombus are perpendicular.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's prove one together</div>
+    <div class="phase-sub">Same structure — pick the triangles, find matching parts, conclude.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — diagonals of a rectangle are equal in length</h2>
+  <p class="sec-desc"><strong>Theorem.</strong> In rectangle ABCD, the diagonals <span class="expr">AC</span> and <span class="expr">BD</span> are equal in length. We'll compare <span class="expr">△ABC</span> and <span class="expr">△BAD</span> — the two triangles that share side AB.</p>
+
+  <div style="display:flex; justify-content:center; margin: 0 0 18px;">
+    <svg viewBox="0 0 240 140" width="260" height="160" aria-hidden="true">
+      <rect x="20" y="20" width="200" height="100" fill="rgba(29,43,94,0.05)" stroke="#1D2B5E" stroke-width="2"/>
+      <line x1="20" y1="20" x2="220" y2="120" stroke="#E8485A" stroke-width="1.6"/>
+      <line x1="220" y1="20" x2="20" y2="120" stroke="#E8485A" stroke-width="1.6"/>
+      <rect x="20" y="20" width="10" height="10" fill="none" stroke="#1D2B5E" stroke-width="1.4"/>
+      <rect x="210" y="20" width="10" height="10" fill="none" stroke="#1D2B5E" stroke-width="1.4"/>
+      <text x="12" y="16" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">A</text>
+      <text x="222" y="16" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">B</text>
+      <text x="222" y="135" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">C</text>
+      <text x="12" y="135" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">D</text>
+    </svg>
+  </div>
+
+  <p style="margin: 0 0 14px;">Answer each prompt below. We'll fill them in as a class.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Once △ABC ≅ △BAD</strong> we read off <span class="expr">AC = BD</span> using <strong>CPCTC</strong>. Same engine as last lesson — congruent triangles do the work, then we extract the fact we want.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then onto the three practice tiers: Building, Stretch, Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the big ideas. Try them on your own first — <strong>then we'll check together as a class</strong> before you move on to the practice.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — properties and reasons <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Short, specific answers. Numbers (no units), short words (<code>true</code>, <code>false</code>, <code>sides</code>, <code>rectangle</code>), or test names (<code>SSS</code>, <code>SAS</code>, <code>ASA</code>, <code>RHS</code>).</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: STRETCH -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — apply the properties <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">Use what you've proved to find lengths and angles. <strong>Hint:</strong> diagonals split each shape into <em>right-angled triangles</em> — bring Pythagoras with you.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — combine and explain <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Harder numerical work plus one written explanation. For the explain question, write 1–2 sentences using the words <em>rhombus</em>, <em>rectangle</em>, and <em>square</em>.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas: <em>which rule, which length, which reason</em>.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 8 · Properties of Special Quadrilaterals<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  // Five pairs (group 1–5). Pair the shape/property with its match.
+  const matchTerms = [
+    { html: 'Rhombus',                        group: 1 },
+    { html: 'All four sides equal',           group: 1 },
+    { html: 'Rectangle',                      group: 2 },
+    { html: 'Four right angles',              group: 2 },
+    { html: 'Square',                         group: 3 },
+    { html: 'Rhombus <em>and</em> rectangle', group: 3 },
+    { html: 'Diagonals perpendicular',        group: 4 },
+    { html: 'Property of a rhombus',          group: 4 },
+    { html: 'Diagonals equal in length',      group: 5 },
+    { html: 'Property of a rectangle',        group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — try again.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // checkpoint (Quick check) — 2 problems
+  const checkpoint = [
+    { q: 'Which congruence test proves the diagonals of a rectangle are equal in length? <em>(SSS / SAS / ASA / RHS)</em>', a: 'SAS', hint: 'Two sides and the included angle — the angle is the 90° corner of the rectangle.' },
+    { q: 'In a rhombus, the two diagonals meet at the centre. What is the size of the angle between them, in degrees?', a: '90', hint: 'We just proved this in the worked example.' },
+  ];
+
+  // we-do — 3 sub-prompts (noCount)
+  const weDo = [
+    { q: 'Which side of the rectangle is <strong>common</strong> to both △ABC and △BAD? (Type two letters, e.g. <code>AB</code>.)', a: 'AB|BA', hint: 'Look at the figure — both triangles include this side.' },
+    { q: '∠ABC = ∠BAD = <strong>?</strong> degrees. (Why? All angles of a rectangle are right angles.)', a: '90', hint: 'Every interior angle of a rectangle is the same special value.' },
+    { q: 'AD = BC because they are <em>opposite sides of a parallelogram</em>. Putting it all together — which congruence test applies? <em>(SSS / SAS / ASA / RHS)</em>', a: 'SAS', hint: 'Two pairs of sides plus the angle between them.' },
+  ];
+
+  // Section 8: Building — short specific answers (10)
+  const practice1 = [
+    { q: 'In a rhombus, the diagonals meet at <strong>?</strong> degrees.', a: '90', hint: 'They are perpendicular.' },
+    { q: 'Type <code>true</code> or <code>false</code>: All four sides of a rhombus are equal in length.', a: 'true', hint: 'This is the defining property of a rhombus.' },
+    { q: 'Type <code>true</code> or <code>false</code>: All four sides of a rectangle are equal in length.', a: 'false', hint: 'Rectangles only need <em>opposite</em> sides equal — like a door, not a square.' },
+    { q: 'Type <code>true</code> or <code>false</code>: The diagonals of a rhombus are always equal in length.', a: 'false', hint: 'Equal diagonals is a <em>rectangle</em> property, not a rhombus one.' },
+    { q: 'In rhombus ABCD, the diagonal AC bisects ∠BAD. If ∠BAD = 70°, find ∠BAC in degrees.', a: '35', hint: 'Bisect means cut in half — 70 ÷ 2.' },
+    { q: 'What is the size of one interior angle of a square, in degrees?', a: '90', hint: 'A square is a rectangle, so all angles are…' },
+    { q: 'Which congruence test proves the diagonals of a rectangle are <strong>equal</strong>? <em>(SSS / SAS / ASA / RHS)</em>', a: 'SAS', hint: 'Two sides and the angle between them.' },
+    { q: 'Which congruence test proves the diagonals of a rhombus are <strong>perpendicular</strong>? <em>(SSS / SAS / ASA / RHS)</em>', a: 'SSS', hint: 'Three matching sides — AB=CB, AE=CE, BE common.' },
+    { q: 'A square is both a rhombus and a <strong>?</strong> (single word).', a: 'rectangle', hint: 'The other special parallelogram.' },
+    { q: 'In a rhombus, one interior angle is 110°. What is the size of the <em>opposite</em> interior angle, in degrees?', a: '110', hint: 'Opposite angles of any parallelogram are equal (from last lesson).' },
+  ];
+
+  // Section 9: Stretch — numerical applications (4)
+  const practice2 = [
+    { q: 'A rhombus has diagonals of length 6 cm and 8 cm. The diagonals meet at right angles and bisect each other. Find the <strong>side length</strong> of the rhombus, in cm.', a: '5', hint: 'Half-diagonals are 3 and 4. Use Pythagoras on the right-angled triangle they form: √(3² + 4²).' },
+    { q: 'A rhombus has side length 13 cm and one diagonal of length 24 cm. Find the length of the <strong>other diagonal</strong>, in cm.', a: '10', hint: 'Half of 24 is 12. Use Pythagoras: 12² + ?² = 13². So ?² = 25, ? = 5. The full diagonal is 2 × 5.' },
+    { q: 'A rectangle has length 12 cm and width 5 cm. Find the length of each <strong>diagonal</strong>, in cm.', a: '13', hint: 'The diagonal forms a right-angled triangle with the two sides: √(12² + 5²).' },
+    { q: 'In rhombus ABCD, ∠DAB = 80°. The diagonal AC bisects ∠DAB. Find the size of ∠ABD, in degrees. <em>(Hint: ∠DAB and ∠ABC are co-interior — they add to 180°. Then BD bisects ∠ABC.)</em>', a: '50', hint: '∠ABC = 180° − 80° = 100°. The diagonal BD bisects this, so ∠ABD = 50°.' },
+  ];
+
+  // Section 10: Mastery (3)
+  const practice3 = [
+    { q: 'The diagonals of a rhombus have lengths 14 cm and 48 cm. Find the <strong>perimeter</strong> of the rhombus, in cm.', a: '100', hint: 'Half-diagonals 7 and 24. Side = √(7² + 24²) = √625 = 25. Perimeter = 4 × side.' },
+    { q: 'In rectangle ABCD, the diagonals AC and BD meet at O. If ∠AOB = 110°, find ∠OAB in degrees. <em>(Hint: the diagonals of a rectangle bisect each other AND are equal in length — so OA = OB and △AOB is isosceles.)</em>', a: '35', hint: '△AOB is isosceles with OA = OB (diagonals of a rectangle are equal AND bisect each other). Base angles equal: 2x + 110 = 180, so x = 35.' },
+    { q: 'Explain in 1–2 sentences why <strong>every square</strong> is both a rhombus AND a rectangle.', a: 'TEXT', textAns: 'A square has all four sides equal (which makes it a rhombus) and all four angles equal to 90° (which makes it a rectangle), so it satisfies both definitions at the same time.', hint: 'Look at the two definitions side by side — what does a square have?' },
+  ];
+
+  // Section 11: Exit ticket (3)
+  const exitProbs = [
+    { q: 'Name the congruence test used to prove that the diagonals of a <strong>rhombus</strong> are perpendicular.', a: 'SSS', hint: 'Three pairs of equal sides — sides of the rhombus, half-diagonals, plus the common side.' },
+    { q: 'A rhombus has diagonals of 16 cm and 30 cm. Find the side length, in cm.', a: '17', hint: 'Half-diagonals 8 and 15. Pythagoras: √(8² + 15²) = √289.' },
+    { q: 'In your own words, explain why a square\'s diagonals must be <strong>equal in length</strong>.', a: 'TEXT', textAns: 'A square is a rectangle (all angles 90°), and we proved that the diagonals of a rectangle are equal in length. So the square inherits that property.', hint: 'A square is a rectangle. Use what we proved about rectangles.' },
+  ];
+
+  // ============ ANSWER CHECKING ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    // Allow pipe-separated alternates: e.g. "AB|BA"
+    for (const alt of expected.split('|')) {
+      const exp = normaliseAnswer(alt);
+      if (norm === exp) return true;
+      const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+      if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    }
+    return false;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a, p.textAns)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a, textAns) {
+    if (a === 'TEXT') return textAns || 'Open response — discuss with your teacher.';
+    // If multi-alternate, show only the first form
+    if (a.includes('|')) a = a.split('|')[0];
+    // Pure-word answer? Display unchanged (don't italicise as a variable).
+    if (/^[A-Za-z][A-Za-z\s,'-]*$/.test(a)) return a;
+    // Math expression path
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
