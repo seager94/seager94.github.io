@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solving One-Step Linear Equations — Year 10</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* BIG IDEA CALLOUT (warm-up) */
+  .big-idea {
+    background: var(--navy);
+    color: white;
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+  }
+  .big-idea .label {
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+  .big-idea .quote {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+  .big-idea .quote strong { color: #ffc4ca; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SUBSTITUTION CHECK INTERACTIVE (drag & drop) */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.true-chip { background: #ecf5ed; border-color: #6ba87c; color: #1d4a30; font-weight: 600; }
+  .term-chip.false-chip { background: var(--bad-soft); border-color: var(--bad); color: #6a2520; font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 100px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: #2f9e6b; }
+  .bucket .ct { color: var(--bad); }
+  .bucket-contents { min-height: 60px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 70px; padding: 12px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .scenario {
+    background: white;
+    border-left: 4px solid var(--coral);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .scenario .tag {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .op-strip { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-left: 8px; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING EQUATIONS TO SOLUTIONS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-context {
+    display: block;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--navy); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* TWO-STEP PREVIEW TEASER (in Stretch section) */
+  .next-lesson-tag {
+    display: inline-block;
+    background: #c89714;
+    color: white;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Solving One-Step Linear Equations</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra · Lesson 2</div>
+  </div>
+  <div class="badge">Through Substitution</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 16</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Warm-up — pay day at the café</h2>
+  <p class="sec-desc">You already know how to substitute. Today we work in reverse.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+    <div>
+      <p>You've got a casual job earning <strong>$25 per hour</strong>. If you work <span class="var">h</span> hours, your gross pay <span class="var">P</span> is:</p>
+      <div class="calc-box" style="text-align: center; margin: 10px 0 14px;"><span class="var">P</span> = 25<span class="var">h</span></div>
+      <p><strong>This week</strong> you worked 6 hours. What's your pay?<br>
+      Substitute <span class="var">h</span> = 6: &nbsp; <span class="expr"><span class="var">P</span> = 25 × 6 = $150</span> ✓<br>
+      <em style="color: var(--muted); font-size: 0.88rem;">That's substitution — you knew the letter, you found the answer.</em></p>
+      <p><strong>Next week</strong> you check your bank: <strong>$175</strong> was deposited. How many hours did you work?<br>
+      Now you need to solve: &nbsp; <span class="expr">25<span class="var">h</span> = 175</span>, &nbsp; <span class="var">h</span> = ?<br>
+      <em style="color: var(--muted); font-size: 0.88rem;">That's an equation — you know the answer, you need to find the letter.</em></p>
+    </div>
+    <div class="big-idea">
+      <div class="label">Today's big idea</div>
+      <div class="quote">
+        <strong>Substitution</strong> gives you the answer when you know the letter.<br><br>
+        <strong>Equations</strong> are the reverse — you find the letter when you know the answer.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and two interactives — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five words are the language of equation-solving.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Equation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A statement that two expressions are <strong>equal</strong> — uses an = sign.<div class="vocab-example expr">25<span class="var">h</span> = 175 means "25 times <span class="var">h</span> gives 175".</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Variable<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The letter standing for the <strong>unknown value</strong> we need to find.<div class="vocab-example expr">In 25<span class="var">h</span> = 175, the variable is <strong><span class="var">h</span></strong> (the hours worked).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Solution<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The value of the variable that makes the equation <strong>true</strong> when substituted in.<div class="vocab-example expr"><span class="var">h</span> = <strong>7</strong> solves 25<span class="var">h</span> = 175, because 25 × 7 = 175.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Substitute<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Replace the variable with a <strong>specific number</strong> to check or evaluate.<div class="vocab-example expr">Substitute <span class="var">h</span> = 7 into 25<span class="var">h</span>: <strong>25 × 7 = 175</strong> ✓</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Inverse operation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The operation that <strong>undoes</strong> another. Subtract undoes add; divide undoes multiply.<div class="vocab-example">To undo <strong>× 25</strong>, we use <strong>÷ 25</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SUBSTITUTION CHECK — drag and drop -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Does this substitution work?</h2>
+  <p class="sec-desc">Each chip shows an equation and a proposed value. Substitute the value to check — does it make the equation true? Drag each chip into <strong style="color: #2f9e6b;">TRUE</strong> or <strong style="color: var(--bad);">FALSE</strong>. Wrong drops will shake.</p>
+
+  <div class="parts-expr">
+    <div class="label">Substitute the proposed value. Does it solve the equation?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="true">P + 12 = 50, &nbsp;<span class="var">P</span> = 38</span>
+      <span class="term-chip" data-type="false">30<span class="var">h</span> = 240, &nbsp;<span class="var">h</span> = 7</span>
+      <span class="term-chip" data-type="true">C − 15 = 40, &nbsp;<span class="var">C</span> = 55</span>
+      <span class="term-chip" data-type="false"><span class="var">P</span>/5 = 22, &nbsp;<span class="var">P</span> = 100</span>
+      <span class="term-chip" data-type="true">B + 75 = 200, &nbsp;<span class="var">B</span> = 125</span>
+      <span class="term-chip" data-type="true">8<span class="var">w</span> = 64, &nbsp;<span class="var">w</span> = 8</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="true">
+        <h4 class="vt">✓ True — value solves the equation</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="false">
+        <h4 class="ct">✗ False — value does NOT solve it</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The two FALSE chips have a correct solution hiding in them — can you spot what value <em>would</em> work? (Answers: 30<span class="var">h</span> = 240 needs <span class="var">h</span> = 8; <span class="var">P</span>/5 = 22 needs <span class="var">P</span> = 110.)
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING EQUATIONS TO SOLUTIONS -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each equation to its solution</h2>
+  <p class="sec-desc">Click an equation and then its matching solution to pair them. There are five pairs hidden in the grid below. Use mental substitution if you're unsure!</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick an equation to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one equation out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
+
+  <div class="worked">
+    <div class="scenario">
+      <span class="tag">Scenario</span>You sold raffle tickets at <strong>$3 each</strong> for the school fundraiser. Total takings: <strong>$21</strong>. How many tickets did you sell?<br>
+      <span style="display: inline-block; margin-top: 6px;">Letting <span class="var">t</span> = tickets sold, the equation is &nbsp; <span class="expr">3<span class="var">t</span> = 21</span>. Solve for <span class="var">t</span>.</span>
+    </div>
+
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify the inverse operation</div>
+        <div class="step-desc">What is being done to <span class="var">t</span>? It is being <strong>multiplied by 3</strong>. The inverse of × 3 is <strong>÷ 3</strong>.</div>
+        <div class="calc-box">
+          3<span class="var">t</span> = 21 &nbsp;&nbsp; <span class="op-strip">↑ multiply by 3 &nbsp;⟶&nbsp; undo with ÷ 3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Apply the inverse to <strong>both sides</strong></div>
+        <div class="step-desc">Whatever we do to one side, we must do to the other — that keeps the equation balanced.</div>
+        <div class="calc-box">
+          3<span class="var">t</span> <span class="red">÷ 3</span> = 21 <span class="red">÷ 3</span><br>
+          <span class="blue"><span class="var">t</span> = 7</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Verify by substitution</div>
+        <div class="step-desc">Replace <span class="var">t</span> with 7 in the original equation. Does the left side equal the right side?</div>
+        <div class="calc-box">
+          3 × <span class="red">7</span> = 21 ✓<br>
+          <span class="op-strip">Both sides equal 21 — the substitution is true, so <span class="var">t</span> = 7 is the solution.</span>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          <span class="var">t</span> = 7 &nbsp;(you sold 7 tickets)
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's solve one together</div>
+    <div class="phase-sub">Talk to your neighbour after each prompt. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — solve <span class="expr"><span class="var">m</span> − 4 = 9</span></h2>
+  <p class="sec-desc"><strong>Scenario:</strong> you started the day with <span class="var">m</span> dollars, spent $4 on a snack, and have $9 left. We'll find <span class="var">m</span> in three small steps, following the same routine as the worked example.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>The 3-step routine:</strong> ① identify the inverse, ② apply it to both sides, ③ verify by substituting the answer back. Use this on every "You do" problem next — it stops sign and operation errors.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then onto the three practice tiers: Building, Stretch (two-step preview), and Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm the method. Try them on your own — <strong>then we'll check together as a class</strong> before moving on to the practice.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING (one-step) -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — all four operations <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Type the value of the variable. For each one, ask yourself: <em>what's being done to the variable, and what's the inverse?</em> Always verify by substituting back into the original.</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: STRETCH (two-step preview) -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — two operations <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span><span class="next-lesson-tag">↗ Next lesson preview</span></h2>
+  <p class="sec-desc">A peek at <strong>next lesson</strong>. These have <strong>two</strong> things happening to the variable — but you can still solve them by undoing one operation at a time. <strong>Undo the +/− first, then the × or ÷.</strong> Verify by substitution.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: MASTERY (two-step + word problems) -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — money problems <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Real finance problems. The equation is already set up for you — solve it using the two-step method, then re-read the scenario to make sure your answer makes sense.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Answer all three before leaving. These check the big ideas of today's lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 10 · Solving One-Step Equations<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SUBSTITUTION CHECK (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      } else {
+        // colour the chip per its truth
+        chip.classList.add(correct === 'true' ? 'true-chip' : 'false-chip');
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop', 'true-chip', 'false-chip');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop', 'true-chip', 'false-chip');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+      chip.classList.add(correct === 'true' ? 'true-chip' : 'false-chip');
+    });
+  }
+
+  // ============ MATCHING EQUATIONS TO SOLUTIONS ============
+  // 5 pairs; each pair has a "group" id 1-5. The four core examples are pairs 1–4.
+  const matchTerms = [
+    { html: '<span class="var">x</span> + 7 = 15', group: 1 },
+    { html: '<span class="var">x</span> = 8', group: 1 },
+    { html: '3<span class="var">x</span> = 21', group: 2 },
+    { html: '<span class="var">x</span> = 7', group: 2 },
+    { html: '<span class="var">x</span> − 4 = 9', group: 3 },
+    { html: '<span class="var">x</span> = 13', group: 3 },
+    { html: '<span class="var">x</span>/4 = 5', group: 4 },
+    { html: '<span class="var">x</span> = 20', group: 4 },
+    { html: '12 + <span class="var">x</span> = 30', group: 5 },
+    { html: '<span class="var">x</span> = 18', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — try substituting the value back in.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // Per-problem fields:
+  //   q       — HTML for the question expression
+  //   a       — expected answer string (or 'TEXT' for open response)
+  //   hint    — italic hint line
+  //   v       — variable letter (renders "v =" before the input)
+  //   label   — overrides the "v =" prefix with custom HTML (e.g. '+', '=', '')
+  //   ctx     — optional small italic context line above the equation
+  //   model   — optional model answer text for TEXT-type questions
+
+  const practice1 = [
+    { q: '<span class="var">x</span> + 5 = 14', v: 'x', a: '9', hint: 'Undo +5 by subtracting 5 from both sides.' },
+    { q: '<span class="var">y</span> − 3 = 12', v: 'y', a: '15', hint: 'Undo −3 by adding 3 to both sides.' },
+    { q: '4<span class="var">k</span> = 32', v: 'k', a: '8', hint: 'Undo ×4 by dividing both sides by 4.' },
+    { q: '<span class="var">m</span>/2 = 11', v: 'm', a: '22', hint: 'Undo ÷2 by multiplying both sides by 2.' },
+    { ctx: '$P in your savings, then $25 deposited brings it to $80.', q: '<span class="var">P</span> + 25 = 80', v: 'P', a: '55', hint: 'Subtract 25 from both sides. Check: 55 + 25 = 80 ✓' },
+    { ctx: 'You earned $6/hr for h hours and made $90 total.', q: '6<span class="var">h</span> = 90', v: 'h', a: '15', hint: 'Divide both sides by 6. Verify: 6 × 15 = 90 ✓' },
+    { ctx: 'You had $C, spent $15, and have $40 left.', q: '<span class="var">C</span> − 15 = 40', v: 'C', a: '55', hint: 'Add 15 to both sides. Verify: 55 − 15 = 40 ✓' },
+    { q: '<span class="var">n</span>/5 = 8', v: 'n', a: '40', hint: 'Multiply both sides by 5.' },
+    { q: '18 + <span class="var">a</span> = 50', v: 'a', a: '32', hint: 'Subtract 18 from both sides. The +a means a is being added, so the inverse is subtraction.' },
+    { ctx: 'A bunch of $7 cinema tickets cost $56 in total.', q: '7<span class="var">w</span> = 56', v: 'w', a: '8', hint: 'Divide both sides by 7.' },
+  ];
+
+  // STRETCH — two-step preview
+  const practice2 = [
+    { q: '2<span class="var">x</span> + 3 = 11', v: 'x', a: '4', hint: 'Undo +3 first (subtract 3 from both sides → 2x = 8), then undo ×2 (÷ both sides by 2).' },
+    { q: '4<span class="var">n</span> − 7 = 13', v: 'n', a: '5', hint: 'Add 7 to both sides → 4n = 20. Then divide by 4.' },
+    { q: '3<span class="var">k</span> + 6 = 24', v: 'k', a: '6', hint: 'Subtract 6 first → 3k = 18. Then ÷ 3.' },
+    { q: '5<span class="var">p</span> − 12 = 23', v: 'p', a: '7', hint: 'Add 12 → 5p = 35. Then ÷ 5. Verify: 5 × 7 − 12 = 23 ✓' },
+  ];
+
+  // MASTERY — two-step with finance contexts
+  const practice3 = [
+    { ctx: 'Hire a function room: $40 flat fee + $8 per hour. Total bill = $96. Find hours h.', q: '8<span class="var">h</span> + 40 = 96', v: 'h', a: '7', hint: 'Subtract 40 from both sides → 8h = 56. Then ÷ 8. Sense check: 7 hours at $8 = $56, plus $40 = $96 ✓' },
+    { ctx: '$25 setup + $12/month subscription. Total spent so far = $97. Find months m.', q: '12<span class="var">m</span> + 25 = 97', v: 'm', a: '6', hint: 'Subtract 25 → 12m = 72. Divide by 12. Verify: 12 × 6 + 25 = 97 ✓' },
+    { ctx: 'You sold t tickets at $25 each. After $30 commission was deducted, you took home $170. Find t.', q: '25<span class="var">t</span> − 30 = 170', v: 't', a: '8', hint: 'Add 30 → 25t = 200. Divide by 25. Verify: 25 × 8 − 30 = 170 ✓' },
+  ];
+
+  const checkpoint = [
+    { q: '<span class="var">x</span> + 7 = 15', v: 'x', a: '8', hint: 'Subtract 7 from both sides. Verify: 8 + 7 = 15 ✓' },
+    { q: '<span class="var">x</span>/4 = 5', v: 'x', a: '20', hint: 'Multiply both sides by 4. Verify: 20 ÷ 4 = 5 ✓' },
+  ];
+
+  const weDo = [
+    { q: 'Step 1 — <strong>Identify:</strong> the variable <span class="var">m</span> has 4 subtracted. To undo subtraction we use addition. What number do we add to both sides?', label: '+', a: '4', hint: 'The number being subtracted is 4, so we add 4.' },
+    { q: 'Step 2 — <strong>Apply:</strong> add 4 to both sides. What does <span class="var">m</span> equal?', v: 'm', a: '13', hint: '(m − 4) + 4 = 9 + 4. The left side simplifies to m, the right to 13.' },
+    { q: 'Step 3 — <strong>Verify:</strong> substitute <span class="var">m</span> = 13 into the left side of the original (<span class="var">m</span> − 4). What do you get?', label: '=', a: '9', hint: '13 − 4 = ? If you get the right side (9), the solution checks out.' },
+  ];
+
+  const exitProbs = [
+    { q: 'Solve: <span class="expr"><span class="var">w</span> + 6 = 22</span>', v: 'w', a: '16', hint: 'Subtract 6 from both sides. Substitute back to verify.' },
+    { ctx: 'Substitution: this is your gross pay if you worked 7 hours at $25/hr.', q: 'Substitute <span class="var">h</span> = 7 into <span class="expr">25<span class="var">h</span></span>. What value do you get?', label: '=', a: '175', hint: '25 × 7 = ? This is how substitution checks an equation answer.' },
+    { q: 'Explain in your own words: what does it mean for a value to be the <strong>solution</strong> to an equation? Use the word "substitute" in your answer.', a: 'TEXT', hint: 'Think about what happens when you substitute the solution back into the original equation.', model: 'A value is the solution to an equation when, after we substitute it for the variable, both sides of the equation become equal — the equation becomes a true statement.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/−/g, '-')          // unicode minus → ascii hyphen
+      .replace(/÷/g, '/')          // division sign → slash
+      .replace(/×/g, '')           // multiplication sign → nothing (3×7 → 37 wouldn't help, but unlikely)
+      .replace(/^[a-z]=/, '')      // strip "x=" prefix if students include the variable
+      .replace(/\$/g, '')          // strip dollar signs
+      .replace(/^\+/, '');         // strip leading +
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // accept reordered terms within an expression
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    return false;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      const eqLabel = p.label !== undefined
+        ? p.label
+        : (p.v ? `<span class="var">${p.v}</span> =` : '=');
+      const ctxLine = p.ctx ? `<span class="problem-context">${p.ctx}</span>` : '';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${ctxLine}${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          ${eqLabel ? `<span class="eq">${eqLabel}</span>` : ''}
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(p) {
+    const a = p.a;
+    if (a === 'TEXT') return p.model || 'Open response — explain in your own words.';
+    // Plain numbers (with optional minus/fraction) — render with the variable prefix if available
+    let body = a;
+    // Stack any fraction
+    body = body.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // ASCII hyphen → typographic minus
+    body = body.replace(/^-/, '− ').replace(/\s+/g, ' ').trim();
+    if (p.v) return `<span class="var">${p.v}</span> = ${body}`;
+    return body;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
