@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Congruence Tests: SSS &amp; SAS — Year 8</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --warn: #c89638;
+    --warn-soft: #fdf3dc;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.1rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .cong { font-family: Georgia, serif; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 220px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.15rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* WARM-UP TABLE */
+  .info-table {
+    width: 100%; border-collapse: collapse;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.92rem;
+  }
+  .info-table th, .info-table td {
+    padding: 10px 12px; text-align: left;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .info-table th {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 0.85rem;
+  }
+  .info-table td.verdict-ok { color: var(--good); font-weight: 600; }
+  .info-table td.verdict-no { color: var(--bad); font-weight: 600; }
+  .info-table tr:last-child td { border-bottom: none; }
+
+  /* PARTS-OF-EXPRESSION (drag sort) */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--navy);
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .parts-buckets.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 90px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .sss-h { color: var(--good); }
+  .bucket .sas-h { color: var(--warn); }
+  .bucket .no-h  { color: var(--bad); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .green { color: var(--good); font-weight: 600; }
+  .calc-box .purple { color: #6f4ab8; font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* TRIANGLE PAIR DISPLAY */
+  .triangle-pair {
+    display: flex; justify-content: center; align-items: center;
+    gap: 24px; flex-wrap: wrap; margin: 0 0 18px;
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .triangle-pair .tri-block { text-align: center; }
+  .triangle-pair .tri-label {
+    margin-top: 6px;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.1rem;
+  }
+  .triangle-pair .cong-sym {
+    font-family: Georgia, serif;
+    font-size: 2.2rem;
+    color: var(--coral);
+    font-weight: bold;
+  }
+  .given-box {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    color: var(--navy);
+  }
+  .given-box strong { color: var(--coral); }
+
+  /* TWO-COLUMN PROOF */
+  .proof-table {
+    width: 100%; border-collapse: collapse;
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    margin: 12px 0;
+    font-size: 0.92rem;
+  }
+  .proof-table th {
+    background: var(--navy); color: white;
+    padding: 8px 12px; text-align: left;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 0.85rem;
+    width: 50%;
+  }
+  .proof-table td {
+    padding: 8px 12px; border-top: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .proof-table td.reason { color: var(--muted); font-style: italic; font-size: 0.88rem; }
+
+  /* WARNING / MISCONCEPTION INSET */
+  .warn-inset {
+    background: var(--warn-soft);
+    border-left: 4px solid var(--warn);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 16px 0;
+    font-size: 0.93rem;
+    color: #6b4815;
+  }
+  .warn-inset strong { color: #8c5e10; }
+
+  /* MATCHING (Section 4) */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 10px;
+    text-align: center;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 70px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.3;
+    color: var(--navy);
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.02rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.05rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets, .parts-buckets.three-col { grid-template-columns: 1fr; }
+    .triangle-pair { gap: 12px; padding: 12px; }
+    .triangle-pair .cong-sym { font-size: 1.6rem; }
+    .info-table { font-size: 0.82rem; }
+    .info-table th, .info-table td { padding: 7px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Congruence Tests: SSS &amp; SAS</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Space (AC9M8SP01)</div>
+  </div>
+  <div class="badge">Minimum-info tests</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Warm-up — do we always need all six measurements?</h2>
+  <p class="sec-desc">Last lesson you learnt that congruent triangles have <strong>all six</strong> pairs of corresponding parts equal — three sides and three angles. Today's question: do you really need to <em>check</em> all six?</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: stretch;">
+    <div>
+      <p><strong>Try this in your head 🍝</strong></p>
+      <p>Imagine I give you three uncooked spaghetti pieces of fixed lengths — say 5 cm, 7 cm and 8 cm. You snap their ends together to form a triangle.</p>
+      <p>How many <em>different shapes</em> of triangle can you make? Only <strong>one</strong>. The three lengths force the triangle to take a single shape.</p>
+      <p>Now imagine I give you just two spaghetti pieces — 5 cm and 7 cm — and pin them at one end so the angle between them is exactly 40°. Again, only <strong>one</strong> triangle shape is possible.</p>
+      <p style="margin-bottom: 0;">In both cases, three pieces of information were enough to lock down the triangle. That's the big idea today.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0; display: flex; flex-direction: column; justify-content: center;">
+      <div style="font-family: Georgia, serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 10px; font-style: normal; font-weight: bold;">
+        🎯 Today's framing question
+      </div>
+      <div style="font-style: normal; font-size: 1rem; color: var(--text); line-height: 1.5;">
+        "Do we always need to check all six measurements (3 sides, 3 angles) to prove two triangles are congruent?"
+      </div>
+      <div style="margin-top: 10px; font-style: normal; font-size: 0.9rem; color: var(--navy); line-height: 1.5;">
+        Short answer: <strong style="color: var(--coral)">no</strong>. Today we meet two shortcuts — <strong>SSS</strong> and <strong>SAS</strong> — that prove congruence from just <strong>three</strong> pieces of information.
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 18px;">
+    <table class="info-table">
+      <thead>
+        <tr>
+          <th>Information given</th>
+          <th>Can you draw just ONE triangle?</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>All 6 (3 sides + 3 angles)</td><td>Yes — obviously</td><td class="verdict-ok">Congruent (but more than we need)</td></tr>
+        <tr><td><strong>3 sides</strong></td><td>Yes — only one triangle fits</td><td class="verdict-ok">✓ SSS works (today)</td></tr>
+        <tr><td><strong>2 sides + the angle BETWEEN them</strong></td><td>Yes — only one triangle fits</td><td class="verdict-ok">✓ SAS works (today)</td></tr>
+        <tr><td>2 sides + an angle NOT between</td><td>No — two different triangles can fit!</td><td class="verdict-no">✗ SSA fails (next lesson)</td></tr>
+        <tr><td>3 angles only (no sides)</td><td>No — many sizes possible</td><td class="verdict-no">✗ AAA fails (similar, not congruent)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, then two interactives to lock in "included angle" and "minimum information".</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. The phrase <em>included angle</em> is the make-or-break term today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Congruence test<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>shortcut rule</strong> — a small set of equal parts that <strong>guarantees</strong> two triangles are congruent, without checking all six.<div class="vocab-example">SSS and SAS are two such tests. ASA and RHS come next lesson.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Included angle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The angle <strong>between</strong> two named sides — the angle at the vertex <strong>where the two sides meet</strong>.<div class="vocab-example">In △ABC, the angle <strong>included between AB and BC</strong> is <strong>∠B</strong> (at the shared vertex).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Non-included angle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An angle that is <strong>NOT between</strong> the two named sides — it sits at one of the other vertices.<div class="vocab-example">In △ABC, ∠A is <strong>not included</strong> between AB and BC (the shared vertex is B, not A).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">SSS test<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>Side–Side–Side.</strong> If <strong>all three</strong> pairs of corresponding sides are equal, the triangles are congruent.<div class="vocab-example expr">AB=DE, BC=EF, CA=FD ⟹ △ABC ≅ △DEF (SSS)</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">SAS test<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>Side–Angle–Side.</strong> If two pairs of sides are equal AND the <strong>included angles</strong> are equal, the triangles are congruent.<div class="vocab-example expr">AB=DE, ∠B=∠E, BC=EF ⟹ △ABC ≅ △DEF (SAS)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — what proves congruence -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort: does this information prove congruence?</h2>
+  <p class="sec-desc">Drag each set of "three pieces of information" into the correct bucket — <strong style="color:var(--good)">SSS</strong>, <strong style="color:var(--warn)">SAS</strong>, or <strong style="color:var(--bad)">not a valid test</strong>. Wrong drops shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort each set of givens</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="sss">3 sides: 5, 8, 11 cm</span>
+      <span class="term-chip" data-type="sas">2 sides + angle BETWEEN: 6, 9 cm, ∠50°</span>
+      <span class="term-chip" data-type="sss">3 sides: 4, 6, 9 cm</span>
+      <span class="term-chip" data-type="no">2 sides + angle NOT between: 5, 9 cm, ∠40°</span>
+      <span class="term-chip" data-type="sas">2 sides + included angle: 8, 11 cm, ∠90°</span>
+      <span class="term-chip" data-type="no">2 sides + non-included angle: 7, 12 cm, ∠30°</span>
+      <span class="term-chip" data-type="sas">2 sides meeting at: 4, 10 cm, ∠65°</span>
+      <span class="term-chip" data-type="no">3 angles only: 50°, 60°, 70°</span>
+    </div>
+    <div class="parts-buckets three-col">
+      <div class="bucket" data-bucket="sss">
+        <h4 class="sss-h">✓ SSS — 3 sides</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="sas">
+        <h4 class="sas-h">✓ SAS — 2 sides + included ∠</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="no">
+        <h4 class="no-h">✗ Not a valid test</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Watch the word "between". <strong>2 sides + the angle between them = SAS (valid)</strong>. 2 sides + an angle <em>somewhere else</em> = not enough — that's the SSA trap we'll meet next lesson.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING — equivalent descriptions -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match: equivalent ways to describe the same givens</h2>
+  <p class="sec-desc">Mathematicians often describe the <em>same</em> information using different word orders. Click two cards that describe the <strong>same set of measurements</strong>. There are <strong>five matching pairs</strong>.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+  <div class="parts-instructions" style="margin-top: 16px;">
+    💡 Order doesn't matter for SSS — "sides 5, 7, 9" is the same triangle as "sides 9, 5, 7". For SAS, "angle between two sides" and "two sides with included angle X" are different ways of saying exactly the same thing.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen carefully</div>
+    <div class="phase-sub">I'll work through one SSS example, three steps. Same routine every time: list pairs, name the test, write the conclusion.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) — SSS -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — SSS: prove the triangles congruent</h2>
+  <p class="sec-desc">The three-step routine works for every congruence-test question you will ever do.</p>
+
+  <div class="given-box">
+    <strong>GIVEN:</strong> In △ABC and △DEF, AB = DE = 5 cm, BC = EF = 7 cm, CA = FD = 8 cm.<br>
+    <strong>SHOW:</strong> △ABC ≅ △DEF, and name the test used.
+  </div>
+
+  <div class="triangle-pair">
+    <div class="tri-block">
+      <svg viewBox="0 0 130 150" width="160" height="150" aria-label="Triangle ABC with sides 5, 7, 8 cm">
+        <polygon points="15,130 85,130 71,33" fill="#fbe1e4" stroke="#1D2B5E" stroke-width="2"/>
+        <text x="3" y="143" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">A</text>
+        <text x="88" y="143" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">B</text>
+        <text x="64" y="26" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">C</text>
+        <text x="38" y="124" font-family="Georgia" font-size="11" fill="#E8485A" font-weight="700">5 cm</text>
+        <text x="84" y="84" font-family="Georgia" font-size="11" fill="#6f4ab8" font-weight="700">7 cm</text>
+        <text x="14" y="84" font-family="Georgia" font-size="11" fill="#2f9e6b" font-weight="700">8 cm</text>
+      </svg>
+      <div class="tri-label">△ABC</div>
+    </div>
+    <div class="cong-sym">≅?</div>
+    <div class="tri-block">
+      <svg viewBox="0 0 130 150" width="160" height="150" aria-label="Triangle DEF with sides 5, 7, 8 cm">
+        <polygon points="15,130 85,130 71,33" fill="#dff5e8" stroke="#1D2B5E" stroke-width="2"/>
+        <text x="3" y="143" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">D</text>
+        <text x="88" y="143" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">E</text>
+        <text x="64" y="26" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">F</text>
+        <text x="38" y="124" font-family="Georgia" font-size="11" fill="#E8485A" font-weight="700">5 cm</text>
+        <text x="84" y="84" font-family="Georgia" font-size="11" fill="#6f4ab8" font-weight="700">7 cm</text>
+        <text x="14" y="84" font-family="Georgia" font-size="11" fill="#2f9e6b" font-weight="700">8 cm</text>
+      </svg>
+      <div class="tri-label">△DEF</div>
+    </div>
+  </div>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">List the pairs of corresponding sides that are equal</div>
+        <div class="step-desc">Match each side of △ABC with its counterpart in △DEF and write down the equal pairs.</div>
+        <div class="calc-box">
+          <span class="red">AB = DE = 5 cm</span><br>
+          <span class="purple">BC = EF = 7 cm</span><br>
+          <span class="green">CA = FD = 8 cm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Count the pairs and name the test</div>
+        <div class="step-desc">We have <strong>three pairs of equal sides</strong> — that matches the SSS rule.</div>
+        <div class="calc-box">
+          3 pairs of equal sides ⟹ use the <span class="blue">SSS test</span>.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Write the conclusion with the test in brackets</div>
+        <div class="step-desc">Always finish with the formal congruence statement <em>and</em> name the reason — the test you used.</div>
+        <div class="calc-box">
+          ∴ △ABC ≅ △DEF &nbsp;(<span class="blue">SSS</span>)
+        </div>
+        <div class="summary-banner">
+          <span class="label">Method recap</span>
+          List equal pairs → count → name the test → write ≅ statement
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work an SAS example together</div>
+    <div class="phase-sub">Discuss each prompt with the person next to you. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO — SAS -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — SAS: triangles with two sides and the included angle</h2>
+  <p class="sec-desc">Same routine as the I Do, but this time we have only <em>two</em> pairs of sides. We'll need an angle to fill the gap — and the angle has to be in <strong>the right place</strong>.</p>
+
+  <div class="given-box">
+    <strong>GIVEN:</strong> In △PQR and △XYZ, PQ = XY = 6 cm, QR = YZ = 9 cm, and ∠Q = ∠Y = 40°.<br>
+    <strong>SHOW:</strong> △PQR ≅ △XYZ, naming the test.
+  </div>
+
+  <div class="triangle-pair">
+    <div class="tri-block">
+      <svg viewBox="0 0 175 145" width="175" height="145" aria-label="Triangle PQR with 40 degree angle at Q">
+        <polygon points="90,75 147,125 30,125" fill="#fbe1e4" stroke="#1D2B5E" stroke-width="2"/>
+        <text x="83" y="68" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">P</text>
+        <text x="18" y="140" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">Q</text>
+        <text x="150" y="140" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">R</text>
+        <text x="35" y="96" font-family="Georgia" font-size="11" fill="#E8485A" font-weight="700">6 cm</text>
+        <text x="78" y="140" font-family="Georgia" font-size="11" fill="#6f4ab8" font-weight="700">9 cm</text>
+        <path d="M 50 125 A 20 20 0 0 0 45 112" fill="none" stroke="#2f9e6b" stroke-width="2"/>
+        <text x="52" y="119" font-family="Georgia" font-size="10" fill="#2f9e6b" font-weight="700">40°</text>
+      </svg>
+      <div class="tri-label">△PQR</div>
+    </div>
+    <div class="cong-sym">≅?</div>
+    <div class="tri-block">
+      <svg viewBox="0 0 175 145" width="175" height="145" aria-label="Triangle XYZ with 40 degree angle at Y">
+        <polygon points="90,75 147,125 30,125" fill="#dff5e8" stroke="#1D2B5E" stroke-width="2"/>
+        <text x="83" y="68" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">X</text>
+        <text x="18" y="140" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">Y</text>
+        <text x="150" y="140" font-family="Georgia" font-size="14" font-weight="bold" fill="#1D2B5E">Z</text>
+        <text x="35" y="96" font-family="Georgia" font-size="11" fill="#E8485A" font-weight="700">6 cm</text>
+        <text x="78" y="140" font-family="Georgia" font-size="11" fill="#6f4ab8" font-weight="700">9 cm</text>
+        <path d="M 50 125 A 20 20 0 0 0 45 112" fill="none" stroke="#2f9e6b" stroke-width="2"/>
+        <text x="52" y="119" font-family="Georgia" font-size="10" fill="#2f9e6b" font-weight="700">40°</text>
+      </svg>
+      <div class="tri-label">△XYZ</div>
+    </div>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this matters:</strong> the 40° angle sits at Q, the vertex <em>where PQ and QR meet</em>. That's why we call it the <strong>included angle</strong> — and it's why SAS works. If the angle had been at P or R instead, we couldn't use SAS.
+  </div>
+
+  <div class="warn-inset">
+    ⚠️ <strong>Misconception alert (the SSA trap):</strong> if you're given two sides AND an angle that is <em>not</em> between them, you cannot use SAS — and there is <strong>no</strong> congruence test that fits this pattern. Two genuinely different triangles can have the same two sides and a non-included angle. We'll meet this "ambiguous case" next lesson.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first — then onto the three practice tiers: Building, Stretch, Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you can name the test from the givens. Type <strong>SSS</strong> or <strong>SAS</strong>. Try them on your own first — <strong>then we'll check together as a class</strong> before you move on.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — Building -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — name the test <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Each question describes a pair of triangles with some equal parts. Type <strong>SSS</strong> or <strong>SAS</strong> — whichever test proves they are congruent.</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: PRACTICE — Stretch -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — spot the trap <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">Now some of the givens DON'T prove congruence. Type <strong>SSS</strong>, <strong>SAS</strong>, or <strong>neither</strong> (no valid test fits).</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: PRACTICE — Mastery -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — use the test, then find the missing piece <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">First read the worked two-column proof. Then tackle the algebra problems — each uses SSS or SAS to set up an equation. Type the value of <span class="var">x</span> only (no units).</p>
+
+  <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 18px;">
+    <div style="font-family: Georgia, serif; font-weight: bold; color: var(--navy); margin-bottom: 8px;">Worked two-column proof (stretch — the formal style for senior maths)</div>
+    <div style="font-size: 0.92rem; margin-bottom: 10px;">
+      <strong>Given:</strong> In △ABC and △DEF, AB = DE, BC = EF, and ∠B = ∠E. <strong>Prove:</strong> △ABC ≅ △DEF.
+    </div>
+    <table class="proof-table">
+      <thead><tr><th>Statement</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>AB = DE</td><td class="reason">Given</td></tr>
+        <tr><td>∠B = ∠E</td><td class="reason">Given</td></tr>
+        <tr><td>BC = EF</td><td class="reason">Given</td></tr>
+        <tr><td>∠B is the included angle between AB and BC; ∠E is the included angle between DE and EF</td><td class="reason">By definition of included angle</td></tr>
+        <tr><td>∴ △ABC ≅ △DEF</td><td class="reason">SAS congruence test</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin-top: 6px;">Notice: every line on the left needs a reason on the right. The final line names the test used.</div>
+  </div>
+
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Three questions before you leave. The last one is a short written explanation — your teacher will collect it verbally or on paper.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 8 · Congruence Tests: SSS &amp; SAS<br>
+  Curriculum: AC9M8SP01 · Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG & DROP SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING — equivalent descriptions ============
+  // 5 pairs; each pair has a "group" id 1-5
+  const matchTerms = [
+    { html: 'Triangle with sides <strong>5, 7, 9</strong>', group: 1 },
+    { html: 'Triangle with sides <strong>9, 5, 7</strong>', group: 1 },
+    { html: 'Sides <strong>4 cm</strong> &amp; <strong>8 cm</strong> meeting at <strong>60°</strong>', group: 2 },
+    { html: 'Two sides <strong>8 cm</strong> and <strong>4 cm</strong> with included <strong>∠60°</strong>', group: 2 },
+    { html: 'Triangle with sides <strong>3, 11, 12</strong>', group: 3 },
+    { html: 'Triangle with sides <strong>12, 3, 11</strong>', group: 3 },
+    { html: '<strong>5 cm</strong> and <strong>7 cm</strong> sides at a <strong>right angle</strong>', group: 4 },
+    { html: 'Two sides <strong>7 cm</strong> and <strong>5 cm</strong> with <strong>∠90°</strong> between them', group: 4 },
+    { html: 'Sides <strong>6, 8, 10</strong>', group: 5 },
+    { html: 'Side lengths <strong>10, 6, 8</strong>', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched! Pairs 1, 3, 5 describe SSS givens; pairs 2 and 4 describe SAS givens.'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Different givens — check whether the measurements really describe the same triangle.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ ANSWER MATCHING ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/[.,;:!?'"`]/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (!norm) return false;
+    if (norm === exp) return true;
+    // synonyms for "neither" (no valid test fits)
+    if (exp === 'neither') {
+      const synonyms = [
+        'neither', 'no', 'nope', 'none', 'noneofthese',
+        'notenough', 'notenoughinfo', 'notenoughinformation',
+        'insufficient', 'invalid', 'notatest', 'cant', 'cannot',
+        'ssa', 'aaa', 'noteither', 'neithertest'
+      ];
+      if (synonyms.includes(norm)) return true;
+    }
+    // tolerate typing the test with extra characters like "(SSS)" or "SSS test"
+    if ((exp === 'sss' || exp === 'sas') && norm.startsWith(exp)) return true;
+    return false;
+  }
+
+  // ============ PROBLEM DATA ============
+  // Each entry: { q, a, hint, display? }
+  // a values used: 'SSS', 'SAS', 'neither', or a number/letter for Mastery
+  // display overrides the answer-box rendering when provided
+
+  const checkpoint = [
+    { q: 'In △ABC and △DEF: AB = DE = 6 cm, BC = EF = 9 cm, CA = FD = 11 cm. Which test proves them congruent?', a: 'SSS', hint: 'Count how many pairs of equal sides are given.', display: 'SSS — three pairs of equal sides' },
+    { q: 'In △PQR and △XYZ: PQ = XY = 4 cm, QR = YZ = 7 cm, ∠Q = ∠Y = 55°. Which test proves them congruent?', a: 'SAS', hint: '∠Q is at the vertex where PQ and QR meet — so it is the included angle.', display: 'SAS — two pairs of equal sides with the included angle equal' },
+  ];
+
+  const weDo = [
+    { q: 'Which two pairs of corresponding sides are equal here?', a: 'TEXT', hint: 'PQ pairs with XY (both 6 cm); QR pairs with YZ (both 9 cm).', display: 'PQ = XY = 6 cm and QR = YZ = 9 cm' },
+    { q: 'Is ∠Q the included angle between PQ and QR? Type <strong>yes</strong> or <strong>no</strong>.', a: 'yes', hint: 'The included angle sits at the vertex where the two named sides meet. PQ and QR meet at Q.' },
+    { q: 'Which test proves △PQR ≅ △XYZ?', a: 'SAS', hint: 'Two pairs of equal sides + the included angle equal.' },
+    { q: 'Complete the conclusion: △PQR ≅ △ ___ ', a: 'XYZ', hint: 'Match vertices in the same order as the equal sides: P↔X, Q↔Y, R↔Z.' },
+  ];
+
+  const practice1 = [
+    { q: 'In △ABC and △DEF: AB = DE, BC = EF, CA = FD. Test?', a: 'SSS', hint: 'Three pairs of equal sides.', display: 'SSS' },
+    { q: 'In △PQR and △XYZ: PQ = XY = 5 cm, QR = YZ = 7 cm, ∠Q = ∠Y = 60°. Test?', a: 'SAS', hint: '∠Q is between PQ and QR — included.', display: 'SAS' },
+    { q: 'In △ABC and △DEF: AB = DE = 4 cm, AC = DF = 9 cm, ∠A = ∠D = 70°. Test?', a: 'SAS', hint: '∠A sits at the vertex where AB and AC meet.', display: 'SAS' },
+    { q: 'In △JKL and △MNO: JK = MN, KL = NO, LJ = OM. Test?', a: 'SSS', hint: 'Each pair of sides matches — that\'s three pairs.', display: 'SSS' },
+    { q: 'In △XYZ and △PQR: XY = PQ = 8, YZ = QR = 11, ZX = RP = 14. Test?', a: 'SSS', hint: 'All three side lengths matched up.', display: 'SSS' },
+    { q: 'In △GHI and △RST: GH = RS, HI = ST, ∠H = ∠S = 90°. Test?', a: 'SAS', hint: '∠H is at vertex H, where GH and HI meet — included.', display: 'SAS' },
+    { q: 'In △ABC and △DEF: AB = DE = 6, BC = EF = 8, CA = FD = 10. Test?', a: 'SSS', hint: 'Three matched side lengths.', display: 'SSS' },
+    { q: 'In △LMN and △PQR: LM = PQ = 12, MN = QR = 12, ∠M = ∠Q = 45°. Test?', a: 'SAS', hint: '∠M is the included angle (sits at M, where LM and MN meet).', display: 'SAS' },
+    { q: 'In △ABC and △XYZ: BC = YZ = 7, CA = ZX = 9, ∠C = ∠Z = 80°. Test?', a: 'SAS', hint: '∠C is between BC and CA — included.', display: 'SAS' },
+    { q: 'In △RST and △UVW: RS = UV, ST = VW, TR = WU. Test?', a: 'SSS', hint: 'Three pairs of equal sides.', display: 'SSS' },
+  ];
+
+  const practice2 = [
+    { q: 'In △ABC and △DEF: AB = DE, BC = EF, ∠A = ∠D. Test?', a: 'neither', hint: '∠A sits at vertex A, between sides AB and AC — but AC isn\'t one of the given equal sides. The angle is NOT between AB and BC.', display: 'Neither — ∠A is not the included angle for AB and BC (that would be ∠B). This is the SSA trap.' },
+    { q: 'In △PQR and △XYZ: PQ = XY = 7, QR = YZ = 9, ∠P = ∠X = 40°. Test?', a: 'neither', hint: 'PQ and QR meet at Q, not P. So ∠P is not the included angle.', display: 'Neither — ∠P is not the included angle (the included angle would be ∠Q). This is SSA — no valid test.' },
+    { q: 'In △GHI and △JKL: GH = JK, HI = KL, ∠H = ∠K. Test?', a: 'SAS', hint: 'GH and HI meet at H — ∠H is the included angle. ✓', display: 'SAS — ∠H is the included angle between GH and HI' },
+    { q: 'In △ABC and △XYZ: AB = XY, BC = YZ, CA = ZX. Test?', a: 'SSS', hint: 'All three pairs of corresponding sides equal.', display: 'SSS' },
+  ];
+
+  // Mastery: numeric answers (just type x value)
+  const practice3 = [
+    { q: '△ABC ≅ △DEF by SSS. AB = DE = 7, BC = EF = 9, CA = 2<span class="var">x</span> + 1, FD = 11. Find <span class="var">x</span>.', a: '5', hint: 'CA pairs with FD. So 2x + 1 = 11. Solve for x.', display: 'x = 5 &nbsp;(from 2x + 1 = 11 ⟹ 2x = 10 ⟹ x = 5)' },
+    { q: '△PQR ≅ △XYZ by SAS. ∠Q = ∠Y, PQ = XY = 8, QR = 3<span class="var">x</span> − 4, YZ = 14. Find <span class="var">x</span>.', a: '6', hint: 'QR pairs with YZ. So 3x − 4 = 14 ⟹ 3x = 18.', display: 'x = 6 &nbsp;(from 3x − 4 = 14 ⟹ 3x = 18 ⟹ x = 6)' },
+    { q: '△JKL ≅ △MNO by SAS. ∠K = ∠N = 50°, JK = MN = 5<span class="var">x</span>, KL = NO = 12, and JK = 20. Find <span class="var">x</span>.', a: '4', hint: 'JK = 20 and JK = 5x, so 5x = 20.', display: 'x = 4 &nbsp;(from 5x = 20 ⟹ x = 4)' },
+  ];
+
+  const exitProbs = [
+    { q: 'In △ABC and △PQR: AB = PQ = 7, BC = QR = 5, CA = RP = 9. Which test proves them congruent?', a: 'SSS', hint: 'Count the equal pairs of sides.', display: 'SSS' },
+    { q: 'In △DEF and △STU: DE = ST = 6, EF = TU = 8, ∠E = ∠T = 75°. Which test proves them congruent?', a: 'SAS', hint: '∠E is at the vertex where DE and EF meet — included angle.', display: 'SAS' },
+    { q: 'Why does SSA (two sides + a non-included angle) <strong>not</strong> work as a congruence test? Use the words "between" or "included" in your answer.', a: 'TEXT', hint: 'Think back to the spaghetti analogy. If the angle is not BETWEEN the two given sides, can you always pin down a single triangle?' },
+  ];
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      const displayHtml = p.display || formatAnswerDisplay(p.a);
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> ${displayHtml}</div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return '(Open response — your teacher will collect this verbally or on paper.)';
+    if (a === 'SSS' || a === 'SAS') return a;
+    if (a === 'neither') return 'Neither — no valid test fits this set of givens (this is the SSA trap).';
+    if (a === 'yes') return 'Yes';
+    if (a === 'no') return 'No';
+    if (/^-?\d+$/.test(a)) return a;
+    // vertex label e.g. "XYZ"
+    if (/^[A-Z]+$/.test(a)) return '△' + a;
+    return a;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
