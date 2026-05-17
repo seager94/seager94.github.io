@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expanding Single Brackets — Year 10</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SHARED SORT CONTAINER (used by area model) */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; justify-content: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin: 18px 0 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All placed! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* AREA MODEL DIAGRAM */
+  .area-model {
+    display: inline-block;
+    margin: 8px auto 4px;
+  }
+  .area-top-dims {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 6px;
+    margin-left: 40px;
+  }
+  .area-top-dim {
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    color: var(--coral);
+    font-weight: bold;
+  }
+  .area-row {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .area-left-dim {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    color: var(--coral);
+    font-weight: bold;
+    padding-right: 4px;
+  }
+  .area-rects {
+    display: grid;
+    gap: 6px;
+  }
+  .area-cell {
+    background: white;
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    min-height: 90px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .area-cell.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .area-cell .bucket-contents {
+    min-height: 60px;
+    width: 100%;
+  }
+  .area-cell-filled {
+    background: var(--hint-bg);
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    min-height: 70px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    color: var(--navy);
+    font-weight: bold;
+  }
+  .area-cell-filled.empty {
+    background: var(--bg);
+    color: var(--muted);
+    font-weight: normal;
+    font-style: italic;
+    border-style: dashed;
+  }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING PAIRS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* WARM-UP GARDEN DIAGRAM */
+  .garden-diagram {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+    margin-top: 10px;
+  }
+  .garden-area {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    border: 2px solid var(--navy);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 18px 0 6px;
+  }
+  .garden-cell {
+    padding: 22px 8px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-weight: bold;
+    border-right: 1.5px dashed var(--navy);
+  }
+  .garden-cell:last-child { border-right: none; background: #fbecdf; }
+  .garden-cell:first-child { background: #e0efe0; }
+  .garden-cell .lbl { display: block; font-size: 0.72rem; color: var(--muted); font-weight: normal; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 4px; }
+  .garden-dim-top {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    font-family: Georgia, serif;
+    color: var(--coral);
+    font-weight: bold;
+    font-size: 1.05rem;
+  }
+  .garden-dim-left {
+    float: left;
+    font-family: Georgia, serif;
+    color: var(--coral);
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-right: 8px;
+    margin-top: 38px;
+  }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Expanding Single Brackets</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra — the distributive law via the area model</div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Warm-up — the garden bed</h2>
+  <p class="sec-desc">Before we touch any algebra, look at the picture.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+    <div>
+      <p>You're planting a rectangular garden bed that's <strong>3 m deep</strong>. The bed is split into two sections: a <strong>herb patch</strong> that's <span class="expr"><span class="var">x</span></span> metres wide and a <strong>flower patch</strong> that's <strong>4</strong> metres wide.</p>
+      <p>You can work out the total area <strong>two ways</strong>, and both must give the same answer:</p>
+      <ul style="line-height: 1.9;">
+        <li><strong>Whole bed at once:</strong> width is <span class="expr">(<span class="var">x</span> + 4)</span>, depth is 3, so area = <span class="expr">3(<span class="var">x</span> + 4)</span>.</li>
+        <li><strong>Section by section:</strong> herbs = <span class="expr">3 × <span class="var">x</span> = 3<span class="var">x</span></span>; flowers = <span class="expr">3 × 4 = 12</span>; total = <span class="expr">3<span class="var">x</span> + 12</span>.</li>
+      </ul>
+    </div>
+    <div class="garden-diagram">
+      <div class="garden-dim-top">
+        <div><span class="var">x</span></div>
+        <div>4</div>
+      </div>
+      <div style="display: flex; align-items: stretch; gap: 6px;">
+        <div class="garden-dim-left">3</div>
+        <div class="garden-area" style="flex: 1;">
+          <div class="garden-cell"><span class="lbl">herbs</span><span class="expr">3<span class="var">x</span></span></div>
+          <div class="garden-cell"><span class="lbl">flowers</span><span class="expr">12</span></div>
+        </div>
+      </div>
+      <div class="parts-instructions" style="margin: 12px 0 0;">
+        Two expressions, one area: <span class="expr">3(<span class="var">x</span> + 4) = 3<span class="var">x</span> + 12</span>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top: 16px;">That single picture is the <strong>area model</strong>, and it's the whole lesson. Today we use it to <em>expand</em> any bracket — turning <span class="expr">3(<span class="var">x</span> + 4)</span> into <span class="expr">3<span class="var">x</span> + 12</span> without needing to draw a garden each time.</p>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, then two interactives — we'll do this whole phase as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use all five of these words today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Bracket<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A pair of <strong>grouping symbols</strong> ( ) that keep terms together so the multiplier outside applies to <strong>everything inside</strong>.<div class="vocab-example expr">In 3(<span class="var">x</span> + 4): the bracket holds <strong><span class="var">x</span> + 4</strong> as one unit.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Coefficient<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number <strong>multiplying</strong> a variable or a bracket — it sits in front.<div class="vocab-example expr">In 3(<span class="var">x</span> + 4): the coefficient is <strong>3</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Term<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A single number, variable, or product, separated by + or − signs.<div class="vocab-example expr">Inside <span class="var">x</span> + 4: the terms are <strong><span class="var">x</span></strong> and <strong>4</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Distributive law<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A rule that says a multiplier outside a bracket must be <strong>shared out</strong> across every term inside.<div class="vocab-example expr"><strong><span class="var">a</span></strong>(<span class="var">b</span> + <span class="var">c</span>) = <strong><span class="var">a</span></strong><span class="var">b</span> + <strong><span class="var">a</span></strong><span class="var">c</span></div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Expand<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">To <strong>remove the brackets</strong> by applying the distributive law — multiplying every inside term by the outside coefficient.<div class="vocab-example expr">Expand 5(<span class="var">x</span> + 2) → <strong>5<span class="var">x</span> + 10</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: AREA MODEL INTERACTIVE -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>The area model — build the expansion</h2>
+  <p class="sec-desc">The rectangle below has dimensions <strong>3</strong> by <strong>(<span class="var">x</span> + 4)</strong>. Drag each area expression into its matching sub-rectangle. Wrong drops shake and pop back.</p>
+
+  <div class="parts-expr">
+    <div class="label">Expand: 3(<span class="var">x</span> + 4) — find the area</div>
+
+    <div class="area-model">
+      <div class="area-top-dims" style="grid-template-columns: 3fr 2fr;">
+        <div class="area-top-dim"><span class="var">x</span></div>
+        <div class="area-top-dim">4</div>
+      </div>
+      <div class="area-row">
+        <div class="area-left-dim">3</div>
+        <div class="area-rects" style="grid-template-columns: 3fr 2fr;">
+          <div class="bucket area-cell" data-bucket="sub-a">
+            <div class="bucket-contents"></div>
+          </div>
+          <div class="bucket area-cell" data-bucket="sub-b">
+            <div class="bucket-contents"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="sub-a">3 × <span class="var">x</span></span>
+      <span class="term-chip expr" data-type="sub-a">3<span class="var">x</span></span>
+      <span class="term-chip expr" data-type="sub-b">3 × 4</span>
+      <span class="term-chip expr" data-type="sub-b">12</span>
+    </div>
+
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The two sub-areas <em>add</em> to give the total: <span class="expr">3<span class="var">x</span> + 12</span>. That's exactly what 3(<span class="var">x</span> + 4) <strong>expands to</strong>. The "3 outside" gets shared with every term inside the bracket — that's the distributive law in one picture.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH BRACKET TO EXPANSION -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the bracket to its expansion</h2>
+  <p class="sec-desc">Click two cards to pair them — each bracket form on the left should match its expanded form on the right. There are five pairs.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a term to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work one example out loud, showing the area model and every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — expand <span class="expr">4(3<span class="var">x</span> + 5)</span></h2>
+  <p class="sec-desc">Same area-model thinking, no garden this time — just the rectangle.</p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Set up the area model</div>
+        <div class="step-desc">Draw a rectangle. The coefficient outside the bracket (4) becomes one dimension; the inside terms (3<span class="var">x</span> and 5) split the other dimension.</div>
+        <div class="calc-box" style="display: flex; justify-content: center;">
+          <div class="area-model">
+            <div class="area-top-dims" style="grid-template-columns: 3fr 1fr;">
+              <div class="area-top-dim">3<span class="var">x</span></div>
+              <div class="area-top-dim">5</div>
+            </div>
+            <div class="area-row">
+              <div class="area-left-dim">4</div>
+              <div class="area-rects" style="grid-template-columns: 3fr 1fr;">
+                <div class="area-cell-filled empty">?</div>
+                <div class="area-cell-filled empty">?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Fill each sub-area — multiply</div>
+        <div class="step-desc">Multiply the outside coefficient by <em>each</em> inside term. That's the distributive law: <span class="expr">4 × 3<span class="var">x</span></span> for the left rectangle, <span class="expr">4 × 5</span> for the right.</div>
+        <div class="calc-box" style="display: flex; justify-content: center;">
+          <div class="area-model">
+            <div class="area-top-dims" style="grid-template-columns: 3fr 1fr;">
+              <div class="area-top-dim">3<span class="var">x</span></div>
+              <div class="area-top-dim">5</div>
+            </div>
+            <div class="area-row">
+              <div class="area-left-dim">4</div>
+              <div class="area-rects" style="grid-template-columns: 3fr 1fr;">
+                <div class="area-cell-filled"><span class="red">12<span class="var">x</span></span></div>
+                <div class="area-cell-filled"><span class="red">20</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="calc-box" style="margin-top: 10px;">
+          <span class="red">4 × 3<span class="var">x</span> = 12<span class="var">x</span></span> &nbsp;&nbsp;&nbsp; <span class="red">4 × 5 = 20</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Add the sub-areas — and check</div>
+        <div class="step-desc">The total area is the sum of the two pieces. Then sub in a value to verify both forms agree.</div>
+        <div class="calc-box">
+          4(3<span class="var">x</span> + 5) = <span class="red">12<span class="var">x</span></span> + <span class="red">20</span><br>
+          <br>
+          <span class="blue">Check with <span class="var">x</span> = 2:</span><br>
+          Original: 4(3·2 + 5) = 4(11) = <span class="blue">44</span><br>
+          Expanded: 12(2) + 20 = 24 + 20 = <span class="blue">44</span> ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          12<span class="var">x</span> + 20
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — expand <span class="expr">3(2<span class="var">x</span> − 7)</span></h2>
+  <p class="sec-desc">Three small steps. After each prompt, talk to the person next to you, then we'll fill in the box together. <strong>Watch the sign on the 7</strong> — it's a subtraction, so it stays a subtraction.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this works:</strong> the 3 outside multiplies <em>every</em> term inside the bracket — the +2<span class="var">x</span> <strong>and</strong> the −7. Each term keeps its sign. When you tackle the "You do" practice next, follow the same routine: multiply the outside by each inside term, then write the expansion.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then the three practice tiers: Building, Stretch, Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you move on to the chilli practice.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE 1 — BUILDING -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — positive expansions <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Type the expanded form in each box. Examples of how to type: <code>3x+12</code>, <code>10w+2</code>. No brackets in your answer.</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: PRACTICE 2 — STRETCH -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — with negatives <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">Now some brackets contain a subtraction, or have a negative coefficient outside. <strong>Two negatives multiply to a positive</strong> — sign-watch carefully.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: CHALLENGE -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — variables outside & combining brackets <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Now the coefficient outside might itself be a variable, or there might be two brackets to expand and combine. Type <code>x^2</code> for <span class="expr"><span class="var">x</span><sup>2</sup></span>. Collect like terms in your final answer.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 10 · Expanding Single Brackets<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ AREA MODEL (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING BRACKETS & EXPANSIONS ============
+  // 5 pairs (bracket form ↔ expansion)
+  const matchTerms = [
+    { html: '2(<span class="var">x</span> + 3)', group: 1 },
+    { html: '2<span class="var">x</span> + 6', group: 1 },
+    { html: '3(<span class="var">x</span> + 5)', group: 2 },
+    { html: '3<span class="var">x</span> + 15', group: 2 },
+    { html: '4(<span class="var">x</span> − 2)', group: 3 },
+    { html: '4<span class="var">x</span> − 8', group: 3 },
+    { html: '5(2<span class="var">x</span> + 1)', group: 4 },
+    { html: '10<span class="var">x</span> + 5', group: 4 },
+    { html: '<span class="var">x</span>(<span class="var">x</span> + 4)', group: 5 },
+    { html: '<span class="var">x</span><sup>2</sup> + 4<span class="var">x</span>', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Those don\'t expand to each other — try again.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  const practice1 = [
+    { q: 'Expand <span class="expr">3(<span class="var">x</span> + 4)</span>', a: '3x+12', hint: '3 × x = 3x. 3 × 4 = 12.' },
+    { q: 'Expand <span class="expr">5(<span class="var">y</span> + 2)</span>', a: '5y+10', hint: 'Multiply 5 by each term: 5·y and 5·2.' },
+    { q: 'Expand <span class="expr">2(<span class="var">a</span> + 7)</span>', a: '2a+14', hint: '2·a + 2·7.' },
+    { q: 'Expand <span class="expr">7(<span class="var">m</span> + 3)</span>', a: '7m+21', hint: '7×m and 7×3.' },
+    { q: 'Expand <span class="expr">4(<span class="var">k</span> + 1)</span>', a: '4k+4', hint: '4·k + 4·1 — and 4·1 is just 4.' },
+    { q: 'Expand <span class="expr">6(<span class="var">n</span> + 8)</span>', a: '6n+48', hint: '6·n + 6·8.' },
+    { q: 'Expand <span class="expr">3(2<span class="var">x</span> + 5)</span>', a: '6x+15', hint: '3 × 2x = 6x (multiply the coefficients). 3 × 5 = 15.' },
+    { q: 'Expand <span class="expr">4(3<span class="var">p</span> + 2)</span>', a: '12p+8', hint: '4 × 3p = 12p. 4 × 2 = 8.' },
+    { q: 'Expand <span class="expr">2(5<span class="var">w</span> + 1)</span>', a: '10w+2', hint: '2 × 5w = 10w. 2 × 1 = 2.' },
+    { q: 'Expand <span class="expr">5(2<span class="var">c</span> + 3)</span>', a: '10c+15', hint: '5 × 2c = 10c. 5 × 3 = 15.' },
+  ];
+
+  const practice2 = [
+    { q: 'Expand <span class="expr">4(<span class="var">x</span> − 3)</span>', a: '4x-12', hint: 'The − sign stays. 4·x − 4·3.' },
+    { q: 'Expand <span class="expr">6(2<span class="var">y</span> − 5)</span>', a: '12y-30', hint: '6·2y − 6·5.' },
+    { q: 'Expand <span class="expr">−2(<span class="var">x</span> + 7)</span>', a: '-2x-14', hint: 'Negative outside: −2·x = −2x; −2·7 = −14.' },
+    { q: 'Expand <span class="expr">−5(<span class="var">m</span> − 4)</span>', a: '-5m+20', hint: 'Watch the signs: −5 × <span class="var">m</span> = −5<span class="var">m</span>; −5 × (−4) = +20.' },
+  ];
+
+  const practice3 = [
+    { q: 'Expand <span class="expr"><span class="var">x</span>(<span class="var">x</span> + 7)</span>', a: 'x^2+7x', hint: 'x · x = x². x · 7 = 7x.' },
+    { q: 'Expand and simplify <span class="expr">3(<span class="var">x</span> + 2) + 5(<span class="var">x</span> − 1)</span>', a: '8x+1', hint: 'Expand each bracket first: 3x + 6 and 5x − 5. Then collect like terms.' },
+    { q: 'Expand and simplify <span class="expr">−2(<span class="var">x</span> − 5) − 3(2<span class="var">x</span> + 1)</span>', a: '-8x+7', hint: '−2(x − 5) = −2x + 10. −3(2x + 1) = −6x − 3. Combine.' },
+  ];
+
+  const checkpoint = [
+    { q: 'Expand <span class="expr">2(<span class="var">x</span> + 5)</span>', a: '2x+10', hint: '2 × x = 2x; 2 × 5 = 10.' },
+    { q: 'Expand <span class="expr">6(2<span class="var">x</span> − 1)</span>', a: '12x-6', hint: '6 × 2x = 12x; the − stays, 6 × 1 = 6.' },
+  ];
+
+  const weDo = [
+    { q: 'Multiply 3 by the first inside term: <span class="expr">3 × 2<span class="var">x</span></span> = ?', a: '6x', hint: 'Multiply the numbers (3 × 2 = 6) and bring the <span class="var">x</span> along.' },
+    { q: 'Multiply 3 by the second inside term: <span class="expr">3 × (−7)</span> = ?', a: '-21', hint: '3 × 7 = 21. The − sign on the 7 carries through.' },
+    { q: 'Write the full expansion of <span class="expr">3(2<span class="var">x</span> − 7)</span>.', a: '6x-21', hint: 'Combine the two sub-results from above, keeping the − sign.' },
+  ];
+
+  const exitProbs = [
+    { q: 'Expand <span class="expr">4(<span class="var">x</span> + 6)</span>', a: '4x+24', hint: '4·x + 4·6.' },
+    { q: 'Expand <span class="expr">−3(2<span class="var">x</span> − 5)</span>', a: '-6x+15', hint: '−3 × 2x = −6x. −3 × (−5) = +15.' },
+    { q: 'In one or two sentences, explain how the area model shows that <span class="expr">5(<span class="var">x</span> + 3) = 5<span class="var">x</span> + 15</span>.', a: 'TEXT', hint: 'Think about a rectangle with sides 5 and (<span class="var">x</span> + 3). What are the two sub-areas?' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/²/g, '^2')
+      .replace(/³/g, '^3')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    return false;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Look for a rectangle 5 by (<span class="var">x</span> + 3). The two sub-areas are 5·<span class="var">x</span> = 5<span class="var">x</span> and 5·3 = 15. Adding them gives 5<span class="var">x</span> + 15 — the expansion.';
+    // Step 1: wrap bare letters in var spans.
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: convert ^N into superscript.
+    r = r.replace(/\^(\d+)/g, '<sup>$1</sup>');
+    // Step 3: stack fractions.
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 4: typographic minus and spacing.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
