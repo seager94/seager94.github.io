@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expanding Binomials — Area Model — Year 10</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 210px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* AREA MODEL */
+  .am-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    margin: 8px auto 4px;
+  }
+  .am-grid {
+    display: grid;
+    grid-template-columns: 50px 1.5fr 1fr;
+    grid-template-rows: 40px 1.5fr 1fr;
+    gap: 0;
+    background: white;
+    border-radius: 10px;
+    padding: 18px 22px 22px;
+    width: 100%;
+    max-width: 460px;
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .am-grid.small {
+    max-width: 340px;
+    padding: 14px 16px 16px;
+  }
+  .am-corner-empty { background: transparent; }
+  .am-top-label, .am-side-label {
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  .am-top-label {
+    border-bottom: 2.5px solid var(--navy);
+    padding: 0 6px 6px;
+  }
+  .am-side-label {
+    border-right: 2.5px solid var(--navy);
+    padding: 0 8px;
+  }
+  .am-cell {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    min-height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 1.35rem;
+    margin: 4px;
+    border-radius: 6px;
+    color: var(--text);
+    text-align: center;
+  }
+  .am-cell.tl-tint { background: #fde9eb; border-color: #f1bcc3; }
+  .am-cell.tr-tint { background: #e3ecfa; border-color: #b9c8e6; }
+  .am-cell.bl-tint { background: #e3ecfa; border-color: #b9c8e6; }
+  .am-cell.br-tint { background: #e0f2e7; border-color: #b6d9c4; }
+  .am-cell.empty-cell { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+  .am-caption {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* AREA-MODEL DRAG INTERACTIVE */
+  .am-drop-wrap {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .am-drop-wrap .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .am-drop-wrap .target-expr {
+    font-family: Georgia, serif;
+    font-size: 1.4rem;
+    text-align: center;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .am-drop-grid {
+    display: grid;
+    grid-template-columns: 50px 1.5fr 1fr;
+    grid-template-rows: 40px 1.5fr 1fr;
+    gap: 0;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto 12px;
+  }
+  .am-cell.bucket {
+    padding: 6px;
+    min-height: 78px;
+  }
+  .am-cell.bucket .bucket-contents {
+    width: 100%; min-height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 4px;
+  }
+  .terms-source {
+    min-height: 60px; padding: 12px;
+    background: var(--bg); border-radius: 8px; margin-bottom: 14px;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center;
+    border: 1px dashed var(--border);
+  }
+  .terms-source:empty::before { content: 'All four placed ✓'; color: var(--muted); font-style: italic; }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    touch-action: none; user-select: none;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft) !important;
+    border-color: var(--coral) !important;
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.22);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .callout {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin: 16px 0;
+    color: var(--navy);
+  }
+  .callout strong { color: var(--coral); }
+
+  .preview-box {
+    background: linear-gradient(180deg, #fff6e6, #ffeed1);
+    border: 1.5px solid #d4a445;
+    border-left: 5px solid #c89638;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 18px 0;
+    color: #5a430b;
+  }
+  .preview-box .preview-tag {
+    display: inline-block;
+    background: #c89638; color: white;
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 3px 9px; border-radius: 999px;
+    margin-bottom: 8px;
+  }
+  .preview-box h3 {
+    margin: 0 0 8px;
+    font-family: Georgia, serif;
+    color: #5a430b;
+    font-size: 1.15rem;
+  }
+  .preview-box .expr { color: #4a3608; }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 18px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 10px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .green { color: var(--good); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* FOIL CONNECTOR */
+  .foil-box {
+    background: white;
+    border: 1.5px solid var(--coral);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 14px;
+  }
+  .foil-box h4 {
+    margin: 0 0 8px;
+    color: var(--coral);
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .foil-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .foil-cell {
+    background: var(--bg);
+    border-radius: 6px;
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  .foil-cell strong { display: block; color: var(--coral); font-size: 1.1rem; margin-bottom: 2px; font-family: Georgia, serif; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.15rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .am-grid, .am-drop-grid {
+      grid-template-columns: 40px 1.4fr 1fr;
+      grid-template-rows: 32px 1.4fr 1fr;
+    }
+    .am-cell { font-size: 1.1rem; min-height: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Expanding Binomials — the Area Model</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra (Lesson 10)</div>
+  </div>
+  <div class="badge">Core + Stretch</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Warm-up — area of a rectangle</h2>
+  <p class="sec-desc">Before we deal with brackets, think about something you've known since primary school.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+    <div>
+      <p>A rectangle has length <strong>5</strong> and width <strong>3</strong>. Its area is <strong>5 × 3 = 15</strong>. Easy.</p>
+      <p>Now split the length into <strong>2 + 3</strong> and the width into <strong>1 + 2</strong>. The big rectangle is now made of <strong>four smaller rectangles</strong>:</p>
+      <ul style="line-height: 1.7;">
+        <li>2 × 1 = 2</li>
+        <li>3 × 1 = 3</li>
+        <li>2 × 2 = 4</li>
+        <li>3 × 2 = 6</li>
+      </ul>
+      <p>Add them up: <strong>2 + 3 + 4 + 6 = 15</strong> ✓ — same answer.</p>
+    </div>
+    <div class="callout" style="margin: 0;">
+      💡 <strong>Today's idea:</strong> the same trick works when the side lengths are algebraic. A rectangle of length <span class="expr">(<span class="var">x</span> + 2)</span> by width <span class="expr">(<span class="var">x</span> + 3)</span> can be split into four sub-rectangles. Adding the four areas <em>is</em> expanding the brackets.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, the area model itself, and a quick matching warm-up.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip it. You'll use these five words today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Binomial<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An expression with <strong>two terms</strong> separated by + or −.<div class="vocab-example expr"><strong><span class="var">x</span> + 2</strong> is a binomial. So is <strong>2<span class="var">x</span> − 5</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Expand<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">To <strong>remove brackets</strong> by multiplying everything out.<div class="vocab-example expr">Expand (<span class="var">x</span>+2)(<span class="var">x</span>+3) → <strong><span class="var">x</span><sup>2</sup>+5<span class="var">x</span>+6</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Area model<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>rectangle drawing</strong> where each side is a binomial. The four sub-rectangles give the four products.<div class="vocab-example">A grid like a times-tables square — but with <strong><span class="var">x</span></strong> and numbers on the edges.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Like terms<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Terms with the <strong>same variable to the same power.</strong> Add their coefficients.<div class="vocab-example expr">3<span class="var">x</span> and 2<span class="var">x</span> are like — combine to <strong>5<span class="var">x</span></strong>. But <span class="var">x</span><sup>2</sup> and <span class="var">x</span> are <em>not</em>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Trinomial<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An expression with <strong>three terms</strong>. Two binomials usually expand into a trinomial.<div class="vocab-example expr"><span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> + 6 is a <strong>trinomial</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: AREA MODEL DRAG -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Build the area model — drag the four pieces</h2>
+  <p class="sec-desc">The rectangle below has length <span class="expr">(<span class="var">x</span> + 3)</span> and width <span class="expr">(<span class="var">x</span> + 2)</span>. <strong>Drag each area chip into the correct cell.</strong> Think: <em>what is the dimension across × the dimension down?</em></p>
+
+  <div class="am-drop-wrap">
+    <div class="label">Drag each area into the matching cell</div>
+    <div class="target-expr">(<span class="var">x</span> + 2)(<span class="var">x</span> + 3)</div>
+
+    <div id="amTerms" class="terms-source">
+      <span class="term-chip" data-type="tr">3<span class="var">x</span></span>
+      <span class="term-chip" data-type="br">6</span>
+      <span class="term-chip" data-type="tl"><span class="var">x</span><sup>2</sup></span>
+      <span class="term-chip" data-type="bl">2<span class="var">x</span></span>
+    </div>
+
+    <div class="am-drop-grid">
+      <div class="am-corner-empty"></div>
+      <div class="am-top-label"><span class="var">x</span></div>
+      <div class="am-top-label">+ 3</div>
+      <div class="am-side-label"><span class="var">x</span></div>
+      <div class="am-cell tl-tint bucket" data-bucket="tl"><div class="bucket-contents"></div></div>
+      <div class="am-cell tr-tint bucket" data-bucket="tr"><div class="bucket-contents"></div></div>
+      <div class="am-side-label">+ 2</div>
+      <div class="am-cell bl-tint bucket" data-bucket="bl"><div class="bucket-contents"></div></div>
+      <div class="am-cell br-tint bucket" data-bucket="br"><div class="bucket-contents"></div></div>
+    </div>
+
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="callout">
+    💡 When you've placed all four, you'll see the four areas of the rectangle. Adding them — <span class="expr"><span class="var">x</span><sup>2</sup> + 3<span class="var">x</span> + 2<span class="var">x</span> + 6</span> — is exactly what "expand" means. Two of those terms are <strong>like terms</strong> and combine.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH FACTORED ↔ EXPANDED -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Spot the match — factored ↔ expanded</h2>
+  <p class="sec-desc">Click two chips that are <strong>equal</strong> to match them — one in brackets, the other expanded. Five pairs to find.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through (x + 2)(x + 3) using the area model, one step at a time.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
+  <p class="sec-desc">Expand: <span class="expr">(<span class="var">x</span> + 2)(<span class="var">x</span> + 3)</span></p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Draw the rectangle and label the edges</div>
+        <div class="step-desc">Each bracket becomes a side. Split each side into its two parts: top edge is <span class="var">x</span> and +3, side edge is <span class="var">x</span> and +2. This makes four sub-rectangles.</div>
+        <div class="am-wrap">
+          <div class="am-grid">
+            <div class="am-corner-empty"></div>
+            <div class="am-top-label"><span class="var">x</span></div>
+            <div class="am-top-label">+ 3</div>
+            <div class="am-side-label"><span class="var">x</span></div>
+            <div class="am-cell tl-tint empty-cell">? × ?</div>
+            <div class="am-cell tr-tint empty-cell">? × ?</div>
+            <div class="am-side-label">+ 2</div>
+            <div class="am-cell bl-tint empty-cell">? × ?</div>
+            <div class="am-cell br-tint empty-cell">? × ?</div>
+          </div>
+          <div class="am-caption">Four empty cells, waiting to be filled.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Fill in each sub-area (length × width)</div>
+        <div class="step-desc">Each cell's area is its column dimension times its row dimension. Top-left is <span class="var">x</span> × <span class="var">x</span> = <span class="var">x</span><sup>2</sup>. Top-right is <span class="var">x</span> × 3 = 3<span class="var">x</span>. And so on.</div>
+        <div class="am-wrap">
+          <div class="am-grid">
+            <div class="am-corner-empty"></div>
+            <div class="am-top-label"><span class="var">x</span></div>
+            <div class="am-top-label">+ 3</div>
+            <div class="am-side-label"><span class="var">x</span></div>
+            <div class="am-cell tl-tint"><span class="var">x</span><sup>2</sup></div>
+            <div class="am-cell tr-tint">3<span class="var">x</span></div>
+            <div class="am-side-label">+ 2</div>
+            <div class="am-cell bl-tint">2<span class="var">x</span></div>
+            <div class="am-cell br-tint">6</div>
+          </div>
+          <div class="am-caption">Each cell now shows its area.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Add the four areas — combine like terms</div>
+        <div class="step-desc">The total area equals the four parts added together. <span class="expr">3<span class="var">x</span></span> and <span class="expr">2<span class="var">x</span></span> are like terms — combine them.</div>
+        <div class="calc-box">
+          Total area = <span class="red"><span class="var">x</span><sup>2</sup></span> + <span class="blue">3<span class="var">x</span></span> + <span class="blue">2<span class="var">x</span></span> + <span class="green">6</span><br>
+          = <span class="red"><span class="var">x</span><sup>2</sup></span> + <span class="blue">5<span class="var">x</span></span> + <span class="green">6</span>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          (<span class="var">x</span> + 2)(<span class="var">x</span> + 3) = <span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> + 6
+        </div>
+
+        <div class="foil-box">
+          <h4>The shortcut — FOIL</h4>
+          <p style="margin: 0 0 8px; font-size: 0.92rem;">Each of the four areas in the rectangle is one product of FOIL. <strong>F</strong>irst × <strong>F</strong>irst, <strong>O</strong>uter × <strong>O</strong>uter, <strong>I</strong>nner × <strong>I</strong>nner, <strong>L</strong>ast × <strong>L</strong>ast.</p>
+          <div class="foil-grid">
+            <div class="foil-cell"><strong>F</strong><span class="expr"><span class="var">x</span> · <span class="var">x</span></span> = <span class="var">x</span><sup>2</sup></div>
+            <div class="foil-cell"><strong>O</strong><span class="expr"><span class="var">x</span> · 3</span> = 3<span class="var">x</span></div>
+            <div class="foil-cell"><strong>I</strong><span class="expr">2 · <span class="var">x</span></span> = 2<span class="var">x</span></div>
+            <div class="foil-cell"><strong>L</strong><span class="expr">2 · 3</span> = 6</div>
+          </div>
+          <p style="margin: 10px 0 0; font-size: 0.88rem; color: var(--muted); font-style: italic;">Same four products, no rectangle drawn. Use the model to <em>understand</em>; use FOIL to <em>work faster</em>.</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Same method on a fresh problem — discuss each step before we fill it in.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — expand <span class="expr">(<span class="var">x</span> + 4)(<span class="var">x</span> + 1)</span></h2>
+  <p class="sec-desc">Use the area model as your reference. We'll answer three small questions, then write the expansion.</p>
+
+  <div class="am-wrap">
+    <div class="am-grid small">
+      <div class="am-corner-empty"></div>
+      <div class="am-top-label"><span class="var">x</span></div>
+      <div class="am-top-label">+ 4</div>
+      <div class="am-side-label"><span class="var">x</span></div>
+      <div class="am-cell tl-tint empty-cell">?</div>
+      <div class="am-cell tr-tint empty-cell">?</div>
+      <div class="am-side-label">+ 1</div>
+      <div class="am-cell bl-tint empty-cell">?</div>
+      <div class="am-cell br-tint empty-cell">?</div>
+    </div>
+    <div class="am-caption">Fill the four cells together, then add.</div>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="callout" style="margin-top: 18px;">
+    💡 <strong>The two middle cells are always like terms</strong> when both brackets contain <span class="var">x</span>. Adding them gives the middle (<span class="var">x</span>) coefficient of the answer.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then onto the three practice tiers.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Use either the area model or FOIL — your choice. Type the answer like <code>x^2+5x+6</code> (or <code>x2+5x+6</code>). <strong>Wait for the class check before moving on.</strong></p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE 1 -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — all positive binomials <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Pure area model territory. Both brackets are <span class="expr"><span class="var">x</span> + (positive)</span>. Type powers as <code>x^2</code> or <code>x2</code>.</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: PRACTICE 2 -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — with negatives <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">Now one or both brackets has a negative. The area model still works — but each sub-area carries its sign. Use FOIL if you prefer.</p>
+  <div class="callout">
+    ⚠️ <strong>Watch the signs.</strong> The cell for <span class="expr">(+5) · (−3)</span> has area <span class="expr">−15</span>, not <span class="expr">+15</span>. Treat each edge length as a signed number.
+  </div>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: MASTERY + METHODS PREVIEW -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — leading coefficients <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Now one of the binomials has a coefficient like <span class="expr">2<span class="var">x</span></span> or <span class="expr">3<span class="var">x</span></span> in front. Same model — just label the edge with the full term, including its coefficient.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+
+  <div class="preview-box">
+    <span class="preview-tag">Methods preview · perfect squares</span>
+    <h3>(1 + <span class="var">r</span>)<sup>2</sup> and why bankers approximate</h3>
+    <p style="margin: 0 0 8px;">Try expanding <span class="expr">(1 + <span class="var">r</span>)<sup>2</sup> = (1 + <span class="var">r</span>)(1 + <span class="var">r</span>)</span> using the area model. You should get:</p>
+    <p style="text-align: center; font-size: 1.2rem; margin: 8px 0;"><span class="expr">(1 + <span class="var">r</span>)<sup>2</sup> = 1 + 2<span class="var">r</span> + <span class="var">r</span><sup>2</sup></span></p>
+    <p style="margin: 12px 0 4px;"><strong>So what?</strong> Imagine <span class="var">r</span> is an interest rate written as a decimal — say <span class="var">r</span> = 0.05 (5%).</p>
+    <ul style="margin: 4px 0 10px; padding-left: 22px;">
+      <li><span class="expr">2<span class="var">r</span> = 0.10</span> (significant — this is the "simple interest" amount)</li>
+      <li><span class="expr"><span class="var">r</span><sup>2</sup> = 0.0025</span> (tiny — only a quarter of one percent)</li>
+    </ul>
+    <p style="margin: 8px 0;">When <span class="var">r</span> is small, <span class="expr"><span class="var">r</span><sup>2</sup></span> is <strong>negligible</strong>. That's why <strong>simple interest ≈ compound interest</strong> over short time periods — the cross term <span class="expr">2<span class="var">r</span></span> dominates, and <span class="expr"><span class="var">r</span><sup>2</sup></span> can be ignored to a good approximation.</p>
+    <p style="margin: 8px 0 0; font-size: 0.88rem; font-style: italic;">You'll meet this idea again in Year 12 Methods as <em>linear approximation</em> — and again in Specialist Maths with binomial series. The seed is here: expand a perfect square, then ignore the small term.</p>
+  </div>
+
+  <div class="practice-grid" id="practiceGrid4"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Three questions before you leave. The last one is an explanation — write a sentence or two.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 10 · Expanding Binomials (Area Model)<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ AREA MODEL DRAG-DROP ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('amTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('amTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING — FACTORED ↔ EXPANDED ============
+  const matchTerms = [
+    { html: '(<span class="var">x</span>+1)(<span class="var">x</span>+2)', group: 1 },
+    { html: '<span class="var">x</span><sup>2</sup>+3<span class="var">x</span>+2', group: 1 },
+    { html: '(<span class="var">x</span>−1)(<span class="var">x</span>+5)', group: 2 },
+    { html: '<span class="var">x</span><sup>2</sup>+4<span class="var">x</span>−5', group: 2 },
+    { html: '(<span class="var">x</span>+4)(<span class="var">x</span>−2)', group: 3 },
+    { html: '<span class="var">x</span><sup>2</sup>+2<span class="var">x</span>−8', group: 3 },
+    { html: '(<span class="var">x</span>+3)(<span class="var">x</span>+4)', group: 4 },
+    { html: '<span class="var">x</span><sup>2</sup>+7<span class="var">x</span>+12', group: 4 },
+    { html: '(<span class="var">x</span>−2)(<span class="var">x</span>−3)', group: 5 },
+    { html: '<span class="var">x</span><sup>2</sup>−5<span class="var">x</span>+6', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not equal — try expanding it in your head or on paper.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 800);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PROBLEM DATA ============
+  // Answers stored with x2 for x^2; the matcher accepts x², x^2, and x2.
+  const weDo = [
+    { q: 'Top-right cell — area of <span class="expr"><span class="var">x</span> × 4</span>:', a: '4x', hint: 'A variable times a constant gives a single x-term.' },
+    { q: 'Bottom-left cell — area of <span class="expr">1 × <span class="var">x</span></span>:', a: 'x', hint: '1 × x = x. (You don\'t write the 1.)' },
+    { q: 'Add the two middle cells together (the like terms):', a: '5x', hint: '4x + x = ?' },
+    { q: 'Write the full expansion (combine x², middle, constant).', a: 'x2+5x+4', hint: 'x² + 5x + (4 × 1).' },
+  ];
+
+  const checkpoint = [
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 1)(<span class="var">x</span> + 5)</span>', a: 'x2+6x+5', hint: 'Four cells: x², 5x, x, 5. Middle two combine to 6x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 3)(<span class="var">x</span> + 2)</span>', a: 'x2+5x+6', hint: 'Four cells: x², 2x, 3x, 6. Middle two: 2x + 3x = 5x.' },
+  ];
+
+  const practice1 = [
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 2)(<span class="var">x</span> + 5)</span>', a: 'x2+7x+10', hint: 'Cells: x², 5x, 2x, 10. Middle: 5x + 2x = 7x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 3)(<span class="var">x</span> + 4)</span>', a: 'x2+7x+12', hint: 'Cells: x², 4x, 3x, 12. Middle: 4x + 3x = 7x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 1)(<span class="var">x</span> + 6)</span>', a: 'x2+7x+6', hint: 'Cells: x², 6x, x, 6. Middle: 6x + x = 7x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 4)(<span class="var">x</span> + 7)</span>', a: 'x2+11x+28', hint: 'Cells: x², 7x, 4x, 28. Middle: 7x + 4x = 11x.' },
+  ];
+
+  const practice2 = [
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 3)(<span class="var">x</span> + 5)</span>', a: 'x2+2x-15', hint: 'Cells: x², +5x, −3x, −15. Middle: 5x − 3x = 2x. Last: (−3)(+5) = −15.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 4)(<span class="var">x</span> − 1)</span>', a: 'x2+3x-4', hint: 'Cells: x², −x, 4x, −4. Middle: −x + 4x = 3x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 2)(<span class="var">x</span> − 6)</span>', a: 'x2-8x+12', hint: 'Both brackets have negatives — the constant cell is (−2)(−6) = +12. Middle: −6x − 2x = −8x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 5)(<span class="var">x</span> + 3)</span>', a: 'x2-2x-15', hint: 'Cells: x², +3x, −5x, −15. Middle: 3x − 5x = −2x.' },
+  ];
+
+  const practice3 = [
+    { q: 'Expand: <span class="expr">(2<span class="var">x</span> + 1)(<span class="var">x</span> − 4)</span>', a: '2x2-7x-4', hint: 'Top edge: 2x and +1. Side edge: x and −4. Cells: 2x², −8x, x, −4. Middle: −8x + x = −7x.' },
+    { q: 'Expand: <span class="expr">(3<span class="var">x</span> − 2)(<span class="var">x</span> + 1)</span>', a: '3x2+x-2', hint: 'Cells: 3x², +3x, −2x, −2. Middle: 3x − 2x = x (coefficient 1).' },
+  ];
+
+  const practice4 = [
+    { q: 'Expand: <span class="expr">(1 + <span class="var">r</span>)<sup>2</sup></span>', a: '1+2r+r2', hint: 'Same as (1 + r)(1 + r). Cells: 1, r, r, r². Middle: r + r = 2r.' },
+  ];
+
+  const exitProbs = [
+    { q: 'Expand using the area model or FOIL: <span class="expr">(<span class="var">x</span> + 5)(<span class="var">x</span> − 2)</span>', a: 'x2+3x-10', hint: 'Cells: x², −2x, 5x, −10. Middle: −2x + 5x = 3x.' },
+    { q: 'Expand: <span class="expr">(2<span class="var">x</span> + 3)(<span class="var">x</span> − 1)</span>', a: '2x2+x-3', hint: 'Cells: 2x², −2x, 3x, −3. Middle: −2x + 3x = x.' },
+    { q: 'For an interest rate <span class="var">r</span> = 0.05, you found <span class="expr">(1 + <span class="var">r</span>)<sup>2</sup> = 1 + 2<span class="var">r</span> + <span class="var">r</span><sup>2</sup></span>. Explain in your own words why <span class="expr"><span class="var">r</span><sup>2</sup></span> is "negligible" here.', a: 'TEXT', hint: 'Calculate r² = 0.0025 and 2r = 0.10. Compare their sizes.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/²/g, '2')
+      .replace(/³/g, '3')
+      .replace(/\^/g, '')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // accept reordered terms: x2+5x+6 == 5x+6+x2
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    return false;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      const inputAttrs = p.a === 'TEXT'
+        ? 'placeholder="Type your explanation"'
+        : 'placeholder="Type answer — e.g. x^2+5x+6"';
+      const escapedAns = (p.a || '').replace(/'/g, "\\'");
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" ${inputAttrs}>
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${escapedAns}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'A model answer: r² = 0.0025 while 2r = 0.10, so r² is only about 2.5% of 2r — small enough to safely ignore for short-term interest estimates.';
+    // 1. Wrap bare lowercase letters in var spans (do this first, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // 2. Convert "</span>N" (a digit immediately after a variable span) to a superscript power.
+    r = r.replace(/(<\/span>)(\d)/g, '$1<sup>$2</sup>');
+    // 3. Stack fractions (digits/digits — variables are now wrapped, so they won't match).
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // 4. Tidy operators — typographic minus, spaces.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('practiceGrid4', practice4, 'R');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
