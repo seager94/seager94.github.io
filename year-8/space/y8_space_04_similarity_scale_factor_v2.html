@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Similarity and Scale Factor — Year 8</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCAB FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 210px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SHAPE SORT */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.82rem;
+    color: var(--navy);
+    transition: all 0.2s;
+    min-width: 120px;
+  }
+  .term-chip svg { display: block; margin-bottom: 4px; }
+  .term-chip:hover { border-color: var(--navy); }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 100px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .congruent-h { color: var(--coral); }
+  .bucket .similar-h { color: var(--navy); }
+  .bucket-contents { min-height: 70px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .terms-source { min-height: 90px; padding: 12px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 10px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.82rem;
+    color: var(--navy);
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* SVG SHAPE STYLING */
+  .shape-stroke { fill: var(--coral-soft); stroke: var(--coral); stroke-width: 1.8; }
+  .shape-stroke-2 { fill: var(--hint-bg); stroke: var(--navy); stroke-width: 1.8; }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCH PAIRS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: -apple-system, sans-serif; font-size: 0.85rem;
+    color: var(--navy);
+    cursor: pointer; transition: all 0.15s;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .match-chip svg { display: block; }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* DIAGRAM (worked example / we do) */
+  .diagram {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    margin: 0 0 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow);
+  }
+  .diagram-shape { text-align: center; font-size: 0.85rem; color: var(--muted); }
+  .diagram-shape .label { font-family: Georgia, serif; font-weight: bold; color: var(--navy); margin-bottom: 6px; }
+
+  /* HOOK */
+  .hook-photos {
+    display: flex; align-items: flex-end; justify-content: center; gap: 24px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 14px 0;
+  }
+  .hook-photo {
+    background: linear-gradient(135deg, #6fa3d8 0%, #4a7ab8 50%, #2e5a8c 100%);
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-family: Georgia, serif; font-weight: bold;
+  }
+  .hook-photo .dims {
+    position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+    font-family: -apple-system, sans-serif; font-size: 0.78rem;
+    color: var(--navy); font-weight: 600; white-space: nowrap;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: -apple-system, sans-serif; font-size: 0.95rem; flex: 1; padding-top: 4px; line-height: 1.45; }
+  .problem-expr .expr { font-family: Georgia, serif; font-size: 1.05rem; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Similarity and Scale Factor</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Geometry &amp; Measurement</div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 16</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Warm-up — same shape, different size?</h2>
+  <p class="sec-desc">Before we talk about <em>similar</em> shapes, look at these two photos of the same school logo.</p>
+
+  <div class="hook-photos">
+    <div class="hook-photo" style="width: 90px; height: 60px;">
+      LOGO
+      <div class="dims">6 cm × 4 cm</div>
+    </div>
+    <div class="hook-photo" style="width: 180px; height: 120px;">
+      LOGO
+      <div class="dims">12 cm × 8 cm</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; margin-top: 28px;">
+    <div>
+      <p>The bigger photo is <strong>twice as wide</strong> and <strong>twice as tall</strong> as the smaller one. The logo still looks right — it hasn't been stretched or squashed. We call shapes that have the <strong>same shape but different size</strong> <span style="color: var(--coral); font-weight: 700;">similar</span>.</p>
+      <p>If we had two photos that were <strong>exactly the same size</strong> as well as the same shape, we'd call them <span style="color: var(--coral); font-weight: 700;">congruent</span> — they'd be identical twins.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      Today's two big ideas:
+      <ul style="margin: 8px 0 0 18px; padding: 0; font-style: normal;">
+        <li><strong>Congruent</strong> = same shape <strong>and</strong> same size.</li>
+        <li><strong>Similar</strong> = same shape, but possibly different size. One is a scaled version of the other.</li>
+        <li>The number you multiply by to get from the small one to the big one is the <strong>scale factor</strong>. In the logos above, it's <strong>2</strong>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Congruent<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Two shapes are congruent if they have the <strong>same shape AND same size</strong>. Identical twins.<div class="vocab-example">A square with side <strong>5 cm</strong> and another square with side <strong>5 cm</strong> are congruent.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Similar<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Two shapes are similar if they have the <strong>same shape</strong>, but one is a scaled version of the other.<div class="vocab-example">A square with side <strong>5 cm</strong> and a square with side <strong>15 cm</strong> are similar.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Corresponding sides<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Sides that are in <strong>the same position</strong> on two similar shapes. They are linked as a pair.<div class="vocab-example">The shortest side of a small triangle and the shortest side of its enlargement are corresponding sides.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Scale factor<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>number you multiply by</strong> to get from a side of the small shape to the matching side of the big one.<div class="vocab-example">If 3 cm becomes 12 cm, the scale factor is <strong>12 ÷ 3 = 4</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Enlargement<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A transformation that produces a <strong>similar shape</strong> using a scale factor. The new shape has the same angles as the original.<div class="vocab-example">Photocopying at <strong>200%</strong> is an enlargement with scale factor <strong>2</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — CONGRUENT VS SIMILAR -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Congruent or similar?</h2>
+  <p class="sec-desc">Drag each pair of shapes into the correct bucket — <strong style="color:var(--coral)">congruent</strong> (identical) or <strong style="color:var(--navy)">similar</strong> (same shape, different size). Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Drag a pair into the matching bucket below</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="congruent">
+        <svg width="90" height="46" viewBox="0 0 90 46">
+          <rect class="shape-stroke" x="4" y="10" width="34" height="26"/>
+          <rect class="shape-stroke" x="52" y="10" width="34" height="26"/>
+        </svg>
+        <span>Two 4&times;3 rectangles</span>
+      </span>
+      <span class="term-chip" data-type="similar">
+        <svg width="100" height="50" viewBox="0 0 100 50">
+          <rect class="shape-stroke-2" x="4" y="20" width="20" height="14"/>
+          <rect class="shape-stroke-2" x="40" y="6" width="56" height="40"/>
+        </svg>
+        <span>Small &amp; big rectangle</span>
+      </span>
+      <span class="term-chip" data-type="congruent">
+        <svg width="90" height="50" viewBox="0 0 90 50">
+          <polygon class="shape-stroke" points="4,42 24,42 24,12"/>
+          <polygon class="shape-stroke" points="52,42 72,42 72,12"/>
+        </svg>
+        <span>Two equal triangles</span>
+      </span>
+      <span class="term-chip" data-type="similar">
+        <svg width="100" height="50" viewBox="0 0 100 50">
+          <polygon class="shape-stroke-2" points="4,42 18,42 18,28"/>
+          <polygon class="shape-stroke-2" points="42,46 92,46 92,4"/>
+        </svg>
+        <span>Triangle enlargement</span>
+      </span>
+      <span class="term-chip" data-type="congruent">
+        <svg width="80" height="44" viewBox="0 0 80 44">
+          <rect class="shape-stroke" x="6" y="6" width="28" height="32"/>
+          <rect class="shape-stroke" x="46" y="6" width="28" height="32"/>
+        </svg>
+        <span>Two 3&times;4 rectangles</span>
+      </span>
+      <span class="term-chip" data-type="similar">
+        <svg width="100" height="50" viewBox="0 0 100 50">
+          <polygon class="shape-stroke-2" points="14,40 4,22 24,22"/>
+          <polygon class="shape-stroke-2" points="68,46 48,10 88,10"/>
+        </svg>
+        <span>Two triangles, ×2</span>
+      </span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="congruent">
+        <h4 class="congruent-h">Congruent (same shape &amp; size)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="similar">
+        <h4 class="similar-h">Similar (same shape, different size)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 If you could lay one shape on top of the other and they'd match exactly — that's <strong>congruent</strong>. If one needs to be stretched bigger or shrunk smaller to match — that's <strong>similar</strong>.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH — FIND THE SIMILAR PAIRS -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Find the similar pairs</h2>
+  <p class="sec-desc">There are <strong>five pairs</strong> of similar shapes mixed up in the grid. Click two shapes you think are similar (same shape, scaled). If they're a match, they lock in colour.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a shape to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — finding a missing side</h2>
+  <p class="sec-desc">Triangle <span class="expr">ABC</span> is similar to triangle <span class="expr">DEF</span>. Use the information below to find the length of <span class="expr">EF</span>.</p>
+
+  <div class="diagram">
+    <div class="diagram-shape">
+      <div class="label">Triangle ABC</div>
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <polygon class="shape-stroke" points="20,100 80,100 20,20"/>
+        <text x="50" y="115" text-anchor="middle" font-size="12" fill="#1D2B5E" font-family="Georgia">AB = 6 cm</text>
+        <text x="14" y="60" text-anchor="middle" font-size="12" fill="#1D2B5E" font-family="Georgia" transform="rotate(-90 14 60)">BC = 8 cm</text>
+        <text x="14" y="113" font-size="11" fill="#666">B</text>
+        <text x="80" y="113" font-size="11" fill="#666">A</text>
+        <text x="14" y="16" font-size="11" fill="#666">C</text>
+      </svg>
+    </div>
+    <div style="font-size: 2rem; color: var(--muted);">→</div>
+    <div class="diagram-shape">
+      <div class="label">Triangle DEF</div>
+      <svg width="170" height="170" viewBox="0 0 170 170">
+        <polygon class="shape-stroke" points="20,150 110,150 20,30"/>
+        <text x="65" y="165" text-anchor="middle" font-size="12" fill="#1D2B5E" font-family="Georgia">DE = 18 cm</text>
+        <text x="14" y="90" text-anchor="middle" font-size="12" fill="#1D2B5E" font-family="Georgia" transform="rotate(-90 14 90)">EF = ? cm</text>
+        <text x="14" y="163" font-size="11" fill="#666">E</text>
+        <text x="110" y="163" font-size="11" fill="#666">D</text>
+        <text x="14" y="26" font-size="11" fill="#666">F</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify corresponding sides</div>
+        <div class="step-desc"><span class="expr">AB</span> matches with <span class="expr">DE</span> (both are the bottom sides). <span class="expr">BC</span> matches with <span class="expr">EF</span> (both are the vertical sides).</div>
+        <div class="calc-box">
+          <span class="red">AB ↔ DE</span> &nbsp;and&nbsp; <span class="blue">BC ↔ EF</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Find the scale factor</div>
+        <div class="step-desc">Use the pair you know: divide the <strong>new</strong> length by the <strong>original</strong>.</div>
+        <div class="calc-box">
+          Scale factor = <span class="frac"><span class="num">new</span><span class="den">old</span></span> = <span class="frac"><span class="num">DE</span><span class="den">AB</span></span> = <span class="frac"><span class="num">18</span><span class="den">6</span></span> = <span class="red">3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Apply the scale factor to find the missing side</div>
+        <div class="step-desc">Multiply the original side (<span class="expr">BC</span>) by the scale factor.</div>
+        <div class="calc-box">
+          <span class="expr">EF</span> = <span class="expr">BC</span> × scale factor = 8 × <span class="red">3</span> = <span class="blue">24 cm</span>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          EF = 24 cm
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — similar rectangles</h2>
+  <p class="sec-desc">Rectangle <span class="expr">PQRS</span> is similar to rectangle <span class="expr">WXYZ</span>. <span class="expr">PQ</span> = 4 cm corresponds to <span class="expr">WX</span> = 12 cm, and <span class="expr">QR</span> = 5 cm. Find <span class="expr">XY</span>.</p>
+
+  <div class="diagram">
+    <div class="diagram-shape">
+      <div class="label">Rectangle PQRS</div>
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <rect class="shape-stroke" x="20" y="15" width="60" height="75"/>
+        <text x="50" y="105" text-anchor="middle" font-size="12" fill="#1D2B5E" font-family="Georgia">PQ = 4 cm</text>
+        <text x="88" y="56" font-size="12" fill="#1D2B5E" font-family="Georgia">QR = 5 cm</text>
+        <text x="13" y="13" font-size="11" fill="#666">S</text>
+        <text x="83" y="13" font-size="11" fill="#666">P</text>
+        <text x="83" y="100" font-size="11" fill="#666">Q</text>
+        <text x="13" y="100" font-size="11" fill="#666">R</text>
+      </svg>
+    </div>
+    <div style="font-size: 2rem; color: var(--muted);">→</div>
+    <div class="diagram-shape">
+      <div class="label">Rectangle WXYZ</div>
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <rect class="shape-stroke" x="20" y="15" width="120" height="150"/>
+        <text x="80" y="180" text-anchor="middle" font-size="12" fill="#1D2B5E" font-family="Georgia">WX = 12 cm</text>
+        <text x="148" y="92" font-size="12" fill="#1D2B5E" font-family="Georgia">XY = ?</text>
+        <text x="13" y="13" font-size="11" fill="#666">Z</text>
+        <text x="143" y="13" font-size="11" fill="#666">W</text>
+        <text x="143" y="175" font-size="11" fill="#666">X</text>
+        <text x="13" y="175" font-size="11" fill="#666">Y</text>
+      </svg>
+    </div>
+  </div>
+
+  <p class="sec-desc" style="margin-top: 4px;">We'll break it into three short steps. After each prompt, discuss with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>The routine:</strong> first find the scale factor from a pair you already know, then multiply to find any missing side. Same routine as the worked example — and you'll use it for every "You do" question coming up.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then onto the three practice tiers: Building, Stretch, Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you move on to the practice. Just enter a number.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE 1 -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — finding the scale factor <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">For each pair of corresponding sides, work out the scale factor that takes the original to the new length. Enter just the number.</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: PRACTICE 2 -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — finding a missing side <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">Now use the scale factor to find a missing side on the enlargement. Enter just the number — no units.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: CHALLENGE -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — reductions and fractional scale factors <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Sometimes the new shape is <strong>smaller</strong> than the original — the scale factor is a fraction less than 1. Type fractions like <code>1/3</code> or <code>2/5</code>.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 8 · Similarity and Scale Factor<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCH — find similar pairs ============
+  // Each match-chip is an SVG of a shape with its dimensions.
+  // Pairs share a group id; matching members have the same "shape" but different scale.
+  const matchTerms = [
+    // Group 1: small + big rectangle (scale factor 3)
+    { svg: '<svg width="50" height="34" viewBox="0 0 50 34"><rect class="shape-stroke" x="6" y="10" width="20" height="14"/></svg>', label: 'Rect 4×3', group: 1 },
+    { svg: '<svg width="74" height="48" viewBox="0 0 74 48"><rect class="shape-stroke" x="4" y="4" width="60" height="42"/></svg>', label: 'Rect 12×9', group: 1 },
+    // Group 2: small + big right triangle (scale factor 2)
+    { svg: '<svg width="50" height="44" viewBox="0 0 50 44"><polygon class="shape-stroke-2" points="6,38 6,14 26,38"/></svg>', label: '△ 3-4-5', group: 2 },
+    { svg: '<svg width="74" height="58" viewBox="0 0 74 58"><polygon class="shape-stroke-2" points="6,52 6,12 46,52"/></svg>', label: '△ 6-8-10', group: 2 },
+    // Group 3: small + big square (scale factor 4)
+    { svg: '<svg width="44" height="44" viewBox="0 0 44 44"><rect class="shape-stroke" x="14" y="14" width="16" height="16"/></svg>', label: 'Square 2', group: 3 },
+    { svg: '<svg width="66" height="58" viewBox="0 0 66 58"><rect class="shape-stroke" x="6" y="4" width="50" height="50"/></svg>', label: 'Square 8', group: 3 },
+    // Group 4: long thin rectangle pair (scale factor 3)
+    { svg: '<svg width="52" height="26" viewBox="0 0 52 26"><rect class="shape-stroke-2" x="4" y="8" width="40" height="10"/></svg>', label: 'Rect 5×2', group: 4 },
+    { svg: '<svg width="78" height="42" viewBox="0 0 78 42"><rect class="shape-stroke-2" x="2" y="6" width="72" height="30"/></svg>', label: 'Rect 15×6', group: 4 },
+    // Group 5: tall thin equilateral-ish triangle pair (scale factor 3)
+    { svg: '<svg width="44" height="42" viewBox="0 0 44 42"><polygon class="shape-stroke" points="22,4 8,38 36,38"/></svg>', label: '△ side 4', group: 5 },
+    { svg: '<svg width="70" height="68" viewBox="0 0 70 68"><polygon class="shape-stroke" points="35,4 6,62 64,62"/></svg>', label: '△ side 12', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.svg + '<span>' + t.label + '</span>';
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its similar partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not similar — check that the proportions match.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  const practice1 = [
+    { q: 'The side <span class="expr">3 cm</span> on the small shape becomes <span class="expr">6 cm</span> on the enlargement. Scale factor?', a: '2', hint: 'Scale factor = new ÷ old. 6 ÷ 3 = ?' },
+    { q: 'The side <span class="expr">4 cm</span> becomes <span class="expr">12 cm</span>. Scale factor?', a: '3', hint: '12 ÷ 4 = ?' },
+    { q: 'The side <span class="expr">5 cm</span> becomes <span class="expr">25 cm</span>. Scale factor?', a: '5', hint: '25 ÷ 5 = ?' },
+    { q: 'The side <span class="expr">2 cm</span> becomes <span class="expr">14 cm</span>. Scale factor?', a: '7', hint: 'Divide the new length by the original.' },
+    { q: 'The side <span class="expr">8 cm</span> becomes <span class="expr">32 cm</span>. Scale factor?', a: '4', hint: '32 ÷ 8 = ?' },
+    { q: 'The side <span class="expr">6 cm</span> becomes <span class="expr">24 cm</span>. Scale factor?', a: '4', hint: '24 ÷ 6 = ?' },
+    { q: 'A photo <span class="expr">10 cm</span> wide is enlarged to <span class="expr">40 cm</span>. Scale factor?', a: '4', hint: 'New ÷ old: 40 ÷ 10.' },
+    { q: 'A triangle side <span class="expr">7 cm</span> is enlarged to <span class="expr">21 cm</span>. Scale factor?', a: '3', hint: '21 ÷ 7 = ?' },
+    { q: 'A square of side <span class="expr">9 cm</span> is enlarged to a square of side <span class="expr">36 cm</span>. Scale factor?', a: '4', hint: '36 ÷ 9 = ?' },
+    { q: 'A line <span class="expr">11 mm</span> is enlarged to <span class="expr">55 mm</span>. Scale factor?', a: '5', hint: '55 ÷ 11 = ?' },
+  ];
+
+  const practice2 = [
+    { q: 'A side of <span class="expr">5 cm</span> is enlarged with scale factor <span class="expr">3</span>. What is the new length (cm)?', a: '15', hint: 'Multiply the original by the scale factor: 5 × 3.' },
+    { q: 'Two similar triangles: a side of <span class="expr">4 cm</span> corresponds to <span class="expr">12 cm</span>. Another side of the small triangle is <span class="expr">7 cm</span>. Find the matching side on the big triangle.', a: '21', hint: 'First find the scale factor (12 ÷ 4 = 3), then multiply: 7 × 3.' },
+    { q: 'Two similar rectangles: small is <span class="expr">3 cm</span> by <span class="expr">5 cm</span>; the matching <span class="expr">3 cm</span> side becomes <span class="expr">12 cm</span> on the big one. Find the matching side of the <span class="expr">5 cm</span>.', a: '20', hint: 'Scale factor = 12 ÷ 3 = 4. Then 5 × 4 = ?' },
+    { q: 'A photo <span class="expr">6 cm</span> wide and <span class="expr">9 cm</span> tall is enlarged so the width becomes <span class="expr">18 cm</span>. What is the new height (cm)?', a: '27', hint: 'Scale factor = 18 ÷ 6 = 3. Then height × 3.' },
+  ];
+
+  const practice3 = [
+    { q: 'A triangle side of <span class="expr">24 cm</span> is reduced to a similar triangle with corresponding side <span class="expr">8 cm</span>. What is the scale factor?', a: '1/3', hint: 'Scale factor = new ÷ old = 8 ÷ 24. Simplify the fraction.' },
+    { q: 'A rectangle is reduced with scale factor <span class="frac"><span class="num">1</span><span class="den">4</span></span>. Its original width was <span class="expr">20 cm</span>. What is the new width (cm)?', a: '5', hint: '20 × 1/4 = 20 ÷ 4.' },
+    { q: 'A shape side <span class="expr">10 cm</span> maps to a similar shape side <span class="expr">25 cm</span>. What is the scale factor? (Type as a fraction.)', a: '5/2', hint: 'Scale factor = 25 ÷ 10 = 25/10. Simplify.' },
+  ];
+
+  const checkpoint = [
+    { q: 'Two similar triangles. A side <span class="expr">5 cm</span> on the small one matches <span class="expr">20 cm</span> on the big one. What is the scale factor?', a: '4', hint: 'New ÷ old: 20 ÷ 5 = ?' },
+    { q: 'Two similar shapes have a scale factor of <span class="expr">3</span>. A side on the small shape is <span class="expr">7 cm</span>. Find the matching side on the big shape (cm).', a: '21', hint: 'Multiply: 7 × 3.' },
+  ];
+
+  const weDo = [
+    { q: 'Find the scale factor using the corresponding sides <span class="expr">PQ = 4 cm</span> and <span class="expr">WX = 12 cm</span>.', a: '3', hint: 'Scale factor = WX ÷ PQ = 12 ÷ 4.' },
+    { q: 'Apply the scale factor to <span class="expr">QR = 5 cm</span> to find <span class="expr">XY</span> (cm).', a: '15', hint: 'XY = QR × scale factor = 5 × 3.' },
+    { q: 'Write the final answer. <span class="expr">XY = ?</span> cm.', a: '15', hint: 'Same number as the previous step — confirm and write it down.' },
+  ];
+
+  const exitProbs = [
+    { q: 'If two similar shapes are also congruent (identical), what must the scale factor between them be?', a: '1', hint: 'Multiplying every side by what number leaves the shape exactly the same?' },
+    { q: 'Two similar shapes have scale factor <span class="expr">6</span>. A side on the small shape is <span class="expr">4 cm</span>. Find the matching side on the big shape (cm).', a: '24', hint: 'New side = old side × scale factor.' },
+    { q: 'In your own words, explain the <strong>difference</strong> between two shapes being <em>congruent</em> and being <em>similar</em>.', a: 'TEXT', hint: 'Think about which property must match for each — size? shape? both?' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    return false;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Congruent shapes have the same shape AND the same size. Similar shapes have the same shape but can be different sizes — one is a scaled version of the other.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
