@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triangle Congruence — ASA, RHS, and Why SSA Fails — Year 8</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.15rem; letter-spacing: 0.3px; }
+  .var { font-style: italic; }
+  .pt { font-family: Georgia, serif; font-weight: 700; color: var(--navy); }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 210px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.15rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* DRAG-SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+    color: var(--navy);
+  }
+  .term-chip:hover { border-color: var(--navy); }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 90px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.8px; font-family: -apple-system, sans-serif; }
+  .bucket h4.good { color: var(--good); }
+  .bucket h4.bad { color: var(--bad); }
+  .bucket-contents { min-height: 56px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 12px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--navy);
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* TRIANGLE SVGs */
+  .tri-pair {
+    display: flex; gap: 14px; justify-content: center; align-items: center;
+    flex-wrap: wrap; margin: 18px 0;
+  }
+  .tri-svg {
+    background: white;
+    border-radius: 10px;
+    padding: 6px;
+    box-shadow: var(--shadow);
+    max-width: 100%;
+    height: auto;
+  }
+  .tri-cong-sym {
+    font-family: Georgia, serif;
+    font-size: 2rem; color: var(--coral); font-weight: bold;
+    padding: 0 4px;
+  }
+  .given-table {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    border-radius: 6px;
+    padding: 12px 18px;
+    font-family: Georgia, serif;
+    font-size: 1.02rem;
+    margin: 12px 0;
+    color: var(--navy);
+  }
+  .given-table ul { margin: 4px 0; padding-left: 22px; }
+  .given-table li { padding: 2px 0; }
+
+  /* SSA DEMO BLOCK */
+  .ssa-demo {
+    background: #fffbf2;
+    border: 2px solid #e0b853;
+    border-radius: 12px;
+    padding: 22px;
+    margin: 14px 0;
+    text-align: center;
+  }
+  .ssa-demo h3 {
+    margin: 0 0 12px;
+    font-family: Georgia, serif;
+    color: #8a5a0a;
+    font-size: 1.05rem;
+  }
+  .ssa-callout {
+    background: var(--coral);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    display: inline-block;
+  }
+  .ssa-callout strong { letter-spacing: 1px; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 32px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.02rem; flex: 1; padding-top: 2px; line-height: 1.45; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Triangle Congruence — ASA, RHS &amp; Why SSA Fails</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Geometry</div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 20</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Warm-up — where we are, where we're heading</h2>
+  <p class="sec-desc">A quick recap of what we already know, then a peek at today's two new tests.</p>
+
+  <p>We've already learnt to prove two triangles are <strong>congruent</strong> (exactly the same shape and size) using two tests:</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0;">
+    <div style="background: var(--hint-bg); border-radius: 10px; padding: 14px 18px;">
+      <div style="font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.1rem; margin-bottom: 4px;">SSS</div>
+      <div style="font-size: 0.93rem;">Three pairs of <strong>sides</strong> equal. <em>e.g.</em> <span class="expr">AB&nbsp;=&nbsp;DE</span>, <span class="expr">BC&nbsp;=&nbsp;EF</span>, <span class="expr">AC&nbsp;=&nbsp;DF</span> ⟹ <span class="expr">△ABC&nbsp;≅&nbsp;△DEF</span>.</div>
+    </div>
+    <div style="background: var(--hint-bg); border-radius: 10px; padding: 14px 18px;">
+      <div style="font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.1rem; margin-bottom: 4px;">SAS</div>
+      <div style="font-size: 0.93rem;">Two <strong>sides</strong> and the <strong>angle between them</strong>. <em>e.g.</em> <span class="expr">AB&nbsp;=&nbsp;DE</span>, <span class="expr">∠B&nbsp;=&nbsp;∠E</span>, <span class="expr">BC&nbsp;=&nbsp;EF</span>.</div>
+    </div>
+  </div>
+
+  <div class="parts-instructions" style="margin: 14px 0 0;">
+    Today we add the last two tests of the four — <strong>ASA</strong> (two angles and the side between them) and <strong>RHS</strong> (a special test for right-angled triangles). We'll also meet one combination that <em>looks</em> like a test but actually <strong>fails</strong>: <strong>SSA</strong>. By the end you'll be able to name the right test for any given pair, and explain why SSA cannot prove congruence.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, the four-tests sort, and the SSA demonstration — we'll do this whole-class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five words come up constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Congruent<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Two shapes are <strong>congruent</strong> when they have <strong>exactly the same shape and size</strong> — every side and every angle matches.<div class="vocab-example expr">If <strong>△ABC ≅ △DEF</strong>, then <strong>AB&nbsp;=&nbsp;DE</strong>, <strong>BC&nbsp;=&nbsp;EF</strong>, <strong>AC&nbsp;=&nbsp;DF</strong> and the matching angles are equal.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Included side<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The side that <strong>sits between</strong> two named angles — it joins those two corners.<div class="vocab-example expr">Between <strong>∠A</strong> and <strong>∠B</strong>, the included side is <strong>AB</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Hypotenuse<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">In a right-angled triangle, the <strong>longest side</strong> — always <strong>opposite the right angle</strong>.<div class="vocab-example expr">If <strong>∠C&nbsp;=&nbsp;90°</strong> in <strong>△ABC</strong>, the hypotenuse is <strong>AB</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">ASA test<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>Angle–Side–Angle</strong>: two pairs of angles and the <strong>side between them</strong> are equal.<div class="vocab-example expr"><strong>∠A&nbsp;=&nbsp;∠D</strong>, <strong>AB&nbsp;=&nbsp;DE</strong>, <strong>∠B&nbsp;=&nbsp;∠E</strong> ⟹ congruent.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">RHS test<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>Right angle–Hypotenuse–Side</strong>: both triangles right-angled, with equal hypotenuses and one other equal side.<div class="vocab-example expr"><strong>∠C&nbsp;=&nbsp;∠F&nbsp;=&nbsp;90°</strong>, <strong>AB&nbsp;=&nbsp;DE</strong> (hypotenuses), <strong>BC&nbsp;=&nbsp;EF</strong> ⟹ congruent.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT VALID vs INVALID -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort — which combinations prove congruence?</h2>
+  <p class="sec-desc">Drag each chip into the correct bucket. There are four valid tests and two combinations that don't work. Wrong drops will shake and bounce back.</p>
+
+  <div class="parts-expr">
+    <div class="label">Drag each test into the right bucket</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="valid">SSS</span>
+      <span class="term-chip" data-type="valid">SAS</span>
+      <span class="term-chip" data-type="valid">ASA</span>
+      <span class="term-chip" data-type="valid">RHS</span>
+      <span class="term-chip" data-type="invalid">SSA</span>
+      <span class="term-chip" data-type="invalid">AAA</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="valid">
+        <h4 class="good">✓ Proves congruence</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="invalid">
+        <h4 class="bad">✗ Does NOT prove congruence</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The four valid tests are <strong>SSS, SAS, ASA, RHS</strong>. <strong>AAA</strong> only tells you the triangles are the same <em>shape</em> (similar) — they could be different sizes. <strong>SSA</strong> is the tricky one — it looks complete but isn't. We'll see why next.
+  </div>
+</section>
+
+<!-- SECTION 4: WHY SSA FAILS -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Why <em>SSA</em> does NOT prove congruence</h2>
+  <p class="sec-desc">Two sides and a <strong>non-included</strong> angle — meaning the angle isn't between the two given sides. Watch what happens when we try to build a triangle from that information.</p>
+
+  <p>Suppose we're told: <span class="expr"><strong>AB</strong>&nbsp;=&nbsp;15&nbsp;cm</span>, <span class="expr"><strong>BC</strong>&nbsp;=&nbsp;9&nbsp;cm</span>, and <span class="expr"><strong>∠A</strong>&nbsp;=&nbsp;30°</span>. Notice the angle <span class="expr">∠A</span> is <em>not</em> between sides <span class="expr">AB</span> and <span class="expr">BC</span> — it sits at the far end. Let's try to draw the triangle.</p>
+
+  <div class="ssa-demo">
+    <h3>The "swing" — the same SSA gives TWO different triangles</h3>
+
+    <svg viewBox="0 0 270 200" class="tri-svg" style="width: 100%; max-width: 460px; background: #fff;">
+      <!-- Ray from A at 30°, dashed grey -->
+      <line x1="50" y1="160" x2="248" y2="46" stroke="#999" stroke-width="1.2" stroke-dasharray="5,4"/>
+
+      <!-- Swing arc from B radius 90 — partial circle from C1 to C2 -->
+      <path d="M 205.6,70.2 A 90,90 0 0,0 119.4,119.9" stroke="#E8485A" stroke-width="1.4" fill="none" stroke-dasharray="3,4" opacity="0.55"/>
+
+      <!-- Triangle 1 (blue, obtuse): A, B, C1 -->
+      <polygon points="50,160 200,160 205.6,70.2" fill="rgba(45,111,168,0.18)" stroke="#2d6fa8" stroke-width="2.2" stroke-linejoin="round"/>
+
+      <!-- Triangle 2 (coral, acute): A, B, C2 -->
+      <polygon points="50,160 200,160 119.4,119.9" fill="rgba(232,72,90,0.20)" stroke="#E8485A" stroke-width="2.2" stroke-linejoin="round"/>
+
+      <!-- Tick marks on BC1 and BC2 to show they're equal in length -->
+      <line x1="197.8" y1="114.8" x2="207.8" y2="115.4" stroke="#E8485A" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="157.5" y1="144.5" x2="161.9" y2="135.5" stroke="#E8485A" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Angle marker at A -->
+      <path d="M 78,160 A 28,28 0 0 0 74.2,146" stroke="#555" stroke-width="1.4" fill="none"/>
+      <text x="58" y="153" font-family="Georgia, serif" font-size="11" fill="#444" font-style="italic">30°</text>
+
+      <!-- Labels -->
+      <text x="36" y="175" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#1D2B5E">A</text>
+      <text x="200" y="178" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#1D2B5E">B</text>
+      <text x="213" y="68" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#2d6fa8">C₁</text>
+      <text x="98" y="118" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#E8485A">C₂</text>
+
+      <!-- Side label AB -->
+      <text x="120" y="178" font-family="Georgia, serif" font-size="11" fill="#555" font-style="italic">AB = 15 cm</text>
+    </svg>
+
+    <div style="text-align: left; max-width: 520px; margin: 14px auto 0; font-size: 0.95rem;">
+      <p style="margin: 6px 0;"><strong>What's happening?</strong></p>
+      <ul style="margin: 6px 0 6px 22px; padding: 0;">
+        <li>We fix the side <span class="expr">AB&nbsp;=&nbsp;15&nbsp;cm</span> and draw a ray from <span class="pt">A</span> at <span class="expr">30°</span>.</li>
+        <li>The third vertex must be <span class="expr">9&nbsp;cm</span> from <span class="pt">B</span>, so we "swing" an arc of radius 9 from <span class="pt">B</span>.</li>
+        <li>That arc <strong>crosses the ray in two places</strong> — at <span class="expr" style="color:#2d6fa8;">C₁</span> and <span class="expr" style="color:#E8485A;">C₂</span>.</li>
+      </ul>
+      <p style="margin: 8px 0 6px;">Both triangles △AB<span style="color:#2d6fa8;">C₁</span> and △AB<span style="color:#E8485A;">C₂</span> have the same <span class="expr">AB</span>, the same <span class="expr">∠A</span>, and the same <span class="expr">BC</span> — but they are clearly <strong>different triangles</strong>. One is acute, the other obtuse.</p>
+    </div>
+
+    <div class="ssa-callout">
+      ⚠️ <strong>SSA</strong> doesn't pin down a unique triangle — so it can't prove two triangles are congruent.
+    </div>
+  </div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Discuss with your neighbour:</strong> what if the angle had been bigger (say 80°)? Would there still be two possible triangles? <em>(Hint: when the angle is large enough, the swing arc only crosses the ray once — but for general SSA we can't trust it.)</em>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work an ASA example aloud, showing the 3-step method.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (ASA) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — proving congruence by ASA</h2>
+  <p class="sec-desc">Given the two triangles below, decide which test applies and write a complete congruence statement.</p>
+
+  <div class="given-table">
+    <strong>Given:</strong>
+    <ul>
+      <li><span class="expr">∠A&nbsp;=&nbsp;∠D&nbsp;=&nbsp;60°</span></li>
+      <li><span class="expr">AB&nbsp;=&nbsp;DE&nbsp;=&nbsp;8&nbsp;cm</span></li>
+      <li><span class="expr">∠B&nbsp;=&nbsp;∠E&nbsp;=&nbsp;50°</span></li>
+    </ul>
+  </div>
+
+  <div class="tri-pair">
+    <svg viewBox="0 0 210 170" class="tri-svg" width="240" height="194">
+      <polygon points="30,150 180,150 91.1,44.1" fill="#fdf5dc" stroke="#1D2B5E" stroke-width="2" stroke-linejoin="round"/>
+      <!-- angle at A (60°) — single arc -->
+      <path d="M 60,150 A 30,30 0 0 0 45,124" stroke="#E8485A" stroke-width="2" fill="none"/>
+      <!-- angle at B (50°) — double arc -->
+      <path d="M 152,150 A 28,28 0 0 0 162,128" stroke="#2d6fa8" stroke-width="2" fill="none"/>
+      <path d="M 156,150 A 22,22 0 0 0 163,134" stroke="#2d6fa8" stroke-width="2" fill="none"/>
+      <!-- side AB single tick -->
+      <line x1="102" y1="145" x2="108" y2="155" stroke="#6f4ab8" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- labels -->
+      <text x="18" y="166" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">A</text>
+      <text x="182" y="166" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">B</text>
+      <text x="85" y="38" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">C</text>
+    </svg>
+
+    <span class="tri-cong-sym">≅?</span>
+
+    <svg viewBox="0 0 210 170" class="tri-svg" width="240" height="194">
+      <polygon points="30,150 180,150 91.1,44.1" fill="#fdf5dc" stroke="#1D2B5E" stroke-width="2" stroke-linejoin="round"/>
+      <!-- angle at D (60°) — single arc -->
+      <path d="M 60,150 A 30,30 0 0 0 45,124" stroke="#E8485A" stroke-width="2" fill="none"/>
+      <!-- angle at E (50°) — double arc -->
+      <path d="M 152,150 A 28,28 0 0 0 162,128" stroke="#2d6fa8" stroke-width="2" fill="none"/>
+      <path d="M 156,150 A 22,22 0 0 0 163,134" stroke="#2d6fa8" stroke-width="2" fill="none"/>
+      <!-- side DE single tick -->
+      <line x1="102" y1="145" x2="108" y2="155" stroke="#6f4ab8" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- labels -->
+      <text x="18" y="166" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">D</text>
+      <text x="182" y="166" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">E</text>
+      <text x="85" y="38" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">F</text>
+    </svg>
+  </div>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify what's matched</div>
+        <div class="step-desc">List the equal angles and the equal side. Use the colour-coding to track them.</div>
+        <div class="calc-box">
+          <span class="red">∠A&nbsp;=&nbsp;∠D</span> (single arc — both 60°)<br>
+          <span class="blue">∠B&nbsp;=&nbsp;∠E</span> (double arc — both 50°)<br>
+          <span style="color:#6f4ab8;font-weight:600;">AB&nbsp;=&nbsp;DE</span> (single tick — both 8&nbsp;cm)
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Match the pattern to a test</div>
+        <div class="step-desc">Is the equal side <em>between</em> the two equal angles? Side <span class="expr">AB</span> joins vertex <span class="pt">A</span> to vertex <span class="pt">B</span> — yes, it sits between <span class="expr">∠A</span> and <span class="expr">∠B</span>. Two angles and the side <strong>between them</strong> ⟹ <strong>ASA</strong>.</div>
+        <div class="calc-box">
+          Pattern: <span class="red">∠</span> &nbsp;—&nbsp; <span style="color:#6f4ab8;font-weight:600;">side</span> &nbsp;—&nbsp; <span class="blue">∠</span>&nbsp;&nbsp;&nbsp;⟹&nbsp;&nbsp;&nbsp;<strong>ASA</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Write the congruence statement</div>
+        <div class="step-desc">List the vertices in <strong>matching order</strong>: <span class="pt">A</span>↔<span class="pt">D</span>, <span class="pt">B</span>↔<span class="pt">E</span>, <span class="pt">C</span>↔<span class="pt">F</span>. State the reason (ASA) in brackets.</div>
+        <div class="calc-box">
+          △ABC&nbsp;≅&nbsp;△DEF&nbsp;&nbsp;(ASA)
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          △ABC&nbsp;≅&nbsp;△DEF&nbsp;&nbsp;(ASA)
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work an RHS one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO (RHS) -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — proving congruence by RHS</h2>
+
+  <div class="given-table">
+    <strong>Given:</strong>
+    <ul>
+      <li><span class="expr">∠C&nbsp;=&nbsp;∠F&nbsp;=&nbsp;90°</span></li>
+      <li><span class="expr">AB&nbsp;=&nbsp;DE&nbsp;=&nbsp;10&nbsp;cm</span></li>
+      <li><span class="expr">BC&nbsp;=&nbsp;EF&nbsp;=&nbsp;6&nbsp;cm</span></li>
+    </ul>
+  </div>
+
+  <div class="tri-pair">
+    <svg viewBox="0 0 220 190" class="tri-svg" width="240" height="207">
+      <polygon points="30,170 30,50 190,170" fill="#fdf5dc" stroke="#1D2B5E" stroke-width="2" stroke-linejoin="round"/>
+      <!-- right angle square at C (bottom-left) -->
+      <path d="M 30,160 L 40,160 L 40,170" stroke="#1D2B5E" stroke-width="1.6" fill="none"/>
+      <!-- tick mark on BC (vertical side) -->
+      <line x1="22" y1="110" x2="38" y2="110" stroke="#6f4ab8" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- double tick on hypotenuse AB -->
+      <line x1="103" y1="105" x2="117" y2="115" stroke="#2d6fa8" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="108" y1="100" x2="122" y2="110" stroke="#2d6fa8" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- labels -->
+      <text x="14" y="184" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">C</text>
+      <text x="14" y="46" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">B</text>
+      <text x="194" y="186" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">A</text>
+    </svg>
+
+    <span class="tri-cong-sym">≅?</span>
+
+    <svg viewBox="0 0 220 190" class="tri-svg" width="240" height="207">
+      <polygon points="30,170 30,50 190,170" fill="#fdf5dc" stroke="#1D2B5E" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M 30,160 L 40,160 L 40,170" stroke="#1D2B5E" stroke-width="1.6" fill="none"/>
+      <line x1="22" y1="110" x2="38" y2="110" stroke="#6f4ab8" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="103" y1="105" x2="117" y2="115" stroke="#2d6fa8" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="108" y1="100" x2="122" y2="110" stroke="#2d6fa8" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="14" y="184" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">F</text>
+      <text x="14" y="46" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">E</text>
+      <text x="194" y="186" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#1D2B5E">D</text>
+    </svg>
+  </div>
+
+  <p class="sec-desc" style="margin-top: 16px;">We'll break the reasoning into three short prompts. After each one, discuss with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why RHS is special:</strong> for right-angled triangles only, knowing the hypotenuse plus one other side is enough — Pythagoras forces the third side to match. That's why we don't need the included-angle rule here.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first, then three tiers of practice: Building, Stretch, Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — name the test
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the idea. Type one of: <strong>SSS</strong>, <strong>SAS</strong>, <strong>ASA</strong>, <strong>RHS</strong>, or <strong>SSA</strong> (if no test applies). Try them on your own first — <strong>then we'll check together as a class</strong> before you start the chilli practice.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE 1 — Building -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — name the test <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">For each set of given information, type the test that proves the triangles congruent. Options: <strong>SSS</strong>, <strong>SAS</strong>, <strong>ASA</strong>, <strong>RHS</strong>, or <strong>SSA</strong> (if no test applies).</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: PRACTICE 2 — Stretch -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — think it through <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">These need a little more thought — watch for non-included angles, hidden hypotenuses, and the angle-sum trick. Same answer format as before.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: CHALLENGE — Mastery -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — reasoning &amp; explanation <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Now you're being asked to explain your reasoning, not just name a test. Read each question carefully — the answers vary.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson — recognising ASA, recognising RHS, and explaining why SSA fails.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 8 · Triangle Congruence (ASA, RHS, and SSA)<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG-SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PROBLEM SETS ============
+  // Answers are short test names (SSS, SAS, ASA, RHS, SSA) — the normaliser lowercases so any case works.
+
+  const weDo = [
+    { q: 'Which sides are the hypotenuses in these two right-angled triangles?', a: 'AB and DE', hint: 'The hypotenuse is the side opposite the right angle — so it\'s the longest one in each triangle.' },
+    { q: 'Which test do we use to prove △ABC ≅ △DEF? (Type the abbreviation.)', a: 'RHS', hint: 'Right angle ✓, equal hypotenuses ✓, one other equal side ✓.' },
+    { q: 'Write the congruence statement, including the reason in brackets.', a: 'TriABC≅TriDEF(RHS)', hint: 'Match vertices in order: A↔D, B↔E, C↔F. Try writing it as "△ABC≅△DEF(RHS)".' },
+  ];
+
+  const checkpoint = [
+    { q: 'Given: <span class="expr">∠A&nbsp;=&nbsp;∠D, AB&nbsp;=&nbsp;DE, ∠B&nbsp;=&nbsp;∠E</span>. Which test?', a: 'ASA', hint: 'Two angles, plus the side between them.' },
+    { q: 'Given: <span class="expr">∠C&nbsp;=&nbsp;∠F&nbsp;=&nbsp;90°, AB&nbsp;=&nbsp;DE (hypotenuse), BC&nbsp;=&nbsp;EF</span>. Which test?', a: 'RHS', hint: 'Right angle + equal hypotenuses + one other equal side.' },
+  ];
+
+  const practice1 = [
+    { q: 'Given: <span class="expr">∠A&nbsp;=&nbsp;∠D, AB&nbsp;=&nbsp;DE, ∠B&nbsp;=&nbsp;∠E</span>', a: 'ASA', hint: 'Two angles and the side joining them.' },
+    { q: 'Given: <span class="expr">∠B&nbsp;=&nbsp;∠E&nbsp;=&nbsp;90°, AC&nbsp;=&nbsp;DF (hypotenuse), AB&nbsp;=&nbsp;DE</span>', a: 'RHS', hint: 'AC and DF are opposite the right angles — that makes them the hypotenuses.' },
+    { q: 'Given: <span class="expr">∠B&nbsp;=&nbsp;∠E, BC&nbsp;=&nbsp;EF, ∠C&nbsp;=&nbsp;∠F</span>', a: 'ASA', hint: 'Side BC joins vertex B to vertex C — so it sits between ∠B and ∠C.' },
+    { q: 'Given: <span class="expr">AB&nbsp;=&nbsp;DE, AC&nbsp;=&nbsp;DF, ∠A&nbsp;=&nbsp;∠D</span>', a: 'SAS', hint: 'AB and AC both meet at vertex A — so ∠A is between them.' },
+    { q: 'Given: <span class="expr">AB&nbsp;=&nbsp;DE, BC&nbsp;=&nbsp;EF, ∠A&nbsp;=&nbsp;∠D</span>', a: 'SSA', hint: 'Is ∠A between AB and BC? Vertex A is only on side AB, not on BC. Non-included.' },
+    { q: 'Given: <span class="expr">∠C&nbsp;=&nbsp;∠F&nbsp;=&nbsp;90°, BC&nbsp;=&nbsp;EF, AB&nbsp;=&nbsp;DE (hypotenuse)</span>', a: 'RHS', hint: 'Right angles ✓, equal hypotenuses ✓, one other equal side ✓.' },
+    { q: 'Given: <span class="expr">∠A&nbsp;=&nbsp;∠D, AC&nbsp;=&nbsp;DF, ∠C&nbsp;=&nbsp;∠F</span>', a: 'ASA', hint: 'Side AC joins A to C — so it sits between ∠A and ∠C.' },
+    { q: 'Given: <span class="expr">AB&nbsp;=&nbsp;DE, BC&nbsp;=&nbsp;EF, AC&nbsp;=&nbsp;DF</span>', a: 'SSS', hint: 'All three pairs of sides — recall from last lesson.' },
+    { q: 'Given: <span class="expr">AB&nbsp;=&nbsp;DE, BC&nbsp;=&nbsp;EF, ∠C&nbsp;=&nbsp;∠F</span>', a: 'SSA', hint: 'Vertex C is on side BC but not on AB. The angle isn\'t between the two given sides — non-included.' },
+    { q: 'Given: <span class="expr">∠B&nbsp;=&nbsp;∠E&nbsp;=&nbsp;90°, AC&nbsp;=&nbsp;DF (hypotenuse), CB&nbsp;=&nbsp;FE</span>', a: 'RHS', hint: 'Right angle, hypotenuse, one other side — classic RHS pattern.' },
+  ];
+
+  const practice2 = [
+    { q: '△PQR and △XYZ have <span class="expr">∠Q&nbsp;=&nbsp;∠Y&nbsp;=&nbsp;90°, PQ&nbsp;=&nbsp;XY, PR&nbsp;=&nbsp;XZ</span>. <em>Tip: which sides are the hypotenuses?</em>', a: 'RHS', hint: 'PR and XZ are opposite the right angles — they are the hypotenuses. PQ and XY are the matching shorter sides.' },
+    { q: 'Given: <span class="expr">∠P&nbsp;=&nbsp;∠X, ∠R&nbsp;=&nbsp;∠Z, PR&nbsp;=&nbsp;XZ</span>. Which test?', a: 'ASA', hint: 'Side PR joins P to R — so it sits between ∠P and ∠R.' },
+    { q: '△ABC and △DEF: <span class="expr">AB&nbsp;=&nbsp;DE&nbsp;=&nbsp;8&nbsp;cm, BC&nbsp;=&nbsp;EF&nbsp;=&nbsp;5&nbsp;cm, ∠C&nbsp;=&nbsp;∠F&nbsp;=&nbsp;40°</span>. <em>Is angle C between AB and BC?</em>', a: 'SSA', hint: 'Vertex C sits on side BC and side CA — not on AB. So ∠C is not between AB and BC.' },
+    { q: 'Given: <span class="expr">AB&nbsp;=&nbsp;DE, ∠B&nbsp;=&nbsp;∠E, AC&nbsp;=&nbsp;DF</span>. <em>Where is ∠B?</em>', a: 'SSA', hint: 'Vertex B is on AB and BC — not on AC. The two given sides are AB and AC, meeting at A. ∠B isn\'t between them.' },
+  ];
+
+  const practice3 = [
+    { q: '△ABC is right-angled at C with hypotenuse <span class="expr">AB&nbsp;=&nbsp;13&nbsp;cm</span> and <span class="expr">BC&nbsp;=&nbsp;5&nbsp;cm</span>. △DEF is right-angled at F with <span class="expr">DE&nbsp;=&nbsp;13&nbsp;cm</span> and <span class="expr">EF&nbsp;=&nbsp;5&nbsp;cm</span>. <em>Type the test that proves them congruent.</em>', a: 'RHS', hint: 'Both have a right angle, both have hypotenuse 13, both have a side of 5.' },
+    { q: '△ABC&nbsp;≅&nbsp;△XYZ by RHS, with <span class="expr">∠B&nbsp;=&nbsp;90°, AB&nbsp;=&nbsp;XY&nbsp;=&nbsp;6&nbsp;cm, AC&nbsp;=&nbsp;10&nbsp;cm</span>. <em>What is the length of XZ in cm? (Type just the number.)</em>', a: '10', hint: 'AC is opposite the right angle at B — that makes AC the hypotenuse. By correspondence in RHS, XZ matches AC.' },
+    { q: 'In your own words, explain why <strong>SSA</strong> does <strong>NOT</strong> prove two triangles are congruent. Mention what changes when you "swing" the third side.', a: 'TEXT', hint: 'When we draw side AB and the angle at A, we then swing an arc of length BC from B. That arc can meet the ray in two different places — giving two different triangles with the same SSA.' },
+  ];
+
+  const exitProbs = [
+    { q: 'Given: <span class="expr">∠A&nbsp;=&nbsp;∠D, AB&nbsp;=&nbsp;DE, ∠B&nbsp;=&nbsp;∠E</span>. Which test proves <span class="expr">△ABC&nbsp;≅&nbsp;△DEF</span>?', a: 'ASA', hint: 'Two angles plus the side between them.' },
+    { q: '△PQR and △XYZ are both right-angled at R and Z. <span class="expr">PQ&nbsp;=&nbsp;XY&nbsp;=&nbsp;15&nbsp;cm</span> and <span class="expr">PR&nbsp;=&nbsp;XZ&nbsp;=&nbsp;9&nbsp;cm</span>. Which test?', a: 'RHS', hint: 'PQ and XY are opposite the right angles — they are the hypotenuses.' },
+    { q: 'Why is <strong>SSA</strong> <em>not</em> a valid congruence test? Give one sentence.', a: 'TEXT', hint: 'The same SSA information can produce two different triangles — the third side can swing to two different positions.' },
+  ];
+
+  // ============ ANSWER NORMALISATION ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/△/g, 'tri')
+      .replace(/≅/g, '=')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // accept reordered terms for simple algebraic answers
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    return false;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">→</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a.replace(/'/g, "\\'")}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return '(Open-ended — discuss as a class or check with your teacher; the hint shows the key idea.)';
+    // For most answers in this lesson (ASA, RHS, SAS, SSS, SSA, 10, etc.) just show as-is.
+    // Decode "Tri" placeholder back to △ for display.
+    return a.replace(/Tri/g, '△').replace(/≅/g, '≅');
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
