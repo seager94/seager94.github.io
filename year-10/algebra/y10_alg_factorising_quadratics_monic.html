@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factorising Quadratics — Year 10</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS-OF-EXPRESSION INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING PAIRS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.02rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Factorising Quadratics</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra · <span class="expr"><span class="var">x</span><sup>2</sup> + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span></span></div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 21</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: WARM-UP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Warm-up — going backwards</h2>
+  <p class="sec-desc">You already know how to <em>expand</em>. Today we run the process in reverse.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>Last week you expanded brackets like this:</p>
+      <div class="calc-box" style="margin: 10px 0;">
+        (<span class="var">x</span> + 2)(<span class="var">x</span> + 5) &nbsp;=&nbsp; <span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 10
+      </div>
+      <p>Today we go the other way. Given <span class="expr"><span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 10</span>, can we recover the brackets it came from?</p>
+      <p>This is called <strong>factorising</strong> — writing a quadratic as a product of two brackets. Same machinery, run backwards.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      The big idea: when (<span class="var">x</span> + <span class="var">p</span>)(<span class="var">x</span> + <span class="var">q</span>) is expanded, the constant term is <span class="var">p</span> × <span class="var">q</span> and the middle coefficient is <span class="var">p</span> + <span class="var">q</span>. To factorise, find the two numbers that <strong>multiply to give <span class="var">c</span></strong> and <strong>add to give <span class="var">b</span></strong>. That's the whole lesson.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five words are the language of today's lesson.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Quadratic<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An expression whose <strong>highest power of the variable is 2</strong>.<div class="vocab-example expr"><span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> − 6 is a quadratic. 3<span class="var">x</span> + 1 is <strong>not</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Factorise<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">To rewrite an expression as a <strong>product of factors</strong> — the reverse of expanding.<div class="vocab-example expr"><span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 10 factorises to <strong>(<span class="var">x</span> + 2)(<span class="var">x</span> + 5)</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Factor<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An expression that <strong>divides another exactly</strong>. Brackets in a factorised form are the factors.<div class="vocab-example expr">(<span class="var">x</span> + 2) and (<span class="var">x</span> + 5) are the factors of <span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 10.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Coefficient<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number <strong>multiplying a variable term</strong>. In <span class="expr"><span class="var">x</span><sup>2</sup> + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span></span>, <span class="var">b</span> is the coefficient of <span class="var">x</span>.<div class="vocab-example expr">In <span class="var">x</span><sup>2</sup> − 8<span class="var">x</span> + 15: the coefficient of <span class="var">x</span> is <strong>−8</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Constant term<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The term with <strong>no variable</strong>. In <span class="expr"><span class="var">x</span><sup>2</sup> + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span></span>, that's <span class="var">c</span>.<div class="vocab-example expr">In <span class="var">x</span><sup>2</sup> − 8<span class="var">x</span> + 15: the constant term is <strong>15</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT THE FACTOR PAIRS -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort the factor pairs of <span class="expr">12</span></h2>
+  <p class="sec-desc">To factorise <span class="expr"><span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 12</span>, we need two integers that multiply to <strong>12</strong>. Drag each pair into the right bucket — wrong drops will shake and return.</p>
+
+  <div class="parts-expr">
+    <div class="label">Target: pairs whose product is 12</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="factor">(1, 12)</span>
+      <span class="term-chip expr" data-type="factor">(2, 6)</span>
+      <span class="term-chip expr" data-type="factor">(3, 4)</span>
+      <span class="term-chip expr" data-type="factor">(−3, −4)</span>
+      <span class="term-chip expr" data-type="nonfactor">(2, 4)</span>
+      <span class="term-chip expr" data-type="nonfactor">(3, 5)</span>
+      <span class="term-chip expr" data-type="nonfactor">(4, 4)</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="factor">
+        <h4 class="vt">Product is 12</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="nonfactor">
+        <h4 class="ct">Product is NOT 12</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Of the four pairs whose product is 12, only <strong>(3, 4)</strong> also sums to 7. So <span class="expr"><span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 12 = (<span class="var">x</span> + 3)(<span class="var">x</span> + 4)</span>. We always need <em>both</em> conditions — product = <span class="var">c</span> and sum = <span class="var">b</span>.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH QUADRATIC ↔ FACTORISED FORM -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each quadratic to its factorised form</h2>
+  <p class="sec-desc">Five quadratics, five factorised forms — they're scrambled. Click a quadratic, then click its factorised partner. Watch the signs carefully.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a quadratic or a factorised form to start.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
+  <p class="sec-desc">Factorise: <span class="expr"><span class="var">x</span><sup>2</sup> + 9<span class="var">x</span> + 20</span></p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify <span class="var">b</span> and <span class="var">c</span></div>
+        <div class="step-desc">Read off the coefficient of <span class="var">x</span> and the constant term.</div>
+        <div class="calc-box">
+          <span class="var">x</span><sup>2</sup> + <span class="red">9</span><span class="var">x</span> + <span class="blue">20</span><br>
+          <span class="red"><span class="var">b</span> = 9</span> &nbsp;·&nbsp; <span class="blue"><span class="var">c</span> = 20</span><br>
+          We need two integers that <strong>multiply to 20</strong> and <strong>add to 9</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">List factor pairs of <span class="var">c</span> and check sums</div>
+        <div class="step-desc">Test each pair against the target sum of 9.</div>
+        <div class="calc-box">
+          (1, 20) &nbsp;→ sum 21 ✗<br>
+          (2, 10) &nbsp;→ sum 12 ✗<br>
+          (<span class="red">4</span>, <span class="red">5</span>) &nbsp;→ sum <span class="red">9</span> ✓
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Write the factorisation and check</div>
+        <div class="step-desc">Drop the two numbers straight into the brackets, then expand to verify.</div>
+        <div class="calc-box">
+          <span class="var">x</span><sup>2</sup> + 9<span class="var">x</span> + 20 &nbsp;=&nbsp; (<span class="var">x</span> + <span class="red">4</span>)(<span class="var">x</span> + <span class="red">5</span>)<br>
+          <strong>Check:</strong> (<span class="var">x</span> + 4)(<span class="var">x</span> + 5) = <span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> + 4<span class="var">x</span> + 20 = <span class="var">x</span><sup>2</sup> + 9<span class="var">x</span> + 20 ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          (<span class="var">x</span> + 4)(<span class="var">x</span> + 5)
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — factorise <span class="expr"><span class="var">x</span><sup>2</sup> + 8<span class="var">x</span> + 15</span></h2>
+  <p class="sec-desc">Three small steps. After each prompt, discuss with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this works:</strong> when (<span class="var">x</span> + 3)(<span class="var">x</span> + 5) is expanded you get <span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> + 3<span class="var">x</span> + 15 = <span class="var">x</span><sup>2</sup> + 8<span class="var">x</span> + 15. The 3 and 5 multiply to give the constant (15) and add to give the coefficient of <span class="var">x</span> (8). Find that pair and you've factorised.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first — then onto the three practice tiers: Building, Stretch, Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK (you do — checkpoint) -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you move on to the practice. Type factorised answers like <code>(x+2)(x+4)</code> — either order is fine.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — all positive -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — both signs positive <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Every problem here has <strong>positive <span class="var">b</span></strong> and <strong>positive <span class="var">c</span></strong> — so both numbers in your brackets are positive. Type answers like <code>(x+2)(x+5)</code>; the order of the brackets doesn't matter.</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: PRACTICE — negative b, positive c -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — negative middle term <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc"><span class="var">c</span> is still positive, but now <span class="var">b</span> is negative. If the product is positive but the sum is negative, <strong>both numbers must be negative</strong>. Type answers like <code>(x-2)(x-5)</code>.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: CHALLENGE — c negative, mixed signs -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Challenge — negative constant <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Now <span class="var">c</span> is <strong>negative</strong> — which means one bracket is positive, the other negative. The larger absolute value takes the same sign as <span class="var">b</span>. Type answers like <code>(x+5)(x-3)</code>.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 10 · Factorising Quadratics<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ FACTOR-PAIR DRAG SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCH QUADRATIC ↔ FACTORISED FORM ============
+  // 5 pairs; each pair has a group id 1-5
+  const matchTerms = [
+    { html: '<span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> + 6', group: 1 },
+    { html: '(<span class="var">x</span>+2)(<span class="var">x</span>+3)', group: 1 },
+    { html: '<span class="var">x</span><sup>2</sup> − 5<span class="var">x</span> + 6', group: 2 },
+    { html: '(<span class="var">x</span>−2)(<span class="var">x</span>−3)', group: 2 },
+    { html: '<span class="var">x</span><sup>2</sup> + <span class="var">x</span> − 6', group: 3 },
+    { html: '(<span class="var">x</span>+3)(<span class="var">x</span>−2)', group: 3 },
+    { html: '<span class="var">x</span><sup>2</sup> − <span class="var">x</span> − 6', group: 4 },
+    { html: '(<span class="var">x</span>−3)(<span class="var">x</span>+2)', group: 4 },
+    { html: '<span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 12', group: 5 },
+    { html: '(<span class="var">x</span>+3)(<span class="var">x</span>+4)', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — expand the brackets and check.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // All answers in canonical form. The matcher accepts reordered factors:
+  // (x+3)(x+4) and (x+4)(x+3) both pass.
+
+  const practice1 = [
+    { q: '<span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> + 4',  a: '(x+1)(x+4)',  hint: 'Two positive integers that multiply to 4 and add to 5.' },
+    { q: '<span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 6',  a: '(x+1)(x+6)',  hint: 'Multiply to 6, add to 7.' },
+    { q: '<span class="var">x</span><sup>2</sup> + 6<span class="var">x</span> + 5',  a: '(x+1)(x+5)',  hint: 'Multiply to 5 (only 1 × 5), check the sum.' },
+    { q: '<span class="var">x</span><sup>2</sup> + 8<span class="var">x</span> + 12', a: '(x+2)(x+6)',  hint: 'Factor pairs of 12: (1,12), (2,6), (3,4). Which sums to 8?' },
+    { q: '<span class="var">x</span><sup>2</sup> + 7<span class="var">x</span> + 10', a: '(x+2)(x+5)',  hint: 'Factor pairs of 10. Which sums to 7?' },
+    { q: '<span class="var">x</span><sup>2</sup> + 9<span class="var">x</span> + 14', a: '(x+2)(x+7)',  hint: 'Factor pairs of 14: (1,14), (2,7). Which sums to 9?' },
+    { q: '<span class="var">x</span><sup>2</sup> + 10<span class="var">x</span> + 21', a: '(x+3)(x+7)', hint: 'Factor pairs of 21: (1,21), (3,7). Which sums to 10?' },
+    { q: '<span class="var">x</span><sup>2</sup> + 11<span class="var">x</span> + 24', a: '(x+3)(x+8)', hint: 'Factor pairs of 24. Try (3, 8): sum 11 ✓.' },
+    { q: '<span class="var">x</span><sup>2</sup> + 12<span class="var">x</span> + 35', a: '(x+5)(x+7)', hint: 'Factor pairs of 35: (1,35), (5,7). Which sums to 12?' },
+    { q: '<span class="var">x</span><sup>2</sup> + 13<span class="var">x</span> + 40', a: '(x+5)(x+8)', hint: 'Factor pairs of 40. Try (5, 8): sum 13 ✓.' },
+  ];
+
+  const practice2 = [
+    { q: '<span class="var">x</span><sup>2</sup> − 7<span class="var">x</span> + 10',  a: '(x-2)(x-5)',  hint: 'c > 0 and b < 0 means both numbers are negative. Multiply to 10, add to −7.' },
+    { q: '<span class="var">x</span><sup>2</sup> − 9<span class="var">x</span> + 20',  a: '(x-4)(x-5)',  hint: 'Both negative. Pairs of 20: (−1,−20), (−2,−10), (−4,−5). Which sums to −9?' },
+    { q: '<span class="var">x</span><sup>2</sup> − 11<span class="var">x</span> + 24', a: '(x-3)(x-8)',  hint: 'Both negative. Multiply to 24, add to −11.' },
+    { q: '<span class="var">x</span><sup>2</sup> − 13<span class="var">x</span> + 40', a: '(x-5)(x-8)',  hint: 'Both negative. Multiply to 40, add to −13.' },
+  ];
+
+  const practice3 = [
+    { q: '<span class="var">x</span><sup>2</sup> + 2<span class="var">x</span> − 15', a: '(x+5)(x-3)', hint: 'c < 0 means one positive, one negative. Multiply to −15, add to +2. Try (+5, −3).' },
+    { q: '<span class="var">x</span><sup>2</sup> − 3<span class="var">x</span> − 18', a: '(x-6)(x+3)', hint: 'Multiply to −18, add to −3. The bigger absolute value takes b\'s sign.' },
+    { q: '<span class="var">x</span><sup>2</sup> − 5<span class="var">x</span> − 14', a: '(x-7)(x+2)', hint: 'Multiply to −14, add to −5. Try (−7, +2).' },
+  ];
+
+  const checkpoint = [
+    { q: '<span class="var">x</span><sup>2</sup> + 6<span class="var">x</span> + 8', a: '(x+2)(x+4)', hint: 'Two positives that multiply to 8 and add to 6.' },
+    { q: '<span class="var">x</span><sup>2</sup> + 9<span class="var">x</span> + 18', a: '(x+3)(x+6)', hint: 'Factor pairs of 18: (1,18), (2,9), (3,6). Which sums to 9?' },
+  ];
+
+  const weDo = [
+    { q: 'Two positive integers multiply to 15 and sum to 8. The <strong>smaller</strong> one is:', a: '3', hint: 'Factor pairs of 15: (1, 15) sum 16; (3, 5) sum 8.' },
+    { q: 'And the <strong>larger</strong> one is:', a: '5', hint: 'Same pair — partner of 3.' },
+    { q: 'Write the factorisation of <span class="expr"><span class="var">x</span><sup>2</sup> + 8<span class="var">x</span> + 15</span>:', a: '(x+3)(x+5)', hint: 'Drop the pair straight into (x + __)(x + __).' },
+  ];
+
+  const exitProbs = [
+    { q: 'Factorise: <span class="expr"><span class="var">x</span><sup>2</sup> + 8<span class="var">x</span> + 12</span>', a: '(x+2)(x+6)', hint: 'Factor pairs of 12. Which sums to 8?' },
+    { q: 'Factorise: <span class="expr"><span class="var">x</span><sup>2</sup> − 4<span class="var">x</span> − 12</span>', a: '(x-6)(x+2)', hint: 'c < 0 → mixed signs. Multiply to −12, add to −4.' },
+    { q: 'Explain why factorising <span class="expr"><span class="var">x</span><sup>2</sup> + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span></span> needs two numbers that <strong>multiply to <span class="var">c</span></strong> and <strong>add to <span class="var">b</span></strong>.', a: 'TEXT', hint: 'Expand (x + p)(x + q) and look at the result.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/−/g, '-')   // typographic minus → hyphen
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');       // strip leading +
+  }
+  // accept reordered terms: 3x+5 == 5+3x
+  // accept reordered factors: (x+4)(x+5) == (x+5)(x+4)
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // try sorting terms (handles 3x+5 == 5+3x within a single expression)
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    // try swapping factors for two-bracket products: (a)(b) == (b)(a)
+    const factorPattern = /^(-?\d*)\(([^()]+)\)\(([^()]+)\)$/;
+    const m1 = norm.match(factorPattern);
+    const m2 = exp.match(factorPattern);
+    if (m1 && m2 && m1[1] === m2[1]) {
+      const inputFactors = [m1[2], m1[3]].map(f => splitTerms(f)).sort();
+      const expectedFactors = [m2[2], m2[3]].map(f => splitTerms(f)).sort();
+      if (JSON.stringify(inputFactors) === JSON.stringify(expectedFactors)) return true;
+    }
+    return false;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') {
+      return 'When we expand (<span class="var">x</span> + <span class="var">p</span>)(<span class="var">x</span> + <span class="var">q</span>) we get <span class="var">x</span><sup>2</sup> + (<span class="var">p</span> + <span class="var">q</span>)<span class="var">x</span> + <span class="var">p</span><span class="var">q</span>. So for <span class="var">x</span><sup>2</sup> + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span> we need <span class="var">p</span> + <span class="var">q</span> = <span class="var">b</span> and <span class="var">p</span><span class="var">q</span> = <span class="var">c</span>.';
+    }
+    // Step 1: wrap bare letters in var spans.
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions.
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 3: tidy operators — typographic minus, spaces around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
