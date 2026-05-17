@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angles in Parallel Lines — Year 8</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* RECAP STRIP */
+  .recap-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  @media (max-width: 720px) { .recap-strip { grid-template-columns: 1fr; } }
+  .recap-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .recap-card h4 {
+    margin: 0 0 6px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1rem;
+  }
+  .recap-card .rule {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.15rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'WHY IT MATTERS — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+
+  /* SORTING WIDGET — 3 BUCKETS */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .ref-diagram {
+    margin-bottom: 16px;
+  }
+  .term-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    transition: all 0.2s;
+    touch-action: none;
+    user-select: none;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.corresponding { background: #fbe9e1; border-color: #d57350; color: #8c3a1c; font-weight: 600; }
+  .term-chip.alternate    { background: #e1ecf8; border-color: #4477b3; color: #1d3a66; font-weight: 600; }
+  .term-chip.cointerior   { background: #ebe4f5; border-color: #6f4ab8; color: #3d2773; font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-top: 12px;
+  }
+  @media (max-width: 720px) { .parts-buckets { grid-template-columns: 1fr; } }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 12px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket[data-bucket="corresponding"] h4 { color: #8c3a1c; }
+  .bucket[data-bucket="alternate"] h4    { color: #1d3a66; }
+  .bucket[data-bucket="cointerior"] h4   { color: #3d2773; }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 7px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .worked .diagram-wrap { text-align: center; margin-bottom: 14px; }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* RULE-RECAP BOX (proof-language bridge) */
+  .rule-recap {
+    background: linear-gradient(135deg, #fff, #f7faff);
+    border: 1.5px solid var(--navy);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-top: 18px;
+  }
+  .rule-recap h4 {
+    margin: 0 0 10px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1.05rem;
+  }
+  .rule-recap ul { margin: 0; padding-left: 20px; line-height: 1.7; }
+  .rule-recap code {
+    background: var(--hint-bg); color: var(--navy);
+    padding: 2px 7px; border-radius: 4px;
+    font-family: Georgia, serif; font-style: italic;
+    font-size: 0.95rem;
+  }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: -apple-system, sans-serif; font-size: 0.92rem;
+    cursor: pointer; transition: all 0.15s; line-height: 1.3;
+    color: var(--navy);
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1rem; flex: 1; padding-top: 2px; }
+  .problem-expr svg { max-width: 100%; height: auto; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.05rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  .answer-box .reason {
+    display: block; margin-top: 4px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.82rem; color: var(--navy);
+    font-style: italic;
+  }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Angles in Parallel Lines</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Geometric reasoning</div>
+  </div>
+  <div class="badge">Bridge Lesson</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: BEFORE WE START — Y7 RECAP -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Before we start — Year 7 recap</h2>
+  <p class="sec-desc">You already know three big angle rules from Year 7. We'll lean on all three today, so let's wake them up first.</p>
+
+  <div class="recap-strip">
+    <div class="recap-card">
+      <h4>Angles on a straight line</h4>
+      <svg viewBox="0 0 160 70" width="160" height="70" style="display:block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="50" x2="150" y2="50" stroke="#1D2B5E" stroke-width="2"/>
+        <line x1="80" y1="50" x2="120" y2="15" stroke="#E8485A" stroke-width="2"/>
+        <text x="40" y="44" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">a°</text>
+        <text x="95" y="44" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">b°</text>
+      </svg>
+      <div class="rule">a + b = 180°</div>
+    </div>
+    <div class="recap-card">
+      <h4>Angles at a point</h4>
+      <svg viewBox="0 0 160 130" width="160" height="130" style="display:block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
+        <line x1="80" y1="65" x2="140" y2="65" stroke="#1D2B5E" stroke-width="2"/>
+        <line x1="80" y1="65" x2="80" y2="15" stroke="#1D2B5E" stroke-width="2"/>
+        <line x1="80" y1="65" x2="34" y2="104" stroke="#1D2B5E" stroke-width="2"/>
+        <text x="98" y="48" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">a°</text>
+        <text x="45" y="58" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">b°</text>
+        <text x="95" y="98" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">c°</text>
+      </svg>
+      <div class="rule">a + b + c = 360°</div>
+    </div>
+    <div class="recap-card">
+      <h4>Vertically opposite</h4>
+      <svg viewBox="0 0 160 80" width="160" height="80" style="display:block; margin: 0 auto;" xmlns="http://www.w3.org/2000/svg">
+        <line x1="15" y1="65" x2="145" y2="15" stroke="#1D2B5E" stroke-width="2"/>
+        <line x1="15" y1="15" x2="145" y2="65" stroke="#1D2B5E" stroke-width="2"/>
+        <text x="20" y="44" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">a°</text>
+        <text x="128" y="44" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">a°</text>
+      </svg>
+      <div class="rule">Opposite angles are equal</div>
+    </div>
+  </div>
+
+  <p style="margin: 4px 0 12px; font-weight: 600; color: var(--navy);">Quick check — find <span class="var">x</span> in each.</p>
+  <div class="practice-grid" id="recapGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 Notice the reasoning we used: "<span class="var">x</span> = 38° <strong>because</strong> angles on a straight line add to 180°." That little "because" is the heart of every geometric proof. We'll keep using it all lesson — and especially next lesson when we prove things about quadrilaterals.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Meet the parallel-line rules</div>
+    <div class="phase-sub">Three new rules to add to your Year 7 toolkit — we'll explore them together.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip. You need every one of these to talk and write about today's diagrams.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Parallel lines<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Two lines that <strong>never meet</strong>, no matter how far they're extended. Marked with matching arrows (➤) or chevrons.<div class="vocab-example">Railway tracks and the lines on lined paper are parallel.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Transversal<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A line that <strong>cuts across</strong> two (or more) other lines. In our diagrams it's the red line.<div class="vocab-example">The transversal creates eight angles — and they come in matching pairs.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Corresponding angles<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Same position at each intersection — the <strong>F-pattern</strong>. They are <strong>equal</strong>.<div class="vocab-example">"<span class="var">x</span> = 75° (corresponding angles, parallel lines)" — the wording you'll write as a reason.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Alternate angles<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Between the parallel lines, on <strong>opposite sides</strong> of the transversal — the <strong>Z-pattern</strong>. They are <strong>equal</strong>.<div class="vocab-example">"<span class="var">x</span> = 110° (alternate angles, parallel lines)".</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Co-interior angles<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Between the parallel lines, on the <strong>same side</strong> of the transversal — the <strong>C-pattern</strong>. They <strong>add to 180°</strong>.<div class="vocab-example">"<span class="var">x</span> + 130° = 180° (co-interior angles, parallel lines), so <span class="var">x</span> = 50°."</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT THE ANGLE PAIRS -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort the angle pairs</h2>
+  <p class="sec-desc">Use the reference diagram. Drag each pair of angles into the right bucket — wrong drops will shake and pop back.</p>
+
+  <div class="parts-expr">
+    <div class="ref-diagram">
+      <svg viewBox="0 0 240 160" width="240" height="160" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="50" x2="230" y2="50" stroke="#1D2B5E" stroke-width="2.2"/>
+        <line x1="10" y1="120" x2="230" y2="120" stroke="#1D2B5E" stroke-width="2.2"/>
+        <path d="M 195 45 L 202 50 L 195 55" fill="none" stroke="#1D2B5E" stroke-width="1.8"/>
+        <path d="M 195 115 L 202 120 L 195 125" fill="none" stroke="#1D2B5E" stroke-width="1.8"/>
+        <line x1="60" y1="15" x2="180" y2="155" stroke="#E8485A" stroke-width="2.2"/>
+        <!-- Upper intersection ~ (90, 50) -->
+        <text x="103" y="42" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">1</text>
+        <text x="103" y="64" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">2</text>
+        <text x="73"  y="64" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">3</text>
+        <text x="73"  y="42" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">4</text>
+        <!-- Lower intersection ~ (150, 120) -->
+        <text x="163" y="112" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">5</text>
+        <text x="163" y="134" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">6</text>
+        <text x="133" y="134" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">7</text>
+        <text x="133" y="112" font-family="Georgia" font-size="13" fill="#1D2B5E" font-weight="bold">8</text>
+      </svg>
+    </div>
+
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="corresponding">∠1 &amp; ∠5</span>
+      <span class="term-chip" data-type="corresponding">∠4 &amp; ∠8</span>
+      <span class="term-chip" data-type="alternate">∠2 &amp; ∠8</span>
+      <span class="term-chip" data-type="alternate">∠3 &amp; ∠5</span>
+      <span class="term-chip" data-type="cointerior">∠2 &amp; ∠5</span>
+      <span class="term-chip" data-type="cointerior">∠3 &amp; ∠8</span>
+    </div>
+
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="corresponding">
+        <h4>Corresponding (F)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="alternate">
+        <h4>Alternate (Z)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="cointerior">
+        <h4>Co-interior (C)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Trace each pair with your finger. If you draw a <strong>Z</strong>, they're alternate. An <strong>F</strong> means corresponding. A <strong>C</strong> means co-interior. Same shape = same rule.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH THE RULE -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each pair to its property</h2>
+  <p class="sec-desc">Click an angle-pair name, then click the property it has. Five pairs to find — including two old friends from Year 7.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch the reasoning</div>
+    <div class="phase-sub">Listen carefully to the "because" — that's the part you'll write in proofs.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — find <span class="var">x</span> with full reasoning</h2>
+  <p class="sec-desc">Two parallel lines cut by a transversal. We're told one angle is 110°. Find <span class="var">x</span>.</p>
+
+  <div class="worked">
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 240 160" width="240" height="160" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="50" x2="230" y2="50" stroke="#1D2B5E" stroke-width="2.2"/>
+        <line x1="10" y1="120" x2="230" y2="120" stroke="#1D2B5E" stroke-width="2.2"/>
+        <path d="M 195 45 L 202 50 L 195 55" fill="none" stroke="#1D2B5E" stroke-width="1.8"/>
+        <path d="M 195 115 L 202 120 L 195 125" fill="none" stroke="#1D2B5E" stroke-width="1.8"/>
+        <line x1="60" y1="15" x2="180" y2="155" stroke="#E8485A" stroke-width="2.2"/>
+        <text x="68" y="68" font-family="Georgia" font-size="14" fill="#1D2B5E" font-weight="bold">110°</text>
+        <text x="160" y="112" font-family="Georgia" font-size="16" fill="#E8485A" font-weight="bold" font-style="italic">x</text>
+      </svg>
+    </div>
+
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify the relationship</div>
+        <div class="step-desc">Trace from the 110° angle to <span class="var">x</span> — they sit on opposite sides of the transversal, between the parallel lines. That's a Z-pattern.</div>
+        <div class="calc-box">
+          The 110° angle and <span class="var">x</span> are <span class="red">alternate angles</span>.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">State the rule</div>
+        <div class="step-desc">Alternate angles on parallel lines are equal. (This is the line you'd write in a proof.)</div>
+        <div class="calc-box">
+          <span class="blue">Alternate angles on parallel lines are equal.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Apply the rule and write the reason</div>
+        <div class="step-desc">Equate and solve — then justify in one short sentence.</div>
+        <div class="calc-box">
+          <span class="var">x</span> = 110° &nbsp; (<span class="red">alternate angles, parallel lines</span>)
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer with reason</span>
+          <span class="var">x</span> = 110° (alternate angles, parallel lines)
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+
+  <div class="rule-recap">
+    <h4>📝 Reason-language toolkit (you'll need this all lesson — and for proofs)</h4>
+    <ul>
+      <li><strong>Equal:</strong> <code>(corresponding angles, parallel lines)</code></li>
+      <li><strong>Equal:</strong> <code>(alternate angles, parallel lines)</code></li>
+      <li><strong>Sum to 180°:</strong> <code>(co-interior angles, parallel lines)</code></li>
+      <li><strong>From Year 7:</strong> <code>(vertically opposite angles)</code> · <code>(angles on a straight line)</code> · <code>(angles at a point)</code></li>
+    </ul>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Try one together</div>
+    <div class="phase-sub">Discuss each prompt with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — find <span class="var">x</span></h2>
+  <p class="sec-desc">Use the same routine: identify → state the rule → apply with a reason.</p>
+
+  <div style="text-align:center; margin-bottom: 16px;">
+    <svg viewBox="0 0 240 160" width="240" height="160" xmlns="http://www.w3.org/2000/svg">
+      <line x1="10" y1="50" x2="230" y2="50" stroke="#1D2B5E" stroke-width="2.2"/>
+      <line x1="10" y1="120" x2="230" y2="120" stroke="#1D2B5E" stroke-width="2.2"/>
+      <path d="M 195 45 L 202 50 L 195 55" fill="none" stroke="#1D2B5E" stroke-width="1.8"/>
+      <path d="M 195 115 L 202 120 L 195 125" fill="none" stroke="#1D2B5E" stroke-width="1.8"/>
+      <line x1="60" y1="15" x2="180" y2="155" stroke="#E8485A" stroke-width="2.2"/>
+      <text x="100" y="68" font-family="Georgia" font-size="14" fill="#1D2B5E" font-weight="bold">65°</text>
+      <text x="160" y="112" font-family="Georgia" font-size="16" fill="#E8485A" font-weight="bold" font-style="italic">x</text>
+    </svg>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Notice the language:</strong> "<span class="var">x</span> = 115° (co-interior angles, parallel lines)". That bracketed reason is exactly what you'll write in a proof. No bracket, no marks.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then the three chilli tiers.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. <strong>Stop after these</strong> — we'll check together before you start the chilli practice.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — one rule at a time <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Each problem uses just <em>one</em> rule. Type the size of <span class="var">x</span> in degrees (the ° is optional).</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: STRETCH -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Practice — two-step chases <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">The given angle isn't directly related to <span class="var">x</span> by a single rule. You'll need two steps — and two reasons.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Mastery — algebraic angles <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">Now the angles are given as algebraic expressions. Write an equation using the rule, then solve for <span class="var">x</span>. Type just the number.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Three questions before you leave. The last one is in words — write a full reason, like you would in a proof.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    🔭 <strong>Looking ahead:</strong> next lesson we'll use these three rules to <em>prove</em> facts about quadrilaterals — for example, why the co-interior rule makes the angles of a trapezium behave the way they do. Today's reason-writing is the rehearsal.
+  </div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 8 · Angles in Parallel Lines<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DIAGRAM HELPER ============
+  // Builds a 180×110 SVG of two parallel lines + transversal,
+  // labels two angle positions with custom text.
+  // Positions: UR1, LR1, LL1, UL1 (upper intersection)
+  //            UR2, LR2, LL2, UL2 (lower intersection)
+  function angleDiag(p1, lab1, p2, lab2) {
+    const positions = {
+      UR1: { x: 78, y: 24 },
+      LR1: { x: 78, y: 44 },
+      LL1: { x: 48, y: 44 },
+      UL1: { x: 48, y: 24 },
+      UR2: { x: 128, y: 74 },
+      LR2: { x: 128, y: 94 },
+      LL2: { x: 98,  y: 94 },
+      UL2: { x: 98,  y: 74 },
+    };
+    const a = positions[p1];
+    const b = positions[p2];
+    const labStyle = (lab) =>
+      /^[a-z()]/i.test(lab.trim()) || lab.includes('(')
+        ? 'font-style="italic"'
+        : '';
+    return `<svg viewBox="0 0 180 110" width="100%" height="110" preserveAspectRatio="xMidYMid meet" style="display:block; margin: 4px auto 6px; max-width: 220px;" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="30" x2="175" y2="30" stroke="#1D2B5E" stroke-width="2"/>
+      <line x1="5" y1="80" x2="175" y2="80" stroke="#1D2B5E" stroke-width="2"/>
+      <path d="M 140 25 L 147 30 L 140 35" fill="none" stroke="#1D2B5E" stroke-width="1.6"/>
+      <path d="M 140 75 L 147 80 L 140 85" fill="none" stroke="#1D2B5E" stroke-width="1.6"/>
+      <line x1="38" y1="5" x2="138" y2="105" stroke="#E8485A" stroke-width="2"/>
+      <text x="${a.x}" y="${a.y + 4}" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold" ${labStyle(lab1)}>${lab1}</text>
+      <text x="${b.x}" y="${b.y + 4}" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold" ${labStyle(lab2)}>${lab2}</text>
+    </svg>`;
+  }
+
+  // ============ DRAG & DROP SORT (3 BUCKETS) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+    dragState = { chip, ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+      chip.classList.remove('corresponding','alternate','cointerior');
+      chip.classList.add(correct);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop', 'corresponding','alternate','cointerior');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop','corresponding','alternate','cointerior');
+      source.appendChild(chip);
+    });
+  }
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop','corresponding','alternate','cointerior');
+      const correct = chip.dataset.type;
+      chip.classList.add(correct);
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  const matchTerms = [
+    { html: 'Corresponding angles', group: 1 },
+    { html: 'Equal — F-pattern', group: 1 },
+    { html: 'Alternate angles', group: 2 },
+    { html: 'Equal — Z-pattern', group: 2 },
+    { html: 'Co-interior angles', group: 3 },
+    { html: 'Sum to 180° — C-pattern', group: 3 },
+    { html: 'Vertically opposite angles', group: 4 },
+    { html: 'Equal — X-pattern', group: 4 },
+    { html: 'Angles on a straight line', group: 5 },
+    { html: 'Adjacent — sum to 180°', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected;
+      const w2 = chip;
+      w1.classList.add('selected');
+      w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — check the rule again.';
+      setTimeout(() => {
+        w1.classList.remove('selected');
+        w2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PROBLEM ARRAYS ============
+  const recap = [
+    { q: `<div style="text-align:center"><svg viewBox="0 0 160 70" width="160" height="70" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="50" x2="150" y2="50" stroke="#1D2B5E" stroke-width="2"/>
+            <line x1="80" y1="50" x2="120" y2="15" stroke="#E8485A" stroke-width="2"/>
+            <text x="35" y="44" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">142°</text>
+            <text x="95" y="44" font-family="Georgia" font-size="12" fill="#E8485A" font-weight="bold" font-style="italic">x</text>
+          </svg><div style="font-size:0.9rem; color: var(--muted);">Find x.</div></div>`,
+      a: '38', hint: '180 − 142 = ?', reason: 'angles on a straight line sum to 180°' },
+    { q: `<div style="text-align:center"><svg viewBox="0 0 160 130" width="160" height="130" xmlns="http://www.w3.org/2000/svg">
+            <line x1="80" y1="65" x2="140" y2="65" stroke="#1D2B5E" stroke-width="2"/>
+            <line x1="80" y1="65" x2="80" y2="15" stroke="#1D2B5E" stroke-width="2"/>
+            <line x1="80" y1="65" x2="34" y2="104" stroke="#1D2B5E" stroke-width="2"/>
+            <text x="98" y="48" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">90°</text>
+            <text x="40" y="58" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">130°</text>
+            <text x="95" y="98" font-family="Georgia" font-size="12" fill="#E8485A" font-weight="bold" font-style="italic">x</text>
+          </svg><div style="font-size:0.9rem; color: var(--muted);">Find x.</div></div>`,
+      a: '140', hint: '360 − 90 − 130 = ?', reason: 'angles at a point sum to 360°' },
+    { q: `<div style="text-align:center"><svg viewBox="0 0 160 80" width="160" height="80" xmlns="http://www.w3.org/2000/svg">
+            <line x1="15" y1="65" x2="145" y2="15" stroke="#1D2B5E" stroke-width="2"/>
+            <line x1="15" y1="15" x2="145" y2="65" stroke="#1D2B5E" stroke-width="2"/>
+            <text x="20" y="44" font-family="Georgia" font-size="12" fill="#1D2B5E" font-weight="bold">53°</text>
+            <text x="125" y="44" font-family="Georgia" font-size="12" fill="#E8485A" font-weight="bold" font-style="italic">x</text>
+          </svg><div style="font-size:0.9rem; color: var(--muted);">Find x.</div></div>`,
+      a: '53', hint: 'Vertically opposite angles are equal.', reason: 'vertically opposite angles are equal' },
+  ];
+
+  const weDo = [
+    { q: 'What relationship do the 65° angle and <span class="var">x</span> have? <em>(corresponding / alternate / co-interior)</em>', a: 'co-interior', hint: 'They sit between the parallel lines on the SAME side of the transversal — a C-pattern.' },
+    { q: 'So the two angles add to ___°.', a: '180', hint: 'Co-interior angles are supplementary.' },
+    { q: 'Find <span class="var">x</span> (just the number of degrees).', a: '115', hint: '180 − 65 = ?', reason: 'co-interior angles, parallel lines' },
+  ];
+
+  const checkpoint = [
+    { q: angleDiag('UR1', '72°', 'UR2', 'x'), a: '72', hint: 'Same position at each intersection — F-pattern.', reason: 'corresponding angles, parallel lines' },
+    { q: angleDiag('LR1', '118°', 'UR2', 'x'), a: '62', hint: 'Both between the lines, same side of the transversal — C-pattern.', reason: 'co-interior angles, parallel lines' },
+  ];
+
+  const practice1 = [
+    { q: angleDiag('UR1', '70°', 'UR2', 'x'), a: '70', hint: 'Corresponding (F-pattern) → equal.', reason: 'corresponding angles, parallel lines' },
+    { q: angleDiag('LR1', '55°', 'UL2', 'x'), a: '55', hint: 'Between the lines, opposite sides → alternate.', reason: 'alternate angles, parallel lines' },
+    { q: angleDiag('LR1', '120°', 'UR2', 'x'), a: '60', hint: 'Between the lines, same side → co-interior. They add to 180°.', reason: 'co-interior angles, parallel lines' },
+    { q: angleDiag('LL1', '142°', 'LL2', 'x'), a: '142', hint: 'Same position at each intersection — corresponding.', reason: 'corresponding angles, parallel lines' },
+    { q: angleDiag('LL1', '38°', 'UR2', 'x'), a: '38', hint: 'Between the lines, opposite sides — alternate (Z).', reason: 'alternate angles, parallel lines' },
+    { q: angleDiag('LL1', '85°', 'UL2', 'x'), a: '95', hint: 'Both between the lines on the LEFT of the transversal — co-interior.', reason: 'co-interior angles, parallel lines' },
+    { q: angleDiag('LR1', '67°', 'LR2', 'x'), a: '67', hint: 'Same position at each intersection — corresponding.', reason: 'corresponding angles, parallel lines' },
+    { q: angleDiag('LR1', '110°', 'UL2', 'x'), a: '110', hint: 'Alternate (Z) → equal.', reason: 'alternate angles, parallel lines' },
+    { q: angleDiag('LR1', '145°', 'UR2', 'x'), a: '35', hint: 'Co-interior → sum to 180°.', reason: 'co-interior angles, parallel lines' },
+    { q: angleDiag('UL1', '113°', 'UL2', 'x'), a: '113', hint: 'Same position — corresponding.', reason: 'corresponding angles, parallel lines' },
+  ];
+
+  const practice2 = [
+    { q: angleDiag('UR1', '78°', 'LL2', 'x'),
+      a: '78',
+      hint: 'Step 1: 78° corresponds to the upper-right angle at the lower intersection. Step 2: that angle is vertically opposite to x.',
+      reason: 'corresponding angles + vertically opposite angles' },
+    { q: angleDiag('UR1', '64°', 'UL2', 'x'),
+      a: '116',
+      hint: 'Step 1: corresponding takes 64° down to the lower intersection. Step 2: that angle and x are on a straight line.',
+      reason: 'corresponding angles, then angles on a straight line' },
+    { q: angleDiag('UL1', '113°', 'LR2', 'x'),
+      a: '113',
+      hint: 'Step 1: corresponding takes 113° to the upper-left at the lower intersection. Step 2: that angle is vertically opposite to x.',
+      reason: 'corresponding angles + vertically opposite angles' },
+    { q: angleDiag('LR1', '105°', 'LL2', 'x'),
+      a: '75',
+      hint: 'Step 1: corresponding gives the lower-right at the lower intersection = 105°. Step 2: x is on a straight line with that angle.',
+      reason: 'corresponding angles, then angles on a straight line' },
+  ];
+
+  const practice3 = [
+    { q: `<div>Co-interior angles. Find <span class="var">x</span>.</div>` + angleDiag('LR1', '(3x+20)°', 'UR2', '(2x−10)°'),
+      a: '34',
+      hint: 'Co-interior → sum to 180. So (3x + 20) + (2x − 10) = 180.',
+      reason: '5x + 10 = 180, so x = 34' },
+    { q: `<div>Alternate angles. Find <span class="var">x</span>.</div>` + angleDiag('LR1', '(4x−15)°', 'UL2', '(2x+25)°'),
+      a: '20',
+      hint: 'Alternate → equal. So 4x − 15 = 2x + 25.',
+      reason: '2x = 40, so x = 20' },
+    { q: `<div>Corresponding angles. Find <span class="var">x</span>.</div>` + angleDiag('UR1', '(5x+10)°', 'UR2', '80°'),
+      a: '14',
+      hint: 'Corresponding → equal. So 5x + 10 = 80.',
+      reason: '5x = 70, so x = 14' },
+  ];
+
+  const exitProbs = [
+    { q: 'Two parallel lines are cut by a transversal. One angle measures 124°. The co-interior angle is <span class="var">x</span>°. Find <span class="var">x</span>.',
+      a: '56', hint: 'Co-interior angles sum to 180°.', reason: 'co-interior angles, parallel lines' },
+    { q: 'In a diagram, an alternate angle to <span class="var">y</span> measures 47°. What is <span class="var">y</span>?',
+      a: '47', hint: 'Alternate angles are equal.', reason: 'alternate angles, parallel lines' },
+    { q: 'Explain <strong>in one sentence</strong> why co-interior angles on parallel lines add to 180°, using the words "straight line" and "corresponding" in your answer.',
+      a: 'TEXT',
+      model: 'The corresponding angle of the first co-interior angle sits on a straight line with the second co-interior angle, so together they must add to 180°.',
+      hint: 'Hint: a co-interior angle has a corresponding partner across the transversal, and that partner is on a straight line with the other co-interior angle.' },
+  ];
+
+  // ============ ANSWER NORMALISATION ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/°/g, '')
+      .replace(/degrees?/g, '')
+      .replace(/\s+/g, '')
+      .replace(/−/g, '-')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // accept "co-interior" / "cointerior" / "co interior"
+    if (exp.replace(/-/g, '') === norm.replace(/-/g, '')) return true;
+    return false;
+  }
+
+  // ============ BUILD PRACTICE ============
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', ${JSON.stringify(p.a)}, ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}">
+          <strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a, p.model)}</span>
+          ${p.reason ? `<span class="reason">because ${p.reason}</span>` : ''}
+        </div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a, model) {
+    if (a === 'TEXT') return model || '(see your teacher)';
+    // numeric / algebraic display: italicise lone letters, tidy minus
+    let r = a;
+    // if it's just digits, append degree symbol
+    if (/^-?\d+$/.test(a)) return a + '°';
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INIT ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('recapGrid', recap, 'R');
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'M');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
