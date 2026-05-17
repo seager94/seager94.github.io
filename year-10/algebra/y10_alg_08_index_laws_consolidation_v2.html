@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Index Laws Consolidation — Year 10</title>
+<style>
+  :root {
+    --navy: #1D2B5E;
+    --navy-dark: #141f48;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* DIAGNOSTIC — warm-up styling: subtle coral accent */
+  section.lesson.diagnostic {
+    background: #fff8f9;
+    border-left: 5px solid var(--coral);
+  }
+  section.lesson.diagnostic .problem { background: white; }
+  .diagnostic-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--coral);
+    color: white;
+    white-space: nowrap;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  sup { font-size: 0.75em; line-height: 0; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* Big "law card" stacked fraction style for worked example */
+  .stacked-frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    margin: 0 4px;
+  }
+  .stacked-frac .num { border-bottom: 2px solid currentColor; padding: 2px 8px 4px; }
+  .stacked-frac .den { padding: 4px 8px 2px; }
+
+  /* VOCABULARY FLIP CARDS (now: "the five laws") */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 215px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.15rem;
+  }
+  .vocab-front .law-num {
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    opacity: 0.7;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+    padding: 14px;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-back .law-rule {
+    margin-bottom: 6px;
+  }
+  .vocab-back .law-formula {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    background: var(--hint-bg);
+    color: var(--navy);
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin: 4px 0 6px;
+    display: inline-block;
+  }
+  .vocab-back .law-example {
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .vocab-back .law-example strong {
+    color: var(--coral);
+    font-style: normal;
+  }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 7px 13px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 90px;
+  }
+  .bucket h4 {
+    margin: 0 0 8px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .bucket h4 .op-tag {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 4px;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+  .bucket h4.tag-mult .op-tag { background: #c89638; }
+  .bucket h4.tag-div  .op-tag { background: #6ba87c; }
+  .bucket h4.tag-pow  .op-tag { background: #6f4ab8; }
+  .bucket h4.tag-special .op-tag { background: var(--coral); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 7px 13px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+    line-height: 1.9;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #d63a4d; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.95rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* INTRO PANEL on Section 1 */
+  .intro-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+    align-items: stretch;
+  }
+  @media (max-width: 700px) {
+    .intro-panel { grid-template-columns: 1fr; }
+  }
+  .intro-panel .panel-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .intro-panel .panel-card h4 {
+    margin: 0 0 8px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1rem;
+  }
+  .intro-panel .panel-card p { margin: 0; font-size: 0.93rem; }
+  .intro-panel .panel-card ul { margin: 4px 0 0; padding-left: 18px; font-size: 0.92rem; }
+  .intro-panel .panel-card .law-list li { margin: 3px 0; }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Index Laws — Consolidating with Variables</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Consolidation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 26</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 1: DIAGNOSTIC MINI-QUIZ (5 minutes) -->
+<section class="lesson diagnostic">
+  <h2>
+    <span class="sec-num">1</span>Diagnostic — what's still with you?
+    <span class="diagnostic-tag">⏱ 5 minutes</span>
+  </h2>
+  <p class="sec-desc">You met all five index laws last term. Try one quick question per law — these check which laws are still solid and which need a bit of refreshing. <strong>Don't worry if some feel rusty.</strong> Today is about getting them all back to confident.</p>
+
+  <div class="intro-panel">
+    <div class="panel-card">
+      <h4>The five laws — one question each</h4>
+      <p>Each problem below targets one specific law. As you go, mentally tag each one as ✓ confident, ~ rusty, or ✗ blank. We'll consolidate them all today.</p>
+    </div>
+    <div class="panel-card">
+      <h4>How to type your answers</h4>
+      <ul>
+        <li>Powers: type <code>x^8</code> or just <code>x8</code></li>
+        <li>Just a number? Type it: <code>1</code>, <code>7</code></li>
+        <li>Negative indices: rewrite as positive — type <code>1/x^2</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="practice-grid" id="diagnosticGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Reflect:</strong> Which felt easy? Which felt fuzzy? Notice the gaps — you'll get fresh chances to work each law throughout the lesson.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Refresh the five laws together</div>
+    <div class="phase-sub">Quick cards, a sort, and a match — we'll do these as a whole class to lock the laws back in.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: THE FIVE LAWS (vocab flip cards) -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>The five index laws</h2>
+  <p class="sec-desc">Tap each card to flip and check the rule. These are the same five laws you met last term — read them like a refresher, not a re-teach.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">
+          <div class="law-num">Law 1</div>
+          Multiplication
+          <div class="hint-flip">Tap to flip</div>
+        </div>
+        <div class="vocab-back">
+          <div class="law-rule">Same base — <strong>add the indices</strong>.</div>
+          <div class="law-formula"><span class="var">x</span><sup>a</sup> × <span class="var">x</span><sup>b</sup> = <span class="var">x</span><sup>a+b</sup></div>
+          <div class="law-example"><span class="var">x</span><sup>3</sup> × <span class="var">x</span><sup>5</sup> = <strong><span class="var">x</span><sup>8</sup></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">
+          <div class="law-num">Law 2</div>
+          Division
+          <div class="hint-flip">Tap to flip</div>
+        </div>
+        <div class="vocab-back">
+          <div class="law-rule">Same base — <strong>subtract the indices</strong>.</div>
+          <div class="law-formula"><span class="var">x</span><sup>a</sup> ÷ <span class="var">x</span><sup>b</sup> = <span class="var">x</span><sup>a−b</sup></div>
+          <div class="law-example"><span class="var">x</span><sup>7</sup> ÷ <span class="var">x</span><sup>2</sup> = <strong><span class="var">x</span><sup>5</sup></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">
+          <div class="law-num">Law 3</div>
+          Power of a power
+          <div class="hint-flip">Tap to flip</div>
+        </div>
+        <div class="vocab-back">
+          <div class="law-rule">Bracket raised to another power — <strong>multiply the indices</strong>.</div>
+          <div class="law-formula">(<span class="var">x</span><sup>a</sup>)<sup>b</sup> = <span class="var">x</span><sup>a×b</sup></div>
+          <div class="law-example">(<span class="var">x</span><sup>4</sup>)<sup>3</sup> = <strong><span class="var">x</span><sup>12</sup></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">
+          <div class="law-num">Law 4</div>
+          Zero index
+          <div class="hint-flip">Tap to flip</div>
+        </div>
+        <div class="vocab-back">
+          <div class="law-rule">Anything (not zero) raised to <strong>the power 0 equals 1</strong>.</div>
+          <div class="law-formula"><span class="var">x</span><sup>0</sup> = 1</div>
+          <div class="law-example">7<sup>0</sup> = <strong>1</strong> &nbsp;·&nbsp; <span class="var">k</span><sup>0</sup> = <strong>1</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">
+          <div class="law-num">Law 5</div>
+          Negative index
+          <div class="hint-flip">Tap to flip</div>
+        </div>
+        <div class="vocab-back">
+          <div class="law-rule">A negative index means <strong>take the reciprocal</strong>.</div>
+          <div class="law-formula"><span class="var">x</span><sup>−n</sup> = <span class="frac"><span class="num">1</span><span class="den"><span class="var">x</span><sup>n</sup></span></span></div>
+          <div class="law-example"><span class="var">x</span><sup>−2</sup> = <strong><span class="frac"><span class="num">1</span><span class="den"><span class="var">x</span><sup>2</sup></span></span></strong></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 3: SORT BY WHICH LAW APPLIES -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Which law applies?</h2>
+  <p class="sec-desc">Drag each expression to the law that simplifies it. Look at the operation between bases — that signals which law you need. Wrong drops will shake and pop back.</p>
+
+  <div class="parts-expr">
+    <div class="label">Drag from the strip into the four buckets</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="mult"><span class="var">x</span><sup>4</sup> × <span class="var">x</span><sup>3</sup></span>
+      <span class="term-chip expr" data-type="div"><span class="var">y</span><sup>10</sup> ÷ <span class="var">y</span><sup>2</sup></span>
+      <span class="term-chip expr" data-type="pow">(<span class="var">k</span><sup>5</sup>)<sup>2</sup></span>
+      <span class="term-chip expr" data-type="special"><span class="var">q</span><sup>0</sup></span>
+      <span class="term-chip expr" data-type="mult"><span class="var">t</span><sup>2</sup> × <span class="var">t</span><sup>7</sup></span>
+      <span class="term-chip expr" data-type="div"><span class="var">w</span><sup>8</sup> ÷ <span class="var">w</span><sup>5</sup></span>
+      <span class="term-chip expr" data-type="pow">(<span class="var">n</span><sup>2</sup>)<sup>5</sup></span>
+      <span class="term-chip expr" data-type="special"><span class="var">e</span><sup>−3</sup></span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="mult">
+        <h4 class="tag-mult"><span class="op-tag">×</span>Indices ADD</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="div">
+        <h4 class="tag-div"><span class="op-tag">÷</span>Indices SUBTRACT</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="pow">
+        <h4 class="tag-pow"><span class="op-tag">( )<sup>n</sup></span>Indices MULTIPLY</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="special">
+        <h4 class="tag-special"><span class="op-tag">0 / −</span>Special case</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The operation between the bases (×, ÷, or a bracket-power) tells you which law applies. Zero and negative indices are the two "special cases" — they re-write rather than combine.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH EXPRESSION TO SIMPLIFIED FORM -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each expression to its simplified form</h2>
+  <p class="sec-desc">Click two chips that are equivalent. Five matching pairs — one per law. Use the laws as your guide.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch how laws combine</div>
+    <div class="phase-sub">When more than one law applies in the same expression, work one law at a time. I'll show you the routine.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — combining two laws</h2>
+  <p class="sec-desc">Simplify: <span class="expr"><span class="stacked-frac"><span class="num">2<span class="var">x</span><sup>5</sup> × 3<span class="var">x</span><sup>2</sup></span><span class="den">6<span class="var">x</span><sup>3</sup></span></span></span></p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Apply the multiplication law to the numerator</div>
+        <div class="step-desc">Same base × same base → multiply coefficients, <strong>add</strong> indices.</div>
+        <div class="calc-box">
+          2<span class="var">x</span><sup>5</sup> × 3<span class="var">x</span><sup>2</sup>
+          = <span class="red">(2 × 3)</span> × <span class="blue">(<span class="var">x</span><sup>5</sup> × <span class="var">x</span><sup>2</sup>)</span><br>
+          = <span class="red">6</span> × <span class="blue"><span class="var">x</span><sup>5+2</sup></span>
+          = <span class="red">6</span><span class="blue"><span class="var">x</span><sup>7</sup></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Now apply the division law</div>
+        <div class="step-desc">The expression is now <span class="expr"><span class="stacked-frac"><span class="num">6<span class="var">x</span><sup>7</sup></span><span class="den">6<span class="var">x</span><sup>3</sup></span></span></span>. Divide coefficients, <strong>subtract</strong> indices.</div>
+        <div class="calc-box">
+          <span class="stacked-frac"><span class="num">6<span class="var">x</span><sup>7</sup></span><span class="den">6<span class="var">x</span><sup>3</sup></span></span>
+          = <span class="red">(6 ÷ 6)</span> × <span class="blue">(<span class="var">x</span><sup>7</sup> ÷ <span class="var">x</span><sup>3</sup>)</span><br>
+          = <span class="red">1</span> × <span class="blue"><span class="var">x</span><sup>7−3</sup></span>
+          = <span class="blue"><span class="var">x</span><sup>4</sup></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Verify by substituting a value</div>
+        <div class="step-desc">Pick <span class="expr"><span class="var">x</span> = 2</span>. Both forms should give the same number.</div>
+        <div class="calc-box">
+          Original: <span class="stacked-frac"><span class="num">2(32) × 3(4)</span><span class="den">6(8)</span></span>
+          = <span class="stacked-frac"><span class="num">64 × 12</span><span class="den">48</span></span>
+          = <span class="stacked-frac"><span class="num">768</span><span class="den">48</span></span>
+          = <strong>16</strong><br>
+          Simplified: <span class="var">x</span><sup>4</sup> = 2<sup>4</sup> = <strong>16</strong> ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          <span class="var">x</span><sup>4</sup>
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's combine laws together</div>
+    <div class="phase-sub">Same routine: work the inside first, then the outside. Three sub-prompts — we'll fill them in as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — simplify <span class="expr"><span class="stacked-frac"><span class="num">5<span class="var">y</span><sup>4</sup> × 2<span class="var">y</span><sup>3</sup></span><span class="den">5<span class="var">y</span><sup>2</sup></span></span></span></h2>
+  <p class="sec-desc">Three small steps: deal with the coefficients in the numerator, then the variables in the numerator, then divide. Discuss each prompt with the person next to you, then we'll lock it in as a class.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>The routine:</strong> when laws stack, work <em>one law at a time</em>. Tidy the numerator first, then divide. This habit prevents most sign and index slips.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then build through three chilli tiers — single-law practice, combining two, then full combinations.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm the routine works for you. Try them on your own first — <strong>then we'll check together as a class</strong> before you tackle the chilli practice.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1">
+  <h2><span class="sec-num">8</span>Practice — one law at a time <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+  <p class="sec-desc">Each problem uses just one of the five laws. Type powers as <code>x^7</code> or <code>x7</code>. Express any negative indices as positive — use <code>1/x^n</code>.</p>
+  <div class="practice-grid" id="practiceGrid1"></div>
+</section>
+
+<!-- SECTION 9: STRETCH (combining two laws) -->
+<section class="lesson difficulty-2">
+  <h2><span class="sec-num">9</span>Stretch — combining laws <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+  <p class="sec-desc">Now two laws in one expression. Use the routine from the worked example: work one law at a time, simplify, then apply the next.</p>
+  <div class="practice-grid" id="practiceGrid2"></div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3">
+  <h2><span class="sec-num">10</span>Mastery — full combinations <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+  <p class="sec-desc">All five laws are in play here, including negative indices. Express final answers with positive indices.</p>
+  <div class="practice-grid" id="practiceGrid3"></div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
+  <h2><span class="sec-num">11</span>Exit ticket</h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the multiplication law, negative indices, and the idea behind the zero index.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School · Mathematics · Year 10 · Index Laws Consolidation<br>
+  Built with Claude · Adapted for SA Curriculum
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  // 5 pairs — one per law
+  const matchTerms = [
+    { html: '<span class="var">x</span><sup>4</sup> × <span class="var">x</span><sup>3</sup>',     group: 1 },  // multiplication
+    { html: '<span class="var">x</span><sup>7</sup>',                                              group: 1 },
+    { html: '<span class="var">x</span><sup>10</sup> ÷ <span class="var">x</span><sup>4</sup>',   group: 2 },  // division
+    { html: '<span class="var">x</span><sup>6</sup>',                                              group: 2 },
+    { html: '(<span class="var">x</span><sup>2</sup>)<sup>5</sup>',                                group: 3 },  // power of a power
+    { html: '<span class="var">x</span><sup>10</sup>',                                             group: 3 },
+    { html: '<span class="var">x</span><sup>0</sup>',                                              group: 4 },  // zero
+    { html: '1',                                                                                   group: 4 },
+    { html: '<span class="var">x</span><sup>−3</sup>',                                             group: 5 },  // negative
+    { html: '<span class="frac"><span class="num">1</span><span class="den"><span class="var">x</span><sup>3</sup></span></span>', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its match.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five laws matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not equivalent — check which law applies.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PROBLEM DATA ============
+  const diagnostic = [
+    { q: '<span class="var">x</span><sup>3</sup> × <span class="var">x</span><sup>5</sup>',
+      a: 'x^8', hint: 'Multiplication law — same base, add the indices.' },
+    { q: '<span class="var">x</span><sup>7</sup> ÷ <span class="var">x</span><sup>2</sup>',
+      a: 'x^5', hint: 'Division law — same base, subtract the indices.' },
+    { q: '(<span class="var">x</span><sup>4</sup>)<sup>3</sup>',
+      a: 'x^12', hint: 'Power of a power — multiply the indices.' },
+    { q: '<span class="var">x</span><sup>0</sup>',
+      a: '1', hint: 'Zero index — anything (not zero) to the power 0 is 1.' },
+    { q: '<span class="var">x</span><sup>−2</sup> &nbsp;<span style="font-size:0.85rem;color:var(--muted);">(express with positive indices)</span>',
+      a: '1/x^2', hint: 'Negative index — take the reciprocal, then write with a positive power.' },
+  ];
+
+  const checkpoint = [
+    { q: '3<span class="var">p</span><sup>4</sup> × 2<span class="var">p</span><sup>2</sup>',
+      a: '6p^6', hint: 'Multiply coefficients (3 × 2). For variables, add the indices (4 + 2).' },
+    { q: '<span class="var">q</span><sup>8</sup> ÷ <span class="var">q</span><sup>3</sup>',
+      a: 'q^5', hint: 'Division law — same base, subtract the indices (8 − 3).' },
+  ];
+
+  const practice1 = [
+    { q: '<span class="var">x</span><sup>4</sup> × <span class="var">x</span><sup>3</sup>',
+      a: 'x^7', hint: 'Multiplication law: 4 + 3.' },
+    { q: '<span class="var">y</span><sup>5</sup> × <span class="var">y</span><sup>6</sup>',
+      a: 'y^11', hint: 'Multiplication law: 5 + 6.' },
+    { q: '<span class="var">k</span><sup>9</sup> ÷ <span class="var">k</span><sup>4</sup>',
+      a: 'k^5', hint: 'Division law: 9 − 4.' },
+    { q: '<span class="var">m</span><sup>12</sup> ÷ <span class="var">m</span><sup>7</sup>',
+      a: 'm^5', hint: 'Division law: 12 − 7.' },
+    { q: '(<span class="var">a</span><sup>3</sup>)<sup>2</sup>',
+      a: 'a^6', hint: 'Power of a power: 3 × 2.' },
+    { q: '(<span class="var">b</span><sup>5</sup>)<sup>4</sup>',
+      a: 'b^20', hint: 'Power of a power: 5 × 4.' },
+    { q: '<span class="var">c</span><sup>0</sup>',
+      a: '1', hint: 'Zero index. Anything to the power 0 is 1.' },
+    { q: '7<span class="var">d</span><sup>0</sup>',
+      a: '7', hint: 'The zero index applies only to d, not the 7. So 7 × 1 = 7.' },
+    { q: '<span class="var">e</span><sup>−3</sup> &nbsp;<span style="font-size:0.85rem;color:var(--muted);">(positive indices)</span>',
+      a: '1/e^3', hint: 'Negative index — flip to reciprocal: 1 over e to the positive power.' },
+    { q: '2<span class="var">f</span><sup>−2</sup> &nbsp;<span style="font-size:0.85rem;color:var(--muted);">(positive indices)</span>',
+      a: '2/f^2', hint: 'Only f has the negative index. The 2 stays on top: 2 over f to the positive power.' },
+  ];
+
+  const practice2 = [
+    { q: '<span class="var">x</span><sup>4</sup> × <span class="var">x</span><sup>3</sup> × <span class="var">x</span>',
+      a: 'x^8', hint: 'Three multiplications. Remember x = x¹. Add: 4 + 3 + 1.' },
+    { q: '<span class="var">y</span><sup>7</sup> × <span class="var">y</span><sup>−2</sup>',
+      a: 'y^5', hint: 'Multiplication law still applies. Add: 7 + (−2) = 5.' },
+    { q: '(<span class="var">m</span><sup>5</sup>)<sup>2</sup> ÷ <span class="var">m</span><sup>7</sup>',
+      a: 'm^3', hint: 'Power of a power first: (m⁵)² = m¹⁰. Then divide: 10 − 7.' },
+    { q: '<span class="stacked-frac"><span class="num">6<span class="var">x</span><sup>5</sup> × 4<span class="var">x</span><sup>3</sup></span><span class="den">8<span class="var">x</span><sup>2</sup></span></span>',
+      a: '3x^6', hint: 'Numerator first: 6 × 4 = 24 and x⁵ × x³ = x⁸. Then divide: 24 ÷ 8 = 3 and x⁸ ÷ x² = x⁶.' },
+  ];
+
+  const practice3 = [
+    { q: '<span class="stacked-frac"><span class="num"><span class="var">a</span><sup>3</sup> × <span class="var">a</span><sup>−1</sup></span><span class="den"><span class="var">a</span><sup>−2</sup></span></span>',
+      a: 'a^4', hint: 'Numerator: 3 + (−1) = 2, so a². Then a² ÷ a⁻² = a^(2 − (−2)) = a⁴.' },
+    { q: '(<span class="var">k</span><sup>2</sup>)<sup>−3</sup> × <span class="var">k</span><sup>7</sup>',
+      a: 'k', hint: 'Power of a power: (k²)⁻³ = k⁻⁶. Then k⁻⁶ × k⁷ = k^(−6 + 7) = k¹ = k.' },
+    { q: '<span class="stacked-frac"><span class="num">2<span class="var">x</span><sup>3</sup><span class="var">y</span><sup>2</sup> × 5<span class="var">x</span><span class="var">y</span><sup>4</sup></span><span class="den">10<span class="var">x</span><sup>2</sup><span class="var">y</span><sup>3</sup></span></span>',
+      a: 'x^2y^3', hint: 'Track x and y separately. Coefficients: 2 × 5 ÷ 10 = 1. x: 3 + 1 − 2 = 2. y: 2 + 4 − 3 = 3.' },
+  ];
+
+  const weDo = [
+    { q: 'Multiply the coefficients in the numerator: 5 × 2 = ?',
+      a: '10', hint: 'Just standard multiplication.' },
+    { q: 'Apply the multiplication law to the y-terms in the numerator: <span class="var">y</span><sup>4</sup> × <span class="var">y</span><sup>3</sup> = ?',
+      a: 'y^7', hint: 'Same base — add the indices. 4 + 3 = 7.' },
+    { q: 'Now divide: <span class="stacked-frac"><span class="num">10<span class="var">y</span><sup>7</sup></span><span class="den">5<span class="var">y</span><sup>2</sup></span></span> = ?',
+      a: '2y^5', hint: 'Coefficients: 10 ÷ 5 = 2. Variables: subtract the indices, 7 − 2 = 5.' },
+  ];
+
+  const exitProbs = [
+    { q: 'Simplify: <span class="expr">3<span class="var">a</span><sup>5</sup> × 2<span class="var">a</span><sup>4</sup></span>',
+      a: '6a^9', hint: 'Multiply coefficients (3 × 2). Add indices (5 + 4).' },
+    { q: 'Simplify: <span class="expr"><span class="var">m</span><sup>−4</sup></span> &nbsp;<span style="font-size:0.85rem;color:var(--muted);">(positive indices)</span>',
+      a: '1/m^4', hint: 'Negative index — reciprocal: 1 over m to the positive power.' },
+    { q: 'Explain in your own words: why does <span class="expr"><span class="var">x</span><sup>0</sup> = 1</span>? (Hint: think about <span class="expr"><span class="var">x</span><sup>3</sup> ÷ <span class="var">x</span><sup>3</sup></span>.)',
+      a: 'TEXT', hint: 'x³ ÷ x³ = 1 (anything divided by itself). But by the division law, it also equals x^(3−3) = x⁰. So x⁰ must be 1.' },
+  ];
+
+  // ============ ANSWER NORMALISATION & MATCHING ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/−/g, '-')        // unicode minus → hyphen
+      .replace(/÷/g, '/')        // unicode division sign → slash
+      .replace(/\*/g, '')
+      .replace(/\^/g, '')             // caret is optional: x^8 == x8
+      .replace(/([a-z])1(?=$|[+\-/])/g, '$1')   // x1 → x at term boundary
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // accept reordered terms within a single expression
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+    return false;
+  }
+
+  // ============ FORMAT ANSWER DISPLAY ============
+  // Turn a plain-text answer like "1/x^2" or "3x^6" into pretty HTML.
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+    let r = a;
+    // 1. Caret + integer (possibly negative) → <sup>
+    r = r.replace(/\^(-?\d+)/g, (_, n) => `<sup>${n.replace('-', '−')}</sup>`);
+    // 2. Wrap standalone letters in <span class="var"> (skip letters inside existing tags)
+    r = r.replace(/([a-z])(?![^<]*>)/g, '<span class="var">$1</span>');
+    // 3. Stack fractions where numerator is digits and denominator is digits or a var (with optional sup)
+    r = r.replace(/(\d+)\/(\d+|<span class="var">[a-z]<\/span>(?:<sup>[^<]+<\/sup>)?)/g,
+      (_, n, d) => `<span class="frac"><span class="num">${n}</span><span class="den">${d}</span></span>`);
+    return r;
+  }
+
+  // ============ PRACTICE BUILDER ============
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('diagnosticGrid', diagnostic, 'D');
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'M');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
