@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fractions, Decimals &amp; Percentages — Year 7</title>
+
+<meta name="lesson-id"             content="y7_num_07">
+<meta name="ac9-descriptor"        content="AC9M7N04">
+<meta name="ac9-elaborations"      content="3">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Number">
+<meta name="sa-conceptual-understanding" content="Rational numbers can be represented in many equivalent ways">
+<meta name="lesson-focus"          content="Convert between fraction, decimal, and percentage representations of rational numbers; learn benchmark equivalences on sight.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* BENCHMARK ROW (used in hook) */
+  .bench-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .bench-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .bench-card .bench-fdp {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--navy);
+    line-height: 1.7;
+  }
+  .bench-card .bench-fdp .eq { color: var(--coral); font-weight: 700; margin: 0 4px; }
+  .bench-card .bench-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS / SORT INTERACTIVE — 3-bucket variant */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.less { background: #e7eef5; border-color: #4a6d8a; color: #1e3950; font-weight: 600; }
+  .term-chip.equal { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.more { background: #dceadc; border-color: #3a8f5f; color: #1d4a30; font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* TRIANGLE DIAGRAM */
+  .fdp-triangle-wrap {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 14px 6px;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .fdp-triangle-wrap .tri-caption {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  svg.fdp-triangle {
+    max-width: 460px; width: 100%; height: auto; display: block; margin: 0 auto;
+  }
+  svg.fdp-triangle .v-box { fill: white; stroke: #d8dde6; stroke-width: 1.5; }
+  svg.fdp-triangle .v-box.f { stroke: var(--coral); }
+  svg.fdp-triangle .v-box.d { stroke: var(--navy); }
+  svg.fdp-triangle .v-box.p { stroke: #c89638; }
+  svg.fdp-triangle .v-label {
+    font-family: Georgia, serif; font-weight: bold; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  svg.fdp-triangle .v-label.f { fill: var(--coral); }
+  svg.fdp-triangle .v-label.d { fill: var(--navy); }
+  svg.fdp-triangle .v-label.p { fill: #8a6618; }
+  svg.fdp-triangle .v-val {
+    font-family: Georgia, serif; font-size: 18px; fill: var(--text);
+    font-style: italic;
+  }
+  svg.fdp-triangle .edge { stroke: #7e8a99; stroke-width: 2; fill: none; }
+  svg.fdp-triangle .edge-label {
+    font-family: -apple-system, sans-serif; font-size: 11px;
+    fill: var(--navy); font-weight: 600;
+  }
+  svg.fdp-triangle .edge-label.tip { fill: var(--coral); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCH */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND — Retrieval + Exit ticket */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Fractions, Decimals &amp; Percentages</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Number</div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's maths.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>Imagine you walk into three different shops. Each has a sign on the front window:</p>
+      <ul style="line-height: 1.9;">
+        <li>Shop A: <strong>"<span class="frac"><span class="num">1</span><span class="den">4</span></span> OFF EVERYTHING"</strong></li>
+        <li>Shop B: <strong>"0.25 OFF EVERY DOLLAR"</strong></li>
+        <li>Shop C: <strong>"25% OFF STOREWIDE"</strong></li>
+      </ul>
+      <p>Which shop has the best deal? <strong>Trick question — they're all the same offer</strong>, written three different ways.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      Fractions, decimals, and percentages are <strong>three languages for the same quantity</strong>. The number doesn't change — only the way we write it. Today you'll learn to switch fluently between them, starting with six benchmark equivalences you should know on sight.
+    </div>
+  </div>
+  <div class="bench-row">
+    <div class="bench-card">
+      <div class="bench-fdp"><span class="frac"><span class="num">1</span><span class="den">2</span></span><span class="eq">=</span>0.5<span class="eq">=</span>50%</div>
+      <div class="bench-label">a half</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-fdp"><span class="frac"><span class="num">1</span><span class="den">4</span></span><span class="eq">=</span>0.25<span class="eq">=</span>25%</div>
+      <div class="bench-label">a quarter</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-fdp"><span class="frac"><span class="num">3</span><span class="den">4</span></span><span class="eq">=</span>0.75<span class="eq">=</span>75%</div>
+      <div class="bench-label">three quarters</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-fdp"><span class="frac"><span class="num">1</span><span class="den">10</span></span><span class="eq">=</span>0.1<span class="eq">=</span>10%</div>
+      <div class="bench-label">a tenth</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-fdp"><span class="frac"><span class="num">1</span><span class="den">5</span></span><span class="eq">=</span>0.2<span class="eq">=</span>20%</div>
+      <div class="bench-label">a fifth</div>
+    </div>
+    <div class="bench-card">
+      <div class="bench-fdp"><span class="frac"><span class="num">1</span><span class="den">8</span></span><span class="eq">=</span>0.125<span class="eq">=</span>12.5%</div>
+      <div class="bench-label">an eighth</div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Fraction<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A number written as <strong>parts out of a whole</strong>, with a numerator above and denominator below.<div class="vocab-example expr">In <span class="frac"><span class="num">3</span><span class="den">8</span></span>: numerator is <strong>3</strong>, denominator is <strong>8</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Decimal<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A number using place value to the right of a <strong>decimal point</strong> — tenths, hundredths, thousandths.<div class="vocab-example expr">0.375 means <strong>3 tenths + 7 hundredths + 5 thousandths</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Percent<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A fraction with denominator <strong>100</strong>. The symbol <strong>%</strong> literally means "out of 100".<div class="vocab-example expr">37% = <span class="frac"><span class="num">37</span><span class="den">100</span></span>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Equivalent<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Two numbers are equivalent if they have the <strong>same value</strong>, even if written differently.<div class="vocab-example expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span>, 0.5, and 50% are all equivalent.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Terminating<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A decimal that <strong>stops</strong> after a finite number of digits. The opposite is "repeating" — the digits go on forever.<div class="vocab-example expr"><span class="frac"><span class="num">3</span><span class="den">8</span></span> = 0.375 terminates. <span class="frac"><span class="num">1</span><span class="den">3</span></span> = 0.333... repeats.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT INTERACTIVE -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort by value</h2>
+  <p class="sec-desc">Each chip is a number in fraction, decimal, or percent form. Drag it into the right bucket — is it <strong>less than</strong>, <strong>equal to</strong>, or <strong>greater than</strong> <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span>?</p>
+
+  <div class="parts-expr">
+    <div class="label">Compare each value to <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span> (= 0.5 = 50%)</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="less">0.25</span>
+      <span class="term-chip expr" data-type="equal"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span>
+      <span class="term-chip expr" data-type="more">65%</span>
+      <span class="term-chip expr" data-type="equal"><span class="frac"><span class="num">5</span><span class="den">10</span></span></span>
+      <span class="term-chip expr" data-type="less"><span class="frac"><span class="num">1</span><span class="den">4</span></span></span>
+      <span class="term-chip expr" data-type="more">0.7</span>
+      <span class="term-chip expr" data-type="equal">50%</span>
+      <span class="term-chip expr" data-type="less">35%</span>
+      <span class="term-chip expr" data-type="more"><span class="frac"><span class="num">4</span><span class="den">5</span></span></span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="less">
+        <h4>Less than <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span></h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="equal">
+        <h4 class="vt">Equal to <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span></h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="more">
+        <h4 class="ct">Greater than <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span></h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 You can't sort by form here — you have to think about the <strong>value</strong>. Convert each chip to a single form (decimals are easiest) and compare to 0.5.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the equivalents</h2>
+  <p class="sec-desc">Click two chips that name the same number to match them. There are five matching pairs in the grid below.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a number to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — convert <span class="expr"><span class="frac"><span class="num">3</span><span class="den">8</span></span></span> to all three forms</h2>
+  <p class="sec-desc">Use the triangle below to picture the moves. Each edge is one conversion rule.</p>
+
+  <div class="fdp-triangle-wrap">
+    <svg class="fdp-triangle" viewBox="0 0 460 320" xmlns="http://www.w3.org/2000/svg" aria-label="Triangle showing fraction, decimal and percent as three equivalent forms">
+      <!-- Edges connect from box edges to box edges -->
+      <line class="edge" x1="195" y1="90" x2="105" y2="240" />
+      <line class="edge" x1="265" y1="90" x2="355" y2="240" />
+      <line class="edge" x1="145" y1="280" x2="315" y2="280" />
+
+      <!-- Edge labels: Fraction ↔ Decimal -->
+      <text class="edge-label" x="118" y="160" transform="rotate(-58 118 160)">divide num ÷ den</text>
+      <text class="edge-label tip" x="172" y="192" transform="rotate(-58 172 192)">↺ write over 10/100</text>
+
+      <!-- Edge labels: Decimal ↔ Percent -->
+      <text class="edge-label" x="230" y="275" text-anchor="middle">× 100</text>
+      <text class="edge-label tip" x="230" y="298" text-anchor="middle">↺ ÷ 100</text>
+
+      <!-- Edge labels: Fraction ↔ Percent -->
+      <text class="edge-label" x="342" y="160" transform="rotate(58 342 160)">scale to /100</text>
+      <text class="edge-label tip" x="288" y="192" transform="rotate(58 288 192)">↺ write over 100</text>
+
+      <!-- Fraction vertex (apex) with stacked fraction inside -->
+      <rect class="v-box f" x="160" y="14" width="140" height="76" rx="10" />
+      <text class="v-label f" x="230" y="36" text-anchor="middle">Fraction</text>
+      <text class="v-val" x="230" y="60" text-anchor="middle">3</text>
+      <line x1="218" y1="65" x2="242" y2="65" stroke="#2a2a2a" stroke-width="1.5" />
+      <text class="v-val" x="230" y="83" text-anchor="middle">8</text>
+
+      <!-- Decimal vertex -->
+      <rect class="v-box d" x="5" y="240" width="140" height="60" rx="10" />
+      <text class="v-label d" x="75" y="262" text-anchor="middle">Decimal</text>
+      <text class="v-val" x="75" y="286" text-anchor="middle">0.375</text>
+
+      <!-- Percent vertex -->
+      <rect class="v-box p" x="315" y="240" width="140" height="60" rx="10" />
+      <text class="v-label p" x="385" y="262" text-anchor="middle">Percent</text>
+      <text class="v-val" x="385" y="286" text-anchor="middle">37.5%</text>
+    </svg>
+    <div class="tri-caption">All three boxes are the same number — only the form changes.</div>
+  </div>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Fraction → Decimal: divide</div>
+        <div class="step-desc">"Out of 8" means divide the numerator by the denominator. So 3 ÷ 8.</div>
+        <div class="calc-box">
+          <span class="red"><span class="frac"><span class="num">3</span><span class="den">8</span></span></span> &nbsp;=&nbsp; 3 ÷ 8 &nbsp;=&nbsp; <span class="blue">0.375</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Decimal → Percent: × 100</div>
+        <div class="step-desc">"Percent" means "out of 100", so multiplying by 100 moves the decimal point two places right.</div>
+        <div class="calc-box">
+          <span class="blue">0.375</span> &nbsp;×&nbsp; 100 &nbsp;=&nbsp; <span class="red">37.5%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Sense-check against benchmarks</div>
+        <div class="step-desc">We expect <span class="expr"><span class="frac"><span class="num">3</span><span class="den">8</span></span></span> to sit between <span class="expr"><span class="frac"><span class="num">1</span><span class="den">4</span></span></span> (= 25%) and <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span> (= 50%). Is 37.5% between 25% and 50%? Yes ✓</div>
+        <div class="calc-box">25% &lt; 37.5% &lt; 50% &nbsp;✓ — the answer is reasonable.</div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          <span class="frac"><span class="num">3</span><span class="den">8</span></span> &nbsp;=&nbsp; 0.375 &nbsp;=&nbsp; 37.5%
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — convert 0.6 to all three forms</h2>
+  <p class="sec-desc">We'll break it into three small steps. After each prompt, discuss with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this works:</strong> the decimal 0.6 means "six tenths" — that's already a fraction (<span class="expr"><span class="frac"><span class="num">6</span><span class="den">10</span></span></span>). We just simplify, and multiply by 100 to read it as a percent.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm the routine works for you. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Most of these can be done in your head using the six benchmarks. For decimals type <code>0.75</code>; for fractions type <code>3/4</code>; for percentages type <code>75</code> or <code>75%</code> — either is fine.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Trickier fractions, and the difference between <strong>terminating</strong> and <strong>repeating</strong> decimals. A short division is useful here.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Order mixed lists from smallest to largest. Convert every value to a common form (decimals work well) before deciding. Type your answer as a comma-separated list <strong>in the same form as given</strong>, e.g. <code>3/5,65%,0.7,11/15</code>.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Number</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Rational numbers can be represented in many equivalent ways.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7N04</strong> — find equivalent representations of rational numbers and represent rational numbers on a number line</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">3</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Convert between fraction, decimal, and percentage representations of rational numbers; learn benchmark equivalences on sight.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_num_07. Source: lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Fractions, Decimals &amp; Percentages
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  // 5 pairs — each links two of fraction / decimal / percent
+  const matchTerms = [
+    { html: '<span class="frac"><span class="num">1</span><span class="den">2</span></span>', group: 1 },
+    { html: '50%', group: 1 },
+    { html: '0.25', group: 2 },
+    { html: '<span class="frac"><span class="num">1</span><span class="den">4</span></span>', group: 2 },
+    { html: '75%', group: 3 },
+    { html: '0.75', group: 3 },
+    { html: '<span class="frac"><span class="num">1</span><span class="den">5</span></span>', group: 4 },
+    { html: '20%', group: 4 },
+    { html: '0.1', group: 5 },
+    { html: '10%', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not the same value — try converting both to decimals.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE DATA ============
+
+  const retrieval = [
+    { q: 'Simplify <span class="expr"><span class="frac"><span class="num">6</span><span class="den">8</span></span></span> to its lowest terms.', a: '3/4', hint: 'Divide top and bottom by their HCF, which is 2.' },
+    { q: 'Write <span class="expr"><span class="frac"><span class="num">3</span><span class="den">10</span></span></span> as a decimal.', a: '0.3', hint: 'Tenths sit in the first place after the decimal point.' },
+    { q: 'Calculate 0.07 × 100.', a: '7', hint: 'Multiplying by 100 moves the decimal point two places to the right.' },
+  ];
+
+  const practice1 = [
+    { q: 'Write <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span> as a decimal.', a: '0.5', hint: 'This is a benchmark — half of one is 0.5.' },
+    { q: 'Write 25% as a decimal.', a: '0.25', hint: '25% = 25/100. Move the decimal point two places left.' },
+    { q: 'Write 0.75 as a percentage.', a: '75', hint: 'Multiply by 100 — move the point two places right.' },
+    { q: 'Write <span class="expr"><span class="frac"><span class="num">1</span><span class="den">10</span></span></span> as a percentage.', a: '10', hint: 'One tenth = 10/100 = 10%.' },
+    { q: 'Write 80% as a fraction in simplest form.', a: '4/5', hint: 'Start with 80/100, then divide top and bottom by 20.' },
+    { q: 'Write 0.3 as a fraction in simplest form.', a: '3/10', hint: '0.3 = three tenths. Is 3/10 already in simplest form?' },
+    { q: 'Write <span class="expr"><span class="frac"><span class="num">1</span><span class="den">4</span></span></span> as a percentage.', a: '25', hint: 'A quarter is a benchmark — 0.25 = 25%.' },
+    { q: 'Write 0.9 as a percentage.', a: '90', hint: '0.9 × 100 = ?' },
+    { q: 'Write 70% as a decimal.', a: '0.7', hint: '70 ÷ 100 = 0.70 = 0.7.' },
+    { q: 'Write <span class="expr"><span class="frac"><span class="num">1</span><span class="den">5</span></span></span> as a decimal.', a: '0.2', hint: '1 ÷ 5 = 0.2 (benchmark).' },
+  ];
+
+  const practice2 = [
+    { q: 'Convert <span class="expr"><span class="frac"><span class="num">7</span><span class="den">16</span></span></span> to a decimal.', a: '0.4375', hint: 'Do the short division 7 ÷ 16. Hint: 16 × 4 = 64, so 7/16 ≈ 0.4...' },
+    { q: 'Convert <span class="expr"><span class="frac"><span class="num">9</span><span class="den">20</span></span></span> to a percentage (number only).', a: '45', hint: 'Scale to a denominator of 100: <span class="frac"><span class="num">9</span><span class="den">20</span></span> × 5/5 = 45/100.' },
+    { q: '<span class="expr"><span class="frac"><span class="num">1</span><span class="den">3</span></span></span> as a decimal goes 0.3333... forever. What digit repeats?', a: '3', hint: 'Long-divide 1 by 3 — you keep getting the same remainder.' },
+    { q: 'Is the decimal for <span class="expr"><span class="frac"><span class="num">5</span><span class="den">12</span></span></span> terminating or repeating?', a: 'repeating', hint: '12 has a factor of 3 in it. Fractions whose denominator has any prime factor other than 2 or 5 give repeating decimals.' },
+    { q: 'Write 12.5% as a fraction in simplest form.', a: '1/8', hint: '12.5% = 12.5/100 = 125/1000. Divide top and bottom by 125.' },
+    { q: 'Write 0.625 as a fraction in simplest form.', a: '5/8', hint: '0.625 = 625/1000. Divide top and bottom by 125.' },
+  ];
+
+  const practice3 = [
+    { q: 'Order least → greatest: 0.7, <span class="expr"><span class="frac"><span class="num">3</span><span class="den">5</span></span></span>, 65%, <span class="expr"><span class="frac"><span class="num">11</span><span class="den">15</span></span></span>', a: '3/5,65%,0.7,11/15', hint: 'Convert each to a decimal: 3/5 = 0.6, 65% = 0.65, 11/15 ≈ 0.733.' },
+    { q: 'Order least → greatest: 0.55, <span class="expr"><span class="frac"><span class="num">6</span><span class="den">10</span></span></span>, 58%, <span class="expr"><span class="frac"><span class="num">7</span><span class="den">12</span></span></span>', a: '0.55,58%,7/12,6/10', hint: 'Decimals: 6/10 = 0.6, 58% = 0.58, 7/12 ≈ 0.583.' },
+    { q: 'Sam ate <span class="expr"><span class="frac"><span class="num">3</span><span class="den">8</span></span></span> of a pizza, Maria ate 0.4 of one, and Tina ate 35%. List the three <strong>amounts</strong> from least to most, in their original form.', a: '35%,3/8,0.4', hint: 'Decimals: 3/8 = 0.375; 35% = 0.35; 0.4 = 0.4.' },
+    { q: 'Which value is greatest: 0.65, <span class="expr"><span class="frac"><span class="num">11</span><span class="den">16</span></span></span>, 67%, or <span class="expr"><span class="frac"><span class="num">2</span><span class="den">3</span></span></span>? Type the answer in the form given.', a: '11/16', hint: 'Decimals: 2/3 ≈ 0.667; 11/16 = 0.6875; 67% = 0.67.' },
+  ];
+
+  const checkpoint = [
+    { q: 'Convert 16% to a fraction in simplest form.', a: '4/25', hint: 'Start with 16/100, then divide top and bottom by 4.' },
+    { q: 'Write 0.45 as a percentage (number only).', a: '45', hint: 'Multiply by 100 — move the decimal point two places right.' },
+  ];
+
+  const weDo = [
+    { q: 'Write 0.6 as a fraction with denominator 10.', a: '6/10', hint: '0.6 means "six tenths".' },
+    { q: 'Simplify <span class="expr"><span class="frac"><span class="num">6</span><span class="den">10</span></span></span> to lowest terms.', a: '3/5', hint: 'Divide top and bottom by their HCF (which is 2).' },
+    { q: 'Write 0.6 as a percentage (number only).', a: '60', hint: '0.6 × 100 = ?' },
+  ];
+
+  const exitProbs = [
+    { q: 'Convert 35% to a fraction in simplest form.', a: '7/20', hint: 'Start with 35/100, then divide top and bottom by 5.' },
+    { q: 'Order least → greatest: 0.3, <span class="expr"><span class="frac"><span class="num">1</span><span class="den">4</span></span></span>, 28%', a: '1/4,28%,0.3', hint: 'Convert all three to decimals: 1/4 = 0.25; 28% = 0.28.' },
+    { q: 'Explain why 0.5, 50%, and <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span> are different ways of writing the <strong>same</strong> number.', a: 'TEXT', hint: 'Think about what "%" means, and what "0.5" means in place value.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/,/g, '')
+      .replace(/%/g, '')
+      .replace(/\.\.\.$/, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    return norm === exp;
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
+          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'They are three forms of the same number. <span class="frac"><span class="num">1</span><span class="den">2</span></span> means 1 of 2 equal parts; 0.5 means 5 tenths (which is the same amount); 50% means 50 out of 100 (also the same amount).';
+    // Stack any fractions of the form digits/digits.
+    let r = a.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
