@@ -1659,7 +1659,7 @@
       div.className = 'problem';
       const inputBox = '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">';
       const checkBtn = p.a !== 'TEXT'
-        ? '<button class="check-btn" onclick="checkAnswer(\'' + idx + '\', ' + JSON.stringify(p.a) + ', ' + (options.noCount ? 'true' : 'false') + ')">Check</button>'
+        ? '<button class="check-btn" onclick="checkAnswer(\'' + idx + '\', ' + JSON.stringify(p.a).replace(/"/g, '&quot;') + ', ' + (options.noCount ? 'true' : 'false') + ')">Check</button>'
         : '';
       div.innerHTML =
         '<div class="problem-q">' +
