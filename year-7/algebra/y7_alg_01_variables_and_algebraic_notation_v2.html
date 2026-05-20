@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variables &amp; Algebraic Notation — Year 7</title>
+
+<meta name="lesson-id"             content="y7_alg_01">
+<meta name="ac9-descriptor"        content="AC9M7A02">
+<meta name="ac9-elaborations"      content="1">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="An algebraic expression uses letters to stand for numbers, and the same expression can be written in many equivalent ways using accepted conventions.">
+<meta name="lesson-focus"          content="Use variables to represent unknown numbers; recognise the conventions of algebraic notation (e.g. 3x means 3×x, x² means x×x); understand that x+x+x+x and 4x are equivalent ways of writing the same expression.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.standard { background: #dff5e8; border-color: var(--good); color: #1d4a30; font-weight: 600; }
+  .term-chip.nonstandard { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--good); }
+  .bucket .ct { color: var(--coral); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Variables &amp; Algebraic Notation</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Watershed</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 22</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions to wake up the maths you already know. We'll lean on these in today's lesson.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's algebra.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>Imagine an AFL forward called Jada is having a huge season. Going into tonight's game, she's kicked <strong>184</strong> career goals. Tonight she'll kick some number of new goals — we just don't know how many yet.</p>
+      <p>How do you write her <em>new</em> career total when you don't know tonight's number? Mathematicians use a <strong>letter</strong> to stand in for the unknown — say, <span class="expr"><span class="var">g</span></span> for tonight's goals. Then her new total is just:</p>
+      <p style="text-align: center; font-size: 1.4rem;" class="expr">184 + <span class="var">g</span></p>
+      <p>The second the siren goes and Jada finishes on 5 goals, we swap <span class="var">g</span> for 5 and compute: 184 + 5 = 189.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      Algebra is the language of <strong>"the value isn't known yet, but the rule still works."</strong> A letter (a <strong>variable</strong>) stands in for any number we like. Today you'll learn how to write and read these expressions properly — including the special conventions mathematicians use everywhere, like writing <span class="expr">3<span class="var">x</span></span> instead of <span class="expr">3×<span class="var">x</span></span>. These conventions are the alphabet of all the algebra to come.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today and for years to come.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Variable<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>letter</strong> that stands in for an unknown number.<div class="vocab-example expr">In 4<span class="var">x</span> + 7: the variable is <strong><span class="var">x</span></strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Constant<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>number on its own</strong> — its value doesn't change.<div class="vocab-example expr">In 4<span class="var">x</span> + 7: the constant is <strong>7</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Coefficient<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number that <strong>multiplies a variable</strong> — it sits in front.<div class="vocab-example expr">In 4<span class="var">x</span>: the coefficient is <strong>4</strong>. In <span class="var">x</span> alone: it's <strong>1</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Term<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A single number, variable, or product, separated by + or − signs.<div class="vocab-example expr">In 3<span class="var">x</span> + 5: the terms are <strong>3<span class="var">x</span></strong> and <strong>5</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Algebraic expression<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>combination</strong> of variables, numbers, and operations — no equals sign.<div class="vocab-example expr"><strong>3<span class="var">x</span> + 5</strong> is an expression. So is <strong>2<span class="var">a</span> + 3<span class="var">b</span></strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: STANDARD NOTATION SORT -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Standard or needs fixing?</h2>
+  <p class="sec-desc">Drag each expression into the correct bucket. Some are written in <strong style="color:var(--good)">standard algebraic notation</strong>; others <strong style="color:var(--coral)">break a convention</strong> and need fixing. Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Eight expressions — which are written correctly?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="standard">3<span class="var">x</span></span>
+      <span class="term-chip expr" data-type="standard">5<span class="var">a</span></span>
+      <span class="term-chip expr" data-type="standard"><span class="var">xy</span></span>
+      <span class="term-chip expr" data-type="standard"><span class="var">x</span><sup>2</sup></span>
+      <span class="term-chip expr" data-type="nonstandard"><span class="var">y</span>4</span>
+      <span class="term-chip expr" data-type="nonstandard">1<span class="var">m</span></span>
+      <span class="term-chip expr" data-type="nonstandard">6×<span class="var">b</span></span>
+      <span class="term-chip expr" data-type="nonstandard"><span class="var">n</span>×<span class="var">n</span></span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="standard">
+        <h4 class="vt">✓ Standard notation</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="nonstandard">
+        <h4 class="ct">✗ Needs fixing</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The four conventions to watch for: <strong>(1)</strong> drop the × sign (write 6<span class="var">b</span>, not 6×<span class="var">b</span>); <strong>(2)</strong> coefficient goes before the variable (write 4<span class="var">y</span>, not <span class="var">y</span>4); <strong>(3)</strong> if the coefficient is 1, don't write it (write <span class="var">m</span>, not 1<span class="var">m</span>); <strong>(4)</strong> repeated multiplication of the same variable uses a power (<span class="var">n</span>×<span class="var">n</span> = <span class="var">n</span><sup>2</sup>).
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING EQUIVALENTS -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the equivalents</h2>
+  <p class="sec-desc">Click two expressions that mean the same thing. There are five matching pairs — each pair has one form written the long way, and the same expression written in standard notation.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick an expression to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one core example out loud, showing every step of the reasoning.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — bridging arithmetic to algebra</h2>
+  <p class="sec-desc"><strong>Question:</strong> Why does <span class="expr"><span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span></span> equal <span class="expr">4<span class="var">x</span></span>? And what does that mean?</p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Recognise the pattern: repeated addition is multiplication</div>
+        <div class="step-desc">Start with arithmetic you already know. <span class="expr">3 + 3 + 3 + 3</span> means we add 3 to itself four times. We don't write it out the long way — we write it as <span class="expr">4 × 3</span>. That's the whole point of multiplication: it's shorthand for repeated addition. Algebra works the same way. <span class="expr"><span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span></span> means we add <span class="var">x</span> to itself four times — whatever <span class="var">x</span> turns out to be. So it equals <span class="expr">4 × <span class="var">x</span></span>.</div>
+        <div class="calc-box">
+          Arithmetic: <span class="blue">3 + 3 + 3 + 3 = 4 × 3</span><br>
+          Algebra: <span class="red"><span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> = 4 × <span class="var">x</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Apply the convention: drop the × sign</div>
+        <div class="step-desc">In algebra, when a number multiplies a variable, we leave out the × sign and write them right next to each other. So <span class="expr">4 × <span class="var">x</span></span> becomes <span class="expr">4<span class="var">x</span></span>. Why? Because the × symbol looks too much like the letter <span class="var">x</span> — it gets confusing fast. The number in front of the variable has a name: it's called the <strong>coefficient</strong>, and it tells you how many copies of the variable you have.</div>
+        <div class="calc-box">
+          <span class="red">4 × <span class="var">x</span></span>  becomes  <span class="red">4<span class="var">x</span></span>
+          <br><span style="font-size: 0.92rem; color: var(--muted);">↑ coefficient ↑ variable</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Verify with a substitution — they really are the same number</div>
+        <div class="step-desc">Pick <em>any</em> value for <span class="var">x</span> — say <span class="var">x</span> = 5. Compute both expressions and check.</div>
+        <div class="calc-box">
+          When <span class="var">x</span> = 5:<br>
+          <span class="red"><span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span></span> = 5 + 5 + 5 + 5 = <strong>20</strong><br>
+          <span class="red">4<span class="var">x</span></span> = 4 × 5 = <strong>20</strong>  ✓<br>
+          <span style="font-size: 0.92rem; color: var(--muted);">Try <span class="var">x</span> = 10: 10+10+10+10 = 40, and 4×10 = 40. ✓ Try any value — they always agree.</span>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Big idea</span>
+          <span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> = 4<span class="var">x</span> — two ways of writing the same expression
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">A trickier comparison — discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — does <span class="expr">3<span class="var">x</span> + 4</span> equal <span class="expr">3(<span class="var">x</span> + 4)</span>?</h2>
+  <p class="sec-desc">These two expressions look almost identical. Just one set of brackets between them. Does that change anything? Let's test it by substituting <span class="expr"><span class="var">x</span> = 2</span> into each, step by step.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>The takeaway:</strong> in <span class="expr">3<span class="var">x</span> + 4</span>, the 3 only multiplies the <span class="var">x</span> — the +4 is added afterwards. In <span class="expr">3(<span class="var">x</span> + 4)</span>, the brackets group <span class="var">x</span> and 4 together, and the 3 multiplies the <strong>whole thing</strong>. Different operations, different answers. <strong>Notation matters.</strong> A single set of brackets changes what the expression means.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the routine. Try them on your own first — <strong>then we'll check together as a class</strong> before you open a tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Type your answer in each box. Use single letters for variables — for example <code>3x</code>, <code>5a</code>, or just a number for the substitution questions.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Multiple variables and the invisible-1 convention. Type answers like <code>2a+3b</code> or <code>3x+y</code> (you can write the terms in any order — the system accepts both).</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY (Error Analysis) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc"><strong>Error Analysis.</strong> A student wrote: <span class="expr">3 + <span class="var">x</span> = 3<span class="var">x</span></span>. Walk through the four parts below to unpack the mistake.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">An algebraic expression uses letters to stand for numbers, and the same expression can be written in many equivalent ways using accepted conventions.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7A02</strong> — formulate algebraic expressions using constants, variables, operations and brackets</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Use variables to represent unknown numbers; recognise the conventions of algebraic notation (3<span class="var">x</span> means 3×<span class="var">x</span>, <span class="var">x</span><sup>2</sup> means <span class="var">x</span>×<span class="var">x</span>); understand that <span class="var">x</span>+<span class="var">x</span>+<span class="var">x</span>+<span class="var">x</span> and 4<span class="var">x</span> are equivalent forms of the same expression.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_alg_01. Source: lesson-map.xlsx. <strong>Watershed lesson</strong> — foundation for the whole Year 7 algebra strand.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Variables &amp; Algebraic Notation
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ PARTS OF EXPRESSION (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING EQUIVALENTS ============
+  // 5 pairs of equivalent expressions: one in "long form", one in standard notation.
+  const matchTerms = [
+    { html: '<span class="var">x</span>+<span class="var">x</span>+<span class="var">x</span>', group: 1 },
+    { html: '3<span class="var">x</span>', group: 1 },
+    { html: '<span class="var">y</span>×<span class="var">y</span>', group: 2 },
+    { html: '<span class="var">y</span><sup>2</sup>', group: 2 },
+    { html: '5×<span class="var">k</span>', group: 3 },
+    { html: '5<span class="var">k</span>', group: 3 },
+    { html: '1<span class="var">m</span>', group: 4 },
+    { html: '<span class="var">m</span>', group: 4 },
+    { html: '<span class="var">a</span>×<span class="var">b</span>×<span class="var">c</span>', group: 5 },
+    { html: '<span class="var">abc</span>', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner — the equivalent expression.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not equivalent — try substituting a value to test.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+
+  // Retrieval warm-up — prior-knowledge prerequisites.
+  const retrieval = [
+    { q: 'Calculate <span class="expr">4 + 4 + 4 + 4 + 4</span>. (Recall: this is 5 lots of 4.)', a: '20', hint: '5 × 4 = ?' },
+    { q: 'Apply order of operations: <span class="expr">3 + 2 × 5</span>', a: '13', hint: 'Multiplication before addition: 2 × 5 first.' },
+    { q: 'What is the value of <span class="expr">5<sup>2</sup></span>? (Recall: 5<sup>2</sup> means 5 × 5.)', a: '25', hint: '5 × 5 = ?' },
+  ];
+
+  // Building tier — translating repeated addition, substitution, invisible coefficient awareness.
+  const practice1 = [
+    { q: 'Write <span class="expr"><span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span></span> in standard algebraic notation.', a: '3x', hint: 'Three lots of x. Use the coefficient convention.' },
+    { q: 'Write <span class="expr"><span class="var">y</span> + <span class="var">y</span> + <span class="var">y</span> + <span class="var">y</span> + <span class="var">y</span></span> in standard algebraic notation.', a: '5y', hint: 'Count how many y\'s there are — that\'s the coefficient.' },
+    { q: 'Write <span class="expr"><span class="var">m</span> + <span class="var">m</span> + <span class="var">m</span> + <span class="var">m</span> + <span class="var">m</span> + <span class="var">m</span> + <span class="var">m</span> + <span class="var">m</span></span> in standard algebraic notation.', a: '8m', hint: 'Eight m\'s.' },
+    { q: 'Evaluate <span class="expr">4<span class="var">k</span></span> when <span class="var">k</span> = 3.', a: '12', hint: '4k means 4 × k. So 4 × 3 = ?' },
+    { q: 'Evaluate <span class="expr">7<span class="var">n</span></span> when <span class="var">n</span> = 2.', a: '14', hint: '7 × 2 = ?' },
+    { q: 'Evaluate <span class="expr">5<span class="var">p</span></span> when <span class="var">p</span> = 6.', a: '30', hint: '5 × 6 = ?' },
+    { q: 'Write "six times the value of <span class="var">a</span>" in standard algebraic notation.', a: '6a', hint: 'Coefficient first, then variable, no × sign.' },
+    { q: 'Write "9 multiplied by <span class="var">t</span>" in standard algebraic notation.', a: '9t', hint: 'Drop the multiplication sign.' },
+    { q: 'Calculate <span class="expr"><span class="var">x</span><sup>2</sup></span> when <span class="var">x</span> = 3. <em>(Remember: x<sup>2</sup> means x × x, NOT 2x.)</em>', a: '9', hint: '3 × 3 = ?' },
+    { q: 'Calculate <span class="expr"><span class="var">x</span><sup>2</sup></span> when <span class="var">x</span> = 7.', a: '49', hint: '7 × 7 = ?' },
+  ];
+
+  // Stretch tier — multiple variables, invisible-1 coefficient, and the brackets contrast.
+  const practice2 = [
+    { q: 'Write <span class="expr"><span class="var">a</span> + <span class="var">a</span> + <span class="var">b</span> + <span class="var">b</span> + <span class="var">b</span></span> in standard algebraic notation.', a: '2a+3b', hint: 'Two a\'s, three b\'s. Each variable gets its own coefficient.' },
+    { q: 'Write <span class="expr"><span class="var">x</span> + <span class="var">x</span> + <span class="var">x</span> + <span class="var">y</span></span> in standard algebraic notation. <em>(Watch the invisible-1 convention!)</em>', a: '3x+y', hint: 'Three x\'s plus one y. A coefficient of 1 isn\'t written.' },
+    { q: 'Write <span class="expr"><span class="var">a</span> × <span class="var">b</span> × <span class="var">c</span></span> in standard algebraic notation.', a: 'abc', hint: 'Drop the × signs. Arrange the letters alphabetically — that\'s the standard form.' },
+    { q: 'Evaluate <span class="expr">2<span class="var">a</span> + 3<span class="var">b</span></span> when <span class="var">a</span> = 4 and <span class="var">b</span> = 5.', a: '23', hint: '2×4 = 8, and 3×5 = 15. Add them.' },
+    { q: 'Evaluate <span class="expr">3<span class="var">x</span> + 4</span> when <span class="var">x</span> = 2.', a: '10', hint: '3×2 = 6, then add 4.' },
+    { q: 'Evaluate <span class="expr">3(<span class="var">x</span> + 4)</span> when <span class="var">x</span> = 2. <em>(Brackets first!)</em>', a: '18', hint: 'Inside the brackets: 2+4 = 6. Then 3×6 = ?' },
+  ];
+
+  // Mastery — focused error analysis on "3 + x = 3x"
+  const practice3 = [
+    { q: '<strong>Part (a):</strong> A student wrote: <span class="expr">3 + <span class="var">x</span> = 3<span class="var">x</span></span>. Explain in your own words why this statement is wrong. What two operations is the student confusing?', a: 'TEXT', hint: '3 + x means add. 3x means multiply. They\'re not the same operation.' },
+    { q: '<strong>Part (b):</strong> Test the student\'s claim with a number. Substitute <span class="var">x</span> = 5 into the left side. What is the value of <span class="expr">3 + <span class="var">x</span></span>?', a: '8', hint: '3 + 5 = ?' },
+    { q: '<strong>Part (c):</strong> Now substitute <span class="var">x</span> = 5 into the right side. What is the value of <span class="expr">3<span class="var">x</span></span>?', a: '15', hint: '3<span class="var">x</span> means 3 × x. So 3 × 5 = ?' },
+    { q: '<strong>Part (d):</strong> Your two answers (parts b and c) are different — 8 versus 15. What does that prove about the student\'s claim that <span class="expr">3 + <span class="var">x</span> = 3<span class="var">x</span></span>? Write a clear conclusion.', a: 'TEXT', hint: 'If two expressions give different values for the same x, they can\'t be equal.' },
+  ];
+
+  // Quick check — confirms the routine before independent practice.
+  const checkpoint = [
+    { q: 'Write <span class="expr"><span class="var">a</span> + <span class="var">a</span> + <span class="var">a</span> + <span class="var">a</span> + <span class="var">a</span></span> in standard algebraic notation.', a: '5a', hint: 'Five a\'s. Coefficient × variable, no × sign.' },
+    { q: 'Evaluate <span class="expr">6<span class="var">x</span></span> when <span class="var">x</span> = 4.', a: '24', hint: '6 × 4 = ?' },
+  ];
+
+  // We Do — collaborative comparison of 3x+4 vs 3(x+4)
+  const weDo = [
+    { q: 'Substitute <span class="var">x</span> = 2 into <span class="expr">3<span class="var">x</span> + 4</span>. What value do you get?', a: '10', hint: '3x means 3 × x. So 3(2) + 4 = 6 + 4 = ?' },
+    { q: 'Substitute <span class="var">x</span> = 2 into <span class="expr">3(<span class="var">x</span> + 4)</span>. <em>Remember: brackets first!</em>', a: '18', hint: 'Inside the brackets: 2 + 4 = 6. Then 3 × 6 = ?' },
+    { q: 'Are <span class="expr">3<span class="var">x</span> + 4</span> and <span class="expr">3(<span class="var">x</span> + 4)</span> equivalent? Explain in one sentence.', a: 'TEXT', hint: 'Compare the values you got in parts (a) and (b). What do the brackets change?' },
+  ];
+
+  // Exit ticket — bookend formative assessment.
+  const exitProbs = [
+    { q: 'Write <span class="expr"><span class="var">k</span> + <span class="var">k</span> + <span class="var">k</span> + <span class="var">k</span></span> in standard algebraic notation.', a: '4k', hint: 'Four k\'s — what\'s the coefficient?' },
+    { q: 'Evaluate <span class="expr">5<span class="var">x</span> + 2</span> when <span class="var">x</span> = 3.', a: '17', hint: '5x = 5×3 = 15. Then add 2.' },
+    { q: 'Explain in your own words why <span class="expr">3<span class="var">x</span></span> and <span class="expr"><span class="var">x</span>3</span> mean the same number, but only <span class="expr">3<span class="var">x</span></span> is acceptable algebraic notation.', a: 'TEXT', hint: 'Multiplication doesn\'t care about order (3×x = x×3), but mathematicians follow a convention: coefficient first, then variable.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return '3x means 3 × x (multiply 3 by x). 3 + x means add 3 to x. They are different operations — e.g. when x = 5: 3x = 15 but 3+x = 8. The order 3x vs x3 doesn\'t change the value (multiplication is commutative), but 3x is the standard notation we always use: coefficient first, then variable.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
