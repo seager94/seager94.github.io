@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON
+  Year 7 · Space · Classification Algorithms
+  Built from the canonical interactive-html-maths-lesson template.
+  Framework code (buildPractice, checkAnswer, answerMatches, formatAnswerDisplay,
+  updateProgress, toggleHint, toggleAnswer, toggleTier) copied verbatim.
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classification Algorithms — Year 7</title>
+
+<!--
+  ============================================================================
+  CURRICULUM METADATA — Source: lesson-map.xlsx row y7_spa_07.
+  ============================================================================
+-->
+<meta name="lesson-id"             content="y7_spa_07">
+<meta name="ac9-descriptor"        content="AC9M7SP04">
+<meta name="ac9-elaborations"      content="1,2">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Space">
+<meta name="sa-conceptual-understanding" content="Shapes can be classified and compared by their geometrical properties">
+<meta name="lesson-focus"          content="Design, follow and describe flow-chart algorithms — sequences of steps and decisions — that classify triangles and quadrilaterals by their geometric attributes.">
+<meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS-OF-EXPRESSION INTERACTIVE (re-used as a classification sort) */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MULTIPLE WORKED EXAMPLES — block heading */
+  .we-block { margin-bottom: 26px; }
+  .we-block:last-child { margin-bottom: 0; }
+  .we-block-title {
+    font-family: Georgia, serif; font-weight: bold;
+    color: var(--coral); font-size: 1.08rem;
+    margin: 0 0 3px;
+  }
+  .we-block-prompt { color: var(--text); margin: 0 0 12px; font-size: 0.97rem; }
+
+  /* FLOW-CHART DIAGRAMS (static SVG) */
+  .flowchart {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px 8px;
+    margin: 14px 0;
+  }
+  .flowchart svg { display: block; width: 100%; height: auto; }
+  .flow-caption {
+    font-size: 0.78rem; color: var(--muted);
+    text-align: center; font-style: italic;
+    margin-top: 4px;
+  }
+  .fc-start { fill: var(--navy); }
+  .fc-start-text { fill: #ffffff; font-family: -apple-system, sans-serif; font-weight: 700; }
+  .fc-decision { fill: var(--coral-soft); stroke: var(--coral); stroke-width: 2; }
+  .fc-decision-text { fill: var(--navy); font-family: -apple-system, sans-serif; font-weight: 600; }
+  .fc-end { fill: var(--good-soft); stroke: var(--good); stroke-width: 2; }
+  .fc-end-text { fill: #1d4a30; font-family: Georgia, serif; font-weight: 700; }
+  .fc-line { stroke: var(--navy); stroke-width: 2; fill: none; }
+  .fc-label { fill: var(--coral); font-family: -apple-system, sans-serif; font-weight: 700; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1rem; flex: 1; padding-top: 2px; line-height: 1.45; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+    .hook-cols { grid-template-columns: 1fr !important; }
+  }
+
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket (Section 11) */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS — Sections 8, 9, 10 */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Classification Algorithms</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Space</div>
+  </div>
+  <div class="badge">Space</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 20</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions on shape properties from earlier work. You will use every one of these facts today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real machine that's secretly doing today's geometry.</p>
+  <div class="hook-cols" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>A recycling plant has one job: send every item to the right bin. The machine can't "just know" what each item is — so it runs every item past a fixed sequence of sensors:</p>
+      <ul style="line-height: 1.8;">
+        <li>Is it metal? → <strong>metal bin</strong></li>
+        <li>Not metal — is it glass? → <strong>glass bin</strong></li>
+        <li>Not glass — is it paper? → <strong>paper bin</strong></li>
+      </ul>
+      <p>Each yes/no question is a <strong>decision</strong>, and the order never changes. Run the same item twice and you always get the same bin.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      Classifying a <strong>shape</strong> works exactly the same way. To name a triangle or a quadrilateral you ask a fixed sequence of attribute questions — "Are all the sides equal?", "Is there a right angle?" — and each decision sends you down one path. A set of steps and decisions like this is an <strong>algorithm</strong>. Today you'll follow, design and describe algorithms that classify shapes.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five words run from concrete to abstract — you'll use them constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Attribute<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A property of a shape you can test — its side lengths, angles, or parallel sides.<div class="vocab-example">"Has a <strong>right angle</strong>" is an attribute of a shape.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Decision<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A step that asks a <strong>yes/no question</strong> about an attribute and chooses a path based on the answer.<div class="vocab-example">"Are all three sides equal?" — <strong>yes</strong> goes one way, <strong>no</strong> the other.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Sequence<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A set of steps carried out in a <strong>fixed order</strong>, one after another.<div class="vocab-example">Check sides <strong>first</strong>, then angles — the order is part of the algorithm.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Algorithm<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A precise sequence of steps and decisions that <strong>always</strong> produces the correct result.<div class="vocab-example">A shape-naming algorithm gives the <strong>same name</strong> every time it is run.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Flow chart<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A diagram of an algorithm: <strong>boxes</strong> for start/end, <strong>diamonds</strong> for decisions, <strong>arrows</strong> for the path.<div class="vocab-example">You follow the arrows out of a diamond labelled <strong>YES</strong> or <strong>NO</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — WHICH ATTRIBUTE? -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Which attribute does it test?</h2>
+  <p class="sec-desc">Every triangle has a <strong>side</strong> classification and an <strong>angle</strong> classification. Drag each name into the bucket for the attribute its decision tests. Wrong drops shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Triangle classification names</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="sides">Equilateral</span>
+      <span class="term-chip" data-type="angles">Acute</span>
+      <span class="term-chip" data-type="sides">Isosceles</span>
+      <span class="term-chip" data-type="angles">Right</span>
+      <span class="term-chip" data-type="sides">Scalene</span>
+      <span class="term-chip" data-type="angles">Obtuse</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="sides">
+        <h4 class="vt">Classify by SIDE LENGTHS</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="angles">
+        <h4 class="ct">Classify by ANGLES</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 When you design a classification algorithm, your very first choice is <em>which attribute family to test</em>. Side lengths and angles are two separate families — a good algorithm tests one at a time.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the name to its attribute</h2>
+  <p class="sec-desc">Click a triangle name, then click the attribute a decision would test to identify it. There are five matching pairs.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">Three worked examples — two for triangles, one for quadrilaterals. I'll show every decision out loud.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLES (I DO) — three examples -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples — following and creating algorithms</h2>
+  <p class="sec-desc">A flow chart turns classifying a shape into a sequence of yes/no decisions. Reveal one step at a time.</p>
+
+  <!-- WORKED EXAMPLE 1 -->
+  <div class="we-block">
+    <div class="we-block-title">Example 1 — follow a triangle algorithm (side lengths)</div>
+    <div class="we-block-prompt">A triangle has sides <strong>6&nbsp;cm, 6&nbsp;cm and 10&nbsp;cm</strong>. Use the flow chart to classify it.</div>
+
+    <div class="flowchart">
+      <svg viewBox="0 0 640 470" role="img" aria-label="Flow chart classifying a triangle by side lengths.">
+        <defs>
+          <marker id="arrow-sides" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1F4D54"/>
+          </marker>
+        </defs>
+        <rect class="fc-start" x="215" y="16" width="210" height="38" rx="19"/>
+        <text class="fc-start-text" x="320" y="40" text-anchor="middle" font-size="15">START — a triangle</text>
+        <line class="fc-line" x1="320" y1="54" x2="320" y2="86" marker-end="url(#arrow-sides)"/>
+        <polygon class="fc-decision" points="320,92 445,150 320,208 195,150"/>
+        <text class="fc-decision-text" x="320" y="145" text-anchor="middle" font-size="13">All three sides</text>
+        <text class="fc-decision-text" x="320" y="163" text-anchor="middle" font-size="13">equal?</text>
+        <line class="fc-line" x1="445" y1="150" x2="496" y2="150" marker-end="url(#arrow-sides)"/>
+        <text class="fc-label" x="455" y="142" font-size="12">YES</text>
+        <rect class="fc-end" x="500" y="129" width="138" height="42" rx="8"/>
+        <text class="fc-end-text" x="569" y="155" text-anchor="middle" font-size="14">Equilateral</text>
+        <line class="fc-line" x1="320" y1="208" x2="320" y2="253" marker-end="url(#arrow-sides)"/>
+        <text class="fc-label" x="328" y="235" font-size="12">NO</text>
+        <polygon class="fc-decision" points="320,257 445,315 320,373 195,315"/>
+        <text class="fc-decision-text" x="320" y="310" text-anchor="middle" font-size="13">Exactly two</text>
+        <text class="fc-decision-text" x="320" y="328" text-anchor="middle" font-size="13">sides equal?</text>
+        <line class="fc-line" x1="445" y1="315" x2="496" y2="315" marker-end="url(#arrow-sides)"/>
+        <text class="fc-label" x="455" y="307" font-size="12">YES</text>
+        <rect class="fc-end" x="500" y="294" width="138" height="42" rx="8"/>
+        <text class="fc-end-text" x="569" y="320" text-anchor="middle" font-size="14">Isosceles</text>
+        <line class="fc-line" x1="320" y1="373" x2="320" y2="416" marker-end="url(#arrow-sides)"/>
+        <text class="fc-label" x="328" y="397" font-size="12">NO</text>
+        <rect class="fc-end" x="240" y="418" width="160" height="40" rx="8"/>
+        <text class="fc-end-text" x="320" y="443" text-anchor="middle" font-size="14">Scalene</text>
+      </svg>
+      <div class="flow-caption">Flow chart: classify a triangle by its side lengths.</div>
+    </div>
+
+    <div class="worked">
+      <div class="step visible">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Read the shape's attributes</div>
+          <div class="step-desc">Start at the top. The attributes the algorithm tests are the side lengths.</div>
+          <div class="calc-box">Side lengths: <span class="red">6 cm</span>, <span class="red">6 cm</span>, <span class="red">10 cm</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Work through the decisions in sequence</div>
+          <div class="step-desc">Answer each diamond, then follow the YES or NO arrow.</div>
+          <div class="calc-box">
+            Decision 1 — all three sides equal? &nbsp;6, 6, 10 → <span class="blue">NO</span> ↓<br>
+            Decision 2 — exactly two sides equal? &nbsp;6 = 6 → <span class="red">YES</span> →
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Read and check the output</div>
+          <div class="step-desc">Following YES out of Decision 2 lands on a result box.</div>
+          <div class="calc-box">Check: an isosceles triangle has <span class="red">exactly two equal sides</span> — 6 cm = 6 cm, and 10 cm is different. ✓</div>
+          <div class="summary-banner">
+            <span class="label">Output</span>
+            Isosceles triangle
+          </div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="revealNextStep(this)">Reveal next step ↓</button>
+    </div>
+  </div>
+
+  <!-- WORKED EXAMPLE 2 -->
+  <div class="we-block">
+    <div class="we-block-title">Example 2 — design a triangle algorithm (angles)</div>
+    <div class="we-block-prompt">Design an algorithm that classifies <em>any</em> triangle by its angles as <strong>acute</strong>, <strong>right</strong> or <strong>obtuse</strong>.</div>
+
+    <div class="worked">
+      <div class="step visible">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Choose the attribute to test</div>
+          <div class="step-desc">Side lengths tell us nothing about angles — we must test a different attribute.</div>
+          <div class="calc-box">Attribute to test: the <span class="red">largest angle</span>. &nbsp; Possible outputs: acute, right, obtuse.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Put the decisions in a sensible sequence</div>
+          <div class="step-desc">Two decisions are enough to separate three outputs.</div>
+          <div class="calc-box">
+            Decision 1 — largest angle = 90°? &nbsp;<span class="red">YES → Right</span><br>
+            Decision 2 (if NO) — largest angle &gt; 90°? &nbsp;<span class="red">YES → Obtuse</span>, &nbsp;<span class="blue">NO → Acute</span>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Test the algorithm before trusting it</div>
+          <div class="step-desc">Run a triangle through it to check the path works.</div>
+          <div class="calc-box">Angles 30°, 50°, 100° → largest = 100°. &nbsp;D1: 100 = 90? <span class="blue">NO</span>. &nbsp;D2: 100 &gt; 90? <span class="red">YES</span> → Obtuse. ✓</div>
+          <div class="summary-banner">
+            <span class="label">Output</span>
+            A 2-decision algorithm — see the flow chart below
+          </div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="revealNextStep(this)">Reveal next step ↓</button>
+    </div>
+
+    <div class="flowchart">
+      <svg viewBox="0 0 640 470" role="img" aria-label="Flow chart classifying a triangle by its angles.">
+        <defs>
+          <marker id="arrow-angles" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1F4D54"/>
+          </marker>
+        </defs>
+        <rect class="fc-start" x="215" y="16" width="210" height="38" rx="19"/>
+        <text class="fc-start-text" x="320" y="40" text-anchor="middle" font-size="15">START — a triangle</text>
+        <line class="fc-line" x1="320" y1="54" x2="320" y2="86" marker-end="url(#arrow-angles)"/>
+        <polygon class="fc-decision" points="320,92 445,150 320,208 195,150"/>
+        <text class="fc-decision-text" x="320" y="145" text-anchor="middle" font-size="13">Largest angle</text>
+        <text class="fc-decision-text" x="320" y="163" text-anchor="middle" font-size="13">exactly 90°?</text>
+        <line class="fc-line" x1="445" y1="150" x2="496" y2="150" marker-end="url(#arrow-angles)"/>
+        <text class="fc-label" x="455" y="142" font-size="12">YES</text>
+        <rect class="fc-end" x="500" y="129" width="138" height="42" rx="8"/>
+        <text class="fc-end-text" x="569" y="155" text-anchor="middle" font-size="14">Right</text>
+        <line class="fc-line" x1="320" y1="208" x2="320" y2="253" marker-end="url(#arrow-angles)"/>
+        <text class="fc-label" x="328" y="235" font-size="12">NO</text>
+        <polygon class="fc-decision" points="320,257 445,315 320,373 195,315"/>
+        <text class="fc-decision-text" x="320" y="310" text-anchor="middle" font-size="13">Largest angle</text>
+        <text class="fc-decision-text" x="320" y="328" text-anchor="middle" font-size="13">more than 90°?</text>
+        <line class="fc-line" x1="445" y1="315" x2="496" y2="315" marker-end="url(#arrow-angles)"/>
+        <text class="fc-label" x="455" y="307" font-size="12">YES</text>
+        <rect class="fc-end" x="500" y="294" width="138" height="42" rx="8"/>
+        <text class="fc-end-text" x="569" y="320" text-anchor="middle" font-size="14">Obtuse</text>
+        <line class="fc-line" x1="320" y1="373" x2="320" y2="416" marker-end="url(#arrow-angles)"/>
+        <text class="fc-label" x="328" y="397" font-size="12">NO</text>
+        <rect class="fc-end" x="240" y="418" width="160" height="40" rx="8"/>
+        <text class="fc-end-text" x="320" y="443" text-anchor="middle" font-size="14">Acute</text>
+      </svg>
+      <div class="flow-caption">The finished algorithm, drawn as a flow chart.</div>
+    </div>
+  </div>
+
+  <!-- WORKED EXAMPLE 3 -->
+  <div class="we-block">
+    <div class="we-block-title">Example 3 — follow a quadrilateral algorithm</div>
+    <div class="we-block-prompt">A quadrilateral has <strong>two pairs of parallel sides</strong>, <strong>no right angles</strong>, and <strong>all four sides equal</strong>. Use the flow chart to classify it.</div>
+
+    <div class="flowchart">
+      <svg viewBox="0 0 820 540" role="img" aria-label="Branching flow chart classifying a quadrilateral.">
+        <defs>
+          <marker id="arrow-quad" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#1F4D54"/>
+          </marker>
+        </defs>
+        <rect class="fc-start" x="312" y="14" width="210" height="38" rx="19"/>
+        <text class="fc-start-text" x="417" y="38" text-anchor="middle" font-size="15">START — a quadrilateral</text>
+        <line class="fc-line" x1="417" y1="52" x2="417" y2="83" marker-end="url(#arrow-quad)"/>
+        <polygon class="fc-decision" points="417,87 527,135 417,183 307,135"/>
+        <text class="fc-decision-text" x="417" y="131" text-anchor="middle" font-size="12">Two pairs of</text>
+        <text class="fc-decision-text" x="417" y="148" text-anchor="middle" font-size="12">parallel sides?</text>
+        <line class="fc-line" x1="527" y1="135" x2="611" y2="135" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="540" y="127" font-size="12">NO</text>
+        <rect class="fc-end" x="615" y="114" width="180" height="42" rx="8"/>
+        <text class="fc-end-text" x="705" y="140" text-anchor="middle" font-size="13">Trapezium or kite</text>
+        <line class="fc-line" x1="417" y1="183" x2="417" y2="217" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="425" y="205" font-size="12">YES</text>
+        <polygon class="fc-decision" points="417,221 527,269 417,317 307,269"/>
+        <text class="fc-decision-text" x="417" y="265" text-anchor="middle" font-size="12">Four right</text>
+        <text class="fc-decision-text" x="417" y="282" text-anchor="middle" font-size="12">angles?</text>
+        <polyline class="fc-line" points="307,269 215,269 215,331" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="228" y="261" font-size="12">YES</text>
+        <polyline class="fc-line" points="527,269 619,269 619,331" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="560" y="261" font-size="12">NO</text>
+        <polygon class="fc-decision" points="215,337 315,383 215,429 115,383"/>
+        <text class="fc-decision-text" x="215" y="379" text-anchor="middle" font-size="12">Four equal</text>
+        <text class="fc-decision-text" x="215" y="396" text-anchor="middle" font-size="12">sides?</text>
+        <polyline class="fc-line" points="115,383 110,383 110,449" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="66" y="405" font-size="12">YES</text>
+        <rect class="fc-end" x="40" y="452" width="140" height="40" rx="8"/>
+        <text class="fc-end-text" x="110" y="477" text-anchor="middle" font-size="14">Square</text>
+        <polyline class="fc-line" points="315,383 320,383 320,449" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="328" y="405" font-size="12">NO</text>
+        <rect class="fc-end" x="250" y="452" width="140" height="40" rx="8"/>
+        <text class="fc-end-text" x="320" y="477" text-anchor="middle" font-size="14">Rectangle</text>
+        <polygon class="fc-decision" points="619,337 719,383 619,429 519,383"/>
+        <text class="fc-decision-text" x="619" y="379" text-anchor="middle" font-size="12">Four equal</text>
+        <text class="fc-decision-text" x="619" y="396" text-anchor="middle" font-size="12">sides?</text>
+        <polyline class="fc-line" points="519,383 514,383 514,449" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="470" y="405" font-size="12">YES</text>
+        <rect class="fc-end" x="444" y="452" width="140" height="40" rx="8"/>
+        <text class="fc-end-text" x="514" y="477" text-anchor="middle" font-size="14">Rhombus</text>
+        <polyline class="fc-line" points="719,383 724,383 724,449" marker-end="url(#arrow-quad)"/>
+        <text class="fc-label" x="732" y="405" font-size="12">NO</text>
+        <rect class="fc-end" x="648" y="452" width="160" height="40" rx="8"/>
+        <text class="fc-end-text" x="728" y="477" text-anchor="middle" font-size="13">Parallelogram</text>
+      </svg>
+      <div class="flow-caption">Flow chart: classify a quadrilateral. It branches — each path is a different sequence of decisions.</div>
+    </div>
+
+    <div class="worked">
+      <div class="step visible">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Read the shape's attributes</div>
+          <div class="step-desc">List exactly what the algorithm will need to test.</div>
+          <div class="calc-box">Two pairs of parallel sides <span class="red">✓</span> &nbsp;·&nbsp; Four right angles <span class="blue">✗</span> &nbsp;·&nbsp; Four equal sides <span class="red">✓</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Follow the sequence of decisions</div>
+          <div class="step-desc">A branching flow chart — your answers choose which decision comes next.</div>
+          <div class="calc-box">
+            D1 — two pairs of parallel sides? &nbsp;<span class="red">YES</span> ↓<br>
+            D2 — four right angles? &nbsp;<span class="blue">NO</span> → right branch<br>
+            D3 — four equal sides? &nbsp;<span class="red">YES</span> →
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Read and check the output</div>
+          <div class="step-desc">The path ends in one result box.</div>
+          <div class="calc-box">Check: a rhombus has two pairs of parallel sides and four equal sides, but its angles are <span class="blue">not</span> right angles. ✓</div>
+          <div class="summary-banner">
+            <span class="label">Output</span>
+            Rhombus
+          </div>
+        </div>
+      </div>
+      <button class="reveal-btn" onclick="revealNextStep(this)">Reveal next step ↓</button>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's design one together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll build the algorithm as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — design an algorithm for <span class="expr">square / rectangle / other</span></h2>
+  <p class="sec-desc">We want an algorithm that takes any quadrilateral and outputs <strong>square</strong>, <strong>rectangle</strong>, or <strong>other quadrilateral</strong>. We'll choose the decisions and put them in order. Discuss each prompt, then we'll fill in the box together.</p>
+
+  <div class="flowchart">
+    <svg viewBox="0 0 640 470" role="img" aria-label="Flow chart for the square, rectangle or other algorithm built together.">
+      <defs>
+        <marker id="arrow-wedo" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#1F4D54"/>
+        </marker>
+      </defs>
+      <rect class="fc-start" x="215" y="16" width="210" height="38" rx="19"/>
+      <text class="fc-start-text" x="320" y="40" text-anchor="middle" font-size="15">START — a quadrilateral</text>
+      <line class="fc-line" x1="320" y1="54" x2="320" y2="86" marker-end="url(#arrow-wedo)"/>
+      <polygon class="fc-decision" points="320,92 445,150 320,208 195,150"/>
+      <text class="fc-decision-text" x="320" y="145" text-anchor="middle" font-size="13">Four right</text>
+      <text class="fc-decision-text" x="320" y="163" text-anchor="middle" font-size="13">angles?</text>
+      <line class="fc-line" x1="445" y1="150" x2="496" y2="150" marker-end="url(#arrow-wedo)"/>
+      <text class="fc-label" x="455" y="142" font-size="12">NO</text>
+      <rect class="fc-end" x="500" y="129" width="138" height="42" rx="8"/>
+      <text class="fc-end-text" x="569" y="148" text-anchor="middle" font-size="12">Other</text>
+      <text class="fc-end-text" x="569" y="164" text-anchor="middle" font-size="12">quadrilateral</text>
+      <line class="fc-line" x1="320" y1="208" x2="320" y2="253" marker-end="url(#arrow-wedo)"/>
+      <text class="fc-label" x="328" y="235" font-size="12">YES</text>
+      <polygon class="fc-decision" points="320,257 445,315 320,373 195,315"/>
+      <text class="fc-decision-text" x="320" y="310" text-anchor="middle" font-size="13">Four equal</text>
+      <text class="fc-decision-text" x="320" y="328" text-anchor="middle" font-size="13">sides?</text>
+      <line class="fc-line" x1="445" y1="315" x2="496" y2="315" marker-end="url(#arrow-wedo)"/>
+      <text class="fc-label" x="455" y="307" font-size="12">YES</text>
+      <rect class="fc-end" x="500" y="294" width="138" height="42" rx="8"/>
+      <text class="fc-end-text" x="569" y="320" text-anchor="middle" font-size="14">Square</text>
+      <line class="fc-line" x1="320" y1="373" x2="320" y2="416" marker-end="url(#arrow-wedo)"/>
+      <text class="fc-label" x="328" y="397" font-size="12">NO</text>
+      <rect class="fc-end" x="240" y="418" width="160" height="40" rx="8"/>
+      <text class="fc-end-text" x="320" y="443" text-anchor="middle" font-size="14">Rectangle</text>
+    </svg>
+    <div class="flow-caption">Our algorithm — two decisions in sequence.</div>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this order works:</strong> Decision 1 sorts out everything that isn't a square or rectangle first, so Decision 2 only ever sees shapes with four right angles. Put the decisions in the wrong order and a shape can reach the wrong result box.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you can follow a flow chart. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Trace each shape through the matching flow chart and type the classification — <strong>one word</strong>, e.g. <code>scalene</code>, <code>square</code>, <code>obtuse</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now reason about the decisions themselves — their order, their outcomes, and what each branch produces.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Design whole algorithms and analyse flawed ones. Several answers are written explanations — set them out clearly so we can discuss them.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Space</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Shapes can be classified and compared by their geometrical properties.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7SP04</strong> — design and create algorithms involving a sequence of steps and decisions that will sort and classify sets of shapes according to their attributes, and describe how the algorithms work</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 2 — creating flow-chart classification schemes for triangles (E1) and for quadrilaterals (E2) using sequences and decisions</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Design, follow and describe flow-chart algorithms — sequences of steps and decisions — that classify triangles and quadrilaterals by their geometric attributes.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_spa_07. Source: SA Curriculum — Mathematics R–10 Prototype 2.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Classification Algorithms
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ ATTRIBUTE SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING — name to attribute ============
+  // 5 pairs; each pair has a "group" id 1-5
+  const matchTerms = [
+    { html: 'Equilateral', group: 1 },
+    { html: '3 equal sides', group: 1 },
+    { html: 'Isosceles', group: 2 },
+    { html: '2 equal sides', group: 2 },
+    { html: 'Scalene', group: 3 },
+    { html: 'No equal sides', group: 3 },
+    { html: 'Right', group: 4 },
+    { html: 'Has a 90° angle', group: 4 },
+    { html: 'Obtuse', group: 5 },
+    { html: 'Has an angle &gt; 90°', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — check the attribute again.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  // Generic: works for any number of worked examples on the page.
+  function revealNextStep(btn) {
+    const worked = btn.closest('.worked');
+    const steps = worked.querySelectorAll('.step');
+    for (const s of steps) {
+      if (!s.classList.contains('visible')) { s.classList.add('visible'); break; }
+    }
+    const remaining = [...steps].some(s => !s.classList.contains('visible'));
+    if (!remaining) {
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // Answers normalised: strip spaces, lowercase.
+
+  // Retrieval warm-up (Section 0) — prior-knowledge prerequisites. noCount.
+  const retrieval = [
+    { q: 'How many sides does a quadrilateral have?', a: '4', hint: 'The prefix "quad" means four.' },
+    { q: 'A triangle with all three sides the same length is called an __________ triangle.', a: 'equilateral', hint: 'It starts with "equi" — meaning equal.' },
+    { q: 'How many degrees are there in a right angle?', a: '90', hint: 'It is the angle in the corner of a square.' },
+  ];
+
+  // BUILDING — follow the flow charts. One-word answers.
+  const practice1 = [
+    { q: 'Triangle with sides 5 cm, 5 cm, 5 cm. Use the side-length flow chart.', a: 'equilateral', hint: 'Decision 1: are all three sides equal?' },
+    { q: 'Triangle with sides 4 cm, 7 cm, 9 cm. Use the side-length flow chart.', a: 'scalene', hint: 'No two sides match — both decisions answer NO.' },
+    { q: 'Triangle with sides 8 cm, 8 cm, 5 cm. Use the side-length flow chart.', a: 'isosceles', hint: 'Not all equal, but exactly two are.' },
+    { q: 'A triangle&rsquo;s largest angle is exactly 90°. Use the angle flow chart.', a: 'right', hint: 'Decision 1 of the angle chart asks about 90°.' },
+    { q: 'A triangle&rsquo;s largest angle is 120°. Use the angle flow chart.', a: 'obtuse', hint: 'D1: 120 = 90? NO. D2: 120 &gt; 90? YES.' },
+    { q: 'A triangle&rsquo;s largest angle is 70°. Use the angle flow chart.', a: 'acute', hint: 'Both angle decisions answer NO.' },
+    { q: 'Quadrilateral: two pairs of parallel sides, four right angles, four equal sides.', a: 'square', hint: 'Follow YES, NO is never used until the last decision — answer YES to four equal sides.' },
+    { q: 'Quadrilateral: two pairs of parallel sides, four right angles, sides NOT all equal.', a: 'rectangle', hint: 'Four right angles → YES; four equal sides → NO.' },
+    { q: 'Quadrilateral: two pairs of parallel sides, no right angles, four equal sides.', a: 'rhombus', hint: 'Four right angles → NO; four equal sides → YES.' },
+    { q: 'Quadrilateral: two pairs of parallel sides, no right angles, sides NOT all equal.', a: 'parallelogram', hint: 'Both later decisions answer NO.' },
+  ];
+
+  // STRETCH — reason about the decisions.
+  const practice2 = [
+    { q: 'A triangle has three 60° angles. What is its <strong>angle</strong> classification?', a: 'acute', hint: 'The largest angle is 60° — both angle decisions answer NO.' },
+    { q: 'The triangle side-length algorithm outputs "scalene". How many of its decisions were answered NO?', a: '2', hint: 'Scalene is the only output reached after failing every decision.' },
+    { q: 'A quadrilateral has only ONE pair of parallel sides. Name the shape the flow chart points toward.', a: 'trapezium', hint: 'Decision 1 (two pairs of parallel sides?) answers NO.' },
+    { q: 'In the quadrilateral chart you answer YES, then YES, then NO. What is the output?', a: 'rectangle', hint: 'YES parallel, YES right angles, NO to four equal sides.' },
+    { q: 'Explain why the decision "four right angles?" is placed AFTER "two pairs of parallel sides?" in the flow chart.', a: 'TEXT', hint: 'Think about what kinds of shape reach the second decision — only parallelograms can be squares or rectangles.' },
+    { q: 'A shape has four equal sides AND four right angles. A flawed algorithm outputs "rhombus". Trace the correct chart — what should the output be?', a: 'square', hint: 'Four right angles → YES branch, then four equal sides → YES.' },
+  ];
+
+  // MASTERY — design and analyse.
+  const practice3 = [
+    { q: 'Design an algorithm: write the sequence of decisions that classifies any triangle by its side lengths, and describe how it works.', a: 'TEXT', hint: 'Decision 1: all three sides equal? Decision 2: exactly two sides equal? Describe what each YES/NO produces.' },
+    { q: 'A classmate&rsquo;s algorithm checks "exactly two sides equal?" FIRST, then "all three sides equal?". Explain the error this causes for an equilateral triangle.', a: 'TEXT', hint: 'An equilateral triangle does have two equal sides — so it would be labelled isosceles and never reach the second decision.' },
+    { q: 'Quadrilateral: two pairs of parallel sides, four equal sides, no right angles. Trace the flow chart and name the shape.', a: 'rhombus', hint: 'Four right angles → NO; four equal sides → YES.' },
+    { q: 'A pentagon is fed into the triangle side-length algorithm, which has no decision to check the number of sides. Describe what happens and what it shows about the algorithm&rsquo;s design.', a: 'TEXT', hint: 'The algorithm still gives a triangle name — a good algorithm should first check the shape is a triangle.' },
+  ];
+
+  // QUICK CHECK
+  const checkpoint = [
+    { q: 'A triangle has sides 9 cm, 9 cm, 4 cm. Use the side-length flow chart to classify it.', a: 'isosceles', hint: 'Not all equal — but exactly two are.' },
+    { q: 'A quadrilateral has four right angles but its sides are not all equal. Classify it.', a: 'rectangle', hint: 'Four right angles → YES; four equal sides → NO.' },
+  ];
+
+  // WE DO — co-built square/rectangle/other algorithm. noCount.
+  const weDo = [
+    { q: 'Decision 1 tests one attribute: "Four right angles?". If the answer is NO, what output should the algorithm give?', a: 'other quadrilateral', hint: 'A shape without four right angles cannot be a square or a rectangle.' },
+    { q: 'If Decision 1 is YES, we reach Decision 2: "Four equal sides?". If that answer is YES, what is the output?', a: 'square', hint: 'Four right angles AND four equal sides.' },
+    { q: 'If Decision 2 is NO, what is the output?', a: 'rectangle', hint: 'Four right angles, but the sides are not all equal.' },
+  ];
+
+  // EXIT TICKET
+  const exitProbs = [
+    { q: 'A triangle has angles 40°, 60° and 80°. What is its angle classification?', a: 'acute', hint: 'Look at the largest angle — is it 90°, more than 90°, or less?' },
+    { q: 'In a flow chart, what does a <strong>diamond</strong> symbol represent? (one word)', a: 'decision', hint: 'It always asks a yes/no question.' },
+    { q: 'Explain why the ORDER of the decisions matters when you design a classification algorithm.', a: 'TEXT', hint: 'Think about a shape reaching the wrong result box if two decisions are swapped.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — there is no single correct answer. Use the hint as a guide, then discuss responses as a class.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 3: tidy operators — typographic minus, space around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
