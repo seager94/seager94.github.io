@@ -1,18 +1,30 @@
 <!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON — Year 7 Measurement: Area of Triangles
+  Built from the interactive-html-maths-lesson template. Regenerated (v2).
+  ============================================================================
+-->
 <html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Area of Triangles — Year 7</title>
 
-<meta name="lesson-id"             content="TODO: confirm lesson ID (likely y7_meas_01 — lesson 01 of Year 7 area/volume unit)">
+<!--
+  ============================================================================
+  CURRICULUM METADATA — scrapable for coverage audits; mirrors the visible
+  "Curriculum link" panel before the footer. Source: lesson-map.xlsx row.
+  ============================================================================
+-->
+<meta name="lesson-id"             content="y7_mea_01">
 <meta name="ac9-descriptor"        content="AC9M7M01">
-<meta name="ac9-elaborations"      content="TODO: confirm elaboration numbers">
+<meta name="ac9-elaborations"      content="1,2,3">
 <meta name="sa-year"               content="7">
 <meta name="sa-strand"             content="Measurement">
-<meta name="sa-conceptual-understanding" content="TODO: confirm SA Curriculum Prototype conceptual understanding statement">
-<meta name="lesson-focus"          content="Use A = ½ × base × perpendicular height to find the area of right-angled, acute and obtuse triangles. Identify the perpendicular height — distinguish it from a slanted side — including the case where the perpendicular falls outside the base.">
-<meta name="mapping-note"          content="Strict">
+<meta name="sa-conceptual-understanding" content="Measurable attributes of 2-dimensional shapes and 3-dimensional objects can be determined based on the known properties of the shape or solid">
+<meta name="lesson-focus"          content="Derive and apply A = ½ × base × perpendicular height to find areas of right-angled, acute and obtuse triangles, including the case where the height falls outside the base and practical shade-sail problems.">
+<meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
 
 <style>
   :root {
@@ -44,6 +56,7 @@
   }
   .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
 
+  /* HEADER */
   header.top {
     background: var(--navy);
     color: white;
@@ -76,6 +89,7 @@
     text-transform: uppercase;
   }
 
+  /* PROGRESS BAR */
   .progress-wrap {
     position: sticky; top: 0; z-index: 50;
     background: var(--bg);
@@ -105,6 +119,7 @@
   }
   .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
 
+  /* DIFFICULTY SECTIONS (You do) */
   section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
   section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
   section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
@@ -118,6 +133,7 @@
   .difficulty-2 .problem-input,
   .difficulty-3 .problem-input { background: white; }
 
+  /* Chilli stickers — top-left of each You Do section */
   section.lesson.difficulty-1::before,
   section.lesson.difficulty-2::before,
   section.lesson.difficulty-3::before {
@@ -135,6 +151,7 @@
   section.lesson.difficulty-2::before { content: '🌶🌶'; }
   section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
 
+  /* CHECKPOINT — short "you do" before independent practice */
   section.lesson.checkpoint {
     background: #f7faff;
     border-left: 5px solid var(--navy);
@@ -193,6 +210,7 @@
     .diff-badge .dots { font-size: 0.72rem; }
   }
 
+  /* PHASE BANNERS */
   .phase-banner {
     display: flex; align-items: center; gap: 18px;
     background: white;
@@ -230,6 +248,7 @@
     .phase-banner { gap: 12px; padding: 12px 14px; }
   }
 
+  /* SECTION CARDS */
   section.lesson {
     background: var(--card);
     border-radius: 14px;
@@ -261,136 +280,19 @@
     font-size: 0.95rem;
   }
 
+  /* MATH STYLING */
   .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
   .var { font-style: italic; }
   .frac {
     display: inline-flex; flex-direction: column;
     vertical-align: middle; text-align: center;
-    line-height: 1.1; margin: 0 3px;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
     font-size: 0.92em;
   }
   .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
   .frac .den { padding: 1px 4px 0; }
 
-  /* TRIANGLE FIGURE STYLING */
-  .tri-figure {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    box-shadow: var(--shadow);
-  }
-  .tri-figure .caption {
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-style: italic;
-    text-align: center;
-    max-width: 240px;
-  }
-  .spatial-grid {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 22px;
-    align-items: center;
-    margin-bottom: 18px;
-  }
-  @media (max-width: 700px) {
-    .spatial-grid { grid-template-columns: 1fr; }
-  }
-
-  /* CASE PANELS for the I Do (three triangle types) */
-  .case-stack { display: flex; flex-direction: column; gap: 18px; }
-  .case-panel {
-    background: white;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 18px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 22px;
-    align-items: start;
-    opacity: 0.35;
-    transition: opacity 0.3s;
-  }
-  .case-panel.visible { opacity: 1; }
-  .case-panel.key {
-    border-color: var(--coral);
-    background: #fff8f4;
-  }
-  .case-panel .case-head {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 8px;
-  }
-  .case-panel .case-tag {
-    background: var(--navy); color: white;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-family: -apple-system, sans-serif;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-weight: 700;
-  }
-  .case-panel.key .case-tag { background: var(--coral); }
-  .case-panel .case-title {
-    font-family: Georgia, serif;
-    font-weight: bold;
-    color: var(--navy);
-    font-size: 1.08rem;
-  }
-  .case-panel .case-body { padding-top: 2px; }
-  .case-panel .calc-box {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-    margin-top: 8px;
-  }
-  .calc-box .red { color: var(--coral); font-weight: 600; }
-  .calc-box .blue { color: var(--navy); font-weight: 600; }
-  @media (max-width: 640px) {
-    .case-panel { grid-template-columns: 1fr; }
-    .case-panel .tri-figure { align-self: center; }
-  }
-
-  /* WORKED EXAMPLE (kept for compatibility) */
-  .worked {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 22px;
-    border: 1px solid var(--border);
-  }
-  .summary-banner {
-    background: var(--coral); color: white;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-top: 14px;
-    font-family: Georgia, serif;
-    font-size: 1.1rem;
-    text-align: center;
-  }
-  .summary-banner .label {
-    font-family: -apple-system, sans-serif;
-    text-transform: uppercase; letter-spacing: 0.8px;
-    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
-  }
-  .reveal-btn {
-    background: var(--navy); color: white;
-    border: none; padding: 10px 18px;
-    border-radius: 8px; cursor: pointer;
-    font-size: 0.92rem; font-weight: 600;
-    margin-top: 10px;
-  }
-  .reveal-btn:hover { background: var(--navy-dark); }
-  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-
-  /* VOCAB CARDS */
+  /* VOCABULARY FLIP CARDS */
   .vocab-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
@@ -432,7 +334,7 @@
   .vocab-back {
     background: white; color: var(--text);
     transform: rotateY(180deg);
-    font-size: 0.92rem; line-height: 1.4;
+    font-size: 0.95rem; line-height: 1.4;
     text-wrap: balance;
   }
   .vocab-back strong { color: var(--coral); }
@@ -442,7 +344,7 @@
     padding: 7px 11px 8px;
     background: var(--hint-bg);
     border-radius: 6px;
-    font-size: 0.82rem;
+    font-size: 0.84rem;
     line-height: 1.4;
     color: var(--navy);
     font-style: italic;
@@ -459,7 +361,7 @@
   }
   .vocab-example strong { color: var(--coral); font-style: normal; }
 
-  /* DRAG-SORT (height vs slanted side) */
+  /* PARTS-OF-EXPRESSION INTERACTIVE */
   .parts-expr {
     text-align: center;
     background: var(--card);
@@ -476,21 +378,19 @@
   }
   .term-chip {
     display: inline-block;
-    padding: 8px 14px;
+    padding: 6px 12px;
     margin: 4px;
     border: 1.5px solid var(--border);
     border-radius: 8px;
     cursor: pointer;
     background: white;
-    font-family: -apple-system, sans-serif;
-    font-size: 0.92rem;
-    line-height: 1.35;
-    max-width: 230px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
     transition: all 0.2s;
   }
   .term-chip:hover { border-color: var(--navy); }
-  .term-chip.height { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
-  .term-chip.slant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
 
   .parts-instructions {
     background: var(--hint-bg);
@@ -513,7 +413,7 @@
   .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
   .bucket .vt { color: var(--coral); }
   .bucket .ct { color: var(--navy); }
-  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; justify-content: center; }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
   .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
   .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
   .term-chip { touch-action: none; user-select: none; }
@@ -523,12 +423,11 @@
     transform: scale(1.06);
     box-shadow: 0 12px 28px rgba(0,0,0,0.22);
     background: white;
-    padding: 8px 14px;
+    padding: 6px 12px;
     border: 1.5px solid var(--navy);
     border-radius: 8px;
-    font-family: -apple-system, sans-serif;
-    font-size: 0.92rem;
-    max-width: 230px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
   }
   .bucket.drop-target {
     background: var(--coral-soft);
@@ -557,9 +456,66 @@
   }
   .btn-secondary:hover { background: var(--hint-bg); }
 
-  /* MATCHING TRIANGLES TO AREAS */
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING */
   .match-area {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
     gap: 10px; margin: 14px 0;
   }
   .match-chip {
@@ -567,8 +523,6 @@
     border-radius: 8px; padding: 12px 6px;
     text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
     cursor: pointer; transition: all 0.15s;
-    min-height: 70px;
-    display: flex; align-items: center; justify-content: center;
   }
   .match-chip:hover { border-color: var(--navy); }
   .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
@@ -606,12 +560,11 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
-  .problem-expr svg { display: block; margin: 4px auto 6px; }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
   .problem-input-row {
     display: flex; gap: 8px; align-items: center; margin-top: 10px;
   }
-  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.05rem; color: var(--muted); }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
   .problem-input {
     flex: 1; padding: 8px 12px;
     border: 1.5px solid var(--border); border-radius: 7px;
@@ -656,14 +609,16 @@
   .answer-box.visible { display: block; }
   body.teacher-mode .answer-box { display: block !important; }
   body.teacher-mode .hint-box { display: block !important; }
-  body.teacher-mode .case-panel { opacity: 1 !important; }
-  body.teacher-mode #revealBtn { display: none; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
 
+  /* EXIT TICKET */
   .exit-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 14px;
   }
 
+  /* FOOTER */
   footer.bottom {
     margin-top: 28px;
     text-align: center;
@@ -671,6 +626,7 @@
     font-size: 0.82rem;
   }
 
+  /* CURRICULUM LINK panel — collapsible metadata footer. */
   details.curriculum-link {
     margin: 18px 0 4px;
     padding: 0;
@@ -725,13 +681,15 @@
     details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
   }
 
+  /* PRINT */
   @media print {
     .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
-    .case-panel { opacity: 1 !important; }
+    .step { opacity: 1 !important; }
     section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
     body { background: white; }
   }
 
+  /* RESPONSIVE */
   @media (max-width: 600px) {
     .page { padding: 0 14px 80px; }
     section.lesson { padding: 18px; }
@@ -740,6 +698,7 @@
     .parts-buckets { grid-template-columns: 1fr; }
   }
 
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket share visual treatment */
   section.lesson.retrieval,
   section.lesson.exit-ticket {
     background: #eaf0f1;
@@ -763,6 +722,7 @@
     white-space: nowrap;
   }
 
+  /* ACCORDION PRACTICE TIERS */
   section.lesson.tier-accordion {
     padding-top: 28px;
   }
@@ -812,122 +772,45 @@
   .tier-accordion .sec-desc { display: none; }
   .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
 
-  /* ERROR ANALYSIS STRATEGY */
-  .err-problem-stem {
-    background: var(--hint-bg);
-    border-left: 4px solid var(--navy);
-    padding: 14px 18px;
-    border-radius: 6px;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-    color: var(--navy);
-    margin-bottom: 16px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 18px;
-    align-items: center;
+  /* DIAGRAM — static SVGs inside worked examples */
+  .diagram { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+  .diagram-cap {
+    text-align: center; font-family: -apple-system, sans-serif;
+    font-size: 0.78rem; color: var(--muted); margin: 6px 0 10px;
   }
-  @media (max-width: 600px) {
-    .err-problem-stem { grid-template-columns: 1fr; }
-  }
-  .err-solution {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px;
-    margin-bottom: 14px;
-  }
-  .err-line {
-    display: grid;
-    grid-template-columns: 36px 1fr 24px;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 14px;
-    margin-bottom: 6px;
-    background: var(--bg);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-    transition: all 0.2s;
-  }
-  .err-line:last-child { margin-bottom: 0; }
-  .err-line:hover { border-color: var(--navy); }
-  .err-line .err-line-num {
-    background: var(--hint-bg); color: var(--navy);
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-family: -apple-system, sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-  }
-  .err-line .err-line-mark { font-size: 1.1rem; opacity: 0; transition: opacity 0.2s; }
-  .err-line.flagged-correct { background: var(--good-soft); border-color: var(--good); }
-  .err-line.flagged-correct .err-line-mark::before { content: '✓'; color: var(--good); }
-  .err-line.flagged-correct .err-line-mark { opacity: 1; }
-  .err-line.flagged-wrong { animation: err-shake 0.45s; background: var(--bad-soft); border-color: var(--bad); }
-  @keyframes err-shake {
-    0%, 100% { transform: translateX(0); }
-    25%, 75% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-  }
-  .err-line.dimmed { opacity: 0.45; cursor: not-allowed; }
-  .err-feedback {
-    background: white;
-    border: 1.5px solid var(--good);
-    border-radius: 10px;
-    padding: 16px 18px;
-    margin-top: 14px;
-    display: none;
-  }
-  .err-feedback.visible { display: block; }
-  .err-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.05rem; }
-  .err-feedback .err-explain { background: var(--hint-bg); border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; font-size: 0.92rem; color: var(--navy); }
-  .err-correction-row {
-    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-  }
-  .err-correction-row input {
-    flex: 1; min-width: 200px;
-    padding: 9px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-  }
-  .err-correction-row input.correct { background: var(--good-soft); border-color: var(--good); }
-  .err-correction-row input.incorrect { background: var(--bad-soft); border-color: var(--bad); }
-  .err-correction-row button {
-    background: var(--coral); color: white;
-    border: none; padding: 9px 16px; border-radius: 8px;
-    font-size: 0.92rem; font-weight: 600; cursor: pointer;
-  }
-  .err-status-msg {
-    margin-top: 10px;
-    font-size: 0.9rem;
-    color: var(--muted);
-    font-style: italic;
-  }
-  body.teacher-mode .err-line[data-is-error="true"] { box-shadow: 0 0 0 3px var(--coral); }
-  section.lesson.error-analysis {
-    background: #fffbf4;
-    border-left: 5px solid var(--coral);
-  }
-  .ea-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    margin-left: auto;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-family: -apple-system, sans-serif;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    background: var(--coral);
-    color: white;
-    white-space: nowrap;
-  }
+
+  /* constant-area triangle component */
+  .cat{display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+  .cat-stage{ flex:1 1 340px; min-width:300px; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:10px; }
+  .cat svg{display:block; width:100%; height:auto; touch-action:none;}
+  .cat-apex{cursor:grab; touch-action:none;}
+  .cat-apex:active{cursor:grabbing;}
+  .cat-apex:focus{outline:none;}
+  .cat-panel{ flex:1 1 240px; min-width:230px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+  .cat-panel h3{font-family:Georgia,serif; color:var(--navy); margin:0 0 10px; font-size:1.05rem;}
+  .cat-row{ display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px dashed var(--border); font-size:.95rem; }
+  .cat-row:last-of-type{border-bottom:none;}
+  .cat-row .lab{color:var(--muted);}
+  .cat-row .val{font-family:Georgia,Cambria,serif; color:var(--navy); font-weight:bold;}
+  .cat-area-line{ margin-top:12px; padding:12px; border-radius:9px; background:var(--coral-soft); text-align:center; font-family:Georgia,Cambria,serif; color:var(--navy); font-size:1.05rem; }
+  .cat-area-line .big{color:var(--coral); font-weight:bold; font-size:1.3rem;}
+  .cat-status{ margin-top:12px; font-size:.85rem; color:var(--muted); background:var(--hint-bg); border-radius:8px; padding:9px 11px; }
+  .cat-status.done{color:var(--good); font-weight:600;}
+  .cat-q{ margin-top:16px; font-style:italic; color:var(--navy); border-left:3px solid var(--coral); padding-left:12px; font-size:.92rem; }
+  .cat-baseext{stroke:var(--border); stroke-width:2; stroke-dasharray:4 5;}
+  .cat-guide{stroke:var(--coral); stroke-width:2; stroke-dasharray:6 5; opacity:.65;}
+  .cat-guide-label{font-family:Georgia,serif; font-size:13px; fill:var(--coral); opacity:.8;}
+  .cat-fill{fill:var(--coral); fill-opacity:.12;}
+  .cat-base{stroke:var(--navy); stroke-width:3.5;}
+  .cat-slant{stroke:var(--navy); stroke-width:3;}
+  .cat-perp{stroke:var(--coral); stroke-width:2; stroke-dasharray:5 4;}
+  .cat-ra{fill:none; stroke:var(--coral); stroke-width:2;}
+  .cat-vlabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-hlabel{font-family:Georgia,serif; font-size:14px; fill:var(--coral);}
+  .cat-baselabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-vdot{fill:var(--navy);}
+  .cat-ring{fill:none; stroke:var(--navy); stroke-width:2; transition:opacity .15s;}
+  .cat-handle{fill:var(--coral); stroke:#ffffff; stroke-width:3;}
 </style>
 </head>
 <body>
@@ -935,14 +818,14 @@
 <header class="top">
   <div>
     <h1>Area of Triangles</h1>
-    <div class="subtitle">Year 7 · Measurement · AC9M7M01</div>
+    <div class="subtitle">Year 7 · SA Curriculum · Measurement</div>
   </div>
-  <div class="badge">Watershed lesson</div>
+  <div class="badge">Measurement</div>
 </header>
 
 <div class="progress-wrap">
   <div class="progress-row">
-    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
       <span>👁</span><span>Teacher mode</span>
@@ -952,33 +835,27 @@
 
 <div class="page">
 
-<!-- SECTION 0: RETRIEVAL -->
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
 <section class="lesson retrieval">
   <h2>
     <span class="sec-num">0</span>Warm-up — quick recall
     <span class="retrieval-tag">🧠 30-second recall</span>
   </h2>
-  <p class="sec-desc">Three quick questions from earlier work. They warm up the skills you'll need today. Type just the number for each answer.</p>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up exactly the skills you'll need to find the area of a triangle today.</p>
   <div class="practice-grid" id="retrievalGrid"></div>
 </section>
 
-<!-- SECTION 1: HOOK -->
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
 <section class="lesson">
   <h2><span class="sec-num">1</span>Why this matters</h2>
-  <p class="sec-desc">A real job your school does every summer.</p>
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+  <p class="sec-desc">A real situation that's secretly today's measurement.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
     <div>
-      <p>Every summer the school orders <strong>triangular shade sails</strong> for the courtyard. The supplier charges <strong>$48 per square metre</strong> of fabric.</p>
-      <p>Three sails need quoting this year:</p>
-      <ul style="line-height: 1.85;">
-        <li>One with a 4 m base and 3 m perpendicular height</li>
-        <li>One with a 5 m base and 6 m perpendicular height</li>
-        <li>One with a 7 m base and 4 m perpendicular height</li>
-      </ul>
-      <p>The bursar needs the total cost by Friday. The maths today gives you a single formula that works for <em>any</em> triangle — not just nice right-angled ones.</p>
+      <p>The school is having a <strong>triangular shade sail</strong> installed over the Year 7 courtyard. Before the order can go in, the installer needs to know how much sail fabric to buy.</p>
+      <p>The shade-cloth costs <strong>$45 per square metre</strong>. Order too little and the sail won't reach the posts; order too much and the school wastes money. They need the exact <strong>area</strong> of the triangle.</p>
     </div>
     <div class="parts-instructions" style="margin: 0;">
-      💡 By the end of this lesson you'll be able to apply <span class="expr">A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × base × perpendicular height</span> to find the area of <strong>any</strong> triangle. We'll come back to those shade-sail quotes in the We Do.
+      The triangular sail has a base of <span class="expr">6 m</span> and a perpendicular height of <span class="expr">4 m</span>. Today's formula gives the area in one line: <span class="expr">A = &frac12; &times; 6 &times; 4 = 12 m&sup2;</span>. So the fabric costs <span class="expr">12 &times; $45 = $540</span>. Learn the formula and you can quote any triangular sail.
     </div>
   </div>
 </section>
@@ -987,71 +864,75 @@
   <div class="phase-mono">AS A&nbsp;CLASS</div>
   <div class="phase-text">
     <div class="phase-label">Build the foundation together</div>
-    <div class="phase-sub">Vocabulary and the key idea — we'll do this as a whole class.</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
   </div>
 </div>
 
-<!-- SECTION 2: VOCAB -->
+<!-- SECTION 2: VOCABULARY -->
 <section class="lesson">
   <h2><span class="sec-num">2</span>Key vocabulary</h2>
-  <p class="sec-desc">Tap each card to flip and reveal the definition. The word <strong>perpendicular</strong> is the one that catches students out — pay close attention to that one.</p>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
   <div class="vocab-grid">
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
+        <div class="vocab-front">Area<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The amount of <strong>flat surface a shape covers</strong>, measured in square units.<div class="vocab-example expr">A triangle's area might be <strong>18 cm&sup2;</strong> — it covers 18 unit squares.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
         <div class="vocab-front">Base<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">Any side of the triangle you <strong>choose</strong> as the bottom. Once chosen, the perpendicular height is measured from this side.<div class="vocab-example">A triangle has three sides — <strong>any</strong> of them can be the base.</div></div>
+        <div class="vocab-back">Any one side of a triangle, chosen as the <strong>side you measure from</strong>.<div class="vocab-example expr">Any of the three sides can be the base — pick the one that is easiest to use.</div></div>
       </div>
     </div>
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
         <div class="vocab-front">Perpendicular height<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">The distance from the <strong>top vertex</strong> straight down to the base — at a <strong>right angle</strong> (90°).<div class="vocab-example">Often drawn as a <strong>dashed line</strong> with a small square showing the 90° angle.</div></div>
+        <div class="vocab-back">The distance from the base to the <strong>opposite vertex</strong>, measured at a right angle to the base.<div class="vocab-example expr">It is <strong>not a slanted side</strong> — it must meet the base at 90&deg;.</div></div>
       </div>
     </div>
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
         <div class="vocab-front">Right angle<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A <strong>90° angle</strong> — a perfect corner like the corner of a page.<div class="vocab-example">Shown as a small <strong>square</strong> in the corner, never as an arc.</div></div>
+        <div class="vocab-back">An angle of <strong>exactly 90&deg;</strong>, marked with a small square.<div class="vocab-example expr">The perpendicular height and the base always meet at a <strong>right angle</strong>.</div></div>
       </div>
     </div>
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
-        <div class="vocab-front">Slanted side<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A side of the triangle that is <strong>not perpendicular</strong> to the base. <strong>This is NOT the height.</strong><div class="vocab-example">Using a slanted side instead of the perpendicular height is the most common mistake.</div></div>
-      </div>
-    </div>
-    <div class="vocab" onclick="this.classList.toggle('flipped')">
-      <div class="vocab-inner">
-        <div class="vocab-front">Area<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">The amount of <strong>space inside</strong> a 2D shape, measured in <strong>square units</strong> (cm², m², etc.).<div class="vocab-example">A square 1 cm on each side has an area of 1 cm².</div></div>
+        <div class="vocab-front">Area formula<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Area of a triangle = <strong>&frac12; &times; base &times; perpendicular height</strong>.<div class="vocab-example expr">A triangle is <strong>half</strong> of a rectangle with the same base and height.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 3: SORT — perpendicular height vs slanted side -->
+<!-- SECTION 3: SORT — TRIANGLE TYPES -->
 <section class="lesson">
-  <h2><span class="sec-num">3</span>Which lines are the height?</h2>
-  <p class="sec-desc">Each chip describes a line drawn on a triangle. Drag it into the correct bucket — is that line the <strong style="color:var(--coral)">perpendicular height</strong>, or just a <strong style="color:var(--navy)">slanted side</strong>?</p>
+  <h2><span class="sec-num">3</span>Sort the triangles by type</h2>
+  <p class="sec-desc">Drag each angle set into the correct bucket — <strong>acute</strong>, <strong>right-angled</strong>, or <strong>obtuse</strong>. Wrong drops will shake; correct ones stay put.</p>
 
   <div class="parts-expr">
-    <div class="label">Sort each description</div>
+    <div class="label">Each chip shows the three angles of a triangle</div>
     <div id="partsTerms" class="terms-source">
-      <span class="term-chip" data-type="height">A dashed line drawn at 90° to the base</span>
-      <span class="term-chip" data-type="slant">The longest side of a right-angled triangle (the hypotenuse)</span>
-      <span class="term-chip" data-type="height">A leg of a right-angled triangle that meets the base at a corner</span>
-      <span class="term-chip" data-type="slant">A diagonal line connecting two corners of the triangle</span>
-      <span class="term-chip" data-type="height">A line from the top vertex meeting the extended base at a right angle</span>
-      <span class="term-chip" data-type="slant">A sloping side from a top vertex down to the end of the base</span>
+      <span class="term-chip expr" data-type="acute">70&deg;, 60&deg;, 50&deg;</span>
+      <span class="term-chip expr" data-type="right">90&deg;, 55&deg;, 35&deg;</span>
+      <span class="term-chip expr" data-type="obtuse">110&deg;, 40&deg;, 30&deg;</span>
+      <span class="term-chip expr" data-type="acute">80&deg;, 65&deg;, 35&deg;</span>
+      <span class="term-chip expr" data-type="obtuse">125&deg;, 30&deg;, 25&deg;</span>
+      <span class="term-chip expr" data-type="right">45&deg;, 45&deg;, 90&deg;</span>
     </div>
-    <div class="parts-buckets">
-      <div class="bucket" data-bucket="height">
-        <h4 class="vt">Perpendicular height ✓</h4>
-        <div class="bucket-contents"></div>
+    <div class="parts-buckets" style="grid-template-columns: repeat(3, minmax(0,1fr));">
+      <div class="bucket" data-bucket="acute">
+        <h4 class="vt">Acute — all angles &lt; 90&deg;</h4>
+        <div class="bucket-contents expr"></div>
       </div>
-      <div class="bucket" data-bucket="slant">
-        <h4 class="ct">Slanted side ✗</h4>
-        <div class="bucket-contents"></div>
+      <div class="bucket" data-bucket="right">
+        <h4 class="ct">Right-angled — one 90&deg; angle</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="obtuse">
+        <h4 class="vt">Obtuse — one angle &gt; 90&deg;</h4>
+        <div class="bucket-contents expr"></div>
       </div>
     </div>
     <div class="parts-actions">
@@ -1061,242 +942,266 @@
   </div>
 
   <div class="parts-instructions">
-    💡 The test for "is this the height?" is always the same: <strong>does it meet the base at a 90° angle?</strong> If yes — it's the height. If it slopes — it isn't.
+    💡 The triangle type decides where the perpendicular height lands. In a right-angled triangle two sides are already perpendicular; in an obtuse triangle the height can fall <strong>outside</strong> the base — but the area formula never changes.
   </div>
 </section>
 
-<!-- SECTION 4: MATCH -->
+<!-- SECTION 4: CONSTANT-AREA TRIANGLE (DGS-substitute component, AC9M7M01 E2) -->
 <section class="lesson">
-  <h2><span class="sec-num">4</span>Match the triangle to its area</h2>
-  <p class="sec-desc">Click a triangle, then click its matching area. There are five pairs. Use <span class="expr">A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × base × height</span>.</p>
+  <h2><span class="sec-num">4</span>Drag the top corner — what stays the same?</h2>
+  <p class="sec-desc">The base and the perpendicular height are fixed. Slide corner <strong>C</strong> left and right along the dashed line. Watch the slanted sides change shape — and watch the area.</p>
+
+  <div class="cat">
+    <!-- STAGE -->
+    <div class="cat-stage">
+      <svg id="catSvg" viewBox="0 0 600 380" role="img"
+           aria-label="A triangle with a draggable top vertex on a fixed-height line">
+        <line class="cat-baseext" x1="40" y1="300" x2="150" y2="300"/>
+        <line class="cat-baseext" x1="450" y1="300" x2="560" y2="300"/>
+        <line class="cat-guide" x1="40" y1="150" x2="560" y2="150"/>
+        <text class="cat-guide-label" x="48" y="142">fixed-height line</text>
+        <polygon id="catFill" class="cat-fill" points="150,300 450,300 300,150"/>
+        <line class="cat-base" x1="150" y1="300" x2="450" y2="300"/>
+        <line id="catSlantA" class="cat-slant" x1="150" y1="300" x2="300" y2="150"/>
+        <line id="catSlantB" class="cat-slant" x1="450" y1="300" x2="300" y2="150"/>
+        <line id="catPerp" class="cat-perp" x1="300" y1="150" x2="300" y2="300"/>
+        <polyline id="catRA" class="cat-ra" points="300,288 312,288 312,300"/>
+        <text class="cat-baselabel" x="300" y="332" text-anchor="middle">base = 12 cm</text>
+        <text id="catHLabel" class="cat-hlabel" x="312" y="230">h = 6 cm</text>
+        <circle class="cat-vdot" cx="150" cy="300" r="4.5"/>
+        <circle class="cat-vdot" cx="450" cy="300" r="4.5"/>
+        <text class="cat-vlabel" x="138" y="320">A</text>
+        <text class="cat-vlabel" x="456" y="320">B</text>
+        <text id="catCLabel" class="cat-vlabel" x="300" y="132" text-anchor="middle">C</text>
+        <circle id="catFocusRing" class="cat-ring" cx="300" cy="150" r="18" opacity="0"/>
+        <circle id="catApex" class="cat-apex cat-handle" cx="300" cy="150" r="12"
+                tabindex="0" role="slider" aria-label="Triangle apex position"
+                aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"/>
+      </svg>
+    </div>
+
+    <!-- READOUT PANEL -->
+    <div class="cat-panel">
+      <h3>Measurements</h3>
+      <div class="cat-row"><span class="lab">Base</span><span class="val">12 cm</span></div>
+      <div class="cat-row"><span class="lab">Perpendicular height</span><span class="val">6 cm</span></div>
+      <div class="cat-row"><span class="lab">Triangle type</span><span class="val" id="catType">acute</span></div>
+      <div class="cat-area-line">
+        Area = &frac12; &times; 12 &times; 6 = <span class="big" id="catArea">36</span> cm&sup2;
+      </div>
+      <div class="cat-status" id="catStatus">Drag C to a few positions. Notice the area readout.</div>
+      <div class="cat-q">What changes as you drag C? What stays exactly the same — and why?</div>
+      <button class="btn-secondary" id="catReset">&#8634; Reset to centre</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Big idea:</strong> the triangle's shape changes — even from acute to right-angled to obtuse — but the area stays <strong>36 cm&sup2;</strong> the whole time. Area depends only on the base and the perpendicular height, not on how the triangle leans.
+  </div>
+</section>
+
+<!-- SECTION 5: MATCH — TRIANGLE TO ITS AREA -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Match each triangle to its area</h2>
+  <p class="sec-desc">Click a base-and-height card, then click the area it produces. There are five matching pairs. Use <span class="expr">A = &frac12; &times; base &times; height</span> in your head.</p>
 
   <div class="match-area" id="matchArea">
     <!-- populated by JS -->
   </div>
-  <div class="match-feedback" id="matchFeedback">Pick a triangle to start matching.</div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
 </section>
 
 <div class="phase-banner">
   <div class="phase-mono">I DO</div>
   <div class="phase-text">
     <div class="phase-label">Watch and listen</div>
-    <div class="phase-sub">I'll work through three cases out loud — every triangle you'll ever meet is one of these.</div>
+    <div class="phase-sub">I'll work through three examples out loud — one for each type of triangle.</div>
   </div>
 </div>
 
-<!-- SECTION 5: I DO -->
+<!-- SECTION 6: WORKED EXAMPLE 1 — RIGHT-ANGLED + DERIVATION (AC9M7M01 E1) -->
 <section class="lesson">
-  <h2><span class="sec-num">5</span>The big idea — and three cases</h2>
-  <p class="sec-desc">Why the formula is what it is, then three worked examples covering every kind of triangle.</p>
+  <h2><span class="sec-num">6</span>Worked example 1 — a right-angled triangle</h2>
+  <p class="sec-desc">Find the area of a right-angled triangle with base <span class="expr">10 cm</span> and perpendicular height <span class="expr">6 cm</span> — and discover where the formula comes from.</p>
 
-  <!-- Spatial argument -->
-  <div class="spatial-grid">
-    <div class="tri-figure">
-      <svg viewBox="0 0 200 140" width="200" height="140" aria-label="A triangle drawn inside a dashed rectangle. The triangle fills exactly half the rectangle.">
-        <rect x="20" y="20" width="160" height="100" fill="#eaf0f1" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="4,3"/>
-        <polygon points="20,120 180,120 100,20" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/>
-        <line x1="100" y1="120" x2="100" y2="20" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="5,4"/>
-        <rect x="100" y="110" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.4"/>
-        <text x="86" y="138" font-family="Georgia" font-size="13" fill="#1F4D54">base</text>
-        <text x="108" y="74" font-family="Georgia" font-size="13" fill="#1F4D54">height</text>
-      </svg>
-      <div class="caption">Any triangle fits inside a rectangle with the same base and height. The triangle is exactly <strong>half</strong> of that rectangle.</div>
-    </div>
-    <div>
-      <p><strong>The spatial argument.</strong> A rectangle with base <span class="expr"><span class="var">b</span></span> and height <span class="expr"><span class="var">h</span></span> has area <span class="expr"><span class="var">b</span> × <span class="var">h</span></span>. If we draw any triangle inside that rectangle using the same base and height, the two "leftover" corners of the rectangle together have the <em>same area</em> as the triangle itself.</p>
-      <p>So the triangle takes up exactly half the rectangle:</p>
-      <div class="summary-banner">
-        <span class="label">Formula</span>
-        A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × base × perpendicular height
+  <div class="worked">
+    <div class="step visible">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Build a rectangle around the triangle</div>
+        <div class="step-desc">A right-angled triangle fits exactly inside a rectangle with the same base and height. This rectangle is 10 cm wide and 6 cm tall.</div>
+        <div class="calc-box">
+          <svg class="diagram" viewBox="0 0 280 180" width="240" role="img" aria-label="A 10 cm by 6 cm rectangle split by a diagonal into two equal triangles, one shaded">
+            <rect x="50" y="30" width="180" height="110" fill="none" stroke="#1F4D54" stroke-width="2.5"/>
+            <polygon points="50,140 230,140 50,30" fill="#BE5837" fill-opacity="0.18"/>
+            <line x1="50" y1="30" x2="230" y2="140" stroke="#1F4D54" stroke-width="2.5"/>
+            <rect x="50" y="125" width="15" height="15" fill="none" stroke="#1F4D54" stroke-width="1.5"/>
+            <text x="140" y="162" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54">base = 10 cm</text>
+            <text x="40" y="88" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" transform="rotate(-90 40 88)">height = 6 cm</text>
+          </svg>
+          <div class="diagram-cap">The shaded triangle is half of the rectangle.</div>
+          Rectangle area = base &times; height = <span class="blue">10 &times; 6</span> = 60 cm&sup2;
+        </div>
       </div>
-      <p style="margin-top: 12px;">The trick is the word <strong>perpendicular</strong>. You must measure the height <strong>at right angles to the base</strong> — not along any slanted side.</p>
     </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">A triangle is half of that rectangle</div>
+        <div class="step-desc">The diagonal cuts the rectangle into two identical triangles. Each triangle is exactly half of the rectangle — so halve the rectangle's area.</div>
+        <div class="calc-box">
+          Area of triangle = &frac12; &times; (base &times; height)<br>
+          So <span class="red">A = &frac12; &times; base &times; perpendicular height</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Substitute the measurements</div>
+        <div class="step-desc">Put base = 10 and perpendicular height = 6 into the formula.</div>
+        <div class="calc-box">
+          A = &frac12; &times; <span class="blue">10</span> &times; <span class="red">6</span> = &frac12; &times; 60 = 30
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Area = 30 cm&sup2;
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" onclick="revealNextStep(this)">Reveal next step ↓</button>
   </div>
+</section>
 
-  <div class="case-stack">
+<!-- SECTION 7: WORKED EXAMPLE 2 — ACUTE -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Worked example 2 — an acute triangle</h2>
+  <p class="sec-desc">Find the area of an acute triangle with base <span class="expr">14 cm</span> and perpendicular height <span class="expr">8 cm</span>.</p>
 
-    <!-- CASE A: right-angled -->
-    <div class="case-panel visible" id="case1">
-      <div class="tri-figure">
-        <svg viewBox="0 0 180 140" width="180" height="140" aria-label="A right-angled triangle with legs 8 cm horizontally and 5 cm vertically.">
-          <polygon points="20,120 160,120 20,40" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/>
-          <rect x="20" y="110" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.4"/>
-          <text x="78" y="138" font-family="Georgia" font-size="13" fill="#1F4D54">8 cm</text>
-          <text x="0" y="84" font-family="Georgia" font-size="13" fill="#1F4D54">5 cm</text>
-        </svg>
-        <div class="caption">Right-angled triangle</div>
-      </div>
-      <div class="case-body">
-        <div class="case-head">
-          <span class="case-tag">Case A</span>
-          <span class="case-title">Right-angled triangle</span>
-        </div>
-        <p style="margin: 4px 0 8px;"><strong>Identify.</strong> The two sides that meet at the right angle <em>are</em> the base and the perpendicular height. Here, base = 8 cm, height = 5 cm.</p>
-        <p style="margin: 0 0 8px;"><strong>Apply the formula.</strong></p>
+  <div class="worked">
+    <div class="step visible">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify the base and the perpendicular height</div>
+        <div class="step-desc">The perpendicular height is the dashed line from the base up to the opposite vertex. It meets the base at a right angle — it is <strong>not</strong> one of the slanted sides.</div>
         <div class="calc-box">
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × <span class="red">base</span> × <span class="blue">height</span><br>
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × <span class="red">8</span> × <span class="blue">5</span><br>
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × 40 = <strong>20 cm²</strong>
+          <svg class="diagram" viewBox="0 0 280 180" width="240" role="img" aria-label="An acute triangle with base 14 cm and the perpendicular height 8 cm drawn inside it">
+            <polygon points="50,140 230,140 150,40" fill="#BE5837" fill-opacity="0.15" stroke="#1F4D54" stroke-width="2.5"/>
+            <line x1="150" y1="40" x2="150" y2="140" stroke="#BE5837" stroke-width="2" stroke-dasharray="5 4"/>
+            <rect x="150" y="125" width="15" height="15" fill="none" stroke="#BE5837" stroke-width="1.5"/>
+            <text x="140" y="162" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54">base = 14 cm</text>
+            <text x="160" y="96" font-family="Georgia,serif" font-size="13" fill="#BE5837">h = 8 cm</text>
+          </svg>
+          <div class="diagram-cap">For an acute triangle the height lands inside the triangle.</div>
+          base = <span class="blue">14 cm</span>, &nbsp; perpendicular height = <span class="red">8 cm</span>
         </div>
-        <p style="margin: 10px 0 0; color: var(--muted); font-size: 0.9rem;">Check: a 5 × 8 rectangle has area 40 cm². The triangle is half of that — 20 cm². ✓</p>
       </div>
     </div>
 
-    <!-- CASE B: acute, dashed height inside -->
-    <div class="case-panel" id="case2">
-      <div class="tri-figure">
-        <svg viewBox="0 0 220 150" width="220" height="150" aria-label="An acute triangle with base 10 cm at the bottom and a dashed perpendicular height of 6 cm drawn inside.">
-          <polygon points="20,130 200,130 110,30" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/>
-          <line x1="110" y1="130" x2="110" y2="30" stroke="#1F4D54" stroke-width="2" stroke-dasharray="5,4"/>
-          <rect x="110" y="120" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.4"/>
-          <text x="95" y="148" font-family="Georgia" font-size="13" fill="#1F4D54">10 cm</text>
-          <text x="120" y="84" font-family="Georgia" font-size="13" fill="#1F4D54">6 cm</text>
-        </svg>
-        <div class="caption">Acute triangle — dashed height inside</div>
-      </div>
-      <div class="case-body">
-        <div class="case-head">
-          <span class="case-tag">Case B</span>
-          <span class="case-title">Acute triangle</span>
-        </div>
-        <p style="margin: 4px 0 8px;"><strong>Identify.</strong> The base is the 10 cm side at the bottom. The perpendicular height is the <strong>dashed</strong> line drawn from the top vertex down to the base at 90° — that's 6 cm. The slanted sides are <em>not</em> the height.</p>
-        <p style="margin: 0 0 8px;"><strong>Apply the formula.</strong></p>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Apply the formula</div>
+        <div class="step-desc">Use A = &frac12; &times; base &times; perpendicular height.</div>
         <div class="calc-box">
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × <span class="red">base</span> × <span class="blue">height</span><br>
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × <span class="red">10</span> × <span class="blue">6</span><br>
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × 60 = <strong>30 cm²</strong>
+          A = &frac12; &times; <span class="blue">14</span> &times; <span class="red">8</span>
         </div>
-        <p style="margin: 10px 0 0; color: var(--muted); font-size: 0.9rem;">Check: enclose it in a 10 × 6 rectangle. Rectangle area = 60 cm². Triangle = half = 30 cm². ✓</p>
       </div>
     </div>
 
-    <!-- CASE C: obtuse, height outside -->
-    <div class="case-panel key" id="case3">
-      <div class="tri-figure">
-        <svg viewBox="-30 0 250 150" width="240" height="150" aria-label="An obtuse triangle whose perpendicular height falls outside the base. The base is extended with a dashed line to meet the foot of the perpendicular.">
-          <polygon points="60,130 200,130 30,40" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/>
-          <line x1="0" y1="130" x2="60" y2="130" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="3,3"/>
-          <line x1="30" y1="40" x2="30" y2="130" stroke="#1F4D54" stroke-width="2" stroke-dasharray="5,4"/>
-          <rect x="30" y="120" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.4"/>
-          <text x="110" y="148" font-family="Georgia" font-size="13" fill="#1F4D54">base = 7 cm</text>
-          <text x="-22" y="88" font-family="Georgia" font-size="13" fill="#1F4D54">h = 4 cm</text>
-        </svg>
-        <div class="caption"><strong>Obtuse triangle</strong> — the height lands <em>outside</em> the triangle</div>
-      </div>
-      <div class="case-body">
-        <div class="case-head">
-          <span class="case-tag">Case C — key</span>
-          <span class="case-title">Obtuse triangle (height outside)</span>
-        </div>
-        <p style="margin: 4px 0 8px;"><strong>Identify.</strong> The triangle is obtuse — one of its angles is bigger than 90°. To draw a perpendicular from the far vertex to the base, we have to <strong>extend</strong> the base outwards (the small dashed line on the left). The dashed perpendicular is still the height — it just lands outside the triangle.</p>
-        <p style="margin: 0 0 8px;"><strong>Apply the formula. Same rule, no exceptions:</strong></p>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Calculate</div>
+        <div class="step-desc">Halve the base first, then multiply — it keeps the numbers small.</div>
         <div class="calc-box">
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × <span class="red">base</span> × <span class="blue">height</span><br>
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × <span class="red">7</span> × <span class="blue">4</span><br>
-          A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × 28 = <strong>14 cm²</strong>
+          &frac12; &times; 14 = 7, &nbsp; and &nbsp; 7 &times; 8 = 56
         </div>
-        <p style="margin: 10px 0 0; color: var(--coral); font-size: 0.9rem;"><strong>Big idea:</strong> the perpendicular height is a <em>measurement</em>, not a side. It doesn't have to be inside the triangle.</p>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Area = 56 cm&sup2;
+        </div>
       </div>
     </div>
 
+    <button class="reveal-btn" onclick="revealNextStep(this)">Reveal next step ↓</button>
   </div>
+</section>
 
-  <button class="reveal-btn" id="revealBtn" onclick="revealNextCase()">Reveal next case ↓</button>
+<!-- SECTION 8: WORKED EXAMPLE 3 — OBTUSE (HEIGHT OUTSIDE THE BASE) -->
+<section class="lesson">
+  <h2><span class="sec-num">8</span>Worked example 3 — an obtuse triangle</h2>
+  <p class="sec-desc">Find the area of an obtuse triangle with base <span class="expr">9 cm</span> and perpendicular height <span class="expr">4 cm</span> — where the height falls <strong>outside</strong> the base.</p>
+
+  <div class="worked">
+    <div class="step visible">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Find the perpendicular height — even though it lands outside</div>
+        <div class="step-desc">This triangle is obtuse, so the perpendicular from the top vertex meets the base <em>line</em> outside the triangle. We extend the base (dashed) to reach it. The perpendicular height is still measured at a right angle — here it is 4 cm.</div>
+        <div class="calc-box">
+          <svg class="diagram" viewBox="0 0 280 180" width="240" role="img" aria-label="An obtuse triangle with base 9 cm and the perpendicular height 4 cm drawn outside the base">
+            <polygon points="90,140 210,140 50,60" fill="#BE5837" fill-opacity="0.15" stroke="#1F4D54" stroke-width="2.5"/>
+            <line x1="50" y1="140" x2="90" y2="140" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <line x1="50" y1="60" x2="50" y2="140" stroke="#BE5837" stroke-width="2" stroke-dasharray="5 4"/>
+            <rect x="50" y="125" width="15" height="15" fill="none" stroke="#BE5837" stroke-width="1.5"/>
+            <text x="150" y="162" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54">base = 9 cm</text>
+            <text x="6" y="104" font-family="Georgia,serif" font-size="13" fill="#BE5837">h = 4 cm</text>
+          </svg>
+          <div class="diagram-cap">The base is extended (dashed) so the height has somewhere to land.</div>
+          base = <span class="blue">9 cm</span>, &nbsp; perpendicular height = <span class="red">4 cm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">The formula does not change</div>
+        <div class="step-desc">Acute, right-angled or obtuse — every triangle uses the same formula. The height being outside the base makes no difference at all.</div>
+        <div class="calc-box">
+          A = &frac12; &times; base &times; perpendicular height = &frac12; &times; <span class="blue">9</span> &times; <span class="red">4</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Calculate</div>
+        <div class="step-desc">Multiply 9 &times; 4 first, then halve.</div>
+        <div class="calc-box">
+          9 &times; 4 = 36, &nbsp; and &nbsp; &frac12; &times; 36 = 18
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Area = 18 cm&sup2;
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" onclick="revealNextStep(this)">Reveal next step ↓</button>
+  </div>
 </section>
 
 <div class="phase-banner">
   <div class="phase-mono">WE DO</div>
   <div class="phase-text">
-    <div class="phase-label">Let's quote a shade sail together</div>
-    <div class="phase-sub">Three small steps — discuss each with your neighbour, then we'll fill in the answer.</div>
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
   </div>
 </div>
 
-<!-- SECTION 6: WE DO -->
+<!-- SECTION 9: WE DO -->
 <section class="lesson">
-  <h2><span class="sec-num">6</span>Together — cost the first shade sail</h2>
-  <div class="spatial-grid">
-    <div class="tri-figure">
-      <svg viewBox="0 0 220 150" width="220" height="150" aria-label="An acute triangular shade sail with base 4 m and perpendicular height 3 m.">
-        <polygon points="20,130 200,130 110,30" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/>
-        <line x1="110" y1="130" x2="110" y2="30" stroke="#1F4D54" stroke-width="2" stroke-dasharray="5,4"/>
-        <rect x="110" y="120" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.4"/>
-        <text x="100" y="148" font-family="Georgia" font-size="13" fill="#1F4D54">4 m</text>
-        <text x="120" y="84" font-family="Georgia" font-size="13" fill="#1F4D54">3 m</text>
-      </svg>
-      <div class="caption">Shade sail #1<br>(base 4 m, height 3 m)</div>
-    </div>
-    <div>
-      <p class="sec-desc" style="margin: 0 0 12px;">The bursar needs to know the cost of this sail. The supplier charges <strong>$48 per m²</strong>. We'll break the job into three steps.</p>
-      <div class="practice-grid" id="weDoGrid"></div>
-    </div>
-  </div>
+  <h2><span class="sec-num">9</span>Together — a triangle with base 16 cm and perpendicular height 5 cm</h2>
+  <p class="sec-desc">We'll break it into three small steps. After each prompt, discuss with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
   <div class="parts-instructions" style="margin-top: 18px;">
-    💡 <strong>The routine.</strong> Identify the perpendicular height first → calculate the area → multiply by the cost-per-square-metre. Use this same three-step routine on the You Do problems coming up.
-  </div>
-</section>
-
-<!-- SECTION 7: ERROR ANALYSIS -->
-<section class="lesson error-analysis">
-  <h2>
-    <span class="sec-num">7</span>Spot the mistake
-    <span class="ea-tag">⚠ Common error</span>
-  </h2>
-  <p class="sec-desc">A student has tried to find the area of this triangle. Read each line of their working — click the line where the mistake <em>first</em> appears.</p>
-
-  <div class="err-problem-stem">
-    <div class="tri-figure" style="background: white;">
-      <svg viewBox="0 0 220 150" width="200" height="135" aria-label="A triangle with a base of 8 cm, a slanted side of 10 cm marked on the right, and a dashed perpendicular height of 6 cm drawn inside.">
-        <polygon points="20,130 180,130 110,30" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/>
-        <line x1="110" y1="130" x2="110" y2="30" stroke="#1F4D54" stroke-width="2" stroke-dasharray="5,4"/>
-        <rect x="110" y="120" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.4"/>
-        <text x="92" y="148" font-family="Georgia" font-size="13" fill="#1F4D54">base = 8 cm</text>
-        <text x="118" y="86" font-family="Georgia" font-size="13" fill="#1F4D54">6 cm</text>
-        <text x="148" y="80" font-family="Georgia" font-size="13" fill="#BE5837">10 cm</text>
-      </svg>
-    </div>
-    <div>
-      <strong>The problem.</strong> Find the area of this triangle.<br>
-      <span style="font-size: 0.92rem; color: var(--muted); font-style: italic;">The base is 8 cm. The slanted side on the right is 10 cm. The dashed perpendicular height inside the triangle is 6 cm.</span>
-    </div>
-  </div>
-
-  <div class="err-solution" id="errSolution">
-    <div class="err-line" data-line="1" onclick="pickErrLine(this)">
-      <span class="err-line-num">1</span>
-      <span>A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × base × height</span>
-      <span class="err-line-mark"></span>
-    </div>
-    <div class="err-line" data-line="2" data-is-error="true"
-         data-correct-line="a=1/2x8x6"
-         onclick="pickErrLine(this)">
-      <span class="err-line-num">2</span>
-      <span>A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × 8 × 10</span>
-      <span class="err-line-mark"></span>
-    </div>
-    <div class="err-line" data-line="3" onclick="pickErrLine(this)">
-      <span class="err-line-num">3</span>
-      <span>A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × 80</span>
-      <span class="err-line-mark"></span>
-    </div>
-    <div class="err-line" data-line="4" onclick="pickErrLine(this)">
-      <span class="err-line-num">4</span>
-      <span>A = 40 cm²</span>
-      <span class="err-line-mark"></span>
-    </div>
-  </div>
-
-  <div class="err-feedback" id="errFeedback">
-    <h4>✓ Right — line 2 is where the mistake first appears.</h4>
-    <div class="err-explain">
-      <strong>Why:</strong> the student grabbed the <strong>slanted side</strong> (10 cm) instead of the <strong>perpendicular height</strong> (6 cm — the dashed line at 90° to the base). Every line after that is wrong because it's built on the wrong height. This is by far the most common mistake with triangle areas — always look for the <em>dashed</em> line, or the side that meets the base at a right angle.
-    </div>
-    <p style="margin: 0 0 8px; font-size: 0.95rem;"><strong>Rewrite line 2 correctly</strong> (type it like <code>A=1/2x8x6</code>):</p>
-    <div class="err-correction-row">
-      <input id="errCorrection" placeholder="e.g. A=1/2x8x6">
-      <button onclick="checkErrCorrection()">Check</button>
-    </div>
-    <div class="err-status-msg" id="errStatusMsg"></div>
+    💡 <strong>Why we do it this way:</strong> work out base &times; height first, then halve. Splitting the formula into two small steps keeps the arithmetic easy and stops mistakes. Use the same routine in the "You do" practice that comes next.
   </div>
 </section>
 
@@ -1308,68 +1213,69 @@
   </div>
 </div>
 
-<!-- SECTION 8: QUICK CHECK -->
+<!-- SECTION 10: QUICK CHECK -->
 <section class="lesson checkpoint">
   <h2>
-    <span class="sec-num">8</span>Quick check — try these on your own
+    <span class="sec-num">10</span>Quick check — try these on your own
     <span class="checkpoint-tag">✋ Stop &amp; check</span>
   </h2>
-  <p class="sec-desc">Two quick questions to confirm you've got the method. Type just the number (cm²). <strong>Then we'll check together as a class</strong> before you choose your tier.</p>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
   <div class="practice-grid" id="checkpointGrid"></div>
   <div class="stop-banner">
     ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
   </div>
 </section>
 
-<!-- SECTION 9: BUILDING -->
+<!-- SECTION 11: PRACTICE — BUILDING -->
 <section class="lesson difficulty-1 tier-accordion open" id="tier1">
   <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
-    <h2><span class="sec-num">9</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <h2><span class="sec-num">11</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
     <span class="accordion-count" id="count-tier1">10 questions</span>
     <span class="accordion-chevron" aria-hidden="true">▶</span>
   </div>
   <div class="accordion-body" id="tier1-body">
-    <p class="sec-desc">Plug the numbers into <span class="expr">A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × base × height</span>. Type just the number for each area (in cm²).</p>
+    <p class="sec-desc">Use <span class="expr">A = &frac12; &times; base &times; perpendicular height</span>. Type the area as a number only (no units). Decimals are fine — e.g. <code>12.5</code>.</p>
     <div class="practice-grid" id="practiceGrid1"></div>
   </div>
 </section>
 
-<!-- SECTION 10: STRETCH -->
+<!-- SECTION 12: PRACTICE — STRETCH -->
 <section class="lesson difficulty-2 tier-accordion" id="tier2">
   <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
-    <h2><span class="sec-num">10</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <h2><span class="sec-num">12</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
     <span class="accordion-count" id="count-tier2">6 questions</span>
     <span class="accordion-chevron" aria-hidden="true">▶</span>
   </div>
   <div class="accordion-body" id="tier2-body">
-    <p class="sec-desc">Composite shapes made from a rectangle plus a triangle, and some "work backwards" questions where the area is given and you find a missing length.</p>
+    <p class="sec-desc">Now you may be given the area and asked to work <em>backwards</em> for a missing length, or to handle an obtuse triangle. Type a number only.</p>
     <div class="practice-grid" id="practiceGrid2"></div>
   </div>
 </section>
 
-<!-- SECTION 11: MASTERY -->
+<!-- SECTION 13: PRACTICE — MASTERY -->
 <section class="lesson difficulty-3 tier-accordion" id="tier3">
   <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
-    <h2><span class="sec-num">11</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <h2><span class="sec-num">13</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
     <span class="accordion-count" id="count-tier3">4 questions</span>
     <span class="accordion-chevron" aria-hidden="true">▶</span>
   </div>
   <div class="accordion-body" id="tier3-body">
-    <p class="sec-desc">Each grid square is 1 cm × 1 cm. <strong>First identify the perpendicular height</strong> by counting straight up from the base — then calculate the area. Type just the number (in cm²).</p>
+    <p class="sec-desc">Practical problems — find the area first, then use it to work out a cost. Type a number only (no $ sign, no units).</p>
     <div class="practice-grid" id="practiceGrid3"></div>
   </div>
 </section>
 
-<!-- SECTION 12: EXIT TICKET -->
+<!-- SECTION 14: EXIT TICKET -->
 <section class="lesson exit-ticket">
   <h2>
-    <span class="sec-num">12</span>Exit ticket
+    <span class="sec-num">14</span>Exit ticket
     <span class="exit-tag">🎯 Before you leave</span>
   </h2>
-  <p class="sec-desc">Three questions before you leave today. The third asks for an explanation in your own words.</p>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
   <div class="exit-grid" id="exitGrid"></div>
 </section>
 
+<!-- CURRICULUM LINK -->
 <details class="curriculum-link">
   <summary>Curriculum link</summary>
   <div class="cl-body">
@@ -1379,21 +1285,21 @@
     </div>
     <div class="cl-row">
       <span class="cl-label">Conceptual understanding</span>
-      <span class="cl-value">TODO: confirm SA Curriculum Prototype conceptual understanding statement.</span>
+      <span class="cl-value">Measurable attributes of 2-dimensional shapes and 3-dimensional objects can be determined based on the known properties of the shape or solid.</span>
     </div>
     <div class="cl-row">
       <span class="cl-label">AC9 descriptor</span>
-      <span class="cl-value"><strong>AC9M7M01</strong> — establish formulas for areas of rectangles, parallelograms and triangles, and use these to solve problems involving the area of composite shapes.</span>
+      <span class="cl-value"><strong>AC9M7M01</strong> — solve problems involving the area of triangles and parallelograms using established formulas and appropriate units</span>
     </div>
     <div class="cl-row">
       <span class="cl-label">Elaborations covered</span>
-      <span class="cl-value">TODO: confirm elaboration numbers from AC9 source.</span>
+      <span class="cl-value">1, 2, 3 — (1) deriving the triangle area formula A = &frac12;bh from the area of a rectangle, shown in Worked example 1 (Section 6); (2) using the draggable-vertex constant-area triangle to see that sliding a vertex at a fixed altitude leaves the area unchanged (Section 4, base 12 cm, height 6 cm, area 36 cm&sup2;); (3) solving practical area problems, including a shade-sail material-cost context (hook, Mastery, Exit ticket).</span>
     </div>
     <div class="cl-row">
       <span class="cl-label">Lesson focus</span>
-      <span class="cl-value">Apply A = ½ × base × perpendicular height to find the area of right-angled, acute and obtuse triangles. Identify the perpendicular height — distinguish it from a slanted side — including the case where the perpendicular falls outside the base.</span>
+      <span class="cl-value">Derive and apply A = &frac12; &times; base &times; perpendicular height to find the area of right-angled, acute and obtuse triangles — including the case where the perpendicular height falls outside the base — and use the formula in practical problems.</span>
     </div>
-    <div class="cl-note">Mapping: Strict. Lesson ID: TODO (confirm as lesson 01 of the Year 7 area/volume sequence — feeds parallelograms in lesson 02 and triangular prism volume in lesson 04). Source: lesson-map.xlsx.</div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_mea_01. Aligned to the SA Curriculum (Mathematics R&ndash;10 Prototype 2). Source: lesson-map.xlsx.</div>
   </div>
 </details>
 
@@ -1407,7 +1313,6 @@
   // ============ STATE ============
   let totalProblems = 0;
   let correctCount = 0;
-  let currentCase = 1;
 
   // ============ TEACHER MODE ============
   function toggleTeacher() {
@@ -1510,28 +1415,19 @@
     });
   }
 
-  // ============ MATCHING TRIANGLES TO AREAS ============
-  // 5 pairs of (triangle figure, area in cm²)
-  function triSvg(b, h, label) {
-    // small SVG of an acute triangle with base b, height h labels
-    return `<svg viewBox="0 0 110 80" width="92" height="68">
-      <polygon points="10,68 100,68 55,12" fill="#f5d8cb" stroke="#BE5837" stroke-width="1.6"/>
-      <line x1="55" y1="68" x2="55" y2="12" stroke="#1F4D54" stroke-width="1.4" stroke-dasharray="3,3"/>
-      <text x="36" y="80" font-family="Georgia" font-size="11" fill="#1F4D54">b=${b}</text>
-      <text x="60" y="44" font-family="Georgia" font-size="11" fill="#1F4D54">h=${h}</text>
-    </svg>`;
-  }
+  // ============ MATCHING — TRIANGLE TO ITS AREA ============
+  // 5 pairs; each pair has a "group" id 1-5
   const matchTerms = [
-    { html: triSvg(6, 4),  group: 1 },
-    { html: triSvg(10, 3), group: 2 },
-    { html: triSvg(8, 5),  group: 3 },
-    { html: triSvg(12, 7), group: 4 },
-    { html: triSvg(9, 2),  group: 5 },
-    { html: '<span class="expr">12 cm²</span>', group: 1 },
-    { html: '<span class="expr">15 cm²</span>', group: 2 },
-    { html: '<span class="expr">20 cm²</span>', group: 3 },
-    { html: '<span class="expr">42 cm²</span>', group: 4 },
-    { html: '<span class="expr">9 cm²</span>',  group: 5 },
+    { html: 'base 8 cm<br>height 5 cm', group: 1 },
+    { html: '20 cm²', group: 1 },
+    { html: 'base 10 cm<br>height 6 cm', group: 2 },
+    { html: '30 cm²', group: 2 },
+    { html: 'base 7 cm<br>height 4 cm', group: 3 },
+    { html: '14 cm²', group: 3 },
+    { html: 'base 9 cm<br>height 6 cm', group: 4 },
+    { html: '27 cm²', group: 4 },
+    { html: 'base 6 cm<br>height 5 cm', group: 5 },
+    { html: '15 cm²', group: 5 },
   ];
 
   let matchSelected = null;
@@ -1543,7 +1439,7 @@
     area.innerHTML = '';
     shuffled.forEach((t, i) => {
       const chip = document.createElement('div');
-      chip.className = 'match-chip';
+      chip.className = 'match-chip expr';
       chip.innerHTML = t.html;
       chip.dataset.group = t.group;
       chip.dataset.idx = i;
@@ -1580,7 +1476,7 @@
       const wrong2 = chip;
       wrong1.classList.add('selected');
       wrong2.classList.add('selected');
-      document.getElementById('matchFeedback').textContent = '✗ Not a match — recalculate ½ × b × h.';
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — recheck ½ × base × height.';
       setTimeout(() => {
         wrong1.classList.remove('selected');
         wrong2.classList.remove('selected');
@@ -1589,156 +1485,73 @@
     }
   }
 
-  // ============ I DO — CASE REVEAL ============
-  function revealNextCase() {
-    currentCase++;
-    const c = document.getElementById('case' + currentCase);
-    if (c) c.classList.add('visible');
-    if (currentCase >= 3) {
-      document.getElementById('revealBtn').disabled = true;
-      document.getElementById('revealBtn').textContent = '✓ All three cases shown';
-    }
-  }
-
-  // ============ ERROR ANALYSIS ============
-  let errFound = false;
-
-  function pickErrLine(el) {
-    if (errFound || el.classList.contains('dimmed')) return;
-    const isError = el.dataset.isError === 'true';
-    if (isError) {
-      el.classList.add('flagged-correct');
-      errFound = true;
-      document.querySelectorAll('.err-line').forEach(o => {
-        if (o !== el) o.classList.add('dimmed');
-      });
-      document.getElementById('errFeedback').classList.add('visible');
-    } else {
-      el.classList.add('flagged-wrong');
-      setTimeout(() => el.classList.remove('flagged-wrong'), 600);
-    }
-  }
-
-  function checkErrCorrection() {
-    const input = document.getElementById('errCorrection');
-    const expected = document.querySelector('.err-line[data-is-error="true"]').dataset.correctLine;
-    const norm = s => (s || '').toLowerCase().replace(/\s+/g, '').replace(/\*/g, '').replace(/×/g, 'x');
-    const msg = document.getElementById('errStatusMsg');
-    input.classList.remove('correct', 'incorrect');
-    if (norm(input.value) === norm(expected)) {
-      input.classList.add('correct');
-      msg.textContent = '✓ Correct. The area is then ½ × 48 = 24 cm² — much smaller than the wrong 40 cm².';
-    } else {
-      input.classList.add('incorrect');
-      msg.textContent = '✗ Not quite. Use the perpendicular height (6 cm), not the slanted side. Try A=1/2x8x6.';
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  // Generalised to support several worked examples on one page: each
+  // reveal button reveals the next .step inside its own .worked block.
+  function revealNextStep(btn) {
+    const worked = btn.closest('.worked');
+    const next = worked.querySelector('.step:not(.visible)');
+    if (next) next.classList.add('visible');
+    if (!worked.querySelector('.step:not(.visible)')) {
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
     }
   }
 
   // ============ PRACTICE PROBLEMS ============
-  // SVG helpers — small inline figures for problem cards.
-  function rightTri(b, h) {
-    // right-angled triangle, legs labelled b (bottom) and h (left)
-    return `<svg viewBox="0 0 170 130" width="170" height="120">
-      <polygon points="20,110 150,110 20,30" fill="#f5d8cb" stroke="#BE5837" stroke-width="1.8"/>
-      <rect x="20" y="100" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.3"/>
-      <text x="72" y="126" font-family="Georgia" font-size="12" fill="#1F4D54">${b} cm</text>
-      <text x="0" y="74" font-family="Georgia" font-size="12" fill="#1F4D54">${h} cm</text>
-    </svg>`;
-  }
-  function acuteTri(b, h) {
-    // acute triangle, dashed height inside
-    return `<svg viewBox="0 0 200 140" width="180" height="120">
-      <polygon points="20,120 180,120 100,28" fill="#f5d8cb" stroke="#BE5837" stroke-width="1.8"/>
-      <line x1="100" y1="120" x2="100" y2="28" stroke="#1F4D54" stroke-width="1.6" stroke-dasharray="4,3"/>
-      <rect x="100" y="110" width="10" height="10" fill="none" stroke="#1F4D54" stroke-width="1.3"/>
-      <text x="90" y="136" font-family="Georgia" font-size="12" fill="#1F4D54">${b} cm</text>
-      <text x="108" y="76" font-family="Georgia" font-size="12" fill="#1F4D54">${h} cm</text>
-    </svg>`;
-  }
-  function gridTri(points, label) {
-    // points is an array of [gx, gy] grid coords (1 unit = 1 cm). origin is top-left.
-    // grid 8 wide × 6 tall (max). cell = 22 px.
-    const cell = 22;
-    const W = 8 * cell, H = 6 * cell;
-    const pts = points.map(([x, y]) => `${x * cell},${y * cell}`).join(' ');
-    return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
-      <defs>
-        <pattern id="grid${label}" width="${cell}" height="${cell}" patternUnits="userSpaceOnUse">
-          <path d="M ${cell} 0 L 0 0 0 ${cell}" fill="none" stroke="#c8d1da" stroke-width="0.7"/>
-        </pattern>
-      </defs>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="white" stroke="#1F4D54" stroke-width="0.8"/>
-      <rect x="0" y="0" width="${W}" height="${H}" fill="url(#grid${label})"/>
-      <polygon points="${pts}" fill="#f5d8cb" stroke="#BE5837" stroke-width="1.8"/>
-    </svg>`;
-  }
-  function compositeRectTri(rectW, rectH, triH) {
-    // rectangle bottom + triangle on top with same base as rect width
-    return `<svg viewBox="0 0 200 160" width="180" height="140">
-      <rect x="30" y="${60 - 0}" width="${rectW * 10}" height="${rectH * 10}" fill="#dde5e6" stroke="#1F4D54" stroke-width="1.6"/>
-      <polygon points="30,60 ${30 + rectW * 10},60 ${30 + rectW * 5},${60 - triH * 10}" fill="#f5d8cb" stroke="#BE5837" stroke-width="1.8"/>
-      <text x="${30 + rectW * 5 - 14}" y="155" font-family="Georgia" font-size="12" fill="#1F4D54">${rectW} cm</text>
-      <text x="${30 + rectW * 10 + 4}" y="${60 + rectH * 5 + 4}" font-family="Georgia" font-size="12" fill="#1F4D54">${rectH} cm</text>
-      <text x="${30 + rectW * 5 + 6}" y="${60 - triH * 5 + 4}" font-family="Georgia" font-size="12" fill="#BE5837">h=${triH}</text>
-    </svg>`;
-  }
+  // Answers normalised: strip spaces, lowercase.
 
-  // Retrieval — prior knowledge for today's lesson.
+  // Retrieval warm-up (Section 0) — prerequisites. noCount; doesn't score.
   const retrieval = [
-    { q: 'Area of a rectangle with length 7 cm and width 4 cm. Type just the number (cm²).', a: '28', hint: 'Length × width.' },
-    { q: 'What is half of 56?', a: '28', hint: '56 ÷ 2.' },
-    { q: 'Calculate <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span> × 8 × 6</span>.', a: '24', hint: '8 × 6 = 48, then halve.' },
+    { q: 'A rectangle measures 12 cm by 5 cm. What is its area, in cm²?', a: '60', hint: 'Area of a rectangle = length × width.' },
+    { q: 'Work out <span class="expr">&frac12; × 14 × 6</span>.', a: '42', hint: 'Halve 14 to get 7, then multiply by 6.' },
+    { q: 'What is half of 9?', a: '4.5', hint: '9 ÷ 2 — the answer is a decimal.' },
   ];
 
-  // We do — costing the first shade sail (base 4 m, height 3 m, $48/m²)
-  const weDo = [
-    { q: 'Step 1. Which line is the perpendicular height — the slanted side or the dashed line? Type <code>dashed</code> or <code>slanted</code>.', a: 'dashed', hint: 'The height is at 90° to the base.' },
-    { q: 'Step 2. Area of the sail (in m²). Type just the number.', a: '6', hint: '½ × 4 × 3 = ?' },
-    { q: 'Step 3. Cost at $48 per m² (in dollars). Type just the number.', a: '288', hint: '6 × 48 = ?' },
+  const practice1 = [
+    { q: 'A triangle has base 6 cm and perpendicular height 4 cm. Find its area in cm².', a: '12', hint: 'A = ½ × 6 × 4. Halve 6 first, then multiply by 4.' },
+    { q: 'A triangle has base 10 cm and perpendicular height 8 cm. Find its area in cm².', a: '40', hint: '½ × 10 = 5, then 5 × 8.' },
+    { q: 'A triangle has base 12 cm and perpendicular height 5 cm. Find its area in cm².', a: '30', hint: '½ × 12 = 6, then 6 × 5.' },
+    { q: 'A triangle has base 9 cm and perpendicular height 2 cm. Find its area in cm².', a: '9', hint: 'Multiply 9 × 2 first, then halve.' },
+    { q: 'A triangle has base 14 cm and perpendicular height 10 cm. Find its area in cm².', a: '70', hint: '½ × 14 = 7, then 7 × 10.' },
+    { q: 'A triangle has base 7 cm and perpendicular height 6 cm. Find its area in cm².', a: '21', hint: '½ × 6 = 3, then 7 × 3.' },
+    { q: 'A right-angled triangle has the two sides at the right angle measuring 20 cm and 9 cm. Find its area in cm².', a: '90', hint: 'In a right-angled triangle those two sides are the base and the height. ½ × 20 × 9.' },
+    { q: 'A triangle has base 11 cm and perpendicular height 4 cm. Find its area in cm².', a: '22', hint: '½ × 4 = 2, then 11 × 2.' },
+    { q: 'A triangle has base 5 cm and perpendicular height 5 cm. Find its area in cm².', a: '12.5', hint: '5 × 5 = 25, then halve. The answer is a decimal.' },
+    { q: 'A triangle has base 16 cm and perpendicular height 7 cm. Find its area in cm².', a: '56', hint: '½ × 16 = 8, then 8 × 7.' },
+  ];
+
+  const practice2 = [
+    { q: 'A triangle has area 24 cm² and base 8 cm. Find its perpendicular height in cm.', a: '6', hint: '24 = ½ × 8 × h, so 24 = 4 × h. Divide 24 by 4.' },
+    { q: 'A triangle has area 30 cm² and perpendicular height 5 cm. Find its base in cm.', a: '12', hint: '30 = ½ × b × 5, so 30 = 2.5 × b. Divide 30 by 2.5.' },
+    { q: 'An obtuse triangle has base 10 cm. Its perpendicular height falls outside the base and measures 7 cm. Find its area in cm².', a: '35', hint: 'The formula does not change when the height is outside: ½ × 10 × 7.' },
+    { q: 'A triangle has base 4.5 m and perpendicular height 6 m. Find its area in m².', a: '13.5', hint: '½ × 6 = 3, then 4.5 × 3.' },
+    { q: 'A triangle has base 13 cm and perpendicular height 9 cm. Find its area in cm².', a: '58.5', hint: '13 × 9 = 117, then halve. The answer is a decimal.' },
+    { q: 'A triangle has area 48 cm² and base 16 cm. Find its perpendicular height in cm.', a: '6', hint: '48 = ½ × 16 × h, so 48 = 8 × h.' },
+  ];
+
+  const practice3 = [
+    { q: 'A triangular shade sail has base 8 m and perpendicular height 5 m. Shade-cloth fabric costs $38 per square metre. Find the total fabric cost in dollars.', a: '760', hint: 'First the area: ½ × 8 × 5 = 20 m². Then cost = 20 × 38.' },
+    { q: 'A triangular garden bed has base 6 m and perpendicular height 4.5 m. Mulch costs $12 per square metre to spread. Find the total cost in dollars.', a: '162', hint: 'Area = ½ × 6 × 4.5 = 13.5 m². Cost = 13.5 × 12.' },
+    { q: 'A large sail is made from two identical triangles, each with base 3 m and perpendicular height 7 m. Find the total area of fabric in m².', a: '21', hint: 'One triangle = ½ × 3 × 7 = 10.5 m². There are two of them.' },
+    { q: 'A triangular shade sail has area 30 m². The fabric costs $40 per square metre and there is a fixed $150 installation fee. Find the total cost in dollars.', a: '1350', hint: 'Fabric = 30 × 40 = 1200. Then add the $150 fee.' },
   ];
 
   const checkpoint = [
-    { q: 'Find the area of a right-angled triangle with legs 6 cm and 8 cm. Type just the number (cm²).' + rightTri(6, 8), a: '24', hint: '½ × 6 × 8.' },
-    { q: 'Find the area of a triangle with base 12 cm and perpendicular height 5 cm. Type just the number (cm²).' + acuteTri(12, 5), a: '30', hint: '½ × 12 × 5.' },
+    { q: 'A triangle has base 8 cm and perpendicular height 7 cm. Find its area in cm².', a: '28', hint: 'A = ½ × 8 × 7. Halve 8 first.' },
+    { q: 'A triangle has base 20 cm and perpendicular height 3 cm. Find its area in cm².', a: '30', hint: '½ × 20 = 10, then 10 × 3.' },
   ];
 
-  // Building — 10 area-of-triangle problems with mixed cases.
-  const practice1 = [
-    { q: 'Base 6 cm, perpendicular height 4 cm.' + acuteTri(6, 4), a: '12', hint: '½ × 6 × 4.' },
-    { q: 'Right-angled triangle with legs 10 cm and 8 cm.' + rightTri(10, 8), a: '40', hint: 'The two legs are the base and height.' },
-    { q: 'Base 12 cm, perpendicular height 5 cm.' + acuteTri(12, 5), a: '30', hint: '½ × 12 × 5.' },
-    { q: 'Base 7 cm, perpendicular height 4 cm.' + acuteTri(7, 4), a: '14', hint: '½ × 7 × 4.' },
-    { q: 'Right-angled triangle with legs 9 cm and 6 cm.' + rightTri(9, 6), a: '27', hint: '½ × 9 × 6 = ½ × 54.' },
-    { q: 'Base 14 cm, perpendicular height 10 cm.' + acuteTri(14, 10), a: '70', hint: '½ × 14 × 10 = ½ × 140.' },
-    { q: 'Base 16 cm, perpendicular height 5 cm.' + acuteTri(16, 5), a: '40', hint: '16 × 5 = 80; halve.' },
-    { q: 'Right-angled triangle with legs 11 cm and 4 cm.' + rightTri(11, 4), a: '22', hint: '11 × 4 = 44; halve.' },
-    { q: 'Base 20 cm, perpendicular height 9 cm.' + acuteTri(20, 9), a: '90', hint: '20 × 9 = 180; halve.' },
-    { q: 'Base 13 cm, perpendicular height 8 cm.' + acuteTri(13, 8), a: '52', hint: '13 × 8 = 104; halve.' },
+  const weDo = [
+    { q: 'Step 1 — The triangle has base 16 cm and perpendicular height 5 cm. Work out base × perpendicular height.', a: '80', hint: 'Multiply 16 × 5.' },
+    { q: 'Step 2 — Now halve your answer. What is ½ × 80?', a: '40', hint: 'Half of 80.' },
+    { q: 'Step 3 — State the area of the triangle, in cm².', a: '40', hint: 'The area is the result of ½ × base × perpendicular height.' },
   ];
 
-  // Stretch — composite shapes + working backwards
-  const practice2 = [
-    { q: 'A "house" shape: a 10 cm × 6 cm rectangle with a triangle on top. The triangle has base 10 cm and perpendicular height 4 cm. Total area in cm²?' + compositeRectTri(10, 6, 4), a: '80', hint: 'Rectangle 60 + triangle 20.' },
-    { q: 'An envelope: an 8 cm × 4 cm rectangle with a triangular flap on top. The flap has base 8 cm and perpendicular height 3 cm. Total area in cm²?' + compositeRectTri(8, 4, 3), a: '44', hint: 'Rectangle 32 + triangle 12.' },
-    { q: 'A composite shape: a 9 cm × 5 cm rectangle with a triangle on top (base 9 cm, perpendicular height 4 cm). Total area in cm²?' + compositeRectTri(9, 5, 4), a: '63', hint: '45 + 18.' },
-    { q: 'A triangle has an area of 24 cm² and a base of 8 cm. What is its perpendicular height in cm? Type just the number.', a: '6', hint: '24 = ½ × 8 × h, so 24 = 4h.' },
-    { q: 'A triangle has an area of 35 cm² and a perpendicular height of 7 cm. What is its base in cm? Type just the number.', a: '10', hint: '35 = ½ × b × 7, so 35 = 3.5b.' },
-    { q: 'A triangle has area 30 cm² and base 12 cm. Find its perpendicular height in cm. Type just the number.', a: '5', hint: '30 = ½ × 12 × h, so 30 = 6h.' },
-  ];
-
-  // Mastery — grid triangles. Students must identify the perpendicular height by counting.
-  const practice3 = [
-    { q: 'A right-angled triangle on a grid (each square = 1 cm). Find the area in cm².' + gridTri([[1,5],[7,5],[1,1]], 'm1'), a: '12', hint: 'Base = 6 squares, height = 4 squares. ½ × 6 × 4.' },
-    { q: 'An acute triangle on a grid (each square = 1 cm). Find the perpendicular height first, then the area in cm².' + gridTri([[1,5],[7,5],[4,1]], 'm2'), a: '12', hint: 'Base = 6 squares (along the bottom). Drop straight down from the apex — the perpendicular height is 4 squares.' },
-    { q: 'A triangle on a grid (each square = 1 cm). The apex sits to the left of the base. Find the area in cm².' + gridTri([[1,5],[5,5],[0,1]], 'm3'), a: '8', hint: 'Base = 4 squares. The perpendicular from the apex straight down still measures 4 squares — even though it lands outside the base.' },
-    { q: 'An obtuse triangle on a grid (each square = 1 cm). Find the area in cm².' + gridTri([[2,5],[6,5],[7,1]], 'm4'), a: '8', hint: 'Base = 4 squares (from x=2 to x=6). Drop a perpendicular from the apex (7, 1) — its height above the base line is 4 squares.' },
-  ];
-
-  // Exit ticket
   const exitProbs = [
-    { q: 'Find the area of a triangle with base 14 cm and perpendicular height 5 cm. Type just the number (cm²).', a: '35', hint: '½ × 14 × 5.' },
-    { q: 'A right-angled triangle has legs of 9 cm and 12 cm. Find its area in cm². Type just the number.', a: '54', hint: 'The two legs are the base and height.' },
-    { q: 'Explain in one or two sentences why you <strong>cannot</strong> use a slanted side of a triangle as the height when calculating its area.', a: 'TEXT', hint: 'Think about the 90° angle, and what would happen to the answer.' },
+    { q: 'A triangle has base 10 cm and perpendicular height 9 cm. Find its area in cm².', a: '45', hint: '½ × 10 × 9.' },
+    { q: 'A triangular shade sail has base 5 m and perpendicular height 6 m. The fabric costs $30 per square metre. Find the total fabric cost in dollars.', a: '450', hint: 'Area = ½ × 5 × 6 = 15 m². Cost = 15 × 30.' },
+    { q: 'A triangle is obtuse, so its perpendicular height falls outside the base. Explain why the formula A = ½ × base × perpendicular height still gives the correct area.', a: 'TEXT', hint: 'Think about the rectangle the triangle still fits inside, and what "perpendicular height" actually measures.' },
   ];
 
   function normaliseAnswer(s) {
@@ -1746,13 +1559,15 @@
       .toLowerCase()
       .replace(/\s+/g, '')
       .replace(/\*/g, '')
-      .replace(/^\+/, '');
+      .replace(/^\+/, '');  // strip leading +
   }
+  // accept reordered terms: 3x+5 == 5+3x
   function answerMatches(input, expected) {
-    if (expected === 'TEXT') return null;
+    if (expected === 'TEXT') return null; // open-ended, don't auto-mark
     const norm = normaliseAnswer(input);
     const exp = normaliseAnswer(expected);
     if (norm === exp) return true;
+    // try sorting terms
     const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
     return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
   }
@@ -1789,6 +1604,8 @@ function buildPractice(containerId, problems, prefix, options) {
       <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
     `;
 
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
     const cb = div.querySelector('.check-btn');
     if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
     div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
@@ -1800,13 +1617,16 @@ function buildPractice(containerId, problems, prefix, options) {
 }
 
   function formatAnswerDisplay(a) {
-    if (a === 'TEXT') return 'The perpendicular height must meet the base at a right angle (90°). A slanted side is longer than the perpendicular height, so using it would give a wrong, larger area.';
+    if (a === 'TEXT') return 'The perpendicular height is still the right-angled distance between the base line and the opposite vertex — even when its foot lands outside the base. The triangle still fits inside a rectangle with the same base and height, so it is still exactly half of that rectangle: A = ½ × base × perpendicular height.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
     let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
     r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
       const neg = n.startsWith('-');
       const num = neg ? n.slice(1) : n;
       return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
     });
+    // Step 3: tidy operators — typographic minus, space around +/−.
     r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
     return r;
   }
@@ -1856,11 +1676,108 @@ function buildPractice(containerId, problems, prefix, options) {
   buildPractice('exitGrid', exitProbs, 'E');
   updateProgress();
 
+  // Enter key checks answer
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
       const btn = e.target.parentElement.querySelector('.check-btn');
       if (btn) btn.click();
     }
+  });
+
+  // ============ CONSTANT-AREA TRIANGLE (DGS-substitute component) ============
+  function initConstantAreaTriangle(cfg){
+  const svg   = document.getElementById(cfg.svgId);
+  if(!svg) return;
+  const apex  = svg.querySelector('#'+cfg.ids.apex);
+  const ring  = svg.querySelector('#'+cfg.ids.focusRing);
+  const fill  = svg.querySelector('#'+cfg.ids.fill);
+  const slA   = svg.querySelector('#'+cfg.ids.slantA);
+  const slB   = svg.querySelector('#'+cfg.ids.slantB);
+  const perp  = svg.querySelector('#'+cfg.ids.perp);
+  const ra    = svg.querySelector('#'+cfg.ids.rightAngle);
+  const cLab  = svg.querySelector('#'+cfg.ids.cLabel);
+  const hLab  = svg.querySelector('#'+cfg.ids.hLabel);
+  const elArea= document.getElementById(cfg.ids.area);
+  const elType= document.getElementById(cfg.ids.type);
+  const elStat= document.getElementById(cfg.ids.status);
+  const btnRst= document.getElementById(cfg.ids.reset);
+
+  const Ax=cfg.Ax, Bx=cfg.Bx, baseY=cfg.baseY, guideY=cfg.guideY;
+  const minX=cfg.minX, maxX=cfg.maxX;
+  const areaValue = 0.5 * cfg.baseCm * cfg.heightCm;
+  const typesSeen = {};
+  let apexX = cfg.startX;
+
+  function svgX(clientX){
+    const pt = svg.createSVGPoint();
+    pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  function clamp(v){ return Math.max(minX, Math.min(maxX, v)); }
+  function classify(x){
+    if(Math.abs(x-Ax)<2 || Math.abs(x-Bx)<2) return 'right-angled';
+    if(x>Ax && x<Bx) return 'acute';
+    return 'obtuse';
+  }
+  function redraw(){
+    apexX = clamp(apexX);
+    fill.setAttribute('points', Ax+','+baseY+' '+Bx+','+baseY+' '+apexX+','+guideY);
+    slA.setAttribute('x2', apexX); slA.setAttribute('y2', guideY);
+    slB.setAttribute('x2', apexX); slB.setAttribute('y2', guideY);
+    perp.setAttribute('x1', apexX); perp.setAttribute('x2', apexX);
+    ra.setAttribute('points', apexX+','+(baseY-12)+' '+(apexX+12)+','+(baseY-12)+' '+(apexX+12)+','+baseY);
+    cLab.setAttribute('x', apexX);
+    hLab.setAttribute('x', apexX+12);
+    hLab.setAttribute('y', (guideY+baseY)/2);
+    apex.setAttribute('cx', apexX);
+    ring.setAttribute('cx', apexX);
+    elArea.textContent = Number.isInteger(areaValue) ? areaValue : areaValue.toFixed(1);
+    const t = classify(apexX);
+    elType.textContent = t;
+    typesSeen[t] = true;
+    apex.setAttribute('aria-valuenow', Math.round((apexX-minX)/(maxX-minX)*100));
+    if(typesSeen['right-angled'] && typesSeen['acute'] && typesSeen['obtuse']){
+      elStat.textContent = "You've made all three triangle types — and the area stayed "+elArea.textContent+" cm² every time.";
+      elStat.classList.add('done');
+    }
+  }
+
+  let dragging=false;
+  apex.addEventListener('pointerdown', function(e){ dragging=true; apex.setPointerCapture(e.pointerId); e.preventDefault(); });
+  apex.addEventListener('pointermove', function(e){ if(dragging){ apexX=clamp(svgX(e.clientX)); redraw(); } });
+  apex.addEventListener('pointerup',   function(){ dragging=false; });
+  apex.addEventListener('pointercancel', function(){ dragging=false; });
+  apex.addEventListener('keydown', function(e){
+    const step = e.shiftKey ? 30 : 10;
+    if(e.key==='ArrowLeft' || e.key==='ArrowDown'){ apexX-=step; redraw(); e.preventDefault(); }
+    if(e.key==='ArrowRight'|| e.key==='ArrowUp'){   apexX+=step; redraw(); e.preventDefault(); }
+  });
+  apex.addEventListener('focus', function(){ ring.setAttribute('opacity','1'); });
+  apex.addEventListener('blur',  function(){ ring.setAttribute('opacity','0'); });
+  btnRst.addEventListener('click', function(){
+    apexX = cfg.startX;
+    elStat.classList.remove('done');
+    elStat.textContent = 'Drag C to a few positions. Notice the area readout.';
+    for(const k in typesSeen) delete typesSeen[k];
+    redraw();
+  });
+
+  redraw();
+}
+
+  // Emit ONE call — base 12 cm, height 6 cm, area 36 cm² (AC9M7M01 E2).
+  initConstantAreaTriangle({
+    svgId:'catSvg',
+    ids:{
+      apex:'catApex', focusRing:'catFocusRing', fill:'catFill',
+      slantA:'catSlantA', slantB:'catSlantB', perp:'catPerp',
+      rightAngle:'catRA', cLabel:'catCLabel', hLabel:'catHLabel',
+      area:'catArea', type:'catType', status:'catStatus', reset:'catReset'
+    },
+    Ax:150, Bx:450, baseY:300, guideY:150,
+    minX:50, maxX:550,
+    startX:300,
+    baseCm:12, heightCm:6
   });
 </script>
 
