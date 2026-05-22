@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON
+  Year 7 Probability — Chance Experiments & Simulations
+  Built from the canonical lesson template. Framework JS (buildPractice,
+  checkAnswer, answerMatches, formatAnswerDisplay, updateProgress, toggleHint,
+  toggleAnswer, toggleTier) copied verbatim. Drag-sort and matching framework
+  copied verbatim and reused with probability content.
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chance Experiments &amp; Simulations — Year 7</title>
+
+<!--
+  ============================================================================
+  CURRICULUM METADATA — scrapable for coverage audits; mirrors the visible
+  "Curriculum link" panel before the footer. Source: lesson-map.xlsx row.
+  ============================================================================
+-->
+<meta name="lesson-id"             content="y7_prb_04">
+<meta name="ac9-descriptor"        content="AC9M7P02">
+<meta name="ac9-elaborations"      content="1,2">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Probability">
+<meta name="sa-conceptual-understanding" content="Theoretical probabilities can predict relative frequencies of experimental data">
+<meta name="lesson-focus"          content="Conduct repeated chance experiments and digital simulations with many trials; compare predicted outcomes with observed relative frequencies and explain why they differ.">
+<meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS-OF-EXPRESSION INTERACTIVE (reused as a sort interactive) */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.92rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.92rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .ex-head {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--navy);
+    font-size: 1.12rem;
+    margin: 26px 0 4px;
+  }
+  .ex-head:first-of-type { margin-top: 6px; }
+  .ex-q { color: var(--text); margin: 0 0 12px; font-size: 0.97rem; }
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 0.97rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* CLASS SIMULATOR — Law of Large Numbers machine */
+  .sim {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .sim-controls {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    margin-bottom: 14px;
+  }
+  .sim-pick {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.88rem; color: var(--navy); font-weight: 600;
+  }
+  .sim-controls select {
+    padding: 7px 10px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-size: 0.88rem; background: white; font-family: inherit;
+  }
+  .sim-controls button {
+    background: var(--navy); color: white; border: none;
+    padding: 8px 14px; border-radius: 7px; cursor: pointer;
+    font-size: 0.86rem; font-weight: 600;
+  }
+  .sim-controls button:hover { background: var(--navy-dark); }
+  .sim-controls button.btn-secondary { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 7px 13px; }
+  .sim-controls button.btn-secondary:hover { background: var(--hint-bg); }
+  .sim-total { font-size: 0.95rem; color: var(--navy); margin-bottom: 12px; }
+  .sim-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .sim-name { width: 64px; font-weight: 600; color: var(--navy); font-size: 0.88rem; flex-shrink: 0; }
+  .sim-track {
+    position: relative; flex: 1; height: 24px;
+    background: #e3e6ec; border-radius: 5px; overflow: hidden;
+    min-width: 130px;
+  }
+  .sim-fill { height: 100%; background: var(--coral); transition: width 0.3s ease; }
+  .sim-theo { position: absolute; top: 0; bottom: 0; border-left: 2px dashed var(--navy); }
+  .sim-stat {
+    width: 198px; font-size: 0.82rem; color: var(--muted); flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .sim-focus {
+    margin-top: 14px; background: var(--coral-soft);
+    border-radius: 8px; padding: 12px 14px;
+    text-align: center; font-size: 0.95rem; color: var(--navy);
+  }
+  @media (max-width: 600px) {
+    .sim-stat { width: 100%; }
+    .sim-row { flex-wrap: wrap; }
+    .sim-name { width: 100%; }
+  }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel — collapsible metadata footer. */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket (Section 12) */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS — Sections 9, 10, 11 */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Chance Experiments &amp; Simulations</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Probability</div>
+  </div>
+  <div class="badge">Probability</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions on theoretical probability from earlier lessons. They warm up the skills you'll lean on today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's probability.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>Your friend tosses a coin 6 times. It lands on Heads <strong>5 times</strong>.</p>
+      <p>"This coin is lucky!" she says — and refuses to swap it for the start of a game.</p>
+      <p>Is the coin really unfair... or is <strong>6 tosses</strong> simply too few to tell?</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      With only a few trials, results jump around — 5 Heads from 6 tosses happens easily with a perfectly fair coin. But run a coin or dice experiment hundreds or thousands of times — using a digital <strong>simulator</strong> — and the <strong>relative frequency</strong> settles down close to the <strong>theoretical probability</strong>. Today you'll see that settling for yourself. It's called the <strong>law of large numbers</strong>.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, concept exploration, and a class simulation — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Chance experiment<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An activity whose result depends on <strong>chance</strong>.<div class="vocab-example">Tossing a coin, rolling a die, or spinning a spinner.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Trial<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">One single <strong>run</strong> of a chance experiment.<div class="vocab-example">One toss of a coin is one trial. 50 tosses is 50 trials.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Theoretical probability<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The probability worked out from <strong>equally likely outcomes</strong>, before any trials.<div class="vocab-example">P(rolling a 4) = <span class="frac"><span class="num">1</span><span class="den">6</span></span>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Relative frequency<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">How often an outcome <strong>actually happened</strong>, as a fraction of total trials. Also called experimental probability.<div class="vocab-example">9 Heads in 20 tosses → <span class="frac"><span class="num">9</span><span class="den">20</span></span> = 0.45.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Law of large numbers<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">As the number of trials grows large, the relative frequency gets <strong>closer to</strong> the theoretical probability.<div class="vocab-example">0.62 after 50 tosses, but ≈ 0.50 after 5000.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — THEORETICAL vs EXPERIMENTAL -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Theoretical or experimental?</h2>
+  <p class="sec-desc">Drag each statement from the strip into the correct bucket — a <strong style="color:var(--coral)">theoretical probability</strong> (worked out from equal outcomes) or an <strong style="color:var(--navy)">experimental result</strong> (a relative frequency from real trials). Wrong drops shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort the six statements</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="variable">P(6) = <span class="frac expr"><span class="num">1</span><span class="den">6</span></span> by counting equal outcomes</span>
+      <span class="term-chip" data-type="constant">27 Heads observed in 50 tosses</span>
+      <span class="term-chip" data-type="variable">Worked out before rolling the die</span>
+      <span class="term-chip" data-type="constant">Relative frequency 0.31 after 200 trials</span>
+      <span class="term-chip" data-type="variable">A coin has a 0.5 chance of Heads — 2 equal sides</span>
+      <span class="term-chip" data-type="constant">Found by running a digital simulation</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="variable">
+        <h4 class="vt">Theoretical probability</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="constant">
+        <h4 class="ct">Experimental (relative frequency)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Theoretical probability is <em>predicted</em> — counted from equally likely outcomes. Experimental probability is <em>observed</em> — measured by actually running trials.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the event to its probability</h2>
+  <p class="sec-desc">Click an event, then click its theoretical probability to match them. There are five matching pairs in the grid below.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick an event to start matching.</div>
+</section>
+
+<!-- SECTION 5: CLASS SIMULATOR -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Class simulator — the Law of Large Numbers machine</h2>
+  <p class="sec-desc">Choose an experiment, then run trials in batches. Watch the <strong>relative frequency</strong> bars. The dashed navy line marks the <strong>theoretical probability</strong> — see how the bars settle onto it as the trial count grows.</p>
+  <div class="sim">
+    <div class="sim-controls">
+      <label class="sim-pick">Experiment:
+        <select id="simExp">
+          <option value="coin">Coin toss — Heads / Tails</option>
+          <option value="die">Six-sided die — 1 to 6</option>
+        </select>
+      </label>
+      <button onclick="runTrials(1)">Run 1</button>
+      <button onclick="runTrials(10)">Run 10</button>
+      <button onclick="runTrials(100)">Run 100</button>
+      <button onclick="runTrials(1000)">Run 1000</button>
+      <button class="btn-secondary" onclick="resetSim()">↺ Reset</button>
+    </div>
+    <div class="sim-total">Total trials: <strong id="simTotal">0</strong></div>
+    <div id="simBars"></div>
+    <div class="sim-focus" id="simFocus">Run some trials to see the relative frequency.</div>
+  </div>
+  <div class="parts-instructions" style="margin-top: 16px;">
+    💡 <strong>What to watch:</strong> after just 10 trials the bars are jumpy and often far from the dashed line. Keep clicking <em>Run 1000</em> — after several thousand trials each relative frequency sits almost exactly on its theoretical probability. That settling is the <strong>law of large numbers</strong>.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through three examples out loud — predict, observe, then compare and explain.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WORKED EXAMPLES (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>I Do — comparing predicted and observed results</h2>
+  <p class="sec-desc">Three examples, all the same routine: <strong>predict</strong> using theoretical probability, <strong>record</strong> the observed result, then <strong>compare and explain</strong> the difference. Use the reveal buttons to step through each one.</p>
+
+  <h3 class="ex-head">Example 1 — a coin tossed 40 times</h3>
+  <p class="ex-q">A fair coin is tossed 40 times. <strong>Predict</strong> how many Heads to expect, then compare with an experiment that produced <strong>24 Heads</strong>.</p>
+  <div class="worked">
+    <div class="step visible" id="e1s1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Predict using theoretical probability</div>
+        <div class="step-desc">A fair coin has 2 equally likely outcomes, so P(Heads) = <span class="frac"><span class="num">1</span><span class="den">2</span></span>. Expected count = probability × number of trials.</div>
+        <div class="calc-box">Predicted Heads = <span class="blue"><span class="frac"><span class="num">1</span><span class="den">2</span></span> × 40 = 20</span></div>
+      </div>
+    </div>
+    <div class="step" id="e1s2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Record the observed result</div>
+        <div class="step-desc">The experiment actually gave 24 Heads. The relative frequency is the observed count over the number of trials.</div>
+        <div class="calc-box">Relative frequency of Heads = <span class="red"><span class="frac"><span class="num">24</span><span class="den">40</span></span> = 0.60</span></div>
+      </div>
+    </div>
+    <div class="step" id="e1s3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Compare and explain the difference</div>
+        <div class="step-desc">Predicted <span style="color:var(--navy);font-weight:600">0.50</span>, observed <span style="color:var(--coral);font-weight:600">0.60</span> — a gap of 0.10. With only 40 trials, random variation easily pushes the relative frequency away from the theoretical probability. This does <strong>not</strong> mean the coin is biased.</div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          A 0.10 gap is normal for just 40 trials — too few to judge the coin.
+        </div>
+      </div>
+    </div>
+    <button class="reveal-btn" id="revealBtn1" onclick="revealStep(1)">Reveal next step ↓</button>
+  </div>
+
+  <h3 class="ex-head">Example 2 — a die rolled 60 times</h3>
+  <p class="ex-q">A fair six-sided die is rolled 60 times. <strong>Predict</strong> the number of 5s, then compare with an experiment that produced <strong>13 fives</strong>.</p>
+  <div class="worked">
+    <div class="step visible" id="e2s1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Predict using theoretical probability</div>
+        <div class="step-desc">A fair die has 6 equally likely outcomes, so P(5) = <span class="frac"><span class="num">1</span><span class="den">6</span></span>.</div>
+        <div class="calc-box">Predicted fives = <span class="blue"><span class="frac"><span class="num">1</span><span class="den">6</span></span> × 60 = 10</span></div>
+      </div>
+    </div>
+    <div class="step" id="e2s2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Record the observed result</div>
+        <div class="step-desc">The experiment gave 13 fives. Write the relative frequency as a decimal.</div>
+        <div class="calc-box">Relative frequency of 5 = <span class="red"><span class="frac"><span class="num">13</span><span class="den">60</span></span> ≈ 0.217</span></div>
+      </div>
+    </div>
+    <div class="step" id="e2s3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Compare and explain the difference</div>
+        <div class="step-desc">Theoretical probability ≈ <span style="color:var(--navy);font-weight:600">0.167</span>, observed ≈ <span style="color:var(--coral);font-weight:600">0.217</span> — a gap of about 0.05. 60 trials is still a small sample, so a gap like this is expected. We would predict that rolling the die many more times brings the relative frequency back toward <span class="frac"><span class="num">1</span><span class="den">6</span></span>.</div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          Observed 0.217 vs predicted 0.167 — a small-sample gap, not a faulty die.
+        </div>
+      </div>
+    </div>
+    <button class="reveal-btn" id="revealBtn2" onclick="revealStep(2)">Reveal next step ↓</button>
+  </div>
+
+  <h3 class="ex-head">Example 3 — a spinner simulated 2000 times</h3>
+  <p class="ex-q">A digital tool simulates a 4-colour spinner (equal sections) <strong>2000 times</strong>. <strong>Predict</strong> the number landing on Blue, then compare with the simulation's result of <strong>486 Blue</strong>.</p>
+  <div class="worked">
+    <div class="step visible" id="e3s1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Predict using theoretical probability</div>
+        <div class="step-desc">The spinner has 4 equal sections, so P(Blue) = <span class="frac"><span class="num">1</span><span class="den">4</span></span>.</div>
+        <div class="calc-box">Predicted Blue = <span class="blue"><span class="frac"><span class="num">1</span><span class="den">4</span></span> × 2000 = 500</span></div>
+      </div>
+    </div>
+    <div class="step" id="e3s2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Record the observed result</div>
+        <div class="step-desc">The simulation recorded 486 Blue out of 2000 trials.</div>
+        <div class="calc-box">Relative frequency of Blue = <span class="red"><span class="frac"><span class="num">486</span><span class="den">2000</span></span> = 0.243</span></div>
+      </div>
+    </div>
+    <div class="step" id="e3s3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Compare and explain the difference</div>
+        <div class="step-desc">Theoretical probability <span style="color:var(--navy);font-weight:600">0.250</span>, observed <span style="color:var(--coral);font-weight:600">0.243</span> — a gap of only 0.007. With a <strong>large number of trials</strong> the relative frequency is very close to the theoretical probability. Compare the three examples: 40 trials gave a 0.10 gap, 60 trials gave a 0.05 gap, but 2000 trials gave just 0.007. That shrinking gap is the <strong>law of large numbers</strong>.</div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          More trials → smaller gap. 2000 trials lands within 0.007 of the prediction.
+        </div>
+      </div>
+    </div>
+    <button class="reveal-btn" id="revealBtn3" onclick="revealStep(3)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Together — a spinner simulated 200 times</h2>
+  <p class="sec-desc">A spinner has 5 equal sections numbered 1–5. A digital tool simulates it <strong>200 times</strong> and records the section 3 landing on <strong>52 spins</strong>. We'll break the comparison into three small steps — discuss each with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why we do it this way:</strong> always predict first, then observe, then compare. When you tackle the "You do" practice next, follow the same routine — theoretical probability, then expected count, then the relative frequency from the trials.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 8: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">8</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">9</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Theoretical probability, predicted counts, and simple relative frequencies. Type fractions like <code>1/6</code> and decimals like <code>0.6</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">10</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now compare predicted with observed results, and work with larger numbers of trials.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">11</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Multi-step word problems on large simulations and the law of large numbers.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 12: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">12</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK — mirrors the <meta> tags in <head>. -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Probability</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Theoretical probabilities can predict relative frequencies of experimental data.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7P02</strong> — conduct repeated chance experiments and run simulations with a large number of trials using digital tools; compare predictions about outcomes with observed results, explaining the differences</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 2 — (E1) recognising that the relative frequency of an outcome approaches its theoretical probability as the number of trials increases (the law of large numbers); (E2) using digital tools to conduct simulations with a large number of trials.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Conduct repeated chance experiments and digital simulations with many trials; compare predicted outcomes with observed relative frequencies and explain why they differ.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_prb_04. Source: lesson-map.xlsx · SA Curriculum (Mathematics R-10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Chance Experiments &amp; Simulations
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    // hide ghost momentarily to find element underneath
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          // pop it back to source after the shake
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  // 5 pairs; each pair shares a "group" id 1-5 (event chip + probability chip).
+  const matchTerms = [
+    { html: 'P(Heads)', group: 1 },
+    { html: 'P(roll a 6)', group: 2 },
+    { html: 'P(1 of 4 colours)', group: 3 },
+    { html: 'P(roll &gt; 4)', group: 4 },
+    { html: 'P(1 of 5 sections)', group: 5 },
+    { html: '<span class="frac"><span class="num">1</span><span class="den">2</span></span>', group: 1 },
+    { html: '<span class="frac"><span class="num">1</span><span class="den">6</span></span>', group: 2 },
+    { html: '<span class="frac"><span class="num">1</span><span class="den">4</span></span>', group: 3 },
+    { html: '<span class="frac"><span class="num">1</span><span class="den">3</span></span>', group: 4 },
+    { html: '<span class="frac"><span class="num">1</span><span class="den">5</span></span>', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    // we have two selected
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — match each event to its theoretical probability.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  // One independent step counter per worked example (1, 2, 3).
+  const wStep = { 1: 1, 2: 1, 3: 1 };
+  function revealStep(ex) {
+    if (wStep[ex] >= 3) return;
+    wStep[ex]++;
+    const step = document.getElementById('e' + ex + 's' + wStep[ex]);
+    if (step) step.classList.add('visible');
+    if (wStep[ex] >= 3) {
+      const btn = document.getElementById('revealBtn' + ex);
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ CLASS SIMULATOR (Law of Large Numbers) ============
+  const simConfig = {
+    coin: { outcomes: ['Heads', 'Tails'], focus: 'Heads' },
+    die:  { outcomes: ['1', '2', '3', '4', '5', '6'], focus: '6' }
+  };
+  let simCounts = {};
+  let simTrials = 0;
+
+  function currentSimExp() { return document.getElementById('simExp').value; }
+
+  function resetSim() {
+    simCounts = {};
+    simTrials = 0;
+    simConfig[currentSimExp()].outcomes.forEach(o => simCounts[o] = 0);
+    renderSim();
+  }
+
+  function runTrials(n) {
+    const outcomes = simConfig[currentSimExp()].outcomes;
+    for (let i = 0; i < n; i++) {
+      const o = outcomes[Math.floor(Math.random() * outcomes.length)];
+      simCounts[o] = (simCounts[o] || 0) + 1;
+      simTrials++;
+    }
+    renderSim();
+  }
+
+  function renderSim() {
+    const cfg = simConfig[currentSimExp()];
+    const theo = 1 / cfg.outcomes.length;
+    document.getElementById('simTotal').textContent = simTrials;
+    const bars = document.getElementById('simBars');
+    bars.innerHTML = '';
+    cfg.outcomes.forEach(o => {
+      const count = simCounts[o] || 0;
+      const rf = simTrials ? count / simTrials : 0;
+      const row = document.createElement('div');
+      row.className = 'sim-row';
+      row.innerHTML =
+        '<span class="sim-name">' + o + '</span>' +
+        '<div class="sim-track">' +
+          '<div class="sim-fill" style="width:' + (rf * 100).toFixed(1) + '%"></div>' +
+          '<div class="sim-theo" style="left:' + (theo * 100).toFixed(2) + '%"></div>' +
+        '</div>' +
+        '<span class="sim-stat">' + count + ' times &middot; rel. freq. ' + rf.toFixed(3) + '</span>';
+      bars.appendChild(row);
+    });
+    const focusEl = document.getElementById('simFocus');
+    if (!simTrials) {
+      focusEl.textContent = 'Run some trials to see the relative frequency.';
+      return;
+    }
+    const f = cfg.focus;
+    const frf = (simCounts[f] || 0) / simTrials;
+    const diff = Math.abs(frf - theo);
+    focusEl.innerHTML =
+      'Relative frequency of <strong>' + f + '</strong> = <strong>' + frf.toFixed(3) + '</strong>' +
+      ' &nbsp;&middot;&nbsp; theoretical probability = <strong>' + theo.toFixed(3) + '</strong>' +
+      ' &nbsp;&middot;&nbsp; difference = <strong>' + diff.toFixed(3) + '</strong>';
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // Answers normalised: strip spaces, lowercase.
+
+  // Retrieval warm-up (Section 0) — prior-knowledge prerequisites. noCount.
+  const retrieval = [
+    { q: 'A fair die is rolled. What is the probability of rolling a 2? (as a fraction)', a: '1/6', hint: 'One favourable outcome out of six equally likely outcomes.' },
+    { q: 'A coin is tossed. What is the probability of Tails? (as a fraction)', a: '1/2', hint: 'A coin has two equally likely sides.' },
+    { q: 'A bag holds 4 red and 1 blue counter. What is P(red)? (as a fraction)', a: '4/5', hint: '4 red counters out of 5 counters in total.' },
+  ];
+
+  const practice1 = [
+    { q: 'A fair coin is tossed. What is the probability of <strong>Heads</strong>? (as a fraction)', a: '1/2', hint: 'A coin has 2 equally likely sides.' },
+    { q: 'A fair six-sided die is rolled. What is P(rolling a 3)? (as a fraction)', a: '1/6', hint: '6 equally likely outcomes; one of them is a 3.' },
+    { q: 'A die is rolled 30 times. Using theoretical probability, how many 2s would you <strong>predict</strong>?', a: '5', hint: 'Expected count = probability × trials = 1/6 × 30.' },
+    { q: 'A coin is tossed 80 times. How many Heads would you predict?', a: '40', hint: '1/2 × 80.' },
+    { q: 'In 20 coin tosses, Heads came up 12 times. What is the relative frequency of Heads? (as a decimal)', a: '0.6', hint: 'Relative frequency = 12 ÷ 20.' },
+    { q: 'A die was rolled 100 times and showed a 6 on 18 of them. Relative frequency of 6? (as a decimal)', a: '0.18', hint: '18 ÷ 100.' },
+    { q: 'A spinner has 4 equal-sized colours. What is P(landing on red)? (as a fraction)', a: '1/4', hint: '1 favourable colour out of 4 equal sections.' },
+    { q: 'That 4-colour spinner is spun 200 times. How many reds would you predict?', a: '50', hint: '1/4 × 200.' },
+    { q: 'In 50 spins of the 4-colour spinner, red came up 9 times. Relative frequency of red? (as a decimal)', a: '0.18', hint: '9 ÷ 50.' },
+    { q: 'A die is rolled. What is P(rolling a number greater than 4)? (fraction, simplest form)', a: '1/3', hint: 'Greater than 4 means 5 or 6 — that is 2 outcomes out of 6.' },
+  ];
+
+  const practice2 = [
+    { q: 'A die is rolled 120 times. The experiment recorded 27 ones. By how much does the <strong>observed</strong> count of 1s differ from the <strong>predicted</strong> count?', a: '7', hint: 'Predicted = 1/6 × 120 = 20. Difference = 27 − 20.' },
+    { q: 'A coin is tossed 500 times and lands Heads 268 times. Relative frequency of Heads? (decimal, 3 d.p.)', a: '0.536', hint: '268 ÷ 500.' },
+    { q: 'A spinner with 5 equal sections is simulated 1000 times. Section A came up 215 times. Relative frequency of A? (as a decimal)', a: '0.215', hint: '215 ÷ 1000.' },
+    { q: 'A digital tool simulates a die 600 times. How many 4s would you predict?', a: '100', hint: '1/6 × 600.' },
+    { q: 'In 400 coin tosses there were 190 Tails. What is the relative frequency of <strong>Heads</strong>? (as a decimal)', a: '0.525', hint: 'Heads = 400 − 190 = 210. Then 210 ÷ 400.' },
+    { q: 'After 2000 simulated tosses, the relative frequency of Heads was 0.48. How far is this from the theoretical probability? (as a decimal)', a: '0.02', hint: 'Theoretical P(Heads) = 0.5. Find the difference.' },
+  ];
+
+  const practice3 = [
+    { q: 'A digital tool simulates a die 3000 times and records 478 sixes. By how much does the observed count of sixes differ from the predicted count?', a: '22', hint: 'Predicted = 1/6 × 3000 = 500. Difference = 500 − 478.' },
+    { q: 'A coin is simulated 1000 times and the relative frequency of Heads is 0.512. How many Heads were recorded?', a: '512', hint: 'Count = relative frequency × trials = 0.512 × 1000.' },
+    { q: 'A spinner has 8 equal sections. It is simulated 2400 times. How many times would you predict it lands on section 1?', a: '300', hint: 'P(section 1) = 1/8. Then 1/8 × 2400.' },
+    { q: 'A die simulated 6000 times gave a relative frequency of 0.165 for rolling a 2. The theoretical probability is 0.167. By how much do they differ? (as a decimal)', a: '0.002', hint: '0.167 − 0.165. A large number of trials keeps this gap tiny.' },
+  ];
+
+  const checkpoint = [
+    { q: 'A coin is tossed 50 times and lands Heads 31 times. Relative frequency of Heads? (as a decimal)', a: '0.62', hint: '31 ÷ 50.' },
+    { q: 'What is the theoretical probability of rolling an <strong>even number</strong> on a die? (fraction, simplest form)', a: '1/2', hint: 'Even numbers on a die: 2, 4, 6 — that is 3 out of 6.' },
+  ];
+
+  const weDo = [
+    { q: 'Step 1 — What is the theoretical probability of the spinner landing on 3? (as a fraction)', a: '1/5', hint: '1 favourable section out of 5 equal sections.' },
+    { q: 'Step 2 — Predict the number of 3s in 200 spins.', a: '40', hint: 'Expected count = 1/5 × 200.' },
+    { q: 'Step 3 — The tool recorded 52 threes. What is the relative frequency of 3? (as a decimal)', a: '0.26', hint: '52 ÷ 200.' },
+  ];
+
+  const exitProbs = [
+    { q: 'A coin is tossed 24 times and lands Heads 15 times. Relative frequency of Heads? (decimal, 3 d.p.)', a: '0.625', hint: '15 ÷ 24.' },
+    { q: 'A die is simulated 1200 times. How many 3s would you predict?', a: '200', hint: '1/6 × 1200.' },
+    { q: 'Liam tosses a coin 10 times and gets 7 Heads. He says "this coin is biased towards Heads." Explain why he cannot be sure, using the law of large numbers.', a: 'TEXT', hint: 'Think about how many trials are needed before the relative frequency settles.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');  // strip leading +
+  }
+  // accept reordered terms: 3x+5 == 5+3x
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null; // open-ended, don't auto-mark
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // try sorting terms
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'In only a few trials the relative frequency jumps around — 7 Heads from 10 tosses happens easily with a fair coin. The law of large numbers says you need a large number of trials before the relative frequency reliably settles near the true probability, so a small sample cannot prove the coin is biased.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 3: tidy operators — typographic minus, space around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      // smooth-scroll the opened section to the top of the viewport
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  resetSim();
+  document.getElementById('simExp').addEventListener('change', resetSim);
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
