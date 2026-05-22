@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON — TEMPLATE
+  ============================================================================
+  This file is the canonical structure for interactive HTML maths lessons.
+  The example content shown here is Year 10 Collecting Like Terms; treat that
+  as a worked reference for the patterns, not as the lesson to ship.
+
+  HOW TO ADAPT:
+  -----------------------------------------------------------------------------
+  Keep ALL of the following intact:
+    • The <style> block (palette, layout, all component CSS)
+    • The <script> block's framework code (buildPractice, drag-and-drop,
+      teacher mode, progress tracking, answer normalisation, toggleTier)
+    • The section ordering (Retrieval → Hook → AS A CLASS → I DO → WE DO →
+      YOU DO → Exit ticket) and phase banner placement
+    • The numbering convention (sections 0–11 sequential)
+    • The accordion structure for the three practice tiers (Sections 8–10):
+      Building expanded by default, Stretch and Mastery collapsed with
+      question-count badges
+    • The matching visual treatment of Retrieval (Section 0) and Exit ticket
+      (Section 11) as bookends
+
+  Replace the following with topic-specific content:
+    • Curriculum metadata (<meta> tags in <head> AND the "Curriculum link"
+      <details> block before the footer — must match each other)
+    • Page <title>, header h1, header subtitle, badge text
+    • Footer line: "Mathematics · Year [N] · [Topic]" — no school branding,
+      no "Built with Claude" tagline; keep it factual and short
+    • Section 0 retrieval warm-up problems (retrieval array)
+    • Section 1 "Why this matters" hook (real-world scenario)
+    • Section 2 vocab cards (5 terms, ordered concrete → abstract)
+    • Section 3 drag-sort items (data-type values + chip contents)
+    • Section 4 match pairs (matchTerms array in JS)
+    • Section 5 worked-example problem and the 3 steps
+    • Section 6 we-do sub-prompts (weDo array)
+    • Section 7 quick check problems (checkpoint array)
+    • Section 8/9/10 practice problems (practice1/practice2/practice3 arrays)
+    • Section 11 exit ticket questions (exitProbs array)
+
+  MATHS TYPOGRAPHY RULES (non-negotiable):
+    • Fractions: <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+      — NEVER inline like "3/4"
+    • Variables: <span class="var">x</span> — italic via CSS
+    • Minus sign: − (U+2212) — NOT a hyphen -
+    • Powers: <sup>2</sup>
+
+  For full guidance see SKILL.md and the references/ folder.
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volume of Rectangular Prisms — Year 7</title>
+
+<!--
+  ============================================================================
+  CURRICULUM METADATA — populate these on every lesson.
+  These tags are scrapable for coverage audits and feed the visible
+  "Curriculum link" panel in the footer. Source: lesson-map.xlsx row.
+  ============================================================================
+-->
+<meta name="lesson-id"             content="TODO: lesson-id not supplied in task prompt">
+<meta name="ac9-descriptor"        content="AC9M7M02">
+<meta name="ac9-elaborations"      content="TODO: elaborations not supplied in task prompt">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="TODO: SA conceptual-understanding statement not supplied in task prompt">
+<meta name="lesson-focus"          content="Derive and apply V = length × width × height for rectangular prisms; interpret volume as the count of unit cubes (or stacked layers of base × height) inside the shape.">
+<meta name="mapping-note"          content="TODO: mapping-note not supplied in task prompt"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS-OF-EXPRESSION INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING LIKE TERMS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel — collapsible metadata footer.
+     Reference info for teachers/auditors, not for students. */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket (Section 11) share visual treatment */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS — Sections 8, 9, 10 */
+  section.lesson.tier-accordion {
+    padding-top: 28px; /* preserve chilli-sticker breathing room */
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none; /* default collapsed */
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* UNIT-CUBE DIAGRAM — used in worked example (Section 5) and We Do (Section 6) */
+  .cube-stack {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 6px; margin: 6px 0 4px;
+    font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+  .cube-stack .cube-row {
+    font-size: 1.4rem;
+    white-space: nowrap;
+  }
+  .cube-stack .layer-label {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 2px;
+  }
+  .cube-stack .layer-block {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 2px; padding: 6px 10px;
+    background: white; border: 1px solid var(--border); border-radius: 6px;
+  }
+  .stack-callout {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 14px;
+    color: var(--navy);
+  }
+  .stack-callout strong { color: var(--coral); }
+  @media (max-width: 600px) {
+    .cube-stack .cube-row { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Volume of Rectangular Prisms</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Measurement</div>
+  </div>
+  <div class="badge">Entry point</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<!-- 2–3 quick recall questions on prerequisite skills for today's lesson.
+     Replace the retrieval array in JS to swap content. These do NOT count
+     toward the student's progress score (they're noCount). -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's measurement.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>Mrs Tran is buying a new fish tank 🐠. The shop has two on display:</p>
+      <ul style="line-height: 1.9;">
+        <li>Tank A: 60 cm long, 30 cm wide, 40 cm deep</li>
+        <li>Tank B: 50 cm long, 40 cm wide, 35 cm deep</li>
+      </ul>
+      <p>She needs the bigger one — but bigger <em>how</em>? Tank A is longer; Tank B is wider. To compare fairly she has to ask: <strong>how much water fits inside?</strong></p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      That "how much fits inside" is called <strong>volume</strong>. For a rectangular box-shape, the volume is found by multiplying the three side lengths: <span class="expr">length × width × height</span>. Tank A holds 72&nbsp;000 cm³ of water; Tank B holds 70&nbsp;000 cm³. Today you'll learn the rule for any rectangular prism.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Volume<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The amount of <strong>3D space</strong> a solid takes up — how much "stuff" fits inside.<div class="vocab-example">A small Lego brick has a tiny <strong>volume</strong>; a fridge has a large one.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Rectangular prism<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A 3D shape with <strong>6 rectangular faces</strong> and all corners square.<div class="vocab-example">A cereal box, a brick, and a shipping container are all <strong>rectangular prisms</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Cubic units<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The units we use to measure volume — every dimension is multiplied, so the unit is <strong>cubed</strong>.<div class="vocab-example">cm × cm × cm = <strong>cm³</strong>. Also: mm³, m³.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Base<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>bottom face</strong> of a prism — the rectangle the prism stands on.<div class="vocab-example">For a 6 × 4 × 5 cm box: the base is a 6 × 4 rectangle (area 24 cm²).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Capacity<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">How much a container <strong>can hold</strong> (usually liquid). Closely related to volume but uses litres/mL.<div class="vocab-example">A 1 L water bottle has a <strong>capacity</strong> of 1000 mL — which equals a volume of 1000 cm³.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SPOT THE PRISM -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Spot the rectangular prism</h2>
+  <p class="sec-desc">Drag each object from the strip below into the correct bucket — <strong style="color:var(--coral)">rectangular prism</strong> or <strong style="color:var(--navy)">not a prism</strong>. Wrong drops will shake; correct ones stay put. Today's formula only works for the prism bucket.</p>
+
+  <div class="parts-expr">
+    <div class="label">Which everyday shapes are rectangular prisms?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="prism">🥣 Cereal box</span>
+      <span class="term-chip" data-type="not">🏀 Basketball</span>
+      <span class="term-chip" data-type="prism">🧱 Brick</span>
+      <span class="term-chip" data-type="not">🥫 Soup can</span>
+      <span class="term-chip" data-type="prism">🍱 Lunch box</span>
+      <span class="term-chip" data-type="not">🍦 Ice-cream cone</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="prism">
+        <h4 class="vt">Rectangular prism</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="not">
+        <h4 class="ct">Not a prism</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 A rectangular prism has 6 flat rectangular faces and right-angle corners. Curved shapes (balls, cans, cones) don't qualify — they need their own volume rules, which you'll meet in later years.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH DIMENSIONS TO VOLUMES -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match dimensions to volumes</h2>
+  <p class="sec-desc">Click a dimensions card, then click the volume that matches it. Five pairs to find — multiply the three side lengths to spot the match.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE — UNIT CUBE DERIVATION -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — building the formula from unit cubes</h2>
+  <p class="sec-desc">Build a rectangular prism that is <strong>4 units long, 3 units wide, and 2 units high</strong> out of unit cubes (each cube is 1 × 1 × 1). How many cubes do we use? And what rule does that give us?</p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Build the bottom layer</div>
+        <div class="step-desc">Lay cubes flat on the floor in a rectangle that is 4 wide and 3 deep.</div>
+        <div class="calc-box">
+          <div class="cube-stack">
+            <div class="layer-block">
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="layer-label">Bottom layer — 1 cube tall</div>
+            </div>
+          </div>
+          One layer = 4 × 3 = <span class="red">12 cubes</span> &nbsp;<span style="color:var(--muted);">(this is the area of the base, in cubes)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Stack the layers</div>
+        <div class="step-desc">Now put a second layer on top. The prism is 2 units high, so we have 2 identical layers.</div>
+        <div class="calc-box">
+          <div class="cube-stack">
+            <div class="layer-block">
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="layer-label">Top layer — 12 cubes</div>
+            </div>
+            <div class="layer-block">
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="cube-row">🟧🟧🟧🟧</div>
+              <div class="layer-label">Bottom layer — 12 cubes</div>
+            </div>
+          </div>
+          Total cubes = <span class="red">12</span> × <span class="blue">2</span> = <span class="red">24 cubes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Spot the formula</div>
+        <div class="step-desc">Look at what we just multiplied: <strong>4 × 3</strong> (the base) <strong>× 2</strong> (the number of layers). Those three numbers are the prism's length, width, and height.</div>
+        <div class="calc-box">
+          Volume = <span class="red">length</span> × <span class="red">width</span> × <span class="blue">height</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 4 × 3 × 2<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 24 cubic units
+        </div>
+        <div class="stack-callout">
+          <strong>Two ways to see it.</strong> Volume = length × width × height <em>or</em> Volume = (area of base) × height. They give the same answer because length × width <em>is</em> the area of the base. Pick whichever is easier for the question.
+        </div>
+        <div class="summary-banner">
+          <span class="label">Formula</span>
+          V = l × w × h&nbsp;&nbsp;|&nbsp;&nbsp;V = 24 cubic units
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — find the volume of a 6 mm × 4 mm × 5 mm prism</h2>
+  <p class="sec-desc">A small Lego-style block measures <strong>6 mm long, 4 mm wide, and 5 mm tall</strong>. We'll find its volume in three steps. Discuss each prompt with the person next to you before we fill in the box.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why we do it this way:</strong> finding the area of the base first lets you "see" one layer of unit cubes. Multiplying by the height then tells you how many of those layers are stacked. It's the same idea as the 4 × 3 × 2 cube prism — just with measurements in mm instead of unit cubes.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK (you do — checkpoint) -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the rule. Type just the <strong>number</strong> for the volume — units are already shown in the question. Try them on your own first; <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING (accordion, open by default) -->
+<!-- Building is the entry tier. .open class shows it expanded.
+     Update the count badge text to match the actual number of problems. -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Multiply the three side lengths. Type just the number for the volume — units are shown in the question.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH (accordion, collapsed) -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Bigger numbers, cubes, and a few "find the missing dimension" problems. Use V = l × w × h, or work backwards by dividing.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY (accordion, collapsed) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Word problems — read carefully, sketch a quick diagram, label the three side lengths, then apply the rule.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET (bookend with retrieval) -->
+<!-- Visual treatment mirrors Section 0 retrieval — same teal-tint, same accent.
+     They are bookends framing the lesson. -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson — the formula, the units, and what to do when one dimension is missing.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK — reference info for teachers and curriculum audits.
+     Mirror values from the <meta> tags in <head>. Collapsed by default;
+     teachers click to expand. Students never need to open this. -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value"><strong>TODO:</strong> SA conceptual-understanding statement not supplied in task prompt — please fill in from lesson-map.xlsx.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7M02</strong> — establish the formulas for areas of rectangles, triangles and parallelograms, and the volumes of rectangular and triangular prisms; use these to solve problems involving the area and volume of composite objects</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value"><strong>TODO:</strong> elaborations list not supplied in task prompt.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Derive and apply V = length × width × height for rectangular prisms; interpret volume as the count of unit cubes (or stacked layers of base × height) inside the shape. Entry-point lesson — assumes only primary-school rectangle area and three-factor multiplication.</span>
+    </div>
+    <div class="cl-note"><strong>TODO:</strong> Mapping note and Lesson ID not supplied in task prompt — please fill in from lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Volume of Rectangular Prisms
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ PARTS OF EXPRESSION (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    // hide ghost momentarily to find element underneath
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          // pop it back to source after the shake
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING DIMENSIONS TO VOLUMES ============
+  // 5 pairs; each pair has a "group" id 1-5
+  const matchTerms = [
+    { html: '2 × 3 × 4 cm', group: 1 },
+    { html: '24 cm³', group: 1 },
+    { html: '5 × 5 × 5 cm', group: 2 },
+    { html: '125 cm³', group: 2 },
+    { html: '1 × 6 × 2 m', group: 3 },
+    { html: '12 m³', group: 3 },
+    { html: '10 × 2 × 3 mm', group: 4 },
+    { html: '60 mm³', group: 4 },
+    { html: '3 × 3 × 4 cm', group: 5 },
+    { html: '36 cm³', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    // we have two selected
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five prisms matched to their volumes!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — multiply the three sides and check again.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // Answers normalised: strip spaces, lowercase. Accept reordered terms.
+
+  // Retrieval warm-up (Section 0) — prior-knowledge prerequisites for today's lesson.
+  // These do NOT count toward progress (built with noCount). Keep them short.
+  const retrieval = [
+    { q: 'Calculate: <span class="expr">5 × 6</span>', a: '30', hint: 'Simple multiplication — five groups of six.' },
+    { q: 'Calculate: <span class="expr">2 × 3 × 4</span>', a: '24', hint: 'Multiply two at a time. 2 × 3 = 6, then 6 × 4.' },
+    { q: 'Find the area of a rectangle that is <strong>7 cm long</strong> and <strong>4 cm wide</strong>. (Answer in cm².)', a: '28', hint: 'Area of a rectangle = length × width.' },
+  ];
+
+  const practice1 = [
+    { q: 'Volume of a prism with sides <strong>2 cm × 3 cm × 4 cm</strong>. (cm³)', a: '24', hint: 'V = l × w × h. 2 × 3 = 6, then × 4.' },
+    { q: 'Volume of a prism with sides <strong>5 cm × 5 cm × 2 cm</strong>. (cm³)', a: '50', hint: '5 × 5 = 25, then × 2 = ?' },
+    { q: 'Volume of a prism with sides <strong>6 mm × 2 mm × 3 mm</strong>. (mm³)', a: '36', hint: '6 × 2 = 12, then × 3.' },
+    { q: 'A cube has every side <strong>4 cm</strong> long. Find its volume. (cm³)', a: '64', hint: 'A cube is a prism with l = w = h. So 4 × 4 × 4.' },
+    { q: 'Volume of a prism with sides <strong>10 cm × 3 cm × 2 cm</strong>. (cm³)', a: '60', hint: '10 × 3 = 30, then × 2.' },
+    { q: 'Volume of a prism with sides <strong>7 mm × 2 mm × 5 mm</strong>. (mm³)', a: '70', hint: '7 × 2 = 14, then × 5.' },
+    { q: 'Volume of a prism with sides <strong>8 cm × 5 cm × 2 cm</strong>. (cm³)', a: '80', hint: '8 × 5 = 40, then × 2.' },
+    { q: 'Volume of a prism with sides <strong>3 m × 2 m × 4 m</strong>. (m³)', a: '24', hint: 'Same rule even with metres. 3 × 2 × 4 = ?' },
+    { q: 'Volume of a prism with sides <strong>6 cm × 5 cm × 3 cm</strong>. (cm³)', a: '90', hint: '6 × 5 = 30, then × 3.' },
+    { q: 'A cube has every side <strong>10 cm</strong> long. Find its volume. (cm³)', a: '1000', hint: '10 × 10 × 10.' },
+  ];
+
+  const practice2 = [
+    { q: 'A cube has sides <strong>6 cm</strong>. Find its volume. (cm³)', a: '216', hint: '6 × 6 = 36, then × 6.' },
+    { q: 'Volume of a prism with sides <strong>12 cm × 4 cm × 5 cm</strong>. (cm³)', a: '240', hint: '12 × 4 = 48, then × 5.' },
+    { q: 'A prism has volume <strong>60 cm³</strong>. Its length is 5 cm and width is 3 cm. Find its <strong>height</strong>. (cm)', a: '4', hint: 'V = l × w × h, so h = V ÷ (l × w). 60 ÷ (5 × 3) = ?' },
+    { q: 'A prism has volume <strong>120 m³</strong> and a base of area <strong>24 m²</strong>. Find its <strong>height</strong>. (m)', a: '5', hint: 'V = base area × height, so height = V ÷ base area. 120 ÷ 24.' },
+    { q: 'Volume of a prism with sides <strong>15 mm × 8 mm × 10 mm</strong>. (mm³)', a: '1200', hint: '15 × 8 = 120, then × 10.' },
+    { q: 'Volume of a prism with sides <strong>9 cm × 7 cm × 11 cm</strong>. (cm³)', a: '693', hint: '9 × 7 = 63, then × 11.' },
+  ];
+
+  const practice3 = [
+    { q: 'A backyard swimming pool is <strong>25 m long, 10 m wide, and 2 m deep</strong>. How many <strong>m³</strong> of water fill it?', a: '500', hint: 'Read off the three dimensions, then multiply. 25 × 10 = 250, then × 2.' },
+    { q: 'A storage box has dimensions <strong>40 cm × 30 cm × 20 cm</strong>. What is its volume in <strong>cm³</strong>?', a: '24000', hint: '40 × 30 = 1200, then × 20. (You can check: 1200 × 20 = 24,000.)' },
+    { q: 'A fish tank measures <strong>80 cm long, 30 cm wide, 40 cm tall</strong>. What is its volume in <strong>cm³</strong>?', a: '96000', hint: '80 × 30 = 2400, then × 40.' },
+    { q: 'A rectangular prism has <strong>volume 600 cm³</strong> and a <strong>base area of 50 cm²</strong>. What is its height in cm?', a: '12', hint: 'Volume = base area × height, so height = volume ÷ base area. 600 ÷ 50.' },
+  ];
+
+  const checkpoint = [
+    { q: 'Volume of a prism with sides <strong>5 cm × 6 cm × 2 cm</strong>. (cm³)', a: '60', hint: 'V = l × w × h. 5 × 6 = 30, then × 2.' },
+    { q: 'Volume of a cube with sides <strong>3 m</strong>. (m³)', a: '27', hint: 'A cube uses the same side length three times. 3 × 3 × 3.' },
+  ];
+
+  const weDo = [
+    { q: 'Find the <strong>area of the base</strong> first. The base is 6 mm × 4 mm. (mm²)', a: '24', hint: 'Area of a rectangle = length × width. 6 × 4 = ?' },
+    { q: 'Now multiply that base area by the <strong>height (5 mm)</strong> to get the volume. (mm³)', a: '120', hint: '24 × 5 = ?' },
+    { q: 'Check: also compute <span class="expr">6 × 4 × 5</span> directly. Same answer? (mm³)', a: '120', hint: 'It should be the same — both methods give the volume of the prism.' },
+  ];
+
+  const exitProbs = [
+    { q: 'Find the volume of a rectangular prism that is <strong>3 cm × 4 cm × 5 cm</strong>. (cm³)', a: '60', hint: 'V = l × w × h. 3 × 4 = 12, then × 5.' },
+    { q: 'A prism has volume <strong>48 cm³</strong> and a <strong>base area of 12 cm²</strong>. What is its height? (cm)', a: '4', hint: 'Volume = base area × height, so height = volume ÷ base area.' },
+    { q: 'Explain why we measure volume in <strong>cubic units (cm³)</strong> instead of <strong>square units (cm²)</strong> or just <strong>cm</strong>.', a: 'TEXT', hint: 'Think about how many dimensions you multiply together.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');  // strip leading +
+  }
+  // accept reordered terms: 3x+5 == 5+3x
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null; // open-ended, don't auto-mark
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // try sorting terms
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Volume measures how much 3D space something takes up. Because we multiply three lengths together (cm × cm × cm), the unit must be cubed: cm³. Squared units only describe a flat (2D) region; plain cm only describes a single edge.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 3: tidy operators — typographic minus, space around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      // smooth-scroll the opened section to the top of the viewport
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
