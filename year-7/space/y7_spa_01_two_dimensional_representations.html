@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON
+  Year 7 · Space · Representing objects in two dimensions
+  Built from the canonical interactive-html-maths-lesson template.
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Representing Objects in Two Dimensions — Year 7</title>
+
+<!-- ============================================================================
+     CURRICULUM METADATA — scrapable for coverage audits; mirrored in the
+     visible "Curriculum link" panel before the footer.
+     ============================================================================ -->
+<meta name="lesson-id"             content="y7_spa_01">
+<meta name="ac9-descriptor"        content="AC9M7SP01">
+<meta name="ac9-elaborations"      content="1,3">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Space">
+<meta name="sa-conceptual-understanding" content="Objects can be represented in two-dimensions in different ways">
+<meta name="lesson-focus"          content="Represent 3D objects in two dimensions using nets (from deconstructed packaging) and aerial/plan views (building footprints); reason about the advantages and disadvantages of different representations.">
+<meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* DIAGRAMS */
+  .diagram { display: block; margin: 6px auto 2px; max-width: 100%; height: auto; }
+  .diagram-cap { text-align: center; font-size: 0.8rem; color: var(--muted); font-style: italic; margin-top: 4px; }
+
+  /* COMPARE / REASONING */
+  .reason-line { font-family: -apple-system, sans-serif; font-size: 0.96rem; line-height: 1.6; }
+  .reason-line .pro { color: var(--good); font-weight: 600; }
+  .reason-line .con { color: var(--bad); font-weight: 600; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS / SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.45; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS — Retrieval + Exit ticket */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Representing Objects in Two Dimensions</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Space</div>
+  </div>
+  <div class="badge">Space</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 22</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work on shapes and solids. They warm up the ideas you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's geometry.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>A box of cereal sits on a shelf — a solid <strong>3D object</strong>. But before it was ever filled, it started life as a single flat sheet of cardboard, printed and cut, then folded into a box.</p>
+      <p>Architects work the other way around. Before a building exists, they draw it flat — a <strong>plan view</strong> looking straight down, showing exactly where every wall and room will sit.</p>
+      <p>In both cases a 3D object is captured on a flat, 2D page. The trick is choosing a <em>flat representation</em> that shows what you actually need.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      Today we represent solid objects in <strong>two dimensions</strong> in two ways: by <strong>deconstructing packaging</strong> into a flat net, and by drawing a building's <strong>aerial (plan) view</strong>. Then we reason about what each representation shows well — and what it leaves out.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">3D object<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A solid shape with <strong>length, width and height</strong> — it takes up space.<div class="vocab-example">A <strong>cereal box</strong> or a <strong>basketball</strong> is a 3D object.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">2D shape<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>flat</strong> shape with length and width only — <strong>no thickness</strong>.<div class="vocab-example">A <strong>square</strong>, <strong>circle</strong> or <strong>triangle</strong> drawn on paper.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Face<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A single <strong>flat surface</strong> of a 3D object. Each face is a 2D shape.<div class="vocab-example">A cube has <strong>6 faces</strong>, each one a square.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Net<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>flat (2D) pattern</strong> that folds up to make a 3D object.<div class="vocab-example">An <strong>unfolded box</strong> is the net of that box.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Plan view<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The 2D view of an object seen from <strong>directly above</strong> — also called the <strong>aerial view</strong> or footprint.<div class="vocab-example">The plan view of a building shows the shape of the ground it covers.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT 2D / 3D -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Flat or solid?</h2>
+  <p class="sec-desc">Drag each item from the strip into the correct bucket — <strong style="color:var(--coral)">2D shapes</strong> (flat) or <strong style="color:var(--navy)">3D objects</strong> (solid). Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort each shape: is it 2D (flat) or 3D (solid)?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="2d">Square</span>
+      <span class="term-chip" data-type="3d">Cube</span>
+      <span class="term-chip" data-type="2d">Circle</span>
+      <span class="term-chip" data-type="3d">Cylinder</span>
+      <span class="term-chip" data-type="2d">Triangle</span>
+      <span class="term-chip" data-type="3d">Sphere</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="2d">
+        <h4 class="vt">2D shapes</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="3d">
+        <h4 class="ct">3D objects</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 A 2D shape is flat — length and width only. A 3D object also has height (thickness). Every 3D object can be <em>represented</em> using 2D shapes — that is exactly today's lesson.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the word to its meaning</h2>
+  <p class="sec-desc">Click a key word, then click its meaning to join the pair. There are five pairs in the grid below.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a word to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through three examples aloud — a net, an aerial view, and a comparison.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE 1 (I DO) — NET / E1 -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example 1 — deconstruct the packaging</h2>
+  <p class="sec-desc">A tissue box is a rectangular prism. Cut along its edges, unfold it flat — what 2D net do you get?</p>
+
+  <div class="worked">
+    <div class="step visible" id="wex1-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Look at the 3D object</div>
+        <div class="step-desc">A tissue box is a rectangular prism. It has <strong>6 flat faces</strong>, and opposite faces are identical pairs: top &amp; bottom, front &amp; back, the two ends.</div>
+        <div class="calc-box">
+          <svg class="diagram" viewBox="0 0 210 130" width="210" role="img" aria-label="A rectangular prism tissue box drawn from an angle">
+            <polygon points="40,45 140,45 175,20 75,20" fill="#fdf3dc" stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="140,45 175,20 175,80 140,105" fill="#e7d3c8" stroke="#1F4D54" stroke-width="2"/>
+            <rect x="40" y="45" width="100" height="60" fill="#f5d8cb" stroke="#1F4D54" stroke-width="2"/>
+            <text x="90" y="80" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#1F4D54">front</text>
+          </svg>
+          <div class="diagram-cap">A rectangular prism — a solid 3D object</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="wex1-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Unfold it into a net</div>
+        <div class="step-desc">Imagine cutting along the edges and laying every face flat on the table. Each face becomes a 2D rectangle. The flat pattern is the <strong>net</strong>.</div>
+        <div class="calc-box">
+          <svg class="diagram" viewBox="0 0 290 185" width="290" role="img" aria-label="Net of a rectangular prism made of six rectangles">
+            <rect x="35" y="20" width="70" height="50" fill="#fdf3dc" stroke="#1F4D54" stroke-width="2"/>
+            <text x="70" y="49" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#1F4D54">top</text>
+            <rect x="35" y="70" width="70" height="50" fill="#f5d8cb" stroke="#1F4D54" stroke-width="2"/>
+            <text x="70" y="99" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#1F4D54">front</text>
+            <rect x="105" y="70" width="45" height="50" fill="#e7d3c8" stroke="#1F4D54" stroke-width="2"/>
+            <text x="127" y="99" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#1F4D54">end</text>
+            <rect x="150" y="70" width="70" height="50" fill="#f5d8cb" stroke="#1F4D54" stroke-width="2"/>
+            <text x="185" y="99" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#1F4D54">back</text>
+            <rect x="220" y="70" width="45" height="50" fill="#e7d3c8" stroke="#1F4D54" stroke-width="2"/>
+            <text x="242" y="99" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#1F4D54">end</text>
+            <rect x="35" y="120" width="70" height="50" fill="#fdf3dc" stroke="#1F4D54" stroke-width="2"/>
+            <text x="70" y="149" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#1F4D54">bottom</text>
+          </svg>
+          <div class="diagram-cap">The net — the box represented flat in two dimensions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="wex1-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Check the net</div>
+        <div class="step-desc">Count the rectangles: <strong>6 in total</strong>, forming <strong>3 matching pairs</strong> (top/bottom, front/back, two ends). Mentally fold the net back along the joins — it rebuilds the box, so the net is correct.</div>
+        <div class="calc-box">6 rectangles · 3 matching pairs — fold the net along the edges and the box comes back.</div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          A net of 6 rectangles (3 matching pairs)
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="wex1-btn" onclick="revealNextStep('wex1')">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- SECTION 6: WORKED EXAMPLE 2 (I DO) — AERIAL VIEW / E3 -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Worked example 2 — draw the aerial view</h2>
+  <p class="sec-desc">A single-storey building is shaped like the letter L. Draw its plan view — the footprint seen from directly above.</p>
+
+  <div class="worked">
+    <div class="step visible" id="wex2-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Picture the 3D building</div>
+        <div class="step-desc">Here is the building drawn from an angle. It has walls, height and a roof — a true 3D object standing on the ground.</div>
+        <div class="calc-box">
+          <svg class="diagram" viewBox="0 0 210 130" width="210" role="img" aria-label="An L-shaped single-storey building drawn from an angle">
+            <polygon points="160,56 92,56 92,98 160,98" fill="#e7d3c8" stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="92,56 128,28 128,70 92,98" fill="#e7d3c8" stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="142,70 160,56 160,98 142,112" fill="#e7d3c8" stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="40,70 142,70 142,112 40,112" fill="#f5d8cb" stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="40,70 142,70 160,56 92,56 128,28 94,28" fill="#fdf3dc" stroke="#1F4D54" stroke-width="2"/>
+          </svg>
+          <div class="diagram-cap">An L-shaped building — seen from an angle</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="wex2-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Move your viewpoint directly above</div>
+        <div class="step-desc">Imagine a drone hovering straight above the building, looking straight down. Height and walls disappear — you see only the outline of the ground the building covers.</div>
+        <div class="calc-box">Looking straight down&nbsp;↓ — the height vanishes, and only the outline of the footprint is left.</div>
+      </div>
+    </div>
+
+    <div class="step" id="wex2-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Trace the footprint</div>
+        <div class="step-desc">Trace the outline you see from above onto a grid. This flat 2D drawing is the <strong>plan view</strong> (aerial view). Here it is an L-shape made of <strong>5 unit squares</strong>.</div>
+        <div class="calc-box">
+          <svg class="diagram" viewBox="0 0 186 156" width="186" role="img" aria-label="Plan view of the L-shaped building: an L of five unit squares">
+            <g stroke="#c7cdd6" stroke-width="1" fill="none">
+              <rect x="30" y="15" width="42" height="42"/>
+              <rect x="72" y="15" width="42" height="42"/>
+              <rect x="114" y="15" width="42" height="42"/>
+              <rect x="30" y="57" width="42" height="42"/>
+              <rect x="72" y="57" width="42" height="42"/>
+              <rect x="114" y="57" width="42" height="42"/>
+              <rect x="30" y="99" width="42" height="42"/>
+              <rect x="72" y="99" width="42" height="42"/>
+              <rect x="114" y="99" width="42" height="42"/>
+            </g>
+            <g fill="#f5d8cb" stroke="#BE5837" stroke-width="2">
+              <rect x="30" y="15" width="42" height="42"/>
+              <rect x="30" y="57" width="42" height="42"/>
+              <rect x="30" y="99" width="42" height="42"/>
+              <rect x="72" y="99" width="42" height="42"/>
+              <rect x="114" y="99" width="42" height="42"/>
+            </g>
+          </svg>
+          <div class="diagram-cap">The plan view — the building's footprint in two dimensions</div>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Plan view = an L-shape of 5 unit squares
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="wex2-btn" onclick="revealNextStep('wex2')">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- SECTION 7: WORKED EXAMPLE 3 (I DO) — ADVANTAGES & DISADVANTAGES -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Worked example 3 — which representation is better?</h2>
+  <p class="sec-desc">You want a friend to build the same cardboard box you have. Should you send them a <strong>net</strong> or a <strong>photograph</strong> of the finished box? Reason about both.</p>
+
+  <div class="worked">
+    <div class="step visible" id="wex3-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Option A — a photograph of the finished box</div>
+        <div class="step-desc">Think about what a photo tells your friend, and what it hides.</div>
+        <div class="calc-box reason-line">
+          <span class="pro">✓ Advantage:</span> shows what the box looks like assembled — its colour, proportions and how it sits. Easy to recognise at a glance.<br>
+          <span class="con">✗ Disadvantage:</span> hides the exact size of each face and how the faces fold together. Your friend can't build it from a photo alone.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="wex3-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Option B — the net</div>
+        <div class="step-desc">Now think about what the net tells your friend, and what it hides.</div>
+        <div class="calc-box reason-line">
+          <span class="pro">✓ Advantage:</span> shows every face, its exact measurements, and how the faces connect and fold. Your friend can cut, fold and build it.<br>
+          <span class="con">✗ Disadvantage:</span> harder to picture the finished 3D object — a net laid flat doesn't obviously look like a box.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="wex3-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Reason and decide</div>
+        <div class="step-desc">For the job of <em>building</em> the box, the net is the better representation — it carries the measurements and folding information. For the job of <em>recognising</em> the box on a shelf, the photo wins. The "best" representation depends on the question you are answering.</div>
+        <div class="calc-box">Net → best for building it. Photo → best for recognising it. Different jobs, different representations.</div>
+        <div class="summary-banner">
+          <span class="label">Big idea</span>
+          Different representations have different strengths — choose the one that shows what your reader needs
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="wex3-btn" onclick="revealNextStep('wex3')">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 8: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">8</span>Together — deconstruct a triangular prism box</h2>
+  <p class="sec-desc">A chocolate box is a <strong>triangular prism</strong> (think of a Toblerone box). We'll find its net in three small steps. After each prompt, discuss with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why we do it this way:</strong> work through one face at a time — identify each face, name its 2D shape, then count the whole net. When you tackle the "You do" practice next, follow the same routine.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 9: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">9</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the ideas. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">10</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Type your answer in each box. Most answers are a number; where a word is asked for, type one word (for example <code>square</code> or <code>circle</code>).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">11</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now you need to picture how nets fold and how footprints are built up. Sketch on grid paper if it helps.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 12: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">12</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Word problems and reasoning. Two have numerical answers; two ask you to explain — type your reasoning in full sentences.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 13: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">13</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Space</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Objects can be represented in two-dimensions in different ways</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7SP01</strong> — represent objects in 2 dimensions; discuss and reason about the advantages and disadvantages of different representations</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 3 — E1: deconstructing packaging to identify shapes; E3: using aerial views of buildings to visualise the footprint</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Represent 3D objects in two dimensions using nets (from deconstructed packaging) and aerial/plan views (building footprints); reason about the advantages and disadvantages of different representations.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_spa_01. Source: SA Curriculum — Mathematics R–10 (Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Representing Objects in Two Dimensions
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  // 5 pairs; each pair shares a "group" id 1-5 (a key word and its meaning)
+  const matchTerms = [
+    { html: 'Net', group: 1 },
+    { html: 'Plan view', group: 2 },
+    { html: 'Face', group: 3 },
+    { html: 'Edge', group: 4 },
+    { html: 'Vertex', group: 5 },
+    { html: 'Folds up into a solid', group: 1 },
+    { html: 'Seen from straight above', group: 2 },
+    { html: 'A flat surface of a solid', group: 3 },
+    { html: 'Where two faces meet', group: 4 },
+    { html: 'A corner point', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — match each word to its meaning.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  // Three I Do worked examples, each with three steps. Per-example counter.
+  const exStep = { wex1: 1, wex2: 1, wex3: 1 };
+  function revealNextStep(ex) {
+    exStep[ex]++;
+    const step = document.getElementById(ex + '-step' + exStep[ex]);
+    if (step) step.classList.add('visible');
+    if (exStep[ex] >= 3) {
+      const btn = document.getElementById(ex + '-btn');
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+
+  // Retrieval warm-up (Section 0) — prior-knowledge prerequisites. noCount.
+  const retrieval = [
+    { q: 'How many sides does a square have?', a: '4', hint: 'Count the straight edges around a square.' },
+    { q: 'How many dimensions does a flat shape have?', a: '2', hint: 'Flat shapes have length and width only.' },
+    { q: 'Name the 3D solid that is shaped like a ball. (one word)', a: 'sphere', hint: 'A perfectly round 3D object.' },
+  ];
+
+  // We Do (Section 8) — co-produced, broken into 3 sub-prompts. noCount.
+  const weDo = [
+    { q: 'A triangular prism box has 2 flat ends. What 2D shape is each end? (one word)', a: 'triangle', hint: 'The two ends of a Toblerone box are the same shape — and that shape gives the prism its name.' },
+    { q: 'The box has 3 long sides. What 2D shape is each long side? (one word)', a: 'rectangle', hint: 'Each long face is flat with four straight edges and square corners.' },
+    { q: 'How many 2D shapes are in the complete net of the box?', a: '5', hint: '2 triangular ends + 3 rectangular sides.' },
+  ];
+
+  // Quick check (Section 9)
+  const checkpoint = [
+    { q: 'A triangular prism has 2 triangular faces and 3 rectangular faces. How many faces in total?', a: '5', hint: 'Add the two groups of faces together.' },
+    { q: 'A cube net is made of 6 identical 2D shapes. What is that shape? (one word)', a: 'square', hint: 'Every face of a cube is the same flat shape.' },
+  ];
+
+  // Building (Section 10) — 10 questions
+  const practice1 = [
+    { q: 'How many faces does a cube have?', a: '6', hint: 'Top, bottom, and four sides.' },
+    { q: 'How many faces does a rectangular prism (a cereal box) have?', a: '6', hint: 'Like a cube, it has 3 matching pairs of faces.' },
+    { q: 'How many faces does a triangular prism have?', a: '5', hint: '2 triangular ends and 3 rectangular sides.' },
+    { q: 'How many faces does a square-based pyramid have?', a: '5', hint: '1 square base and 4 triangular sides.' },
+    { q: 'How many edges does a cube have?', a: '12', hint: 'An edge is where two faces meet — 4 on top, 4 on the bottom, 4 uprights.' },
+    { q: 'How many vertices (corners) does a cube have?', a: '8', hint: '4 corners on the top face, 4 on the bottom face.' },
+    { q: 'What 2D shape makes up every face in the net of a cube? (one word)', a: 'square', hint: 'All 6 faces of a cube are identical.' },
+    { q: 'What 2D shape is the plan view of a cube? (one word)', a: 'square', hint: 'Look straight down on a cube — you see one face.' },
+    { q: 'What 2D shape is the plan view of a cylindrical can, seen from directly above? (one word)', a: 'circle', hint: 'Look straight down on a soup can.' },
+    { q: 'Counting the curved surface as one face, how many faces does a cylinder have?', a: '3', hint: '2 flat circular ends and 1 curved surface.' },
+  ];
+
+  // Stretch (Section 11) — 6 questions
+  const practice2 = [
+    { q: 'A net is made of 6 identical squares. Which solid does it fold into? (one word)', a: 'cube', hint: '6 equal square faces.' },
+    { q: "A square-based pyramid's net has 1 square base and how many triangular faces?", a: '4', hint: 'One triangle rises from each edge of the square base.' },
+    { q: 'A single-storey building is a 2 × 3 arrangement of identical rooms. How many unit squares are in its plan view?', a: '6', hint: '2 rows of 3 squares each.' },
+    { q: "An object's plan view, front view and side view are all identical squares. What 3D object is it? (one word)", a: 'cube', hint: 'A solid that looks like a square from every direction.' },
+    { q: 'A triangular prism box has 2 triangular faces. How many rectangular faces does it have?', a: '3', hint: 'It has 5 faces in total.' },
+    { q: 'Looking straight down on a cone standing on its base, what 2D shape do you see? (one word)', a: 'circle', hint: 'The base of a cone is a circle.' },
+  ];
+
+  // Mastery (Section 12) — 4 questions: 2 numerical, 2 open-response
+  const practice3 = [
+    { q: 'A warehouse floor plan is an L-shape: a 4 × 3 rectangle of unit squares with a 2 × 2 block removed from one corner. How many unit squares are in the plan view?', a: '8', hint: '4 × 3 = 12 squares, then take away the 2 × 2 = 4 that were removed.' },
+    { q: 'A model town hall is built from identical cubes: 5 cubes in a plus (+) shape on the ground, with 1 more cube stacked on top of the centre cube. Looking straight down, how many small squares appear in the plan view?', a: '5', hint: 'The stacked cube sits directly above the centre cube — from above it hides behind it. The plan view shows only the footprint.' },
+    { q: 'A net and a photograph both represent the same cardboard box. Give one advantage of the net and one advantage of the photograph.', a: 'TEXT', hint: 'Think about which one helps you BUILD the box, and which one helps you RECOGNISE it.' },
+    { q: 'An estate agent shows buyers a plan (aerial) view of a house instead of a 3D model. Give one advantage and one disadvantage of using the plan view.', a: 'TEXT', hint: 'A plan view shows room layout and footprint clearly — but what does it leave out?' },
+  ];
+
+  // Exit ticket (Section 13) — 3 questions, one open-response
+  const exitProbs = [
+    { q: 'How many faces does a cube have?', a: '6', hint: 'A 3D object can be represented by the 2D shapes of its faces.' },
+    { q: 'What 2D shape is the plan view of a cylindrical water tank? (one word)', a: 'circle', hint: 'Imagine a drone looking straight down on the tank.' },
+    { q: 'A net and an aerial (plan) view are both 2D ways to represent a 3D object. Describe one thing the net shows well, and one thing the plan view shows well.', a: 'TEXT', hint: 'A net shows the faces and how they fold; a plan view shows the footprint and layout.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');  // strip leading +
+  }
+  // accept reordered terms: 3x+5 == 5+3x
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null; // open-ended, don't auto-mark
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // try sorting terms
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — a strong answer names what each representation shows clearly and what it leaves out. Discuss responses as a class.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 3: tidy operators — typographic minus, space around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
