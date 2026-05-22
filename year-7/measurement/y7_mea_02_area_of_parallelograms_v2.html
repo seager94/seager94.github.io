@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Area of Parallelograms — Year 7</title>
+
+<meta name="lesson-id"             content="y7_mea_02">
+<meta name="ac9-descriptor"        content="AC9M7M01">
+<meta name="ac9-elaborations"      content="TODO: confirm elaboration list">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Familiar metric units can be used to establish formulas for the areas of rectangles, triangles and parallelograms, allowing these formulas to be applied to solve problems.">
+<meta name="lesson-focus"          content="Apply A = base × perpendicular height to find the area of parallelograms; discriminate between the perpendicular height (used) and the slanted side (not used); apply to tiling and design contexts.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 220px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 0.98rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.use { background: #d9efe5; border-color: var(--good); color: #1d4a30; font-weight: 600; }
+  .term-chip.dont-use { background: #fde2e2; border-color: var(--bad); color: var(--bad); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 110px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .use-label { color: var(--good); }
+  .bucket .dont-use-label { color: var(--bad); }
+  .bucket-contents { min-height: 60px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 0.98rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 0.98rem;
+    cursor: pointer; transition: all 0.15s;
+    line-height: 1.25;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* ERROR ANALYSIS CARD — correct vs incorrect side-by-side */
+  .error-analysis {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .error-card {
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1.5px solid;
+    background: white;
+  }
+  .error-card.correct { border-color: var(--good); background: var(--good-soft); }
+  .error-card.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .error-card .ea-tag {
+    display: inline-block;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .error-card.correct .ea-tag { background: var(--good); }
+  .error-card.incorrect .ea-tag { background: var(--bad); }
+  .error-card h4 {
+    margin: 4px 0 8px;
+    font-family: Georgia, serif;
+    color: var(--text);
+    font-size: 1rem;
+  }
+  .error-card .ea-calc {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 6px 0;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .error-card .ea-reason {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 8px;
+    font-style: italic;
+    line-height: 1.45;
+  }
+  @media (max-width: 600px) {
+    .error-analysis { grid-template-columns: 1fr; }
+  }
+
+  /* DIAGRAM FIGURE */
+  .figure {
+    display: flex; justify-content: center; align-items: center;
+    margin: 10px 0 14px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .figure svg { display: block; }
+  .figure-arrow {
+    font-size: 1.8rem; color: var(--coral); font-weight: bold;
+    align-self: center; padding: 0 4px;
+  }
+  .figure-arrow .arrow-sub {
+    display: block;
+    font-size: 0.72rem; color: var(--muted);
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Area of Parallelograms</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Measurement</div>
+  </div>
+  <div class="badge">Lesson 02</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 23</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work — last lesson's triangles and rectangle work from Year 6. Type just the number.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS — REARRANGEMENT ARGUMENT -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters — the rearrangement trick</h2>
+  <p class="sec-desc">A parallelogram doesn't <em>look</em> like a rectangle. But with one clever cut, it becomes one.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+    <div>
+      <p>Imagine a parallelogram-shaped patch of grass. Slice off the right-hand triangle with a straight vertical cut, and slide that triangle all the way to the left. The slanted left edge of the parallelogram lines up exactly with the slanted edge of the moved triangle.</p>
+      <p>What you're left with is a <strong>rectangle</strong> with the <strong>same base</strong> and the <strong>same perpendicular height</strong> as the parallelogram you started with.</p>
+      <p>So the parallelogram has the same area as that rectangle:</p>
+      <div class="summary-banner" style="margin-top: 6px;">
+        <span class="label">Area of a parallelogram</span>
+        A = base × perpendicular height
+      </div>
+    </div>
+    <div class="figure">
+      <!-- Parallelogram with right-triangle slice highlighted -->
+      <svg viewBox="-15 -15 200 110" width="200" height="110" aria-label="Parallelogram with right slice">
+        <polygon points="0,70 120,70 120,0 30,0" fill="#dfe9eb" stroke="#1F4D54" stroke-width="1.5"/>
+        <polygon points="120,0 150,0 120,70" fill="#f5d8cb" stroke="#BE5837" stroke-width="1.5"/>
+        <line x1="120" y1="0" x2="120" y2="70" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="60" y="86" text-anchor="middle" font-family="Georgia" font-size="11" fill="#1F4D54">base</text>
+        <text x="-3" y="38" text-anchor="end" font-family="Georgia" font-size="11" fill="#1F4D54">h</text>
+        <text x="138" y="-2" text-anchor="middle" font-family="Georgia" font-size="10" fill="#BE5837">slice</text>
+      </svg>
+      <div class="figure-arrow">→<span class="arrow-sub">slide left</span></div>
+      <!-- Rectangle result -->
+      <svg viewBox="-15 -15 160 110" width="160" height="110" aria-label="Resulting rectangle">
+        <rect x="0" y="0" width="120" height="70" fill="#dfe9eb" stroke="#1F4D54" stroke-width="1.5"/>
+        <polyline points="0,8 8,8 8,0" fill="none" stroke="#1F4D54" stroke-width="1"/>
+        <polyline points="112,0 112,8 120,8" fill="none" stroke="#1F4D54" stroke-width="1"/>
+        <text x="60" y="86" text-anchor="middle" font-family="Georgia" font-size="11" fill="#1F4D54">base</text>
+        <text x="-3" y="38" text-anchor="end" font-family="Georgia" font-size="11" fill="#1F4D54">h</text>
+      </svg>
+    </div>
+  </div>
+  <div class="parts-instructions" style="margin: 18px 0 0;">
+    ⚠️ <strong>Watch out:</strong> like triangles last lesson, the misconception risk is the same — students sometimes multiply the base by the <em>slanted side</em> instead of the perpendicular height. The slanted side is too long. Always use the <strong>perpendicular</strong> height.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and discrimination — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. The two height words are the ones to get right today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Parallelogram<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A four-sided shape with <strong>two pairs of parallel sides</strong>. Opposite sides are equal in length.<div class="vocab-example">A rectangle is a special parallelogram (all angles are 90°).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Base<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The side you choose to <strong>measure from</strong> — usually the bottom. Any side can be the base.<div class="vocab-example">If the base is the bottom, height is measured straight up to the opposite side.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Perpendicular height<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The straight-line distance from the base to the opposite side, measured at <strong>right angles</strong>. <em>This</em> is what we multiply by the base.<div class="vocab-example">Often shown as a dashed line <strong>inside</strong> the parallelogram.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Slanted side<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The actual <strong>sloped side</strong> of the parallelogram. Always longer than the perpendicular height. <strong>Do NOT use this</strong> in the area formula.<div class="vocab-example">If you multiply base × slanted side, the answer will be too big.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Area formula<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>A = base × perpendicular height.</strong> Units: cm², m², mm². Always perpendicular height — never the slanted side.<div class="vocab-example">b = 8 cm, h = 5 cm → A = 8 × 5 = 40 cm².</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: DRAG-SORT — use vs don't use -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Which measurement do we use?</h2>
+  <p class="sec-desc">Drag each label into the correct bucket — <strong style="color:var(--good)">use it in A = b × h</strong> or <strong style="color:var(--bad)">don't use it</strong>. Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Six labels — three you'd use, three you wouldn't</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip use" data-type="use">base = 12 cm</span>
+      <span class="term-chip use" data-type="use">perpendicular height = 7 cm</span>
+      <span class="term-chip dont-use" data-type="dont-use">slanted side = 9 cm</span>
+      <span class="term-chip dont-use" data-type="dont-use">diagonal = 14 cm</span>
+      <span class="term-chip use" data-type="use">perpendicular height = 5 m</span>
+      <span class="term-chip dont-use" data-type="dont-use">slanted side = 6 m</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="use">
+        <h4 class="use-label">✓ Use in A = b × h</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="dont-use">
+        <h4 class="dont-use-label">✗ Don't use</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Anything described as "slanted", "sloped", or "diagonal" stays out of the formula. Only the <strong>base</strong> and the <strong>perpendicular</strong> height go in.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH — parallelogram dimensions ↔ areas -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the parallelogram to its area</h2>
+  <p class="sec-desc">Click a parallelogram, then click its area. There are five matching pairs in the grid below.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a parallelogram to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, then we'll compare the right and wrong way side by side.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE + ERROR ANALYSIS -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — base 12 cm, perpendicular height 7 cm</h2>
+  <p class="sec-desc">Find the area of this parallelogram.</p>
+
+  <div class="figure">
+    <svg viewBox="-20 -15 220 110" width="220" height="110" aria-label="Parallelogram 12 cm by 7 cm">
+      <polygon points="0,70 120,70 150,0 30,0" fill="#dfe9eb" stroke="#1F4D54" stroke-width="1.5"/>
+      <line x1="30" y1="0" x2="30" y2="70" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <polyline points="30,62 38,62 38,70" fill="none" stroke="#BE5837" stroke-width="1.2"/>
+      <text x="75" y="86" text-anchor="middle" font-family="Georgia" font-size="13" fill="#1F4D54" font-weight="bold">base = 12 cm</text>
+      <text x="25" y="40" text-anchor="end" font-family="Georgia" font-size="13" fill="#BE5837" font-weight="bold">h = 7 cm</text>
+    </svg>
+  </div>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify the base and the perpendicular height</div>
+        <div class="step-desc">The base sits along the bottom — 12 cm. The perpendicular height is the dashed line drawn inside at right angles — 7 cm.</div>
+        <div class="calc-box">
+          base = <span class="blue">12 cm</span> &nbsp;·&nbsp; perpendicular height = <span class="red">7 cm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Apply A = base × perpendicular height</div>
+        <div class="step-desc">Multiply the two values. Use the perpendicular height (the dashed line), not any slanted side.</div>
+        <div class="calc-box">
+          A = <span class="blue">12</span> × <span class="red">7</span><br>
+          A = <span class="red">84</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Write the answer with the correct unit</div>
+        <div class="step-desc">Lengths were in centimetres, so area is in <strong>square centimetres</strong> (cm²).</div>
+        <div class="calc-box">A = 84 cm²</div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          A = 84 cm²
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+
+  <!-- ERROR ANALYSIS CARD — correct vs incorrect calculations -->
+  <div class="error-analysis">
+    <div class="error-card correct">
+      <span class="ea-tag">✓ Correct</span>
+      <h4>Using the perpendicular height</h4>
+      <div class="ea-calc">
+        A = base × <strong>perpendicular height</strong><br>
+        A = 12 × <strong>7</strong> = <strong>84 cm²</strong>
+      </div>
+      <div class="ea-reason">The 7 cm is measured at a right angle from the base to the opposite side. This matches the rectangle we'd get after the rearrangement.</div>
+    </div>
+    <div class="error-card incorrect">
+      <span class="ea-tag">✗ Common mistake</span>
+      <h4>Using the slanted side</h4>
+      <div class="ea-calc">
+        A = base × <strong>slanted side</strong><br>
+        A = 12 × <strong>9</strong> = <strong>108 cm²</strong>  ✗
+      </div>
+      <div class="ea-reason">The slanted side (9 cm) is longer than the perpendicular height. Multiplying by it gives a value that's too big — the answer doesn't match the rearranged rectangle.</div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Same parallelogram — but this time the slanted side is labelled too. Spot the trap.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO — discrimination version -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — three labels, which two do we use?</h2>
+  <p class="sec-desc">This is the same parallelogram from Section 5. Now the slanted side has been labelled (9 cm) — but two of the three labels are distractors-or-decoys. Work through with your neighbour.</p>
+
+  <div class="figure">
+    <svg viewBox="-20 -15 280 110" width="280" height="110" aria-label="Parallelogram with all three labels">
+      <polygon points="0,70 120,70 150,0 30,0" fill="#dfe9eb" stroke="#1F4D54" stroke-width="1.5"/>
+      <line x1="30" y1="0" x2="30" y2="70" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <polyline points="30,62 38,62 38,70" fill="none" stroke="#BE5837" stroke-width="1.2"/>
+      <text x="75" y="86" text-anchor="middle" font-family="Georgia" font-size="13" fill="#1F4D54" font-weight="bold">base = 12 cm</text>
+      <text x="25" y="40" text-anchor="end" font-family="Georgia" font-size="13" fill="#BE5837" font-weight="bold">h = 7 cm</text>
+      <text x="158" y="40" text-anchor="start" font-family="Georgia" font-size="12" fill="#888">slanted side = 9 cm</text>
+      <line x1="155" y1="36" x2="142" y2="32" stroke="#888" stroke-width="0.8"/>
+    </svg>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this matters:</strong> exam questions often label all three sides — base, perpendicular height, and slanted side — to test whether you know which is which. The slanted side is the decoy. Always look for the dashed line drawn inside at a right angle.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Type just the number (the unit is shown in the question). Try them on your own — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Apply A = base × perpendicular height. Type just the number — the unit is given in the question. Q6 and Q9–10 are word problems.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Composite shapes — break each one into a parallelogram plus a triangle (or subtract a triangle). Add the parts together, then write the total area.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Reverse the formula or justify your choice. Q4 is an open-response — type a short explanation.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. Q3 is an open-response — type a sentence or two.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Familiar metric units can be used to establish formulas for the areas of rectangles, triangles and parallelograms, allowing these formulas to be applied to solve problems.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7M01</strong> — establish formulas for areas of rectangles, triangles and parallelograms; use these to solve problems involving the areas of polygons</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">TODO: confirm elaboration list with curriculum lead</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Apply A = base × perpendicular height to find the area of parallelograms; discriminate between the perpendicular height (used) and the slanted side (not used); apply to tiling and design contexts.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_mea_02. Builds on lesson 01 (area of triangles).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Area of Parallelograms
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG & DROP SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING — parallelograms ↔ areas ============
+  const matchTerms = [
+    { html: 'b = 10 cm<br>h = 4 cm', group: 1 },
+    { html: '40 cm²', group: 1 },
+    { html: 'b = 6 m<br>h = 8 m', group: 2 },
+    { html: '48 m²', group: 2 },
+    { html: 'b = 5 mm<br>h = 3 mm', group: 3 },
+    { html: '15 mm²', group: 3 },
+    { html: 'b = 12 cm<br>h = 7 cm', group: 4 },
+    { html: '84 cm²', group: 4 },
+    { html: 'b = 9 m<br>h = 2 m', group: 5 },
+    { html: '18 m²', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its match.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — recalculate base × perpendicular height.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 800);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PROBLEM DATA ============
+
+  // Retrieval — prior knowledge (Lesson 01 triangles + Year 6 rectangles)
+  const retrieval = [
+    { q: 'A rectangle has length 9 cm and width 4 cm. Find its area in cm².', a: '36', hint: 'Area of a rectangle = length × width.' },
+    { q: 'A triangle has base 10 cm and perpendicular height 6 cm. Find its area in cm².', a: '30', hint: 'A = <span class="frac"><span class="num">1</span><span class="den">2</span></span> × base × perpendicular height. So <span class="frac"><span class="num">1</span><span class="den">2</span></span> × 10 × 6.' },
+    { q: 'Which is the perpendicular height of a triangle — the side that slopes, or the line drawn at 90° from the base?', a: 'TEXT', hint: 'Think back to last lesson. Perpendicular means at a right angle.' },
+  ];
+
+  // Building (Section 8) — apply A = b × h directly
+  const practice1 = [
+    { q: 'Parallelogram with base 8 cm and perpendicular height 5 cm. Find the area in cm².', a: '40', hint: 'A = b × h = 8 × 5.' },
+    { q: 'Parallelogram with base 10 mm and perpendicular height 4 mm. Find the area in mm².', a: '40', hint: 'A = 10 × 4.' },
+    { q: 'Parallelogram with base 6 m and perpendicular height 9 m. Find the area in m².', a: '54', hint: 'A = 6 × 9.' },
+    { q: 'Parallelogram with base 15 cm and perpendicular height 2 cm. Find the area in cm².', a: '30', hint: 'A = 15 × 2.' },
+    { q: 'Parallelogram with base 7 mm and perpendicular height 11 mm. Find the area in mm².', a: '77', hint: 'A = 7 × 11.' },
+    { q: 'A parallelogram has base 14 cm, perpendicular height 6 cm, and slanted side 8 cm. Which value do you ignore? Find the area in cm².', a: '84', hint: 'Ignore the slanted side. Use 14 × 6.' },
+    { q: 'Parallelogram with base 20 cm and perpendicular height 3 cm. Find the area in cm².', a: '60', hint: 'A = 20 × 3.' },
+    { q: 'Parallelogram with base 4 m and perpendicular height 12 m. Find the area in m².', a: '48', hint: 'A = 4 × 12.' },
+    { q: 'A floor measures 3 m by 2 m. Parallelogram tiles each have base 50 cm and perpendicular height 40 cm. How many whole tiles are needed to cover the floor?', a: '30', hint: 'Floor area = 3 × 2 = 6 m² = 60 000 cm². Tile area = 50 × 40 = 2 000 cm². Tiles needed = 60 000 ÷ 2 000.' },
+    { q: 'Same floor as Q9. Each tile costs $14.50. What is the total cost in dollars? (Type just the number.)', a: '435', hint: '30 tiles × $14.50 each.' },
+  ];
+
+  // Stretch (Section 9) — composite shapes
+  const practice2 = [
+    { q: 'A shape is made of a parallelogram (base 10 m, height 4 m) <strong>plus</strong> a triangle (base 10 m, height 3 m) sitting on top of it. Find the total area in m².', a: '55', hint: 'Parallelogram: 10 × 4 = 40. Triangle: ½ × 10 × 3 = 15. Add them.' },
+    { q: 'A garden bed is a parallelogram (base 12 m, height 5 m) <strong>with a triangular cutout</strong> (base 4 m, height 5 m) removed. Find the area of the garden bed in m².', a: '50', hint: 'Whole parallelogram: 12 × 5 = 60. Triangle cutout: ½ × 4 × 5 = 10. Subtract.' },
+    { q: 'A logo is two identical parallelograms stacked. Each has base 6 cm and perpendicular height 4 cm. Find the total area in cm².', a: '48', hint: 'One parallelogram: 6 × 4 = 24. Two of them: 24 × 2.' },
+    { q: 'A shade sail is a triangle (base 8 m, height 6 m) <strong>plus</strong> a parallelogram (base 8 m, height 5 m) joined along the 8 m edge. Find the total area in m².', a: '64', hint: 'Triangle: ½ × 8 × 6 = 24. Parallelogram: 8 × 5 = 40. Total = 24 + 40.' },
+    { q: 'An arrow shape is a parallelogram (base 10 cm, height 4 cm) joined to a triangle "head" (base 4 cm, height 4 cm). Find the total area in cm².', a: '48', hint: 'Parallelogram: 10 × 4 = 40. Triangle: ½ × 4 × 4 = 8.' },
+    { q: 'A shade-sail design has two parts: a parallelogram (b = 7 m, h = 4 m) and a triangle (b = 7 m, h = 2 m). The total area must be costed at $35 per m². What is the total cost in dollars?', a: '1225', hint: 'Parallelogram: 7 × 4 = 28. Triangle: ½ × 7 × 2 = 7. Total area = 35 m². Cost = 35 × 35.' },
+  ];
+
+  // Mastery (Section 10) — reverse the formula, justify
+  const practice3 = [
+    { q: 'A parallelogram has area 60 cm² and base 12 cm. Find its perpendicular height in cm.', a: '5', hint: 'A = b × h, so h = A ÷ b = 60 ÷ 12.' },
+    { q: 'A parallelogram has area 84 m² and perpendicular height 7 m. Find its base in m.', a: '12', hint: 'b = A ÷ h = 84 ÷ 7.' },
+    { q: 'A parallelogram has base 10 cm, perpendicular height 6 cm, and slanted side 8 cm. Which length do you multiply 10 by? Find the area in cm².', a: '60', hint: 'Use the perpendicular height (6 cm), not the slanted side. A = 10 × 6.' },
+    { q: 'A parallelogram has base 10 cm, perpendicular height 7 cm, and slanted side 14 cm. A student writes A = 10 × 14 = 140 cm². Explain in one or two sentences why this is wrong and what they should do.', a: 'TEXT', hint: 'They used the slanted side. The formula needs the perpendicular height (drawn at 90° inside the shape).' },
+  ];
+
+  // Quick check
+  const checkpoint = [
+    { q: 'Parallelogram with base 9 cm and perpendicular height 6 cm. Find the area in cm².', a: '54', hint: 'A = 9 × 6.' },
+    { q: 'A parallelogram has base 8 cm, slanted side 10 cm, and perpendicular height 5 cm. Find the area in cm². <em>(Watch the decoy.)</em>', a: '40', hint: 'Use perpendicular height (5 cm), not slanted side. A = 8 × 5.' },
+  ];
+
+  // We Do — three sub-prompts for the parallelogram with all 3 labels
+  const weDo = [
+    { q: 'Which of the three labels (12 cm, 7 cm, 9 cm) is the perpendicular height? Type the number.', a: '7', hint: 'It\'s the one drawn as a dashed line inside the shape, at a right angle to the base.' },
+    { q: 'Why don\'t we multiply 12 × 9?', a: 'TEXT', hint: '9 cm is the slanted side, not the perpendicular height. The formula needs the perpendicular distance.' },
+    { q: 'Now calculate the area in cm².', a: '84', hint: 'A = base × perpendicular height = 12 × 7.' },
+  ];
+
+  // Exit ticket
+  const exitProbs = [
+    { q: 'Parallelogram with base 15 cm and perpendicular height 4 cm. Find the area in cm².', a: '60', hint: 'A = b × h = 15 × 4.' },
+    { q: 'A parallelogram has base 8 cm, slanted side 10 cm, and perpendicular height 6 cm. Find the area in cm².', a: '48', hint: 'Use the perpendicular height (6 cm). A = 8 × 6.' },
+    { q: 'Explain in one sentence why we use the perpendicular height — not the slanted side — when finding the area of a parallelogram.', a: 'TEXT', hint: 'Think about the rearrangement: cutting and sliding gives a rectangle whose height matches the perpendicular distance, not the slanted side.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
