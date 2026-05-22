@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introducing π — Year 7</title>
+
+<meta name="lesson-id"             content="y7_mea_06">
+<meta name="ac9-descriptor"        content="AC9M7M03">
+<meta name="ac9-elaborations"      content="all">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="The need to be more precise about quantities and shapes underpins greater accuracy in measurement, and the development of new units and concepts that build on those previously experienced.">
+<meta name="lesson-focus"          content="Establish through measurement that the ratio of circumference to diameter is the same constant for every circle, and name that constant π ≈ 3.14159.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 0.98rem;
+    cursor: pointer; transition: all 0.15s;
+    line-height: 1.3;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* MEASUREMENT TABLE (Section 1 hook) */
+  .meas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 0.95rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .meas-table th {
+    background: var(--navy);
+    color: white;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 0.85rem;
+    letter-spacing: 0.4px;
+  }
+  .meas-table td {
+    padding: 8px 10px;
+    border-top: 1px solid var(--border);
+    font-family: Georgia, serif;
+  }
+  .meas-table tr:nth-child(even) td { background: #f7faff; }
+  .meas-table td.ratio { color: var(--coral); font-weight: 700; }
+
+  /* HISTORY TIMELINE */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 14px 0 4px;
+  }
+  .tl-card {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--coral);
+  }
+  .tl-card .tl-place {
+    font-family: Georgia, serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.02rem;
+    margin-bottom: 2px;
+  }
+  .tl-card .tl-when {
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+  .tl-card .tl-approx {
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--coral);
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .tl-card .tl-desc {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--text);
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Introducing π</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Measurement</div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from last lesson on the features of circles. They warm up the language you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters — the string experiment</h2>
+  <p class="sec-desc">Imagine you wrap string around three round objects, then measure the diameter across. Watch what happens when you divide.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start;">
+    <div>
+      <p>Take three round objects — a jar <strong>lid</strong>, a dinner <strong>plate</strong>, and a bike <strong>wheel</strong>. For each one:</p>
+      <ol style="line-height: 1.7;">
+        <li>Wrap a piece of string once around the edge. Mark the string where it meets itself — that length is the <strong>circumference</strong> (C).</li>
+        <li>Lay a ruler straight across the middle to get the <strong>diameter</strong> (d).</li>
+        <li>Divide C by d.</li>
+      </ol>
+      <p>Something strange happens. The numbers C and d are different for every object — but C ÷ d is <strong>always about the same</strong>.</p>
+    </div>
+    <div>
+      <table class="meas-table">
+        <thead>
+          <tr><th>Object</th><th>C (cm)</th><th>d (cm)</th><th>C ÷ d</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Jar lid</td><td>25.1</td><td>8</td><td class="ratio">3.14</td></tr>
+          <tr><td>Dinner plate</td><td>87.9</td><td>28</td><td class="ratio">3.14</td></tr>
+          <tr><td>Bike wheel</td><td>206.0</td><td>65.6</td><td class="ratio">3.14</td></tr>
+        </tbody>
+      </table>
+      <div class="parts-instructions" style="margin: 14px 0 0;">
+        Three different circles, three identical ratios. That repeating number — about <strong>3.14</strong> — is what we're meeting today. It has a name: <strong>π</strong> (pi).
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five words carry the lesson.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Circumference<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>distance around</strong> the edge of a circle. We write it as <strong>C</strong>.<div class="vocab-example">String wrapped once around a lid, then unrolled, gives <strong>C</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Diameter<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The distance <strong>straight across</strong> a circle through its centre. We write it as <strong>d</strong>.<div class="vocab-example">A ruler placed across a plate through its middle measures <strong>d</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Ratio<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A comparison between two quantities, often shown as a <strong>division</strong>.<div class="vocab-example">C ÷ d is the ratio of circumference to diameter.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Constant<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A value that <strong>never changes</strong> — no matter the situation.<div class="vocab-example">C ÷ d is the <strong>same constant</strong> for every circle that ever existed.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">π (pi)<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The Greek letter we use for the constant <strong>C ÷ d</strong>.<div class="vocab-example"><strong>π ≈ 3.14159</strong> — the decimal never ends and never repeats.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — does this ratio look like π? -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Does this ratio look like π?</h2>
+  <p class="sec-desc">Below are six C ÷ d calculations a student wrote down after measuring round objects with string. Drag each chip into <strong style="color:var(--coral)">looks like π</strong> (≈ 3.14) or <strong style="color:var(--navy)">doesn't look like π</strong> (probably a measurement error). Wrong drops will shake.</p>
+
+  <div class="parts-expr">
+    <div class="label">Six measurements — sort them</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip variable" data-type="pi-like">31.4 ÷ 10 = 3.14</span>
+      <span class="term-chip variable" data-type="pi-like">62.8 ÷ 20 = 3.14</span>
+      <span class="term-chip constant" data-type="not-pi">20 ÷ 6 = 3.33</span>
+      <span class="term-chip variable" data-type="pi-like">47.1 ÷ 15 = 3.14</span>
+      <span class="term-chip constant" data-type="not-pi">15 ÷ 5 = 3.00</span>
+      <span class="term-chip constant" data-type="not-pi">25 ÷ 10 = 2.50</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="pi-like">
+        <h4 class="vt">Looks like π (≈ 3.14)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="not-pi">
+        <h4 class="ct">Probably a measurement error</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 For an accurate circle measurement, C ÷ d should land near <strong>3.14</strong>. If the ratio is well below 3 or well above 3.3, something went wrong — the string slipped, or d was measured off-centre.
+  </div>
+</section>
+
+<!-- SECTION 4: HISTORY OF π + MATCHING -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>How did people first find π?</h2>
+  <p class="sec-desc">Long before calculators, many civilisations tried to pin down this strange ratio. Their answers all hover near 3.14 — even though they were working independently, in different centuries, on different continents.</p>
+
+  <div class="timeline">
+    <div class="tl-card">
+      <div class="tl-place">Egypt</div>
+      <div class="tl-when">≈ 1650 BCE · Rhind Papyrus</div>
+      <div class="tl-approx">≈ 3.16</div>
+      <div class="tl-desc">An ancient papyrus scroll shows scribes treating the area of a circle as the square of <span class="frac"><span class="num">8</span><span class="den">9</span></span> of the diameter — which corresponds to π ≈ 3.16.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-place">Babylon</div>
+      <div class="tl-when">≈ 1900 BCE · Clay tablets</div>
+      <div class="tl-approx">≈ 3.125</div>
+      <div class="tl-desc">Babylonian mathematicians, working with clay tablets and a base-60 number system, used π ≈ 3<span class="frac"><span class="num">1</span><span class="den">8</span></span>.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-place">Greece (Archimedes)</div>
+      <div class="tl-when">≈ 250 BCE</div>
+      <div class="tl-approx">3 + <span class="frac"><span class="num">10</span><span class="den">71</span></span> &lt; π &lt; 3 + <span class="frac"><span class="num">1</span><span class="den">7</span></span></div>
+      <div class="tl-desc">Archimedes drew polygons inside and outside a circle, then squeezed π between two fractions: between roughly 3.1408 and 3.1429.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-place">India (Aryabhata)</div>
+      <div class="tl-when">≈ 499 CE</div>
+      <div class="tl-approx">3.1416</div>
+      <div class="tl-desc">The astronomer-mathematician Aryabhata gave π ≈ 3.1416 — accurate to four decimal places.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-place">China (Zu Chongzhi)</div>
+      <div class="tl-when">≈ 480 CE</div>
+      <div class="tl-approx"><span class="frac"><span class="num">355</span><span class="den">113</span></span> ≈ 3.14159292</div>
+      <div class="tl-desc">Zu Chongzhi found a fraction that matches π to six decimal places — a record that stood for nearly a thousand years.</div>
+    </div>
+  </div>
+
+  <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 26px 0 8px;">Match each civilisation with its approximation</h3>
+  <p class="sec-desc" style="margin-bottom: 10px;">Click two chips that belong together to match them. There are five pairs.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — finding C ÷ d</h2>
+  <p class="sec-desc">A circle has circumference <span class="expr">C = 31.4 cm</span> and diameter <span class="expr">d = 10 cm</span>. Find C ÷ d and compare it to π.</p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Write the ratio</div>
+        <div class="step-desc">We want the value of <strong>C ÷ d</strong> — circumference divided by diameter.</div>
+        <div class="calc-box">
+          C ÷ d = <span class="red">31.4</span> ÷ <span class="blue">10</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Divide</div>
+        <div class="step-desc">Dividing by 10 shifts the decimal point one place to the left.</div>
+        <div class="calc-box">
+          C ÷ d = 31.4 ÷ 10 = <span class="red">3.14</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Compare to π</div>
+        <div class="step-desc">We know that π ≈ 3.14159... Our ratio is 3.14 — within rounding, this <strong>is</strong> π. The match isn't a coincidence: <em>every</em> circle gives this ratio.</div>
+        <div class="calc-box">
+          3.14 ≈ <span class="blue">π</span> &nbsp; ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          C ÷ d = 3.14 ≈ π
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — a circle with <span class="expr">C = 47.1 cm</span> and <span class="expr">d = 15 cm</span></h2>
+  <p class="sec-desc">We'll break it into three small steps. After each prompt, discuss with the person next to you, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Notice:</strong> we got 3.14 again — even though C and d are different numbers from the last example. The ratio is fixed; only the circles change. That's the whole idea of π.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm the routine. Give your answer to two decimal places. <strong>Then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">8 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Compute C ÷ d for each circle. Give answers to <strong>two decimal places</strong> (e.g. <code>3.14</code>). Notice the pattern.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">5 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">A class measured several circles with string and ruler. Some results look like π, others suggest the string slipped or the ruler was crooked. For each row, compute C ÷ d to two decimal places — then decide whether the measurement looks <strong>reasonable</strong> or like an <strong>error</strong>.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY (preview Year 8) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc"><strong>Year 8 preview.</strong> If C ÷ d = π <em>always</em>, then re-arranging gives <span class="expr">C = π × d</span>. Using <strong>π ≈ 3.14159</strong>, compute C from the diameter. Round to <strong>two decimal places</strong>.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+    <div class="parts-instructions" style="margin-top: 18px;">
+      🔭 <strong>Forward-pointer:</strong> In Year 8, you'll use <span class="expr">C = πd</span> (and <span class="expr">C = 2π<span class="var">r</span></span>) to calculate circumferences directly — no string required. The ratio you measured today <em>is</em> the formula.
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. The last one is open-ended — write a sentence or two.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">The need to be more precise about quantities and shapes underpins greater accuracy in measurement, and the development of new units and concepts that build on those previously experienced.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7M03</strong> — use the relationships between the radius, diameter and circumference of a circle to investigate, name and use π to find circumferences</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">all (conceptual focus — formal use of C = πd is deferred to Year 8)</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Establish through measurement that the ratio of circumference to diameter is the same constant for every circle, and name that constant π ≈ 3.14159.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_mea_06. Source: lesson-map.xlsx. Prereq: y7_mea_05 (features of circles).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Introducing π
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING — civilisation ↔ approximation ============
+  const matchTerms = [
+    { html: 'Egypt<br><small>Rhind Papyrus</small>', group: 1 },
+    { html: '≈ 3.16', group: 1 },
+    { html: 'Babylon<br><small>Clay tablets</small>', group: 2 },
+    { html: '3.125', group: 2 },
+    { html: 'Archimedes<br><small>Greek geometer</small>', group: 3 },
+    { html: '3 + <span class="frac"><span class="num">10</span><span class="den">71</span></span> &lt; π &lt; 3 + <span class="frac"><span class="num">1</span><span class="den">7</span></span>', group: 3 },
+    { html: 'Aryabhata<br><small>Indian astronomer</small>', group: 4 },
+    { html: '3.1416', group: 4 },
+    { html: 'Zu Chongzhi<br><small>Chinese mathematician</small>', group: 5 },
+    { html: '<span class="frac"><span class="num">355</span><span class="den">113</span></span> ≈ 3.14159292', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five civilisations matched with their approximations!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — re-read the timeline above.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE DATA ============
+
+  // Retrieval — features of circles (lesson 05) prior knowledge.
+  const retrieval = [
+    { q: 'A circle has radius <span class="expr">r = 6 cm</span>. What is its diameter?', a: '12cm', hint: 'Diameter = 2 × radius.' },
+    { q: 'A circle has diameter <span class="expr">d = 18 cm</span>. What is its radius?', a: '9cm', hint: 'Radius = diameter ÷ 2.' },
+    { q: 'What name do we give the <strong>distance around</strong> a circle?', a: 'circumference', hint: 'Starts with C.' },
+  ];
+
+  // We Do (Section 6) — C = 47.1, d = 15
+  const weDo = [
+    { q: 'Step 1 — Write the calculation. What is C ÷ d as numbers?', a: '47.1÷15', hint: 'Just write the division, don\'t solve it yet.' },
+    { q: 'Step 2 — Compute. What is 47.1 ÷ 15? (2 d.p.)', a: '3.14', hint: 'Long division, or use the fact that 15 × 3 = 45 and 15 × 0.14 ≈ 2.1.' },
+    { q: 'Step 3 — How does this compare to π? Write π or "pi".', a: 'π', hint: 'The ratio is ≈ 3.14. What constant equals 3.14159...?' },
+  ];
+
+  // Checkpoint (Section 7)
+  const checkpoint = [
+    { q: 'A circle has <span class="expr">C = 62.8 cm</span> and <span class="expr">d = 20 cm</span>. Compute C ÷ d to 2 d.p.', a: '3.14', hint: '62.8 ÷ 20 — try halving and halving again, or shift the decimal.' },
+    { q: 'A circle has <span class="expr">C = 18.85 cm</span> and <span class="expr">d = 6 cm</span>. Compute C ÷ d to 2 d.p.', a: '3.14', hint: '6 × 3 = 18, so 18.85 ÷ 6 starts with 3-something.' },
+  ];
+
+  // Building (Section 8) — straightforward C ÷ d calculations.
+  const practice1 = [
+    { q: 'C = 12.56 cm, d = 4 cm. Find C ÷ d (2 d.p.)', a: '3.14', hint: '12.56 ÷ 4 — quarter of 12.56.' },
+    { q: 'C = 21.99 cm, d = 7 cm. Find C ÷ d (2 d.p.)', a: '3.14', hint: '7 × 3 = 21, so the answer is just above 3.' },
+    { q: 'C = 28.27 cm, d = 9 cm. Find C ÷ d (2 d.p.)', a: '3.14', hint: '9 × 3 = 27, so 28.27 ÷ 9 is just above 3.' },
+    { q: 'C = 37.70 cm, d = 12 cm. Find C ÷ d (2 d.p.)', a: '3.14', hint: '12 × 3 = 36; the remainder gives the .14.' },
+    { q: 'C = 50.27 cm, d = 16 cm. Find C ÷ d (2 d.p.)', a: '3.14', hint: '16 × 3 = 48, so the answer is a bit more than 3.' },
+    { q: 'C = 78.54 cm, d = 25 cm. Find C ÷ d (2 d.p.)', a: '3.14', hint: '25 × 3 = 75; 78.54 − 75 = 3.54; 3.54 ÷ 25 = 0.14.' },
+    { q: 'C = 6.28 cm, d = 2 cm. Find C ÷ d (2 d.p.)', a: '3.14', hint: 'Half of 6.28.' },
+    { q: 'What value does C ÷ d give for every circle? (write π or "pi")', a: 'π', hint: 'You\'ve just computed it eight times — the answer is the same Greek letter every time.' },
+  ];
+
+  // Stretch (Section 9) — noisy measurements; compute the ratio, then judge.
+  const practice2 = [
+    { q: 'A student measures C = 25.1 cm for a lid with d = 8 cm. C ÷ d? (2 d.p.)', a: '3.14', hint: '25.1 ÷ 8 — 8 × 3 = 24; the remainder is 1.1.' },
+    { q: 'A student measures C = 29.5 cm for a plate with d = 12 cm. C ÷ d? (2 d.p.)', a: '2.46', hint: '12 × 2 = 24; 29.5 − 24 = 5.5; 5.5 ÷ 12 ≈ 0.46.' },
+    { q: 'A student measures C = 44.0 cm for a clock face with d = 15 cm. C ÷ d? (2 d.p.)', a: '2.93', hint: '15 × 2 = 30; 44 − 30 = 14; 14 ÷ 15 ≈ 0.93.' },
+    { q: 'A student measures C = 37.7 cm for a CD with d = 12 cm. C ÷ d? (2 d.p.)', a: '3.14', hint: 'Same ratio as the earlier examples.' },
+    { q: 'Of the four results above, which two look like measurement errors? Write the diameters separated by a comma (e.g. <code>8,12</code>).', a: '12,15', hint: 'The ratios that fall well below 3.14 are the errors — find the d values for those.' },
+  ];
+
+  // Mastery (Section 10) — Year 8 preview: compute C from d using π ≈ 3.14159.
+  const practice3 = [
+    { q: 'Using π ≈ 3.14159, find C when d = 10 cm. (2 d.p., cm)', a: '31.42cm', hint: 'C = π × d = 3.14159 × 10 = 31.4159...' },
+    { q: 'Using π ≈ 3.14159, find C when d = 7 cm. (2 d.p., cm)', a: '21.99cm', hint: 'C = π × d = 3.14159 × 7. Try 3 × 7 = 21, then add 0.14159 × 7.' },
+    { q: 'Using π ≈ 3.14159, find C when d = 25 cm. (2 d.p., cm)', a: '78.54cm', hint: 'C = π × d = 3.14159 × 25.' },
+    { q: 'A bike wheel has d = 60 cm. Using π ≈ 3.14159, find C. (2 d.p., cm)', a: '188.50cm', hint: '3.14159 × 60. Note: 3 × 60 = 180; 0.14159 × 60 ≈ 8.50.' },
+  ];
+
+  // Exit ticket (Section 11) — includes one open-ended reflection.
+  const exitProbs = [
+    { q: 'For <em>any</em> circle, what does <span class="expr">C ÷ d</span> equal? (Write π or "pi".)', a: 'π', hint: 'Same answer for the lid, the plate, the wheel — and every other circle.' },
+    { q: 'A circle has C = 15.71 cm and d = 5 cm. Find C ÷ d (2 d.p.).', a: '3.14', hint: '5 × 3 = 15; the .71 gives the rest.' },
+    { q: 'Why do you think different civilisations (Egypt, Babylon, Greece, India, China) found similar values for π — even though they worked thousands of years and thousands of kilometres apart?', a: 'TEXT', hint: 'Think about what the ratio C ÷ d depends on. Does it depend on the country, the century, or just on the shape itself?' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '')
+      .replace(/cm$/, '');  // allow answers with or without trailing "cm"
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // accept "pi" as a synonym for "π"
+    if ((norm === 'pi' && exp === 'π') || (norm === 'π' && exp === 'pi')) return true;
+    // accept reordered comma-separated lists (e.g. 15,12 == 12,15)
+    if (norm.includes(',') && exp.includes(',')) {
+      const a = norm.split(',').map(s => s.trim()).filter(Boolean).sort();
+      const b = exp.split(',').map(s => s.trim()).filter(Boolean).sort();
+      if (JSON.stringify(a) === JSON.stringify(b)) return true;
+    }
+    // accept reordered terms (e.g. 3x+5 == 5+3x) — kept for generality
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — example answer: "The ratio C ÷ d depends only on the shape of a circle, not the country or century. Every civilisation was measuring the same constant, so they were bound to get similar values."';
+    // direct π pass-through
+    if (a === 'π' || a === 'pi') return 'π';
+    let r = a;
+    // stack fractions like 355/113
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // typographic minus
+    r = r.replace(/(\d)-(\d)/g, '$1 − $2');
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
