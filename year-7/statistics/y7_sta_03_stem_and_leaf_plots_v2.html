@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<!--
+  Interactive HTML Maths Lesson — Year 7 Statistics — Stem-and-Leaf Plots
+  Built from the interactive-html-maths-lesson skill template.
+  Locked framework functions (buildPractice, checkAnswer, answerMatches,
+  formatAnswerDisplay, updateProgress, toggleHint, toggleAnswer, toggleTier)
+  are reproduced from the template; lesson data and components are adapted.
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stem-and-Leaf Plots — Year 7</title>
+
+<!-- CURRICULUM METADATA — machine-readable; mirrored in the visible panel before the footer. -->
+<meta name="lesson-id"             content="y7_sta_03">
+<meta name="ac9-descriptor"        content="AC9M7ST02">
+<meta name="ac9-descriptor-text"   content="create different types of numerical data displays including stem-and-leaf plots using software where appropriate; describe and compare the distribution of data, commenting on the shape, centre and spread including outliers and determining the range, median, mean and mode">
+<meta name="ac9-elaborations"      content="1,2">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Statistics">
+<meta name="sa-conceptual-understanding" content="Data can be organised and represented in different ways to inform, justify and persuade conclusions">
+<meta name="lesson-focus"          content="Construct ordered and back-to-back stem-and-leaf plots from class data, and compare distributions by shape, centre and spread.">
+<meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+<meta name="curriculum-source"     content="SA Curriculum — Mathematics R-10 Prototype 2">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+  }
+
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket (Section 11) */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS — Sections 8, 9, 10 */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* ===== STEM-AND-LEAF BUILDER (new drag-and-drop interactive) ===== */
+  .slp-builder { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .slp-sources { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+  .slp-source-wrap { flex: 1; min-width: 220px; }
+  .slp-source-label {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--muted); font-weight: 700; margin-bottom: 5px;
+  }
+  .slp-source {
+    background: white; border: 1.5px dashed var(--border); border-radius: 8px;
+    padding: 10px; min-height: 58px;
+    display: flex; flex-wrap: wrap; gap: 7px; align-items: center; justify-content: center;
+  }
+  .slp-source:empty::before {
+    content: 'All leaves placed ✓'; color: var(--muted); font-style: italic; font-size: 0.85rem;
+  }
+  .leaf-chip {
+    touch-action: none; user-select: none; cursor: grab;
+    width: 46px; min-height: 44px;
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    background: white; border: 1.6px solid var(--navy); border-radius: 8px;
+    line-height: 1.05;
+  }
+  .leaf-chip:active { cursor: grabbing; }
+  .leaf-chip b { font-family: 'Courier New', monospace; font-size: 1.25rem; color: var(--navy); }
+  .leaf-chip i { font-style: normal; font-size: 0.58rem; color: var(--muted); }
+  .leaf-chip.dragging { opacity: 0.3; }
+  .leaf-chip.chip-wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .leaf-chip.chip-wrong b { color: var(--bad); }
+  .leaf-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none;
+    width: 46px; min-height: 44px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: white; border: 1.6px solid var(--coral); border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22); transform: scale(1.08); line-height: 1.05;
+  }
+  .leaf-chip-ghost b { font-family: 'Courier New', monospace; font-size: 1.25rem; color: var(--coral); }
+  .leaf-chip-ghost i { font-style: normal; font-size: 0.58rem; color: var(--muted); }
+  .slp-plot { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .slp-row { display: flex; align-items: stretch; border-bottom: 1px solid #e7e9ee; min-height: 52px; }
+  .slp-row:last-child { border-bottom: none; }
+  .slp-stem {
+    width: 60px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Courier New', monospace; font-size: 1.2rem; font-weight: bold;
+    color: white; background: var(--navy);
+  }
+  .slp-leaves {
+    flex: 1; min-height: 50px;
+    display: flex; flex-wrap: wrap; gap: 7px; align-items: center;
+    padding: 6px 9px; transition: background 0.15s;
+  }
+  .slp-leaves.drop-target, .slp-source.drop-target { background: var(--coral-soft); }
+  .slp-leaves.zone-correct { background: var(--good-soft); }
+  .slp-leaves.zone-wrong { background: var(--bad-soft); }
+  .slp-row.b2b .slp-leaves[data-side="left"] { justify-content: flex-end; }
+  .slp-builder-actions { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+  .slp-check {
+    background: var(--coral); color: white; border: none;
+    padding: 9px 22px; border-radius: 8px; cursor: pointer;
+    font-weight: 700; font-size: 0.95rem;
+  }
+  .slp-check:hover { background: #a04829; }
+  .slp-feedback {
+    margin-top: 13px; text-align: center; font-size: 0.95rem;
+    min-height: 22px; font-weight: 600;
+  }
+  .slp-feedback.fb-good { color: var(--good); }
+  .slp-feedback.fb-bad { color: var(--bad); }
+  .slp-feedback.fb-wait { color: var(--coral); }
+  .slp-key { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-top: 10px; text-align: center; }
+
+  /* ===== STATIC STEM-AND-LEAF PLOTS ===== */
+  .slp-static {
+    display: inline-block; background: white;
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 8px 4px; margin: 10px 0;
+  }
+  .slp-static table { border-collapse: collapse; }
+  .slp-static td { padding: 3px 14px; font-family: 'Courier New', monospace; font-size: 1.05rem; }
+  .slp-static thead td {
+    font-family: -apple-system, sans-serif; font-size: 0.66rem;
+    text-transform: uppercase; letter-spacing: 1px; color: var(--muted); text-align: center;
+  }
+  .slp-static .ss-stem { text-align: right; border-right: 2.6px solid var(--navy); font-weight: bold; color: var(--navy); }
+  .slp-static .ss-leaf { letter-spacing: 0.32em; }
+  .slp-static .ss-leaf-l { text-align: right; border-right: 2.6px solid var(--navy); letter-spacing: 0.32em; }
+  .slp-static .ss-stem-mid { text-align: center; border-right: 2.6px solid var(--navy); font-weight: bold; color: var(--navy); }
+  .slp-static caption {
+    caption-side: bottom; font-family: -apple-system, sans-serif;
+    font-size: 0.76rem; color: var(--muted); font-style: italic; padding: 6px 4px 2px;
+  }
+
+  /* worked-example sub-headings */
+  .we-title {
+    font-family: Georgia, serif; color: var(--coral);
+    font-size: 1.12rem; font-weight: bold;
+    margin: 26px 0 4px; padding-top: 18px; border-top: 1px solid var(--border);
+  }
+  .we-title:first-of-type { border-top: none; padding-top: 4px; margin-top: 10px; }
+  .we-problem { font-size: 0.97rem; margin: 0 0 12px; }
+  .info-box {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 0.92rem; margin: 14px 0; color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Stem-and-Leaf Plots</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Statistics</div>
+  </div>
+  <div class="badge">Statistics</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. Ordering numbers, finding the median and the range are the skills you'll lean on today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's statistics.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>Mr Tran measured the height of every student in class 7C and scribbled <strong>24 numbers</strong> down a page in no particular order:</p>
+      <p style="font-family:'Courier New',monospace; font-size:0.9rem; background:var(--bg); padding:10px; border-radius:6px;">145&nbsp; 132&nbsp; 168&nbsp; 124&nbsp; 151&nbsp; 137&nbsp; 142&nbsp; 156&nbsp; 131&nbsp; 149&nbsp; 128&nbsp; 163&nbsp; 135&nbsp; 172&nbsp; 145&nbsp; …</p>
+      <p>Staring at that list, he can't quickly see the shortest student, the tallest, or the <strong>typical</strong> height. He needs the numbers <em>organised</em> — without losing a single original value.</p>
+    </div>
+    <div class="info-box" style="margin: 0;">
+      A <strong>stem-and-leaf plot</strong> solves exactly this. It splits each height into a <strong>stem</strong> (the first digits) and a <strong>leaf</strong> (the last digit), then stacks them in order. The shortest, the tallest, the clusters and the gaps all jump out — and every original number is still there to read back.
+    </div>
+  </div>
+</section>
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, then two hands-on builders — we'll work through these as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Stem<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>leading digit(s)</strong> of a number, written once on the left of a row.<div class="vocab-example expr">In 142 cm: the stem is <strong>14</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Leaf<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>final digit</strong> of a number, written to the right of its stem.<div class="vocab-example expr">In 142 cm: the leaf is <strong>2</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Key<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A note that shows how to <strong>read a stem and leaf</strong> as a real value.<div class="vocab-example expr">Key: 14 | 2 means <strong>142 cm</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Ordered plot<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A stem-and-leaf plot whose leaves in each row run <strong>smallest to largest</strong>.<div class="vocab-example expr">Row: 13 | 1 5 7 — leaves are in order.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Back-to-back plot<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Two data sets sharing <strong>one stem column</strong>, leaves on each side — built to <strong>compare</strong> the groups.<div class="vocab-example expr">7A leaves | Stem | 7B leaves.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: DRAG-AND-DROP STEM-AND-LEAF BUILDER (new interactive) -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Build the plot — drag the leaves home</h2>
+  <p class="sec-desc">Here are the heights (cm) of every student in class 7C. Each chip shows a <strong>leaf</strong> (large) and the full height (small). Drag every leaf onto its correct <strong>stem row</strong>, and arrange the leaves in each row from <strong>smallest to largest</strong> — smallest closest to the stem. Then press <strong>Check my plot</strong>.</p>
+
+  <div class="info-box">
+    💡 The stem is the first two digits (hundreds and tens); the leaf is the ones digit. So <strong>145 cm</strong> has stem <strong>14</strong> and leaf <strong>5</strong>. To slot a leaf <em>between</em> two others, drop it where you want it to land.
+  </div>
+
+  <div class="slp-builder" id="builder1">
+    <div class="slp-sources">
+      <div class="slp-source-wrap">
+        <div class="slp-source-label">Class 7C — drag every leaf onto the plot</div>
+        <div class="slp-source" data-side="one">
+          <span class="leaf-chip" data-side="one" data-stem="14" data-leaf="5"><b>5</b><i>145</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="12" data-leaf="4"><b>4</b><i>124</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="13" data-leaf="7"><b>7</b><i>137</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="16" data-leaf="8"><b>8</b><i>168</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="13" data-leaf="1"><b>1</b><i>131</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="15" data-leaf="6"><b>6</b><i>156</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="14" data-leaf="9"><b>9</b><i>149</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="12" data-leaf="8"><b>8</b><i>128</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="17" data-leaf="2"><b>2</b><i>172</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="14" data-leaf="2"><b>2</b><i>142</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="16" data-leaf="3"><b>3</b><i>163</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="13" data-leaf="5"><b>5</b><i>135</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="15" data-leaf="1"><b>1</b><i>151</i></span>
+          <span class="leaf-chip" data-side="one" data-stem="14" data-leaf="5"><b>5</b><i>145</i></span>
+        </div>
+      </div>
+    </div>
+    <div class="slp-plot">
+      <div class="slp-row"><div class="slp-stem">12</div><div class="slp-leaves" data-stem="12" data-side="one" data-order="asc"></div></div>
+      <div class="slp-row"><div class="slp-stem">13</div><div class="slp-leaves" data-stem="13" data-side="one" data-order="asc"></div></div>
+      <div class="slp-row"><div class="slp-stem">14</div><div class="slp-leaves" data-stem="14" data-side="one" data-order="asc"></div></div>
+      <div class="slp-row"><div class="slp-stem">15</div><div class="slp-leaves" data-stem="15" data-side="one" data-order="asc"></div></div>
+      <div class="slp-row"><div class="slp-stem">16</div><div class="slp-leaves" data-stem="16" data-side="one" data-order="asc"></div></div>
+      <div class="slp-row"><div class="slp-stem">17</div><div class="slp-leaves" data-stem="17" data-side="one" data-order="asc"></div></div>
+    </div>
+    <div class="slp-key">Key: 12 | 4 = 124 cm</div>
+    <div class="slp-builder-actions">
+      <button class="slp-check" type="button">Check my plot</button>
+      <button class="btn-secondary btn-sm slp-reset" type="button">↺ Reset</button>
+      <button class="btn-secondary btn-sm slp-solve" type="button">Show solution</button>
+    </div>
+    <div class="slp-feedback" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- SECTION 4: BACK-TO-BACK (SPLIT) STEM-AND-LEAF PLOT INTERACTION -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Compare two classes — build a back-to-back plot</h2>
+  <p class="sec-desc">A <strong>back-to-back</strong> (split) plot puts two groups either side of one shared stem column, so you can compare them at a glance. Drag <strong>7A's</strong> leaves into the <strong>left</strong> of each row and <strong>7B's</strong> leaves into the <strong>right</strong>.</p>
+
+  <div class="info-box">
+    💡 On <strong>both</strong> sides the <strong>smallest leaf sits closest to the stem</strong>. So the left side counts <em>down</em> as it nears the stem (left-to-right is large&nbsp;→&nbsp;small) and the right side counts <em>up</em> away from it (small&nbsp;→&nbsp;large). Press <strong>Check my plot</strong> to test both sides.
+  </div>
+
+  <div class="slp-builder" id="builder2">
+    <div class="slp-sources">
+      <div class="slp-source-wrap">
+        <div class="slp-source-label">Class 7A leaves → drag LEFT</div>
+        <div class="slp-source" data-side="left">
+          <span class="leaf-chip" data-side="left" data-stem="14" data-leaf="7"><b>7</b><i>147</i></span>
+          <span class="leaf-chip" data-side="left" data-stem="12" data-leaf="9"><b>9</b><i>129</i></span>
+          <span class="leaf-chip" data-side="left" data-stem="13" data-leaf="6"><b>6</b><i>136</i></span>
+          <span class="leaf-chip" data-side="left" data-stem="14" data-leaf="1"><b>1</b><i>141</i></span>
+          <span class="leaf-chip" data-side="left" data-stem="13" data-leaf="3"><b>3</b><i>133</i></span>
+        </div>
+      </div>
+      <div class="slp-source-wrap">
+        <div class="slp-source-label">Class 7B leaves → drag RIGHT</div>
+        <div class="slp-source" data-side="right">
+          <span class="leaf-chip" data-side="right" data-stem="14" data-leaf="5"><b>5</b><i>145</i></span>
+          <span class="leaf-chip" data-side="right" data-stem="13" data-leaf="8"><b>8</b><i>138</i></span>
+          <span class="leaf-chip" data-side="right" data-stem="15" data-leaf="1"><b>1</b><i>151</i></span>
+          <span class="leaf-chip" data-side="right" data-stem="13" data-leaf="4"><b>4</b><i>134</i></span>
+          <span class="leaf-chip" data-side="right" data-stem="14" data-leaf="2"><b>2</b><i>142</i></span>
+        </div>
+      </div>
+    </div>
+    <div class="slp-plot">
+      <div class="slp-row b2b">
+        <div class="slp-leaves" data-stem="12" data-side="left" data-order="desc"></div>
+        <div class="slp-stem">12</div>
+        <div class="slp-leaves" data-stem="12" data-side="right" data-order="asc"></div>
+      </div>
+      <div class="slp-row b2b">
+        <div class="slp-leaves" data-stem="13" data-side="left" data-order="desc"></div>
+        <div class="slp-stem">13</div>
+        <div class="slp-leaves" data-stem="13" data-side="right" data-order="asc"></div>
+      </div>
+      <div class="slp-row b2b">
+        <div class="slp-leaves" data-stem="14" data-side="left" data-order="desc"></div>
+        <div class="slp-stem">14</div>
+        <div class="slp-leaves" data-stem="14" data-side="right" data-order="asc"></div>
+      </div>
+      <div class="slp-row b2b">
+        <div class="slp-leaves" data-stem="15" data-side="left" data-order="desc"></div>
+        <div class="slp-stem">15</div>
+        <div class="slp-leaves" data-stem="15" data-side="right" data-order="asc"></div>
+      </div>
+    </div>
+    <div class="slp-key">Key: 7A&nbsp; 6 | 13 | 4&nbsp; 7B&nbsp; reads 136 cm (left) and 134 cm (right)</div>
+    <div class="slp-builder-actions">
+      <button class="slp-check" type="button">Check my plot</button>
+      <button class="btn-secondary btn-sm slp-reset" type="button">↺ Reset</button>
+      <button class="btn-secondary btn-sm slp-solve" type="button">Show solution</button>
+    </div>
+    <div class="slp-feedback" aria-live="polite"></div>
+  </div>
+  <div class="info-box" style="margin-top:18px;">
+    💬 <strong>Talk it over:</strong> once both sides are built — which class looks taller overall? Which class is more spread out? We'll use language like <em>symmetric</em>, <em>skewed</em> and <em>spread</em> to describe what you see.
+  </div>
+</section>
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through three examples out loud, revealing each step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: THREE WORKED EXAMPLES (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>I Do — three worked examples</h2>
+  <p class="sec-desc">Three examples: constructing a plot, reading centre and spread from it, then comparing two groups. I'll reveal the steps one at a time.</p>
+
+  <!-- WORKED EXAMPLE 1 -->
+  <div class="we-title">Example 1 — Constructing an ordered stem-and-leaf plot</div>
+  <p class="we-problem">Twelve Year 7 students had their heights measured (cm): <strong>145, 132, 158, 141, 137, 152, 149, 133, 145, 144, 138, 150</strong>. Construct an ordered stem-and-leaf plot.</p>
+  <div class="worked" id="we1">
+    <div class="step visible" id="we1-s1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Choose the stems</div>
+        <div class="step-desc">The smallest value is 132 cm and the largest is 158 cm. The stem is the hundreds-and-tens part, so we need stems <strong>13, 14, 15</strong>.</div>
+        <div class="calc-box">Smallest = <span class="blue">132</span> &rarr; stem 13 &nbsp;&nbsp; Largest = <span class="red">158</span> &rarr; stem 15</div>
+      </div>
+    </div>
+    <div class="step" id="we1-s2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Place each leaf with its stem</div>
+        <div class="step-desc">Work through the list in order. The ones digit becomes the leaf. This first plot is <em>unordered</em> — the leaves are just in the order they were recorded.</div>
+        <div class="slp-static">
+          <table>
+            <thead><tr><td>Stem</td><td>Leaf (unordered)</td></tr></thead>
+            <tbody>
+              <tr><td class="ss-stem">13</td><td class="ss-leaf">2 7 3 8</td></tr>
+              <tr><td class="ss-stem">14</td><td class="ss-leaf">5 1 9 5 4</td></tr>
+              <tr><td class="ss-stem">15</td><td class="ss-leaf">8 2 0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="step" id="we1-s3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Order the leaves and add a key</div>
+        <div class="step-desc">Sort each row's leaves smallest to largest. A key tells the reader how to decode a stem and a leaf.</div>
+        <div class="slp-static">
+          <table>
+            <thead><tr><td>Stem</td><td>Leaf (ordered)</td></tr></thead>
+            <tbody>
+              <tr><td class="ss-stem">13</td><td class="ss-leaf">2 3 7 8</td></tr>
+              <tr><td class="ss-stem">14</td><td class="ss-leaf">1 4 5 5 9</td></tr>
+              <tr><td class="ss-stem">15</td><td class="ss-leaf">0 2 8</td></tr>
+            </tbody>
+            <caption>Key: 13 | 2 = 132 cm</caption>
+          </table>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          An ordered stem-and-leaf plot — all 12 values kept, now sorted and grouped.
+        </div>
+      </div>
+    </div>
+    <button class="reveal-btn" data-we="we1" data-steps="3" type="button">Reveal next step ↓</button>
+  </div>
+
+  <!-- WORKED EXAMPLE 2 -->
+  <div class="we-title">Example 2 — Reading centre and spread from a plot</div>
+  <p class="we-problem">Using the ordered plot from Example 1, find the <strong>range</strong>, the <strong>median</strong> and the <strong>mode</strong> of the 12 heights.</p>
+  <div class="slp-static">
+    <table>
+      <thead><tr><td>Stem</td><td>Leaf</td></tr></thead>
+      <tbody>
+        <tr><td class="ss-stem">13</td><td class="ss-leaf">2 3 7 8</td></tr>
+        <tr><td class="ss-stem">14</td><td class="ss-leaf">1 4 5 5 9</td></tr>
+        <tr><td class="ss-stem">15</td><td class="ss-leaf">0 2 8</td></tr>
+      </tbody>
+      <caption>Key: 13 | 2 = 132 cm</caption>
+    </table>
+  </div>
+  <div class="worked" id="we2">
+    <div class="step visible" id="we2-s1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Find the spread — the range</div>
+        <div class="step-desc">A plot's first and last leaves are its smallest and largest values. Range = largest &minus; smallest.</div>
+        <div class="calc-box">Range = <span class="red">158</span> &minus; <span class="blue">132</span> = <span class="red">26 cm</span></div>
+      </div>
+    </div>
+    <div class="step" id="we2-s2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Locate the median position</div>
+        <div class="step-desc">There are <strong>n = 12</strong> leaves (even), so the median sits halfway between the 6th and 7th values. Count leaves from the top row down.</div>
+        <div class="calc-box">132, 133, 137, 138, 141, <span class="red">144</span>, <span class="red">145</span>, 145, 149, 150, 152, 158<br>6th value = <span class="red">144</span>, &nbsp; 7th value = <span class="red">145</span></div>
+      </div>
+    </div>
+    <div class="step" id="we2-s3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Calculate median and read the mode</div>
+        <div class="step-desc">Average the two middle values for the median. The mode is the most frequent value — easy to spot as a repeated leaf.</div>
+        <div class="calc-box">Median = (144 + 145) &divide; 2 = <span class="red">144.5 cm</span><br>Mode = <span class="blue">145 cm</span> (leaf 5 appears twice in the stem-14 row)</div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Range 26 cm &nbsp;·&nbsp; Median 144.5 cm &nbsp;·&nbsp; Mode 145 cm
+        </div>
+      </div>
+    </div>
+    <button class="reveal-btn" data-we="we2" data-steps="3" type="button">Reveal next step ↓</button>
+  </div>
+
+  <!-- WORKED EXAMPLE 3 -->
+  <div class="we-title">Example 3 — Comparing two groups with a back-to-back plot</div>
+  <p class="we-problem">The heights of a netball squad and a basketball squad were recorded. Compare the two groups using this back-to-back stem-and-leaf plot.</p>
+  <div class="slp-static">
+    <table>
+      <thead><tr><td>Netball leaf</td><td>Stem</td><td>Basketball leaf</td></tr></thead>
+      <tbody>
+        <tr><td class="ss-leaf-l">8 2</td><td class="ss-stem-mid">13</td><td class="ss-leaf"></td></tr>
+        <tr><td class="ss-leaf-l">9 6 3 1</td><td class="ss-stem-mid">14</td><td class="ss-leaf">1 5 8</td></tr>
+        <tr><td class="ss-leaf-l">2</td><td class="ss-stem-mid">15</td><td class="ss-leaf">2 5 8</td></tr>
+        <tr><td class="ss-leaf-l"></td><td class="ss-stem-mid">16</td><td class="ss-leaf">1 7</td></tr>
+      </tbody>
+      <caption>Key: 2 | 13 = 132 cm (netball) &nbsp;·&nbsp; 14 | 1 = 141 cm (basketball)</caption>
+    </table>
+  </div>
+  <div class="worked" id="we3">
+    <div class="step visible" id="we3-s1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Compare the centre</div>
+        <div class="step-desc">Netball has 7 values: median is the 4th = <strong>143 cm</strong>. Basketball has 8 values: median is between the 4th and 5th = (152 + 155) &divide; 2 = <strong>153.5 cm</strong>.</div>
+        <div class="calc-box">Netball median = <span class="blue">143 cm</span> &nbsp;&lt;&nbsp; Basketball median = <span class="red">153.5 cm</span><br>The basketball squad is <span class="red">taller on average</span>.</div>
+      </div>
+    </div>
+    <div class="step" id="we3-s2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Compare the spread</div>
+        <div class="step-desc">Range = largest &minus; smallest for each squad.</div>
+        <div class="calc-box">Netball range = 152 &minus; 132 = <span class="blue">20 cm</span><br>Basketball range = 167 &minus; 141 = <span class="red">26 cm</span> &mdash; basketball heights are <span class="red">more spread out</span>.</div>
+      </div>
+    </div>
+    <div class="step" id="we3-s3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Describe the shape</div>
+        <div class="step-desc">Read the lengths of the rows on each side.</div>
+        <div class="calc-box">Netball clusters tightly in the 140s and is roughly <span class="blue">symmetric</span>.<br>Basketball stretches upward into the 160s &mdash; it is <span class="red">skewed towards the taller values</span>.</div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Basketball is taller (higher centre), more spread out, and skewed high; netball is shorter and roughly symmetric.
+        </div>
+      </div>
+    </div>
+    <button class="reveal-btn" data-we="we3" data-steps="3" type="button">Reveal next step ↓</button>
+  </div>
+</section>
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's build one together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — build a plot from new data</h2>
+  <p class="sec-desc">Six students were measured (cm): <strong>131, 135, 138, 142, 145, 149</strong>. We'll construct the plot in three small steps. Discuss each prompt, then we'll fill in the box together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="info-box" style="margin-top:18px;">
+    💡 <strong>Why this routine works:</strong> choose your stems first, then place leaves row by row, then order them. Following the same three steps every time keeps the plot tidy and stops you dropping a value. Use exactly this routine in the "You do" practice next.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK (checkpoint) -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions about class 7D's heights. Read the plot below, try both on your own &mdash; <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="slp-static">
+    <table>
+      <thead><tr><td>Stem</td><td>Leaf</td></tr></thead>
+      <tbody>
+        <tr><td class="ss-stem">13</td><td class="ss-leaf">2 6</td></tr>
+        <tr><td class="ss-stem">14</td><td class="ss-leaf">0 3 3 7</td></tr>
+        <tr><td class="ss-stem">15</td><td class="ss-leaf">1 5</td></tr>
+      </tbody>
+      <caption>Class 7D heights (cm) &nbsp;·&nbsp; Key: 13 | 2 = 132 cm</caption>
+    </table>
+  </div>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">All ten questions read from the stem-and-leaf plot of class 7E below. Type whole numbers (cm) as your answers.</p>
+    <div class="slp-static">
+      <table>
+        <thead><tr><td>Stem</td><td>Leaf</td></tr></thead>
+        <tbody>
+          <tr><td class="ss-stem">12</td><td class="ss-leaf">6 9</td></tr>
+          <tr><td class="ss-stem">13</td><td class="ss-leaf">0 4 4 4 8</td></tr>
+          <tr><td class="ss-stem">14</td><td class="ss-leaf">1 3 6 9</td></tr>
+          <tr><td class="ss-stem">15</td><td class="ss-leaf">2 5 7</td></tr>
+          <tr><td class="ss-stem">16</td><td class="ss-leaf">0 3</td></tr>
+        </tbody>
+        <caption>Class 7E heights (cm) &nbsp;·&nbsp; Key: 12 | 6 = 126 cm</caption>
+      </table>
+    </div>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Questions about class 7F's heights. Some questions ask you to add a value or construct part of a plot.</p>
+    <div class="slp-static">
+      <table>
+        <thead><tr><td>Stem</td><td>Leaf</td></tr></thead>
+        <tbody>
+          <tr><td class="ss-stem">12</td><td class="ss-leaf">1</td></tr>
+          <tr><td class="ss-stem">13</td><td class="ss-leaf">8</td></tr>
+          <tr><td class="ss-stem">14</td><td class="ss-leaf">0 2 5 5 8</td></tr>
+          <tr><td class="ss-stem">15</td><td class="ss-leaf">1 3 9</td></tr>
+          <tr><td class="ss-stem">16</td><td class="ss-leaf">2</td></tr>
+        </tbody>
+        <caption>Class 7F heights (cm) &nbsp;·&nbsp; Key: 12 | 1 = 121 cm</caption>
+      </table>
+    </div>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Compare classes 7G and 7H using the back-to-back plot below. Read carefully — each side is a different group.</p>
+    <div class="slp-static">
+      <table>
+        <thead><tr><td>7G leaf</td><td>Stem</td><td>7H leaf</td></tr></thead>
+        <tbody>
+          <tr><td class="ss-leaf-l">4</td><td class="ss-stem-mid">12</td><td class="ss-leaf">8</td></tr>
+          <tr><td class="ss-leaf-l">8 3 1</td><td class="ss-stem-mid">13</td><td class="ss-leaf">5 9</td></tr>
+          <tr><td class="ss-leaf-l">6 2</td><td class="ss-stem-mid">14</td><td class="ss-leaf">1 4 5</td></tr>
+          <tr><td class="ss-leaf-l">1</td><td class="ss-stem-mid">15</td><td class="ss-leaf">2 8</td></tr>
+        </tbody>
+        <caption>Heights (cm) &nbsp;·&nbsp; Key: 4 | 12 = 124 cm (7G) &nbsp;·&nbsp; 12 | 8 = 128 cm (7H)</caption>
+      </table>
+    </div>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+<!-- SECTION 11: EXIT TICKET (bookend with retrieval) -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK — mirrors the <meta> tags in <head>. -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">Lesson ID</span>
+      <span class="cl-value">y7_sta_03</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Statistics</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Data can be organised and represented in different ways to inform, justify and persuade conclusions</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7ST02</strong> — create different types of numerical data displays including stem-and-leaf plots using software where appropriate; describe and compare the distribution of data, commenting on the shape, centre and spread including outliers and determining the range, median, mean and mode</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 2</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaboration detail</span>
+      <span class="cl-value"><strong>E1</strong> — constructing ordered stem-and-leaf plots from a class data set such as student heights in centimetres using the stems 12 to 17 (Sections 3, 5, 6, 8, 9). <strong>E2</strong> — comparing variation by category with split (back-to-back) stem-and-leaf plots, describing symmetry, skewness and spread in qualitative terms (Sections 4, 5, 10, 11).</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Construct ordered and back-to-back stem-and-leaf plots from class data, and compare distributions by shape, centre and spread.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_sta_03. Source: SA Curriculum — Mathematics R&ndash;10 Prototype 2; lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Stem-and-Leaf Plots
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL (additive — supports multiple examples) ============
+  // Each .reveal-btn carries data-we (example id) and data-steps. The shown counter
+  // is closure-captured per button — no answer/state passes through inline attributes.
+  function initWorkedExamples() {
+    document.querySelectorAll('.reveal-btn[data-we]').forEach(btn => {
+      const we = btn.dataset.we;
+      const total = parseInt(btn.dataset.steps, 10);
+      let shown = 1;
+      btn.addEventListener('click', () => {
+        shown++;
+        const step = document.getElementById(we + '-s' + shown);
+        if (step) step.classList.add('visible');
+        if (shown >= total) {
+          btn.disabled = true;
+          btn.textContent = '✓ All steps shown';
+        }
+      });
+    });
+  }
+
+  // ============ STEM-AND-LEAF BUILDER (new drag-and-drop interactive) ============
+  // Built on the template's drag-and-drop pattern: Pointer Events + a positioned
+  // ghost element. Works for the single plot and the back-to-back plot.
+  // Correct answers live in the chips' data-stem / data-side attributes and are
+  // read inside the closure-scoped check() — no answer values pass through inline
+  // onclick attributes. The Check button is wired with addEventListener.
+  function initStemLeafBuilder(rootId) {
+    const root = document.getElementById(rootId);
+    if (!root) return;
+
+    const chips    = Array.from(root.querySelectorAll('.leaf-chip'));
+    const zones    = Array.from(root.querySelectorAll('.slp-leaves'));
+    const sources  = Array.from(root.querySelectorAll('.slp-source'));
+    const checkBtn = root.querySelector('.slp-check');
+    const resetBtn = root.querySelector('.slp-reset');
+    const solveBtn = root.querySelector('.slp-solve');
+    const feedback = root.querySelector('.slp-feedback');
+
+    let drag = null;
+
+    function sourceFor(side) {
+      return sources.find(s => s.dataset.side === side) || sources[0];
+    }
+
+    // Insert a chip into a container at the pointer x position, so leaves can be
+    // dropped *between* existing leaves to build ascending / descending order.
+    function insertByX(container, chip, clientX) {
+      const others = Array.from(container.querySelectorAll('.leaf-chip')).filter(c => c !== chip);
+      let before = null;
+      for (const c of others) {
+        const r = c.getBoundingClientRect();
+        if (clientX < r.left + r.width / 2) { before = c; break; }
+      }
+      container.insertBefore(chip, before);
+    }
+
+    function clearMarks() {
+      zones.forEach(z => z.classList.remove('zone-correct', 'zone-wrong'));
+      chips.forEach(c => c.classList.remove('chip-wrong'));
+      feedback.textContent = '';
+      feedback.className = 'slp-feedback';
+    }
+
+    function startDrag(e) {
+      e.preventDefault();
+      const chip = e.currentTarget;
+      const rect = chip.getBoundingClientRect();
+
+      const ghost = document.createElement('span');
+      ghost.className = 'leaf-chip-ghost';
+      ghost.innerHTML = chip.innerHTML;
+      ghost.style.left = rect.left + 'px';
+      ghost.style.top  = rect.top + 'px';
+      document.body.appendChild(ghost);
+      chip.classList.add('dragging');
+
+      drag = {
+        chip, ghost,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+      };
+
+      chip.setPointerCapture(e.pointerId);
+      chip.addEventListener('pointermove', moveDrag);
+      chip.addEventListener('pointerup', endDrag);
+      chip.addEventListener('pointercancel', endDrag);
+    }
+
+    function moveDrag(e) {
+      if (!drag) return;
+      drag.ghost.style.left = (e.clientX - drag.offsetX) + 'px';
+      drag.ghost.style.top  = (e.clientY - drag.offsetY) + 'px';
+
+      drag.ghost.style.display = 'none';
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      drag.ghost.style.display = '';
+
+      const target = under ? under.closest('.slp-leaves, .slp-source') : null;
+      zones.forEach(z => z.classList.toggle('drop-target', z === target));
+      sources.forEach(s => s.classList.toggle('drop-target', s === target));
+    }
+
+    function endDrag(e) {
+      if (!drag) return;
+      const { chip, ghost } = drag;
+
+      ghost.style.display = 'none';
+      const under = document.elementFromPoint(e.clientX, e.clientY);
+      ghost.remove();
+      chip.classList.remove('dragging');
+      zones.forEach(z => z.classList.remove('drop-target'));
+      sources.forEach(s => s.classList.remove('drop-target'));
+
+      const target = under ? under.closest('.slp-leaves, .slp-source') : null;
+      if (target) {
+        if (target.classList.contains('slp-source')) {
+          target.appendChild(chip);
+        } else {
+          insertByX(target, chip, e.clientX);
+        }
+        clearMarks();
+      }
+
+      chip.removeEventListener('pointermove', moveDrag);
+      chip.removeEventListener('pointerup', endDrag);
+      chip.removeEventListener('pointercancel', endDrag);
+      drag = null;
+    }
+
+    // Check: verifies BOTH correct stem placement AND correct leaf order, then
+    // visibly marks the result (green / red zones, wrong chips flagged, message).
+    function check() {
+      const unplaced = chips.filter(c => c.closest('.slp-source'));
+      if (unplaced.length) {
+        feedback.textContent = 'Place every leaf on the plot before checking — ' +
+          unplaced.length + ' still waiting.';
+        feedback.className = 'slp-feedback fb-wait';
+        return;
+      }
+
+      chips.forEach(c => c.classList.remove('chip-wrong'));
+      let allGood = true;
+
+      zones.forEach(z => {
+        const zc = Array.from(z.querySelectorAll('.leaf-chip'));
+        let zoneGood = true;
+
+        // 1. correct stem + side placement
+        zc.forEach(c => {
+          const placed = c.dataset.stem === z.dataset.stem &&
+                         c.dataset.side === z.dataset.side;
+          if (!placed) { zoneGood = false; c.classList.add('chip-wrong'); }
+        });
+
+        // 2. correct leaf order within the row
+        const order = z.dataset.order || 'asc';
+        for (let i = 1; i < zc.length; i++) {
+          const prev = parseInt(zc[i - 1].dataset.leaf, 10);
+          const cur  = parseInt(zc[i].dataset.leaf, 10);
+          if (order === 'asc' ? cur < prev : cur > prev) zoneGood = false;
+        }
+
+        z.classList.remove('zone-correct', 'zone-wrong');
+        z.classList.add(zoneGood ? 'zone-correct' : 'zone-wrong');
+        if (!zoneGood) allGood = false;
+      });
+
+      if (allGood) {
+        feedback.textContent = '✓ Correct! Every leaf is on the right stem and in order.';
+        feedback.className = 'slp-feedback fb-good';
+      } else {
+        feedback.textContent = '✗ Not yet. A row in red has a leaf on the wrong stem, ' +
+          'or its leaves are out of order. Remember: the smallest leaf sits closest to the stem.';
+        feedback.className = 'slp-feedback fb-bad';
+      }
+    }
+
+    function reset() {
+      chips.forEach(c => {
+        c.classList.remove('chip-wrong');
+        sourceFor(c.dataset.side).appendChild(c);
+      });
+      clearMarks();
+    }
+
+    function solve() {
+      zones.forEach(z => {
+        const order = z.dataset.order || 'asc';
+        const belong = chips.filter(c => c.dataset.stem === z.dataset.stem &&
+                                          c.dataset.side === z.dataset.side);
+        belong.sort((a, b) => order === 'asc'
+          ? a.dataset.leaf - b.dataset.leaf
+          : b.dataset.leaf - a.dataset.leaf);
+        belong.forEach(c => { c.classList.remove('chip-wrong'); z.appendChild(c); });
+      });
+      check();
+    }
+
+    // Shuffle each source so chips don't start pre-sorted.
+    sources.forEach(s => {
+      Array.from(s.querySelectorAll('.leaf-chip'))
+        .sort(() => Math.random() - 0.5)
+        .forEach(c => s.appendChild(c));
+    });
+
+    chips.forEach(c => c.addEventListener('pointerdown', startDrag));
+    checkBtn.addEventListener('click', check);
+    if (resetBtn) resetBtn.addEventListener('click', reset);
+    if (solveBtn) solveBtn.addEventListener('click', solve);
+  }
+
+  // ============ PRACTICE DATA ============
+  // Retrieval warm-up (Section 0) — prior-knowledge prerequisites. noCount.
+  const retrieval = [
+    { q: 'Put these in order, smallest to largest: <span class="expr">15, 9, 22, 9, 17</span>', a: '9,9,15,17,22', hint: 'Write the smallest first. Equal values both still appear.' },
+    { q: 'Find the median of: <span class="expr">12, 14, 15, 18, 20</span>', a: '15', hint: 'The median is the middle value once the list is in order.' },
+    { q: 'Find the range of: <span class="expr">7, 13, 4, 19, 10</span>', a: '15', hint: 'Range = largest − smallest = 19 − 4.' },
+  ];
+
+  // We Do (Section 6) — co-produced. noCount.
+  const weDo = [
+    { q: 'The heights are 131, 135, 138, 142, 145, 149 cm. Which stems does the plot need? List them smallest first, e.g. 13,14', a: '13,14', hint: 'Smallest is 131 (stem 13), largest is 149 (stem 14).' },
+    { q: 'Write the ordered leaves for the stem 13 row, separated by commas.', a: '1,5,8', hint: 'The 130s values are 131, 135, 138 — take the ones digit of each.' },
+    { q: 'What is the range of the six heights?', a: '18', hint: 'Range = 149 − 131.' },
+  ];
+
+  // Quick check (Section 7) — class 7D plot. Counts.
+  const checkpoint = [
+    { q: 'In class 7D, the stem 14 row reads 0 3 3 7. What height does the leaf <strong>7</strong> represent?', a: '147', hint: 'Join the stem 14 to the leaf 7.' },
+    { q: 'What is the range of class 7D\'s heights?', a: '23', hint: 'Tallest is 155 cm, shortest is 132 cm. Range = 155 − 132.' },
+  ];
+
+  // Building (Section 8) — class 7E plot.
+  const practice1 = [
+    { q: 'How many students were measured in 7E?', a: '16', hint: 'Count every leaf across all five rows.' },
+    { q: 'What is the shortest height in 7E?', a: '126', hint: 'The first leaf of the top row: stem 12, leaf 6.' },
+    { q: 'What is the tallest height in 7E?', a: '163', hint: 'The last leaf of the bottom row: stem 16, leaf 3.' },
+    { q: 'What is the range of 7E\'s heights?', a: '37', hint: 'Range = tallest − shortest = 163 − 126.' },
+    { q: 'How many students are in the 130s (the stem 13 row)?', a: '5', hint: 'Count the leaves in the stem 13 row: 0 4 4 4 8.' },
+    { q: 'What height is shown by stem 16, leaf 0?', a: '160', hint: 'Join the stem to the leaf.' },
+    { q: 'How many students are 150 cm or taller?', a: '5', hint: 'Count every leaf in the stem 15 and stem 16 rows.' },
+    { q: 'What is the most common height (the mode) in 7E?', a: '134', hint: 'Find the leaf that repeats most — the stem 13 row has 4 appearing three times.' },
+    { q: 'How many students are shorter than 140 cm?', a: '7', hint: 'Count the leaves in the stem 12 and stem 13 rows.' },
+    { q: 'There are 16 values. The median is the average of the 8th and 9th. Find the median height.', a: '142', hint: 'Count to the 8th leaf (141) and 9th leaf (143); median = (141 + 143) ÷ 2.' },
+  ];
+
+  // Stretch (Section 9) — class 7F plot.
+  const practice2 = [
+    { q: '7F has 11 students. Find the median height.', a: '145', hint: 'With 11 values the median is the 6th leaf, counted from the top.' },
+    { q: 'What is the mode of 7F\'s heights?', a: '145', hint: 'Look for a repeated leaf — the stem 14 row has 5 twice.' },
+    { q: 'What is the range of 7F\'s heights?', a: '41', hint: 'Range = 162 − 121.' },
+    { q: 'A new student of height 137 cm joins 7F. Which stem does its leaf belong on?', a: '13', hint: 'The first two digits of 137 give the stem.' },
+    { q: 'Four more heights are recorded: 129, 133, 136, 133 cm. Write the ordered leaves for the stem 13 row, comma separated.', a: '3,3,6', hint: 'Only the 130s values belong on stem 13: 133, 136, 133. Order the ones digits.' },
+    { q: 'How many students in 7F are taller than 150 cm?', a: '4', hint: 'Count leaves above 150: the stem 15 and stem 16 rows.' },
+  ];
+
+  // Mastery (Section 10) — back-to-back 7G vs 7H plot.
+  const practice3 = [
+    { q: '7G has 7 students. Find the median height of 7G.', a: '138', hint: 'With 7 values the median is the 4th, counted from the smallest (closest to the stem).' },
+    { q: '7H has 8 students. Find the median height of 7H.', a: '142.5', hint: 'With 8 values average the 4th and 5th: (141 + 144) ÷ 2.' },
+    { q: 'What is the range of 7H\'s heights?', a: '30', hint: 'Range = 158 − 128.' },
+    { q: '7H\'s tallest student is how many cm taller than 7G\'s tallest student?', a: '7', hint: '7H tallest = 158 cm; 7G tallest = 151 cm.' },
+  ];
+
+  // Exit ticket (Section 11) — includes one open-response.
+  const exitProbs = [
+    { q: 'A stem-and-leaf plot shows the entry <span class="expr">15 | 4</span>. What height does this represent?', a: '154', hint: 'The stem is 15, the leaf is 4 — join them.' },
+    { q: 'A stem-and-leaf plot has 9 leaves in total. Counting from the smallest, the median is which numbered value?', a: '5', hint: 'With 9 values the middle position is the 5th.' },
+    { q: 'Give one reason a stem-and-leaf plot is more useful than the same numbers written in an unsorted list.', a: 'TEXT', hint: 'Think about what you can see at a glance — and what is NOT lost.' },
+  ];
+
+  // ============ ANSWER NORMALISATION (locked framework — copied verbatim) ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');  // strip leading +
+  }
+  // accept reordered terms: 3x+5 == 5+3x
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null; // open-ended, don't auto-mark
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // try sorting terms
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'A stem-and-leaf plot sorts and groups the data while still keeping every original value, so the shape, centre and spread are visible at a glance.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 3: tidy operators — typographic minus, space around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initStemLeafBuilder('builder1');
+  initStemLeafBuilder('builder2');
+  initWorkedExamples();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
