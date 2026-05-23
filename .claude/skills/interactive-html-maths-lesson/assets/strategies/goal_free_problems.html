@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: GOAL-FREE PROBLEMS
+================================================================================
+A scenario is set up — diagram, data, or relationship — but NO specific question
+is asked. Students decide what to find out. Cognitive-load research backs this
+for novice-to-expert development.
+
+When to use: see references/strategies.md entry #13.
+Typical position: Section 10 (Mastery tier alternative) or extension section 11+.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Replace the SVG with
+     your scenario (diagram, data table, graph, real-world image).
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. The "possible questions" panel is optional — it gives students who
+     freeze a few starter ideas. Remove it if you want pure open inquiry.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goal-Free Problems — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .gf-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+  .gf-visual {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 280px;
+  }
+  .gf-workspace {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1.5px solid var(--border);
+  }
+  .gf-workspace h4 {
+    margin: 0 0 8px; font-family: Georgia, serif; color: var(--navy); font-size: 1rem;
+  }
+  .gf-workspace textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: vertical;
+    background: white;
+  }
+  .gf-workspace textarea:focus { outline: none; border-color: var(--navy); }
+  .gf-helpers {
+    background: var(--hint-bg);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 12px;
+    font-size: 0.88rem;
+  }
+  .gf-helpers summary {
+    cursor: pointer;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .gf-helpers ul {
+    margin: 8px 0 0 18px;
+    padding: 0;
+    color: var(--navy);
+  }
+  .gf-helpers li { margin: 4px 0; }
+  .gf-status {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 800px) {
+    .gf-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     The demo is a labelled trapezium for Year 9 measurement.
+     Swap the SVG for whatever fits your topic.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">11</span>Open inquiry — what can you find out?</h2>
+  <p class="sec-desc">There's no question here. Just a shape with all its measurements labelled. Write down everything you can <em>work out</em> from the information given — areas, perimeters, angles, comparisons, anything. The more the better.</p>
+
+  <div class="gf-layout">
+    <div class="gf-visual">
+      <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" aria-label="Labelled trapezium">
+        <!-- trapezium: top side 8 cm, bottom 14 cm, height 6 cm, slant sides ~6.7 cm and ~6 cm -->
+        <polygon points="100,60 240,60 300,220 60,220"
+                 fill="#fbe1e4" stroke="#1D2B5E" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- height indicator (dashed) -->
+        <line x1="170" y1="60" x2="170" y2="220" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <!-- right-angle marks at the height-base intersections -->
+        <path d="M 170 70 L 180 70 L 180 60" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+        <path d="M 170 210 L 180 210 L 180 220" fill="none" stroke="#6b7280" stroke-width="1.5"/>
+        <!-- labels -->
+        <text x="170" y="45" font-family="Georgia, serif" font-size="16" fill="#1D2B5E" text-anchor="middle" font-weight="bold">8 cm</text>
+        <text x="180" y="245" font-family="Georgia, serif" font-size="16" fill="#1D2B5E" text-anchor="middle" font-weight="bold">14 cm</text>
+        <text x="200" y="140" font-family="Georgia, serif" font-size="14" fill="#6b7280">6 cm</text>
+        <text x="65" y="140" font-family="Georgia, serif" font-size="14" fill="#E8485A" font-weight="bold" transform="rotate(-65 65 140)">7.2 cm</text>
+        <text x="290" y="140" font-family="Georgia, serif" font-size="14" fill="#E8485A" font-weight="bold" transform="rotate(70 290 140)">8.5 cm</text>
+        <text x="180" y="270" font-family="Georgia, serif" font-size="12" fill="#6b7280" text-anchor="middle" font-style="italic">(not to exact scale)</text>
+      </svg>
+    </div>
+    <div class="gf-workspace">
+      <h4>What can you find out?</h4>
+      <textarea id="gfWorkspace" placeholder="Write what you discover — equations, calculations, observations. Try to find at least three things."></textarea>
+      <details class="gf-helpers">
+        <summary>Stuck? Some starter questions</summary>
+        <ul>
+          <li>What is the difference between the parallel sides?</li>
+          <li>What is the perimeter?</li>
+          <li>What is the area?</li>
+          <li>Is the trapezium isosceles?</li>
+          <li>How does the area compare to a rectangle of the same height?</li>
+          <li>What would happen to the area if you doubled the height?</li>
+        </ul>
+      </details>
+      <div class="gf-status">Your notes stay on this page — your teacher can see them in teacher mode.</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     No interactive logic needed — goal-free problems are deliberately
+     open. The workspace is just a textarea that the teacher reviews.
+     ============================================================ */
+  // Intentionally empty — the strategy works without JS by design.
+</script>
+
+</body>
+</html>

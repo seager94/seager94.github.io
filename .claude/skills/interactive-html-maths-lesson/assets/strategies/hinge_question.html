@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: HINGE QUESTION
+================================================================================
+A single multiple-choice question where each distractor maps to a specific
+misconception. Selecting any option reveals targeted feedback.
+
+When to use: see references/strategies.md entry #1.
+Typical position: Section 7 (replacing Quick Check) or Section 4.5 between
+AS A CLASS and I DO.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body at the appropriate position.
+     Renumber the sec-num to match its section number in the lesson.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the four options and their feedback to match your topic and
+     misconceptions.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hinge Question — Strategy Demo</title>
+<style>
+  /* ============================================================
+     STANDARD HOUSE PALETTE — already in lesson_template.html.
+     Don't duplicate when integrating; use the existing :root.
+     ============================================================ */
+  :root {
+    --navy: #1D2B5E;
+    --coral: #E8485A;
+    --coral-soft: #fbe1e4;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, "Times New Roman", serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  section.lesson.hinge {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  .hinge-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy); color: white;
+    white-space: nowrap;
+  }
+  .hinge-stem {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-family: Georgia, serif;
+    font-size: 1.25rem;
+    color: var(--navy);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .hinge-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .hinge-opt {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: left;
+  }
+  .hinge-opt:hover { border-color: var(--navy); transform: translateY(-1px); }
+  .hinge-opt .opt-letter {
+    background: var(--hint-bg); color: var(--navy);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .hinge-opt.selected.correct { background: var(--good-soft); border-color: var(--good); }
+  .hinge-opt.selected.correct .opt-letter { background: var(--good); color: white; }
+  .hinge-opt.selected.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .hinge-opt.selected.incorrect .opt-letter { background: var(--bad); color: white; }
+  .hinge-opt.dimmed { opacity: 0.45; cursor: not-allowed; }
+  .hinge-feedback {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .hinge-feedback.visible { display: block; }
+  .hinge-feedback.correct { background: var(--good-soft); color: #1d4a30; border-left: 4px solid var(--good); }
+  .hinge-feedback.incorrect { background: var(--bad-soft); color: #6a2520; border-left: 4px solid var(--bad); }
+  .hinge-feedback strong { font-weight: 700; }
+  .hinge-reset {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 7px 14px; border-radius: 8px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600;
+    margin-top: 12px;
+  }
+  body.teacher-mode .hinge-opt.correct-answer { box-shadow: 0 0 0 3px var(--good); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     Customise: stem, four options, four feedback messages.
+     The correct option needs data-correct="true".
+     Each option's data-feedback-id points to its feedback div.
+     ============================================================ -->
+<section class="lesson hinge">
+  <h2>
+    <span class="sec-num">7</span>Hinge check
+    <span class="hinge-tag">🎯 Pick one</span>
+  </h2>
+  <p class="sec-desc">A right-angled triangle has legs of 6&nbsp;cm and 8&nbsp;cm. Which value gives the hypotenuse?</p>
+
+  <div class="hinge-stem expr">
+    <span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>² &nbsp;&nbsp;⟶&nbsp;&nbsp; <span class="var">c</span> = ?
+  </div>
+
+  <div class="hinge-options" id="hingeOpts">
+    <button class="hinge-opt" data-feedback-id="fb-A"            onclick="pickHingeOption(this)"><span class="opt-letter">A</span><span>14&nbsp;cm</span></button>
+    <button class="hinge-opt correct-answer" data-correct="true" data-feedback-id="fb-B" onclick="pickHingeOption(this)"><span class="opt-letter">B</span><span>10&nbsp;cm</span></button>
+    <button class="hinge-opt" data-feedback-id="fb-C"            onclick="pickHingeOption(this)"><span class="opt-letter">C</span><span>100&nbsp;cm</span></button>
+    <button class="hinge-opt" data-feedback-id="fb-D"            onclick="pickHingeOption(this)"><span class="opt-letter">D</span><span>28&nbsp;cm</span></button>
+  </div>
+
+  <div class="hinge-feedback incorrect" id="fb-A">
+    <strong>Not quite — you added the legs.</strong> Pythagoras says we add the <em>squares</em> of the legs, not the legs themselves. 6 + 8 = 14, but 6² + 8² = 36 + 64 = 100, and <span class="var">c</span> = √100 = 10.
+  </div>
+  <div class="hinge-feedback correct" id="fb-B">
+    <strong>Correct.</strong> 6² + 8² = 36 + 64 = 100, and √100 = 10. The hypotenuse is 10 cm — and notice 10 is longer than each leg, which is always true.
+  </div>
+  <div class="hinge-feedback incorrect" id="fb-C">
+    <strong>So close — you forgot the last step.</strong> 100 is the value of <span class="var">c</span>², not <span class="var">c</span>. You still need to square-root: <span class="var">c</span> = √100 = 10.
+  </div>
+  <div class="hinge-feedback incorrect" id="fb-D">
+    <strong>That's the perimeter, not the hypotenuse.</strong> 6 + 8 + (10 + 4?) — and even that's not how Pythagoras works. Apply <span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²: 36 + 64 = 100, so <span class="var">c</span> = 10.
+  </div>
+
+  <button class="hinge-reset" onclick="resetHinge()">↺ Try again</button>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  function pickHingeOption(btn) {
+    if (btn.classList.contains('dimmed')) return;
+    const isCorrect = btn.dataset.correct === 'true';
+    btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');
+    // dim other options
+    document.querySelectorAll('.hinge-opt').forEach(o => {
+      if (o !== btn) o.classList.add('dimmed');
+    });
+    // show feedback for this option
+    document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));
+    const fbId = btn.dataset.feedbackId;
+    if (fbId) document.getElementById(fbId).classList.add('visible');
+  }
+
+  function resetHinge() {
+    document.querySelectorAll('.hinge-opt').forEach(o => {
+      o.classList.remove('selected', 'correct', 'incorrect', 'dimmed');
+    });
+    document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));
+  }
+</script>
+
+</body>
+</html>

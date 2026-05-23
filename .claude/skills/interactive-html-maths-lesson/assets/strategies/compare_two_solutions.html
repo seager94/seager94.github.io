@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: COMPARE TWO SOLUTIONS
+================================================================================
+Two correct methods for the same problem are shown side-by-side. Students
+answer "what's the same?", "what's different?", and "which method is better
+when?" Builds strategic flexibility — students see that one problem can have
+multiple valid approaches.
+
+When to use: see references/strategies.md entry #8.
+Typical position: Section 5 (I DO variant) or Section 8 (post-practice consolidation).
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Each column is a
+     standalone worked solution. Customise the problem stem, method labels,
+     and step-by-step solutions.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. The three textareas are open-response — no auto-marking. Teacher
+     reviews in teacher mode.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare Two Solutions — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .ct-stem {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+  }
+  .ct-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .ct-method {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ct-method-head {
+    padding: 10px 14px;
+    color: white;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-size: 1.02rem;
+  }
+  .ct-method.a .ct-method-head { background: var(--navy); }
+  .ct-method.b .ct-method-head { background: var(--coral); }
+  .ct-method-body {
+    padding: 14px 16px;
+    font-family: Georgia, serif;
+    font-size: 1.02rem;
+    line-height: 1.85;
+  }
+  .ct-method-body .ct-line { padding: 2px 0; }
+  .ct-method-body .ct-answer {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: var(--good-soft);
+    color: #1d4a30;
+    border-radius: 6px;
+    font-weight: 700;
+    display: inline-block;
+  }
+  .ct-prompts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .ct-prompt {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .ct-prompt.same     { border-left: 4px solid var(--good); }
+  .ct-prompt.diff     { border-left: 4px solid var(--coral); }
+  .ct-prompt.betterwhen { border-left: 4px solid var(--navy); }
+  .ct-prompt h4 {
+    margin: 0 0 6px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 0.98rem;
+  }
+  .ct-prompt textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    resize: vertical;
+  }
+  .ct-prompt textarea:focus { outline: none; border-color: var(--navy); }
+  .ct-status {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+  @media (max-width: 700px) {
+    .ct-methods { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     The demo compares two methods for finding 15% of $80.
+     Replace stem + both method bodies for your topic.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">8</span>Two ways to the same answer</h2>
+  <p class="sec-desc">Two students were asked to calculate <strong>15% of $80</strong>. Both got the right answer using different methods. Read both carefully, then answer the three questions below.</p>
+
+  <div class="ct-stem">
+    🛍️ A jacket is $80 with 15% off — how much is the discount?
+  </div>
+
+  <div class="ct-methods">
+    <div class="ct-method a">
+      <div class="ct-method-head">Method A — Multiplier</div>
+      <div class="ct-method-body">
+        <div class="ct-line">15% as a decimal: 0.15</div>
+        <div class="ct-line">0.15 × 80</div>
+        <div class="ct-line">= 12</div>
+        <div class="ct-answer">$12 off</div>
+      </div>
+    </div>
+    <div class="ct-method b">
+      <div class="ct-method-head">Method B — Build up from 10%</div>
+      <div class="ct-method-body">
+        <div class="ct-line">10% of 80 = 8</div>
+        <div class="ct-line">5% of 80 = 4 &nbsp;<span style="color:var(--muted); font-size:0.88rem;">(half of 10%)</span></div>
+        <div class="ct-line">15% = 10% + 5% = 8 + 4</div>
+        <div class="ct-line">= 12</div>
+        <div class="ct-answer">$12 off</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ct-prompts">
+    <div class="ct-prompt same">
+      <h4>What's the SAME about both methods?</h4>
+      <textarea placeholder="e.g. They both arrive at..."></textarea>
+    </div>
+    <div class="ct-prompt diff">
+      <h4>What's DIFFERENT?</h4>
+      <textarea placeholder="e.g. Method A uses..., Method B uses..."></textarea>
+    </div>
+    <div class="ct-prompt betterwhen">
+      <h4>Which method works BETTER WHEN... ?</h4>
+      <textarea placeholder="e.g. Method A is better when you have a calculator..."></textarea>
+    </div>
+  </div>
+
+  <div class="ct-status">Your responses stay on this page — your teacher can see them in teacher mode.</div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     No auto-marking — open-ended comparison prompts. Teacher reviews.
+     ============================================================ */
+  // Intentionally minimal — the strategy works without JS by design.
+</script>
+
+</body>
+</html>

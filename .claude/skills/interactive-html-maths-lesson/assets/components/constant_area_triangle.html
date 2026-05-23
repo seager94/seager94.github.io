@@ -1,0 +1,228 @@
+<!--
+  Constant-area triangle — DGS-substitute component (component 9).
+  Reusable asset for the interactive-html-maths-lesson skill.
+
+  COLOURS: every colour is a var(--...) inherited from the template's
+  :root. The component renders in whatever palette the template defines —
+  no hardcoded hex. Do not reintroduce literal colours here.
+
+  HOW THE SKILL USES THIS FILE:
+  1. Merge the <style> rules into the lesson's existing <style> block.
+  2. Place the <section class="lesson"> ... </section> block in the
+     AS A CLASS phase, renumbering the section number to fit the lesson.
+  3. Merge the initConstantAreaTriangle function into the lesson's
+     <script> block (additive — touches none of the eight locked functions).
+  4. Emit one initConstantAreaTriangle({...}) call with the lesson's
+     own base/height values. Adjust the visible numeric labels in the
+     SVG and panel to match.
+-->
+
+<!-- ============ STYLE: merge into the lesson's <style> block ============ -->
+<style>
+  /* constant-area triangle component */
+  .cat{display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+  .cat-stage{
+    flex:1 1 340px; min-width:300px;
+    background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:10px;
+  }
+  .cat svg{display:block; width:100%; height:auto; touch-action:none;}
+  .cat-apex{cursor:grab; touch-action:none;}
+  .cat-apex:active{cursor:grabbing;}
+  .cat-apex:focus{outline:none;}
+  .cat-panel{
+    flex:1 1 240px; min-width:230px;
+    background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px;
+  }
+  .cat-panel h3{font-family:Georgia,serif; color:var(--navy); margin:0 0 10px; font-size:1.05rem;}
+  .cat-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:7px 0; border-bottom:1px dashed var(--border); font-size:.95rem;
+  }
+  .cat-row:last-of-type{border-bottom:none;}
+  .cat-row .lab{color:var(--muted);}
+  .cat-row .val{font-family:Georgia,Cambria,serif; color:var(--navy); font-weight:bold;}
+  .cat-area-line{
+    margin-top:12px; padding:12px; border-radius:9px; background:var(--coral-soft);
+    text-align:center; font-family:Georgia,Cambria,serif; color:var(--navy); font-size:1.05rem;
+  }
+  .cat-area-line .big{color:var(--coral); font-weight:bold; font-size:1.3rem;}
+  .cat-status{
+    margin-top:12px; font-size:.85rem; color:var(--muted);
+    background:var(--hint-bg); border-radius:8px; padding:9px 11px;
+  }
+  .cat-status.done{color:var(--good); font-weight:600;}
+  .cat-q{
+    margin-top:16px; font-style:italic; color:var(--navy);
+    border-left:3px solid var(--coral); padding-left:12px; font-size:.92rem;
+  }
+  /* SVG strokes/fills driven by CSS so they inherit the palette */
+  .cat-baseext{stroke:var(--border); stroke-width:2; stroke-dasharray:4 5;}
+  .cat-guide{stroke:var(--coral); stroke-width:2; stroke-dasharray:6 5; opacity:.65;}
+  .cat-guide-label{font-family:Georgia,serif; font-size:13px; fill:var(--coral); opacity:.8;}
+  .cat-fill{fill:var(--coral); fill-opacity:.12;}
+  .cat-base{stroke:var(--navy); stroke-width:3.5;}
+  .cat-slant{stroke:var(--navy); stroke-width:3;}
+  .cat-perp{stroke:var(--coral); stroke-width:2; stroke-dasharray:5 4;}
+  .cat-ra{fill:none; stroke:var(--coral); stroke-width:2;}
+  .cat-vlabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-hlabel{font-family:Georgia,serif; font-size:14px; fill:var(--coral);}
+  .cat-baselabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-vdot{fill:var(--navy);}
+  .cat-ring{fill:none; stroke:var(--navy); stroke-width:2; transition:opacity .15s;}
+  .cat-handle{fill:var(--coral); stroke:#ffffff; stroke-width:3;}
+</style>
+
+<!-- ====== HTML: place in the AS A CLASS phase (renumber sec-num to fit) ====== -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Drag the top corner — what stays the same?</h2>
+  <p class="sec-desc">The base and the perpendicular height are fixed. Slide corner <strong>C</strong> left and right along the dashed line. Watch the slanted sides change shape — and watch the area.</p>
+
+  <div class="cat">
+    <!-- STAGE -->
+    <div class="cat-stage">
+      <svg id="catSvg" viewBox="0 0 600 380" role="img"
+           aria-label="A triangle with a draggable top vertex on a fixed-height line">
+        <line class="cat-baseext" x1="40" y1="300" x2="150" y2="300"/>
+        <line class="cat-baseext" x1="450" y1="300" x2="560" y2="300"/>
+        <line class="cat-guide" x1="40" y1="150" x2="560" y2="150"/>
+        <text class="cat-guide-label" x="48" y="142">fixed-height line</text>
+        <polygon id="catFill" class="cat-fill" points="150,300 450,300 300,150"/>
+        <line class="cat-base" x1="150" y1="300" x2="450" y2="300"/>
+        <line id="catSlantA" class="cat-slant" x1="150" y1="300" x2="300" y2="150"/>
+        <line id="catSlantB" class="cat-slant" x1="450" y1="300" x2="300" y2="150"/>
+        <line id="catPerp" class="cat-perp" x1="300" y1="150" x2="300" y2="300"/>
+        <polyline id="catRA" class="cat-ra" points="300,288 312,288 312,300"/>
+        <text class="cat-baselabel" x="300" y="332" text-anchor="middle">base = 12 cm</text>
+        <text id="catHLabel" class="cat-hlabel" x="312" y="230">h = 6 cm</text>
+        <circle class="cat-vdot" cx="150" cy="300" r="4.5"/>
+        <circle class="cat-vdot" cx="450" cy="300" r="4.5"/>
+        <text class="cat-vlabel" x="138" y="320">A</text>
+        <text class="cat-vlabel" x="456" y="320">B</text>
+        <text id="catCLabel" class="cat-vlabel" x="300" y="132" text-anchor="middle">C</text>
+        <circle id="catFocusRing" class="cat-ring" cx="300" cy="150" r="18" opacity="0"/>
+        <circle id="catApex" class="cat-apex cat-handle" cx="300" cy="150" r="12"
+                tabindex="0" role="slider" aria-label="Triangle apex position"
+                aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"/>
+      </svg>
+    </div>
+
+    <!-- READOUT PANEL -->
+    <div class="cat-panel">
+      <h3>Measurements</h3>
+      <div class="cat-row"><span class="lab">Base</span><span class="val">12 cm</span></div>
+      <div class="cat-row"><span class="lab">Perpendicular height</span><span class="val">6 cm</span></div>
+      <div class="cat-row"><span class="lab">Triangle type</span><span class="val" id="catType">acute</span></div>
+      <div class="cat-area-line">
+        Area = &frac12; &times; 12 &times; 6 = <span class="big" id="catArea">36</span> cm&sup2;
+      </div>
+      <div class="cat-status" id="catStatus">Drag C to a few positions. Notice the area readout.</div>
+      <div class="cat-q">What changes as you drag C? What stays exactly the same — and why?</div>
+      <button class="btn-secondary" id="catReset">&#8634; Reset to centre</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== SCRIPT: merge initConstantAreaTriangle into the lesson <script> ======
+     Additive. Does NOT touch the eight locked functions
+     (buildPractice, checkAnswer, answerMatches, formatAnswerDisplay,
+      updateProgress, toggleHint, toggleAnswer, toggleTier).
+     Then emit ONE init call with the lesson's own base/height values.
+     NOTE: this function contains no colours — palette is handled in CSS. -->
+<script>
+function initConstantAreaTriangle(cfg){
+  const svg   = document.getElementById(cfg.svgId);
+  if(!svg) return;
+  const apex  = svg.querySelector('#'+cfg.ids.apex);
+  const ring  = svg.querySelector('#'+cfg.ids.focusRing);
+  const fill  = svg.querySelector('#'+cfg.ids.fill);
+  const slA   = svg.querySelector('#'+cfg.ids.slantA);
+  const slB   = svg.querySelector('#'+cfg.ids.slantB);
+  const perp  = svg.querySelector('#'+cfg.ids.perp);
+  const ra    = svg.querySelector('#'+cfg.ids.rightAngle);
+  const cLab  = svg.querySelector('#'+cfg.ids.cLabel);
+  const hLab  = svg.querySelector('#'+cfg.ids.hLabel);
+  const elArea= document.getElementById(cfg.ids.area);
+  const elType= document.getElementById(cfg.ids.type);
+  const elStat= document.getElementById(cfg.ids.status);
+  const btnRst= document.getElementById(cfg.ids.reset);
+
+  const Ax=cfg.Ax, Bx=cfg.Bx, baseY=cfg.baseY, guideY=cfg.guideY;
+  const minX=cfg.minX, maxX=cfg.maxX;
+  const areaValue = 0.5 * cfg.baseCm * cfg.heightCm;   // computed, never hardcoded
+  const typesSeen = {};
+  let apexX = cfg.startX;
+
+  function svgX(clientX){
+    const pt = svg.createSVGPoint();
+    pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  function clamp(v){ return Math.max(minX, Math.min(maxX, v)); }
+  function classify(x){
+    if(Math.abs(x-Ax)<2 || Math.abs(x-Bx)<2) return 'right-angled';
+    if(x>Ax && x<Bx) return 'acute';
+    return 'obtuse';
+  }
+  function redraw(){
+    apexX = clamp(apexX);
+    fill.setAttribute('points', Ax+','+baseY+' '+Bx+','+baseY+' '+apexX+','+guideY);
+    slA.setAttribute('x2', apexX); slA.setAttribute('y2', guideY);
+    slB.setAttribute('x2', apexX); slB.setAttribute('y2', guideY);
+    perp.setAttribute('x1', apexX); perp.setAttribute('x2', apexX);
+    ra.setAttribute('points', apexX+','+(baseY-12)+' '+(apexX+12)+','+(baseY-12)+' '+(apexX+12)+','+baseY);
+    cLab.setAttribute('x', apexX);
+    hLab.setAttribute('x', apexX+12);
+    hLab.setAttribute('y', (guideY+baseY)/2);
+    apex.setAttribute('cx', apexX);
+    ring.setAttribute('cx', apexX);
+    elArea.textContent = Number.isInteger(areaValue) ? areaValue : areaValue.toFixed(1);
+    const t = classify(apexX);
+    elType.textContent = t;
+    typesSeen[t] = true;
+    apex.setAttribute('aria-valuenow', Math.round((apexX-minX)/(maxX-minX)*100));
+    if(typesSeen['right-angled'] && typesSeen['acute'] && typesSeen['obtuse']){
+      elStat.textContent =
+        "You've made all three triangle types \u2014 and the area stayed "+elArea.textContent+" cm\u00b2 every time.";
+      elStat.classList.add('done');
+    }
+  }
+
+  let dragging=false;
+  apex.addEventListener('pointerdown', function(e){ dragging=true; apex.setPointerCapture(e.pointerId); e.preventDefault(); });
+  apex.addEventListener('pointermove', function(e){ if(dragging){ apexX=clamp(svgX(e.clientX)); redraw(); } });
+  apex.addEventListener('pointerup',   function(){ dragging=false; });
+  apex.addEventListener('pointercancel',function(){ dragging=false; });
+  apex.addEventListener('keydown', function(e){
+    const step = e.shiftKey ? 30 : 10;
+    if(e.key==='ArrowLeft' || e.key==='ArrowDown'){ apexX-=step; redraw(); e.preventDefault(); }
+    if(e.key==='ArrowRight'|| e.key==='ArrowUp'){   apexX+=step; redraw(); e.preventDefault(); }
+  });
+  apex.addEventListener('focus', function(){ ring.setAttribute('opacity','1'); });
+  apex.addEventListener('blur',  function(){ ring.setAttribute('opacity','0'); });
+  btnRst.addEventListener('click', function(){
+    apexX = cfg.startX;
+    elStat.classList.remove('done');
+    elStat.textContent = 'Drag C to a few positions. Notice the area readout.';
+    for(const k in typesSeen) delete typesSeen[k];
+    redraw();
+  });
+
+  redraw();
+}
+
+/* Emit ONE call per lesson. Adjust baseCm / heightCm and the visible
+   SVG + panel labels to match the lesson's chosen triangle. */
+initConstantAreaTriangle({
+  svgId:'catSvg',
+  ids:{
+    apex:'catApex', focusRing:'catFocusRing', fill:'catFill',
+    slantA:'catSlantA', slantB:'catSlantB', perp:'catPerp',
+    rightAngle:'catRA', cLabel:'catCLabel', hLabel:'catHLabel',
+    area:'catArea', type:'catType', status:'catStatus', reset:'catReset'
+  },
+  Ax:150, Bx:450, baseY:300, guideY:150,
+  minX:50, maxX:550,
+  startX:300,
+  baseCm:12, heightCm:6
+});
+</script>

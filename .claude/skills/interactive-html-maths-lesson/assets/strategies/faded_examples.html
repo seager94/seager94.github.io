@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: FADED WORKED EXAMPLES
+================================================================================
+A sequence of 3–4 worked examples on the same procedure, each one removing a
+little more scaffolding. Example 1 is fully worked (read-only). Each subsequent
+example has more inline blanks for the student to fill in. The last example is
+fully independent.
+
+When to use: see references/strategies.md entry #3.
+Typical position: replaces Section 5 (I DO) and Section 6 (WE DO).
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Each .faded-blank input
+     has a data-expected attribute with the correct value (whitespace
+     stripped, lowercased for comparison).
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the procedure and the four examples. Plan which step is the
+     "key step" for each example — that's the one to blank out first.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faded Examples — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .faded-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .faded-ex {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    position: relative;
+  }
+  .faded-ex.read-only { background: #f7faff; border-left: 4px solid var(--navy); }
+  .faded-ex.completion { background: #f9f3df; border-left: 4px solid #c89638; }
+  .faded-ex.independent { background: #fde4d6; border-left: 4px solid #d57350; }
+
+  .faded-ex .faded-label {
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .faded-ex .faded-stem {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .faded-ex .faded-work {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 1.85;
+    overflow-x: auto;
+  }
+  .faded-ex .faded-work .read { color: var(--navy); }
+  .faded-blank {
+    display: inline-block;
+    width: 60px;
+    padding: 2px 6px;
+    border: 1.5px solid var(--coral);
+    border-radius: 6px;
+    background: white;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .faded-blank.correct { background: var(--good-soft); border-color: var(--good); }
+  .faded-blank.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .faded-ex-actions {
+    display: flex; gap: 10px; align-items: center;
+    margin-top: 10px;
+  }
+  .faded-ex-actions .faded-check {
+    background: var(--coral); color: white;
+    border: none; padding: 7px 14px; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .faded-ex-actions .faded-reveal {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 7px 14px; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .faded-ex-actions .faded-status {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-left: auto;
+  }
+  body.teacher-mode .faded-blank { background: var(--good-soft); border-color: var(--good); }
+  body.teacher-mode .faded-blank::after { content: attr(data-expected); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Faded examples — the squaring routine</h2>
+  <p class="sec-desc">Four examples of the same Pythagoras routine. The first is fully worked — read it. Each example after has a little less written down. Fill the coral blanks; check after each.</p>
+
+  <div class="faded-grid">
+
+    <div class="faded-ex read-only">
+      <div class="faded-label">Example 1 — fully worked</div>
+      <div class="faded-stem">Legs <span class="var">a</span> = 3, <span class="var">b</span> = 4. Find <span class="var">c</span>.</div>
+      <div class="faded-work expr read">
+        3² + 4² = <span class="var">c</span>²<br>
+        9 + 16 = <span class="var">c</span>²<br>
+        25 = <span class="var">c</span>²<br>
+        <span class="var">c</span> = √25 = <strong>5</strong>
+      </div>
+    </div>
+
+    <div class="faded-ex completion" data-faded-id="ex2">
+      <div class="faded-label">Example 2 — fill the squares</div>
+      <div class="faded-stem">Legs <span class="var">a</span> = 6, <span class="var">b</span> = 8. Find <span class="var">c</span>.</div>
+      <div class="faded-work expr">
+        6² + 8² = <span class="var">c</span>²<br>
+        <input class="faded-blank" data-expected="36"> + <input class="faded-blank" data-expected="64"> = <span class="var">c</span>²<br>
+        <input class="faded-blank" data-expected="100"> = <span class="var">c</span>²<br>
+        <span class="var">c</span> = √100 = <strong>10</strong>
+      </div>
+      <div class="faded-ex-actions">
+        <button class="faded-check" onclick="checkFaded('ex2')">Check</button>
+        <button class="faded-reveal" onclick="revealFaded('ex2')">Show answer</button>
+        <span class="faded-status" id="status-ex2"></span>
+      </div>
+    </div>
+
+    <div class="faded-ex completion" data-faded-id="ex3">
+      <div class="faded-label">Example 3 — fill more of the work</div>
+      <div class="faded-stem">Legs <span class="var">a</span> = 5, <span class="var">b</span> = 12. Find <span class="var">c</span>.</div>
+      <div class="faded-work expr">
+        <input class="faded-blank" data-expected="25"> + <input class="faded-blank" data-expected="144"> = <span class="var">c</span>²<br>
+        <input class="faded-blank" data-expected="169"> = <span class="var">c</span>²<br>
+        <span class="var">c</span> = √<input class="faded-blank" data-expected="169"> = <input class="faded-blank" data-expected="13">
+      </div>
+      <div class="faded-ex-actions">
+        <button class="faded-check" onclick="checkFaded('ex3')">Check</button>
+        <button class="faded-reveal" onclick="revealFaded('ex3')">Show answer</button>
+        <span class="faded-status" id="status-ex3"></span>
+      </div>
+    </div>
+
+    <div class="faded-ex independent" data-faded-id="ex4">
+      <div class="faded-label">Example 4 — fully independent</div>
+      <div class="faded-stem">Legs <span class="var">a</span> = 9, <span class="var">b</span> = 12. Find <span class="var">c</span>.</div>
+      <div class="faded-work expr">
+        <span class="var">c</span> = <input class="faded-blank" data-expected="15" style="width: 80px;">
+      </div>
+      <div class="faded-ex-actions">
+        <button class="faded-check" onclick="checkFaded('ex4')">Check</button>
+        <button class="faded-reveal" onclick="revealFaded('ex4')">Show answer</button>
+        <span class="faded-status" id="status-ex4"></span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  function checkFaded(exId) {
+    const card = document.querySelector('[data-faded-id="' + exId + '"]');
+    const blanks = card.querySelectorAll('.faded-blank');
+    let allCorrect = true, attempted = 0;
+    blanks.forEach(b => {
+      b.classList.remove('correct', 'incorrect');
+      if (b.value.trim() === '') return;
+      attempted++;
+      const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g, '');
+      if (norm(b.value) === norm(b.dataset.expected)) {
+        b.classList.add('correct');
+      } else {
+        b.classList.add('incorrect');
+        allCorrect = false;
+      }
+    });
+    const status = document.getElementById('status-' + exId);
+    if (attempted === 0) {
+      status.textContent = 'Fill in the blanks first.';
+    } else if (attempted < blanks.length) {
+      status.textContent = `${attempted}/${blanks.length} attempted — keep going.`;
+    } else if (allCorrect) {
+      status.textContent = '✓ All correct.';
+    } else {
+      status.textContent = '✗ Some incorrect — check the squares.';
+    }
+  }
+
+  function revealFaded(exId) {
+    const card = document.querySelector('[data-faded-id="' + exId + '"]');
+    card.querySelectorAll('.faded-blank').forEach(b => {
+      b.value = b.dataset.expected;
+      b.classList.add('correct');
+    });
+    document.getElementById('status-' + exId).textContent = 'Answer shown.';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: ORDER THE STEPS
+================================================================================
+A correct solution is shown with its steps in jumbled order. Students reorder
+the cards using up/down buttons (touch-friendly; works on smartboard, laptop,
+and tablet). A Check Order button validates against the expected sequence.
+
+When to use: see references/strategies.md entry #4.
+Typical position: Section 6 (WE DO variant) or a 5.5 between I DO and WE DO.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Each step card has a
+     data-correct-pos attribute (1-indexed). They appear in jumbled order
+     in the markup — the JS keeps the markup order until the student moves
+     cards or shuffles.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the four-to-six step cards. Plan a sequence where order
+     genuinely matters (not just labels — the maths breaks if reordered).
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order the Steps — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .order-problem-stem {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .order-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    counter-reset: stepCounter;
+  }
+  .order-card {
+    counter-increment: stepCounter;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    transition: background 0.25s, border-color 0.25s, transform 0.18s;
+  }
+  .order-card::before {
+    content: counter(stepCounter);
+    background: var(--coral); color: white;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+  .order-card.correct { background: var(--good-soft); border-color: var(--good); }
+  .order-card.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .order-card.locked { opacity: 0.7; }
+  .order-card.locked .order-buttons button { display: none; }
+  .order-content {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--text);
+  }
+  .order-buttons {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .order-buttons button {
+    background: var(--hint-bg); color: var(--navy);
+    border: 1px solid var(--border);
+    width: 32px; height: 26px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+    transition: background 0.15s;
+  }
+  .order-buttons button:hover { background: var(--navy); color: white; }
+  .order-buttons button:disabled { opacity: 0.3; cursor: not-allowed; background: var(--hint-bg); color: var(--navy); }
+  .order-actions {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .order-actions button {
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .order-actions .order-check { background: var(--coral); color: white; }
+  .order-actions .order-shuffle, .order-actions .order-show {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .order-status {
+    font-size: 0.9rem; color: var(--muted); font-style: italic;
+    margin-left: auto;
+  }
+  body.teacher-mode .order-card::after {
+    content: '(correct pos: ' attr(data-correct-pos) ')';
+    font-size: 0.7rem; color: var(--muted); margin-left: 8px;
+    grid-column: 2 / 3;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     The list below is in jumbled order. data-correct-pos tells the JS
+     where each card should end up. Customise the cards to suit the topic.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Order the working</h2>
+  <p class="sec-desc">A right-angled triangle has legs of 6&nbsp;cm and 8&nbsp;cm. The four steps below show how to find the hypotenuse — but they're in the wrong order. Use the ↑ and ↓ buttons to put them right, then click <strong>Check order</strong>.</p>
+
+  <div class="order-problem-stem expr">
+    Find the hypotenuse: legs <span class="var">a</span> = 6, <span class="var">b</span> = 8
+  </div>
+
+  <ul class="order-list" id="orderList">
+    <li class="order-card" data-correct-pos="4">
+      <div class="order-content expr"><span class="var">c</span> = √100 = <strong>10</strong>&nbsp;cm</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="1">
+      <div class="order-content expr">Write the formula: <span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>² &nbsp;⟶&nbsp; 6² + 8² = <span class="var">c</span>²</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="3">
+      <div class="order-content expr"><span class="var">c</span>² = 100</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="2">
+      <div class="order-content expr">Compute the squares: 36 + 64 = <span class="var">c</span>²</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+  </ul>
+
+  <div class="order-actions">
+    <button class="order-check" onclick="checkOrder()">Check order</button>
+    <button class="order-shuffle" onclick="shuffleOrder()">↻ Shuffle</button>
+    <button class="order-show" onclick="showOrderAnswer()">Show answer</button>
+    <span class="order-status" id="orderStatus"></span>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  function moveOrder(btn, direction) {
+    const card = btn.closest('.order-card');
+    if (card.classList.contains('locked')) return;
+    const sibling = direction === -1 ? card.previousElementSibling : card.nextElementSibling;
+    if (!sibling) return;
+    const list = card.parentElement;
+    if (direction === -1) list.insertBefore(card, sibling);
+    else list.insertBefore(sibling, card);
+    updateOrderButtons();
+    clearOrderState();
+  }
+
+  function updateOrderButtons() {
+    const cards = document.querySelectorAll('#orderList .order-card');
+    cards.forEach((c, i) => {
+      const [up, down] = c.querySelectorAll('.order-buttons button');
+      up.disabled = (i === 0);
+      down.disabled = (i === cards.length - 1);
+    });
+  }
+
+  function clearOrderState() {
+    document.querySelectorAll('.order-card').forEach(c => c.classList.remove('correct', 'incorrect'));
+    document.getElementById('orderStatus').textContent = '';
+  }
+
+  function checkOrder() {
+    const cards = document.querySelectorAll('#orderList .order-card');
+    let allCorrect = true;
+    cards.forEach((c, i) => {
+      const expected = parseInt(c.dataset.correctPos, 10);
+      const actual = i + 1;
+      c.classList.remove('correct', 'incorrect');
+      if (expected === actual) {
+        c.classList.add('correct');
+      } else {
+        c.classList.add('incorrect');
+        allCorrect = false;
+      }
+    });
+    const status = document.getElementById('orderStatus');
+    if (allCorrect) {
+      status.textContent = '✓ Perfect order — the working flows.';
+      cards.forEach(c => c.classList.add('locked'));
+    } else {
+      const numCorrect = document.querySelectorAll('.order-card.correct').length;
+      status.textContent = `${numCorrect}/${cards.length} in the right place — keep going.`;
+    }
+  }
+
+  function shuffleOrder() {
+    const list = document.getElementById('orderList');
+    const cards = Array.from(list.children);
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    cards.forEach(c => { c.classList.remove('locked'); list.appendChild(c); });
+    updateOrderButtons();
+    clearOrderState();
+  }
+
+  function showOrderAnswer() {
+    const list = document.getElementById('orderList');
+    const cards = Array.from(list.children);
+    cards.sort((a, b) => parseInt(a.dataset.correctPos, 10) - parseInt(b.dataset.correctPos, 10));
+    cards.forEach(c => { list.appendChild(c); c.classList.add('correct'); c.classList.add('locked'); });
+    updateOrderButtons();
+    document.getElementById('orderStatus').textContent = 'Answer shown.';
+  }
+
+  // Initialise: disable up on first card, down on last
+  updateOrderButtons();
+</script>
+
+</body>
+</html>

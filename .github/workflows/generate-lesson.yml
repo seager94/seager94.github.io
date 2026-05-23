@@ -1,0 +1,46 @@
+name: Generate Lesson (test)
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Year 7 lesson topic to generate'
+        required: true
+        default: 'adding and subtracting integers'
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Generate the test lesson
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          TOPIC: ${{ inputs.topic }}
+        run: |
+          mkdir -p lesson-drafts
+          claude -p "Use the interactive-html-maths-lesson skill to build an interactive HTML maths lesson for Year 7 on the topic: $TOPIC. Save the file as lesson-drafts/y7_test_lesson.html. Do not check for existing files — create this lesson fresh and overwrite if a file with this name already exists." \
+            --dangerously-skip-permissions \
+            --max-turns 100
+
+      - name: Commit the generated lesson
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Add generated test lesson" || echo "Nothing to commit"
+          git push

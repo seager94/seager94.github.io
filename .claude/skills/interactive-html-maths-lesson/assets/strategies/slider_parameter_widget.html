@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: SLIDER PARAMETER WIDGET
+================================================================================
+A range input varies one (or more) parameter of a function. The diagram or
+graph updates live as the student drags. Used to develop conceptual
+understanding of how parameters shape a function — gradient, intercept,
+amplitude, period, etc.
+
+When to use: see references/strategies.md entry #16.
+Typical position: Section 5 (I DO variant) — replacing the static worked example
+with a dynamic exploration that students do themselves first.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. The default demo is
+     y = mx + c with two sliders, a live equation display, and a "match
+     the target line" challenge.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. To adapt to a different function (e.g. quadratic y = ax² + bx + c,
+     or sin/cos with amplitude / period), customise:
+       - The slider ranges and step sizes
+       - The renderLine() function (recompute path from new parameters)
+       - The equation display string
+       - The target challenge values
+
+This kit is the most code-heavy of the strategy kits — fine because parameter
+exploration genuinely needs live-rendered visuals.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slider Parameter Widget — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .slider-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+  .slider-graph {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+  }
+  .slider-graph svg { width: 100%; height: auto; display: block; }
+  .slider-controls {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .slider-eqn {
+    background: white;
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+    text-align: center;
+  }
+  .slider-eqn .var { font-style: italic; }
+  .slider-row { display: flex; flex-direction: column; gap: 4px; }
+  .slider-row label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: Georgia, serif; color: var(--navy); font-weight: 600;
+  }
+  .slider-row label .slider-value {
+    font-family: monospace; font-size: 1.1rem;
+    background: var(--hint-bg); padding: 2px 10px;
+    border-radius: 6px;
+  }
+  .slider-row input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    outline: none;
+  }
+  .slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    background: var(--coral);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 0 0 1px var(--coral);
+  }
+  .slider-row input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px;
+    background: var(--coral);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 0 0 1px var(--coral);
+  }
+  .slider-challenge {
+    background: var(--coral-soft);
+    border-left: 4px solid var(--coral);
+    padding: 12px 14px;
+    border-radius: 6px;
+    margin-top: 4px;
+  }
+  .slider-challenge h4 {
+    margin: 0 0 4px;
+    font-family: Georgia, serif;
+    color: var(--coral);
+    font-size: 0.95rem;
+  }
+  .slider-challenge p { margin: 0; font-size: 0.88rem; color: var(--text); }
+  .slider-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .slider-actions button {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 6px 12px; border-radius: 6px;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  }
+  .slider-actions button.primary {
+    background: var(--coral); color: white; border-color: var(--coral);
+  }
+  .slider-status {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+  .slider-status.win { color: var(--good); font-weight: 700; font-style: normal; }
+  @media (max-width: 800px) {
+    .slider-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     The SVG has a static grid + axes; the line itself is drawn by JS.
+     The target line (challenge) and current line both render dynamically.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Explore <span class="expr"><span class="var">y</span> = <span class="var">m</span><span class="var">x</span> + <span class="var">c</span></span></h2>
+  <p class="sec-desc">Drag the sliders to change the gradient <span class="var">m</span> and y-intercept <span class="var">c</span>. Watch what happens to the line. Then try the challenge — match the dotted target line.</p>
+
+  <div class="slider-layout">
+    <div class="slider-graph">
+      <svg id="sliderSvg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Coordinate plane showing the line y = mx + c">
+        <!-- Grid lines (every unit) -->
+        <g stroke="#e5e7eb" stroke-width="1">
+          <!-- vertical lines, x = -10 to 10, mapped to x = 20..380 (scale = 18 per unit) -->
+          <g id="gridLinesV"></g>
+          <g id="gridLinesH"></g>
+        </g>
+        <!-- Axes -->
+        <line x1="20" y1="200" x2="380" y2="200" stroke="#2a2a2a" stroke-width="1.5"/>
+        <line x1="200" y1="20" x2="200" y2="380" stroke="#2a2a2a" stroke-width="1.5"/>
+        <!-- Axis arrows -->
+        <polygon points="380,200 372,196 372,204" fill="#2a2a2a"/>
+        <polygon points="200,20 196,28 204,28" fill="#2a2a2a"/>
+        <!-- Axis labels -->
+        <text x="385" y="215" font-family="Georgia, serif" font-size="14" fill="#2a2a2a" font-style="italic">x</text>
+        <text x="208" y="22" font-family="Georgia, serif" font-size="14" fill="#2a2a2a" font-style="italic">y</text>
+        <!-- Origin label -->
+        <text x="205" y="215" font-family="Georgia, serif" font-size="11" fill="#6b7280">O</text>
+        <!-- Tick labels (-5 and 5 on each axis) -->
+        <text x="110" y="215" font-family="-apple-system, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle">−5</text>
+        <text x="290" y="215" font-family="-apple-system, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle">5</text>
+        <text x="190" y="113" font-family="-apple-system, sans-serif" font-size="11" fill="#6b7280" text-anchor="end">5</text>
+        <text x="190" y="293" font-family="-apple-system, sans-serif" font-size="11" fill="#6b7280" text-anchor="end">−5</text>
+        <!-- Target line (dashed, hidden by default) -->
+        <line id="targetLine" x1="0" y1="0" x2="0" y2="0" stroke="#1D2B5E" stroke-width="2" stroke-dasharray="6 4" opacity="0"/>
+        <!-- Current line (drawn by JS) -->
+        <line id="currentLine" x1="20" y1="200" x2="380" y2="200" stroke="#E8485A" stroke-width="3"/>
+        <!-- Y-intercept point -->
+        <circle id="interceptDot" cx="200" cy="200" r="5" fill="#E8485A" stroke="white" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="slider-controls">
+      <div class="slider-eqn">
+        <span class="var">y</span> = <span id="mDisplay">1</span><span class="var">x</span> + <span id="cDisplay">0</span>
+      </div>
+      <div class="slider-row">
+        <label>Gradient <span class="var">m</span> <span class="slider-value" id="mValue">1</span></label>
+        <input type="range" id="mSlider" min="-5" max="5" step="0.5" value="1" oninput="updateSliderLine()">
+      </div>
+      <div class="slider-row">
+        <label>y-intercept <span class="var">c</span> <span class="slider-value" id="cValue">0</span></label>
+        <input type="range" id="cSlider" min="-5" max="5" step="0.5" value="0" oninput="updateSliderLine()">
+      </div>
+      <div class="slider-challenge">
+        <h4>🎯 Challenge</h4>
+        <p id="challengeText">Click <em>New target</em> to reveal a dotted line, then move the sliders to match it.</p>
+        <div class="slider-actions">
+          <button class="primary" onclick="newSliderTarget()">New target</button>
+          <button onclick="checkSliderMatch()">Check match</button>
+          <button onclick="hideSliderTarget()">Hide target</button>
+        </div>
+        <div class="slider-status" id="sliderStatus"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  // SVG coordinate system: viewBox 0..400 with the origin at (200, 200).
+  // 1 maths unit = 18 SVG units (so x = -10 to 10 fits in 20..380).
+  const SVG_ORIGIN = { x: 200, y: 200 };
+  const SVG_SCALE = 18;
+
+  // Build grid lines at integer x and y from -9 to 9
+  (function buildSliderGrid() {
+    const v = document.getElementById('gridLinesV');
+    const h = document.getElementById('gridLinesH');
+    for (let i = -9; i <= 9; i++) {
+      if (i === 0) continue;
+      const xPos = SVG_ORIGIN.x + i * SVG_SCALE;
+      const yPos = SVG_ORIGIN.y - i * SVG_SCALE;
+      v.innerHTML += `<line x1="${xPos}" y1="20" x2="${xPos}" y2="380"/>`;
+      h.innerHTML += `<line x1="20" y1="${yPos}" x2="380" y2="${yPos}"/>`;
+    }
+  })();
+
+  function mathToSVG(x, y) {
+    return { sx: SVG_ORIGIN.x + x * SVG_SCALE, sy: SVG_ORIGIN.y - y * SVG_SCALE };
+  }
+
+  function renderSliderLine(elId, m, c, opacity) {
+    const line = document.getElementById(elId);
+    // Compute endpoints at x = -10 and x = 10, clip y to ±10 if needed for sane visuals
+    const x1 = -10, x2 = 10;
+    const y1 = m * x1 + c;
+    const y2 = m * x2 + c;
+    const p1 = mathToSVG(x1, y1);
+    const p2 = mathToSVG(x2, y2);
+    line.setAttribute('x1', p1.sx);
+    line.setAttribute('y1', p1.sy);
+    line.setAttribute('x2', p2.sx);
+    line.setAttribute('y2', p2.sy);
+    line.setAttribute('opacity', opacity);
+  }
+
+  function updateSliderLine() {
+    const m = parseFloat(document.getElementById('mSlider').value);
+    const c = parseFloat(document.getElementById('cSlider').value);
+    renderSliderLine('currentLine', m, c, 1);
+    // Update intercept dot at (0, c)
+    const p = mathToSVG(0, c);
+    const dot = document.getElementById('interceptDot');
+    dot.setAttribute('cx', p.sx);
+    dot.setAttribute('cy', p.sy);
+    // Update display
+    document.getElementById('mDisplay').textContent = m;
+    document.getElementById('cDisplay').textContent = c >= 0 ? '+ ' + c : '− ' + Math.abs(c);
+    document.getElementById('mValue').textContent = m;
+    document.getElementById('cValue').textContent = c;
+    // Clear any prior match status
+    document.getElementById('sliderStatus').textContent = '';
+    document.getElementById('sliderStatus').classList.remove('win');
+  }
+
+  let currentTarget = null;
+
+  function newSliderTarget() {
+    // Pick non-trivial target: m in {-3, -2, -1, 0.5, 1, 2, 3}, c in {-4, -2, 0, 2, 4}
+    const ms = [-3, -2, -1, 0.5, 1, 2, 3];
+    const cs = [-4, -2, 0, 2, 4];
+    let tm, tc;
+    do {
+      tm = ms[Math.floor(Math.random() * ms.length)];
+      tc = cs[Math.floor(Math.random() * cs.length)];
+    } while (currentTarget && tm === currentTarget.m && tc === currentTarget.c);
+    currentTarget = { m: tm, c: tc };
+    renderSliderLine('targetLine', tm, tc, 1);
+    document.getElementById('challengeText').innerHTML = 'Move the sliders so the coral line covers the dotted navy target line. Hit <strong>Check match</strong> when you think you have it.';
+    document.getElementById('sliderStatus').textContent = '';
+    document.getElementById('sliderStatus').classList.remove('win');
+  }
+
+  function hideSliderTarget() {
+    document.getElementById('targetLine').setAttribute('opacity', 0);
+    currentTarget = null;
+    document.getElementById('challengeText').innerHTML = 'Click <em>New target</em> to reveal a dotted line, then move the sliders to match it.';
+    document.getElementById('sliderStatus').textContent = '';
+    document.getElementById('sliderStatus').classList.remove('win');
+  }
+
+  function checkSliderMatch() {
+    if (!currentTarget) {
+      document.getElementById('sliderStatus').textContent = 'Click New target first.';
+      return;
+    }
+    const m = parseFloat(document.getElementById('mSlider').value);
+    const c = parseFloat(document.getElementById('cSlider').value);
+    const status = document.getElementById('sliderStatus');
+    status.classList.remove('win');
+    if (m === currentTarget.m && c === currentTarget.c) {
+      status.classList.add('win');
+      status.textContent = `✓ Matched! Target was y = ${currentTarget.m}x ${currentTarget.c >= 0 ? '+' : '−'} ${Math.abs(currentTarget.c)}.`;
+    } else {
+      const mHint = m < currentTarget.m ? 'increase' : m > currentTarget.m ? 'decrease' : 'good';
+      const cHint = c < currentTarget.c ? 'increase' : c > currentTarget.c ? 'decrease' : 'good';
+      status.textContent = `Not yet — m: ${mHint === 'good' ? '✓' : mHint}; c: ${cHint === 'good' ? '✓' : cHint}.`;
+    }
+  }
+
+  // Initial render
+  updateSliderLine();
+</script>
+
+</body>
+</html>

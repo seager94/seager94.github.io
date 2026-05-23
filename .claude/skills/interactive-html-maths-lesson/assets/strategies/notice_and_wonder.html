@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: NOTICE AND WONDER
+================================================================================
+A striking diagram, image, or data set is shown with two text inputs:
+"I notice…" and "I wonder…". No marking — the teacher reviews student responses
+in teacher mode or by walking the room.
+
+When to use: see references/strategies.md entry #12.
+Typical position: Section 1 (warm-up replacement).
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Replace the SVG with
+     whatever visual fits your topic — an image, a chart, a data table,
+     a geometric figure. The textareas don't need customising.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. The "seed prompts" below the textareas are optional — they give shy
+     students a starting point.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notice and Wonder — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .nw-visual {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    margin-bottom: 18px;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 240px;
+  }
+  .nw-visual svg, .nw-visual img { max-width: 100%; height: auto; }
+  .nw-prompts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .nw-prompt {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .nw-prompt.notice { border-left: 4px solid var(--navy); }
+  .nw-prompt.wonder { border-left: 4px solid var(--coral); }
+  .nw-prompt h4 {
+    margin: 0 0 4px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1.05rem;
+  }
+  .nw-prompt .nw-stem {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .nw-prompt textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: vertical;
+    background: white;
+  }
+  .nw-prompt textarea:focus { outline: none; border-color: var(--navy); }
+  .nw-seeds {
+    margin-top: 10px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .nw-seed {
+    background: white; color: var(--navy);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+  .nw-seed:hover { background: var(--hint-bg); border-color: var(--navy); }
+  .nw-status {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+  @media (max-width: 700px) {
+    .nw-prompts { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     Replace the SVG with whatever visual fits the topic.
+     The demo shows a stem-and-leaf-style dot plot (Year 9 statistics).
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Notice and wonder</h2>
+  <p class="sec-desc">Look at the dot plot below. Take a moment — what do you <strong>notice</strong>? What does it make you <strong>wonder</strong>? There are no wrong answers here. Write at least two of each.</p>
+
+  <div class="nw-visual">
+    <svg viewBox="0 0 540 240" xmlns="http://www.w3.org/2000/svg" aria-label="Dot plot showing 18 student test scores from 4 to 10">
+      <!-- baseline -->
+      <line x1="40" y1="200" x2="500" y2="200" stroke="#2a2a2a" stroke-width="2"/>
+      <!-- tick marks and labels (4 to 10) -->
+      <g font-family="Georgia, serif" font-size="14" fill="#2a2a2a" text-anchor="middle">
+        <line x1="80" y1="200" x2="80" y2="207" stroke="#2a2a2a" stroke-width="2"/><text x="80" y="225">4</text>
+        <line x1="140" y1="200" x2="140" y2="207" stroke="#2a2a2a" stroke-width="2"/><text x="140" y="225">5</text>
+        <line x1="200" y1="200" x2="200" y2="207" stroke="#2a2a2a" stroke-width="2"/><text x="200" y="225">6</text>
+        <line x1="260" y1="200" x2="260" y2="207" stroke="#2a2a2a" stroke-width="2"/><text x="260" y="225">7</text>
+        <line x1="320" y1="200" x2="320" y2="207" stroke="#2a2a2a" stroke-width="2"/><text x="320" y="225">8</text>
+        <line x1="380" y1="200" x2="380" y2="207" stroke="#2a2a2a" stroke-width="2"/><text x="380" y="225">9</text>
+        <line x1="440" y1="200" x2="440" y2="207" stroke="#2a2a2a" stroke-width="2"/><text x="440" y="225">10</text>
+      </g>
+      <text x="270" y="20" font-family="Georgia, serif" font-size="15" fill="#1D2B5E" text-anchor="middle" font-weight="bold">Test scores out of 10 — 9A class (n = 18)</text>
+      <!-- dots: 1 at 4; 1 at 5; 2 at 6; 4 at 7; 5 at 8; 3 at 9; 2 at 10 -->
+      <g fill="#E8485A" stroke="#1D2B5E" stroke-width="1">
+        <circle cx="80" cy="185" r="9"/>
+        <circle cx="140" cy="185" r="9"/>
+        <circle cx="200" cy="185" r="9"/><circle cx="200" cy="165" r="9"/>
+        <circle cx="260" cy="185" r="9"/><circle cx="260" cy="165" r="9"/><circle cx="260" cy="145" r="9"/><circle cx="260" cy="125" r="9"/>
+        <circle cx="320" cy="185" r="9"/><circle cx="320" cy="165" r="9"/><circle cx="320" cy="145" r="9"/><circle cx="320" cy="125" r="9"/><circle cx="320" cy="105" r="9"/>
+        <circle cx="380" cy="185" r="9"/><circle cx="380" cy="165" r="9"/><circle cx="380" cy="145" r="9"/>
+        <circle cx="440" cy="185" r="9"/><circle cx="440" cy="165" r="9"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="nw-prompts">
+    <div class="nw-prompt notice">
+      <h4>I notice…</h4>
+      <div class="nw-stem">Describe what you can see. Numbers, shapes, patterns, surprises.</div>
+      <textarea id="nwNotice" placeholder="e.g. Most scores are between..."></textarea>
+      <div class="nw-seeds">
+        <button class="nw-seed" onclick="seedNW('nwNotice', 'Most scores are clustered around ')">Most scores…</button>
+        <button class="nw-seed" onclick="seedNW('nwNotice', 'The lowest score is ')">The lowest is…</button>
+        <button class="nw-seed" onclick="seedNW('nwNotice', 'I count ')">I count…</button>
+      </div>
+    </div>
+    <div class="nw-prompt wonder">
+      <h4>I wonder…</h4>
+      <div class="nw-stem">What questions does this make you ask? What would you like to know more about?</div>
+      <textarea id="nwWonder" placeholder="e.g. I wonder if..."></textarea>
+      <div class="nw-seeds">
+        <button class="nw-seed" onclick="seedNW('nwWonder', 'I wonder if the mean is ')">I wonder if the mean…</button>
+        <button class="nw-seed" onclick="seedNW('nwWonder', 'I wonder why ')">I wonder why…</button>
+        <button class="nw-seed" onclick="seedNW('nwWonder', 'I wonder what would happen if ')">What if…</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nw-status">Your responses stay on this page — your teacher can see them in teacher mode.</div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  function seedNW(targetId, seed) {
+    const ta = document.getElementById(targetId);
+    const current = ta.value.trim();
+    if (current && !current.endsWith('\n')) {
+      ta.value = current + '\n' + seed;
+    } else {
+      ta.value = current + seed;
+    }
+    ta.focus();
+    // place cursor at end
+    ta.setSelectionRange(ta.value.length, ta.value.length);
+  }
+</script>
+
+</body>
+</html>

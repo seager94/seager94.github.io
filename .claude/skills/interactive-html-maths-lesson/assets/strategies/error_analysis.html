@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: ERROR ANALYSIS
+================================================================================
+A pre-written incorrect solution is displayed line by line. Students click the
+line where they think the error first appears, then write the corrected line.
+
+When to use: see references/strategies.md entry #2.
+Typical position: Section 6 (WE DO replacement).
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. The line containing the
+     error needs data-is-error="true". The correction is checked against
+     data-correct-line (text-matched, whitespace-stripped, lowercased).
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the problem, the lines, the error-line attribute, the
+     correct-line value, and the explanation text.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error Analysis — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .err-problem-stem {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .err-solution {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .err-line {
+    display: grid;
+    grid-template-columns: 36px 1fr 24px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+  }
+  .err-line:last-child { margin-bottom: 0; }
+  .err-line:hover { border-color: var(--navy); }
+  .err-line .err-line-num {
+    background: var(--hint-bg); color: var(--navy);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .err-line .err-line-mark { font-size: 1.1rem; opacity: 0; transition: opacity 0.2s; }
+  .err-line.flagged-correct { background: var(--good-soft); border-color: var(--good); }
+  .err-line.flagged-correct .err-line-mark::before { content: '✓'; color: var(--good); }
+  .err-line.flagged-correct .err-line-mark { opacity: 1; }
+  .err-line.flagged-wrong { animation: err-shake 0.45s; background: var(--bad-soft); border-color: var(--bad); }
+  @keyframes err-shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+  }
+  .err-line.dimmed { opacity: 0.45; cursor: not-allowed; }
+  .err-feedback {
+    background: white;
+    border: 1.5px solid var(--good);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    display: none;
+  }
+  .err-feedback.visible { display: block; }
+  .err-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.05rem; }
+  .err-feedback .err-explain { background: var(--hint-bg); border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; font-size: 0.92rem; color: var(--navy); }
+  .err-correction-row {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .err-correction-row input {
+    flex: 1; min-width: 200px;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .err-correction-row input.correct { background: var(--good-soft); border-color: var(--good); }
+  .err-correction-row input.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .err-correction-row button {
+    background: var(--coral); color: white;
+    border: none; padding: 9px 16px; border-radius: 8px;
+    font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .err-status-msg {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  body.teacher-mode .err-line[data-is-error="true"] { box-shadow: 0 0 0 3px var(--coral); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Spot the mistake</h2>
+  <p class="sec-desc">A student has tried to solve this equation but made a mistake. Read each line carefully — click on the line where the mistake <em>first</em> appears.</p>
+
+  <div class="err-problem-stem expr">
+    Solve for <span class="var">x</span>: &nbsp; 4(<span class="var">x</span> − 3) = 2<span class="var">x</span> + 6
+  </div>
+
+  <div class="err-solution" id="errSolution">
+    <div class="err-line expr" data-line="1" onclick="pickErrLine(this)">
+      <span class="err-line-num">1</span>
+      <span>4<span class="var">x</span> − 12 = 2<span class="var">x</span> + 6</span>
+      <span class="err-line-mark"></span>
+    </div>
+    <div class="err-line expr" data-line="2" data-is-error="true"
+         data-correct-line="2x=18"
+         onclick="pickErrLine(this)">
+      <span class="err-line-num">2</span>
+      <span>2<span class="var">x</span> = −6</span>
+      <span class="err-line-mark"></span>
+    </div>
+    <div class="err-line expr" data-line="3" onclick="pickErrLine(this)">
+      <span class="err-line-num">3</span>
+      <span><span class="var">x</span> = −3</span>
+      <span class="err-line-mark"></span>
+    </div>
+  </div>
+
+  <div class="err-feedback" id="errFeedback">
+    <h4>✓ Right — that's where the mistake first appears.</h4>
+    <div class="err-explain">
+      <strong>Why:</strong> moving terms between sides flips the sign. From 4<span class="var">x</span> − 12 = 2<span class="var">x</span> + 6, when we add 12 to both sides <em>and</em> subtract 2<span class="var">x</span> from both sides we should get 4<span class="var">x</span> − 2<span class="var">x</span> = 6 + 12, i.e. 2<span class="var">x</span> = 18 — not 2<span class="var">x</span> = −6. The student flipped only one sign instead of two.
+    </div>
+    <p style="margin: 0 0 8px; font-size: 0.95rem;"><strong>Now rewrite line 2 correctly</strong> (use <code>x</code> for <em>x</em>, no spaces):</p>
+    <div class="err-correction-row">
+      <input id="errCorrection" placeholder="e.g. 2x=18">
+      <button onclick="checkErrCorrection()">Check</button>
+    </div>
+    <div class="err-status-msg" id="errStatusMsg"></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  let errFound = false;
+
+  function pickErrLine(el) {
+    if (errFound || el.classList.contains('dimmed')) return;
+    const isError = el.dataset.isError === 'true';
+    if (isError) {
+      el.classList.add('flagged-correct');
+      errFound = true;
+      // dim the others
+      document.querySelectorAll('.err-line').forEach(o => {
+        if (o !== el) o.classList.add('dimmed');
+      });
+      // show the feedback panel
+      document.getElementById('errFeedback').classList.add('visible');
+    } else {
+      el.classList.add('flagged-wrong');
+      setTimeout(() => el.classList.remove('flagged-wrong'), 600);
+    }
+  }
+
+  function checkErrCorrection() {
+    const input = document.getElementById('errCorrection');
+    const expected = document.querySelector('.err-line[data-is-error="true"]').dataset.correctLine;
+    const norm = s => (s || '').toLowerCase().replace(/\s+/g, '').replace(/\*/g, '');
+    const msg = document.getElementById('errStatusMsg');
+    input.classList.remove('correct', 'incorrect');
+    if (norm(input.value) === norm(expected)) {
+      input.classList.add('correct');
+      msg.textContent = '✓ Correct. The next line should now read x = 9, not x = −3.';
+    } else {
+      input.classList.add('incorrect');
+      msg.textContent = '✗ Not quite. Try again — remember, both sides need the same operation applied.';
+    }
+  }
+</script>
+
+</body>
+</html>

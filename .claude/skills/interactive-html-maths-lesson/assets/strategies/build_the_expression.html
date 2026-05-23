@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: BUILD THE EXPRESSION
+================================================================================
+Students click number / variable / operator tiles to *construct* an algebraic
+expression matching an English description. The inverse of "simplify". Excellent
+for translating between English and algebra — a major Year 7-8 algebra skill.
+
+When to use: see references/strategies.md entry #15.
+Typical position: Section 4 or 6.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Each problem card has a
+     description, a tile palette (data-tiles), and an expected sequence
+     (data-expected). Tiles are click-to-add to the build area.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the problem descriptions and expected sequences. The tile
+     palette can be shared across problems or customised per problem.
+
+Multiple equivalent forms? The kit supports a comma-separated list in
+data-expected — e.g. data-expected="3x+2,2+3x" accepts either order.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build the Expression — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .bx-problem {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .bx-prompt {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .bx-prompt strong { color: var(--coral); }
+  .bx-build-area {
+    background: white;
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    min-height: 60px;
+    margin-bottom: 10px;
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    font-family: Georgia, serif;
+    font-size: 1.4rem;
+  }
+  .bx-build-area:empty::before {
+    content: 'Click tiles below to build →';
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    font-family: -apple-system, sans-serif;
+  }
+  .bx-built-tile {
+    padding: 6px 12px;
+    background: var(--hint-bg);
+    border: 1.5px solid var(--navy);
+    border-radius: 6px;
+    color: var(--navy);
+    cursor: pointer;
+    user-select: none;
+  }
+  .bx-built-tile:hover { background: var(--coral-soft); }
+  .bx-palette {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 12px;
+  }
+  .bx-tile {
+    background: white;
+    border: 1.5px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+    transition: all 0.15s;
+  }
+  .bx-tile:hover { border-color: var(--navy); background: var(--hint-bg); transform: translateY(-1px); }
+  .bx-tile.op { background: var(--coral-soft); color: var(--coral); border-color: var(--coral-soft); }
+  .bx-tile.op:hover { background: var(--coral); color: white; border-color: var(--coral); }
+  .bx-tile.varTile { font-style: italic; }
+  .bx-actions {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  }
+  .bx-actions .bx-check {
+    background: var(--coral); color: white;
+    border: none; padding: 7px 14px; border-radius: 8px;
+    font-size: 0.88rem; font-weight: 600; cursor: pointer;
+  }
+  .bx-actions .bx-undo, .bx-actions .bx-clear {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 7px 14px; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .bx-status {
+    margin-left: auto;
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .bx-problem.solved .bx-build-area {
+    background: var(--good-soft);
+    border-style: solid;
+    border-color: var(--good);
+  }
+  .bx-problem.wrong .bx-build-area {
+    background: var(--bad-soft);
+    border-style: solid;
+    border-color: var(--bad);
+    animation: bx-shake 0.4s;
+  }
+  @keyframes bx-shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+  }
+  body.teacher-mode .bx-problem::after {
+    content: 'Answer: ' attr(data-expected);
+    display: block;
+    font-size: 0.75rem;
+    color: var(--coral);
+    margin-top: 6px;
+    font-family: -apple-system, sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     Three demo problems with shared tile palette. Click a tile to
+     add it to the build area; click a built tile to remove it.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Build the expression</h2>
+  <p class="sec-desc">Click the tiles below to construct each algebraic expression matching the English description. Click a tile in the build area to remove it. Type units / spaces aren't checked — only the symbols and order.</p>
+
+  <div class="bx-problem" data-expected="3x+2,2+3x">
+    <div class="bx-prompt"><strong>1.</strong> Write an expression for: <em>two more than three times <span class="var">x</span></em>.</div>
+    <div class="bx-build-area" data-built=""></div>
+    <div class="bx-palette">
+      <button class="bx-tile" onclick="addTile(this)">2</button>
+      <button class="bx-tile" onclick="addTile(this)">3</button>
+      <button class="bx-tile varTile" onclick="addTile(this)">x</button>
+      <button class="bx-tile op" onclick="addTile(this)">+</button>
+      <button class="bx-tile op" onclick="addTile(this)">−</button>
+      <button class="bx-tile op" onclick="addTile(this)">×</button>
+    </div>
+    <div class="bx-actions">
+      <button class="bx-check" onclick="checkExpr(this)">Check</button>
+      <button class="bx-undo" onclick="undoTile(this)">↶ Undo</button>
+      <button class="bx-clear" onclick="clearExpr(this)">Clear</button>
+      <span class="bx-status"></span>
+    </div>
+  </div>
+
+  <div class="bx-problem" data-expected="y-5">
+    <div class="bx-prompt"><strong>2.</strong> Write an expression for: <em>five less than <span class="var">y</span></em>.</div>
+    <div class="bx-build-area" data-built=""></div>
+    <div class="bx-palette">
+      <button class="bx-tile" onclick="addTile(this)">5</button>
+      <button class="bx-tile varTile" onclick="addTile(this)">y</button>
+      <button class="bx-tile op" onclick="addTile(this)">+</button>
+      <button class="bx-tile op" onclick="addTile(this)">−</button>
+    </div>
+    <div class="bx-actions">
+      <button class="bx-check" onclick="checkExpr(this)">Check</button>
+      <button class="bx-undo" onclick="undoTile(this)">↶ Undo</button>
+      <button class="bx-clear" onclick="clearExpr(this)">Clear</button>
+      <span class="bx-status"></span>
+    </div>
+  </div>
+
+  <div class="bx-problem" data-expected="2(n+5),2n+10">
+    <div class="bx-prompt"><strong>3.</strong> Write an expression for: <em>double the sum of <span class="var">n</span> and 5</em>. (Hint: brackets matter.)</div>
+    <div class="bx-build-area" data-built=""></div>
+    <div class="bx-palette">
+      <button class="bx-tile" onclick="addTile(this)">2</button>
+      <button class="bx-tile" onclick="addTile(this)">5</button>
+      <button class="bx-tile varTile" onclick="addTile(this)">n</button>
+      <button class="bx-tile op" onclick="addTile(this)">+</button>
+      <button class="bx-tile op" onclick="addTile(this)">×</button>
+      <button class="bx-tile op" onclick="addTile(this)">(</button>
+      <button class="bx-tile op" onclick="addTile(this)">)</button>
+    </div>
+    <div class="bx-actions">
+      <button class="bx-check" onclick="checkExpr(this)">Check</button>
+      <button class="bx-undo" onclick="undoTile(this)">↶ Undo</button>
+      <button class="bx-clear" onclick="clearExpr(this)">Clear</button>
+      <span class="bx-status"></span>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  function addTile(tile) {
+    const problem = tile.closest('.bx-problem');
+    const area = problem.querySelector('.bx-build-area');
+    const built = document.createElement('span');
+    built.className = 'bx-built-tile';
+    built.textContent = tile.textContent;
+    built.onclick = () => { built.remove(); resetExprState(problem); };
+    area.appendChild(built);
+    resetExprState(problem);
+  }
+
+  function undoTile(btn) {
+    const problem = btn.closest('.bx-problem');
+    const area = problem.querySelector('.bx-build-area');
+    const last = area.lastElementChild;
+    if (last) last.remove();
+    resetExprState(problem);
+  }
+
+  function clearExpr(btn) {
+    const problem = btn.closest('.bx-problem');
+    const area = problem.querySelector('.bx-build-area');
+    area.innerHTML = '';
+    resetExprState(problem);
+  }
+
+  function resetExprState(problem) {
+    problem.classList.remove('solved', 'wrong');
+    problem.querySelector('.bx-status').textContent = '';
+  }
+
+  function checkExpr(btn) {
+    const problem = btn.closest('.bx-problem');
+    const area = problem.querySelector('.bx-build-area');
+    const status = problem.querySelector('.bx-status');
+    // join the built tiles
+    const built = Array.from(area.children).map(c => c.textContent).join('');
+    // normalise: lowercase, strip times-sign (× = juxtaposition for coefficients), strip whitespace
+    const norm = s => s.toLowerCase().replace(/\s+/g, '').replace(/×/g, '').replace(/·/g, '');
+    const accepted = problem.dataset.expected.split(',').map(norm);
+    problem.classList.remove('solved', 'wrong');
+    if (built === '') {
+      status.textContent = 'Click some tiles first.';
+      return;
+    }
+    if (accepted.includes(norm(built))) {
+      problem.classList.add('solved');
+      status.textContent = '✓ Correct.';
+    } else {
+      problem.classList.add('wrong');
+      status.textContent = '✗ Not quite — try again.';
+      setTimeout(() => problem.classList.remove('wrong'), 500);
+    }
+  }
+</script>
+
+</body>
+</html>

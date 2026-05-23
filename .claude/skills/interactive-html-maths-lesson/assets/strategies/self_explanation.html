@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: SELF-EXPLANATION BETWEEN STEPS
+================================================================================
+Between each step of a worked example, the student must type *why* the previous
+step works before the next step reveals. Strong cognitive-science backing for
+deep learning of multi-step procedures.
+
+When to use: see references/strategies.md entry #9.
+Typical position: Section 5 (I DO) variant — replaces the standard worked example.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Each step has a
+     justification prompt (data-prompt) and a "model answer" the student
+     can compare against (data-model-answer) — optional.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the worked example + the four prompts.
+
+There's no auto-marking on the student's explanation (it's open-ended).
+The student types, clicks Continue, and the next step reveals — but their
+words are saved so the teacher can review in teacher mode.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Explanation — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .se-step {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 14px;
+    align-items: start;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+  }
+  .se-step.active { opacity: 1; }
+  .se-step.locked { background: white; opacity: 1; }
+  .se-step-num {
+    background: var(--coral); color: white;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-weight: 700;
+  }
+  .se-step.locked .se-step-num { background: var(--good); }
+  .se-step-body { width: 100%; }
+  .se-step-line {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .se-prompt {
+    margin-top: 10px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: none;
+  }
+  .se-step.active .se-prompt { display: block; }
+  .se-step.locked .se-prompt { display: block; background: white; border-left: 3px solid var(--good); }
+  .se-prompt-q {
+    font-size: 0.92rem;
+    color: var(--navy);
+    margin-bottom: 8px;
+    font-family: Georgia, serif;
+    font-style: italic;
+  }
+  .se-prompt textarea {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    resize: vertical;
+  }
+  .se-prompt textarea:focus { outline: none; border-color: var(--navy); }
+  .se-step.locked .se-prompt textarea { background: var(--good-soft); border-color: var(--good); }
+  .se-continue {
+    background: var(--coral); color: white;
+    border: none; padding: 7px 14px; border-radius: 8px;
+    cursor: pointer; font-size: 0.85rem; font-weight: 600;
+    margin-top: 8px;
+  }
+  .se-step.locked .se-continue { display: none; }
+  .se-model {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    display: none;
+  }
+  .se-step.locked .se-model { display: block; }
+  .se-model::before { content: 'Model answer: '; font-weight: 700; }
+  body.teacher-mode .se-step:not(.locked) .se-model { display: block; color: var(--coral); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     Customise: the problem stem, each step's maths line, each prompt
+     question, and each model answer.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — explain as you go</h2>
+  <p class="sec-desc">Solve 3<span class="var">x</span> + 7 = 22 for <span class="var">x</span>. After each step we'll ask you to type a one-sentence reason for what just happened. The next step won't unlock until you write something — even a rough guess is fine.</p>
+
+  <div class="se-step active" data-step="1">
+    <div class="se-step-num">1</div>
+    <div class="se-step-body">
+      <div class="se-step-line expr">3<span class="var">x</span> + 7 = 22</div>
+      <div class="se-prompt">
+        <div class="se-prompt-q">Before we touch this — what's the goal? In one line, what does it mean to "solve for <span class="var">x</span>"?</div>
+        <textarea data-step-input="1" placeholder="Type your reason…"></textarea>
+        <div class="se-model">To find the value of x that makes both sides equal.</div>
+        <button class="se-continue" onclick="advanceSE(1)">Continue ↓</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="se-step" data-step="2">
+    <div class="se-step-num">2</div>
+    <div class="se-step-body">
+      <div class="se-step-line expr">3<span class="var">x</span> = 15 &nbsp;&nbsp;<span style="color:var(--muted); font-size:0.9rem;">(subtracted 7 from both sides)</span></div>
+      <div class="se-prompt">
+        <div class="se-prompt-q">Why did we subtract 7 from <em>both</em> sides — and not just the left?</div>
+        <textarea data-step-input="2" placeholder="Type your reason…"></textarea>
+        <div class="se-model">To keep the equation balanced — whatever you do to one side you must do to the other.</div>
+        <button class="se-continue" onclick="advanceSE(2)">Continue ↓</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="se-step" data-step="3">
+    <div class="se-step-num">3</div>
+    <div class="se-step-body">
+      <div class="se-step-line expr"><span class="var">x</span> = 5 &nbsp;&nbsp;<span style="color:var(--muted); font-size:0.9rem;">(divided both sides by 3)</span></div>
+      <div class="se-prompt">
+        <div class="se-prompt-q">Why divide by 3 here, rather than subtract 3?</div>
+        <textarea data-step-input="3" placeholder="Type your reason…"></textarea>
+        <div class="se-model">3x means 3 times x — the inverse of multiplying is dividing, not subtracting.</div>
+        <button class="se-continue" onclick="advanceSE(3)">Continue ↓</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="se-step" data-step="4">
+    <div class="se-step-num">4</div>
+    <div class="se-step-body">
+      <div class="se-step-line expr">Check: 3(5) + 7 = 15 + 7 = 22 ✓</div>
+      <div class="se-prompt">
+        <div class="se-prompt-q">In your own words, why is it worth doing this check at the end?</div>
+        <textarea data-step-input="4" placeholder="Type your reason…"></textarea>
+        <div class="se-model">To catch arithmetic slips — if 5 makes both sides equal then it really is the solution.</div>
+        <button class="se-continue" onclick="advanceSE(4)">Finish ✓</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  function advanceSE(stepNum) {
+    const input = document.querySelector(`[data-step-input="${stepNum}"]`);
+    if (!input.value.trim()) {
+      input.focus();
+      input.style.borderColor = 'var(--coral)';
+      setTimeout(() => { input.style.borderColor = ''; }, 1200);
+      return;
+    }
+    const current = document.querySelector(`.se-step[data-step="${stepNum}"]`);
+    current.classList.remove('active');
+    current.classList.add('locked');
+    const next = document.querySelector(`.se-step[data-step="${stepNum + 1}"]`);
+    if (next) {
+      next.classList.add('active');
+      next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+</script>
+
+</body>
+</html>

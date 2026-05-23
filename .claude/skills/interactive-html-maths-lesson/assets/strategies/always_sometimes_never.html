@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: ALWAYS / SOMETIMES / NEVER
+================================================================================
+A three-bucket drag-sort variant. Students drag mathematical claims into one
+of three buckets — Always true, Sometimes true, Never true. Wrong drops shake
+and return to source. The "sometimes" bucket is the richest pedagogically —
+it forces edge-case thinking.
+
+When to use: see references/strategies.md entry #5.
+Typical position: Section 3 (replacing the standard drag-sort) or Section 4.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Each statement chip has
+     data-truth set to "always", "sometimes", or "never".
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the statements. Aim for 6–9 claims, roughly balanced across
+     the three buckets. The "sometimes" claims should have an obvious-but-wrong
+     reading and a more careful right reading — that's where the learning is.
+
+NOTE: this kit's drag-and-drop is independent of the template's `initDragSort()`
+— it uses its own function names (`initASNDrag()`, etc.) so it can coexist with
+the standard drag-sort in Section 3 of the template.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Always / Sometimes / Never — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .asn-wrap {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .asn-source {
+    background: white;
+    border: 1.5px dashed var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 16px;
+    min-height: 70px;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  }
+  .asn-source:empty::before {
+    content: 'All claims sorted ✓';
+    color: var(--muted); font-style: italic; margin: 0 auto;
+  }
+  .asn-chip {
+    display: inline-flex; align-items: center;
+    padding: 8px 14px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: grab;
+    font-family: Georgia, serif;
+    font-size: 0.98rem;
+    line-height: 1.35;
+    color: var(--text);
+    touch-action: none;
+    user-select: none;
+    max-width: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .asn-chip:hover { border-color: var(--navy); }
+  .asn-chip.dragging { opacity: 0.3; }
+  .asn-chip.wrong-drop {
+    animation: asn-shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes asn-shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .asn-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.04);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 0.98rem;
+  }
+  .asn-buckets {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .asn-bucket {
+    background: white;
+    border-radius: 10px;
+    border: 1.5px dashed var(--border);
+    padding: 14px;
+    min-height: 120px;
+  }
+  .asn-bucket h4 {
+    margin: 0 0 10px;
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .asn-bucket[data-truth="always"]    h4 { background: var(--good-soft);  color: #1d4a30; }
+  .asn-bucket[data-truth="sometimes"] h4 { background: var(--hint-bg);    color: var(--navy); }
+  .asn-bucket[data-truth="never"]     h4 { background: var(--bad-soft);   color: #6a2520; }
+  .asn-bucket.drop-target {
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+    background: var(--coral-soft);
+  }
+  .asn-bucket-contents {
+    min-height: 60px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    align-content: flex-start;
+  }
+  .asn-actions {
+    display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap;
+  }
+  .asn-actions button {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 7px 14px; border-radius: 8px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600;
+  }
+  .asn-actions button:hover { background: var(--hint-bg); }
+  .asn-explain {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 0.92rem; font-style: italic;
+    margin-top: 16px;
+    color: var(--navy);
+  }
+  body.teacher-mode .asn-chip[data-truth]::after {
+    content: ' (' attr(data-truth) ')';
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-left: 4px;
+  }
+
+  @media (max-width: 700px) {
+    .asn-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     Six statement chips, two per bucket in the demo. Add or remove as
+     needed; the bucket layout adapts.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Always, sometimes, or never?</h2>
+  <p class="sec-desc">For each claim about quadrilaterals, drag it into the bucket where it belongs. Wrong drops shake. Think carefully — the "sometimes" bucket is where the interesting maths lives.</p>
+
+  <div class="asn-wrap">
+    <div class="asn-source" id="asnSource">
+      <span class="asn-chip" data-truth="always">A square is a rectangle</span>
+      <span class="asn-chip" data-truth="sometimes">A rectangle is a square</span>
+      <span class="asn-chip" data-truth="sometimes">A rhombus has 4 right angles</span>
+      <span class="asn-chip" data-truth="always">The diagonals of a parallelogram bisect each other</span>
+      <span class="asn-chip" data-truth="never">A triangle is a quadrilateral</span>
+      <span class="asn-chip" data-truth="sometimes">A trapezium has a line of symmetry</span>
+    </div>
+
+    <div class="asn-buckets">
+      <div class="asn-bucket" data-truth="always">
+        <h4>✓ Always true</h4>
+        <div class="asn-bucket-contents"></div>
+      </div>
+      <div class="asn-bucket" data-truth="sometimes">
+        <h4>~ Sometimes true</h4>
+        <div class="asn-bucket-contents"></div>
+      </div>
+      <div class="asn-bucket" data-truth="never">
+        <h4>✗ Never true</h4>
+        <div class="asn-bucket-contents"></div>
+      </div>
+    </div>
+
+    <div class="asn-actions">
+      <button onclick="resetASN()">↺ Reset</button>
+      <button onclick="solveASN()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="asn-explain">
+    💡 The "sometimes" claims have a careful condition. For example, a rectangle is sometimes a square (only when all four sides are equal); a rhombus has 4 right angles only when it's a square; an isosceles trapezium has a line of symmetry but a scalene one doesn't.
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     Self-contained: uses its own names (asn*) so it can coexist with
+     the template's existing drag-sort in Section 3.
+     ============================================================ */
+  let asnDragState = null;
+
+  function initASNDrag() {
+    document.querySelectorAll('.asn-chip').forEach(chip => {
+      chip.addEventListener('pointerdown', asnStartDrag);
+    });
+  }
+
+  function asnStartDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+    const ghost = document.createElement('span');
+    ghost.className = 'asn-chip-ghost';
+    ghost.textContent = chip.textContent;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+    asnDragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', asnMoveDrag);
+    chip.addEventListener('pointerup', asnEndDrag);
+    chip.addEventListener('pointercancel', asnEndDrag);
+  }
+
+  function asnMoveDrag(e) {
+    if (!asnDragState) return;
+    asnDragState.ghost.style.left = (e.clientX - asnDragState.offsetX) + 'px';
+    asnDragState.ghost.style.top  = (e.clientY - asnDragState.offsetY) + 'px';
+    asnDragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    asnDragState.ghost.style.display = '';
+    const bucket = under?.closest('.asn-bucket');
+    document.querySelectorAll('.asn-bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function asnEndDrag(e) {
+    if (!asnDragState) return;
+    const { chip, ghost } = asnDragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.asn-bucket').forEach(b => b.classList.remove('drop-target'));
+    const bucket = under?.closest('.asn-bucket');
+    if (bucket) {
+      const dest = bucket.dataset.truth;
+      const correct = chip.dataset.truth;
+      bucket.querySelector('.asn-bucket-contents').appendChild(chip);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('asnSource').appendChild(chip);
+        }, 600);
+      }
+    }
+    chip.removeEventListener('pointermove', asnMoveDrag);
+    chip.removeEventListener('pointerup', asnEndDrag);
+    chip.removeEventListener('pointercancel', asnEndDrag);
+    asnDragState = null;
+  }
+
+  function resetASN() {
+    const source = document.getElementById('asnSource');
+    document.querySelectorAll('.asn-bucket-contents .asn-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveASN() {
+    document.querySelectorAll('.asn-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const truth = chip.dataset.truth;
+      const bucket = document.querySelector('.asn-bucket[data-truth="' + truth + '"] .asn-bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  initASNDrag();
+</script>
+
+</body>
+</html>

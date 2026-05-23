@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: ESTIMATION LADDER
+================================================================================
+Before students compute anything, they place their estimate on a too-low / about
+right / too-high continuum AND give a numeric estimate. Reveals number sense
+before procedural work — pairs well with Estimation 180 style hooks.
+
+When to use: see references/strategies.md entry #14.
+Typical position: Section 1 (warm-up) or short extension to Section 5.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Set the data-actual
+     attribute on the section to the true answer — the JS uses it to give
+     feedback after the student commits an estimate.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. Customise the scenario, the units, and the actual value.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estimation Ladder — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .est-scenario {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 16px 18px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    font-family: Georgia, serif;
+    font-size: 1.08rem;
+    color: var(--navy);
+  }
+  .est-ladder {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .est-ladder-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .est-rung {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: Georgia, serif;
+  }
+  .est-rung:hover { border-color: var(--navy); transform: translateY(-1px); }
+  .est-rung.picked { background: var(--coral-soft); border-color: var(--coral); }
+  .est-rung .rung-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .est-rung .rung-value { font-size: 1.05rem; color: var(--navy); font-weight: 700; }
+  .est-input-row {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .est-input-row label { font-family: Georgia, serif; color: var(--navy); font-weight: 600; }
+  .est-input-row input {
+    flex: 1; min-width: 140px;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .est-input-row button {
+    background: var(--coral); color: white;
+    border: none; padding: 9px 16px; border-radius: 8px;
+    font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .est-feedback {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    display: none;
+  }
+  .est-feedback.visible { display: block; }
+  .est-feedback.close { background: var(--good-soft); border-left: 4px solid var(--good); }
+  .est-feedback.far { background: var(--coral-soft); border-left: 4px solid var(--coral); }
+  .est-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 6px; font-size: 1rem; }
+  .est-feedback p { margin: 0; font-size: 0.92rem; }
+  body.teacher-mode .est-input-row::after {
+    content: 'Actual: ' attr(data-actual);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     The data-actual attribute on the section is the true answer.
+     The three rung values are guide-posts only — they help students
+     orient. The student's typed estimate is what's checked.
+     ============================================================ -->
+<section class="lesson" id="estSection" data-actual="18" data-units="m" data-tolerance="0.20">
+  <h2><span class="sec-num">1</span>Estimate first</h2>
+  <p class="sec-desc">Before we calculate anything: how tall do you reckon a 6-storey apartment building is, in metres? Don't compute — just commit a gut answer. Then we'll see how close you got.</p>
+
+  <div class="est-scenario">
+    🏢 A typical 6-storey apartment building in Adelaide. No roof gardens, no fancy lobby — just six normal storeys stacked. How tall is it from the ground to the top of the highest storey?
+  </div>
+
+  <div class="est-ladder">
+    <div class="est-ladder-row">
+      <button class="est-rung" onclick="pickRung(this)" data-rung="low">
+        <span class="rung-label">Too low</span>
+        <span class="rung-value">&lt; 10 m</span>
+      </button>
+      <button class="est-rung" onclick="pickRung(this)" data-rung="mid">
+        <span class="rung-label">About right</span>
+        <span class="rung-value">15 – 25 m</span>
+      </button>
+      <button class="est-rung" onclick="pickRung(this)" data-rung="high">
+        <span class="rung-label">Too high</span>
+        <span class="rung-value">&gt; 30 m</span>
+      </button>
+    </div>
+    <div class="est-input-row">
+      <label for="estInput">Your estimate:</label>
+      <input id="estInput" placeholder="number in metres" inputmode="decimal">
+      <button onclick="commitEstimate()">Commit</button>
+    </div>
+  </div>
+
+  <div class="est-feedback" id="estFeedback">
+    <h4 id="estFbHeader"></h4>
+    <p id="estFbBody"></p>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  function pickRung(btn) {
+    document.querySelectorAll('.est-rung').forEach(r => r.classList.remove('picked'));
+    btn.classList.add('picked');
+  }
+
+  function commitEstimate() {
+    const sec = document.getElementById('estSection');
+    const actual = parseFloat(sec.dataset.actual);
+    const units = sec.dataset.units || '';
+    const tol = parseFloat(sec.dataset.tolerance) || 0.2;
+    const input = document.getElementById('estInput');
+    const guess = parseFloat(input.value);
+    const fb = document.getElementById('estFeedback');
+    const hdr = document.getElementById('estFbHeader');
+    const body = document.getElementById('estFbBody');
+    fb.classList.remove('close', 'far');
+    if (isNaN(guess)) {
+      fb.classList.add('far', 'visible');
+      hdr.textContent = 'Type a number first.';
+      body.textContent = 'Take a guess — even a rough one is fine. There are no wrong answers at this stage.';
+      return;
+    }
+    const error = Math.abs(guess - actual) / actual;
+    fb.classList.add('visible');
+    if (error <= tol) {
+      fb.classList.add('close');
+      hdr.textContent = `✓ Close — actual is ${actual} ${units}`;
+      body.textContent = `You guessed ${guess} ${units}, off by about ${Math.round(error * 100)}%. Strong number sense.`;
+    } else {
+      fb.classList.add('far');
+      const direction = guess > actual ? 'higher than' : 'lower than';
+      hdr.textContent = `Actual is ${actual} ${units}`;
+      body.textContent = `You guessed ${guess} ${units} — that's ${direction} the real value. (Storey ≈ 3 m, so 6 × 3 = 18 m. Worth remembering as a rough rule.)`;
+    }
+  }
+</script>
+
+</body>
+</html>

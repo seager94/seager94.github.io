@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: MULTIPLE REPRESENTATIONS
+================================================================================
+The same mathematical relationship is shown in four representations
+simultaneously: equation, table, graph, and word context. Clicking any
+element in one representation highlights the equivalent elements in the
+other three.
+
+When to use: see references/strategies.md entry #11.
+Typical position: Section 4 (replacing the match component) or Section 5.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. Each linked element has
+     data-link-id="pN" where N is the point index (0 through 5 in the demo).
+     Graph circles, table rows, and the equation pane all share these IDs.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. To adapt to a different relationship (quadratic, proportional,
+     exponential), customise:
+       - The line equation in the SVG and the y-values in the table
+       - The 6 data points (graph circles + table rows)
+       - The word context phrase
+       - The data-link-id mapping (no change needed if you keep 6 points)
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Representations — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .mr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 12px;
+  }
+  .mr-pane {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex; flex-direction: column;
+  }
+  .mr-pane h4 {
+    margin: 0 0 10px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 2px solid var(--hint-bg);
+    padding-bottom: 6px;
+  }
+  .mr-pane.equation .mr-eqn {
+    font-family: Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+    text-align: center;
+    margin: 12px 0;
+  }
+  .mr-pane.equation .mr-sub {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--text);
+    text-align: center;
+    transition: background 0.2s;
+    min-height: 70px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mr-pane.equation .mr-sub.active { background: var(--coral-soft); color: var(--coral); font-weight: 600; }
+
+  .mr-pane.table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .mr-pane.table th {
+    background: var(--hint-bg);
+    color: var(--navy);
+    padding: 8px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .mr-pane.table td {
+    padding: 8px;
+    border: 1px solid var(--border);
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .mr-pane.table tr[data-link-id] {
+    cursor: pointer;
+  }
+  .mr-pane.table tr[data-link-id]:hover td {
+    background: var(--hint-bg);
+  }
+  .mr-pane.table tr[data-link-id].active td {
+    background: var(--coral-soft);
+    color: var(--coral);
+    font-weight: 700;
+  }
+
+  .mr-pane.graph svg { width: 100%; height: auto; max-height: 320px; }
+  .mr-pane.graph circle[data-link-id] {
+    cursor: pointer;
+    transition: r 0.15s, stroke-width 0.15s;
+  }
+  .mr-pane.graph circle[data-link-id]:hover { stroke-width: 3; }
+  .mr-pane.graph circle[data-link-id].active {
+    fill: var(--coral);
+    stroke: white;
+    stroke-width: 3;
+    r: 8;
+  }
+  .mr-pane.graph circle[data-link-id].active + text { fill: var(--coral); font-weight: bold; }
+
+  .mr-pane.context .mr-story {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .mr-pane.context .mr-specific {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--text);
+    flex: 1;
+    transition: background 0.2s;
+    min-height: 60px;
+    display: flex; align-items: center;
+  }
+  .mr-pane.context .mr-specific.active {
+    background: var(--coral-soft); color: var(--coral); font-weight: 600;
+  }
+  .mr-hint {
+    grid-column: 1 / -1;
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: var(--navy);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 800px) {
+    .mr-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     Four panes: equation, table, graph, word context.
+     Linked elements share data-link-id="p0", "p1", ..., "p5".
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Four ways to see the same relationship</h2>
+  <p class="sec-desc">The relationship <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> + 1</span> can be shown four ways. Click any row in the table, any point on the graph — and watch the equation and word panel update with the matching specific case.</p>
+
+  <div class="mr-grid">
+
+    <!-- TOP-LEFT: Equation pane -->
+    <div class="mr-pane equation">
+      <h4>Equation</h4>
+      <div class="mr-eqn"><span class="var">y</span> = 2<span class="var">x</span> + 1</div>
+      <div class="mr-sub" id="mrSub">Click a point or table row to see a specific example.</div>
+    </div>
+
+    <!-- TOP-RIGHT: Table pane -->
+    <div class="mr-pane table">
+      <h4>Table</h4>
+      <table>
+        <tr><th>x</th><th>y</th></tr>
+        <tr data-link-id="p0" onclick="linkSelect('p0')"><td>0</td><td>1</td></tr>
+        <tr data-link-id="p1" onclick="linkSelect('p1')"><td>1</td><td>3</td></tr>
+        <tr data-link-id="p2" onclick="linkSelect('p2')"><td>2</td><td>5</td></tr>
+        <tr data-link-id="p3" onclick="linkSelect('p3')"><td>3</td><td>7</td></tr>
+        <tr data-link-id="p4" onclick="linkSelect('p4')"><td>4</td><td>9</td></tr>
+        <tr data-link-id="p5" onclick="linkSelect('p5')"><td>5</td><td>11</td></tr>
+      </table>
+    </div>
+
+    <!-- BOTTOM-LEFT: Graph pane -->
+    <div class="mr-pane graph">
+      <h4>Graph</h4>
+      <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" aria-label="Graph of y = 2x + 1 with 6 marked points">
+        <!-- Grid -->
+        <g stroke="#e5e7eb" stroke-width="1">
+          <!-- vertical lines at x = 1..6 -->
+          <line x1="90" y1="20" x2="90" y2="290"/>
+          <line x1="120" y1="20" x2="120" y2="290"/>
+          <line x1="150" y1="20" x2="150" y2="290"/>
+          <line x1="180" y1="20" x2="180" y2="290"/>
+          <line x1="210" y1="20" x2="210" y2="290"/>
+          <line x1="240" y1="20" x2="240" y2="290"/>
+          <!-- horizontal lines at y = 2, 4, 6, 8, 10, 12 -->
+          <line x1="30" y1="240" x2="290" y2="240"/>
+          <line x1="30" y1="200" x2="290" y2="200"/>
+          <line x1="30" y1="160" x2="290" y2="160"/>
+          <line x1="30" y1="120" x2="290" y2="120"/>
+          <line x1="30" y1="80"  x2="290" y2="80"/>
+          <line x1="30" y1="40"  x2="290" y2="40"/>
+        </g>
+        <!-- Axes (origin at (60, 280); 1 unit_x = 30, 1 unit_y = 20) -->
+        <line x1="30" y1="280" x2="290" y2="280" stroke="#2a2a2a" stroke-width="1.5"/>
+        <line x1="60" y1="20" x2="60" y2="300" stroke="#2a2a2a" stroke-width="1.5"/>
+        <!-- Tick labels -->
+        <g font-family="-apple-system, sans-serif" font-size="10" fill="#6b7280">
+          <text x="60" y="295" text-anchor="middle">0</text>
+          <text x="90" y="295" text-anchor="middle">1</text>
+          <text x="120" y="295" text-anchor="middle">2</text>
+          <text x="150" y="295" text-anchor="middle">3</text>
+          <text x="180" y="295" text-anchor="middle">4</text>
+          <text x="210" y="295" text-anchor="middle">5</text>
+          <text x="55" y="263" text-anchor="end">1</text>
+          <text x="55" y="223" text-anchor="end">3</text>
+          <text x="55" y="183" text-anchor="end">5</text>
+          <text x="55" y="143" text-anchor="end">7</text>
+          <text x="55" y="103" text-anchor="end">9</text>
+          <text x="55" y="63" text-anchor="end">11</text>
+        </g>
+        <!-- Axis labels -->
+        <text x="285" y="296" font-family="Georgia, serif" font-size="13" fill="#2a2a2a" font-style="italic">x</text>
+        <text x="48" y="25" font-family="Georgia, serif" font-size="13" fill="#2a2a2a" font-style="italic">y</text>
+        <!-- Line y = 2x + 1, from (-0.25, 0.5) → (5.5, 12) approximately, clipped within view -->
+        <line x1="52" y1="290" x2="225" y2="40" stroke="#1D2B5E" stroke-width="2"/>
+        <!-- 6 marked points -->
+        <circle cx="60"  cy="260" r="6" fill="#1D2B5E" stroke="white" stroke-width="2" data-link-id="p0" onclick="linkSelect('p0')"/>
+        <circle cx="90"  cy="220" r="6" fill="#1D2B5E" stroke="white" stroke-width="2" data-link-id="p1" onclick="linkSelect('p1')"/>
+        <circle cx="120" cy="180" r="6" fill="#1D2B5E" stroke="white" stroke-width="2" data-link-id="p2" onclick="linkSelect('p2')"/>
+        <circle cx="150" cy="140" r="6" fill="#1D2B5E" stroke="white" stroke-width="2" data-link-id="p3" onclick="linkSelect('p3')"/>
+        <circle cx="180" cy="100" r="6" fill="#1D2B5E" stroke="white" stroke-width="2" data-link-id="p4" onclick="linkSelect('p4')"/>
+        <circle cx="210" cy="60"  r="6" fill="#1D2B5E" stroke="white" stroke-width="2" data-link-id="p5" onclick="linkSelect('p5')"/>
+      </svg>
+    </div>
+
+    <!-- BOTTOM-RIGHT: Word context pane -->
+    <div class="mr-pane context">
+      <h4>In words</h4>
+      <div class="mr-story">
+        🚕 An Adelaide taxi charges a $1 fixed flag-fall plus $2 per kilometre. <span class="var">y</span> is the total cost (in $); <span class="var">x</span> is the distance (in km).
+      </div>
+      <div class="mr-specific" id="mrSpecific">A specific example will appear here when you click a point.</div>
+    </div>
+
+    <div class="mr-hint">
+      💡 Notice — the gradient <strong>2</strong> represents the cost per km. The y-intercept <strong>1</strong> represents the flag-fall (what you pay before moving). Every representation says the same thing in a different language.
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  // Map each data-link-id to the (x, y) pair for that point.
+  const linkData = {
+    p0: { x: 0, y: 1 },
+    p1: { x: 1, y: 3 },
+    p2: { x: 2, y: 5 },
+    p3: { x: 3, y: 7 },
+    p4: { x: 4, y: 9 },
+    p5: { x: 5, y: 11 },
+  };
+
+  function linkSelect(id) {
+    // Clear previous active states
+    document.querySelectorAll('[data-link-id]').forEach(el => el.classList.remove('active'));
+    document.getElementById('mrSub').classList.remove('active');
+    document.getElementById('mrSpecific').classList.remove('active');
+    // Activate all elements with this id
+    document.querySelectorAll(`[data-link-id="${id}"]`).forEach(el => el.classList.add('active'));
+    // Update the equation substitution pane
+    const { x, y } = linkData[id];
+    document.getElementById('mrSub').innerHTML = `If <span class="var">x</span> = ${x}: &nbsp; <span class="var">y</span> = 2(${x}) + 1 = ${y}`;
+    document.getElementById('mrSub').classList.add('active');
+    // Update the word context pane
+    if (x === 0) {
+      document.getElementById('mrSpecific').textContent = `If you go 0 km (you don't move) you still pay $${y} — the flag-fall.`;
+    } else {
+      document.getElementById('mrSpecific').textContent = `A ${x} km journey costs $${y}.`;
+    }
+    document.getElementById('mrSpecific').classList.add('active');
+  }
+</script>
+
+</body>
+</html>

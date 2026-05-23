@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+STRATEGY KIT: GEOMETRIC PROOF / DISSECTION
+================================================================================
+A step-by-step visual proof revealed through SVG animation. Each click adds a
+layer to the diagram until the proof is complete. The demo is the classic
+"squares on the sides of a right triangle" proof of Pythagoras, anchored on
+the concrete 3-4-5 example.
+
+When to use: see references/strategies.md entry #17.
+Typical position: Section 5 (I DO) — *before* the algebraic worked example,
+motivating the formula geometrically.
+
+TO INTEGRATE INTO A LESSON:
+  1. Copy the CSS block marked "STRATEGY CSS" into the lesson's <style>.
+  2. Copy the SECTION MARKUP into the lesson body. The SVG is fully embedded
+     with all visual layers; the JS toggles them via opacity.
+  3. Copy the JS block marked "STRATEGY JS" into the lesson's <script>.
+  4. To adapt to a different theorem (parallelogram-to-rectangle, completing
+     the square geometrically, etc.) the entire SVG would need replacing —
+     this kit is theorem-specific by nature.
+
+This is the most theorem-specific of the kits. Treat it as a starting pattern
+rather than a generic template — most lessons that warrant a geometric proof
+will need bespoke SVG work anyway.
+
+Open this file in a browser to see the kit in action.
+================================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometric Proof — Strategy Demo</title>
+<style>
+  /* === STANDARD HOUSE PALETTE — don't duplicate when integrating === */
+  :root {
+    --navy: #1D2B5E; --coral: #E8485A; --coral-soft: #fbe1e4;
+    --bg: #F3F5F8; --hint-bg: #DDE5F5; --card: #ffffff; --border: #d8dde6;
+    --text: #2a2a2a; --muted: #6b7280;
+    --good: #2f9e6b; --good-soft: #dff5e8; --bad: #d24a4a; --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 16px; line-height: 1.55; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  section.lesson { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+  section.lesson h2 { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.4rem; margin: 0 0 6px; display: flex; align-items: center; gap: 12px; }
+  section.lesson h2 .sec-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem; }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; }
+  .var { font-style: italic; }
+
+  /* ============================================================
+     === STRATEGY CSS — COPY THIS BLOCK INTO THE LESSON STYLE ===
+     ============================================================ */
+  .proof-stage {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+  }
+  .proof-stage svg { width: 100%; height: auto; display: block; max-height: 540px; }
+  .proof-layer { opacity: 0; transition: opacity 0.6s ease-in-out; }
+  .proof-layer.visible { opacity: 1; }
+  .proof-narration {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    min-height: 60px;
+  }
+  .proof-narration .step-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .proof-narration .step-text {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1.05rem;
+    margin-top: 4px;
+  }
+  .proof-controls {
+    display: flex; gap: 10px; align-items: center; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .proof-controls button {
+    background: var(--coral); color: white;
+    border: none; padding: 9px 18px; border-radius: 8px;
+    font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .proof-controls button.secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .proof-controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .proof-progress {
+    font-size: 0.85rem; color: var(--muted);
+    font-family: -apple-system, sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ============================================================
+     === SECTION MARKUP — COPY THIS BLOCK INTO THE LESSON BODY ===
+     The SVG contains all layers (triangle, squares, areas, conclusion).
+     Each layer starts at opacity 0; the JS adds .visible to reveal them
+     in sequence. Triangle uses 3-4-5 sides at a scale of 40 SVG units per
+     maths unit.
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Why does <span class="expr"><span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²</span> ?</h2>
+  <p class="sec-desc">A visual proof using a 3-4-5 right triangle. Click <strong>Next</strong> to reveal each step — the picture builds itself.</p>
+
+  <div class="proof-narration">
+    <div class="step-label">Step <span id="proofStepNum">1</span> of 5</div>
+    <div class="step-text" id="proofStepText">Here's a right-angled triangle with legs of length 3 and 4. By measurement (or by the converse of Pythagoras), the hypotenuse is 5. The right angle is shown in the bottom-left corner.</div>
+  </div>
+
+  <div class="proof-stage">
+    <svg viewBox="180 30 540 460" xmlns="http://www.w3.org/2000/svg" aria-label="Visual proof of Pythagoras using a 3-4-5 triangle">
+
+      <!-- Square on bottom leg (a=3): 3x3 grid below the triangle -->
+      <g class="proof-layer" data-step="2">
+        <rect x="400" y="350" width="120" height="120" fill="#fbe1e4" stroke="#E8485A" stroke-width="2"/>
+        <text x="460" y="425" font-family="Georgia, serif" font-size="22" fill="#E8485A" text-anchor="middle" font-style="italic" font-weight="bold"><tspan>a</tspan><tspan baseline-shift="super" font-size="14">2</tspan></text>
+      </g>
+      <!-- Unit grid inside square a (revealed at step 3) -->
+      <g class="proof-layer" data-step="3" stroke="#E8485A" stroke-width="0.6" fill="none">
+        <line x1="440" y1="350" x2="440" y2="470"/>
+        <line x1="480" y1="350" x2="480" y2="470"/>
+        <line x1="400" y1="390" x2="520" y2="390"/>
+        <line x1="400" y1="430" x2="520" y2="430"/>
+      </g>
+      <g class="proof-layer" data-step="3">
+        <rect x="430" y="395" width="60" height="30" rx="6" fill="white" stroke="#E8485A" stroke-width="1.5"/>
+        <text x="460" y="417" font-family="Georgia, serif" font-size="20" fill="#E8485A" text-anchor="middle" font-weight="bold">9</text>
+      </g>
+
+      <!-- Square on left leg (b=4): 4x4 grid to the left of the triangle -->
+      <g class="proof-layer" data-step="2">
+        <rect x="240" y="190" width="160" height="160" fill="#dde5f5" stroke="#1D2B5E" stroke-width="2"/>
+        <text x="320" y="280" font-family="Georgia, serif" font-size="22" fill="#1D2B5E" text-anchor="middle" font-style="italic" font-weight="bold"><tspan>b</tspan><tspan baseline-shift="super" font-size="14">2</tspan></text>
+      </g>
+      <!-- Unit grid inside square b -->
+      <g class="proof-layer" data-step="3" stroke="#1D2B5E" stroke-width="0.6" fill="none">
+        <line x1="280" y1="190" x2="280" y2="350"/>
+        <line x1="320" y1="190" x2="320" y2="350"/>
+        <line x1="360" y1="190" x2="360" y2="350"/>
+        <line x1="240" y1="230" x2="400" y2="230"/>
+        <line x1="240" y1="270" x2="400" y2="270"/>
+        <line x1="240" y1="310" x2="400" y2="310"/>
+      </g>
+      <g class="proof-layer" data-step="3">
+        <rect x="285" y="255" width="70" height="30" rx="6" fill="white" stroke="#1D2B5E" stroke-width="1.5"/>
+        <text x="320" y="277" font-family="Georgia, serif" font-size="20" fill="#1D2B5E" text-anchor="middle" font-weight="bold">16</text>
+      </g>
+
+      <!-- Square on hypotenuse (c=5): rotated square attached to the diagonal -->
+      <!-- Triangle corners: A=(400,350), B=(520,350), C=(400,190)
+           Hypotenuse goes B to C. Outer perp is (0.8, -0.6) in SVG y-flipped:
+           From B=(520,350) outward 200 units (5*40): (520+160, 350-120) = (680, 230)
+           From C=(400,190) outward 200 units: (400+160, 190-120) = (560, 70) -->
+      <g class="proof-layer" data-step="2">
+        <polygon points="520,350 680,230 560,70 400,190" fill="#dff5e8" stroke="#2f9e6b" stroke-width="2"/>
+        <text x="540" y="200" font-family="Georgia, serif" font-size="22" fill="#2f9e6b" text-anchor="middle" font-style="italic" font-weight="bold"><tspan>c</tspan><tspan baseline-shift="super" font-size="14">2</tspan></text>
+      </g>
+      <!-- "25" label (no unit grid for the rotated square — would be visually noisy) -->
+      <g class="proof-layer" data-step="3">
+        <rect x="510" y="195" width="70" height="30" rx="6" fill="white" stroke="#2f9e6b" stroke-width="1.5"/>
+        <text x="545" y="217" font-family="Georgia, serif" font-size="20" fill="#2f9e6b" text-anchor="middle" font-weight="bold">25</text>
+      </g>
+
+      <!-- Triangle (drawn ON TOP so it sits cleanly over the square edges) -->
+      <g class="proof-layer visible" data-step="1">
+        <polygon points="400,350 520,350 400,190" fill="white" stroke="#2a2a2a" stroke-width="2.5"/>
+        <!-- right-angle mark -->
+        <path d="M 400 332 L 418 332 L 418 350" fill="none" stroke="#2a2a2a" stroke-width="1.5"/>
+        <!-- side labels -->
+        <text x="460" y="372" font-family="Georgia, serif" font-size="18" fill="#E8485A" text-anchor="middle" font-style="italic" font-weight="bold">a = 3</text>
+        <text x="380" y="275" font-family="Georgia, serif" font-size="18" fill="#1D2B5E" text-anchor="end" font-style="italic" font-weight="bold">b = 4</text>
+        <text x="475" y="265" font-family="Georgia, serif" font-size="18" fill="#2f9e6b" font-style="italic" font-weight="bold" transform="rotate(-53 475 265)">c = 5</text>
+      </g>
+
+      <!-- Concrete equation (step 4) -->
+      <g class="proof-layer" data-step="4">
+        <rect x="220" y="55" width="480" height="45" rx="10" fill="#1D2B5E"/>
+        <text x="460" y="86" font-family="Georgia, serif" font-size="22" fill="white" text-anchor="middle" font-weight="bold">
+          9 + 16 = 25 &nbsp;&nbsp;✓
+        </text>
+      </g>
+
+      <!-- General form (step 5) -->
+      <g class="proof-layer" data-step="5">
+        <rect x="220" y="110" width="480" height="55" rx="10" fill="#E8485A"/>
+        <text x="460" y="148" font-family="Georgia, serif" font-size="24" fill="white" text-anchor="middle" font-weight="bold">
+          <tspan font-style="italic">a</tspan><tspan baseline-shift="super" font-size="14">2</tspan> +
+          <tspan font-style="italic">b</tspan><tspan baseline-shift="super" font-size="14">2</tspan> =
+          <tspan font-style="italic">c</tspan><tspan baseline-shift="super" font-size="14">2</tspan>
+        </text>
+      </g>
+
+    </svg>
+  </div>
+
+  <div class="proof-controls">
+    <button class="secondary" onclick="proofPrev()" id="proofPrev" disabled>← Back</button>
+    <span class="proof-progress" id="proofProgress">Step 1 / 5</span>
+    <button onclick="proofNext()" id="proofNext">Next →</button>
+    <button class="secondary" onclick="proofRestart()">↺ Restart</button>
+  </div>
+</section>
+
+</div>
+
+<script>
+  /* ============================================================
+     === STRATEGY JS — COPY THIS BLOCK INTO THE LESSON SCRIPT ===
+     ============================================================ */
+  const proofSteps = [
+    // Step 1 narration (the triangle alone)
+    "Here's a right-angled triangle with legs of length 3 and 4. By measurement (or by the converse of Pythagoras), the hypotenuse is 5. The right angle is shown in the bottom-left corner.",
+    // Step 2
+    "Now imagine a square built on each side. The pink square sits below side a (3 by 3). The navy square sits to the left of side b (4 by 4). The green square sits on the hypotenuse c — it's rotated, but it's still a perfect square with side 5.",
+    // Step 3
+    "Counting unit squares inside each: a² = 9 small squares, b² = 16, c² = 25. (The green square has 5 × 5 = 25 unit squares, even though we haven't drawn the grid — it would look too busy on the diagonal.)",
+    // Step 4
+    "And — remarkably — 9 + 16 = 25. The area of the square on the hypotenuse equals the sum of the areas of the squares on the two legs. Try it with other right triangles. It always works.",
+    // Step 5
+    "In general, for ANY right-angled triangle with legs a and b and hypotenuse c: a² + b² = c². This is Pythagoras' Theorem — the most famous result in elementary geometry, and the key tool we'll use to find unknown sides."
+  ];
+
+  let proofCurrentStep = 1;
+
+  function proofShowStep(n) {
+    proofCurrentStep = Math.max(1, Math.min(5, n));
+    document.querySelectorAll('.proof-layer').forEach(g => {
+      const stepNum = parseInt(g.dataset.step, 10);
+      g.classList.toggle('visible', stepNum <= proofCurrentStep);
+    });
+    document.getElementById('proofStepNum').textContent = proofCurrentStep;
+    document.getElementById('proofStepText').textContent = proofSteps[proofCurrentStep - 1];
+    document.getElementById('proofProgress').textContent = `Step ${proofCurrentStep} / 5`;
+    document.getElementById('proofPrev').disabled = (proofCurrentStep === 1);
+    document.getElementById('proofNext').disabled = (proofCurrentStep === 5);
+  }
+
+  function proofNext() { proofShowStep(proofCurrentStep + 1); }
+  function proofPrev() { proofShowStep(proofCurrentStep - 1); }
+  function proofRestart() { proofShowStep(1); }
+</script>
+
+</body>
+</html>
