@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTRODUCTION TO LOGARITHMS — SACE Stage 1 Mathematical Methods
+  Topic 3 (Growth & Decay) · Week 5, Lesson 9
+  Built on the interactive-html-maths-lesson skill (post-18-May structure:
+  teal/terracotta palette, Section 0 retrieval, accordion practice tiers).
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction to Logarithms — Stage 1 Methods</title>
+<style>
+  :root {
+    --navy: #1F4D54;          /* teal authority */
+    --navy-dark: #143438;
+    --coral: #BE5837;         /* terracotta highlight */
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --tint: #eaf2f2;          /* pale teal — Section 0 / Exit bookend */
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  section.lesson h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--navy);
+    font-size: 1.1rem;
+    margin: 24px 0 6px;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* RETRIEVAL (Section 0) + EXIT (Section 11) — bookend treatment */
+  section.lesson.retrieval, section.lesson.exit {
+    background: var(--tint);
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem, section.lesson.exit .problem { background: #fff; }
+  .checkpoint-tag, .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f4f8f8; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  .difficulty-1 .problem, .difficulty-2 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input, .difficulty-2 .problem-input { background: white; }
+  section.lesson.difficulty-1::before, section.lesson.difficulty-2::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg);
+    z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '\01F336'; }
+  section.lesson.difficulty-2::before { content: '\01F336\01F336'; }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700; color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+
+  /* ACCORDION TIERS */
+  section.lesson.tier h2 { cursor: pointer; }
+  .tier-toggle { display: inline-flex; align-items: center; gap: 10px; }
+  .q-count {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--muted);
+    background: #fff; border: 1px solid var(--border);
+    padding: 3px 9px; border-radius: 999px; white-space: nowrap;
+  }
+  .chevron { font-size: 0.85rem; color: var(--navy); transition: transform 0.25s; }
+  section.lesson.tier.collapsed .chevron { transform: rotate(-90deg); }
+  section.lesson.tier.collapsed .tier-body { display: none; }
+  body.teacher-mode .tier-body { display: block !important; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; font-size: 1.5rem;
+    color: var(--coral); letter-spacing: 2px; line-height: 1;
+    flex-shrink: 0; padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.4px; }
+  .var { font-style: italic; }
+  .expr sub, .expr sup { font-style: normal; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin: 14px 0;
+    color: var(--navy);
+  }
+  .callout.warn {
+    background: var(--bad-soft);
+    border-left-color: var(--bad);
+    color: #7a2e2e;
+  }
+  .callout.warn ul { margin: 6px 0 0; padding-left: 20px; }
+  .callout.warn li { margin-bottom: 4px; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px; padding: 16px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.12rem; }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif; font-weight: normal;
+    font-size: 0.7rem; opacity: 0.7; margin-top: 10px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.88rem; line-height: 1.4; text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 9px;
+    padding: 6px 10px 7px;
+    background: var(--hint-bg); border-radius: 6px;
+    font-size: 0.8rem; line-height: 1.35;
+    color: var(--navy); font-style: italic; text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE \2014 '; font-style: normal; font-weight: 700;
+    font-size: 0.6rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* DEFINITION BOX */
+  .label-mini {
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--coral); margin-bottom: 8px;
+  }
+  .def-box {
+    background: #fff; border: 2px solid var(--navy);
+    border-radius: 10px; padding: 20px 22px; margin: 16px 0; text-align: center;
+  }
+  .def-box .def-eq { font-family: Georgia, serif; font-size: 1.4rem; color: var(--navy); line-height: 1.6; }
+  .def-box .def-conditions { font-size: 0.88rem; color: var(--muted); margin-top: 10px; }
+
+  /* TWO-WAYS DIAGRAM */
+  .two-ways {
+    display: flex; align-items: center; justify-content: center;
+    gap: 20px; flex-wrap: wrap;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; margin: 14px 0;
+  }
+  .tw-panel { text-align: center; }
+  .tw-expr { font-family: Georgia, serif; font-size: 1.6rem; }
+  .tw-base { color: var(--coral); font-weight: 700; }
+  .tw-exp  { color: var(--navy);  font-weight: 700; }
+  .tw-link { font-size: 1.9rem; color: var(--coral); }
+  .tw-labels { font-size: 0.74rem; color: var(--muted); margin-top: 8px; }
+
+  /* CALCULATOR KEYS */
+  .calc-keys { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  .calc-key-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .calc-key {
+    display: inline-block; background: var(--navy); color: #fff;
+    font-family: Georgia, serif; padding: 6px 18px; border-radius: 6px;
+    font-size: 1.15rem; margin-bottom: 8px;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,0.25);
+  }
+  .calc-key-card .ck-desc { font-size: 0.9rem; color: var(--text); }
+  @media (max-width: 600px) { .calc-keys { grid-template-columns: 1fr; } }
+
+  /* QUESTION BANNER (worked examples) */
+  .question-banner {
+    background: var(--coral); color: #fff;
+    border-radius: 8px; padding: 13px 17px; margin-bottom: 16px;
+    font-family: Georgia, serif; font-size: 1.08rem; line-height: 1.5;
+  }
+  .question-banner .label {
+    font-family: -apple-system, sans-serif; display: block;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.68rem; opacity: 0.9; margin-bottom: 4px;
+  }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem; overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px; padding: 12px 16px; margin-top: 14px;
+    font-family: Georgia, serif; font-size: 1.05rem; text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.7rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white; border: none;
+    padding: 10px 18px; border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600; margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif; font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 30px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem; background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.14); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white; border: none;
+    padding: 8px 14px; border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a94a2d; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg); padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px; line-height: 1.5;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson.tier.collapsed .tier-body { display: block !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.18rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .two-ways { gap: 10px; }
+    .tw-expr { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Introduction to Logarithms</h1>
+    <div class="subtitle">SACE Stage 1 Mathematical Methods &middot; Topic 3 — Growth &amp; Decay &middot; Week 5, Lesson 9</div>
+  </div>
+  <div class="badge">Stage 1 &middot; Methods</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>&#128065;</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2><span class="sec-num">0</span>Retrieval warm-up
+    <span class="retrieval-tag">&#129504; Retrieval</span>
+  </h2>
+  <p class="sec-desc">Quick recall — solve each by inspection (just by thinking, no calculator). These don't count toward today's progress; they wake up the prior knowledge you'll build on.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real Growth &amp; Decay problem — and the gap in your toolkit it exposes.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start;">
+    <div>
+      <p>You invest <strong>$1000</strong> in a long-term fund that, historically, <strong>doubles in value about every 7 years</strong>. You'd like to know when your investment passes <strong>$1&nbsp;000&nbsp;000</strong>.</p>
+      <p>Each doubling multiplies the balance by 2, so after <span class="expr"><span class="var">n</span></span> doublings you have <span class="expr">1000 &times; 2<sup><span class="var">n</span></sup></span> dollars. Reaching a million means solving:</p>
+      <p style="text-align:center;"><span class="expr">2<sup><span class="var">n</span></sup> = 1000</span></p>
+      <p>From the warm-up you can already feel the problem: <span class="expr">2<sup>9</sup> = 512</span> and <span class="expr">2<sup>10</sup> = 1024</span>. The answer sits somewhere between 9 and 10 doublings — but inspection can't tell you <em>exactly</em> where.</p>
+    </div>
+    <div class="callout" style="margin: 0;">
+      This is the job of a <strong>logarithm</strong>. The logarithm <span class="expr">log<sub>2</sub>(1000)</span> means precisely <em>"the power of 2 that gives 1000"</em> — and a calculator returns <span class="expr">log<sub>2</sub>(1000) &asymp; 9.97</span> doublings (about 70 years).<br><br>
+      Today: what a logarithm <em>is</em>, and how every exponential fact can be read as a logarithmic fact — <strong>the same statement, two ways round.</strong>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, the definition, and a matching activity — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip it. These eight words are the language of the whole topic.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Logarithm<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>exponent</strong> a base must be raised to in order to give a certain number.<div class="vocab-example expr">log<sub>2</sub>(8) = 3, because 2<sup>3</sup> = 8.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Base<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number being repeatedly multiplied — written as a <strong>subscript</strong> on the log.<div class="vocab-example expr">In log<sub>5</sub>(25), the base is <strong>5</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Argument<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number you take the logarithm <strong>of</strong> — it sits inside the brackets. Must be positive.<div class="vocab-example expr">In log<sub>5</sub>(25), the argument is <strong>25</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Exponential form<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A fact written as <strong>base<sup>exponent</sup> = result</strong>.<div class="vocab-example expr">2<sup>3</sup> = 8</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Logarithmic form<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>same fact</strong> written as log<sub>base</sub>(result) = exponent.<div class="vocab-example expr">log<sub>2</sub>(8) = 3</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Common logarithm<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A logarithm with <strong>base 10</strong>. Written "log" with no base shown — the <strong>log</strong> button.<div class="vocab-example expr">log(1000) = 3</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Natural logarithm<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A logarithm with <strong>base <span class="var">e</span></strong> (&asymp; 2.718). Written "ln" — the <strong>ln</strong> button. Used in full in Stage 2.<div class="vocab-example expr">ln(<span class="var">e</span>) = 1</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Inverse operation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An operation that <strong>undoes</strong> another. Logarithms undo exponentials.<div class="vocab-example expr">log<sub>2</sub>(2<sup><span class="var">x</span></sup>) = <span class="var">x</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: EXPLICIT TEACHING -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Explicit teaching — the definition</h2>
+  <p class="sec-desc">A logarithm is an exponent in disguise. Here is the precise definition, how to convert between forms, and the two calculator buttons you'll meet.</p>
+
+  <div class="def-box">
+    <div class="label-mini">The definition</div>
+    <div class="def-eq">
+      <span class="expr">log<sub><span class="var">a</span></sub>(<span class="var">x</span>) = <span class="var">y</span></span>
+      &nbsp; means exactly the same as &nbsp;
+      <span class="expr"><span class="var">a</span><sup><span class="var">y</span></sup> = <span class="var">x</span></span>
+    </div>
+    <div class="def-conditions">where <span class="expr"><span class="var">a</span> &gt; 0</span>, &nbsp; <span class="expr"><span class="var">a</span> &ne; 1</span>, &nbsp; and &nbsp; <span class="expr"><span class="var">x</span> &gt; 0</span></div>
+  </div>
+
+  <p>Read a logarithm out loud as a <strong>question</strong>: <em>"<span class="var">a</span> to the what power gives <span class="var">x</span>?"</em> — and the answer to that question is <span class="var">y</span>.</p>
+
+  <h3>The same fact, two ways round</h3>
+  <p>An exponential statement and a logarithmic statement carry identical information. Notice how the <span style="color:var(--coral);font-weight:700">base</span> and the <span style="color:var(--navy);font-weight:700">exponent</span> match across both forms:</p>
+  <div class="two-ways">
+    <div class="tw-panel">
+      <div class="tw-expr"><span class="tw-base">2</span><sup class="tw-exp">3</sup> = 8</div>
+      <div class="tw-labels">base &middot; exponent &middot; result</div>
+    </div>
+    <div class="tw-link">&#8660;</div>
+    <div class="tw-panel">
+      <div class="tw-expr">log<sub class="tw-base">2</sub>(8) = <span class="tw-exp">3</span></div>
+      <div class="tw-labels">base &middot; argument &middot; the log equals</div>
+    </div>
+  </div>
+
+  <h3>Converting between the two forms</h3>
+  <p>To convert <strong>exponential &rarr; logarithmic</strong>: the base stays the base, the <em>result</em> moves inside the brackets to become the argument, and the <em>exponent</em> becomes what the logarithm equals. To convert <strong>logarithmic &rarr; exponential</strong>, run the same swap in reverse.</p>
+  <div class="calc-box" style="text-align:center;">
+    <span class="blue">3</span><sup class="red">4</sup> = 81 &nbsp;&nbsp;&#8660;&nbsp;&nbsp; log<sub class="blue">3</sub>(81) = <span class="red">4</span>
+  </div>
+
+  <h3>Two buttons on your calculator</h3>
+  <p>For "nice" numbers you can find a logarithm by inspection. When the numbers aren't nice, your calculator has two logarithm buttons:</p>
+  <div class="calc-keys">
+    <div class="calc-key-card">
+      <span class="calc-key">log</span>
+      <div class="ck-desc"><strong>Common logarithm — base 10.</strong> When a logarithm is written with no base shown, base 10 is assumed. So <span class="expr">log(1000)</span> means <span class="expr">log<sub>10</sub>(1000) = 3</span>.</div>
+    </div>
+    <div class="calc-key-card">
+      <span class="calc-key">ln</span>
+      <div class="ck-desc"><strong>Natural logarithm — base <span class="var">e</span></strong> (&asymp; 2.718). Same operation as log, just a different base. <span class="expr"><span class="var">e</span></span> is a special constant you'll work with in detail in Stage 2.</div>
+    </div>
+  </div>
+  <div class="callout">
+    &#128161; <strong>About "ln" for now:</strong> all you need today is that the <strong>ln</strong> button exists and uses base <span class="var">e</span> &asymp; 2.718. It behaves exactly like the log button — same idea, different base. You'll use it properly in Stage 2.
+  </div>
+
+  <h3>Why the argument must be positive</h3>
+  <p>A positive base raised to <em>any</em> power — positive, negative, or zero — always gives a <strong>positive</strong> result (for example <span class="expr">2<sup>&minus;3</sup> = </span><span class="frac"><span class="num">1</span><span class="den">8</span></span>, still positive). Since <span class="expr">log<sub><span class="var">a</span></sub>(<span class="var">x</span>)</span> asks <em>"what power gives <span class="var">x</span>?"</em>, and no power of a positive base is ever zero or negative, the argument <span class="var">x</span> <strong>must be positive</strong>. That is why <span class="expr">log(0)</span> and <span class="expr">log(&minus;5)</span> have no answer.</p>
+
+  <div class="callout warn">
+    &#9888;&#65039; <strong>Common mistakes to avoid:</strong>
+    <ul>
+      <li><strong>Mixing up base and result.</strong> In <span class="expr">log<sub>2</sub>(8)</span>, the base is 2 and 8 is the result — don't swap them.</li>
+      <li><strong>Reading it as multiplication.</strong> <span class="expr">log<sub>2</sub>(8)</span> is <em>not</em> "2 lots of 8". It is a single operation: <em>the power</em>.</li>
+      <li><strong>Taking the log of 0 or a negative number.</strong> <span class="expr">log(0)</span> and <span class="expr">log(&minus;7)</span> are undefined.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the pairs — two ways round</h2>
+  <p class="sec-desc">Click an exponential statement, then its equivalent logarithmic statement, to match them. There are five matching pairs.</p>
+  <div class="match-area" id="matchArea"><!-- populated by JS --></div>
+  <div class="match-feedback" id="matchFeedback">Pick a statement to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll convert between the two forms out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE 1 (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked Example 1 — converting between forms</h2>
+  <div class="question-banner">
+    <span class="label">Worked Example 1</span>
+    (a) Write <span class="expr">3<sup>4</sup> = 81</span> in logarithmic form. &nbsp; (b) Write <span class="expr">log<sub>5</sub>(125) = 3</span> in exponential form.
+  </div>
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Identify the parts</div>
+        <div class="step-desc">For part (a), label the base, the exponent, and the result.</div>
+        <div class="calc-box">
+          <span class="blue">3</span><sup class="red">4</sup> = 81 &nbsp;&rarr;&nbsp; base = <span class="blue">3</span>, &nbsp; exponent = <span class="red">4</span>, &nbsp; result = 81
+        </div>
+      </div>
+    </div>
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Apply the definition</div>
+        <div class="step-desc">Use <span class="expr"><span class="var">a</span><sup><span class="var">y</span></sup> = <span class="var">x</span></span> &#8660; <span class="expr">log<sub><span class="var">a</span></sub>(<span class="var">x</span>) = <span class="var">y</span></span>. Base stays the base; the result becomes the argument; the exponent becomes what the log equals.</div>
+        <div class="calc-box">
+          <span class="blue">3</span><sup class="red">4</sup> = 81 &nbsp;&#8660;&nbsp; log<sub class="blue">3</sub>(81) = <span class="red">4</span>
+        </div>
+      </div>
+    </div>
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Reverse the swap for part (b)</div>
+        <div class="step-desc"><span class="expr">log<sub>5</sub>(125) = 3</span> has base 5, argument 125, and the log equals 3. So <span class="expr"><span class="var">a</span><sup><span class="var">y</span></sup> = <span class="var">x</span></span> gives <span class="expr">5<sup>3</sup> = 125</span>. Check: 5 &times; 5 &times; 5 = 125. &#10004;</div>
+        <div class="calc-box">
+          log<sub class="blue">5</sub>(125) = <span class="red">3</span> &nbsp;&#8660;&nbsp; <span class="blue">5</span><sup class="red">3</sup> = 125
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          3<sup>4</sup> = 81 &#8660; log<sub>3</sub>(81) = 4 &nbsp;&nbsp;|&nbsp;&nbsp; log<sub>5</sub>(125) = 3 &#8660; 5<sup>3</sup> = 125
+        </div>
+      </div>
+    </div>
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step &darr;</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work these out together</div>
+    <div class="phase-sub">Discuss each one with your neighbour — we'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WORKED EXAMPLE 2 (WE DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Worked Example 2 — evaluating by inspection</h2>
+  <div class="question-banner">
+    <span class="label">Worked Example 2 &middot; we do</span>
+    Evaluate each logarithm by inspection. For each one ask: <em>"this base, to what power, gives this number?"</em>
+  </div>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="callout">
+    &#128161; <strong>Worth remembering:</strong> <span class="expr">log<sub>7</sub>(1) = 0</span> — and in fact <span class="expr">log<sub><span class="var">a</span></sub>(1) = 0</span> for <em>every</em> valid base, because <span class="expr"><span class="var">a</span><sup>0</sup> = 1</span>. Likewise <span class="expr">log<sub><span class="var">a</span></sub>(<span class="var">a</span>) = 1</span>, since <span class="expr"><span class="var">a</span><sup>1</sup> = <span class="var">a</span></span>.
+  </div>
+</section>
+
+<!-- SECTION 7: WORKED EXAMPLE 3 (WE DO — calculator) -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Worked Example 3 — using the calculator</h2>
+  <div class="question-banner">
+    <span class="label">Worked Example 3 &middot; we do</span>
+    Use a calculator to evaluate, correct to 3 decimal places: <span class="expr">log<sub>10</sub>(7)</span>, &nbsp; <span class="expr">ln(7)</span>, &nbsp; <span class="expr">ln(20)</span>.
+  </div>
+  <div class="worked">
+    <div class="step visible">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">log<sub>10</sub>(7) — use the <strong>log</strong> button</div>
+        <div class="step-desc">The log button is base 10, so no base needs to be entered. Press <strong>log</strong>, then type 7.</div>
+        <div class="calc-box">log<sub>10</sub>(7) = <span class="blue">0.845</span> &nbsp;(3 d.p.)</div>
+      </div>
+    </div>
+    <div class="step visible">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">ln(7) — use the <strong>ln</strong> button</div>
+        <div class="step-desc">"ln" is the natural logarithm: base <span class="var">e</span> &asymp; 2.718. Press <strong>ln</strong>, then type 7.</div>
+        <div class="calc-box">ln(7) = <span class="red">1.946</span> &nbsp;(3 d.p.)</div>
+      </div>
+    </div>
+    <div class="step visible">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">ln(20) — and compare</div>
+        <div class="step-desc">Same ln button. Then notice: <span class="expr">log<sub>10</sub>(7) &asymp; 0.845</span> but <span class="expr">ln(7) &asymp; 1.946</span> — the <em>same number</em> 7, but different answers, because the <strong>base differs</strong> (10 versus <span class="var">e</span>).</div>
+        <div class="calc-box">ln(20) = <span class="red">2.996</span> &nbsp;(3 d.p.)</div>
+        <div class="summary-banner">
+          <span class="label">Remember</span>
+          log button &rarr; base 10 &nbsp;&middot;&nbsp; ln button &rarr; base <span style="font-style:italic">e</span> &asymp; 2.718
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then the Foundation and Higher practice tiers.</div>
+  </div>
+</div>
+
+<!-- SECTION 8: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">8</span>Quick check — try these on your own
+    <span class="checkpoint-tag">&#9995; Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own — <strong>then we'll check together as a class</strong> before the practice tiers.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    &#9995; <strong>Stop here</strong> when you're done. Wait for the class check before starting the practice.
+  </div>
+</section>
+
+<!-- SECTION 9: FOUNDATION PRACTICE -->
+<section class="lesson difficulty-1 tier" id="tier-foundation">
+  <h2 onclick="toggleTier('tier-foundation')">
+    <span class="sec-num">9</span>Practice — Foundation
+    <span class="diff-badge d1"><span class="dots">&#9679;&#9675;</span>Foundation</span>
+    <span class="tier-toggle"><span class="q-count" id="countF">&nbsp;</span><span class="chevron">&#9662;</span></span>
+  </h2>
+  <div class="tier-body">
+    <p class="sec-desc">Read the instruction in each question. Type log form like <code>log2(8)=3</code> and exponential form like <code>2^3=8</code>; for "evaluate", type just the number. Brackets, spaces and the <code>^</code> symbol are optional — the marker is flexible.</p>
+    <div class="practice-grid" id="practiceGridF"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: HIGHER PRACTICE -->
+<section class="lesson difficulty-2 tier collapsed" id="tier-higher">
+  <h2 onclick="toggleTier('tier-higher')">
+    <span class="sec-num">10</span>Practice — Higher
+    <span class="diff-badge d2"><span class="dots">&#9679;&#9679;</span>Higher</span>
+    <span class="tier-toggle"><span class="q-count" id="countH">&nbsp;</span><span class="chevron">&#9662;</span></span>
+  </h2>
+  <div class="tier-body">
+    <p class="sec-desc">Use your calculator and give answers correct to <strong>3 decimal places</strong>. The final question is written — answer it in full sentences.</p>
+    <div class="practice-grid" id="practiceGridH"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit">
+  <h2><span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">&#127919; Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three questions before you go — they check the big ideas of today's lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<footer class="bottom">
+  Aberfoyle Park High School &middot; Mathematics &middot; SACE Stage 1 Mathematical Methods &middot; Topic 3 Growth &amp; Decay<br>
+  Introduction to Logarithms &middot; Week 5, Lesson 9 &middot; Built with Claude
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    document.getElementById(id).classList.toggle('collapsed');
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      const btn = document.getElementById('revealBtn');
+      btn.disabled = true;
+      btn.textContent = '\u2713 All steps shown';
+    }
+  }
+
+  // ============ DATA: RETRIEVAL (Section 0) ============
+  const retrieval = [
+    { q: 'Solve by inspection: <span class="expr">2<sup><span class="var">x</span></sup> = 8</span>', a: '3', hint: '2 to the what power gives 8? 2 \u00d7 2 \u00d7 2 = 8.' },
+    { q: 'Solve by inspection: <span class="expr">5<sup><span class="var">x</span></sup> = 25</span>', a: '2', hint: '5 \u00d7 5 = 25.' },
+    { q: 'Solve by inspection: <span class="expr">10<sup><span class="var">x</span></sup> = 1000</span>', a: '3', hint: '10 \u00d7 10 \u00d7 10 = 1000 \u2014 count the zeros.' },
+    { q: 'Now try <span class="expr">2<sup><span class="var">x</span></sup> = 7</span>. What whole number works? If none does, explain what you notice.', a: 'TEXT',
+      hint: 'Test x = 2 and x = 3 \u2014 does either land exactly on 7?',
+      disp: 'No whole number works: 2<sup>2</sup> = 4 (too small) and 2<sup>3</sup> = 8 (too big), so x sits somewhere between 2 and 3. To pin it down exactly we need a new tool \u2014 a logarithm.' },
+  ];
+
+  // ============ DATA: MATCHING (Section 4) ============
+  const matchTerms = [
+    { html: '2<sup>3</sup> = 8',        group: 1 },
+    { html: 'log<sub>2</sub>(8) = 3',   group: 1 },
+    { html: '10<sup>2</sup> = 100',     group: 2 },
+    { html: 'log<sub>10</sub>(100) = 2',group: 2 },
+    { html: '5<sup>3</sup> = 125',      group: 3 },
+    { html: 'log<sub>5</sub>(125) = 3', group: 3 },
+    { html: '3<sup>4</sup> = 81',       group: 4 },
+    { html: 'log<sub>3</sub>(81) = 4',  group: 4 },
+    { html: '4<sup>2</sup> = 16',       group: 5 },
+    { html: 'log<sub>4</sub>(16) = 2',  group: 5 },
+  ];
+
+  // ============ DATA: WE DO (Section 6) ============
+  const weDo2 = [
+    { q: 'Evaluate <span class="expr">log<sub>2</sub>(16)</span> &mdash; 2 to the what power gives 16?', a: '4', hint: '2 \u00d7 2 \u00d7 2 \u00d7 2 = 16.' },
+    { q: 'Evaluate <span class="expr">log<sub>10</sub>(1000)</span> &mdash; 10 to the what power gives 1000?', a: '3', hint: '1000 has three zeros.' },
+    { q: 'Evaluate <span class="expr">log<sub>7</sub>(1)</span> &mdash; 7 to the what power gives 1?', a: '0', hint: 'Any non-zero number raised to the power 0 equals 1.' },
+  ];
+
+  // ============ DATA: QUICK CHECK (Section 8) ============
+  const checkpoint = [
+    { q: 'Write <span class="expr">2<sup>5</sup> = 32</span> in logarithmic form.', a: 'log2(32)=5',
+      disp: 'log<sub>2</sub>(32) = 5', hint: 'Base stays the base; 32 becomes the argument; the exponent 5 is what the log equals.' },
+    { q: 'Evaluate <span class="expr">log<sub>3</sub>(9)</span>.', a: '2', hint: '3 to the what power gives 9?' },
+  ];
+
+  // ============ DATA: FOUNDATION PRACTICE (Section 9) ============
+  const practiceFoundation = [
+    { q: 'Write in logarithmic form: <span class="expr">4<sup>2</sup> = 16</span>', a: 'log4(16)=2',
+      disp: 'log<sub>4</sub>(16) = 2', hint: 'Base 4 stays; 16 is the argument; the exponent 2 is the value.' },
+    { q: 'Write in logarithmic form: <span class="expr">10<sup>3</sup> = 1000</span>', a: 'log10(1000)=3',
+      disp: 'log<sub>10</sub>(1000) = 3', hint: 'Base 10; argument 1000; exponent 3.' },
+    { q: 'Write in logarithmic form: <span class="expr">2<sup>6</sup> = 64</span>', a: 'log2(64)=6',
+      disp: 'log<sub>2</sub>(64) = 6', hint: 'Base 2; argument 64; exponent 6.' },
+    { q: 'Write in logarithmic form: <span class="expr">3<sup>3</sup> = 27</span>', a: 'log3(27)=3',
+      disp: 'log<sub>3</sub>(27) = 3', hint: 'Base 3; argument 27; exponent 3.' },
+    { q: 'Write in exponential form: <span class="expr">log<sub>5</sub>(25) = 2</span>', a: '5^2=25',
+      disp: '5<sup>2</sup> = 25', hint: 'base <sup>(value)</sup> = argument, so 5 to the power 2.' },
+    { q: 'Write in exponential form: <span class="expr">log<sub>2</sub>(8) = 3</span>', a: '2^3=8',
+      disp: '2<sup>3</sup> = 8', hint: 'Base 2, raised to the power 3, equals 8.' },
+    { q: 'Write in exponential form: <span class="expr">log<sub>10</sub>(100) = 2</span>', a: '10^2=100',
+      disp: '10<sup>2</sup> = 100', hint: 'Base 10, raised to the power 2, equals 100.' },
+    { q: 'Evaluate by inspection: <span class="expr">log<sub>2</sub>(4)</span>', a: '2', hint: '2 to the what power gives 4?' },
+    { q: 'Evaluate by inspection: <span class="expr">log<sub>3</sub>(81)</span>', a: '4', hint: '3 \u00d7 3 \u00d7 3 \u00d7 3 = 81.' },
+    { q: 'Evaluate by inspection: <span class="expr">log<sub>6</sub>(1)</span>', a: '0', hint: 'Any base to the power 0 equals 1.' },
+  ];
+
+  // ============ DATA: HIGHER PRACTICE (Section 10) ============
+  const practiceHigher = [
+    { q: 'Use a calculator: <span class="expr">log<sub>10</sub>(50)</span> &nbsp;(3 d.p.)', a: '1.699', hint: 'Press the log button, enter 50, round to 3 decimal places.' },
+    { q: 'Use a calculator: <span class="expr">log<sub>10</sub>(7)</span> &nbsp;(3 d.p.)', a: '0.845', hint: 'Press the log button, enter 7.' },
+    { q: 'Use a calculator: <span class="expr">ln(10)</span> &nbsp;(3 d.p.)', a: '2.303', hint: 'Press the ln button, enter 10.' },
+    { q: 'Use a calculator: <span class="expr">ln(50)</span> &nbsp;(3 d.p.)', a: '3.912', hint: 'Press the ln button, enter 50.' },
+    { q: 'Use a calculator: <span class="expr">ln(2)</span> &nbsp;(3 d.p.)', a: '0.693', hint: 'Press the ln button, enter 2.' },
+    { q: 'Reasoning: explain why <span class="expr">log<sub>10</sub>(&minus;100)</span> is undefined &mdash; there is no value it can equal.', a: 'TEXT',
+      hint: 'Think about the result of raising 10 to any power \u2014 can it ever be negative?',
+      disp: 'Raising 10 to any power always gives a positive result (e.g. 10<sup>&minus;2</sup> = 0.01, still positive). Since log<sub>10</sub>(&minus;100) asks "what power of 10 gives &minus;100?", and no power of 10 is ever negative, there is no answer \u2014 it is undefined.' },
+  ];
+
+  // ============ DATA: EXIT TICKET (Section 11) ============
+  const exitProbs = [
+    { q: 'Write <span class="expr">log<sub>2</sub>(64) = 6</span> in exponential form.', a: '2^6=64',
+      disp: '2<sup>6</sup> = 64', hint: 'Base 2, raised to the power 6.' },
+    { q: 'Evaluate <span class="expr">log<sub>10</sub>(10000)</span>.', a: '4', hint: '10 to the what power gives 10000? Count the zeros.' },
+    { q: 'In your own words: what does <span class="expr">log<sub>5</sub>(125)</span> ask? And why must the number inside any logarithm be positive?', a: 'TEXT',
+      hint: 'Read the logarithm as a question. Then think about what a positive base raised to a power can produce.',
+      disp: 'log<sub>5</sub>(125) asks "what power of 5 gives 125?" \u2014 the answer is 3, since 5<sup>3</sup> = 125. The number inside a logarithm must be positive because it is the result of raising a positive base to a power, and a positive base raised to any power is always positive \u2014 never zero or negative.' },
+  ];
+
+  // ============ ANSWER NORMALISATION ============
+  const SUBS = '\u2080\u2081\u2082\u2083\u2084\u2085\u2086\u2087\u2088\u2089';
+  const SUPS = '\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079';
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/[\u2080-\u2089]/g, d => SUBS.indexOf(d))   // unicode subscripts -> digits
+      .replace(/[\u2070\u00b9\u00b2\u00b3\u2074-\u2079]/g, d => SUPS.indexOf(d)) // superscripts -> digits
+      .replace(/[()_^]/g, '')          // strip brackets, underscores, caret
+      .replace(/\u2212/g, '-')         // unicode minus -> hyphen
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;            // open-ended, don't auto-mark
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === '') return null;
+    if (norm === exp) return true;
+    // accept reordered terms (e.g. for any +/- expressions)
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Discuss your response with the class.';
+    return a;
+  }
+
+  // ============ PRACTICE BUILDER ============
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      const isText = p.a === 'TEXT';
+      const answerInner = isText
+        ? '<strong>Sample answer:</strong> ' + (p.disp || formatAnswerDisplay(p.a))
+        : '<strong>Answer:</strong> <span class="expr">' + (p.disp || formatAnswerDisplay(p.a)) + '</span>';
+      div.innerHTML =
+        '<div class="problem-q">' +
+          '<div class="problem-num">' + idx + '</div>' +
+          '<div class="problem-expr">' + p.q + '</div>' +
+        '</div>' +
+        '<div class="problem-input-row">' +
+          '<input class="problem-input" id="inp-' + idx + '" placeholder="' +
+            (isText ? 'Type your explanation' : 'Type answer') + '">' +
+          (isText ? '' : '<button class="check-btn" data-idx="' + idx + '">Check</button>') +
+        '</div>' +
+        '<div class="problem-tools">' +
+          '<button class="hint-link" data-hint="' + idx + '">Show hint</button>' +
+          '<button class="answer-link" data-ans="' + idx + '">Show answer</button>' +
+        '</div>' +
+        '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+        '<div class="answer-box" id="ans-' + idx + '">' + answerInner + '</div>';
+      grid.appendChild(div);
+
+      if (!isText) {
+        const btn = div.querySelector('.check-btn');
+        btn.addEventListener('click', () => checkAnswer(idx, p.a, !!options.noCount));
+        if (!options.noCount) totalProblems++;
+      }
+      div.querySelector('[data-hint]').addEventListener('click', () => toggleHint(idx));
+      div.querySelector('[data-ans]').addEventListener('click', () => toggleAnswer(idx));
+    });
+  }
+
+  function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ MATCHING ============
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its equivalent.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5 ? '\u{1F389} All five pairs matched!' : 'Matched! (' + matchedGroups.size + '/5)';
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected, wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '\u2717 Not equivalent \u2014 check the base and the exponent.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 750);
+      matchSelected = null;
+    }
+  }
+
+  // ============ INITIALISE ============
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildMatchArea();
+  buildPractice('weDoGrid', weDo2, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGridF', practiceFoundation, 'F');
+  buildPractice('practiceGridH', practiceHigher, 'H');
+  buildPractice('exitGrid', exitProbs, 'E');
+
+  document.getElementById('countF').textContent = practiceFoundation.length + ' questions';
+  document.getElementById('countH').textContent = practiceHigher.length + ' questions';
+  updateProgress();
+
+  // Enter key checks the answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
