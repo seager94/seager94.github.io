@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Relationships in Tables and Graphs — Year 8</title>
+
+<meta name="lesson-id"             content="y8_alg_05">
+<meta name="ac9-descriptor"        content="AC9M8A02">
+<meta name="ac9-elaborations"      content="1,3">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures">
+<meta name="lesson-focus"          content="Complete tables of values from a linear rule; recognise linearity from a constant first difference; plot ordered pairs and verify they lie on a straight line.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white;
+    font-weight: 700; font-size: 0.78rem;
+    padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg);
+    z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; font-size: 1.5rem; color: var(--coral);
+    letter-spacing: 2px; line-height: 1; flex-shrink: 0;
+    padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px;
+    padding: 28px; margin-bottom: 22px;
+    box-shadow: var(--shadow); border: 1px solid var(--border); position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; color: var(--navy); font-size: 1.4rem;
+    margin: 0 0 6px; display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VALUE TABLE */
+  .val-table {
+    border-collapse: collapse;
+    margin: 14px auto;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .val-table th, .val-table td {
+    padding: 8px 16px; border: 1.5px solid var(--border); text-align: center;
+  }
+  .val-table th { background: var(--navy); color: white; font-weight: bold; font-style: italic; }
+  .val-table td { background: white; }
+  .val-table .diff-row td {
+    background: var(--hint-bg); font-size: 0.88rem;
+    color: var(--navy); font-style: normal;
+  }
+  .val-table .diff-row th {
+    background: #2d6e78; font-size: 0.88rem;
+  }
+
+  /* GRAPH */
+  .graph-wrap {
+    display: flex; justify-content: center; margin-top: 14px;
+  }
+  .graph-wrap svg {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: #f8f9fb; max-width: 100%;
+  }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px;
+  }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px;
+    padding: 18px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold; font-size: 1.15rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif; font-weight: normal;
+    font-size: 0.72rem; opacity: 0.7; margin-top: 10px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg); font-size: 0.92rem; line-height: 1.4;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 10px; padding: 7px 11px 8px;
+    background: var(--hint-bg); border-radius: 6px;
+    font-size: 0.82rem; line-height: 1.4; color: var(--navy); font-style: italic;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — '; font-style: normal; font-weight: 700;
+    font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center; background: var(--card);
+    border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 20px; margin-bottom: 18px; box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block; padding: 6px 12px; margin: 4px;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    cursor: pointer; background: white;
+    font-family: Georgia, serif; font-size: 1rem;
+    transition: all 0.2s; touch-action: none; user-select: none;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.linear { background: var(--good-soft); border-color: var(--good); color: #1d4a30; font-weight: 600; }
+  .term-chip.notlinear { background: var(--coral-soft); border-color: var(--coral); color: #6a2520; font-weight: 600; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white; padding: 6px 12px;
+    border: 1.5px solid var(--navy); border-radius: 8px;
+    font-family: Georgia, serif; font-size: 1rem;
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-instructions {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 0.92rem; font-style: italic; margin-bottom: 16px; color: var(--navy);
+  }
+  .parts-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--good); }
+  .bucket .ct { color: var(--coral); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source {
+    min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px;
+    margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    justify-content: center; border: 1px dashed var(--border);
+  }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .bucket.drop-target {
+    background: var(--coral-soft); border-color: var(--coral);
+    border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy); border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .worked + .worked { margin-top: 22px; }
+  .worked-label {
+    font-family: Georgia, serif; font-weight: bold; font-size: 0.82rem;
+    color: var(--coral); text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .worked-problem {
+    font-family: Georgia, serif; font-size: 1.1rem;
+    background: white; padding: 12px 16px; border-radius: 8px;
+    border: 1px solid var(--border); margin-bottom: 16px;
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35; transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem; overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .green { color: var(--good); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white; border-radius: 8px;
+    padding: 12px 16px; margin-top: 14px;
+    font-family: Georgia, serif; font-size: 1.05rem; text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white; border: none;
+    padding: 10px 18px; border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600; margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num {
+    font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif;
+    font-size: 0.92rem; background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem; background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white; border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg); padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px; padding: 0;
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+    border-radius: 4px; font-size: 0.86rem; text-align: left;
+  }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; transition: transform 0.15s ease; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket { background: #eaf0f1; border-left: 5px solid var(--navy); }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head {
+    cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none;
+  }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: white; border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.9rem; color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white; border: 1px solid var(--border); color: var(--muted);
+    padding: 3px 10px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.75rem;
+    font-weight: 600; flex-shrink: 0; white-space: nowrap;
+  }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Linear Relationships in Tables and Graphs</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">AC9M8A02</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 23</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. These warm up the substitution and coordinate skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that is secretly today's algebra.</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start;">
+    <div>
+      <p>A plumber charges a $50 call-out fee plus $80 for each hour of work. Here is what you would pay:</p>
+      <table class="val-table" style="margin:10px 0;">
+        <tr><th><span class="var">h</span> (hours)</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+        <tr><td><span class="var">C</span> (cost $)</td><td>50</td><td>130</td><td>210</td><td>290</td></tr>
+      </table>
+      <p>Each extra hour adds exactly $80. The cost increases by the <strong>same amount</strong> every time — that pattern is a <strong>linear relationship</strong>, and its graph is a straight line.</p>
+    </div>
+    <div class="parts-instructions" style="margin:0; font-style:normal;">
+      <strong style="color:var(--navy);">The maths behind it</strong><br><br>
+      The rule is <span class="expr"><span class="var">C</span> = 80<span class="var">h</span> + 50</span>.<br><br>
+      Today we learn how to:<br>
+      &nbsp;• complete a <strong>table of values</strong> from a rule like this<br>
+      &nbsp;• spot a linear relationship from a <strong>constant first difference</strong><br>
+      &nbsp;• plot the ordered pairs on the Cartesian plane and verify the points lie on a <strong>straight line</strong>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — whole-class activity.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use all five words today.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Ordered pair<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A pair of numbers (<span class="var">x</span>, <span class="var">y</span>) describing a location on the Cartesian plane. <strong>Order matters</strong> — first is horizontal, second is vertical.<div class="vocab-example">(3, −2) means <strong>3 right, 2 down</strong> from the origin.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Table of values<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A table showing <strong>pairs of</strong> <span class="var">x</span> and <span class="var">y</span> values that satisfy a rule. Each column is one ordered pair.<div class="vocab-example">For <span class="var">y</span> = 2<span class="var">x</span> + 1: when <span class="var">x</span> = 3, <strong><span class="var">y</span> = 7</strong>.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">First difference<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The result of subtracting <strong>consecutive <span class="var">y</span>-values</strong> in a table: <span class="var">y</span>₂ − <span class="var">y</span>₁, <span class="var">y</span>₃ − <span class="var">y</span>₂, and so on.<div class="vocab-example"><span class="var">y</span>: 1, 4, 7, 10 → first differences: <strong>+3, +3, +3</strong></div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Linear relationship<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A relationship where the graph is a <strong>straight line</strong>. In a table, all first differences are <strong>equal</strong>.<div class="vocab-example"><span class="var">y</span> = 2<span class="var">x</span> + 1 is linear — its graph is a straight line.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Cartesian plane<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A flat surface with two perpendicular number lines: the horizontal <strong><span class="var">x</span>-axis</strong> and the vertical <strong><span class="var">y</span>-axis</strong>. They cross at the <strong>origin (0, 0).</strong><div class="vocab-example">(−2, 4) is plotted <strong>2 left, 4 up</strong>.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — Linear or Not Linear? -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Linear or Not Linear?</h2>
+  <p class="sec-desc">Drag each card showing a sequence of first differences into the correct bucket. A <strong>constant</strong> first difference means the relationship is linear; a <strong>changing</strong> first difference means it is not.</p>
+
+  <div class="parts-expr">
+    <div class="label">Drag each first-difference pattern into the correct bucket</div>
+    <div id="sortTerms" class="terms-source">
+      <span class="term-chip" data-type="linear">+2, +2, +2, +2</span>
+      <span class="term-chip" data-type="notlinear">+1, +3, +5, +7</span>
+      <span class="term-chip" data-type="linear">−3, −3, −3</span>
+      <span class="term-chip" data-type="linear">+5, +5, +5</span>
+      <span class="term-chip" data-type="notlinear">+1, +2, +4</span>
+      <span class="term-chip" data-type="notlinear">+2, +4, +8</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="linear">
+        <h4 class="vt">✔ Linear — constant first difference</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="notlinear">
+        <h4 class="ct">✘ Not Linear — changing first difference</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Notice the pattern: linear sequences grow by <em>adding</em> the same amount each time. Non-linear sequences grow by <em>different</em> amounts — or by multiplying.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH — Rule to ordered pair -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the rule to a point on its graph</h2>
+  <p class="sec-desc">Click a rule on the left, then click the ordered pair that lies on that line. There are five matching pairs.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a rule or a point to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen — three worked examples</div>
+    <div class="phase-sub">I'll work through each example out loud, revealing one step at a time.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: THREE WORKED EXAMPLES (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples — the 3-step method</h2>
+  <p class="sec-desc">For each example: <strong>Step 1</strong> — complete the table. <strong>Step 2</strong> — check the first difference. <strong>Step 3</strong> — plot the ordered pairs and verify they lie on a straight line.</p>
+
+  <!-- ── EXAMPLE 1 ── -->
+  <div class="worked">
+    <div class="worked-label">Example 1 of 3</div>
+    <div class="worked-problem">
+      Rule: <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> + 1</span> for <span class="var">x</span> = −2, −1, 0, 1, 2. Complete the table, find the first difference, and plot the ordered pairs.
+    </div>
+
+    <div class="step visible" id="ex1-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Complete the table of values</div>
+        <div class="step-desc">Substitute each <span class="var">x</span>-value into <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> + 1</span>.</div>
+        <div class="calc-box">
+          <table class="val-table">
+            <tr><th><span class="var">x</span></th><td>−2</td><td>−1</td><td>0</td><td>1</td><td>2</td></tr>
+            <tr>
+              <th><span class="var">y</span></th>
+              <td class="red">2(−2)+1 = <strong>−3</strong></td>
+              <td class="red">2(−1)+1 = <strong>−1</strong></td>
+              <td class="red">2(0)+1 = <strong>1</strong></td>
+              <td class="red">2(1)+1 = <strong>3</strong></td>
+              <td class="red">2(2)+1 = <strong>5</strong></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex1-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Calculate the first differences</div>
+        <div class="step-desc">Subtract consecutive <span class="var">y</span>-values: <span class="var">y</span>₂ − <span class="var">y</span>₁, <span class="var">y</span>₃ − <span class="var">y</span>₂, …</div>
+        <div class="calc-box">
+          <table class="val-table">
+            <tr><th><span class="var">x</span></th><td>−2</td><td>−1</td><td>0</td><td>1</td><td>2</td></tr>
+            <tr><th><span class="var">y</span></th><td>−3</td><td>−1</td><td>1</td><td>3</td><td>5</td></tr>
+            <tr class="diff-row"><th>1st diff</th><td></td><td class="blue">+2</td><td class="blue">+2</td><td class="blue">+2</td><td class="blue">+2</td></tr>
+          </table>
+          <p style="margin-top:10px;">All first differences equal <span class="blue">+2</span> — <strong>constant</strong> → the relationship is <strong>linear</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex1-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Plot the ordered pairs and verify a straight line</div>
+        <div class="step-desc">Plot (−2, −3), (−1, −1), (0, 1), (1, 3), (2, 5). All five points lie on a single straight line. ✓</div>
+        <div class="graph-wrap">
+          <svg viewBox="0 0 225 240" width="225" height="240" role="img" aria-label="Graph of y = 2x + 1 showing five collinear points">
+            <!-- Grid lines -->
+            <line x1="10" y1="15" x2="10" y2="230" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="40" y1="15" x2="40" y2="230" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="70" y1="15" x2="70" y2="230" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="100" y1="15" x2="100" y2="230" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="130" y1="15" x2="130" y2="230" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="160" y1="15" x2="160" y2="230" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="190" y1="15" x2="190" y2="230" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="215" x2="210" y2="215" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="190" x2="210" y2="190" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="165" x2="210" y2="165" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="140" x2="210" y2="140" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="115" x2="210" y2="115" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="90" x2="210" y2="90" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="65" x2="210" y2="65" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="40" x2="210" y2="40" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="5" y1="15" x2="210" y2="15" stroke="#e0e4ea" stroke-width="1"/>
+            <!-- Axes -->
+            <line x1="5" y1="140" x2="215" y2="140" stroke="#1F4D54" stroke-width="2"/>
+            <line x1="100" y1="10" x2="100" y2="230" stroke="#1F4D54" stroke-width="2"/>
+            <!-- Arrow heads -->
+            <polygon points="215,136 222,140 215,144" fill="#1F4D54"/>
+            <polygon points="96,10 100,3 104,10" fill="#1F4D54"/>
+            <!-- Axis labels -->
+            <text x="218" y="144" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">x</text>
+            <text x="104" y="9" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">y</text>
+            <text x="87" y="153" fill="#6b7280" font-size="9">O</text>
+            <!-- x-axis tick labels -->
+            <text x="40" y="153" fill="#6b7280" font-size="9" text-anchor="middle">−2</text>
+            <text x="70" y="153" fill="#6b7280" font-size="9" text-anchor="middle">−1</text>
+            <text x="130" y="153" fill="#6b7280" font-size="9" text-anchor="middle">1</text>
+            <text x="160" y="153" fill="#6b7280" font-size="9" text-anchor="middle">2</text>
+            <!-- y-axis tick labels -->
+            <text x="92" y="168" fill="#6b7280" font-size="9" text-anchor="end">−1</text>
+            <text x="92" y="193" fill="#6b7280" font-size="9" text-anchor="end">−2</text>
+            <text x="92" y="218" fill="#6b7280" font-size="9" text-anchor="end">−3</text>
+            <text x="92" y="118" fill="#6b7280" font-size="9" text-anchor="end">1</text>
+            <text x="92" y="93" fill="#6b7280" font-size="9" text-anchor="end">2</text>
+            <text x="92" y="68" fill="#6b7280" font-size="9" text-anchor="end">3</text>
+            <text x="92" y="43" fill="#6b7280" font-size="9" text-anchor="end">4</text>
+            <text x="92" y="18" fill="#6b7280" font-size="9" text-anchor="end">5</text>
+            <!-- Line (dashed, extended) -->
+            <line x1="28" y1="228" x2="172" y2="3" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.55"/>
+            <!-- Points: (-2,-3)=(40,215), (-1,-1)=(70,165), (0,1)=(100,115), (1,3)=(130,65), (2,5)=(160,15) -->
+            <circle cx="40" cy="215" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="70" cy="165" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="100" cy="115" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="130" cy="65" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="160" cy="15" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <!-- Point labels -->
+            <text x="44" y="212" fill="#BE5837" font-size="8" font-family="sans-serif">(−2,−3)</text>
+            <text x="74" y="162" fill="#BE5837" font-size="8" font-family="sans-serif">(−1,−1)</text>
+            <text x="104" y="112" fill="#BE5837" font-size="8" font-family="sans-serif">(0,1)</text>
+            <text x="134" y="62" fill="#BE5837" font-size="8" font-family="sans-serif">(1,3)</text>
+            <text x="164" y="20" fill="#BE5837" font-size="8" font-family="sans-serif">(2,5)</text>
+          </svg>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          Constant first difference (+2) → linear → all 5 points lie on the line <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> + 1</span>. ✓
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn1" onclick="revealStep(1)">Reveal next step ↓</button>
+  </div>
+
+  <!-- ── EXAMPLE 2 ── -->
+  <div class="worked">
+    <div class="worked-label">Example 2 of 3</div>
+    <div class="worked-problem">
+      Rule: <span class="expr"><span class="var">y</span> = −<span class="var">x</span> + 3</span> for <span class="var">x</span> = −1, 0, 1, 2, 3. Complete the table, find the first difference, and plot the ordered pairs.
+    </div>
+
+    <div class="step visible" id="ex2-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Complete the table of values</div>
+        <div class="step-desc">Substitute each <span class="var">x</span>-value into <span class="expr"><span class="var">y</span> = −<span class="var">x</span> + 3</span>. Remember: −(−1) = +1.</div>
+        <div class="calc-box">
+          <table class="val-table">
+            <tr><th><span class="var">x</span></th><td>−1</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+            <tr>
+              <th><span class="var">y</span></th>
+              <td class="red">−(−1)+3 = <strong>4</strong></td>
+              <td class="red">−(0)+3 = <strong>3</strong></td>
+              <td class="red">−(1)+3 = <strong>2</strong></td>
+              <td class="red">−(2)+3 = <strong>1</strong></td>
+              <td class="red">−(3)+3 = <strong>0</strong></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex2-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Calculate the first differences</div>
+        <div class="step-desc">Subtract consecutive <span class="var">y</span>-values: 3 − 4 = −1, 2 − 3 = −1, …</div>
+        <div class="calc-box">
+          <table class="val-table">
+            <tr><th><span class="var">x</span></th><td>−1</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+            <tr><th><span class="var">y</span></th><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr>
+            <tr class="diff-row"><th>1st diff</th><td></td><td class="blue">−1</td><td class="blue">−1</td><td class="blue">−1</td><td class="blue">−1</td></tr>
+          </table>
+          <p style="margin-top:10px;">All first differences equal <span class="blue">−1</span> — <strong>constant</strong> → the relationship is <strong>linear</strong>. The line is decreasing (going downhill left to right).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex2-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Plot the ordered pairs and verify a straight line</div>
+        <div class="step-desc">Plot (−1, 4), (0, 3), (1, 2), (2, 1), (3, 0). The points decrease from left to right and all lie on one straight line. ✓</div>
+        <div class="graph-wrap">
+          <svg viewBox="0 0 225 200" width="225" height="200" role="img" aria-label="Graph of y = -x + 3 showing five collinear points">
+            <!-- Grid: origin at (100, 140), 30px/unit x, 25px/unit y -->
+            <!-- vertical grid lines x=-2..4 -->
+            <line x1="40" y1="15" x2="40" y2="185" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="70" y1="15" x2="70" y2="185" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="100" y1="15" x2="100" y2="185" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="130" y1="15" x2="130" y2="185" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="160" y1="15" x2="160" y2="185" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="190" y1="15" x2="190" y2="185" stroke="#e0e4ea" stroke-width="1"/>
+            <!-- horizontal grid lines y=-1..5 -->
+            <line x1="20" y1="165" x2="215" y2="165" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="140" x2="215" y2="140" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="115" x2="215" y2="115" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="90" x2="215" y2="90" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="65" x2="215" y2="65" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="40" x2="215" y2="40" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="15" x2="215" y2="15" stroke="#e0e4ea" stroke-width="1"/>
+            <!-- Axes: x-axis at y=140, y-axis at x=100 -->
+            <line x1="20" y1="140" x2="215" y2="140" stroke="#1F4D54" stroke-width="2"/>
+            <line x1="100" y1="10" x2="100" y2="185" stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="215,136 222,140 215,144" fill="#1F4D54"/>
+            <polygon points="96,10 100,3 104,10" fill="#1F4D54"/>
+            <text x="218" y="144" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">x</text>
+            <text x="104" y="9" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">y</text>
+            <text x="87" y="153" fill="#6b7280" font-size="9">O</text>
+            <!-- x tick labels -->
+            <text x="40" y="153" fill="#6b7280" font-size="9" text-anchor="middle">−1</text>
+            <text x="130" y="153" fill="#6b7280" font-size="9" text-anchor="middle">1</text>
+            <text x="160" y="153" fill="#6b7280" font-size="9" text-anchor="middle">2</text>
+            <text x="190" y="153" fill="#6b7280" font-size="9" text-anchor="middle">3</text>
+            <!-- y tick labels -->
+            <text x="92" y="168" fill="#6b7280" font-size="9" text-anchor="end">−1</text>
+            <text x="92" y="118" fill="#6b7280" font-size="9" text-anchor="end">1</text>
+            <text x="92" y="93" fill="#6b7280" font-size="9" text-anchor="end">2</text>
+            <text x="92" y="68" fill="#6b7280" font-size="9" text-anchor="end">3</text>
+            <text x="92" y="43" fill="#6b7280" font-size="9" text-anchor="end">4</text>
+            <text x="92" y="18" fill="#6b7280" font-size="9" text-anchor="end">5</text>
+            <!-- Line (dashed, extended slightly) -->
+            <!-- y = -x + 3: at x=-1.5 → y=4.5 → py=140-112.5=27.5; at x=3.5 → y=-0.5 → py=140+12.5=152.5 -->
+            <line x1="55" y1="27" x2="205" y2="153" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.55"/>
+            <!-- Points: x=-1→(70,40), x=0→(100,65), x=1→(130,90), x=2→(160,115), x=3→(190,140) -->
+            <!-- Wait: y=4 → py=140-100=40; y=3→py=65; y=2→py=90; y=1→py=115; y=0→py=140 -->
+            <circle cx="70" cy="40" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="100" cy="65" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="130" cy="90" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="160" cy="115" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="190" cy="140" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <!-- Labels -->
+            <text x="74" y="36" fill="#BE5837" font-size="8">(−1,4)</text>
+            <text x="104" y="61" fill="#BE5837" font-size="8">(0,3)</text>
+            <text x="134" y="86" fill="#BE5837" font-size="8">(1,2)</text>
+            <text x="164" y="111" fill="#BE5837" font-size="8">(2,1)</text>
+            <text x="168" y="135" fill="#BE5837" font-size="8">(3,0)</text>
+          </svg>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          Constant first difference (−1) → decreasing linear line → all 5 points lie on <span class="expr"><span class="var">y</span> = −<span class="var">x</span> + 3</span>. ✓
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn2" onclick="revealStep(2)">Reveal next step ↓</button>
+  </div>
+
+  <!-- ── EXAMPLE 3 ── -->
+  <div class="worked">
+    <div class="worked-label">Example 3 of 3</div>
+    <div class="worked-problem">
+      A table of values is given below. <strong>No rule is shown.</strong> Determine whether the relationship is linear, find the rule, and verify one point on a graph.
+      <table class="val-table" style="margin-top:10px;">
+        <tr><th><span class="var">x</span></th><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+        <tr><th><span class="var">y</span></th><td>2</td><td>5</td><td>8</td><td>11</td></tr>
+      </table>
+    </div>
+
+    <div class="step visible" id="ex3-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Calculate the first differences</div>
+        <div class="step-desc">Subtract consecutive <span class="var">y</span>-values: 5 − 2 = 3, 8 − 5 = 3, 11 − 8 = 3.</div>
+        <div class="calc-box">
+          <table class="val-table">
+            <tr><th><span class="var">x</span></th><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+            <tr><th><span class="var">y</span></th><td>2</td><td>5</td><td>8</td><td>11</td></tr>
+            <tr class="diff-row"><th>1st diff</th><td></td><td class="blue">+3</td><td class="blue">+3</td><td class="blue">+3</td></tr>
+          </table>
+          <p style="margin-top:10px;">All first differences equal <span class="blue">+3</span> — <strong>constant</strong> → the relationship is <strong>linear</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex3-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Find the rule</div>
+        <div class="step-desc">The constant first difference tells us the <em>coefficient</em> of <span class="var">x</span>. When <span class="var">x</span> = 0, <span class="var">y</span> = 2 tells us the <em>starting value</em> (the <span class="var">y</span>-intercept).</div>
+        <div class="calc-box">
+          Constant first difference = <span class="blue">3</span> → coefficient of <span class="var">x</span> is 3.<br>
+          When <span class="var">x</span> = 0: <span class="var">y</span> = 2 → the <span class="var">y</span>-intercept is 2.<br><br>
+          Rule: <span class="red"><span class="expr"><span class="var">y</span> = 3<span class="var">x</span> + 2</span></span><br><br>
+          <strong>Verify with another point:</strong> when <span class="var">x</span> = 3: <span class="var">y</span> = 3(3) + 2 = 11 ✓
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex3-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Plot the ordered pairs and verify a straight line</div>
+        <div class="step-desc">Plot (0, 2), (1, 5), (2, 8), (3, 11). The points are collinear — they lie on a single straight line. ✓</div>
+        <div class="graph-wrap">
+          <!-- Origin at (55, 195), scale: 40px/unit x, 15px/unit y -->
+          <svg viewBox="0 0 220 215" width="220" height="215" role="img" aria-label="Graph of y = 3x + 2 showing four collinear points">
+            <!-- vertical grid lines x=0..4 -->
+            <line x1="55" y1="10" x2="55" y2="210" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="95" y1="10" x2="95" y2="210" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="135" y1="10" x2="135" y2="210" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="175" y1="10" x2="175" y2="210" stroke="#e0e4ea" stroke-width="1"/>
+            <!-- horizontal grid lines y=0..12 every 2 units = every 30px -->
+            <line x1="10" y1="195" x2="210" y2="195" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="10" y1="165" x2="210" y2="165" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="10" y1="135" x2="210" y2="135" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="10" y1="105" x2="210" y2="105" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="10" y1="75" x2="210" y2="75" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="10" y1="45" x2="210" y2="45" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="10" y1="15" x2="210" y2="15" stroke="#e0e4ea" stroke-width="1"/>
+            <!-- Axes -->
+            <line x1="10" y1="195" x2="215" y2="195" stroke="#1F4D54" stroke-width="2"/>
+            <line x1="55" y1="10" x2="55" y2="205" stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="215,191 222,195 215,199" fill="#1F4D54"/>
+            <polygon points="51,10 55,3 59,10" fill="#1F4D54"/>
+            <text x="218" y="199" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">x</text>
+            <text x="59" y="9" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">y</text>
+            <text x="42" y="207" fill="#6b7280" font-size="9">O</text>
+            <!-- x tick labels -->
+            <text x="95" y="207" fill="#6b7280" font-size="9" text-anchor="middle">1</text>
+            <text x="135" y="207" fill="#6b7280" font-size="9" text-anchor="middle">2</text>
+            <text x="175" y="207" fill="#6b7280" font-size="9" text-anchor="middle">3</text>
+            <!-- y tick labels: y=2→py=165, y=4→135, y=6→105, y=8→75, y=10→45, y=12→15 -->
+            <text x="47" y="168" fill="#6b7280" font-size="9" text-anchor="end">2</text>
+            <text x="47" y="138" fill="#6b7280" font-size="9" text-anchor="end">4</text>
+            <text x="47" y="108" fill="#6b7280" font-size="9" text-anchor="end">6</text>
+            <text x="47" y="78" fill="#6b7280" font-size="9" text-anchor="end">8</text>
+            <text x="47" y="48" fill="#6b7280" font-size="9" text-anchor="end">10</text>
+            <text x="47" y="18" fill="#6b7280" font-size="9" text-anchor="end">12</text>
+            <!-- Line extended: from (0,2) back to (-0.3, 1.1) → px=55-12=43, py=195-16.5=178.5 -->
+            <!-- to (3,11) → px=175, py=195-165=30. Extend: (3.3,11.9) → px=187, py=195-178.5=16.5 -->
+            <line x1="42" y1="179" x2="187" y2="16" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.55"/>
+            <!-- Points: (0,2)→(55,165), (1,5)→(95,120), (2,8)→(135,75), (3,11)→(175,30) -->
+            <!-- py = 195 - y*15: y=2→165, y=5→120, y=8→75, y=11→30 -->
+            <circle cx="55" cy="165" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="95" cy="120" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="135" cy="75" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="175" cy="30" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <!-- Labels -->
+            <text x="59" y="161" fill="#BE5837" font-size="8">(0,2)</text>
+            <text x="99" y="116" fill="#BE5837" font-size="8">(1,5)</text>
+            <text x="139" y="71" fill="#BE5837" font-size="8">(2,8)</text>
+            <text x="179" y="27" fill="#BE5837" font-size="8">(3,11)</text>
+          </svg>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          Constant first difference (+3) → linear → rule is <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> + 2</span> → all 4 points lie on a straight line. ✓
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn3" onclick="revealStep(3)">Reveal next step ↓</button>
+  </div>
+
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with a neighbour. We'll fill in the boxes together as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> − 2</span> for <span class="var">x</span> = −1, 0, 1, 2, 3</h2>
+  <p class="sec-desc">Three steps — discuss with a neighbour after each prompt, then we fill it in as a class.</p>
+  <div style="overflow-x:auto; margin-bottom:16px;">
+    <table class="val-table">
+      <tr><th><span class="var">x</span></th><td>−1</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+      <tr><th><span class="var">y</span></th><td>?</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+    </table>
+  </div>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top:18px;">
+    💡 <strong>Key idea:</strong> the first difference equals the <em>coefficient</em> of <span class="var">x</span> in the rule, and the <span class="var">y</span>-value when <span class="var">x</span> = 0 is the <em>constant</em> in the rule. Checking these two things confirms whether the rule is correct.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first — then choose your tier: Building, Stretch, or Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them alone first — <strong>then we'll check together as a class</strong> before you open a chilli tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING (accordion, open by default) -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Complete each task. For "Is this linear?" questions, type <strong>yes</strong> or <strong>no</strong>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: STRETCH (accordion, collapsed) -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Work with negative values, predict the next term, and find a rule from a table.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MASTERY (accordion, collapsed) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Word problems, verification, and one open-response explanation. For Q4, type a full sentence.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these before leaving. They check the three big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 · Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8A02</strong> — graph linear relations on the Cartesian plane using digital tools where appropriate; solve linear equations and one-variable inequalities using graphical and algebraic techniques; verify solutions by substitution</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 3 — graphing linear relations from tables of values; verifying that plotted points lie on a straight line</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Recognise linearity from a constant first difference; complete tables of values from a rule; plot ordered pairs and verify collinearity.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y8_alg_05. Source: SA Curriculum (Mathematics R-10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Linear Relationships in Tables and Graphs
+</footer>
+
+</div><!-- end .page -->
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  const exStepCurrent = { 1: 1, 2: 1, 3: 1 };
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG-SORT (Section 3) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top  = rect.top  + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+    dragState = { chip, ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup',   endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('sortTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup',   endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('sortTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING (Section 4) ============
+  // Pairs: rule ↔ a point on that line
+  const matchTerms = [
+    { html: '<span class="var">y</span> = 2<span class="var">x</span> + 1', group: 1 },
+    { html: '(1,&thinsp;3)',                                                  group: 1 },
+    { html: '<span class="var">y</span> = <span class="var">x</span> − 3',    group: 2 },
+    { html: '(4,&thinsp;1)',                                                  group: 2 },
+    { html: '<span class="var">y</span> = −<span class="var">x</span> + 4',   group: 3 },
+    { html: '(2,&thinsp;2)',                                                  group: 3 },
+    { html: '<span class="var">y</span> = 3<span class="var">x</span> − 2',   group: 4 },
+    { html: '(2,&thinsp;4)',                                                  group: 4 },
+    { html: '<span class="var">y</span> = −2<span class="var">x</span> + 5',  group: 5 },
+    { html: '(0,&thinsp;5)',                                                  group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its matching partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : 'Matched! (' + matchedGroups.size + '/5)';
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected, w2 = chip;
+      w1.classList.add('selected'); w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — substitute the point into the rule to check.';
+      setTimeout(() => { w1.classList.remove('selected'); w2.classList.remove('selected'); }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealStep(exNum) {
+    exStepCurrent[exNum]++;
+    const step = document.getElementById('ex' + exNum + '-step' + exStepCurrent[exNum]);
+    if (step) step.classList.add('visible');
+    if (exStepCurrent[exNum] >= 3) {
+      const btn = document.getElementById('revealBtn' + exNum);
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PROBLEM DATA ============
+
+  const retrieval = [
+    {
+      q: 'Evaluate <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> + 1</span> when <span class="var">x</span> = 3.',
+      a: '7',
+      hint: 'Substitute: 2 × 3 + 1.'
+    },
+    {
+      q: 'Evaluate <span class="expr"><span class="var">y</span> = −<span class="var">x</span> + 5</span> when <span class="var">x</span> = 2.',
+      a: '3',
+      hint: '−(2) + 5 = ?'
+    },
+    {
+      q: 'The sequence of <span class="var">y</span>-values is 4, 7, 10, 13. What is the first difference?',
+      a: '3',
+      hint: 'Subtract consecutive terms: 7 − 4.'
+    },
+  ];
+
+  const weDo = [
+    {
+      q: 'Complete the table for <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> − 2</span>. What is <span class="var">y</span> when <span class="var">x</span> = 1?',
+      a: '1',
+      hint: '3(1) − 2 = ?'
+    },
+    {
+      q: 'The <span class="var">y</span>-values in the table are −5, −2, 1, 4, 7. What is the first difference?',
+      a: '3',
+      hint: '−2 − (−5) = ?'
+    },
+    {
+      q: 'Is the relationship <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> − 2</span> linear? (yes / no)',
+      a: 'yes',
+      hint: 'Check: is the first difference constant?'
+    },
+  ];
+
+  const checkpoint = [
+    {
+      q: 'The rule is <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> − 1</span>. Find <span class="var">y</span> when <span class="var">x</span> = 2.',
+      a: '5',
+      hint: '3(2) − 1 = ?'
+    },
+    {
+      q: 'A table has <span class="var">y</span>-values 2, 5, 8, 11. What is the first difference?',
+      a: '3',
+      hint: 'Subtract: 5 − 2.'
+    },
+  ];
+
+  const practice1 = [
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = <span class="var">x</span> + 4</span>. Find <span class="var">y</span> when <span class="var">x</span> = 3.',
+      a: '7',
+      hint: '3 + 4 = ?'
+    },
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> − 1</span>. Find <span class="var">y</span> when <span class="var">x</span> = 0.',
+      a: '-1',
+      hint: '2(0) − 1 = ?'
+    },
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = −<span class="var">x</span> + 5</span>. Find <span class="var">y</span> when <span class="var">x</span> = 2.',
+      a: '3',
+      hint: '−(2) + 5 = ?'
+    },
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> + 1</span>. Find <span class="var">y</span> when <span class="var">x</span> = −1.',
+      a: '-2',
+      hint: '3(−1) + 1 = ?'
+    },
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = 4<span class="var">x</span></span>. Find <span class="var">y</span> when <span class="var">x</span> = −2.',
+      a: '-8',
+      hint: '4 × (−2) = ?'
+    },
+    {
+      q: 'A table has <span class="var">y</span>-values: 1, 4, 7, 10. What is the first difference?',
+      a: '3',
+      hint: 'Subtract: 4 − 1.'
+    },
+    {
+      q: 'A table has <span class="var">y</span>-values: 10, 8, 6, 4. What is the first difference?',
+      a: '-2',
+      hint: 'Subtract: 8 − 10.'
+    },
+    {
+      q: 'All first differences in a table equal +5. Is the relationship linear? (yes / no)',
+      a: 'yes',
+      hint: 'Constant first difference → straight line → linear.'
+    },
+    {
+      q: 'First differences in a table are +1, +2, +3, +4. Is the relationship linear? (yes / no)',
+      a: 'no',
+      hint: 'The first differences are not all the same — they are changing.'
+    },
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> + 3</span>. Find <span class="var">y</span> when <span class="var">x</span> = 5.',
+      a: '13',
+      hint: '2(5) + 3 = ?'
+    },
+  ];
+
+  const practice2 = [
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> − 3</span>. Find <span class="var">y</span> when <span class="var">x</span> = −2.',
+      a: '-7',
+      hint: '2(−2) − 3 = −4 − 3 = ?'
+    },
+    {
+      q: 'A table shows <span class="var">x</span>: 0, 1, 2, 3 and <span class="var">y</span>: −1, 2, 5, 8. What is the first difference?',
+      a: '3',
+      hint: '2 − (−1) = ?'
+    },
+    {
+      q: 'Using the table from Q2 (y-values −1, 2, 5, 8), what is the next <span class="var">y</span>-value when <span class="var">x</span> = 4?',
+      a: '11',
+      hint: 'Add the constant first difference to the last y-value: 8 + 3.'
+    },
+    {
+      q: 'A table shows <span class="var">x</span>: 0, 1, 2, 3 and <span class="var">y</span>: 0, 1, 4, 9. Is this relationship linear? (yes / no)',
+      a: 'no',
+      hint: 'Calculate first differences: 1−0, 4−1, 9−4. Are they equal?'
+    },
+    {
+      q: 'For the table <span class="var">x</span>: 0, 1, 2, 3 with <span class="var">y</span>: −1, 2, 5, 8, the rule is <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> + <span class="var">c</span></span>. What is <span class="var">c</span>?',
+      a: '-1',
+      hint: 'When x = 0, y = c. Read the y-value at x = 0.'
+    },
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = −2<span class="var">x</span> + 7</span>. Find <span class="var">y</span> when <span class="var">x</span> = 4.',
+      a: '-1',
+      hint: '−2(4) + 7 = −8 + 7 = ?'
+    },
+  ];
+
+  const practice3 = [
+    {
+      q: 'A plumber charges $50 call-out plus $80 per hour. Using the rule <span class="expr"><span class="var">C</span> = 80<span class="var">h</span> + 50</span>, what does the plumber charge for 3 hours? (Answer in dollars.)',
+      a: '290',
+      hint: '80 × 3 + 50 = 240 + 50 = ?'
+    },
+    {
+      q: 'A table has <span class="var">y</span>-values 7, 10, 13, 16 for <span class="var">x</span> = 1, 2, 3, 4. Verify that (3, 13) satisfies the rule <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> + 4</span>. What is 3 × 3 + 4?',
+      a: '13',
+      hint: '3 × 3 = 9, then 9 + 4 = ?'
+    },
+    {
+      q: 'The first difference of a table is a constant −4. The <span class="var">y</span>-value at <span class="var">x</span> = 0 is 20. What is <span class="var">y</span> at <span class="var">x</span> = 3?',
+      a: '8',
+      hint: 'Starting at 20, subtract 4 three times: 20, 16, 12, 8.'
+    },
+    {
+      q: 'In your own words, explain why a <strong>constant</strong> first difference means the graph of a relationship is a <strong>straight line</strong>.',
+      a: 'TEXT',
+      hint: 'Think about what "constant" means: equal steps up or down every time you move one unit to the right.'
+    },
+  ];
+
+  const exitProbs = [
+    {
+      q: 'Rule: <span class="expr"><span class="var">y</span> = 4<span class="var">x</span> − 3</span>. Find <span class="var">y</span> when <span class="var">x</span> = 2.',
+      a: '5',
+      hint: '4(2) − 3 = 8 − 3 = ?'
+    },
+    {
+      q: 'A table has <span class="var">y</span>-values: 6, 2, −2, −6. What is the first difference?',
+      a: '-4',
+      hint: '2 − 6 = ?'
+    },
+    {
+      q: 'In your own words: what two things do you check to decide if a table of values represents a linear relationship?',
+      a: 'TEXT',
+      hint: 'Think about first differences and what "constant" means.'
+    },
+  ];
+
+  // ============ FRAMEWORK (copy verbatim from template) ============
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp  = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — discuss with your class.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + '<span class="frac"><span class="num">' + num + '</span><span class="den">' + d + '</span></span>';
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid   = document.getElementById(containerId);
+    const noCount = !!options.noCount;
+
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+
+      const checkBtnHtml = p.a !== 'TEXT'
+        ? '<button class="check-btn">Check</button>'
+        : '';
+
+      div.innerHTML =
+        '<div class="problem-q">' +
+          '<div class="problem-num">' + idx + '</div>' +
+          '<div class="problem-expr">' + p.q + '</div>' +
+        '</div>' +
+        '<div class="problem-input-row">' +
+          '<span class="eq">=</span>' +
+          '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">' +
+          checkBtnHtml +
+        '</div>' +
+        '<div class="problem-tools">' +
+          '<button class="hint-link">Show hint</button>' +
+          '<button class="answer-link">Show answer</button>' +
+        '</div>' +
+        '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+        '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> <span class="expr">' + formatAnswerDisplay(p.a) + '</span></div>';
+
+      const cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+      div.querySelector('.hint-link').addEventListener('click',   () => toggleHint(idx));
+      div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !noCount) totalProblems++;
+    });
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+  buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1',  practice1,  'P');
+  buildPractice('practiceGrid2',  practice2,  'S');
+  buildPractice('practiceGrid3',  practice3,  'C');
+  buildPractice('exitGrid',       exitProbs,  'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
