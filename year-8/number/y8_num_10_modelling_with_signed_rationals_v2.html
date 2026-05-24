@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelling with Signed Rational Numbers — Year 8</title>
+
+<meta name="lesson-id"             content="y8_num_10">
+<meta name="ac9-descriptor"        content="AC9M8N05">
+<meta name="ac9-elaborations"      content="1">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Number">
+<meta name="sa-conceptual-understanding" content="Mathematical modelling can be used to represent and solve practical problems, including in financial contexts, using rational numbers and percentages">
+<meta name="lesson-focus"          content="Model weather and environmental situations using operations on positive and negative rational numbers; walk the modelling cycle (formulate, calculate, interpret, review).">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.positive { background: var(--good-soft); border-color: var(--good); color: #1d4a30; font-weight: 600; }
+  .term-chip.negative { background: var(--bad-soft); border-color: var(--bad); color: #6a2520; font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--good); }
+  .bucket .ct { color: var(--bad); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .grn { color: var(--good); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* Modelling cycle label pill */
+  .model-step-tag {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: 4px;
+    vertical-align: middle;
+  }
+  .model-step-tag.formulate  { background: #2f5fa3; }
+  .model-step-tag.calculate  { background: var(--coral); }
+  .model-step-tag.interpret  { background: var(--good); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Modelling with Signed Rational Numbers</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Number</div>
+  </div>
+  <div class="badge">AC9M8N05</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 23</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 0 — RETRIEVAL WARM-UP
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work on signed numbers. Warm up the skills you'll use today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 1 — WHY THIS MATTERS
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">Real mathematics, running right now — in weather apps, submarines, and climate science.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start;">
+    <div>
+      <p>Every weather app on every phone uses signed rational numbers. When the Bureau of Meteorology reports that Canberra's overnight low is <strong>−4.5°C</strong> and the daytime high is <strong>12.8°C</strong>, meteorologists are applying operations to signed numbers to calculate the temperature change (+17.3°C).</p>
+      <p>Oceanographers record depths as negative values — a reef at <strong>−38.5 m</strong> sits below a surface at 0. Pilots and surveyors use positive values for altitude above sea level. The Dead Sea lies at <strong>−430 m</strong>; Mount Everest reaches <strong>+8 849 m</strong> — both are measured from the same zero point.</p>
+      <p>Today we build <strong>mathematical models</strong> for these situations — writing signed expressions that represent what's happening, calculating results, and checking whether the answers make sense.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0; font-style: normal;">
+      <strong style="color: var(--navy);">The modelling cycle — used in every I Do example today:</strong>
+      <ol style="margin: 10px 0 0; padding-left: 18px; line-height: 2;">
+        <li><span class="model-step-tag formulate">Formulate</span> — assign signed values; choose an operation</li>
+        <li><span class="model-step-tag calculate">Calculate</span> — evaluate the expression</li>
+        <li><span class="model-step-tag interpret">Interpret &amp; Review</span> — explain the answer in context; check it's reasonable</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do these sections as a whole class.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 2 — VOCABULARY
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use all five terms today.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Signed number<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A number with a <strong>positive (+) or negative (−) sign</strong>, showing direction or position relative to zero.<span class="vocab-example">−3.5°C means 3.5 degrees <strong>below</strong> zero. +3.5°C means 3.5 degrees <strong>above</strong> zero.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Rational number<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Any number that can be written as a <strong>fraction of two integers</strong>. Includes all integers, fractions, and terminating or recurring decimals.<span class="vocab-example">−3.5 = <strong>−7/2</strong>; 0.75 = <strong>3/4</strong>; −12 = <strong>−12/1</strong> — all rational.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Net change<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>total change</strong> after all increases and decreases have been combined — the final difference from the starting value.<span class="vocab-example">Start at −5°C, rise 8°C, fall 3°C → net change = <strong>+5°C</strong>; final temp = 0°C.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Mathematical model<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>mathematical representation</strong> of a real-world situation. Here we use signed expressions to represent physical scenarios.<span class="vocab-example">Writing <strong>−3.5 + 18.4</strong> to model a temperature that starts at −3.5°C and rises 18.4°C.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Reference point<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>zero point</strong> used for measurement. Positive values are above it; negative values are below it.<span class="vocab-example"><strong>Sea level</strong> is the reference point for depth and altitude. <strong>0°C</strong> is the reference point for temperature.</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 3 — DRAG SORT: POSITIVE OR NEGATIVE?
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Positive or negative?</h2>
+  <p class="sec-desc">Drag each situation into the correct bucket. Wrong drops will shake and return to the source.</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort each real-world situation — does it represent a positive or negative value?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="positive" style="font-family: -apple-system, sans-serif; font-size: 0.95rem;">Temperature rises 6.5°C</span>
+      <span class="term-chip" data-type="negative" style="font-family: -apple-system, sans-serif; font-size: 0.95rem;">Diver descends 8.25 m</span>
+      <span class="term-chip" data-type="positive" style="font-family: -apple-system, sans-serif; font-size: 0.95rem;">Mt Kosciuszko: 2228 m above sea level</span>
+      <span class="term-chip" data-type="negative" style="font-family: -apple-system, sans-serif; font-size: 0.95rem;">Temperature drops 2.75°C</span>
+      <span class="term-chip" data-type="negative" style="font-family: -apple-system, sans-serif; font-size: 0.95rem;">Submarine at 350 m below sea level</span>
+      <span class="term-chip" data-type="positive" style="font-family: -apple-system, sans-serif; font-size: 0.95rem;">Hilltop 45.5 m above the valley floor</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="positive">
+        <h4 class="vt">✚ Positive values</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="negative">
+        <h4 class="ct">− Negative values</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The reference point (zero) is key: above sea level or above zero → positive; below sea level or below zero → negative. A <em>rise</em> or <em>ascent</em> is positive; a <em>fall</em> or <em>descent</em> is negative.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 4 — MATCH: SITUATION TO SIGNED NUMBER
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each situation to its signed number</h2>
+  <p class="sec-desc">Click a situation, then click the number that represents it. Five pairs to find.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a situation or a number to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen — three worked examples</div>
+    <div class="phase-sub">Each example walks the full modelling cycle. Click "Reveal next step" to move through each one.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 5 — I DO EXAMPLE 1: TEMPERATURE CHANGE
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example 1 — temperature change</h2>
+  <p class="sec-desc">Alice Springs has a midnight temperature of −3.5°C. By noon, the temperature has risen 18.4°C. <strong>What is the noon temperature?</strong></p>
+
+  <div class="worked">
+
+    <div class="step visible" id="exA1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag formulate">Formulate</span> &mdash; assign signed values and choose an operation</div>
+        <div class="step-desc">Identify what we know and what we need to find. Assign signs based on the reference point (0°C).</div>
+        <div class="calc-box">
+          <span class="blue">Starting temperature</span> = −3.5°C &nbsp; (below zero → negative)<br>
+          <span class="red">Temperature change</span> = +18.4°C &nbsp; (a rise → positive)<br><br>
+          <strong>Model:</strong> noon temp = starting temp + change<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= −3.5 + 18.4
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exA2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag calculate">Calculate</span> &mdash; evaluate the expression</div>
+        <div class="step-desc">Work out the sum of the two signed values.</div>
+        <div class="calc-box">
+          −3.5 + 18.4<br>
+          = <span class="red">18.4</span> − <span class="blue">3.5</span> &nbsp; &nbsp; (18.4 is larger and positive, so the result is positive)<br>
+          = <strong>14.9</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exA3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag interpret">Interpret &amp; Review</span> &mdash; explain in context; check reasonableness</div>
+        <div class="step-desc">Translate the number back into the real-world situation. Ask: does this answer make sense?</div>
+        <div class="calc-box">
+          <span class="grn">Interpretation:</span> The noon temperature in Alice Springs is <strong>14.9°C</strong>.<br><br>
+          <span class="grn">Review:</span> We started below zero (−3.5°C) and rose by more than 18 degrees.
+          A positive answer in the teens is reasonable — it should definitely be above zero. ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Noon temperature = 14.9°C
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revBtnA" onclick="revealNextStep('A', 3)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 6 — I DO EXAMPLE 2: SEA DEPTH
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Worked example 2 — submarine depth</h2>
+  <p class="sec-desc">A submarine is at 45.5 m below sea level. It rises 28.75 m. <strong>What is its new depth?</strong></p>
+
+  <div class="worked">
+
+    <div class="step visible" id="exB1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag formulate">Formulate</span> &mdash; assign signed values and choose an operation</div>
+        <div class="step-desc">Sea level = 0. Below sea level = negative; above = positive. A rise means moving in the positive direction.</div>
+        <div class="calc-box">
+          <span class="blue">Current depth</span> = −45.5 m &nbsp; (below sea level → negative)<br>
+          <span class="red">Change</span> = +28.75 m &nbsp; (rising → positive)<br><br>
+          <strong>Model:</strong> new depth = current depth + change<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = −45.5 + 28.75
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exB2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag calculate">Calculate</span> &mdash; evaluate the expression</div>
+        <div class="step-desc">The negative value is larger in size, so the result will be negative.</div>
+        <div class="calc-box">
+          −45.5 + 28.75<br>
+          = −(<span class="blue">45.5</span> − <span class="red">28.75</span>) &nbsp; &nbsp; (45.5 is larger; result stays negative)<br>
+          = −<strong>16.75</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exB3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag interpret">Interpret &amp; Review</span> &mdash; explain in context; check reasonableness</div>
+        <div class="step-desc">What does −16.75 mean in this real-world situation? Is it plausible?</div>
+        <div class="calc-box">
+          <span class="grn">Interpretation:</span> The submarine is now <strong>16.75 m below sea level</strong>.<br><br>
+          <span class="grn">Review:</span> The submarine started at −45.5 m and rose 28.75 m — not enough to reach the surface.
+          It should still be below zero, and 16.75 m is a shallower depth than 45.5 m. ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          New depth = −16.75 m (16.75 m below sea level)
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revBtnB" onclick="revealNextStep('B', 3)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 7 — I DO EXAMPLE 3: SEASONAL TEMPERATURE DIFFERENCE
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Worked example 3 — comparing average temperatures</h2>
+  <p class="sec-desc">Adelaide's average winter temperature is 11.2°C. A Canadian city's average winter temperature is −14.8°C. <strong>How much warmer is Adelaide's winter?</strong></p>
+
+  <div class="worked">
+
+    <div class="step visible" id="exC1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag formulate">Formulate</span> &mdash; assign signed values and choose an operation</div>
+        <div class="step-desc">To find how much warmer Adelaide is, subtract the Canadian temperature from Adelaide's.</div>
+        <div class="calc-box">
+          <span class="red">Adelaide winter</span> = +11.2°C<br>
+          <span class="blue">Canadian winter</span> = −14.8°C<br><br>
+          <strong>Model:</strong> difference = Adelaide − Canadian<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 11.2 − (−14.8)
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exC2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag calculate">Calculate</span> &mdash; evaluate the expression</div>
+        <div class="step-desc">Subtracting a negative is the same as adding its positive — so we add the magnitudes.</div>
+        <div class="calc-box">
+          11.2 − (−14.8)<br>
+          = 11.2 <span class="red">+ 14.8</span> &nbsp; &nbsp; (subtracting a negative = adding a positive)<br>
+          = <strong>26.0</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exC3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag interpret">Interpret &amp; Review</span> &mdash; explain in context; check reasonableness</div>
+        <div class="step-desc">What does 26°C mean here? The gap between opposite-signed values should exceed both magnitudes.</div>
+        <div class="calc-box">
+          <span class="grn">Interpretation:</span> Adelaide's average winter temperature is <strong>26°C warmer</strong> than the Canadian city's.<br><br>
+          <span class="grn">Review:</span> One city is positive, the other is negative — the distance between them spans both sides of zero,
+          so it should exceed 14.8 (the Canadian magnitude) and exceed 11.2 (Adelaide's). 26 &gt; 14.8 and 26 &gt; 11.2 ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Adelaide's winter is 26°C warmer
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revBtnC" onclick="revealNextStep('C', 3)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 8 — WE DO
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">8</span>Together — a mountain weather problem</h2>
+  <p class="sec-desc">A mountain weather station records <strong>−7.5°C at dawn</strong>. During the day it rises <strong>14.25°C</strong>. By night, it falls <strong>9.8°C</strong> from the daytime high. What is the night temperature?<br>Work through the three steps below, then we'll share as a class.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why two steps?</strong> We can't jump straight to the end — the fall happens from the <em>daytime high</em>, not from dawn. Splitting into steps follows the modelling cycle: each calculation has a clear meaning in the real world before we move on.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 9 — QUICK CHECK
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">9</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them independently — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 10 — BUILDING (accordion, open by default)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">10</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Single-step problems using addition and subtraction with signed rational numbers. Type your answer — include the sign if negative (e.g. <code>-7</code>, <code>-5.5</code>).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 11 — STRETCH (accordion, collapsed)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">11</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Multi-step problems — chain two or more operations, or work with means and comparisons across multiple values.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 12 — MASTERY (accordion, collapsed)
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">12</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Complex multi-step problems, including multiplication of signed decimals and open-ended reasoning. Walk the full modelling cycle for each.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 13 — EXIT TICKET
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">13</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three questions to check today's big ideas. Answer independently before you go.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 &middot; Number</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Mathematical modelling can be used to represent and solve practical problems, including in financial contexts, using rational numbers and percentages.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8N05</strong> — use mathematical modelling to solve practical problems involving rational numbers and percentages, including financial contexts; formulate problems, choosing efficient calculation strategies and using digital tools where appropriate; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1 — modelling weather and environmental situations by applying operations to positive and negative rational numbers</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Model temperature changes, sea depths, and altitude differences using signed rational numbers; walk the modelling cycle (formulate, calculate, interpret, review) in real-world environmental contexts.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y8_num_10. Source: SA Curriculum (Mathematics R–10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Modelling with Signed Rational Numbers
+</footer>
+
+</div><!-- /.page -->
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG SORT (positive / negative) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top  = rect.top  + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest  = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  const matchTerms = [
+    { html: '6.5 m below sea level',   group: 1 },
+    { html: 'Rise of 3.25°C',          group: 2 },
+    { html: '285 m above sea level',   group: 3 },
+    { html: 'Fall of 4.75°C',          group: 4 },
+    { html: '12 m below the surface',  group: 5 },
+    { html: '−6.5 m',                  group: 1 },
+    { html: '+3.25°C',                 group: 2 },
+    { html: '+285 m',                  group: 3 },
+    { html: '−4.75°C',                 group: 4 },
+    { html: '−12 m',                   group: 5 },
+  ];
+
+  let matchSelected  = null;
+  let matchedGroups  = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML  = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx   = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its matching partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : 'Matched! (' + matchedGroups.size + '/5 pairs)';
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected, w2 = chip;
+      w1.classList.add('selected'); w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — check the sign and value.';
+      setTimeout(() => {
+        w1.classList.remove('selected');
+        w2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ I DO STEP REVEAL (three independent examples) ============
+  const exStepCounters = { A: 1, B: 1, C: 1 };
+
+  function revealNextStep(prefix, totalSteps) {
+    exStepCounters[prefix]++;
+    const step = document.getElementById('ex' + prefix + exStepCounters[prefix]);
+    if (step) step.classList.add('visible');
+    const btn = document.getElementById('revBtn' + prefix);
+    if (btn && exStepCounters[prefix] >= totalSteps) {
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE DATA ============
+
+  const retrieval = [
+    {
+      q: 'Evaluate: −8 + 13',
+      a: '5',
+      hint: 'The positive value is larger; result is positive: 13 − 8 = 5.'
+    },
+    {
+      q: 'Evaluate: −3.5 − 4.5',
+      a: '-8',
+      hint: 'Both negative — add the magnitudes and keep the sign: 3.5 + 4.5 = 8.'
+    },
+    {
+      q: 'What is (−6) × (−4)?',
+      a: '24',
+      hint: 'Negative × negative = positive: 6 × 4 = 24.'
+    },
+  ];
+
+  const weDo = [
+    {
+      q: '<strong>Step 1 — Calculate the daytime high.</strong><br>Starting temperature: −7.5°C. Rises 14.25°C.<br>Daytime high = −7.5 + 14.25',
+      a: '6.75',
+      hint: '14.25 − 7.5 = 6.75 (positive value is larger).'
+    },
+    {
+      q: '<strong>Step 2 — Calculate the night temperature.</strong><br>The temperature falls 9.8°C from the daytime high of 6.75°C.<br>Night temp = 6.75 − 9.8',
+      a: '-3.05',
+      hint: 'The fall exceeds the daytime high, so the result is negative: 9.8 − 6.75 = 3.05.'
+    },
+    {
+      q: '<strong>Step 3 — Interpret the result.</strong><br>The night temperature is −3.05°C. Describe what this means in the context of the mountain weather station.',
+      a: 'TEXT',
+      hint: 'Say whether the temperature is above or below zero, and by how much.'
+    },
+  ];
+
+  const checkpoint = [
+    {
+      q: 'The temperature at 6 pm is −5.5°C. It falls 2.5°C overnight. What is the temperature at midnight? (°C)',
+      a: '-8',
+      hint: '−5.5 − 2.5 = ?  Both terms are effectively negative.'
+    },
+    {
+      q: 'A cliff top is 45.5 m above sea level. A cave entrance is 12.5 m below sea level. What is the vertical distance between them? (m)',
+      a: '58',
+      hint: 'distance = 45.5 − (−12.5) = 45.5 + 12.5'
+    },
+  ];
+
+  const practice1 = [
+    {
+      q: 'The temperature at 6 am is −4°C. By noon it rises 11°C.<br><em>What is the noon temperature? (°C)</em>',
+      a: '7',
+      hint: '−4 + 11 = ?'
+    },
+    {
+      q: 'A cliff base is 15.5 m below sea level (−15.5 m). A climber ascends 8.5 m.<br><em>What is the new position? (m)</em>',
+      a: '-7',
+      hint: '−15.5 + 8.5 = ?  The negative value is larger.'
+    },
+    {
+      q: 'The temperature is −2.5°C. It falls 3°C overnight.<br><em>What is the morning temperature? (°C)</em>',
+      a: '-5.5',
+      hint: '−2.5 − 3 = ?  A fall means subtract.'
+    },
+    {
+      q: 'A diver is 22.5 m below sea level (−22.5 m). The diver rises 7.5 m.<br><em>What is the new depth? (m)</em>',
+      a: '-15',
+      hint: '−22.5 + 7.5 = ?'
+    },
+    {
+      q: 'The summer average is 26°C. The winter average is 15.5°C lower.<br><em>What is the winter average? (°C)</em>',
+      a: '10.5',
+      hint: '26 − 15.5 = ?  A lower value means subtract.'
+    },
+    {
+      q: 'The temperature is 3.5°C. It falls 8.5°C.<br><em>What is the new temperature? (°C)</em>',
+      a: '-5',
+      hint: '3.5 − 8.5 = ?  The fall exceeds the start, so the answer is negative.'
+    },
+    {
+      q: 'A hilltop is 120 m above sea level. Descend 185 m into a valley.<br><em>What is the new altitude? (m)</em>',
+      a: '-65',
+      hint: '120 − 185 = ?'
+    },
+    {
+      q: 'Yesterday\'s temperature was −6°C. Today it is 2.5°C.<br><em>What is the temperature change? (°C)</em>',
+      a: '8.5',
+      hint: 'change = today − yesterday = 2.5 − (−6) = 2.5 + 6'
+    },
+    {
+      q: 'A sea floor is 4200 m below sea level (−4200 m). An ROV ascends 1350 m.<br><em>What is the new depth? (m)</em>',
+      a: '-2850',
+      hint: '−4200 + 1350 = ?'
+    },
+    {
+      q: 'City A has a winter average of −8.5°C. City B has a winter average of 5.5°C.<br><em>How much warmer is City B? (°C)</em>',
+      a: '14',
+      hint: 'difference = 5.5 − (−8.5) = 5.5 + 8.5'
+    },
+  ];
+
+  const practice2 = [
+    {
+      q: 'A day starts at −3.5°C. The temperature rises 11.75°C, then falls 6.25°C.<br><em>What is the final temperature? (°C)</em>',
+      a: '2',
+      hint: '−3.5 + 11.75 = 8.25, then 8.25 − 6.25 = ?'
+    },
+    {
+      q: 'At midnight: −8.4°C. By noon it rises 13.6°C. By 8 pm it falls 9.5°C from the noon temperature.<br><em>What is the 8 pm temperature? (°C)</em>',
+      a: '-4.3',
+      hint: 'Step 1: −8.4 + 13.6 = 5.2. Step 2: 5.2 − 9.5 = ?'
+    },
+    {
+      q: 'A weather buoy records temperature changes on four consecutive days: −2.5°C, +3.75°C, −1.25°C, +0.5°C.<br><em>What is the total temperature change? (°C)</em>',
+      a: '0.5',
+      hint: 'Add all four: −2.5 + 3.75 − 1.25 + 0.5'
+    },
+    {
+      q: 'City A: −14.2°C. City B is 18.75°C warmer than City A. City C is 5.5°C colder than City B.<br><em>What is the average temperature in City C? (°C)</em>',
+      a: '-0.95',
+      hint: 'City B = −14.2 + 18.75 = 4.55. Then City C = 4.55 − 5.5 = ?'
+    },
+    {
+      q: 'Peak A is 1234.5 m above sea level. Valley B is 87.5 m below sea level.<br><em>What is the vertical distance between them? (m)</em>',
+      a: '1322',
+      hint: 'distance = 1234.5 − (−87.5) = 1234.5 + 87.5'
+    },
+    {
+      q: 'Four daily temperature readings (°C): −6, −3, 1, −2.<br><em>What is the mean temperature? (°C)</em>',
+      a: '-2.5',
+      hint: 'Sum = −6 + (−3) + 1 + (−2) = −10. Divide by 4.'
+    },
+  ];
+
+  const practice3 = [
+    {
+      q: 'A mountain station records five daily temperatures (°C): −12.5, −8, 1.5, −3.5, −2.5.<br><em>What is the average daily temperature? (°C)</em>',
+      a: '-5',
+      hint: 'Sum = −12.5 − 8 + 1.5 − 3.5 − 2.5 = −25. Divide by 5.'
+    },
+    {
+      q: 'Starting at sea level (0 m), a submarine descends at 12.5 m per minute for 3.6 minutes, then ascends 18.75 m.<br><em>What is its final depth? (m)</em>',
+      a: '-26.25',
+      hint: 'Descent = −12.5 × 3.6 = −45 m. Then: −45 + 18.75 = ?'
+    },
+    {
+      q: 'Peak A is 3842.5 m above sea level. A valley floor is 38.5 m below sea level.<br><em>What is the total vertical rise from the valley floor to Peak A? (m)</em>',
+      a: '3881',
+      hint: 'vertical rise = 3842.5 − (−38.5) = 3842.5 + 38.5'
+    },
+    {
+      q: 'Explain why subtracting a negative temperature gives a larger positive result. Use the example −3°C − (−11°C) in your explanation.',
+      a: 'TEXT',
+      hint: 'Subtracting a negative equals adding a positive: −3 − (−11) = −3 + 11 = 8.'
+    },
+  ];
+
+  const exitProbs = [
+    {
+      q: 'In Hobart, the dawn temperature is −2.75°C. By midday it rises 9.5°C.<br><em>What is the midday temperature? (°C)</em>',
+      a: '6.75',
+      hint: '−2.75 + 9.5 = ?'
+    },
+    {
+      q: 'A submarine starts at 85 m below sea level (−85 m). It descends a further 37.5 m, then ascends 52.25 m.<br><em>What is its final depth? (m)</em>',
+      a: '-70.25',
+      hint: '−85 − 37.5 + 52.25 = ?  Work left to right.'
+    },
+    {
+      q: 'A friend says: "I don\'t need negative numbers — I can always subtract the smaller temperature from the larger." Explain why this fails when tracking temperature changes.',
+      a: 'TEXT',
+      hint: 'Think about direction: a drop from 2°C to −5°C is a change of −7°C, not +3°C. The sign tells you the direction of change.'
+    },
+  ];
+
+  // ============ ANSWER NORMALISATION (verbatim from template) ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp  = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+  // ============ BUILD PRACTICE (verbatim from template) ============
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    const noCount = !!options.noCount;
+
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+
+      const checkBtnHtml = p.a !== 'TEXT'
+        ? '<button class="check-btn">Check</button>'
+        : '';
+
+      div.innerHTML =
+        '<div class="problem-q">' +
+          '<div class="problem-num">' + idx + '</div>' +
+          '<div class="problem-expr">' + p.q + '</div>' +
+        '</div>' +
+        '<div class="problem-input-row">' +
+          '<span class="eq">=</span>' +
+          '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">' +
+          checkBtnHtml +
+        '</div>' +
+        '<div class="problem-tools">' +
+          '<button class="hint-link">Show hint</button>' +
+          '<button class="answer-link">Show answer</button>' +
+        '</div>' +
+        '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+        '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> <span class="expr">' + formatAnswerDisplay(p.a) + '</span></div>';
+
+      const cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+      div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+      div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open-ended — share your reasoning with the class.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + '<span class="frac"><span class="num">' + num + '</span><span class="den">' + d + '</span></span>';
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input  = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS (verbatim from template) ============
+  function toggleTier(id) {
+    const sec  = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+  buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1',  practice1,  'P');
+  buildPractice('practiceGrid2',  practice2,  'S');
+  buildPractice('practiceGrid3',  practice3,  'C');
+  buildPractice('exitGrid',       exitProbs,  'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
