@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Modelling — Income Tax — Year 8</title>
+
+<meta name="lesson-id"             content="y8_num_11">
+<meta name="ac9-descriptor"        content="AC9M8N05, AC9M8M05">
+<meta name="ac9-elaborations"      content="3 (N05); 4 (M05)">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Number">
+<meta name="sa-conceptual-understanding" content="Mathematical modelling can be used to represent and solve practical problems, including in financial contexts, using rational numbers and percentages">
+<meta name="lesson-focus"          content="Use a marginal tax-bracket table to compute personal income tax; calculate effective tax rates; compare effective and marginal rates across low, middle and high incomes.">
+<meta name="mapping-note"          content="Strict + cross-tag">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar { height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden; flex: 1; max-width: 360px; }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem, .difficulty-2 .problem, .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input, .difficulty-2 .problem-input, .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg); z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; font-size: 1.5rem; color: var(--coral);
+    letter-spacing: 2px; line-height: 1; flex-shrink: 0;
+    padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px; padding: 28px;
+    margin-bottom: 22px; box-shadow: var(--shadow);
+    border: 1px solid var(--border); position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    color: var(--navy); font-size: 1.4rem; margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCAB FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px;
+    padding: 18px; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.15rem; }
+  .vocab-front .hint-flip { font-family: -apple-system, sans-serif; font-weight: normal; font-size: 0.72rem; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .vocab-back { background: white; color: var(--text); transform: rotateY(180deg); font-size: 0.9rem; line-height: 1.4; text-wrap: balance; }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 10px; padding: 7px 11px 8px;
+    background: var(--hint-bg); border-radius: 6px; font-size: 0.82rem;
+    line-height: 1.4; color: var(--navy); font-style: italic; text-wrap: balance;
+  }
+  .vocab-example::before { content: 'EXAMPLE — '; font-style: normal; font-weight: 700; font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px; }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center; background: var(--card); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 26px; margin-bottom: 18px; box-shadow: var(--shadow);
+  }
+  .parts-expr .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+  .term-chip {
+    display: inline-block; padding: 7px 14px; margin: 4px;
+    border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer;
+    background: white; font-family: -apple-system, sans-serif; font-size: 0.95rem;
+    transition: all 0.2s; touch-action: none; user-select: none;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.free    { background: var(--good-soft); border-color: var(--good); color: #1d4a30; font-weight: 600; }
+  .term-chip.taxable { background: var(--coral-soft); border-color: var(--coral); color: #7a2d12; font-weight: 600; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white; padding: 7px 14px; border: 1.5px solid var(--navy);
+    border-radius: 8px; font-family: -apple-system, sans-serif; font-size: 0.95rem;
+  }
+  .parts-instructions {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 10px 14px; border-radius: 6px; font-size: 0.92rem;
+    font-style: italic; margin-bottom: 16px; color: var(--navy);
+  }
+  .parts-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--good); }
+  .bucket .ct { color: var(--coral); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source {
+    min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px;
+    margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px;
+    align-items: center; justify-content: center; border: 1px dashed var(--border);
+  }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .bucket.drop-target { background: var(--coral-soft); border-color: var(--coral); border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18); }
+  .term-chip.wrong-drop { animation: shake 0.45s; background: var(--bad-soft) !important; border-color: var(--bad) !important; color: var(--bad) !important; }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* MATCHING */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-size: 1rem; cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: -apple-system, sans-serif; }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow); font-family: Georgia, serif; font-size: 1.1rem; overflow-x: auto; line-height: 1.9; }
+  .calc-box .red  { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .grn  { color: var(--good); font-weight: 600; }
+  .summary-banner { background: var(--coral); color: white; border-radius: 8px; padding: 12px 16px; margin-top: 14px; font-family: Georgia, serif; font-size: 1.05rem; text-align: center; }
+  .summary-banner .label { font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block; }
+  .reveal-btn { background: var(--navy); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.92rem; font-weight: 600; margin-top: 10px; }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num { font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif; font-size: 0.92rem; background: white; border: 1px solid var(--border); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .problem-expr { font-family: -apple-system, sans-serif; font-size: 1rem; flex: 1; padding-top: 2px; line-height: 1.55; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input { flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px; font-family: Georgia, serif; font-size: 1rem; background: white; }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn { background: var(--coral); color: white; border: none; padding: 8px 14px; border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600; }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link { color: var(--navy); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font: inherit; }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box { background: var(--hint-bg); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none; }
+  .hint-box.visible { display: block; }
+  .answer-box { background: var(--good-soft); color: #1d4a30; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none; }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link { margin: 18px 0 4px; padding: 0; background: #eaf0f1; border-left: 5px solid var(--navy); border-radius: 4px; font-size: 0.86rem; text-align: left; }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket { background: #eaf0f1; border-left: 5px solid var(--navy); }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron { width: 32px; height: 32px; border-radius: 8px; background: white; border: 1.5px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; color: var(--navy); transition: transform 0.25s ease; }
+  .accordion-count { background: white; border: 1px solid var(--border); color: var(--muted); padding: 3px 10px; border-radius: 999px; font-family: -apple-system, sans-serif; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* MODELLING CYCLE TAGS */
+  .model-step-tag {
+    display: inline-block; color: white;
+    font-family: -apple-system, sans-serif; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 999px; margin-bottom: 4px; vertical-align: middle;
+  }
+  .model-step-tag.formulate { background: #2f5fa3; }
+  .model-step-tag.calculate { background: var(--coral); }
+  .model-step-tag.interpret { background: var(--good); }
+
+  /* TAX BRACKET TABLE */
+  .tax-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.93rem; margin: 14px 0; border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .tax-table th {
+    background: var(--navy); color: white;
+    padding: 10px 14px; text-align: left; font-weight: 600;
+    font-family: -apple-system, sans-serif;
+  }
+  .tax-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); background: white; }
+  .tax-table tr:nth-child(even) td { background: #f8f9fb; }
+  .tax-table .rate-cell { font-weight: 600; color: var(--coral); }
+  .tax-table .hl-row td { background: #fff8e1; border-left: 4px solid #c89638; }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.92rem; margin: 14px 0; border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .compare-table th { background: var(--navy); color: white; padding: 9px 14px; text-align: center; font-weight: 600; font-family: -apple-system, sans-serif; }
+  .compare-table td { padding: 9px 14px; text-align: center; border-bottom: 1px solid var(--border); background: white; }
+  .compare-table tr:nth-child(even) td { background: #f8f9fb; }
+  .compare-table .eff { color: var(--good); font-weight: 700; }
+  .compare-table .marg { color: var(--coral); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Financial Modelling — Income Tax</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Number</div>
+  </div>
+  <div class="badge">AC9M8N05 · AC9M8M05</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 22</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 0 — RETRIEVAL WARM-UP
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions on percentages and rates — skills you need for today's lesson.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1 — WHY THIS MATTERS
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">Income tax affects every working person in Australia — and it is pure percentage mathematics.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start;">
+    <div>
+      <p>When you earn income in Australia, the government takes a portion as <strong>income tax</strong>. The rate you pay depends on how much you earn — higher earners pay a higher percentage on the income in each extra bracket, but <em>not</em> on their whole income.</p>
+      <p>This is a <strong>marginal tax system</strong>. The first $18,200 is tax-free. Income above that is taxed in steps — each step has its own rate. The table below is based on Australia's individual income tax rates.</p>
+      <table class="tax-table">
+        <thead>
+          <tr><th>Taxable income</th><th>Tax on this income</th><th class="rate-cell">Rate</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>$0 – $18,200</td><td>Nil</td><td class="rate-cell">0%</td></tr>
+          <tr><td>$18,201 – $45,000</td><td>19c for each $1 over $18,200</td><td class="rate-cell">19%</td></tr>
+          <tr><td>$45,001 – $120,000</td><td>$5,092 plus 32.5c for each $1 over $45,000</td><td class="rate-cell">32.5%</td></tr>
+          <tr><td>$120,001 – $180,000</td><td>$29,467 plus 37c for each $1 over $120,000</td><td class="rate-cell">37%</td></tr>
+          <tr><td>$180,001 and over</td><td>$51,667 plus 45c for each $1 over $180,000</td><td class="rate-cell">45%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="parts-instructions" style="margin: 0; font-style: normal;">
+      <strong style="color: var(--navy);">Two key rates — and why they differ:</strong>
+      <ul style="margin: 10px 0 0; padding-left: 18px; line-height: 2.1; font-style: italic;">
+        <li><strong style="font-style: normal;">Marginal rate</strong> — the rate applied to each extra dollar in a given bracket (e.g. 32.5%)</li>
+        <li><strong style="font-style: normal;">Effective rate</strong> — total tax ÷ total income × 100; always <em>lower</em> than the marginal rate because lower brackets pay lower rates first</li>
+      </ul>
+      <div style="margin-top: 12px; padding: 10px 12px; background: white; border-radius: 8px; border: 1px solid var(--border); font-size: 0.88rem;">
+        <strong>Modelling cycle used in every I Do example:</strong><br>
+        <span class="model-step-tag formulate" style="margin-top:6px;">Formulate</span> → identify bracket, write the tax expression<br>
+        <span class="model-step-tag calculate">Calculate</span> → evaluate; find effective rate<br>
+        <span class="model-step-tag interpret">Interpret &amp; Review</span> → explain in context; check reasonableness
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do these sections as a whole class.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2 — VOCABULARY
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. All five terms appear in today's worked examples.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Income tax<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>levy charged by the government</strong> on money earned from work or investments, calculated as a percentage of taxable income.<span class="vocab-example">Earning $60,000 per year and paying $9,967 in income tax.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Tax bracket<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>range of income</strong> to which a specific marginal tax rate applies. Australia has five brackets.<span class="vocab-example">$45,001–$120,000 is the 32.5% bracket.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Marginal rate<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The tax rate that applies to each <strong>extra dollar earned</strong> within a bracket. Different parts of your income are taxed at different marginal rates.<span class="vocab-example">Earning $50,000: the last $5,000 is taxed at the 32.5% marginal rate.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Effective rate<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Total tax paid ÷ total income × 100. The <strong>actual overall percentage</strong> of income paid as tax — always lower than the marginal rate.<span class="vocab-example">Paying $9,967 tax on $60,000 income → effective rate = 16.6%.</span></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Taxable income<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The amount of income on which tax is calculated. The <strong>tax-free threshold</strong> ($18,200) means the first portion is not taxed at all.<span class="vocab-example">Earning $30,000: only $11,800 is taxable (above the $18,200 threshold).</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3 — DRAG SORT: TAX-FREE OR TAXABLE?
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Tax-free or taxable income?</h2>
+  <p class="sec-desc">Drag each annual income into the correct bucket. Remember: incomes at or below $18,200 are in the tax-free zone — no income tax is payable.</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort each annual income — tax-free zone ($0–$18,200) or taxable (above $18,200)?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="free">$10,000</span>
+      <span class="term-chip" data-type="taxable">$25,000</span>
+      <span class="term-chip" data-type="free">$18,200</span>
+      <span class="term-chip" data-type="taxable">$55,000</span>
+      <span class="term-chip" data-type="free">$6,500</span>
+      <span class="term-chip" data-type="taxable">$180,000</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="free">
+        <h4 class="vt">✓ Tax-free zone (≤ $18,200)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="taxable">
+        <h4 class="ct">$ Taxable (above $18,200)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 $18,200 exactly is still tax-free — tax only begins on income <em>above</em> $18,200. The government calls this the <strong>tax-free threshold</strong>.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4 — MATCH: INCOME TO MARGINAL RATE
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each income to its marginal tax rate</h2>
+  <p class="sec-desc">Click an income, then click the rate that applies to that bracket from the tax table. Five pairs to find.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick an income or a rate to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen — three worked examples</div>
+    <div class="phase-sub">Low, middle and high income. Each walks the full modelling cycle. Click "Reveal next step" to move through.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 5 — I DO EXAMPLE 1: LOW INCOME $28,000
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example 1 — low income: $28,000</h2>
+  <p class="sec-desc">A part-time worker earns $28,000 per year. <strong>Calculate their income tax and effective tax rate.</strong></p>
+
+  <div class="worked">
+
+    <div class="step visible" id="exA1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag formulate">Formulate</span> — locate the bracket and write the tax expression</div>
+        <div class="step-desc">Find $28,000 in the tax table. It sits between $18,201 and $45,000 — the 19% bracket.</div>
+        <div class="calc-box">
+          Income = <span class="blue">$28,000</span><br>
+          Bracket: $18,201 – $45,000 &nbsp; → &nbsp; <span class="red">marginal rate = 19%</span><br><br>
+          Tax on first $18,200 = <strong>$0</strong> &nbsp; (tax-free zone)<br>
+          Amount above $18,200 = $28,000 − $18,200 = <span class="red">$9,800</span><br><br>
+          <strong>Tax model:</strong> tax = 19% × $9,800
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exA2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag calculate">Calculate</span> — evaluate the tax and the effective rate</div>
+        <div class="step-desc">Multiply out, then divide total tax by total income to get the effective rate.</div>
+        <div class="calc-box">
+          Tax = 19% × $9,800<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 0.19 × $9,800<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong>$1,862</strong><br><br>
+          Effective rate = <span class="frac" style="font-size:1rem;"><span class="num">$1,862</span><span class="den">$28,000</span></span> × 100
+          &nbsp;≈ <span class="grn"><strong>6.7%</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exA3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag interpret">Interpret &amp; Review</span> — explain in context; check reasonableness</div>
+        <div class="step-desc">What does the answer mean? Why is the effective rate (6.7%) so much lower than the marginal rate (19%)?</div>
+        <div class="calc-box">
+          <span class="grn">Interpretation:</span> On a $28,000 income, income tax = <strong>$1,862</strong>.<br>
+          The worker keeps $28,000 − $1,862 = $26,138 (take-home pay).<br><br>
+          <span class="grn">Review:</span> The effective rate is 6.7%, well below the 19% marginal rate.
+          This makes sense: only $9,800 (out of $28,000) is taxed at 19% — the first $18,200 is taxed at 0%.
+          Averaging these lower and higher rates gives an effective rate well below 19%. ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Tax = $1,862 &nbsp;|&nbsp; Marginal rate: 19% &nbsp;|&nbsp; Effective rate: 6.7%
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revBtnA" onclick="revealNextStep('A', 3)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6 — I DO EXAMPLE 2: MIDDLE INCOME $75,000
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Worked example 2 — middle income: $75,000</h2>
+  <p class="sec-desc">A full-time professional earns $75,000 per year. <strong>Calculate their income tax and effective tax rate.</strong></p>
+
+  <div class="worked">
+
+    <div class="step visible" id="exB1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag formulate">Formulate</span> — locate the bracket and write the tax expression</div>
+        <div class="step-desc">$75,000 sits between $45,001 and $120,000 — the 32.5% bracket. The table already gives us the tax on the first $45,000.</div>
+        <div class="calc-box">
+          Income = <span class="blue">$75,000</span><br>
+          Bracket: $45,001 – $120,000 &nbsp; → &nbsp; <span class="red">marginal rate = 32.5%</span><br><br>
+          Tax on first $45,000 = <strong>$5,092</strong> &nbsp; (read directly from the table)<br>
+          Amount above $45,000 = $75,000 − $45,000 = <span class="red">$30,000</span><br><br>
+          <strong>Tax model:</strong> tax = $5,092 + 32.5% × $30,000
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exB2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag calculate">Calculate</span> — evaluate the tax and the effective rate</div>
+        <div class="step-desc">Calculate the 32.5% portion, add it to $5,092, then find the effective rate.</div>
+        <div class="calc-box">
+          32.5% × $30,000 = 0.325 × $30,000 = $9,750<br>
+          Tax = $5,092 + $9,750 = <strong>$14,842</strong><br><br>
+          Effective rate = <span class="frac" style="font-size:1rem;"><span class="num">$14,842</span><span class="den">$75,000</span></span> × 100
+          &nbsp;≈ <span class="grn"><strong>19.8%</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exB3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag interpret">Interpret &amp; Review</span> — explain in context; check reasonableness</div>
+        <div class="step-desc">Compare effective rate (19.8%) to marginal rate (32.5%). Why is the gap smaller here than in Example 1?</div>
+        <div class="calc-box">
+          <span class="grn">Interpretation:</span> On a $75,000 income, income tax = <strong>$14,842</strong>.<br>
+          Take-home pay = $75,000 − $14,842 = $60,158.<br><br>
+          <span class="grn">Review:</span> The effective rate (19.8%) is well below the marginal rate (32.5%) — but the gap is narrower than in Example 1.
+          As income grows, more of it sits in higher brackets, so the effective rate rises towards (but never reaches) the marginal rate. ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Tax = $14,842 &nbsp;|&nbsp; Marginal rate: 32.5% &nbsp;|&nbsp; Effective rate: 19.8%
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revBtnB" onclick="revealNextStep('B', 3)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 7 — I DO EXAMPLE 3: HIGH INCOME $150,000
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Worked example 3 — high income: $150,000</h2>
+  <p class="sec-desc">A senior manager earns $150,000 per year. <strong>Calculate their income tax, effective rate, and compare all three examples.</strong></p>
+
+  <div class="worked">
+
+    <div class="step visible" id="exC1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag formulate">Formulate</span> — locate the bracket and write the tax expression</div>
+        <div class="step-desc">$150,000 sits between $120,001 and $180,000 — the 37% bracket. The table gives the tax on the first $120,000.</div>
+        <div class="calc-box">
+          Income = <span class="blue">$150,000</span><br>
+          Bracket: $120,001 – $180,000 &nbsp; → &nbsp; <span class="red">marginal rate = 37%</span><br><br>
+          Tax on first $120,000 = <strong>$29,467</strong> &nbsp; (read from table)<br>
+          Amount above $120,000 = $150,000 − $120,000 = <span class="red">$30,000</span><br><br>
+          <strong>Tax model:</strong> tax = $29,467 + 37% × $30,000
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exC2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag calculate">Calculate</span> — evaluate the tax and the effective rate</div>
+        <div class="step-desc">Calculate the 37% portion, add it to $29,467, then find the effective rate.</div>
+        <div class="calc-box">
+          37% × $30,000 = 0.37 × $30,000 = $11,100<br>
+          Tax = $29,467 + $11,100 = <strong>$40,567</strong><br><br>
+          Effective rate = <span class="frac" style="font-size:1rem;"><span class="num">$40,567</span><span class="den">$150,000</span></span> × 100
+          &nbsp;≈ <span class="grn"><strong>27.0%</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="exC3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title"><span class="model-step-tag interpret">Interpret &amp; Review</span> — compare all three examples and explain the pattern</div>
+        <div class="step-desc">Now compare across all three incomes. Notice how the effective rate rises gradually while the marginal rate jumps in steps.</div>
+        <div class="calc-box" style="padding: 0; overflow: hidden;">
+          <table class="compare-table" style="margin: 0; box-shadow: none;">
+            <thead>
+              <tr>
+                <th>Income</th>
+                <th>Tax paid</th>
+                <th>Marginal rate</th>
+                <th>Effective rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$28,000</td>
+                <td>$1,862</td>
+                <td class="marg">19%</td>
+                <td class="eff">6.7%</td>
+              </tr>
+              <tr>
+                <td>$75,000</td>
+                <td>$14,842</td>
+                <td class="marg">32.5%</td>
+                <td class="eff">19.8%</td>
+              </tr>
+              <tr>
+                <td>$150,000</td>
+                <td>$40,567</td>
+                <td class="marg">37%</td>
+                <td class="eff">27.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 12px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-family: -apple-system, sans-serif; font-size: 0.93rem;">
+          <strong style="color: var(--navy);">Key insight:</strong>
+          The <span style="color: var(--coral); font-weight: 600;">marginal rate jumps in steps</span> (19% → 32.5% → 37%) every time income crosses a bracket boundary.
+          The <span style="color: var(--good); font-weight: 600;">effective rate rises gradually</span> (6.7% → 19.8% → 27.0%) and is always lower — because the lower-taxed income earned first brings the average down.
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Tax = $40,567 &nbsp;|&nbsp; Marginal rate: 37% &nbsp;|&nbsp; Effective rate: 27.0%
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revBtnC" onclick="revealNextStep('C', 3)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 8 — WE DO
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">8</span>Together — income of $52,000</h2>
+  <p class="sec-desc">A teacher earns $52,000 per year. Work through the five steps below with the person next to you, then we'll share answers as a class.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why read the base tax from the table?</strong> The $5,092 already accounts for all the tax owed on the first $45,000 (0% on $18,200, then 19% on the remaining $26,800). You don't need to recalculate that — just add on the 32.5% for the income above $45,000.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 9 — QUICK CHECK
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">9</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them independently — <strong>then we'll check together as a class</strong> before you pick your tier. Type just the number, no dollar signs or commas.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 10 — BUILDING (accordion, open by default)
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">10</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Calculate the income tax for each annual income using the tax table. Type just the number — no $ or commas. For marginal-rate questions, type the number only (e.g. 32.5).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 11 — STRETCH (accordion, collapsed)
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">11</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Calculate income tax amounts and effective tax rates. Round effective rates to 1 decimal place. Type just the number — no $ or commas or % symbol.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 12 — MASTERY (accordion, collapsed)
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">12</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Two computation problems and two open-ended reasoning questions. For the open-ended items, type your reasoning and use "Show answer" to compare with the model response.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 13 — EXIT TICKET
+     ═══════════════════════════════════════════════════════════ -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">13</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three questions to check today's big ideas. Answer independently before you go.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 · Number (cross-tag: Measurement)</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Mathematical modelling can be used to represent and solve practical problems, including in financial contexts, using rational numbers and percentages.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptors</span>
+      <span class="cl-value">
+        <strong>AC9M8N05</strong> — use mathematical modelling to solve practical problems involving rational numbers and percentages, including financial contexts; formulate problems, choosing efficient calculation strategies and using digital tools where appropriate; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model<br>
+        <strong>AC9M8M05</strong> — recognise and use rates to solve problems involving the comparison of 2 related quantities of different units of measure
+      </span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">AC9M8N05 elaboration 3 — modelling personal income tax by interpreting tax tables; AC9M8M05 elaboration 4 — using taxation tables to calculate annual income tax</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Use a marginal tax-bracket table to compute personal income tax; calculate effective tax rates; compare effective and marginal rates across low, middle and high incomes to see that the effective rate rises gradually while the marginal rate jumps in steps.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict + cross-tag. Lesson ID y8_num_11. Source: SA Curriculum (Mathematics R–10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Financial Modelling — Income Tax
+</footer>
+
+</div><!-- /.page -->
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount  = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top  = rect.top  + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup',   endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest    = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup',   endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  const matchTerms = [
+    { html: '$10,000',   group: 1 },
+    { html: '$30,000',   group: 2 },
+    { html: '$80,000',   group: 3 },
+    { html: '$145,000',  group: 4 },
+    { html: '$200,000',  group: 5 },
+    { html: '0%',        group: 1 },
+    { html: '19%',       group: 2 },
+    { html: '32.5%',     group: 3 },
+    { html: '37%',       group: 4 },
+    { html: '45%',       group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML  = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx   = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its matching partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched! Check each income against the tax table.'
+          : 'Matched! (' + matchedGroups.size + '/5 pairs)';
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected, w2 = chip;
+      w1.classList.add('selected'); w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — check which bracket that income falls in.';
+      setTimeout(() => {
+        w1.classList.remove('selected');
+        w2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ I DO STEP REVEAL (three independent examples) ============
+  const exStepCounters = { A: 1, B: 1, C: 1 };
+
+  function revealNextStep(prefix, totalSteps) {
+    exStepCounters[prefix]++;
+    const step = document.getElementById('ex' + prefix + exStepCounters[prefix]);
+    if (step) step.classList.add('visible');
+    const btn = document.getElementById('revBtn' + prefix);
+    if (btn && exStepCounters[prefix] >= totalSteps) {
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE DATA ============
+
+  const retrieval = [
+    {
+      q: 'Calculate 19% of $6,800. (Type the number only, no $)',
+      a: '1292',
+      hint: '19% × 6800 = 0.19 × 6800. Try 0.2 × 6800 − 0.01 × 6800.'
+    },
+    {
+      q: 'A tax rate of 32.5% is applied to $20,000. How much tax is payable? (No $)',
+      a: '6500',
+      hint: '32.5% × 20000 = 0.325 × 20000 = 0.3 × 20000 + 0.025 × 20000.'
+    },
+    {
+      q: 'A person earns $50,000 and pays $8,000 in tax. What percentage of their income goes to tax? (No %)',
+      a: '16',
+      hint: 'Effective rate = (tax ÷ income) × 100 = (8000 ÷ 50000) × 100.'
+    },
+  ];
+
+  const weDo = [
+    {
+      q: '<strong>Step 1 — Identify the bracket.</strong><br>Income = $52,000. It falls between $45,001 and $120,000.<br>What is the marginal tax rate for this bracket? (Type the number, e.g. 32.5)',
+      a: '32.5',
+      hint: 'Check the $45,001–$120,000 row in the tax table.'
+    },
+    {
+      q: '<strong>Step 2 — Base tax.</strong><br>The table tells us the tax already calculated on the first $45,000 is $___.<br>(Type the number, no $)',
+      a: '5092',
+      hint: 'Read directly from the $45,001–$120,000 row: "$5,092 plus..."'
+    },
+    {
+      q: '<strong>Step 3 — Tax on the top slice.</strong><br>Amount above $45,000 = $52,000 − $45,000 = $7,000.<br>32.5% × $7,000 = $___ (no $)',
+      a: '2275',
+      hint: '0.325 × 7000 = 0.3 × 7000 + 0.025 × 7000 = 2100 + 175.'
+    },
+    {
+      q: '<strong>Step 4 — Total tax.</strong><br>Total tax = $5,092 + $2,275 = $___ (no $)',
+      a: '7367',
+      hint: '5092 + 2275. Add the thousands then the remainder.'
+    },
+    {
+      q: '<strong>Step 5 — Effective tax rate.</strong><br>Effective rate = $7,367 ÷ $52,000 × 100.<br>Give your answer to 1 decimal place. (No %)',
+      a: '14.2',
+      hint: '7367 ÷ 52000 ≈ 0.1417 → ×100 = 14.17% → round to 1 dp.'
+    },
+  ];
+
+  const checkpoint = [
+    {
+      q: 'An annual income of $22,000 falls in the 19% bracket. What is the income tax payable on $22,000? (No $)',
+      a: '722',
+      hint: 'Tax = 19% × (22000 − 18200) = 19% × 3800. Try 0.19 × 3800.'
+    },
+    {
+      q: 'An annual income of $38,000 falls in the 19% bracket. What is the income tax payable on $38,000? (No $)',
+      a: '3762',
+      hint: 'Tax = 19% × (38000 − 18200) = 0.19 × 19800.'
+    },
+  ];
+
+  const practice1 = [
+    {
+      q: 'What is the marginal tax rate for someone earning $80,000 per year? (Type the number, e.g. 32.5)',
+      a: '32.5',
+      hint: '$80,000 sits between $45,001 and $120,000 — check that row of the table.'
+    },
+    {
+      q: 'An income of $15,000 is below the tax-free threshold of $18,200.<br>How much income tax is payable?',
+      a: '0',
+      hint: 'The tax-free zone is $0–$18,200: no tax is payable at all.'
+    },
+    {
+      q: 'Calculate the income tax on $20,000.<br>(19% bracket; base = $0)',
+      a: '342',
+      hint: 'Tax = 19% × (20000 − 18200) = 0.19 × 1800.'
+    },
+    {
+      q: 'Calculate the income tax on $30,000.<br>(19% bracket; base = $0)',
+      a: '2242',
+      hint: 'Tax = 19% × (30000 − 18200) = 0.19 × 11800.'
+    },
+    {
+      q: 'Calculate the income tax on $45,000.<br>(19% bracket; base = $0)',
+      a: '5092',
+      hint: 'Tax = 0.19 × (45000 − 18200) = 0.19 × 26800. This should match the table\'s base for the next bracket.'
+    },
+    {
+      q: 'Calculate the income tax on $60,000.<br>(32.5% bracket; base = $5,092)',
+      a: '9967',
+      hint: 'Tax = 5092 + 32.5% × (60000 − 45000) = 5092 + 0.325 × 15000.'
+    },
+    {
+      q: 'Calculate the income tax on $90,000.<br>(32.5% bracket; base = $5,092)',
+      a: '19717',
+      hint: 'Tax = 5092 + 0.325 × (90000 − 45000) = 5092 + 0.325 × 45000.'
+    },
+    {
+      q: 'Calculate the income tax on $120,000.<br>(32.5% bracket; base = $5,092)',
+      a: '29467',
+      hint: 'Tax = 5092 + 0.325 × (120000 − 45000) = 5092 + 0.325 × 75000. Check: does this match the table\'s base for the 37% bracket?'
+    },
+    {
+      q: 'Calculate the income tax on $130,000.<br>(37% bracket; base = $29,467)',
+      a: '33167',
+      hint: 'Tax = 29467 + 37% × (130000 − 120000) = 29467 + 0.37 × 10000.'
+    },
+    {
+      q: 'How much of a $45,000 income is in the tax-free zone? (No $)',
+      a: '18200',
+      hint: 'The tax-free threshold is exactly $18,200 — the first $18,200 of any income is tax-free.'
+    },
+  ];
+
+  const practice2 = [
+    {
+      q: 'Calculate the income tax on $55,000.<br>(32.5% bracket; base = $5,092; no $)',
+      a: '8342',
+      hint: 'Tax = 5092 + 0.325 × (55000 − 45000) = 5092 + 0.325 × 10000.'
+    },
+    {
+      q: 'For a $55,000 income, the total tax is $8,342.<br>Calculate the effective tax rate to 1 decimal place. (No %)',
+      a: '15.2',
+      hint: 'Effective rate = (8342 ÷ 55000) × 100 ≈ 15.17% → round to 1 dp.'
+    },
+    {
+      q: 'Calculate the income tax on $160,000.<br>(37% bracket; base = $29,467; no $)',
+      a: '44267',
+      hint: 'Tax = 29467 + 0.37 × (160000 − 120000) = 29467 + 0.37 × 40000.'
+    },
+    {
+      q: 'For a $160,000 income, the total tax is $44,267.<br>Calculate the effective tax rate to 1 decimal place. (No %)',
+      a: '27.7',
+      hint: 'Effective rate = (44267 ÷ 160000) × 100 ≈ 27.67% → round to 1 dp.'
+    },
+    {
+      q: 'For a $28,000 income, the total tax is $1,862.<br>Calculate the effective tax rate to 1 decimal place. (No %)',
+      a: '6.7',
+      hint: 'Effective rate = (1862 ÷ 28000) × 100 ≈ 6.65% → round to 1 dp.'
+    },
+    {
+      q: 'For a $75,000 income, the total tax is $14,842.<br>Calculate the effective tax rate to 1 decimal place. (No %)',
+      a: '19.8',
+      hint: 'Effective rate = (14842 ÷ 75000) × 100 ≈ 19.79% → round to 1 dp.'
+    },
+  ];
+
+  const practice3 = [
+    {
+      q: 'Calculate the income tax on $200,000.<br>(45% bracket; base = $51,667; no $)',
+      a: '60667',
+      hint: 'Tax = 51667 + 0.45 × (200000 − 180000) = 51667 + 0.45 × 20000.'
+    },
+    {
+      q: 'For a $200,000 income, the total tax is $60,667.<br>Calculate the effective tax rate to 1 decimal place. (No %)',
+      a: '30.3',
+      hint: 'Effective rate = (60667 ÷ 200000) × 100 ≈ 30.33% → round to 1 dp.'
+    },
+    {
+      q: 'Ali earns $45,000 (tax = $5,092). Jake earns $90,000 — exactly double Ali\'s income. Does Jake pay exactly double the tax? Calculate Jake\'s tax and explain what you find.',
+      a: 'TEXT',
+      hint: 'Jake\'s tax = $5,092 + 32.5% × ($90,000 − $45,000) = $5,092 + $14,625 = $19,717. Double of $5,092 = $10,184. Jake pays about 3.87 times Ali\'s tax — far more than double — because Jake\'s higher income is taxed at a higher marginal rate (32.5%) not just 19%.'
+    },
+    {
+      q: 'A student claims: "Someone earning $75,000 is in the 32.5% bracket, so they pay 32.5% of their whole $75,000 as tax." Identify the error and explain why the effective rate (19.8%) is much lower than 32.5%.',
+      a: 'TEXT',
+      hint: 'The error: 32.5% is the marginal rate — it only applies to income above $45,000, not the whole $75,000. The first $18,200 is taxed at 0% and the next $26,800 at 19%. Averaging all these rates gives an effective rate of 19.8%, well below 32.5%.'
+    },
+  ];
+
+  const exitProbs = [
+    {
+      q: 'Calculate the income tax on $42,000.<br>(19% bracket; base = $0; no $)',
+      a: '4522',
+      hint: 'Tax = 19% × (42000 − 18200) = 0.19 × 23800.'
+    },
+    {
+      q: 'For a $42,000 income, the total tax is $4,522.<br>Calculate the effective tax rate to 1 decimal place. (No %)',
+      a: '10.8',
+      hint: 'Effective rate = (4522 ÷ 42000) × 100 ≈ 10.77% → round to 1 dp.'
+    },
+    {
+      q: 'A student says: "The effective tax rate and the marginal rate are the same thing." Explain why this is incorrect, using the tax table to support your answer.',
+      a: 'TEXT',
+      hint: 'The marginal rate is the rate on the last dollar earned in a bracket. The effective rate is total tax ÷ total income × 100. They differ because lower-bracket income is taxed at lower rates first, pulling the effective rate below the marginal rate. Example: $75,000 income has a 32.5% marginal rate but only a 19.8% effective rate.'
+    },
+  ];
+
+  // ============ ANSWER NORMALISATION (verbatim framework) ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/[$,%]/g, '')   // strip currency, percent symbols
+      .replace(/,/g, '')       // strip thousands commas
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp  = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+  // ============ BUILD PRACTICE (verbatim from template) ============
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    const noCount = !!options.noCount;
+
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+
+      const checkBtnHtml = p.a !== 'TEXT'
+        ? '<button class="check-btn">Check</button>'
+        : '';
+
+      div.innerHTML =
+        '<div class="problem-q">' +
+          '<div class="problem-num">' + idx + '</div>' +
+          '<div class="problem-expr">' + p.q + '</div>' +
+        '</div>' +
+        '<div class="problem-input-row">' +
+          '<span class="eq">=</span>' +
+          '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">' +
+          checkBtnHtml +
+        '</div>' +
+        '<div class="problem-tools">' +
+          '<button class="hint-link">Show hint</button>' +
+          '<button class="answer-link">Show answer</button>' +
+        '</div>' +
+        '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+        '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> <span class="expr">' + formatAnswerDisplay(p.a) + '</span></div>';
+
+      const cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+      div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+      div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open-ended — compare your reasoning with the hint, then discuss with the class.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + '<span class="frac"><span class="num">' + num + '</span><span class="den">' + d + '</span></span>';
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input  = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS (verbatim from template) ============
+  function toggleTier(id) {
+    const sec  = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+  buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1',  practice1,  'P');
+  buildPractice('practiceGrid2',  practice2,  'S');
+  buildPractice('practiceGrid3',  practice3,  'C');
+  buildPractice('exitGrid',       exitProbs,  'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
