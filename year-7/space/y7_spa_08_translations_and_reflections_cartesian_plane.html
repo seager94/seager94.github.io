@@ -10,8 +10,8 @@
 <meta name="ac9-elaborations"      content="1">
 <meta name="sa-year"               content="7">
 <meta name="sa-strand"             content="Space">
-<meta name="sa-conceptual-understanding" content="Geometrical transformations of points and 2-dimensional shapes can be represented on a Cartesian plane.">
-<meta name="lesson-focus"          content="Describe translations and reflections of points and 2D shapes on the Cartesian plane using coordinate-rule notation; recognise that the image is the same shape and size as the pre-image.">
+<meta name="sa-conceptual-understanding" content="Geometrical transformations of points and 2-dimensional shapes can be represented on a Cartesian plane">
+<meta name="lesson-focus"          content="Translate and reflect points and 2D shapes on the Cartesian plane; describe translations and reflections using coordinate-rule notation.">
 <meta name="mapping-note"          content="Strict">
 
 <style>
@@ -44,6 +44,7 @@
   }
   .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
 
+  /* HEADER */
   header.top {
     background: var(--navy);
     color: white;
@@ -76,6 +77,7 @@
     text-transform: uppercase;
   }
 
+  /* PROGRESS BAR */
   .progress-wrap {
     position: sticky; top: 0; z-index: 50;
     background: var(--bg);
@@ -105,6 +107,7 @@
   }
   .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
 
+  /* DIFFICULTY SECTIONS (You do) */
   section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
   section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
   section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
@@ -118,6 +121,7 @@
   .difficulty-2 .problem-input,
   .difficulty-3 .problem-input { background: white; }
 
+  /* Chilli stickers */
   section.lesson.difficulty-1::before,
   section.lesson.difficulty-2::before,
   section.lesson.difficulty-3::before {
@@ -135,6 +139,7 @@
   section.lesson.difficulty-2::before { content: '🌶🌶'; }
   section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
 
+  /* CHECKPOINT */
   section.lesson.checkpoint {
     background: #f7faff;
     border-left: 5px solid var(--navy);
@@ -193,6 +198,7 @@
     .diff-badge .dots { font-size: 0.72rem; }
   }
 
+  /* PHASE BANNERS */
   .phase-banner {
     display: flex; align-items: center; gap: 18px;
     background: white;
@@ -230,6 +236,7 @@
     .phase-banner { gap: 12px; padding: 12px 14px; }
   }
 
+  /* SECTION CARDS */
   section.lesson {
     background: var(--card);
     border-radius: 14px;
@@ -246,6 +253,7 @@
     font-size: 1.4rem;
     margin: 0 0 6px;
     display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap;
   }
   section.lesson h2 .sec-num {
     background: var(--coral);
@@ -261,6 +269,7 @@
     font-size: 0.95rem;
   }
 
+  /* MATH STYLING */
   .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
   .var { font-style: italic; }
   .frac {
@@ -271,7 +280,17 @@
   }
   .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
   .frac .den { padding: 1px 4px 0; }
+  .rule {
+    font-family: Georgia, "Cambria", serif;
+    background: var(--hint-bg);
+    color: var(--navy);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
 
+  /* VOCABULARY FLIP CARDS */
   .vocab-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
@@ -279,7 +298,7 @@
   }
   .vocab {
     perspective: 1000px;
-    height: 220px;
+    height: 210px;
     cursor: pointer;
   }
   .vocab-inner {
@@ -340,6 +359,7 @@
   }
   .vocab-example strong { color: var(--coral); font-style: normal; }
 
+  /* DRAG SORT */
   .parts-expr {
     text-align: center;
     background: var(--card);
@@ -356,19 +376,21 @@
   }
   .term-chip {
     display: inline-block;
-    padding: 8px 14px;
+    padding: 7px 13px;
     margin: 4px;
     border: 1.5px solid var(--border);
     border-radius: 8px;
     cursor: pointer;
     background: white;
     font-family: Georgia, serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
     transition: all 0.2s;
+    touch-action: none;
+    user-select: none;
   }
   .term-chip:hover { border-color: var(--navy); }
-  .term-chip.translation { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
-  .term-chip.reflection { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+  .term-chip[data-type="translation"] { border-color: var(--coral); }
+  .term-chip[data-type="reflection"]  { border-color: var(--navy); }
 
   .parts-instructions {
     background: var(--hint-bg);
@@ -386,26 +408,25 @@
   }
   .bucket {
     background: var(--bg); border-radius: 10px; padding: 14px;
-    border: 1.5px dashed var(--border); min-height: 80px;
+    border: 1.5px dashed var(--border); min-height: 90px;
   }
   .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
   .bucket .vt { color: var(--coral); }
   .bucket .ct { color: var(--navy); }
-  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .bucket-contents { min-height: 55px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
   .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
   .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
-  .term-chip { touch-action: none; user-select: none; }
   .term-chip.dragging { opacity: 0.3; }
   .term-chip-ghost {
     position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
     transform: scale(1.06);
     box-shadow: 0 12px 28px rgba(0,0,0,0.22);
     background: white;
-    padding: 8px 14px;
+    padding: 7px 13px;
     border: 1.5px solid var(--navy);
     border-radius: 8px;
     font-family: Georgia, serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
   .bucket.drop-target {
     background: var(--coral-soft);
@@ -434,6 +455,7 @@
   }
   .btn-secondary:hover { background: var(--hint-bg); }
 
+  /* WORKED EXAMPLE */
   .worked {
     background: var(--bg);
     border-radius: 10px;
@@ -463,10 +485,10 @@
     border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
     font-family: Georgia, serif; font-size: 1.1rem;
     overflow-x: auto;
-    line-height: 1.7;
   }
   .calc-box .red { color: var(--coral); font-weight: 600; }
   .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .vertex-row { display: block; padding: 3px 0; }
   .summary-banner {
     background: var(--coral); color: white;
     border-radius: 8px;
@@ -491,15 +513,73 @@
   .reveal-btn:hover { background: var(--navy-dark); }
   .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
+  /* CARTESIAN GRID SVGs */
+  .grid-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .grid-wrap.with-caption .grid-caption {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .cart-svg { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+  .cart-svg .gridlines line { stroke: #d8dde6; stroke-width: 0.7; }
+  .cart-svg .axes line { stroke: #2a2a2a; stroke-width: 1.4; }
+  .cart-svg .y-eq-x { stroke: #8a6dbb; stroke-width: 1.5; stroke-dasharray: 5 4; }
+  .cart-svg .axis-labels text { font-family: Georgia, serif; font-size: 11px; fill: #6b7280; }
+  .cart-svg .axis-name { font-family: Georgia, serif; font-size: 14px; font-style: italic; fill: #2a2a2a; font-weight: bold; }
+  .cart-svg .origin-label { font-family: Georgia, serif; font-size: 11px; fill: #6b7280; font-style: italic; }
+  .cart-svg .pre-image { fill: rgba(31,77,84,0.18); stroke: #1F4D54; stroke-width: 2.5; stroke-linejoin: round; }
+  .cart-svg .image     { fill: rgba(190,88,55,0.20); stroke: #BE5837; stroke-width: 2.5; stroke-linejoin: round; }
+  .cart-svg .pre-vertex   { fill: #1F4D54; stroke: white; stroke-width: 1.5; }
+  .cart-svg .image-vertex { fill: #BE5837; stroke: white; stroke-width: 1.5; }
+  .cart-svg .vertex-label { font-family: Georgia, serif; font-size: 12px; font-weight: bold; }
+  .cart-svg .vertex-label.pre { fill: #143438; }
+  .cart-svg .vertex-label.img { fill: #8a3a1f; }
+  .cart-svg .trans-arrow { stroke: #8a8a8a; stroke-width: 1.4; stroke-dasharray: 3 3; fill: none; }
+  .cart-svg .point.pre { fill: #1F4D54; stroke: white; stroke-width: 1.5; }
+  .cart-svg .point.img { fill: #BE5837; stroke: white; stroke-width: 1.5; }
+  .cart-svg .point-label.pre { fill: #143438; }
+  .cart-svg .point-label.img { fill: #8a3a1f; }
+  .cart-svg .point-label { font-family: Georgia, serif; font-size: 13px; font-weight: bold; }
+  .cart-svg .axis-emph { stroke: #BE5837; stroke-width: 2.5; }
+  .cart-svg .err-cross { stroke: #d24a4a; stroke-width: 2.5; }
+  .cart-svg .err-mark  { fill: #d24a4a; stroke: white; stroke-width: 1.5; }
+  .cart-svg .ok-mark   { fill: #2f9e6b; stroke: white; stroke-width: 1.5; }
+
+  .grid-legend {
+    display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    font-size: 0.82rem; color: var(--muted);
+    margin-top: 6px;
+  }
+  .grid-legend .legend-item { display: inline-flex; align-items: center; gap: 6px; }
+  .grid-legend .legend-swatch {
+    width: 14px; height: 14px; border-radius: 3px;
+    border: 2px solid currentColor;
+    background: transparent;
+    display: inline-block;
+  }
+  .grid-legend .legend-pre   { color: #1F4D54; background: rgba(31,77,84,0.18); }
+  .grid-legend .legend-image { color: #BE5837; background: rgba(190,88,55,0.20); }
+
+  /* MATCHING */
   .match-area {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 10px; margin: 14px 0;
   }
   .match-chip {
     background: white; border: 1.5px solid var(--border);
-    border-radius: 8px; padding: 12px 6px;
-    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 0.98rem;
     cursor: pointer; transition: all 0.15s;
+    line-height: 1.3;
   }
   .match-chip:hover { border-color: var(--navy); }
   .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
@@ -513,6 +593,7 @@
     min-height: 22px;
   }
 
+  /* PRACTICE */
   .practice-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
     gap: 14px;
@@ -536,7 +617,7 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.45; }
   .problem-input-row {
     display: flex; gap: 8px; align-items: center; margin-top: 10px;
   }
@@ -588,11 +669,56 @@
   body.teacher-mode .step { opacity: 1 !important; }
   body.teacher-mode #revealBtn { display: none; }
 
+  /* ERROR ANALYSIS */
+  section.lesson.error-analysis {
+    background: #fff7ed;
+    border-left: 5px solid #d57350;
+  }
+  .error-analysis .error-card {
+    background: white;
+    border: 1.5px dashed #d57350;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .error-analysis .error-card h4 {
+    margin: 0 0 8px;
+    color: #8a3a1f;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+  .error-analysis .sam-quote {
+    font-family: Georgia, serif;
+    background: #fcd9d9;
+    border-left: 3px solid var(--bad);
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #6a2520;
+    font-size: 0.98rem;
+    margin: 6px 0 4px;
+  }
+  .error-analysis .error-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: #d57350;
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* EXIT TICKET */
   .exit-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 14px;
   }
 
+  /* FOOTER */
   footer.bottom {
     margin-top: 28px;
     text-align: center;
@@ -600,6 +726,7 @@
     font-size: 0.82rem;
   }
 
+  /* CURRICULUM LINK panel */
   details.curriculum-link {
     margin: 18px 0 4px;
     padding: 0;
@@ -654,6 +781,7 @@
     details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
   }
 
+  /* PRINT */
   @media print {
     .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
     .step { opacity: 1 !important; }
@@ -661,6 +789,7 @@
     body { background: white; }
   }
 
+  /* RESPONSIVE */
   @media (max-width: 600px) {
     .page { padding: 0 14px 80px; }
     section.lesson { padding: 18px; }
@@ -669,6 +798,7 @@
     .parts-buckets { grid-template-columns: 1fr; }
   }
 
+  /* BOOKEND SECTIONS */
   section.lesson.retrieval,
   section.lesson.exit-ticket {
     background: #eaf0f1;
@@ -692,6 +822,7 @@
     white-space: nowrap;
   }
 
+  /* ACCORDION PRACTICE TIERS */
   section.lesson.tier-accordion {
     padding-top: 28px;
   }
@@ -741,97 +872,16 @@
   .tier-accordion .sec-desc { display: none; }
   .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
 
-  /* ERROR ANALYSIS STRATEGY */
-  .err-problem-stem {
-    background: var(--hint-bg);
-    border-left: 4px solid var(--navy);
-    padding: 12px 16px;
-    border-radius: 6px;
-    font-family: Georgia, serif;
-    font-size: 1.15rem;
-    color: var(--navy);
-    margin-bottom: 16px;
-  }
-  .err-solution {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px;
-    margin-bottom: 14px;
-  }
-  .err-line {
+  /* SIDE-BY-SIDE GRID + EXPLANATION */
+  .grid-flex {
     display: grid;
-    grid-template-columns: 36px 1fr 24px;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 14px;
-    margin-bottom: 6px;
-    background: white;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-    transition: all 0.2s;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: start;
   }
-  .err-line:last-child { margin-bottom: 0; }
-  .err-line:hover { border-color: var(--navy); }
-  .err-line .err-line-num {
-    background: var(--hint-bg); color: var(--navy);
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-family: -apple-system, sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
+  @media (max-width: 700px) {
+    .grid-flex { grid-template-columns: 1fr; }
   }
-  .err-line .err-line-mark { font-size: 1.1rem; opacity: 0; transition: opacity 0.2s; }
-  .err-line.flagged-correct { background: var(--good-soft); border-color: var(--good); }
-  .err-line.flagged-correct .err-line-mark::before { content: '✓'; color: var(--good); }
-  .err-line.flagged-correct .err-line-mark { opacity: 1; }
-  .err-line.flagged-wrong { animation: err-shake 0.45s; background: var(--bad-soft); border-color: var(--bad); }
-  @keyframes err-shake {
-    0%, 100% { transform: translateX(0); }
-    25%, 75% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-  }
-  .err-line.dimmed { opacity: 0.45; cursor: not-allowed; }
-  .err-feedback {
-    background: white;
-    border: 1.5px solid var(--good);
-    border-radius: 10px;
-    padding: 16px 18px;
-    margin-top: 14px;
-    display: none;
-  }
-  .err-feedback.visible { display: block; }
-  .err-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.05rem; }
-  .err-feedback .err-explain { background: var(--hint-bg); border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; font-size: 0.92rem; color: var(--navy); }
-  .err-correction-row {
-    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-  }
-  .err-correction-row input {
-    flex: 1; min-width: 200px;
-    padding: 9px 12px;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-  }
-  .err-correction-row input.correct { background: var(--good-soft); border-color: var(--good); }
-  .err-correction-row input.incorrect { background: var(--bad-soft); border-color: var(--bad); }
-  .err-correction-row button {
-    background: var(--coral); color: white;
-    border: none; padding: 9px 16px; border-radius: 8px;
-    font-size: 0.92rem; font-weight: 600; cursor: pointer;
-  }
-  .err-status-msg {
-    margin-top: 10px;
-    font-size: 0.9rem;
-    color: var(--muted);
-    font-style: italic;
-  }
-  body.teacher-mode .err-line[data-is-error="true"] { box-shadow: 0 0 0 3px var(--coral); }
 </style>
 </head>
 <body>
@@ -846,7 +896,7 @@
 
 <div class="progress-wrap">
   <div class="progress-row">
-    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <span>Progress: <strong id="progressLabel">0 / 26</strong></span>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
       <span>👁</span><span>Teacher mode</span>
@@ -856,13 +906,13 @@
 
 <div class="page">
 
-<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<!-- SECTION 0: RETRIEVAL -->
 <section class="lesson retrieval">
   <h2>
     <span class="sec-num">0</span>Warm-up — quick recall
     <span class="retrieval-tag">🧠 30-second recall</span>
   </h2>
-  <p class="sec-desc">Three quick questions on the Cartesian plane to warm up the skills you'll need today.</p>
+  <p class="sec-desc">Three quick questions from earlier coordinate work. They warm up the skills you'll need today.</p>
   <div class="practice-grid" id="retrievalGrid"></div>
 </section>
 
@@ -870,13 +920,15 @@
 <section class="lesson">
   <h2><span class="sec-num">1</span>Why this matters</h2>
   <p class="sec-desc">A real situation that's secretly today's geometry.</p>
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+  <div class="grid-flex">
     <div>
-      <p>Picture moving a sprite around a video game level. Every time the character takes a step — one square right, two squares up — you're applying a <strong>translation</strong>: a slide.</p>
-      <p>Now picture designing a tiled mosaic for a kitchen splashback. You draw one motif, then mirror it across a centre line so the pattern is symmetrical. That mirror is a <strong>reflection</strong>: a flip.</p>
+      <p>You're coding a 2D game. Your character — a little sprite at point <span class="expr">(3, 2)</span> on the grid — needs to take 4 steps right and 1 step down. Inside the game's code, every frame just runs the rule:</p>
+      <p style="text-align:center;"><span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span></p>
+      <p>The sprite is now at <span class="expr">(7, 1)</span>. Same shape, same size — just moved.</p>
+      <p>Or maybe you're designing a tiling pattern: one motif on the left, its mirror image on the right. To reflect the motif across the centre line, the code applies <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span> to every vertex.</p>
     </div>
     <div class="parts-instructions" style="margin: 0;">
-      A <strong>transformation</strong> is a rule that moves every point of a shape in the same way. A <strong>translation</strong> slides; a <strong>reflection</strong> flips. In both, the shape keeps its size and form — only its <em>position</em> or <em>orientation</em> changes. <strong>Same shape, new address.</strong> Today we'll write these rules using coordinates.
+      A <strong>transformation</strong> is a rule that moves every point of a shape in <em>the same way</em>. A <strong>translation</strong> <em>slides</em> a shape; a <strong>reflection</strong> <em>flips</em> it. In both, the shape keeps its size and form — only its position or orientation changes. Today you'll learn to describe these moves on the Cartesian plane using coordinate rules.
     </div>
   </div>
 </section>
@@ -897,58 +949,58 @@
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
         <div class="vocab-front">Transformation<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A rule that moves <strong>every point</strong> of a shape in the <strong>same way</strong>.<div class="vocab-example expr">A translation, a reflection, and a rotation are all transformations.</div></div>
+        <div class="vocab-back">A <strong>rule</strong> that moves every point of a shape in the same way.<div class="vocab-example">A <strong>translation</strong> slides; a <strong>reflection</strong> flips. The shape keeps its size and form.</div></div>
       </div>
     </div>
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
-        <div class="vocab-front">Translation<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A <strong>slide</strong> — every point moves the same distance in the same direction. No flipping or turning.<div class="vocab-example expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+3, <span class="var">y</span>−1) slides 3 right and 1 down.</div></div>
-      </div>
-    </div>
-    <div class="vocab" onclick="this.classList.toggle('flipped')">
-      <div class="vocab-inner">
-        <div class="vocab-front">Reflection<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A <strong>flip</strong> across a mirror line. Each point lands the same distance the other side.<div class="vocab-example expr">Reflecting (3, 4) in the <span class="var">x</span>-axis gives (3, −4).</div></div>
+        <div class="vocab-front">Pre-image<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>original shape</strong>, before the transformation. Vertices are usually labelled A, B, C.<div class="vocab-example">If A is at (1, 2), then A is a vertex of the <strong>pre-image</strong>.</div></div>
       </div>
     </div>
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
         <div class="vocab-front">Image<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">The new figure <strong>after</strong> the transformation. We mark image points with a prime: P → P′.<div class="vocab-example expr">If P = (2, 3) and we translate by (<span class="var">x</span>+1, <span class="var">y</span>), the image is <strong>P′ = (3, 3)</strong>.</div></div>
+        <div class="vocab-back">The <strong>new shape</strong>, after the transformation. Vertices are labelled with a dash: A′, B′, C′.<div class="vocab-example">If A(1, 2) translates to <strong>A′(5, 1)</strong>, then A′ is a vertex of the image.</div></div>
       </div>
     </div>
     <div class="vocab" onclick="this.classList.toggle('flipped')">
       <div class="vocab-inner">
-        <div class="vocab-front">Coordinate rule<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A formula showing what happens to a general point (<span class="var">x</span>, <span class="var">y</span>) under the transformation.<div class="vocab-example expr">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>) is the rule for reflection in the <span class="var">y</span>-axis.</div></div>
+        <div class="vocab-front">Translation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>slide</strong>. Every point moves the <em>same distance</em> in the <em>same direction</em>.<div class="vocab-example">Rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span> slides 4 right and 1 down.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Reflection<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>flip</strong> across a line (usually the x-axis, y-axis, or <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>).<div class="vocab-example">(3, 2) reflected in the x-axis → <strong>(3, −2)</strong>. In the y-axis → <strong>(−3, 2)</strong>.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 3: TRANSLATION OR REFLECTION (drag sort) -->
+<!-- SECTION 3: SORT TRANSFORMATIONS -->
 <section class="lesson">
   <h2><span class="sec-num">3</span>Translation or reflection?</h2>
-  <p class="sec-desc">Drag each rule below into the correct bucket — <strong style="color:var(--coral)">translation</strong> (a slide) or <strong style="color:var(--navy)">reflection</strong> (a flip). Wrong drops will shake; correct ones stay put.</p>
+  <p class="sec-desc">Drag each coordinate rule into the correct bucket — <strong style="color:var(--coral)">translation</strong> (a slide) or <strong style="color:var(--navy)">reflection</strong> (a flip). Wrong drops will shake; correct ones stay put.</p>
 
   <div class="parts-expr">
-    <div class="label">Six transformation rules — sort them.</div>
+    <div class="label">Six coordinate rules to sort</div>
     <div id="partsTerms" class="terms-source">
-      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>)</span>
-      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, <span class="var">y</span>−3)</span>
-      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+2, <span class="var">y</span>+5)</span>
+      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+5, <span class="var">y</span>−1)</span>
       <span class="term-chip expr" data-type="reflection">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>
       <span class="term-chip expr" data-type="reflection">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, −<span class="var">y</span>)</span>
-      <span class="term-chip" data-type="reflection">Flip across the <span class="var">y</span>-axis</span>
+      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>−2, <span class="var">y</span>+7)</span>
+      <span class="term-chip expr" data-type="reflection">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">y</span>, <span class="var">x</span>)</span>
+      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, <span class="var">y</span>+3)</span>
     </div>
     <div class="parts-buckets">
       <div class="bucket" data-bucket="translation">
-        <h4 class="vt">Translations (slides)</h4>
+        <h4 class="vt">Translation (slide)</h4>
         <div class="bucket-contents expr"></div>
       </div>
       <div class="bucket" data-bucket="reflection">
-        <h4 class="ct">Reflections (flips)</h4>
+        <h4 class="ct">Reflection (flip)</h4>
         <div class="bucket-contents expr"></div>
       </div>
     </div>
@@ -959,43 +1011,40 @@
   </div>
 
   <div class="parts-instructions">
-    💡 A translation only <strong>adds or subtracts</strong> from the coordinates. A reflection <strong>changes the sign</strong> of one (or sometimes both) of them.
+    💡 Translations <em>add or subtract</em> from x and y. Reflections <em>flip a sign</em> (or swap x and y, for the line <span class="expr"><span class="var">y</span>=<span class="var">x</span></span>).
   </div>
 </section>
 
-<!-- SECTION 4: MATCH POINT TO IMAGE (reflection in x-axis) -->
+<!-- SECTION 4: MATCHING -->
 <section class="lesson">
-  <h2><span class="sec-num">4</span>Match the point to its image</h2>
-  <p class="sec-desc">Each of these ten points belongs to one of <strong>five matching pairs</strong>. In every pair, one point is the <strong>image</strong> of the other after a <strong>reflection in the <span class="var">x</span>-axis</strong>. Click two chips to test if they match.</p>
+  <h2><span class="sec-num">4</span>Match the rule to its description</h2>
+  <p class="sec-desc">Click a coordinate rule, then click the description it matches. There are five matching pairs.</p>
 
-  <div class="match-area" id="matchArea">
-    <!-- populated by JS -->
-  </div>
-  <div class="match-feedback" id="matchFeedback">Pick a point to start matching.</div>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a tile to start matching.</div>
 </section>
 
 <div class="phase-banner">
   <div class="phase-mono">I DO</div>
   <div class="phase-text">
     <div class="phase-label">Watch and listen</div>
-    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+    <div class="phase-sub">I'll work through one example out loud, modelling the coordinate-rule notation step by step.</div>
   </div>
 </div>
 
-<!-- SECTION 5: WORKED EXAMPLE -->
+<!-- SECTION 5: WORKED EXAMPLE (I DO) -->
 <section class="lesson">
-  <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
-  <p class="sec-desc">Translate triangle A(1, 2), B(3, 2), C(2, 4) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span>.</p>
+  <h2><span class="sec-num">5</span>Worked example — translate a triangle</h2>
+  <p class="sec-desc">Translate triangle <span class="expr">A(1, 2), B(3, 2), C(2, 4)</span> by the rule <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span> and list the image coordinates.</p>
 
   <div class="worked">
     <div class="step visible" id="step1">
       <div class="step-num">1</div>
       <div class="step-body">
-        <div class="step-title">Read the coordinate rule</div>
-        <div class="step-desc">The rule tells us exactly what to do to every point.</div>
+        <div class="step-title">Read the rule</div>
+        <div class="step-desc">The rule <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span> says: for <em>every</em> point, add 4 to the x-coordinate and subtract 1 from the y-coordinate. Same rule applies to every vertex.</div>
         <div class="calc-box">
-          (<span class="var">x</span>, <span class="var">y</span>) → (<span class="red"><span class="var">x</span>+4</span>, <span class="blue"><span class="var">y</span>−1</span>)<br>
-          <span style="font-size:0.95rem; color:var(--muted);">Add <span class="red">4</span> to every <span class="var">x</span>. Subtract <span class="blue">1</span> from every <span class="var">y</span>.</span>
+          For each vertex <span class="red">(<span class="var">x</span>, <span class="var">y</span>)</span>, the image vertex is <span class="blue">(<span class="var">x</span>+4, <span class="var">y</span>−1)</span>.
         </div>
       </div>
     </div>
@@ -1004,11 +1053,11 @@
       <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">Apply the rule to each vertex</div>
-        <div class="step-desc">Substitute each vertex's coordinates into the rule.</div>
+        <div class="step-desc">Work through A, B and C one at a time. Substitute the coordinates into the rule.</div>
         <div class="calc-box">
-          A(<span class="red">1</span>, <span class="blue">2</span>) → A′(<span class="red">1+4</span>, <span class="blue">2−1</span>) = (5, 1)<br>
-          B(<span class="red">3</span>, <span class="blue">2</span>) → B′(<span class="red">3+4</span>, <span class="blue">2−1</span>) = (7, 1)<br>
-          C(<span class="red">2</span>, <span class="blue">4</span>) → C′(<span class="red">2+4</span>, <span class="blue">4−1</span>) = (6, 3)
+          <span class="vertex-row"><span class="red">A(1, 2)</span> → (1+4, 2−1) = <span class="blue">A′(5, 1)</span></span>
+          <span class="vertex-row"><span class="red">B(3, 2)</span> → (3+4, 2−1) = <span class="blue">B′(7, 1)</span></span>
+          <span class="vertex-row"><span class="red">C(2, 4)</span> → (2+4, 4−1) = <span class="blue">C′(6, 3)</span></span>
         </div>
       </div>
     </div>
@@ -1016,12 +1065,19 @@
     <div class="step" id="step3">
       <div class="step-num">3</div>
       <div class="step-body">
-        <div class="step-title">Sanity-check the image</div>
-        <div class="step-desc">Every vertex should have moved <em>the same way</em> — 4 right and 1 down. And the image triangle should be the same shape and size as the original.</div>
-        <div class="calc-box">A → A′: 1 → 5 (right 4 ✓), 2 → 1 (down 1 ✓)<br>The image triangle A′B′C′ is the same size and shape — only its address changed.</div>
+        <div class="step-title">Plot and check</div>
+        <div class="step-desc">Plot both triangles on the Cartesian plane. The image should be congruent — same size, same shape, same orientation — just <em>slid</em> 4 right and 1 down. The pre-image is shown in <span style="color:var(--navy);font-weight:600;">teal</span>; the image in <span style="color:var(--coral);font-weight:600;">terracotta</span>.</div>
+        <div class="grid-wrap with-caption">
+          <div id="svg-i-do"></div>
+          <div class="grid-legend">
+            <span class="legend-item"><span class="legend-swatch legend-pre"></span>Pre-image (ABC)</span>
+            <span class="legend-item"><span class="legend-swatch legend-image"></span>Image (A′B′C′)</span>
+          </div>
+          <div class="grid-caption">Every vertex moved 4 right and 1 down — the same slide.</div>
+        </div>
         <div class="summary-banner">
-          <span class="label">Answer</span>
-          A′(5, 1), B′(7, 1), C′(6, 3)
+          <span class="label">Image coordinates</span>
+          A′(5, 1) &nbsp;·&nbsp; B′(7, 1) &nbsp;·&nbsp; C′(6, 3)
         </div>
       </div>
     </div>
@@ -1033,62 +1089,79 @@
 <div class="phase-banner">
   <div class="phase-mono">WE DO</div>
   <div class="phase-text">
-    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-label">Let's reflect one together</div>
     <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
   </div>
 </div>
 
 <!-- SECTION 6: WE DO -->
 <section class="lesson">
-  <h2><span class="sec-num">6</span>Together — reflect triangle PQR in the <span class="var">y</span>-axis</h2>
-  <p class="sec-desc">Triangle PQR has vertices P(−2, 1), Q(−2, 4), R(−5, 4). Apply the rule for reflection in the <span class="var">y</span>-axis: <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>.<br>Type each image as <code>(x, y)</code> — for example <code>(2, -3)</code>.</p>
+  <h2><span class="sec-num">6</span>Together — reflect a triangle in the y-axis</h2>
+  <p class="sec-desc">First, look at a single point. The point <span class="expr">P(3, 2)</span> reflected in the x-axis is <span class="expr">(3, −2)</span> — flip the sign of y. Reflected in the y-axis it's <span class="expr">(−3, 2)</span> — flip the sign of x. Now we'll apply this to a whole triangle.</p>
+
+  <div class="grid-wrap with-caption">
+    <div id="svg-point-refl"></div>
+    <div class="grid-legend">
+      <span class="legend-item"><span class="legend-swatch legend-pre"></span>P(3, 2) — pre-image</span>
+      <span class="legend-item"><span class="legend-swatch legend-image"></span>Images after reflection</span>
+    </div>
+    <div class="grid-caption">P(3, 2) reflected in the x-axis lands at (3, −2). Reflected in the y-axis it lands at (−3, 2).</div>
+  </div>
+
+  <p style="margin: 20px 0 10px;"><strong>Now your turn — together:</strong> Reflect triangle <span class="expr">A(2, 1), B(4, 1), C(3, 3)</span> in the <strong>y-axis</strong>. Use the rule <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>.</p>
+
   <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="grid-wrap with-caption" style="margin-top: 18px;">
+    <div id="svg-we-do"></div>
+    <div class="grid-legend">
+      <span class="legend-item"><span class="legend-swatch legend-pre"></span>Pre-image (ABC)</span>
+      <span class="legend-item"><span class="legend-swatch legend-image"></span>Image (A′B′C′)</span>
+    </div>
+    <div class="grid-caption">Reflection in the y-axis flips left-to-right. Notice the image is a mirror image.</div>
+  </div>
+
   <div class="parts-instructions" style="margin-top: 18px;">
-    💡 <strong>Why this rule:</strong> reflecting across the <span class="var">y</span>-axis is like folding the page along the <span class="var">y</span>-axis. A point 5 units left of the axis lands 5 units right of it — same height, opposite side. Only the <span class="var">x</span>-coordinate's sign changes.
+    💡 <strong>Why this works:</strong> reflecting in the y-axis flips left and right. The y-coordinate (how far up or down) doesn't change — only the x-coordinate flips sign. The rule is <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>.
   </div>
 </section>
 
 <!-- SECTION 7: ERROR ANALYSIS -->
-<section class="lesson">
-  <h2><span class="sec-num">7</span>Spot the mistake</h2>
-  <p class="sec-desc">A student tried to reflect a point in the <span class="var">x</span>-axis but made the most common mistake in this whole topic. Read each line carefully — click on the line where the mistake <em>first</em> appears.</p>
+<section class="lesson error-analysis">
+  <h2>
+    <span class="sec-num">7</span>Error analysis — Sam's tricky mistake
+    <span class="error-tag">⚠ Spot the slip</span>
+  </h2>
+  <p class="sec-desc">A very common mistake: muddling up which coordinate to flip. Let's diagnose Sam's working before you do your own practice.</p>
 
-  <div class="err-problem-stem expr">
-    Reflect the point P(4, −3) in the <span class="var">x</span>-axis.
+  <div class="error-card">
+    <h4>The task Sam was given</h4>
+    <p style="margin:4px 0 8px;">Reflect the point <span class="expr">Q(4, −3)</span> in the <strong>x-axis</strong>.</p>
+    <p style="margin:0 0 6px;"><strong>Sam wrote:</strong></p>
+    <div class="sam-quote expr">"Reflecting in the x-axis flips the x-coordinate, so Q′ = (−4, −3)."</div>
   </div>
 
-  <div class="err-solution" id="errSolution">
-    <div class="err-line expr" data-line="1" onclick="pickErrLine(this)">
-      <span class="err-line-num">1</span>
-      <span>Mirror line: the <span class="var">x</span>-axis (a horizontal line).</span>
-      <span class="err-line-mark"></span>
+  <div class="grid-flex">
+    <div class="grid-wrap with-caption">
+      <div id="svg-error"></div>
+      <div class="grid-legend">
+        <span class="legend-item"><span class="legend-swatch" style="background:#2f9e6b; border-color:#2f9e6b;"></span>Correct image</span>
+        <span class="legend-item"><span class="legend-swatch" style="background:#d24a4a; border-color:#d24a4a;"></span>Sam's wrong image</span>
+      </div>
+      <div class="grid-caption">Sam's point landed across the <em>y-axis</em>, not across the <em>x-axis</em>.</div>
     </div>
-    <div class="err-line expr" data-line="2" data-is-error="true"
-         data-correct-line="(4,3)"
-         onclick="pickErrLine(this)">
-      <span class="err-line-num">2</span>
-      <span>Reflection rule: (<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>
-      <span class="err-line-mark"></span>
-    </div>
-    <div class="err-line expr" data-line="3" onclick="pickErrLine(this)">
-      <span class="err-line-num">3</span>
-      <span>Apply: P(4, −3) → P′ = (−4, −3)</span>
-      <span class="err-line-mark"></span>
+    <div>
+      <p style="margin-top:0;"><strong>The fix:</strong></p>
+      <ul style="line-height:1.7;">
+        <li>Reflecting in the <strong>x-axis</strong> means the image is the mirror across the horizontal axis. The shape moves <em>up or down</em>, so the <strong>y</strong>-coordinate flips sign. Rule: <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, −<span class="var">y</span>)</span>.</li>
+        <li>Reflecting in the <strong>y-axis</strong> means the mirror is the vertical axis. The shape moves <em>left or right</em>, so the <strong>x</strong>-coordinate flips sign. Rule: <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>.</li>
+        <li>Sam used the <em>y-axis</em> rule by mistake. The correct image of <span class="expr">Q(4, −3)</span> in the x-axis is <span class="expr">Q′(4, 3)</span> — the y flips, not the x.</li>
+      </ul>
+      <p style="background: var(--hint-bg); color: var(--navy); padding: 10px 14px; border-radius: 6px; font-style: italic; font-size: 0.9rem;">🎯 <strong>Memory trick:</strong> the axis you reflect in is the axis you <em>cross</em>. Reflecting in the x-axis means you cross the x-axis, so y changes sign. Reflecting in the y-axis means you cross the y-axis, so x changes sign.</p>
     </div>
   </div>
 
-  <div class="err-feedback" id="errFeedback">
-    <h4>✓ Right — that's where the mistake first appears.</h4>
-    <div class="err-explain">
-      <strong>Why:</strong> the <span class="var">x</span>-axis is the <em>horizontal</em> mirror, so a point's height (its <span class="var">y</span>-coordinate) flips while its left-right position (its <span class="var">x</span>-coordinate) stays the same. The correct rule is <strong>(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, −<span class="var">y</span>)</strong> — change the sign of <span class="var">y</span>, not <span class="var">x</span>. The rule the student wrote, (<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>), is the rule for reflection in the <span class="var">y</span>-axis. Easy to mix up — always pause to ask "which axis is the mirror?"
-    </div>
-    <p style="margin: 0 0 8px; font-size: 0.95rem;"><strong>Now write the correct image of P</strong> (write as (x, y), no spaces):</p>
-    <div class="err-correction-row">
-      <input id="errCorrection" placeholder="e.g. (4,3)">
-      <button onclick="checkErrCorrection()">Check</button>
-    </div>
-    <div class="err-status-msg" id="errStatusMsg"></div>
-  </div>
+  <div class="practice-grid" id="errorGrid" style="margin-top:16px;"></div>
 </section>
 
 <div class="phase-banner">
@@ -1105,7 +1178,7 @@
     <span class="sec-num">8</span>Quick check — try these on your own
     <span class="checkpoint-tag">✋ Stop &amp; check</span>
   </h2>
-  <p class="sec-desc">Two questions to confirm you've got the method. Write coordinate answers as <code>(x, y)</code> — for example <code>(7, -2)</code>. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier. Write coordinates like <code>(5,1)</code> or <code>5,1</code>.</p>
   <div class="practice-grid" id="checkpointGrid"></div>
   <div class="stop-banner">
     ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
@@ -1120,7 +1193,7 @@
     <span class="accordion-chevron" aria-hidden="true">▶</span>
   </div>
   <div class="accordion-body" id="tier1-body">
-    <p class="sec-desc">Single-point translations and reflections. Write every answer as <code>(x, y)</code> — for example <code>(3, -4)</code>.</p>
+    <p class="sec-desc">Find the image of each point. Type your answer as <code>(x,y)</code> — for example <code>(5,1)</code> or <code>(-3,2)</code>.</p>
     <div class="practice-grid" id="practiceGrid1"></div>
   </div>
 </section>
@@ -1133,7 +1206,7 @@
     <span class="accordion-chevron" aria-hidden="true">▶</span>
   </div>
   <div class="accordion-body" id="tier2-body">
-    <p class="sec-desc">Transformations of shapes (triangles, squares), and finding the rule when given a point and its image. Same format: <code>(x, y)</code>.</p>
+    <p class="sec-desc">Now apply transformations to triangle vertices and start <strong>describing</strong> the rule that maps a point to its image.</p>
     <div class="practice-grid" id="practiceGrid2"></div>
   </div>
 </section>
@@ -1146,7 +1219,7 @@
     <span class="accordion-chevron" aria-hidden="true">▶</span>
   </div>
   <div class="accordion-body" id="tier3-body">
-    <p class="sec-desc">Reflections in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>, predicting images without plotting, and explaining your reasoning.</p>
+    <p class="sec-desc">Reflections in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>, predicting images without plotting, and finding rules from a pre-image and its image.</p>
     <div class="practice-grid" id="practiceGrid3"></div>
   </div>
 </section>
@@ -1182,9 +1255,9 @@
     </div>
     <div class="cl-row">
       <span class="cl-label">Lesson focus</span>
-      <span class="cl-value">Describe translations and reflections of points and 2D shapes on the Cartesian plane using coordinate-rule notation; recognise that the image is the same shape and size as the pre-image.</span>
+      <span class="cl-value">Translate and reflect points and 2D shapes on the Cartesian plane; describe translations and reflections using coordinate-rule notation.</span>
     </div>
-    <div class="cl-note">Mapping: Strict. Lesson ID y7_spa_08. Rotations (the third transformation named in AC9M7SP03) are introduced in the next lesson; this lesson covers translations and reflections only.</div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_spa_08. Source: SA Curriculum (Mathematics R–10 Prototype 2) · lesson-map.xlsx.</div>
   </div>
 </details>
 
@@ -1206,7 +1279,7 @@
     document.getElementById('teacherToggle').classList.toggle('active');
   }
 
-  // ============ DRAG & DROP SORT ============
+  // ============ DRAG-SORT ============
   let dragState = null;
 
   function initDragSort() {
@@ -1302,18 +1375,17 @@
   }
 
   // ============ MATCHING ============
-  // 5 pairs — each pair is a point and its image under reflection in the x-axis.
   const matchTerms = [
-    { html: '(2, 5)',     group: 1 },
-    { html: '(2, −5)',    group: 1 },
-    { html: '(−3, 4)',    group: 2 },
-    { html: '(−3, −4)',   group: 2 },
-    { html: '(1, −7)',    group: 3 },
-    { html: '(1, 7)',     group: 3 },
-    { html: '(0, 6)',     group: 4 },
-    { html: '(0, −6)',    group: 4 },
-    { html: '(−4, −2)',   group: 5 },
-    { html: '(−4, 2)',    group: 5 },
+    { html: '(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+3, <span class="var">y</span>)', group: 1 },
+    { html: 'Slide 3 right',                                                                                                       group: 1 },
+    { html: '(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, <span class="var">y</span>−4)', group: 2 },
+    { html: 'Slide 4 down',                                                                                                        group: 2 },
+    { html: '(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)', group: 3 },
+    { html: 'Reflect in <span class="var">y</span>-axis',                                                                          group: 3 },
+    { html: '(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, −<span class="var">y</span>)', group: 4 },
+    { html: 'Reflect in <span class="var">x</span>-axis',                                                                          group: 4 },
+    { html: '(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">y</span>, <span class="var">x</span>)',  group: 5 },
+    { html: 'Reflect in line <span class="var">y</span> = <span class="var">x</span>',                                              group: 5 },
   ];
 
   let matchSelected = null;
@@ -1343,7 +1415,7 @@
     if (!matchSelected) {
       matchSelected = chip;
       chip.classList.add('selected');
-      document.getElementById('matchFeedback').textContent = 'Now pick its image (or pre-image).';
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
       return;
     }
     if (matchSelected.dataset.group === chip.dataset.group) {
@@ -1354,7 +1426,7 @@
       matchedGroups.add(g);
       document.getElementById('matchFeedback').textContent =
         matchedGroups.size === 5
-          ? '🎉 All five pairs matched! Notice how each pair shares the same x but has opposite y — that\'s reflection in the x-axis.'
+          ? '🎉 All five pairs matched!'
           : `Matched! (${matchedGroups.size}/5)`;
       matchSelected = null;
     } else {
@@ -1362,7 +1434,7 @@
       const wrong2 = chip;
       wrong1.classList.add('selected');
       wrong2.classList.add('selected');
-      document.getElementById('matchFeedback').textContent = '✗ Not a pair — check whether the x-coordinates match and the y-coordinates are opposite signs.';
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — re-read the rule carefully.';
       setTimeout(() => {
         wrong1.classList.remove('selected');
         wrong2.classList.remove('selected');
@@ -1382,64 +1454,73 @@
     }
   }
 
-  // ============ PRACTICE PROBLEMS ============
-  const retrieval = [
-    { q: 'What are the coordinates of the <strong>origin</strong>?', a: '(0,0)', hint: 'The origin is where the x-axis and y-axis cross.' },
-    { q: 'In which quadrant is the point (−3, 4)? Type 1, 2, 3, or 4.', a: '2', hint: 'Quadrant 1 is top-right; quadrants go anticlockwise.' },
-    { q: 'Start at (2, 1). Move 3 units right and 2 units down. Type the new position as (x, y).', a: '(5,-1)', hint: 'Right increases x; down decreases y.' },
-  ];
+  // ============ PROBLEMS ============
 
-  const checkpoint = [
-    { q: 'Translate (2, 3) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+5, <span class="var">y</span>−1)</span>. Image?', a: '(7,2)', hint: 'Add 5 to the x. Subtract 1 from the y.' },
-    { q: 'Reflect (−4, 6) in the <span class="var">x</span>-axis. Image?', a: '(-4,-6)', hint: 'Reflection in the x-axis flips the sign of the y-coordinate; x stays.' },
+  const retrieval = [
+    { q: 'The point <span class="expr">(3, −2)</span> — which quadrant is it in? (Type 1, 2, 3, or 4.)', a: '4', hint: 'Positive x, negative y. Bottom-right quadrant.' },
+    { q: 'In the coordinate <span class="expr">(−1, 5)</span>, which value is the <span class="var">x</span>-coordinate?', a: '-1', hint: 'The x-coordinate is always written first.' },
+    { q: 'Evaluate: <span class="expr">−2 + 5</span>', a: '3', hint: 'Start at −2 on a number line and count 5 to the right.' },
   ];
 
   const weDo = [
-    { q: 'Reflect <strong>P(−2, 1)</strong> in the <span class="var">y</span>-axis. Image P′?', a: '(2,1)', hint: 'Rule: (x, y) → (−x, y). The sign of x flips; y stays.' },
-    { q: 'Reflect <strong>Q(−2, 4)</strong> in the <span class="var">y</span>-axis. Image Q′?', a: '(2,4)', hint: 'Same rule — flip the sign of −2.' },
-    { q: 'Reflect <strong>R(−5, 4)</strong> in the <span class="var">y</span>-axis. Image R′?', a: '(5,4)', hint: 'Same rule again — flip the sign of −5.' },
+    { q: 'Apply <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span> to <span class="expr">A(2, 1)</span>. A′ = ?', a: '(-2,1)', hint: 'Flip the sign of the x-coordinate. y stays the same.' },
+    { q: 'Apply the same rule to <span class="expr">B(4, 1)</span>. B′ = ?', a: '(-4,1)', hint: 'x becomes −4; y stays 1.' },
+    { q: 'Apply the same rule to <span class="expr">C(3, 3)</span>. C′ = ?', a: '(-3,3)', hint: 'x becomes −3; y stays 3.' },
+  ];
+
+  const errorProbs = [
+    { q: 'Now <strong>you</strong> reflect <span class="expr">(4, −3)</span> in the <strong>x-axis</strong> correctly. Image = ?', a: '(4,3)', hint: 'X-axis reflection flips the y-coordinate. x stays 4; y becomes +3.' },
+    { q: 'Reflect <span class="expr">(4, −3)</span> in the <strong>y-axis</strong>. Image = ?', a: '(-4,-3)', hint: 'Y-axis reflection flips x. x becomes −4; y stays −3.' },
+  ];
+
+  const checkpoint = [
+    { q: 'Translate <span class="expr">(3, 5)</span> by <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>−2, <span class="var">y</span>+1)</span>. Image = ?', a: '(1,6)', hint: '3 − 2 = 1; 5 + 1 = 6.' },
+    { q: 'Reflect <span class="expr">(2, −3)</span> in the <strong>x-axis</strong>. Image = ?', a: '(2,3)', hint: 'Reflection in the x-axis: flip the sign of y.' },
   ];
 
   const practice1 = [
-    { q: 'Translate (2, 3) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>)</span>.', a: '(6,3)', hint: 'Add 4 to the x. The y stays the same.' },
-    { q: 'Translate (5, 1) by 3 units down.', a: '(5,-2)', hint: 'Down means subtract from the y-coordinate. x stays.' },
-    { q: 'Translate (−2, 3) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+5, <span class="var">y</span>+5)</span>.', a: '(3,8)', hint: 'Add 5 to both coordinates: −2+5 = 3, 3+5 = 8.' },
-    { q: 'Translate (0, 7) by 6 units left and 2 units up.', a: '(-6,9)', hint: 'Left: subtract from x. Up: add to y.' },
-    { q: 'Reflect (3, 2) in the <span class="var">x</span>-axis.', a: '(3,-2)', hint: 'Reflection in the x-axis: (x, y) → (x, −y). x stays, y flips sign.' },
-    { q: 'Reflect (3, 2) in the <span class="var">y</span>-axis.', a: '(-3,2)', hint: 'Reflection in the y-axis: (x, y) → (−x, y). y stays, x flips sign.' },
-    { q: 'Reflect (−5, 4) in the <span class="var">x</span>-axis.', a: '(-5,-4)', hint: 'x stays at −5. y flips: 4 becomes −4.' },
-    { q: 'Reflect (−5, 4) in the <span class="var">y</span>-axis.', a: '(5,4)', hint: 'y stays at 4. x flips: −5 becomes 5.' },
-    { q: 'Apply the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>−3, <span class="var">y</span>+4)</span> to the point (7, 1).', a: '(4,5)', hint: '7 − 3 = 4. 1 + 4 = 5.' },
-    { q: 'Reflect (6, −1) in the <span class="var">x</span>-axis.', a: '(6,1)', hint: 'x stays at 6. y flips: −1 becomes 1.' },
+    { q: 'Translate <span class="expr">(−2, 3)</span> by <span class="rule">(<span class="var">x</span>+5, <span class="var">y</span>+5)</span>. Image = ?', a: '(3,8)', hint: '−2 + 5 = 3; 3 + 5 = 8.' },
+    { q: 'Translate <span class="expr">(1, 4)</span> by <span class="rule">(<span class="var">x</span>+3, <span class="var">y</span>−2)</span>. Image = ?', a: '(4,2)', hint: '1 + 3 = 4; 4 − 2 = 2.' },
+    { q: 'Translate <span class="expr">(0, 0)</span> by <span class="rule">(<span class="var">x</span>−5, <span class="var">y</span>+1)</span>. Image = ?', a: '(-5,1)', hint: '0 − 5 = −5; 0 + 1 = 1.' },
+    { q: 'Translate <span class="expr">(6, 2)</span> by <span class="rule">(<span class="var">x</span>−3, <span class="var">y</span>−3)</span>. Image = ?', a: '(3,-1)', hint: '6 − 3 = 3; 2 − 3 = −1.' },
+    { q: 'Reflect <span class="expr">(3, 2)</span> in the <strong>x-axis</strong>. Image = ?', a: '(3,-2)', hint: 'X-axis reflection flips y. x stays.' },
+    { q: 'Reflect <span class="expr">(3, 2)</span> in the <strong>y-axis</strong>. Image = ?', a: '(-3,2)', hint: 'Y-axis reflection flips x. y stays.' },
+    { q: 'Reflect <span class="expr">(−4, 5)</span> in the <strong>x-axis</strong>. Image = ?', a: '(-4,-5)', hint: 'x stays −4; y flips to −5.' },
+    { q: 'Reflect <span class="expr">(−1, −6)</span> in the <strong>y-axis</strong>. Image = ?', a: '(1,-6)', hint: 'x flips to +1; y stays −6.' },
+    { q: 'Translate <span class="expr">(−3, −2)</span> by <span class="rule">(<span class="var">x</span>+4, <span class="var">y</span>+3)</span>. Image = ?', a: '(1,1)', hint: '−3 + 4 = 1; −2 + 3 = 1.' },
+    { q: 'Reflect <span class="expr">(0, 7)</span> in the <strong>x-axis</strong>. Image = ?', a: '(0,-7)', hint: 'x stays 0; y flips to −7.' },
   ];
 
   const practice2 = [
-    { q: 'Triangle has vertices A(1, 2), B(3, 2), C(2, 4). Apply <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span> to <strong>A</strong>. Image A′?', a: '(5,1)', hint: '1 + 4 = 5. 2 − 1 = 1.' },
-    { q: 'Same triangle, same rule as Q1. Image of <strong>C</strong>?', a: '(6,3)', hint: '2 + 4 = 6. 4 − 1 = 3.' },
-    { q: 'Reflect triangle P(−1, 3), Q(−4, 5), R(−2, 1) in the <span class="var">y</span>-axis. Image of <strong>P</strong>?', a: '(1,3)', hint: 'Rule for y-axis reflection: (x, y) → (−x, y). Flip the sign of −1.' },
-    { q: 'Same triangle as Q3. Image of <strong>Q(−4, 5)</strong> after reflection in the <span class="var">y</span>-axis?', a: '(4,5)', hint: 'Same rule. y stays at 5; x flips from −4 to 4.' },
-    { q: 'A translation maps (1, 1) onto (6, −2). Write the rule as <span class="expr">(<span class="var">x</span>+<span class="var">a</span>, <span class="var">y</span>+<span class="var">b</span>)</span> — type as <code>(x+a,y+b)</code>, e.g. <code>(x+5,y-3)</code>.', a: '(x+5,y-3)', hint: 'How far did x move? 1 → 6 means +5. How far did y move? 1 → −2 means −3.' },
-    { q: 'A point (3, 5) is reflected in one of the axes, and its image is (3, −5). Which axis? Type <code>x</code> or <code>y</code>.', a: 'x', hint: 'The x-coordinate stayed the same. So the axis that x sits on is the mirror.' },
+    { q: 'Triangle <span class="expr">A(1, 2), B(3, 2), C(2, 4)</span> is translated by <span class="rule">(<span class="var">x</span>−3, <span class="var">y</span>+1)</span>. Image of A?', a: '(-2,3)', hint: '1 − 3 = −2; 2 + 1 = 3.' },
+    { q: 'Same triangle, same rule <span class="rule">(<span class="var">x</span>−3, <span class="var">y</span>+1)</span>. Image of C?', a: '(-1,5)', hint: '2 − 3 = −1; 4 + 1 = 5.' },
+    { q: 'Reflect <span class="expr">(−5, 3)</span> in the <strong>y-axis</strong>. Image = ?', a: '(5,3)', hint: 'Y-axis reflection: flip x.' },
+    { q: 'Triangle <span class="expr">D(2, 1), E(5, 1), F(4, 4)</span> is reflected in the <strong>x-axis</strong>. Image of F?', a: '(4,-4)', hint: 'Rule: (x,y)→(x,−y). x stays 4; y flips to −4.' },
+    { q: 'The point <span class="expr">(1, 1)</span> is translated to <span class="expr">(6, −2)</span>. What is <strong>added to x</strong>?', a: '5', hint: 'How much do you add to 1 to get 6?' },
+    { q: 'For the same translation, what is <strong>added to y</strong>? (Use a negative if needed.)', a: '-3', hint: 'How much do you add to 1 to get −2? 1 + ? = −2.' },
   ];
 
   const practice3 = [
-    { q: 'Reflect (3, 4) in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>. (Rule: swap the coordinates — (<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">y</span>, <span class="var">x</span>).)', a: '(4,3)', hint: 'Swap the two numbers.' },
-    { q: 'Reflect (−2, 5) in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>.', a: '(5,-2)', hint: 'Swap the two numbers, keeping the signs attached to them: (−2, 5) → (5, −2).' },
-    { q: 'A square has vertices A(1, 1), B(4, 1), C(4, 4), D(1, 4). Without drawing it, what is the image of <strong>C</strong> after reflection in the <span class="var">y</span>-axis?', a: '(-4,4)', hint: 'Reflection in the y-axis: x flips sign, y stays. C(4, 4) → (−4, 4).' },
-    { q: 'Explain in one sentence: why does reflecting a shape in the <span class="var">x</span>-axis twice in a row leave the shape exactly where it started?', a: 'TEXT', hint: 'What happens to a y-coordinate when you flip its sign, then flip its sign again?' },
+    { q: 'Reflect <span class="expr">(5, 2)</span> in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>. Image = ? <em>(Swap x and y.)</em>', a: '(2,5)', hint: 'Rule for y = x: (x,y)→(y,x). Swap them.' },
+    { q: 'Reflect <span class="expr">(−3, 8)</span> in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>. Image = ?', a: '(8,-3)', hint: '(x,y)→(y,x). The signs stay; only the positions swap.' },
+    { q: 'Predict <strong>without plotting</strong>: image of <span class="expr">(10, −3)</span> under <span class="rule">(<span class="var">x</span>−7, <span class="var">y</span>+4)</span>. Image = ?', a: '(3,1)', hint: '10 − 7 = 3; −3 + 4 = 1.' },
+    { q: 'A triangle has vertex <span class="expr">A(2, 1)</span>. Under a translation, A moves to <span class="expr">A′(7, −2)</span>. Where does <span class="expr">B(4, 1)</span> map to under the same rule?', a: '(9,-2)', hint: 'First find the rule from A → A′ (add 5 to x, subtract 3 from y). Then apply to B.' },
   ];
 
   const exitProbs = [
-    { q: 'Translate (4, −2) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>−5, <span class="var">y</span>+3)</span>. Image?', a: '(-1,1)', hint: '4 − 5 = −1. −2 + 3 = 1.' },
-    { q: 'Reflect (2, −7) in the <span class="var">y</span>-axis. Image?', a: '(-2,-7)', hint: 'Rule: (x, y) → (−x, y). Flip x; keep y.' },
-    { q: 'A classmate says: "Reflecting a point in the <span class="var">x</span>-axis changes the sign of the <span class="var">x</span>-coordinate." Are they correct? Explain in one sentence.', a: 'TEXT', hint: 'Which coordinate actually changes when the x-axis is the mirror?' },
+    { q: 'Reflect <span class="expr">(−4, 6)</span> in the <strong>y-axis</strong>. Image = ?', a: '(4,6)', hint: 'Y-axis reflection: flip x. y stays.' },
+    { q: 'Translate <span class="expr">(2, −1)</span> using <span class="rule">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+3, <span class="var">y</span>−4)</span>. Image = ?', a: '(5,-5)', hint: '2 + 3 = 5; −1 − 4 = −5.' },
+    { q: 'Explain in one sentence: why does reflecting in the x-axis <strong>not</strong> change the x-coordinate?', a: 'TEXT', hint: 'The x-axis is horizontal. Reflecting across it moves the point up or down — that changes y, not x.' },
   ];
 
+  // ============ ANSWER CHECKING ============
   function normaliseAnswer(s) {
     return (s || '')
       .toLowerCase()
       .replace(/\s+/g, '')
       .replace(/\*/g, '')
+      .replace(/[()]/g, '')
+      .replace(/[−–—]/g, '-')
       .replace(/^\+/, '');
   }
   function answerMatches(input, expected) {
@@ -1494,14 +1575,14 @@ function buildPractice(containerId, problems, prefix, options) {
 }
 
   function formatAnswerDisplay(a) {
-    if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+    if (a === 'TEXT') return 'The x-axis is horizontal; reflecting across it flips a point up or down, which changes the y-coordinate, not the x.';
     let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
     r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
       const neg = n.startsWith('-');
       const num = neg ? n.slice(1) : n;
       return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
     });
-    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    r = r.replace(/-/g, '−');
     return r;
   }
 
@@ -1538,52 +1619,206 @@ function buildPractice(containerId, problems, prefix, options) {
     }
   }
 
-  // ============ ERROR ANALYSIS ============
-  let errFound = false;
+  // ============ CARTESIAN GRID SVG HELPER ============
+  function buildCartesianSVG(opts) {
+    const xMin = opts.xMin, xMax = opts.xMax;
+    const yMin = opts.yMin, yMax = opts.yMax;
+    const u = opts.unit || 28;
+    const pad = 28;
+    const W = (xMax - xMin) * u + 2 * pad;
+    const H = (yMax - yMin) * u + 2 * pad;
 
-  function pickErrLine(el) {
-    if (errFound || el.classList.contains('dimmed')) return;
-    const isError = el.dataset.isError === 'true';
-    if (isError) {
-      el.classList.add('flagged-correct');
-      errFound = true;
-      document.querySelectorAll('.err-line').forEach(o => {
-        if (o !== el) o.classList.add('dimmed');
+    const sx = x => pad + (x - xMin) * u;
+    const sy = y => H - pad - (y - yMin) * u;
+    const fmt = n => (n < 0 ? '−' + Math.abs(n) : '' + n);
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" class="cart-svg" role="img" aria-label="${opts.label || 'Cartesian plane figure'}" style="max-width:${Math.min(W, 500)}px;">`;
+
+    // gridlines
+    svg += '<g class="gridlines">';
+    for (let x = xMin; x <= xMax; x++) {
+      svg += `<line x1="${sx(x)}" y1="${sy(yMin)}" x2="${sx(x)}" y2="${sy(yMax)}"/>`;
+    }
+    for (let y = yMin; y <= yMax; y++) {
+      svg += `<line x1="${sx(xMin)}" y1="${sy(y)}" x2="${sx(xMax)}" y2="${sy(y)}"/>`;
+    }
+    svg += '</g>';
+
+    // axes
+    svg += '<g class="axes">';
+    svg += `<line x1="${sx(xMin)}" y1="${sy(0)}" x2="${sx(xMax)}" y2="${sy(0)}"/>`;
+    svg += `<line x1="${sx(0)}" y1="${sy(yMin)}" x2="${sx(0)}" y2="${sy(yMax)}"/>`;
+    svg += '</g>';
+
+    // optional axis emphasis
+    if (opts.emphAxis === 'x') {
+      svg += `<line class="axis-emph" x1="${sx(xMin)}" y1="${sy(0)}" x2="${sx(xMax)}" y2="${sy(0)}"/>`;
+    }
+    if (opts.emphAxis === 'y') {
+      svg += `<line class="axis-emph" x1="${sx(0)}" y1="${sy(yMin)}" x2="${sx(0)}" y2="${sy(yMax)}"/>`;
+    }
+
+    // y=x line
+    if (opts.showLineYeqX) {
+      const lo = Math.max(xMin, yMin);
+      const hi = Math.min(xMax, yMax);
+      svg += `<line class="y-eq-x" x1="${sx(lo)}" y1="${sy(lo)}" x2="${sx(hi)}" y2="${sy(hi)}"/>`;
+    }
+
+    // axis number labels
+    svg += '<g class="axis-labels">';
+    for (let x = xMin; x <= xMax; x++) {
+      if (x === 0) continue;
+      svg += `<text x="${sx(x)}" y="${sy(0) + 13}" text-anchor="middle">${fmt(x)}</text>`;
+    }
+    for (let y = yMin; y <= yMax; y++) {
+      if (y === 0) continue;
+      svg += `<text x="${sx(0) - 6}" y="${sy(y) + 4}" text-anchor="end">${fmt(y)}</text>`;
+    }
+    svg += '</g>';
+
+    // axis names
+    svg += `<text class="axis-name" x="${sx(xMax) - 4}" y="${sy(0) - 6}" text-anchor="end">x</text>`;
+    svg += `<text class="axis-name" x="${sx(0) + 8}" y="${sy(yMax) + 12}">y</text>`;
+    svg += `<text class="origin-label" x="${sx(0) - 6}" y="${sy(0) + 13}" text-anchor="end">O</text>`;
+
+    // arrows from pre to image (drawn under shapes)
+    if (opts.arrows && opts.preImage && opts.image) {
+      for (let i = 0; i < Math.min(opts.preImage.length, opts.image.length); i++) {
+        const a = opts.preImage[i], b = opts.image[i];
+        svg += `<line class="trans-arrow" x1="${sx(a[0])}" y1="${sy(a[1])}" x2="${sx(b[0])}" y2="${sy(b[1])}"/>`;
+      }
+    }
+
+    // pre-image
+    if (opts.preImage) {
+      if (opts.preImage.length >= 3) {
+        const pts = opts.preImage.map(p => `${sx(p[0])},${sy(p[1])}`).join(' ');
+        svg += `<polygon class="pre-image" points="${pts}"/>`;
+      }
+      opts.preImage.forEach((p) => {
+        svg += `<circle class="pre-vertex" cx="${sx(p[0])}" cy="${sy(p[1])}" r="4"/>`;
+        const lab = p[2] || '';
+        const off = p[3] || [-10, -10];
+        svg += `<text class="vertex-label pre" x="${sx(p[0]) + off[0]}" y="${sy(p[1]) + off[1]}" text-anchor="${off[0] < 0 ? 'end' : 'start'}">${lab}(${fmt(p[0])}, ${fmt(p[1])})</text>`;
       });
-      document.getElementById('errFeedback').classList.add('visible');
-    } else {
-      el.classList.add('flagged-wrong');
-      setTimeout(() => el.classList.remove('flagged-wrong'), 600);
     }
-  }
+    // image
+    if (opts.image) {
+      if (opts.image.length >= 3) {
+        const pts = opts.image.map(p => `${sx(p[0])},${sy(p[1])}`).join(' ');
+        svg += `<polygon class="image" points="${pts}"/>`;
+      }
+      opts.image.forEach((p) => {
+        svg += `<circle class="image-vertex" cx="${sx(p[0])}" cy="${sy(p[1])}" r="4"/>`;
+        const lab = p[2] || '';
+        const off = p[3] || [8, -8];
+        svg += `<text class="vertex-label img" x="${sx(p[0]) + off[0]}" y="${sy(p[1]) + off[1]}" text-anchor="${off[0] < 0 ? 'end' : 'start'}">${lab}(${fmt(p[0])}, ${fmt(p[1])})</text>`;
+      });
+    }
+    // standalone points
+    if (opts.points) {
+      opts.points.forEach(p => {
+        const cls = p[3] || 'pre';
+        svg += `<circle class="point ${cls}" cx="${sx(p[0])}" cy="${sy(p[1])}" r="5"/>`;
+        const lab = p[2] || '';
+        const off = p[4] || [10, -10];
+        svg += `<text class="point-label ${cls}" x="${sx(p[0]) + off[0]}" y="${sy(p[1]) + off[1]}" text-anchor="${off[0] < 0 ? 'end' : 'start'}">${lab}(${fmt(p[0])}, ${fmt(p[1])})</text>`;
+      });
+    }
+    // markers for error analysis
+    if (opts.markers) {
+      opts.markers.forEach(m => {
+        const cls = m.type === 'wrong' ? 'err-mark' : 'ok-mark';
+        svg += `<circle class="${cls}" cx="${sx(m.x)}" cy="${sy(m.y)}" r="6"/>`;
+        if (m.type === 'wrong') {
+          svg += `<line class="err-cross" x1="${sx(m.x) - 8}" y1="${sy(m.y) - 8}" x2="${sx(m.x) + 8}" y2="${sy(m.y) + 8}"/>`;
+          svg += `<line class="err-cross" x1="${sx(m.x) + 8}" y1="${sy(m.y) - 8}" x2="${sx(m.x) - 8}" y2="${sy(m.y) + 8}"/>`;
+        }
+        const off = m.off || [10, -10];
+        const colour = m.type === 'wrong' ? '#8a1f1f' : '#1d4a30';
+        svg += `<text x="${sx(m.x) + off[0]}" y="${sy(m.y) + off[1]}" font-family="Georgia,serif" font-size="12" font-weight="bold" fill="${colour}" text-anchor="${off[0] < 0 ? 'end' : 'start'}">${m.label}</text>`;
+      });
+    }
 
-  function checkErrCorrection() {
-    const input = document.getElementById('errCorrection');
-    const expected = document.querySelector('.err-line[data-is-error="true"]').dataset.correctLine;
-    const norm = s => (s || '').toLowerCase().replace(/\s+/g, '').replace(/\*/g, '');
-    const msg = document.getElementById('errStatusMsg');
-    input.classList.remove('correct', 'incorrect');
-    if (norm(input.value) === norm(expected)) {
-      input.classList.add('correct');
-      msg.textContent = '✓ Correct. Reflecting (4, −3) in the x-axis gives (4, 3) — same x, opposite y.';
-    } else {
-      input.classList.add('incorrect');
-      msg.textContent = '✗ Not quite. Remember: the x-axis is the horizontal mirror, so the y-coordinate is the one that flips sign.';
-    }
+    svg += '</svg>';
+    return svg;
   }
 
   // ============ INITIALISE ============
   initDragSort();
   buildMatchArea();
   buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
-  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
-  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('weDoGrid',      weDo,      'W', { noCount: true });
+  buildPractice('errorGrid',     errorProbs,'X');
+  buildPractice('checkpointGrid',checkpoint,'Q');
   buildPractice('practiceGrid1', practice1, 'P');
   buildPractice('practiceGrid2', practice2, 'S');
   buildPractice('practiceGrid3', practice3, 'C');
-  buildPractice('exitGrid', exitProbs, 'E');
+  buildPractice('exitGrid',      exitProbs, 'E');
   updateProgress();
 
+  // ============ BUILD SVG FIGURES ============
+  // I Do: Translate triangle ABC by (x+4, y-1)
+  document.getElementById('svg-i-do').innerHTML = buildCartesianSVG({
+    xMin: -1, xMax: 9, yMin: -1, yMax: 6,
+    label: 'Translation of triangle ABC by the rule (x,y) to (x+4, y-1)',
+    preImage: [
+      [1, 2, 'A', [-12, 6]],
+      [3, 2, 'B', [12, 6]],
+      [2, 4, 'C', [-12, -10]],
+    ],
+    image: [
+      [5, 1, 'A′', [-12, 6]],
+      [7, 1, 'B′', [12, 6]],
+      [6, 3, 'C′', [12, -10]],
+    ],
+    arrows: true,
+  });
+
+  // We Do intro: point P reflected in each axis
+  document.getElementById('svg-point-refl').innerHTML = buildCartesianSVG({
+    xMin: -5, xMax: 5, yMin: -4, yMax: 4,
+    label: 'Point P(3,2) reflected in the x-axis and y-axis',
+    points: [
+      [3, 2, 'P',  'pre', [10, -8]],
+      [3, -2, 'P′ (x-axis)', 'img', [10, 16]],
+      [-3, 2, 'P′ (y-axis)', 'img', [-12, -8]],
+    ],
+  });
+
+  // We Do: Reflect triangle ABC in the y-axis
+  document.getElementById('svg-we-do').innerHTML = buildCartesianSVG({
+    xMin: -5, xMax: 5, yMin: -1, yMax: 5,
+    label: 'Reflection of triangle ABC in the y-axis',
+    preImage: [
+      [2, 1, 'A', [10, 8]],
+      [4, 1, 'B', [10, 8]],
+      [3, 3, 'C', [10, -10]],
+    ],
+    image: [
+      [-2, 1, 'A′', [-12, 8]],
+      [-4, 1, 'B′', [-12, 8]],
+      [-3, 3, 'C′', [-12, -10]],
+    ],
+    emphAxis: 'y',
+  });
+
+  // Error analysis: Q(4,-3), correct (4,3), wrong (-4,-3)
+  document.getElementById('svg-error').innerHTML = buildCartesianSVG({
+    xMin: -5, xMax: 5, yMin: -4, yMax: 4,
+    label: 'Sam reflected Q(4, -3) but used the y-axis rule by mistake',
+    points: [
+      [4, -3, 'Q', 'pre', [10, 16]],
+    ],
+    markers: [
+      { x: 4, y: 3, label: 'Q′ correct (4, 3)', type: 'ok', off: [10, -10] },
+      { x: -4, y: -3, label: "Sam's wrong (−4, −3)", type: 'wrong', off: [-14, 16] },
+    ],
+    emphAxis: 'x',
+  });
+
+  // Enter key checks answer
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
       const btn = e.target.parentElement.querySelector('.check-btn');
