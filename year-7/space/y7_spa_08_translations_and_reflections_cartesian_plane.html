@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Translations &amp; Reflections on the Cartesian Plane — Year 7</title>
+
+<meta name="lesson-id"             content="y7_spa_08">
+<meta name="ac9-descriptor"        content="AC9M7SP03">
+<meta name="ac9-elaborations"      content="1">
+<meta name="sa-year"               content="7">
+<meta name="sa-strand"             content="Space">
+<meta name="sa-conceptual-understanding" content="Geometrical transformations of points and 2-dimensional shapes can be represented on a Cartesian plane.">
+<meta name="lesson-focus"          content="Describe translations and reflections of points and 2D shapes on the Cartesian plane using coordinate-rule notation; recognise that the image is the same shape and size as the pre-image.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 220px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.translation { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.reflection { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* ERROR ANALYSIS STRATEGY */
+  .err-problem-stem {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .err-solution {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .err-line {
+    display: grid;
+    grid-template-columns: 36px 1fr 24px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .err-line:last-child { margin-bottom: 0; }
+  .err-line:hover { border-color: var(--navy); }
+  .err-line .err-line-num {
+    background: var(--hint-bg); color: var(--navy);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .err-line .err-line-mark { font-size: 1.1rem; opacity: 0; transition: opacity 0.2s; }
+  .err-line.flagged-correct { background: var(--good-soft); border-color: var(--good); }
+  .err-line.flagged-correct .err-line-mark::before { content: '✓'; color: var(--good); }
+  .err-line.flagged-correct .err-line-mark { opacity: 1; }
+  .err-line.flagged-wrong { animation: err-shake 0.45s; background: var(--bad-soft); border-color: var(--bad); }
+  @keyframes err-shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+  }
+  .err-line.dimmed { opacity: 0.45; cursor: not-allowed; }
+  .err-feedback {
+    background: white;
+    border: 1.5px solid var(--good);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    display: none;
+  }
+  .err-feedback.visible { display: block; }
+  .err-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.05rem; }
+  .err-feedback .err-explain { background: var(--hint-bg); border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; font-size: 0.92rem; color: var(--navy); }
+  .err-correction-row {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .err-correction-row input {
+    flex: 1; min-width: 200px;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .err-correction-row input.correct { background: var(--good-soft); border-color: var(--good); }
+  .err-correction-row input.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .err-correction-row button {
+    background: var(--coral); color: white;
+    border: none; padding: 9px 16px; border-radius: 8px;
+    font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .err-status-msg {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  body.teacher-mode .err-line[data-is-error="true"] { box-shadow: 0 0 0 3px var(--coral); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Translations &amp; Reflections on the Cartesian Plane</h1>
+    <div class="subtitle">Year 7 · SA Curriculum · Space</div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions on the Cartesian plane to warm up the skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's geometry.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>Picture moving a sprite around a video game level. Every time the character takes a step — one square right, two squares up — you're applying a <strong>translation</strong>: a slide.</p>
+      <p>Now picture designing a tiled mosaic for a kitchen splashback. You draw one motif, then mirror it across a centre line so the pattern is symmetrical. That mirror is a <strong>reflection</strong>: a flip.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      A <strong>transformation</strong> is a rule that moves every point of a shape in the same way. A <strong>translation</strong> slides; a <strong>reflection</strong> flips. In both, the shape keeps its size and form — only its <em>position</em> or <em>orientation</em> changes. <strong>Same shape, new address.</strong> Today we'll write these rules using coordinates.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Transformation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A rule that moves <strong>every point</strong> of a shape in the <strong>same way</strong>.<div class="vocab-example expr">A translation, a reflection, and a rotation are all transformations.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Translation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>slide</strong> — every point moves the same distance in the same direction. No flipping or turning.<div class="vocab-example expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+3, <span class="var">y</span>−1) slides 3 right and 1 down.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Reflection<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>flip</strong> across a mirror line. Each point lands the same distance the other side.<div class="vocab-example expr">Reflecting (3, 4) in the <span class="var">x</span>-axis gives (3, −4).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Image<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The new figure <strong>after</strong> the transformation. We mark image points with a prime: P → P′.<div class="vocab-example expr">If P = (2, 3) and we translate by (<span class="var">x</span>+1, <span class="var">y</span>), the image is <strong>P′ = (3, 3)</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Coordinate rule<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A formula showing what happens to a general point (<span class="var">x</span>, <span class="var">y</span>) under the transformation.<div class="vocab-example expr">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>) is the rule for reflection in the <span class="var">y</span>-axis.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: TRANSLATION OR REFLECTION (drag sort) -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Translation or reflection?</h2>
+  <p class="sec-desc">Drag each rule below into the correct bucket — <strong style="color:var(--coral)">translation</strong> (a slide) or <strong style="color:var(--navy)">reflection</strong> (a flip). Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Six transformation rules — sort them.</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>)</span>
+      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, <span class="var">y</span>−3)</span>
+      <span class="term-chip expr" data-type="translation">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+2, <span class="var">y</span>+5)</span>
+      <span class="term-chip expr" data-type="reflection">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>
+      <span class="term-chip expr" data-type="reflection">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, −<span class="var">y</span>)</span>
+      <span class="term-chip" data-type="reflection">Flip across the <span class="var">y</span>-axis</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="translation">
+        <h4 class="vt">Translations (slides)</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="reflection">
+        <h4 class="ct">Reflections (flips)</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 A translation only <strong>adds or subtracts</strong> from the coordinates. A reflection <strong>changes the sign</strong> of one (or sometimes both) of them.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH POINT TO IMAGE (reflection in x-axis) -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the point to its image</h2>
+  <p class="sec-desc">Each of these ten points belongs to one of <strong>five matching pairs</strong>. In every pair, one point is the <strong>image</strong> of the other after a <strong>reflection in the <span class="var">x</span>-axis</strong>. Click two chips to test if they match.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a point to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
+  <p class="sec-desc">Translate triangle A(1, 2), B(3, 2), C(2, 4) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span>.</p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Read the coordinate rule</div>
+        <div class="step-desc">The rule tells us exactly what to do to every point.</div>
+        <div class="calc-box">
+          (<span class="var">x</span>, <span class="var">y</span>) → (<span class="red"><span class="var">x</span>+4</span>, <span class="blue"><span class="var">y</span>−1</span>)<br>
+          <span style="font-size:0.95rem; color:var(--muted);">Add <span class="red">4</span> to every <span class="var">x</span>. Subtract <span class="blue">1</span> from every <span class="var">y</span>.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Apply the rule to each vertex</div>
+        <div class="step-desc">Substitute each vertex's coordinates into the rule.</div>
+        <div class="calc-box">
+          A(<span class="red">1</span>, <span class="blue">2</span>) → A′(<span class="red">1+4</span>, <span class="blue">2−1</span>) = (5, 1)<br>
+          B(<span class="red">3</span>, <span class="blue">2</span>) → B′(<span class="red">3+4</span>, <span class="blue">2−1</span>) = (7, 1)<br>
+          C(<span class="red">2</span>, <span class="blue">4</span>) → C′(<span class="red">2+4</span>, <span class="blue">4−1</span>) = (6, 3)
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Sanity-check the image</div>
+        <div class="step-desc">Every vertex should have moved <em>the same way</em> — 4 right and 1 down. And the image triangle should be the same shape and size as the original.</div>
+        <div class="calc-box">A → A′: 1 → 5 (right 4 ✓), 2 → 1 (down 1 ✓)<br>The image triangle A′B′C′ is the same size and shape — only its address changed.</div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          A′(5, 1), B′(7, 1), C′(6, 3)
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — reflect triangle PQR in the <span class="var">y</span>-axis</h2>
+  <p class="sec-desc">Triangle PQR has vertices P(−2, 1), Q(−2, 4), R(−5, 4). Apply the rule for reflection in the <span class="var">y</span>-axis: <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>.<br>Type each image as <code>(x, y)</code> — for example <code>(2, -3)</code>.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this rule:</strong> reflecting across the <span class="var">y</span>-axis is like folding the page along the <span class="var">y</span>-axis. A point 5 units left of the axis lands 5 units right of it — same height, opposite side. Only the <span class="var">x</span>-coordinate's sign changes.
+  </div>
+</section>
+
+<!-- SECTION 7: ERROR ANALYSIS -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Spot the mistake</h2>
+  <p class="sec-desc">A student tried to reflect a point in the <span class="var">x</span>-axis but made the most common mistake in this whole topic. Read each line carefully — click on the line where the mistake <em>first</em> appears.</p>
+
+  <div class="err-problem-stem expr">
+    Reflect the point P(4, −3) in the <span class="var">x</span>-axis.
+  </div>
+
+  <div class="err-solution" id="errSolution">
+    <div class="err-line expr" data-line="1" onclick="pickErrLine(this)">
+      <span class="err-line-num">1</span>
+      <span>Mirror line: the <span class="var">x</span>-axis (a horizontal line).</span>
+      <span class="err-line-mark"></span>
+    </div>
+    <div class="err-line expr" data-line="2" data-is-error="true"
+         data-correct-line="(4,3)"
+         onclick="pickErrLine(this)">
+      <span class="err-line-num">2</span>
+      <span>Reflection rule: (<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>)</span>
+      <span class="err-line-mark"></span>
+    </div>
+    <div class="err-line expr" data-line="3" onclick="pickErrLine(this)">
+      <span class="err-line-num">3</span>
+      <span>Apply: P(4, −3) → P′ = (−4, −3)</span>
+      <span class="err-line-mark"></span>
+    </div>
+  </div>
+
+  <div class="err-feedback" id="errFeedback">
+    <h4>✓ Right — that's where the mistake first appears.</h4>
+    <div class="err-explain">
+      <strong>Why:</strong> the <span class="var">x</span>-axis is the <em>horizontal</em> mirror, so a point's height (its <span class="var">y</span>-coordinate) flips while its left-right position (its <span class="var">x</span>-coordinate) stays the same. The correct rule is <strong>(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>, −<span class="var">y</span>)</strong> — change the sign of <span class="var">y</span>, not <span class="var">x</span>. The rule the student wrote, (<span class="var">x</span>, <span class="var">y</span>) → (−<span class="var">x</span>, <span class="var">y</span>), is the rule for reflection in the <span class="var">y</span>-axis. Easy to mix up — always pause to ask "which axis is the mirror?"
+    </div>
+    <p style="margin: 0 0 8px; font-size: 0.95rem;"><strong>Now write the correct image of P</strong> (write as (x, y), no spaces):</p>
+    <div class="err-correction-row">
+      <input id="errCorrection" placeholder="e.g. (4,3)">
+      <button onclick="checkErrCorrection()">Check</button>
+    </div>
+    <div class="err-status-msg" id="errStatusMsg"></div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 8: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">8</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Write coordinate answers as <code>(x, y)</code> — for example <code>(7, -2)</code>. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 9: BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">9</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Single-point translations and reflections. Write every answer as <code>(x, y)</code> — for example <code>(3, -4)</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">10</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Transformations of shapes (triangles, squares), and finding the rule when given a point and its image. Same format: <code>(x, y)</code>.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">11</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Reflections in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>, predicting images without plotting, and explaining your reasoning.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 12: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">12</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 7 &middot; Space</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Geometrical transformations of points and 2-dimensional shapes can be represented on a Cartesian plane.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M7SP03</strong> — describe transformations of a set of points using coordinates in the Cartesian plane, translations and reflections on an axis, and rotations about a given point</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Describe translations and reflections of points and 2D shapes on the Cartesian plane using coordinate-rule notation; recognise that the image is the same shape and size as the pre-image.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y7_spa_08. Rotations (the third transformation named in AC9M7SP03) are introduced in the next lesson; this lesson covers translations and reflections only.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 7 · Translations &amp; Reflections on the Cartesian Plane
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG & DROP SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  // 5 pairs — each pair is a point and its image under reflection in the x-axis.
+  const matchTerms = [
+    { html: '(2, 5)',     group: 1 },
+    { html: '(2, −5)',    group: 1 },
+    { html: '(−3, 4)',    group: 2 },
+    { html: '(−3, −4)',   group: 2 },
+    { html: '(1, −7)',    group: 3 },
+    { html: '(1, 7)',     group: 3 },
+    { html: '(0, 6)',     group: 4 },
+    { html: '(0, −6)',    group: 4 },
+    { html: '(−4, −2)',   group: 5 },
+    { html: '(−4, 2)',    group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its image (or pre-image).';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched! Notice how each pair shares the same x but has opposite y — that\'s reflection in the x-axis.'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — check whether the x-coordinates match and the y-coordinates are opposite signs.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  const retrieval = [
+    { q: 'What are the coordinates of the <strong>origin</strong>?', a: '(0,0)', hint: 'The origin is where the x-axis and y-axis cross.' },
+    { q: 'In which quadrant is the point (−3, 4)? Type 1, 2, 3, or 4.', a: '2', hint: 'Quadrant 1 is top-right; quadrants go anticlockwise.' },
+    { q: 'Start at (2, 1). Move 3 units right and 2 units down. Type the new position as (x, y).', a: '(5,-1)', hint: 'Right increases x; down decreases y.' },
+  ];
+
+  const checkpoint = [
+    { q: 'Translate (2, 3) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+5, <span class="var">y</span>−1)</span>. Image?', a: '(7,2)', hint: 'Add 5 to the x. Subtract 1 from the y.' },
+    { q: 'Reflect (−4, 6) in the <span class="var">x</span>-axis. Image?', a: '(-4,-6)', hint: 'Reflection in the x-axis flips the sign of the y-coordinate; x stays.' },
+  ];
+
+  const weDo = [
+    { q: 'Reflect <strong>P(−2, 1)</strong> in the <span class="var">y</span>-axis. Image P′?', a: '(2,1)', hint: 'Rule: (x, y) → (−x, y). The sign of x flips; y stays.' },
+    { q: 'Reflect <strong>Q(−2, 4)</strong> in the <span class="var">y</span>-axis. Image Q′?', a: '(2,4)', hint: 'Same rule — flip the sign of −2.' },
+    { q: 'Reflect <strong>R(−5, 4)</strong> in the <span class="var">y</span>-axis. Image R′?', a: '(5,4)', hint: 'Same rule again — flip the sign of −5.' },
+  ];
+
+  const practice1 = [
+    { q: 'Translate (2, 3) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>)</span>.', a: '(6,3)', hint: 'Add 4 to the x. The y stays the same.' },
+    { q: 'Translate (5, 1) by 3 units down.', a: '(5,-2)', hint: 'Down means subtract from the y-coordinate. x stays.' },
+    { q: 'Translate (−2, 3) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+5, <span class="var">y</span>+5)</span>.', a: '(3,8)', hint: 'Add 5 to both coordinates: −2+5 = 3, 3+5 = 8.' },
+    { q: 'Translate (0, 7) by 6 units left and 2 units up.', a: '(-6,9)', hint: 'Left: subtract from x. Up: add to y.' },
+    { q: 'Reflect (3, 2) in the <span class="var">x</span>-axis.', a: '(3,-2)', hint: 'Reflection in the x-axis: (x, y) → (x, −y). x stays, y flips sign.' },
+    { q: 'Reflect (3, 2) in the <span class="var">y</span>-axis.', a: '(-3,2)', hint: 'Reflection in the y-axis: (x, y) → (−x, y). y stays, x flips sign.' },
+    { q: 'Reflect (−5, 4) in the <span class="var">x</span>-axis.', a: '(-5,-4)', hint: 'x stays at −5. y flips: 4 becomes −4.' },
+    { q: 'Reflect (−5, 4) in the <span class="var">y</span>-axis.', a: '(5,4)', hint: 'y stays at 4. x flips: −5 becomes 5.' },
+    { q: 'Apply the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>−3, <span class="var">y</span>+4)</span> to the point (7, 1).', a: '(4,5)', hint: '7 − 3 = 4. 1 + 4 = 5.' },
+    { q: 'Reflect (6, −1) in the <span class="var">x</span>-axis.', a: '(6,1)', hint: 'x stays at 6. y flips: −1 becomes 1.' },
+  ];
+
+  const practice2 = [
+    { q: 'Triangle has vertices A(1, 2), B(3, 2), C(2, 4). Apply <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>+4, <span class="var">y</span>−1)</span> to <strong>A</strong>. Image A′?', a: '(5,1)', hint: '1 + 4 = 5. 2 − 1 = 1.' },
+    { q: 'Same triangle, same rule as Q1. Image of <strong>C</strong>?', a: '(6,3)', hint: '2 + 4 = 6. 4 − 1 = 3.' },
+    { q: 'Reflect triangle P(−1, 3), Q(−4, 5), R(−2, 1) in the <span class="var">y</span>-axis. Image of <strong>P</strong>?', a: '(1,3)', hint: 'Rule for y-axis reflection: (x, y) → (−x, y). Flip the sign of −1.' },
+    { q: 'Same triangle as Q3. Image of <strong>Q(−4, 5)</strong> after reflection in the <span class="var">y</span>-axis?', a: '(4,5)', hint: 'Same rule. y stays at 5; x flips from −4 to 4.' },
+    { q: 'A translation maps (1, 1) onto (6, −2). Write the rule as <span class="expr">(<span class="var">x</span>+<span class="var">a</span>, <span class="var">y</span>+<span class="var">b</span>)</span> — type as <code>(x+a,y+b)</code>, e.g. <code>(x+5,y-3)</code>.', a: '(x+5,y-3)', hint: 'How far did x move? 1 → 6 means +5. How far did y move? 1 → −2 means −3.' },
+    { q: 'A point (3, 5) is reflected in one of the axes, and its image is (3, −5). Which axis? Type <code>x</code> or <code>y</code>.', a: 'x', hint: 'The x-coordinate stayed the same. So the axis that x sits on is the mirror.' },
+  ];
+
+  const practice3 = [
+    { q: 'Reflect (3, 4) in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>. (Rule: swap the coordinates — (<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">y</span>, <span class="var">x</span>).)', a: '(4,3)', hint: 'Swap the two numbers.' },
+    { q: 'Reflect (−2, 5) in the line <span class="expr"><span class="var">y</span> = <span class="var">x</span></span>.', a: '(5,-2)', hint: 'Swap the two numbers, keeping the signs attached to them: (−2, 5) → (5, −2).' },
+    { q: 'A square has vertices A(1, 1), B(4, 1), C(4, 4), D(1, 4). Without drawing it, what is the image of <strong>C</strong> after reflection in the <span class="var">y</span>-axis?', a: '(-4,4)', hint: 'Reflection in the y-axis: x flips sign, y stays. C(4, 4) → (−4, 4).' },
+    { q: 'Explain in one sentence: why does reflecting a shape in the <span class="var">x</span>-axis twice in a row leave the shape exactly where it started?', a: 'TEXT', hint: 'What happens to a y-coordinate when you flip its sign, then flip its sign again?' },
+  ];
+
+  const exitProbs = [
+    { q: 'Translate (4, −2) by the rule <span class="expr">(<span class="var">x</span>, <span class="var">y</span>) → (<span class="var">x</span>−5, <span class="var">y</span>+3)</span>. Image?', a: '(-1,1)', hint: '4 − 5 = −1. −2 + 3 = 1.' },
+    { q: 'Reflect (2, −7) in the <span class="var">y</span>-axis. Image?', a: '(-2,-7)', hint: 'Rule: (x, y) → (−x, y). Flip x; keep y.' },
+    { q: 'A classmate says: "Reflecting a point in the <span class="var">x</span>-axis changes the sign of the <span class="var">x</span>-coordinate." Are they correct? Explain in one sentence.', a: 'TEXT', hint: 'Which coordinate actually changes when the x-axis is the mirror?' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ ERROR ANALYSIS ============
+  let errFound = false;
+
+  function pickErrLine(el) {
+    if (errFound || el.classList.contains('dimmed')) return;
+    const isError = el.dataset.isError === 'true';
+    if (isError) {
+      el.classList.add('flagged-correct');
+      errFound = true;
+      document.querySelectorAll('.err-line').forEach(o => {
+        if (o !== el) o.classList.add('dimmed');
+      });
+      document.getElementById('errFeedback').classList.add('visible');
+    } else {
+      el.classList.add('flagged-wrong');
+      setTimeout(() => el.classList.remove('flagged-wrong'), 600);
+    }
+  }
+
+  function checkErrCorrection() {
+    const input = document.getElementById('errCorrection');
+    const expected = document.querySelector('.err-line[data-is-error="true"]').dataset.correctLine;
+    const norm = s => (s || '').toLowerCase().replace(/\s+/g, '').replace(/\*/g, '');
+    const msg = document.getElementById('errStatusMsg');
+    input.classList.remove('correct', 'incorrect');
+    if (norm(input.value) === norm(expected)) {
+      input.classList.add('correct');
+      msg.textContent = '✓ Correct. Reflecting (4, −3) in the x-axis gives (4, 3) — same x, opposite y.';
+    } else {
+      input.classList.add('incorrect');
+      msg.textContent = '✗ Not quite. Remember: the x-axis is the horizontal mirror, so the y-coordinate is the one that flips sign.';
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
