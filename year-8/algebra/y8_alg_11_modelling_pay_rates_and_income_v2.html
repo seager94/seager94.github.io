@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelling Pay Rates and Income — Year 8</title>
+
+<meta name="lesson-id"             content="y8_alg_11">
+<meta name="ac9-descriptor"        content="AC9M8A03">
+<meta name="ac9-elaborations"      content="3">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures">
+<meta name="lesson-focus"          content="Model pay-rate and income situations with linear functions; calculate weekly earnings from hourly rates including overtime; compare casual and salaried pay structures and interpret the break-even point.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy); color: white;
+    padding: 18px 24px; margin-bottom: 28px;
+    border-radius: 0 0 14px 14px; box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; margin: 0; font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white;
+    font-weight: 700; font-size: 0.78rem;
+    padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg);
+    z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; font-size: 1.5rem; color: var(--coral);
+    letter-spacing: 2px; line-height: 1; flex-shrink: 0;
+    padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px;
+    padding: 28px; margin-bottom: 22px;
+    box-shadow: var(--shadow); border: 1px solid var(--border); position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; color: var(--navy); font-size: 1.4rem;
+    margin: 0 0 6px; display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VALUE TABLE */
+  .val-table {
+    border-collapse: collapse;
+    margin: 14px auto;
+    font-family: Georgia, serif;
+    font-size: 1.0rem;
+  }
+  .val-table th, .val-table td {
+    padding: 7px 14px; border: 1.5px solid var(--border); text-align: center;
+  }
+  .val-table th { background: var(--navy); color: white; font-weight: bold; font-style: italic; }
+  .val-table td { background: white; }
+  .val-table .diff-row td { background: var(--hint-bg); font-size: 0.88rem; color: var(--navy); font-style: normal; }
+  .val-table .diff-row th { background: #2d6e78; font-size: 0.88rem; }
+
+  /* GRAPH */
+  .graph-wrap { display: flex; justify-content: center; margin-top: 14px; }
+  .graph-wrap svg {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: #f8f9fb; max-width: 100%;
+  }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px;
+    padding: 18px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.15rem; }
+  .vocab-front .hint-flip { font-family: -apple-system, sans-serif; font-weight: normal; font-size: 0.72rem; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .vocab-back { background: white; color: var(--text); transform: rotateY(180deg); font-size: 0.92rem; line-height: 1.4; }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example { display: block; margin-top: 10px; padding: 7px 11px 8px; background: var(--hint-bg); border-radius: 6px; font-size: 0.82rem; line-height: 1.4; color: var(--navy); font-style: italic; }
+  .vocab-example::before { content: 'EXAMPLE — '; font-style: normal; font-weight: 700; font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px; }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center; background: var(--card);
+    border: 1.5px solid var(--border); border-radius: 10px;
+    padding: 20px; margin-bottom: 18px; box-shadow: var(--shadow);
+  }
+  .parts-expr .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+  .term-chip {
+    display: inline-block; padding: 6px 12px; margin: 4px;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    cursor: pointer; background: white;
+    font-family: Georgia, serif; font-size: 0.95rem;
+    transition: all 0.2s; touch-action: none; user-select: none;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.linear { background: var(--good-soft); border-color: var(--good); color: #1d4a30; font-weight: 600; }
+  .term-chip.notlinear { background: var(--coral-soft); border-color: var(--coral); color: #6a2520; font-weight: 600; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white; padding: 6px 12px;
+    border: 1.5px solid var(--navy); border-radius: 8px;
+    font-family: Georgia, serif; font-size: 0.95rem;
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-instructions {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 0.92rem; font-style: italic; margin-bottom: 16px; color: var(--navy);
+  }
+  .parts-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--good); }
+  .bucket .ct { color: var(--coral); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source {
+    min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px;
+    margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    justify-content: center; border: 1px dashed var(--border);
+  }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .bucket.drop-target { background: var(--coral-soft); border-color: var(--coral); border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18); }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* MATCHING */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 12px 8px; text-align: center; font-family: Georgia, serif; font-size: 0.98rem; cursor: pointer; transition: all 0.15s; }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .worked + .worked { margin-top: 22px; }
+  .worked-label { font-family: Georgia, serif; font-weight: bold; font-size: 0.82rem; color: var(--coral); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .worked-problem { font-family: Georgia, serif; font-size: 1.05rem; background: white; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 16px; }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: -apple-system, sans-serif; }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow); font-family: Georgia, serif; font-size: 1.05rem; overflow-x: auto; }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .green { color: var(--good); font-weight: 600; }
+  .summary-banner { background: var(--coral); color: white; border-radius: 8px; padding: 12px 16px; margin-top: 14px; font-family: Georgia, serif; font-size: 1.05rem; text-align: center; }
+  .summary-banner .label { font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block; }
+  .reveal-btn { background: var(--navy); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.92rem; font-weight: 600; margin-top: 10px; }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num { font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif; font-size: 0.92rem; background: white; border: 1px solid var(--border); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input { flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px; font-family: Georgia, serif; font-size: 1rem; background: white; }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn { background: var(--coral); color: white; border: none; padding: 8px 14px; border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600; }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link { color: var(--navy); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font: inherit; }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box { background: var(--hint-bg); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none; }
+  .hint-box.visible { display: block; }
+  .answer-box { background: var(--good-soft); color: #1d4a30; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none; }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px; padding: 0;
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+    border-radius: 4px; font-size: 0.86rem; text-align: left;
+  }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket { background: #eaf0f1; border-left: 5px solid var(--navy); }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron { width: 32px; height: 32px; border-radius: 8px; background: white; border: 1.5px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; color: var(--navy); transition: transform 0.25s ease; }
+  .accordion-count { background: white; border: 1px solid var(--border); color: var(--muted); padding: 3px 10px; border-radius: 999px; font-family: -apple-system, sans-serif; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Modelling Pay Rates and Income</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">AC9M8A03</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 23</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the substitution and linear-rule skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that is secretly today's algebra.</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start;">
+    <div>
+      <p>You've been offered a part-time job at a local café paying <strong>$24 per hour</strong>. Before you say yes, you want to know:</p>
+      <ul style="line-height:2;">
+        <li>How much do I earn for a 4-hour shift?</li>
+        <li>How many hours until I've earned $192?</li>
+        <li>Is casual work better than a fixed salary?</li>
+      </ul>
+      <p>A linear equation can answer all of these in seconds — once you know the rule.</p>
+    </div>
+    <div class="parts-instructions" style="margin:0; font-style:normal;">
+      <strong style="color:var(--navy);">The maths behind it</strong><br><br>
+      At $24/hr, the income rule is <span class="expr"><span class="var">I</span> = 24<span class="var">h</span></span>.<br><br>
+      Every extra hour adds the same amount — <strong>$24</strong>. That constant rate of increase is what makes this a <strong>linear relationship</strong>. Today we model these pay-rate situations, including overtime, and compare casual pay with salaried pay to find the break-even point.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — whole-class activity.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five terms will be used throughout the lesson.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Hourly rate<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The amount of money earned <strong>for each hour of work.</strong> It is the rate of change in a pay-rate model.<div class="vocab-example">$22/hr means you earn <strong>$22 more</strong> for every extra hour worked.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Linear function<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A rule where the output increases by <strong>equal amounts</strong> for each unit increase in the input. Its graph is a <strong>straight line.</strong><div class="vocab-example"><span class="var">I</span> = 25<span class="var">h</span> — for every +1 hour, income goes up by <strong>$25</strong>.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Overtime<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Hours worked <strong>beyond a standard threshold</strong> (often 8 hrs/day), paid at a higher rate — usually 1.5× the standard rate.<div class="vocab-example">Standard: $20/hr. Overtime: <strong>$30/hr</strong> (= 1.5 × 20).</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Break-even point<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The value of the input where <strong>two different pay rules give the same income.</strong> Found by setting the two rules equal and solving.<div class="vocab-example">28<span class="var">h</span> = 560 → <span class="var">h</span> = 20 hrs is the <strong>break-even.</strong></div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Rate of change<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">How much the output changes <strong>per unit increase</strong> in the input. In pay models, it equals the hourly rate. It is the <strong>gradient</strong> (slope) of the graph.<div class="vocab-example"><span class="var">I</span> = 18<span class="var">h</span> → rate of change = <strong>$18/hr</strong>.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — Linear or Not Linear? -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Linear or Not Linear?</h2>
+  <p class="sec-desc">Drag each pay-rate description into the correct bucket. A <strong>constant</strong> increase means the relationship is linear; a <strong>changing</strong> increase means it is not.</p>
+
+  <div class="parts-expr">
+    <div class="label">Drag each description into the correct bucket</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="linear">First diff: +$25, +$25, +$25</span>
+      <span class="term-chip" data-type="notlinear">Pay doubles each hour</span>
+      <span class="term-chip expr" data-type="linear"><span class="var">I</span> = 22<span class="var">h</span> — constant hourly rate</span>
+      <span class="term-chip" data-type="notlinear">First diff: +$10, +$15, +$20</span>
+      <span class="term-chip" data-type="linear">$18 added to income per hour worked</span>
+      <span class="term-chip expr" data-type="notlinear"><span class="var">I</span> = 5<span class="var">h</span>² — rate grows with hours</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="linear">
+        <h4 class="vt">✔ Linear — constant first difference</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="notlinear">
+        <h4 class="ct">✘ Not Linear — rate varies</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 A pay-rate relationship is linear when every extra hour earns exactly the same amount. If the first differences are all equal, the relationship is linear — and its graph is a straight line.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH — Pay scenario to rule -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the pay scenario to its expression</h2>
+  <p class="sec-desc">Click a scenario on one side, then click its matching expression or value. There are five pairs to find.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen — three worked examples</div>
+    <div class="phase-sub">I'll work through each example aloud, revealing one step at a time.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: THREE WORKED EXAMPLES (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples — pay rates, overtime, and comparison</h2>
+  <p class="sec-desc">Three key situations. For each: read the problem, then reveal one step at a time.</p>
+
+  <!-- ── EXAMPLE 1 ── -->
+  <div class="worked">
+    <div class="worked-label">Example 1 of 3 — Table of values and graph</div>
+    <div class="worked-problem">
+      Maya earns <strong>$25 per hour</strong> as a checkout operator. Write the income rule, complete a table of values for <span class="var">h</span> = 0, 2, 4, 6, 8, and plot the relationship on a graph. Interpret what the gradient represents.
+    </div>
+
+    <div class="step visible" id="ex1-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Write the rule and complete the table</div>
+        <div class="step-desc">Income = hourly rate × hours. Rule: <span class="expr"><span class="var">I</span> = 25<span class="var">h</span></span>. Substitute each value of <span class="var">h</span>.</div>
+        <div class="calc-box" style="overflow-x:auto;">
+          <table class="val-table">
+            <tr><th><span class="var">h</span> (hours)</th><td>0</td><td>2</td><td>4</td><td>6</td><td>8</td></tr>
+            <tr>
+              <th><span class="var">I</span> ($)</th>
+              <td class="red">25×0 = <strong>0</strong></td>
+              <td class="red">25×2 = <strong>50</strong></td>
+              <td class="red">25×4 = <strong>100</strong></td>
+              <td class="red">25×6 = <strong>150</strong></td>
+              <td class="red">25×8 = <strong>200</strong></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex1-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Check first differences — confirm it's linear</div>
+        <div class="step-desc">Subtract consecutive <span class="var">I</span>-values: 50 − 0 = 50, 100 − 50 = 50, … All equal → <strong>constant</strong> → linear relationship.</div>
+        <div class="calc-box" style="overflow-x:auto;">
+          <table class="val-table">
+            <tr><th><span class="var">h</span></th><td>0</td><td>2</td><td>4</td><td>6</td><td>8</td></tr>
+            <tr><th><span class="var">I</span></th><td>0</td><td>50</td><td>100</td><td>150</td><td>200</td></tr>
+            <tr class="diff-row"><th>1st diff</th><td></td><td class="blue">+50</td><td class="blue">+50</td><td class="blue">+50</td><td class="blue">+50</td></tr>
+          </table>
+          <p style="margin-top:10px;">All first differences equal <span class="blue">+50</span> (per 2 hours, or +$25 per hour) — <strong>constant</strong> → the relationship is <strong>linear</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex1-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Plot the ordered pairs and interpret the graph</div>
+        <div class="step-desc">Plot (0, 0), (2, 50), (4, 100), (6, 150), (8, 200). All five points lie on one straight line passing through the origin. The gradient equals <strong>$25/hr</strong> — the hourly rate.</div>
+        <div class="graph-wrap">
+          <svg viewBox="0 0 290 240" width="290" height="240" role="img" aria-label="Graph of I = 25h showing five collinear points">
+            <!-- Grid verticals at h = 0,2,4,6,8,10 → x = 50,98,146,194,242,290 -->
+            <line x1="50"  y1="20" x2="50"  y2="218" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="98"  y1="20" x2="98"  y2="218" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="146" y1="20" x2="146" y2="218" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="194" y1="20" x2="194" y2="218" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="242" y1="20" x2="242" y2="218" stroke="#e0e4ea" stroke-width="1"/>
+            <!-- Grid horizontals at I = 0,50,100,150,200 → y = 218,178,138,98,58 -->
+            <line x1="20" y1="218" x2="270" y2="218" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="178" x2="270" y2="178" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="138" x2="270" y2="138" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="98"  x2="270" y2="98"  stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="58"  x2="270" y2="58"  stroke="#e0e4ea" stroke-width="1"/>
+            <!-- Axes -->
+            <line x1="20" y1="218" x2="275" y2="218" stroke="#1F4D54" stroke-width="2"/>
+            <line x1="50" y1="218" x2="50"  y2="14"  stroke="#1F4D54" stroke-width="2"/>
+            <!-- Arrow heads -->
+            <polygon points="275,214 282,218 275,222" fill="#1F4D54"/>
+            <polygon points="46,14 50,7 54,14" fill="#1F4D54"/>
+            <!-- Axis labels -->
+            <text x="278" y="222" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">h</text>
+            <text x="55"  y="12"  fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">I</text>
+            <text x="33"  y="230" fill="#6b7280" font-size="9">O</text>
+            <!-- x tick labels (y=230) -->
+            <text x="98"  y="230" fill="#6b7280" font-size="9" text-anchor="middle">2</text>
+            <text x="146" y="230" fill="#6b7280" font-size="9" text-anchor="middle">4</text>
+            <text x="194" y="230" fill="#6b7280" font-size="9" text-anchor="middle">6</text>
+            <text x="242" y="230" fill="#6b7280" font-size="9" text-anchor="middle">8</text>
+            <!-- y tick labels (x=44 right-aligned) -->
+            <text x="44" y="182" fill="#6b7280" font-size="9" text-anchor="end">50</text>
+            <text x="44" y="142" fill="#6b7280" font-size="9" text-anchor="end">100</text>
+            <text x="44" y="102" fill="#6b7280" font-size="9" text-anchor="end">150</text>
+            <text x="44" y="62"  fill="#6b7280" font-size="9" text-anchor="end">200</text>
+            <!-- Extended line I = 25h -->
+            <line x1="50" y1="218" x2="250" y2="50" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.5"/>
+            <!-- Points: (0,0)→(50,218), (2,50)→(98,178), (4,100)→(146,138), (6,150)→(194,98), (8,200)→(242,58) -->
+            <circle cx="50"  cy="218" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="98"  cy="178" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="146" cy="138" r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="194" cy="98"  r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <circle cx="242" cy="58"  r="5" fill="#BE5837" stroke="white" stroke-width="1.5"/>
+            <!-- Point labels -->
+            <text x="54"  y="214" fill="#BE5837" font-size="8">(0, 0)</text>
+            <text x="102" y="174" fill="#BE5837" font-size="8">(2, 50)</text>
+            <text x="150" y="134" fill="#BE5837" font-size="8">(4, 100)</text>
+            <text x="198" y="94"  fill="#BE5837" font-size="8">(6, 150)</text>
+            <text x="246" y="54"  fill="#BE5837" font-size="8">(8, 200)</text>
+          </svg>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          Rule: <span class="expr"><span class="var">I</span> = 25<span class="var">h</span></span> — gradient = $25/hr (hourly rate) — all 5 points lie on the straight line. ✓
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn1" onclick="revealStep(1)">Reveal next step ↓</button>
+  </div>
+
+  <!-- ── EXAMPLE 2 ── -->
+  <div class="worked">
+    <div class="worked-label">Example 2 of 3 — Overtime pay</div>
+    <div class="worked-problem">
+      Jordan earns <strong>$22/hr</strong> for his first 8 standard hours each day. Any additional hours are paid at <strong>overtime rate: $33/hr</strong> (1.5 × standard). On Saturday he works <strong>10 hours</strong>. Calculate his total income.
+    </div>
+
+    <div class="step visible" id="ex2-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Calculate standard pay (first 8 hours)</div>
+        <div class="step-desc">Standard hours = 8. Apply the standard rate of $22/hr.</div>
+        <div class="calc-box">
+          Standard pay = 8 × $22 = <span class="red"><strong>$176</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex2-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Calculate overtime pay (hours beyond 8)</div>
+        <div class="step-desc">Overtime hours = 10 − 8 = 2. Overtime rate = 1.5 × $22 = $33/hr.</div>
+        <div class="calc-box">
+          Overtime hours = 10 − 8 = <span class="blue"><strong>2 hours</strong></span><br>
+          Overtime pay = 2 × $33 = <span class="blue"><strong>$66</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex2-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Add to find total income and write the rule</div>
+        <div class="step-desc">Total = standard pay + overtime pay. For any number of hours <span class="var">h</span> &gt; 8, the rule is <span class="expr"><span class="var">I</span> = 176 + 33(<span class="var">h</span> − 8).</span></div>
+        <div class="calc-box">
+          Total = $176 + $66 = <span class="red"><strong>$242</strong></span><br><br>
+          <strong>General rule for h &gt; 8:</strong><br>
+          <span class="expr"><span class="var">I</span> = 8 × 22 + (<span class="var">h</span> − 8) × 33 = 176 + 33<span class="var">h</span> − 264 = 33<span class="var">h</span> − 88</span><br><br>
+          <strong>Check:</strong> <span class="var">h</span> = 10 → <span class="var">I</span> = 33(10) − 88 = 330 − 88 = 242 ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Jordan earns <strong>$242</strong> for 10 hours (8 standard + 2 overtime).
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn2" onclick="revealStep(2)">Reveal next step ↓</button>
+  </div>
+
+  <!-- ── EXAMPLE 3 ── -->
+  <div class="worked">
+    <div class="worked-label">Example 3 of 3 — Comparing casual vs salary</div>
+    <div class="worked-problem">
+      A café offers two pay structures: <strong>Casual</strong> at $28/hr, or a fixed <strong>weekly salary</strong> of $560. For how many hours per week does the salary become more favourable? Represent both options on a graph and interpret the intersection.
+    </div>
+
+    <div class="step visible" id="ex3-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Write both rules and build a comparison table</div>
+        <div class="step-desc">Casual income: <span class="expr"><span class="var">I</span><sub>C</sub> = 28<span class="var">h</span></span>. Salary income: <span class="expr"><span class="var">I</span><sub>S</sub> = 560</span> (constant, regardless of hours).</div>
+        <div class="calc-box" style="overflow-x:auto;">
+          <table class="val-table">
+            <tr><th><span class="var">h</span> (hours/wk)</th><td>0</td><td>5</td><td>10</td><td>15</td><td>20</td><td>25</td></tr>
+            <tr><th><span class="var">I</span><sub>C</sub> = 28<span class="var">h</span></th><td>0</td><td class="red">140</td><td class="red">280</td><td class="red">420</td><td class="red">560</td><td class="red">700</td></tr>
+            <tr><th><span class="var">I</span><sub>S</sub> = 560</th><td class="blue">560</td><td class="blue">560</td><td class="blue">560</td><td class="blue">560</td><td class="blue">560</td><td class="blue">560</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex3-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Find the break-even point algebraically</div>
+        <div class="step-desc">Set the two rules equal and solve for <span class="var">h</span>.</div>
+        <div class="calc-box">
+          Set equal: <span class="red">28<span class="var">h</span></span> = <span class="blue">560</span><br>
+          Divide both sides by 28: <strong><span class="var">h</span> = 20</strong><br><br>
+          At <span class="var">h</span> = 20: both options pay <strong>$560/week</strong>.<br>
+          If <span class="var">h</span> &lt; 20 → Salary pays more. &nbsp; If <span class="var">h</span> &gt; 20 → Casual pays more.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="ex3-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Graph both rules and identify the intersection</div>
+        <div class="step-desc">The casual line <span class="expr"><span class="var">I</span> = 28<span class="var">h</span></span> starts at the origin and rises steeply. The salary line <span class="expr"><span class="var">I</span> = 560</span> is horizontal. They intersect at <strong>(20, 560)</strong> — the break-even point.</div>
+        <div class="graph-wrap">
+          <svg viewBox="0 0 320 228" width="320" height="228" role="img" aria-label="Graph comparing casual income I=28h with salary I=560, intersecting at (20, 560)">
+            <!-- Grid verticals at h = 0,5,10,15,20,25 → x = 50,100,150,200,250,300 -->
+            <line x1="50"  y1="15" x2="50"  y2="208" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="100" y1="15" x2="100" y2="208" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="150" y1="15" x2="150" y2="208" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="200" y1="15" x2="200" y2="208" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="250" y1="15" x2="250" y2="208" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="300" y1="15" x2="300" y2="208" stroke="#e0e4ea" stroke-width="1"/>
+            <!-- Grid horizontals: I=0→208, I=100→186, I=200→164, I=300→142, I=400→120, I=500→98, I=600→76, I=700→54 -->
+            <!-- scale: $100 = 22px -->
+            <line x1="20" y1="208" x2="308" y2="208" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="186" x2="308" y2="186" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="164" x2="308" y2="164" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="142" x2="308" y2="142" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="120" x2="308" y2="120" stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="98"  x2="308" y2="98"  stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="76"  x2="308" y2="76"  stroke="#e0e4ea" stroke-width="1"/>
+            <line x1="20" y1="54"  x2="308" y2="54"  stroke="#e0e4ea" stroke-width="1"/>
+            <!-- Axes -->
+            <line x1="20" y1="208" x2="312" y2="208" stroke="#1F4D54" stroke-width="2"/>
+            <line x1="50" y1="208" x2="50"  y2="10"  stroke="#1F4D54" stroke-width="2"/>
+            <polygon points="312,204 319,208 312,212" fill="#1F4D54"/>
+            <polygon points="46,10 50,3 54,10" fill="#1F4D54"/>
+            <text x="315" y="212" fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">h</text>
+            <text x="55"  y="9"   fill="#1F4D54" font-size="11" font-family="Georgia,serif" font-style="italic">I</text>
+            <text x="33"  y="220" fill="#6b7280" font-size="9">O</text>
+            <!-- x tick labels (y=220) -->
+            <text x="100" y="220" fill="#6b7280" font-size="9" text-anchor="middle">5</text>
+            <text x="150" y="220" fill="#6b7280" font-size="9" text-anchor="middle">10</text>
+            <text x="200" y="220" fill="#6b7280" font-size="9" text-anchor="middle">15</text>
+            <text x="250" y="220" fill="#6b7280" font-size="9" text-anchor="middle">20</text>
+            <text x="300" y="220" fill="#6b7280" font-size="9" text-anchor="middle">25</text>
+            <!-- y tick labels (right-aligned at x=44) -->
+            <text x="44" y="190" fill="#6b7280" font-size="9" text-anchor="end">100</text>
+            <text x="44" y="168" fill="#6b7280" font-size="9" text-anchor="end">200</text>
+            <text x="44" y="146" fill="#6b7280" font-size="9" text-anchor="end">300</text>
+            <text x="44" y="124" fill="#6b7280" font-size="9" text-anchor="end">400</text>
+            <text x="44" y="102" fill="#6b7280" font-size="9" text-anchor="end">500</text>
+            <text x="44" y="80"  fill="#6b7280" font-size="9" text-anchor="end">600</text>
+            <text x="44" y="58"  fill="#6b7280" font-size="9" text-anchor="end">700</text>
+            <!-- Casual line: I=28h. h=0→(50,208); h=25→I=700→y=54: (300,54) -->
+            <line x1="50" y1="208" x2="300" y2="54" stroke="#BE5837" stroke-width="2.5"/>
+            <!-- Salary line: I=560 → y=208-560×0.22=208-123.2≈85. Use 85. -->
+            <!-- 560 × (22/100) = 123.2; 208-123.2 = 84.8 ≈ 85 -->
+            <line x1="50" y1="85" x2="308" y2="85" stroke="#1F4D54" stroke-width="2.5" stroke-dasharray="8,4"/>
+            <!-- Intersection at h=20, I=560 → x=250, y=85 -->
+            <!-- Vertical dashed guide -->
+            <line x1="250" y1="85" x2="250" y2="208" stroke="#6b7280" stroke-width="1" stroke-dasharray="4,4"/>
+            <!-- Intersection dot -->
+            <circle cx="250" cy="85" r="6" fill="white" stroke="#1F4D54" stroke-width="2.5"/>
+            <circle cx="250" cy="85" r="3" fill="#1F4D54"/>
+            <!-- Labels for lines -->
+            <text x="258" y="50"  fill="#BE5837" font-size="9.5" font-weight="bold">I = 28h (casual)</text>
+            <text x="55"  y="79"  fill="#1F4D54" font-size="9.5" font-weight="bold">I = 560 (salary)</text>
+            <!-- Break-even label -->
+            <text x="253" y="81" fill="#1F4D54" font-size="8.5">(20, 560)</text>
+          </svg>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Conclusion</span>
+          Break-even at <strong>h = 20 hrs</strong>. Fewer than 20 hrs → salary pays more. More than 20 hrs → casual pays more.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn3" onclick="revealStep(3)">Reveal next step ↓</button>
+  </div>
+
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with a neighbour. We'll fill in the boxes together as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — calculating a lifeguard's Saturday pay</h2>
+  <p class="sec-desc">A lifeguard earns <strong>$24/hr</strong> for the first 8 standard hours and <strong>$36/hr</strong> for any overtime. She works <strong>11 hours</strong> on Saturday. Discuss each step with a neighbour, then we'll fill in the answer together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top:18px;">
+    💡 <strong>Key pattern:</strong> for hours beyond the standard threshold, always split the shift into two parts — standard hours × standard rate, then overtime hours × overtime rate. Add the two parts for total income.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first — then choose your tier: Building, Stretch, or Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them alone first — <strong>then we'll check together as a class</strong> before you open a chilli tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING (accordion, open by default) -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Type the numerical answer (in dollars or hours as required). No dollar signs or units needed — just the number.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: STRETCH (accordion, collapsed) -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Overtime calculations, net income, call-out fees, and finding break-even points.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MASTERY (accordion, collapsed) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Multi-step problems, piecewise pay rules, and one open-response explanation.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving. They check the big ideas of today's lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 · Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8A03</strong> — use mathematical modelling to solve applied problems involving linear relations, including financial contexts; formulate problems with linear functions, choosing a representation; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">3 — modelling pay-rate and income situations with linear relations in a financial context</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Model pay-rate and income situations with linear functions; calculate weekly earnings from hourly rates including overtime; compare casual and salaried pay structures and interpret the break-even point.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y8_alg_11. Source: SA Curriculum (Mathematics R-10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Modelling Pay Rates and Income
+</footer>
+
+</div><!-- end .page -->
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  const exStep = [0, 1, 1, 1]; // exStep[n] tracks current visible step for example n
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealStep(ex) {
+    exStep[ex]++;
+    const stepEl = document.getElementById('ex' + ex + '-step' + exStep[ex]);
+    if (stepEl) stepEl.classList.add('visible');
+    if (exStep[ex] >= 3) {
+      const btn = document.getElementById('revealBtn' + ex);
+      if (btn) { btn.disabled = true; btn.textContent = '✓ All steps shown'; }
+    }
+  }
+
+  // ============ DRAG-AND-DROP SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top  = rect.top  + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+    dragState = { chip, ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup',   endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest   = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup',   endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  const matchTerms = [
+    { html: '$24/hr &times; 5 hrs', group: 1 },
+    { html: '$18/hr + $50 allowance', group: 2 },
+    { html: 'Fixed salary $750/wk', group: 3 },
+    { html: 'Rate in <span class="var">I</span> = 32<span class="var">h</span>', group: 4 },
+    { html: '28<span class="var">h</span> = 560 &rarr; find <span class="var">h</span>', group: 5 },
+    { html: '$120', group: 1 },
+    { html: '<span class="expr"><span class="var">I</span> = 18<span class="var">h</span> + 50</span>', group: 2 },
+    { html: '<span class="expr"><span class="var">I</span> = 750</span>', group: 3 },
+    { html: '$32 per hour', group: 4 },
+    { html: '<span class="var">h</span> = 20 hours', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its matching card.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5 ? '🎉 All five pairs matched!' : 'Matched! (' + matchedGroups.size + '/5)';
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected, w2 = chip;
+      w1.classList.add('selected'); w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — look again.';
+      setTimeout(() => { w1.classList.remove('selected'); w2.classList.remove('selected'); }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ PROBLEM DATA ============
+
+  const retrieval = [
+    { q: 'Substitute <span class="var">h</span> = 4 into <span class="expr"><span class="var">I</span> = 20<span class="var">h</span></span>. What is <span class="var">I</span>?', a: '80', hint: 'Multiply: 20 × 4.' },
+    { q: 'Using <span class="expr"><span class="var">y</span> = 3<span class="var">x</span> + 10</span>, find <span class="var">y</span> when <span class="var">x</span> = 5.', a: '25', hint: '3 × 5 = 15, then add 10.' },
+    { q: 'A table shows <span class="var">h</span> = 0, 1, 2, 3 and income = $0, $15, $30, $45. What is the first difference?', a: '15', hint: 'Subtract consecutive income values: 15 − 0.' },
+  ];
+
+  const weDo = [
+    { q: 'How much does the lifeguard earn for her first 8 standard hours at $24/hr? (Enter the dollar amount)', a: '192', hint: '8 × 24 = ?' },
+    { q: 'She worked 11 − 8 = 3 overtime hours at $36/hr. How much does she earn for those overtime hours?', a: '108', hint: '3 × 36 = ?' },
+    { q: 'What is her total pay for the full 11-hour shift? (Standard pay + overtime pay)', a: '300', hint: '192 + 108 = ?' },
+  ];
+
+  const checkpoint = [
+    { q: 'Using <span class="expr"><span class="var">I</span> = 18<span class="var">h</span></span>, find income when <span class="var">h</span> = 6.', a: '108', hint: '18 × 6 = ?' },
+    { q: 'Casual rate: $24/hr. Weekly salary: $480. At how many hours per week do they give the same income?', a: '20', hint: 'Solve: 24h = 480. Divide both sides by 24.' },
+  ];
+
+  const practice1 = [
+    { q: 'Using the rule <span class="expr"><span class="var">I</span> = 20<span class="var">h</span></span>, find income when <span class="var">h</span> = 5.', a: '100', hint: '20 × 5 = ?' },
+    { q: 'Using the rule <span class="expr"><span class="var">I</span> = 15<span class="var">h</span></span>, find income when <span class="var">h</span> = 8.', a: '120', hint: '15 × 8 = ?' },
+    { q: 'Using the rule <span class="expr"><span class="var">I</span> = 24<span class="var">h</span></span>, find income when <span class="var">h</span> = 6.', a: '144', hint: '24 × 6 = ?' },
+    { q: 'Using <span class="expr"><span class="var">I</span> = 30<span class="var">h</span></span>, find the number of hours needed to earn $150.', a: '5', hint: '30 × ? = 150. Divide: 150 ÷ 30.' },
+    { q: 'Using <span class="expr"><span class="var">I</span> = 22<span class="var">h</span></span>, find the number of hours needed to earn $176.', a: '8', hint: '22 × ? = 176. Divide: 176 ÷ 22.' },
+    { q: 'A table shows: <span class="var">h</span> = 0, 1, 2, 3 → income = $0, $17, $34, $51. What is the hourly rate?', a: '17', hint: 'The first difference tells you how much income increases per hour.' },
+    { q: 'A worker earns $18 per hour. How much does she earn in 9 hours?', a: '162', hint: '18 × 9 = ?' },
+    { q: 'For the rule <span class="expr"><span class="var">I</span> = 25<span class="var">h</span></span>, what is the first difference in a table with <span class="var">h</span> = 0, 1, 2, 3, …?', a: '25', hint: 'The first difference equals the coefficient of h.' },
+    { q: 'A casual worker earns $14 per hour. How much does he earn in 10 hours?', a: '140', hint: '14 × 10 = ?' },
+    { q: 'Using <span class="expr"><span class="var">I</span> = 16<span class="var">h</span> + 20</span> (includes a $20 tool allowance), find income when <span class="var">h</span> = 5.', a: '100', hint: '16 × 5 = 80, then add 20.' },
+  ];
+
+  const practice2 = [
+    { q: 'Jordan earns $22/hr for the first 8 hours and $33/hr for overtime. He works <strong>10 hours</strong>. What is his total income?', a: '242', hint: 'Standard: 8 × 22 = 176. Overtime: 2 × 33 = 66. Add them.' },
+    { q: 'Tran earns $26/hr standard and $39/hr overtime (hours beyond 8). She works <strong>12 hours</strong>. What is her total income?', a: '364', hint: 'Standard: 8 × 26 = 208. Overtime: 4 × 39 = 156.' },
+    { q: 'Casual rate: $28/hr. Weekly salary: $560. At how many hours per week do they give the same total income?', a: '20', hint: 'Solve: 28h = 560. Divide both sides by 28.' },
+    { q: 'Net income is modelled by <span class="expr"><span class="var">I</span> = 24<span class="var">h</span> − 80</span> (after transport costs). Find net income when <span class="var">h</span> = 10.', a: '160', hint: '24 × 10 = 240, then subtract 80.' },
+    { q: 'A babysitter charges an $8 call-out fee plus $15 per hour. Find her total income for <strong>3 hours</strong>.', a: '53', hint: 'I = 15h + 8. Substitute h = 3: 15 × 3 = 45, then add 8.' },
+    { q: 'Alex earns <span class="expr"><span class="var">I</span> = 20<span class="var">h</span></span> and Sam earns <span class="expr"><span class="var">I</span> = 18<span class="var">h</span> + 20</span>. After how many hours have they earned the same total?', a: '10', hint: 'Set 20h = 18h + 20. Subtract 18h from both sides, then solve.' },
+  ];
+
+  const practice3 = [
+    { q: 'Emma works 8 standard hours at $24/hr, then earns overtime at <strong>1.5 times</strong> her standard rate. She works <strong>11 hours</strong> total. What is her total income?', a: '300', hint: 'Overtime rate = 1.5 × 24 = $36/hr. Overtime hours = 11 − 8 = 3. Total = 8×24 + 3×36.' },
+    { q: 'Noah can receive a weekly salary of $720 or work casually at $36/hr. If he works <strong>22 hours</strong> this week, what is his casual income?', a: '792', hint: '36 × 22 = ?' },
+    { q: 'Lily\'s pay follows: <span class="expr"><span class="var">I</span> = 23<span class="var">h</span></span> for <span class="var">h</span> ≤ 8, then <span class="expr"><span class="var">I</span> = 184 + 34.5(<span class="var">h</span> − 8)</span> for <span class="var">h</span> &gt; 8. Find her total income for <strong>10 hours</strong>.', a: '253', hint: 'Standard: 23 × 8 = 184. Overtime: 34.5 × 2 = 69. Total = 184 + 69.' },
+    { q: 'A manager earns a fixed salary of $1 200/week. A consultant earns $60 per hour. Is it <em>always, sometimes,</em> or <em>never</em> true that the consultant earns more? Include the break-even point in your answer.', a: 'TEXT', hint: 'Compare 60h with 1200. Solve 60h = 1200 to find the break-even point. Then interpret.' },
+  ];
+
+  const exitProbs = [
+    { q: 'Using <span class="expr"><span class="var">I</span> = 21<span class="var">h</span></span>, find income when <span class="var">h</span> = 7.', a: '147', hint: '21 × 7 = ?' },
+    { q: 'Casual rate $24/hr; weekly salary $480. At how many hours do they give equal income?', a: '20', hint: 'Solve: 24h = 480. Divide both sides by 24.' },
+    { q: 'Explain why pay at a constant hourly rate is a linear relationship. Use the words <strong>rate of change</strong> and <strong>first difference</strong> in your answer.', a: 'TEXT', hint: 'Think about how income changes for each additional hour worked. Are the jumps always the same?' },
+  ];
+
+  // ============ ANSWER CHECKING ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp  = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    const noCount = !!options.noCount;
+
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+
+      const checkBtnHtml = p.a !== 'TEXT'
+        ? `<button class="check-btn">Check</button>`
+        : '';
+
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${checkBtnHtml}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link">Show hint</button>
+          <button class="answer-link">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+
+      const cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+      div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+      div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec  = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+  buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1',  practice1,  'P');
+  buildPractice('practiceGrid2',  practice2,  'S');
+  buildPractice('practiceGrid3',  practice3,  'C');
+  buildPractice('exitGrid',       exitProbs,  'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
