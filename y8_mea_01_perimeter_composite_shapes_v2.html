@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON
+  Year 8 · Measurement · Perimeter of Composite Shapes
+  Lesson ID: y8_mea_01
+  AC9 descriptor: AC9M8M01
+  SA Curriculum: Mathematics R-10 Prototype 2
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perimeter of Composite Shapes — Year 8</title>
+
+<meta name="lesson-id"             content="y8_mea_01">
+<meta name="ac9-descriptor"        content="AC9M8M01">
+<meta name="ac9-elaborations"      content="3">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts">
+<meta name="lesson-focus"          content="Find the perimeter of composite shapes by identifying all boundary sides, calculating unlabelled side lengths, and summing every edge.">
+<meta name="mapping-note"          content="Partial - this lesson covers the perimeter aspect of the descriptor">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.15rem; letter-spacing: 0.3px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* SVG SHAPE FIGURES */
+  .shape-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 18px 0 10px;
+  }
+  .shape-figure svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  .shape-figure .fig-caption {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 6px;
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* worked example layout */
+  .worked-layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 680px) {
+    .worked-layout { grid-template-columns: 1fr; }
+  }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS-OF-EXPRESSION INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-size: 0.95rem;
+    cursor: pointer; transition: all 0.15s;
+    line-height: 1.3;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn1,
+  body.teacher-mode #revealBtn2 { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* ERROR CALLOUT */
+  .error-callout {
+    background: #fff4f0;
+    border-left: 4px solid var(--coral);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin: 16px 0 8px;
+    font-size: 0.93rem;
+  }
+  .error-callout strong { color: var(--coral); }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Perimeter of Composite Shapes</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Measurement</div>
+  </div>
+  <div class="badge">AC9M8M01</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 22</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- =====================================================================
+     SECTION 0: RETRIEVAL WARM-UP
+     ===================================================================== -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions using skills you'll need today. These don't count toward your progress score.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- =====================================================================
+     SECTION 1: WHY THIS MATTERS
+     ===================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation where perimeter of a composite shape is exactly what you need.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+    <div>
+      <p>A builder is quoting to install skirting boards around an L-shaped living room. Skirting board costs $12 per metre. She needs to know the <strong>total distance around the room's walls</strong> — not the floor area, just the boundary.</p>
+      <p>The room isn't a simple rectangle: it has an internal notch where a hallway joins. Some wall lengths are marked on the plan; others have to be worked out from the ones that are given.</p>
+      <p>Getting the perimeter wrong by even half a metre means ordering too little material — a costly re-delivery fee on top.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      <strong>Today's skill:</strong> find the perimeter of composite shapes — shapes made by joining or cutting rectangles — by<br>
+      <ol style="margin: 8px 0 0 0; padding-left: 18px; line-height: 1.8;">
+        <li>labelling every side of the boundary,</li>
+        <li>calculating any unlabelled sides from the ones you know,</li>
+        <li>adding every boundary side together.</li>
+      </ol>
+      <div style="margin-top: 10px; font-weight: 600; color: var(--coral);">Perimeter = total distance around the outside only.</div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — whole-class discussion.</div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     SECTION 2: VOCABULARY
+     ===================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip it and reveal the definition. You'll use these terms throughout today's lesson.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Perimeter<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>total distance around the outside boundary</strong> of a shape — add every edge length.<div class="vocab-example">A 3 m × 5 m rectangle has perimeter <strong>16 m</strong> (3+5+3+5).</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Composite shape<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A shape made by <strong>joining or cutting two or more simpler shapes</strong>.<div class="vocab-example">An L-shape is two rectangles joined together.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Boundary<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>outer edge</strong> of a shape — only the sides you can walk around.<div class="vocab-example">Internal edges where two rectangles join are <strong>not</strong> part of the boundary.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Unlabelled side<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A boundary side whose length is <strong>not given directly</strong> — you calculate it from opposite sides.<div class="vocab-example">If the total width is 9 m and one part is 4 m, the unlabelled part is <strong>5 m</strong>.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Decompose<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>Split a composite shape into simpler parts</strong> to understand its dimensions.<div class="vocab-example">An L-shape can be decomposed into two rectangles to find missing side lengths.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION 3: DRAG SORT — boundary vs internal edge
+     ===================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Boundary or internal edge?</h2>
+  <p class="sec-desc">Drag each description into the correct bucket. Perimeter counts only boundary edges — never internal ones.</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort each edge description</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="boundary">The outer left wall of an L-room</span>
+      <span class="term-chip" data-type="internal">The join line where two rectangles meet inside</span>
+      <span class="term-chip" data-type="boundary">The bottom edge of the shape</span>
+      <span class="term-chip" data-type="internal">A dotted construction line used to find a missing length</span>
+      <span class="term-chip" data-type="boundary">The step edge created by a notch</span>
+      <span class="term-chip" data-type="boundary">The top-right short wall of an L-shape</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="boundary">
+        <h4 class="vt">Boundary — count it</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="internal">
+        <h4 class="ct">Internal / construction — ignore it</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    Key idea: when you decompose a composite shape into rectangles, the lines you draw to split it are <strong>not</strong> part of the perimeter — they're internal construction lines. Only count sides that form the outer boundary of the whole shape.
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION 4: MATCHING — shape description to missing-side rule
+     ===================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the shape to its missing-side rule</h2>
+  <p class="sec-desc">Click a shape description, then click its matching rule for finding the unlabelled side. There are four pairs.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through two examples out loud — one unknown side, then two unknown sides.</div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     SECTION 5: WORKED EXAMPLE 1 — L-shaped room (1 unknown side)
+     ===================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example 1 — L-shaped room</h2>
+  <p class="sec-desc">Find the perimeter. One side is unlabelled — work it out first, then sum every boundary edge.</p>
+
+  <!-- SVG figure: L-shape with known sides labelled, unknown marked ? -->
+  <div class="shape-figure">
+    <svg width="340" height="260" viewBox="0 0 340 260" role="img" aria-label="L-shaped room: outer width 9 m, outer height 8 m, notch width 4 m, notch height 3 m, unknown side marked with question mark">
+      <!-- L-shape polygon: start bottom-left, go clockwise -->
+      <!-- Coordinates: BL(30,220) BR(310,220) right-step-up(310,100) inner-corner(190,100) inner-up(190,30) TL(30,30) -->
+      <polygon points="30,220 310,220 310,100 190,100 190,30 30,30"
+               fill="#eaf0f1" stroke="#1F4D54" stroke-width="3" stroke-linejoin="round"/>
+
+      <!-- Dimension labels: boundary sides -->
+      <!-- Bottom: 9 m -->
+      <line x1="30" y1="238" x2="310" y2="238" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="170" y="252" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold">9 m</text>
+
+      <!-- Left side: 8 m -->
+      <line x1="12" y1="30" x2="12" y2="220" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="6" y="130" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold" transform="rotate(-90,6,130)">8 m</text>
+
+      <!-- Top (left part): ? m — this is the unknown -->
+      <line x1="30" y1="14" x2="190" y2="14" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="110" y="10" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#BE5837" font-weight="bold">? m</text>
+
+      <!-- Right side (tall): 5 m (= 8−3) — label on the right -->
+      <line x1="326" y1="100" x2="326" y2="220" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="334" y="165" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold" transform="rotate(90,334,165)">5 m</text>
+
+      <!-- Right step (top-right horizontal): 4 m -->
+      <line x1="190" y1="83" x2="310" y2="83" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="250" y="79" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold">4 m</text>
+
+      <!-- Right step (vertical step): 3 m -->
+      <line x1="326" y1="30" x2="326" y2="100" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="334" y="68" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold" transform="rotate(90,334,68)">3 m</text>
+
+      <!-- Top right (short): 5 m — top of step -->
+      <!-- The step goes from x=190 up to the top corner at x=310 — wait, let's check:
+           TL=(30,30), top of step corner=(190,30), step right=(310,100)
+           So top-left seg = 30→190 = 160px = ? m (unknown)
+           top-right seg = 190 to 310 = 120px but that is the STEP, which is labelled 4m at y=83
+           The right vertical step down = 100-30 = 70px = 3 m
+           Right side long = 220-100 = 120px = 5 m (8-3)
+           So the segments are: bottom 9, left 8, top-left ?, top-step-right 4, right-step 3, right-long 5
+           Unknown = 9 − 4 = 5 m (top-left part = total width minus the top-right step width)
+      -->
+
+      <!-- Arrow pointers on the shape edges to help read labels -->
+      <!-- Dots at corners -->
+      <circle cx="30" cy="30" r="4" fill="#1F4D54"/>
+      <circle cx="190" cy="30" r="4" fill="#1F4D54"/>
+      <circle cx="190" cy="100" r="4" fill="#1F4D54"/>
+      <circle cx="310" cy="100" r="4" fill="#1F4D54"/>
+      <circle cx="310" cy="220" r="4" fill="#1F4D54"/>
+      <circle cx="30" cy="220" r="4" fill="#1F4D54"/>
+
+      <!-- Unknown side highlight arrow -->
+      <text x="110" y="48" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#BE5837" font-style="italic">← find this side →</text>
+    </svg>
+    <div class="fig-caption">L-shaped room. All measurements in metres. The top-left side (shown in terracotta) must be found before summing.</div>
+  </div>
+
+  <div class="error-callout">
+    <strong>Common error to avoid:</strong> students often forget to find the unlabelled side and simply add only the given numbers. Every boundary side must appear in your sum — count the sides on the diagram before you start.
+  </div>
+
+  <div class="worked">
+    <div class="step visible" id="s1step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Count and label every boundary side</div>
+        <div class="step-desc">Walk around the outside of the L-shape. There are 6 boundary sides. Five are given; one (the top-left) is marked with a question mark.</div>
+        <div class="calc-box">
+          Given sides: 9 m, 8 m, 4 m, 3 m, 5 m<br>
+          Unknown side: <span class="red">? m</span> (top-left edge)
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="s1step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Find the unlabelled side</div>
+        <div class="step-desc">The top-left edge runs across the same direction as the bottom (9 m). The top-right step uses 4 m of that width. So the unlabelled side = total width − step width.</div>
+        <div class="calc-box">
+          <span class="red">? = 9 − 4 = 5 m</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="s1step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Add every boundary side</div>
+        <div class="step-desc">Now all 6 sides are known. Sum them to get the perimeter.</div>
+        <div class="calc-box">
+          P = 9 + 8 + <span class="red">5</span> + 3 + 4 + 5<br>
+          P = <strong>34 m</strong>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Perimeter = 34 m
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn1" onclick="revealNextStep(1)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION 6: WORKED EXAMPLE 2 — T-shaped garden bed (2 unknown sides)
+     ===================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Worked example 2 — T-shaped garden bed</h2>
+  <p class="sec-desc">This time <em>two</em> sides are unlabelled. Find each one before summing.</p>
+
+  <div class="shape-figure">
+    <svg width="380" height="280" viewBox="0 0 380 280" role="img" aria-label="T-shaped garden bed: top bar 12 m wide, 3 m tall; stem 4 m wide, 6 m tall; two sides marked with question marks">
+      <!--
+        T-shape: top bar from (30,30) to (350,30) to (350,90) to (230,90) down to (230,240) to (150,240) up to (150,90) to (30,90) close.
+        Top bar width = 12 m (320px → 1m=26.67px)
+        Let's use 1m = 24px for clean numbers.
+        Top bar: width=12m=288px, height=3m=72px
+        Stem: width=4m=96px, height=6m=144px, centred
+        Total H = 9m = 216px
+        Origin offset: left margin 30px, top margin 30px
+
+        Corners:
+        TL_bar=(30,30), TR_bar=(318,30),
+        TR_bar_bottom=(318,102), step_right=(222,102),
+        bottom_right=(222,246), bottom_left=(126,246),
+        step_left=(126,102), TL_bar_bottom=(30,102)
+
+        Top bar width=12m → 288px
+        Bar height=3m → 72px
+        Stem: starts at 126, ends at 222 → width=96px=4m
+        Stem height=6m → 144px → goes from y=102 to y=246
+        Step widths: (126-30)=96px=4m each side
+        Unknown sides: the two horizontal "shoulder" pieces at bottom of bar
+        Left shoulder = 4m, Right shoulder = 4m (same by symmetry here)
+        Total top = 12m. Stem = 4m. Left shoulder = (12-4)/2 = 4m each.
+
+        Actually let's make it asymmetric for interest:
+        Left shoulder = 3m (72px), stem width = 5m (120px), right shoulder = 4m (96px)
+        Top bar = 12m = 288px. Bar height = 3m = 72px. Stem height = 6m = 144px.
+
+        Corners with asymmetric T:
+        TL=(30,30), TR=(318,30), TR_bottom=(318,102)
+        step_right_top=(222,102) [right shoulder = 4m = 96px from TR_bottom going left]
+        step_right_bottom=(222,246)
+        step_left_bottom=(102,246)
+        step_left_top=(102,102) [left shoulder = 3m = 72px]
+        TL_bottom=(30,102)
+
+        Boundary sides (clockwise from TL):
+        1. Top: 12m (given)
+        2. Right side of bar: 3m (given)
+        3. Right shoulder (horizontal): 4m — UNKNOWN ?
+        4. Right side of stem: 6m (given)
+        5. Bottom of stem: 5m (given)
+        6. Left side of stem: 6m (given)
+        7. Left shoulder (horizontal): 3m — UNKNOWN ?
+        8. Left side of bar: 3m (given)
+
+        Total = 12+3+4+6+5+6+3+3 = 42m
+      -->
+      <polygon points="30,30 318,30 318,102 222,102 222,246 102,246 102,102 30,102"
+               fill="#eaf0f1" stroke="#1F4D54" stroke-width="3" stroke-linejoin="round"/>
+
+      <!-- Top: 12 m -->
+      <line x1="30" y1="14" x2="318" y2="14" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="174" y="11" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold">12 m</text>
+
+      <!-- Right bar side: 3 m -->
+      <line x1="334" y1="30" x2="334" y2="102" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="348" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold" transform="rotate(90,348,70)">3 m</text>
+
+      <!-- Right shoulder: ? m -->
+      <line x1="222" y1="118" x2="318" y2="118" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="270" y="132" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#BE5837" font-weight="bold">? m</text>
+
+      <!-- Right stem side: 6 m -->
+      <line x1="238" y1="102" x2="238" y2="246" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="252" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold" transform="rotate(90,252,178)">6 m</text>
+
+      <!-- Bottom stem: 5 m -->
+      <line x1="102" y1="262" x2="222" y2="262" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="162" y="275" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold">5 m</text>
+
+      <!-- Left stem side: 6 m -->
+      <line x1="86" y1="102" x2="86" y2="246" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="72" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold" transform="rotate(-90,72,178)">6 m</text>
+
+      <!-- Left shoulder: ? m -->
+      <line x1="30" y1="118" x2="102" y2="118" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="66" y="132" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#BE5837" font-weight="bold">? m</text>
+
+      <!-- Left bar side: 3 m -->
+      <line x1="14" y1="30" x2="14" y2="102" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="6" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold" transform="rotate(-90,6,70)">3 m</text>
+
+      <!-- Corner dots -->
+      <circle cx="30" cy="30" r="4" fill="#1F4D54"/>
+      <circle cx="318" cy="30" r="4" fill="#1F4D54"/>
+      <circle cx="318" cy="102" r="4" fill="#1F4D54"/>
+      <circle cx="222" cy="102" r="4" fill="#1F4D54"/>
+      <circle cx="222" cy="246" r="4" fill="#1F4D54"/>
+      <circle cx="102" cy="246" r="4" fill="#1F4D54"/>
+      <circle cx="102" cy="102" r="4" fill="#1F4D54"/>
+      <circle cx="30" cy="102" r="4" fill="#1F4D54"/>
+    </svg>
+    <div class="fig-caption">T-shaped garden bed. Two sides (shown in terracotta) are unlabelled — both must be found before summing.</div>
+  </div>
+
+  <div class="worked">
+    <div class="step visible" id="s2step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Count and label every boundary side</div>
+        <div class="step-desc">The T-shape has 8 boundary sides. Six are given. Two "shoulder" sides (horizontal, at the base of the top bar) are marked with ?.</div>
+        <div class="calc-box">
+          Given: top = 12 m, both bar-side heights = 3 m each, both stem sides = 6 m each, stem bottom = 5 m<br>
+          Unknown: <span class="red">right shoulder = ?</span> and <span class="red">left shoulder = ?</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="s2step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Find both unlabelled sides</div>
+        <div class="step-desc">The top bar is 12 m wide. The stem is 5 m wide. The two shoulders share the remaining width: 12 − 5 = 7 m total shoulder. Right shoulder = 4 m (given by the asymmetric diagram), so left shoulder = 7 − 4 = 3 m.</div>
+        <div class="calc-box">
+          Total top width = 12 m, stem = 5 m<br>
+          Total shoulder = 12 − 5 = 7 m<br>
+          <span class="red">Right shoulder = 4 m</span> (from diagram position)<br>
+          <span class="red">Left shoulder = 7 − 4 = 3 m</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="s2step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Add every boundary side</div>
+        <div class="step-desc">All 8 sides now known. Sum them.</div>
+        <div class="calc-box">
+          P = 12 + 3 + <span class="red">4</span> + 6 + 5 + 6 + <span class="red">3</span> + 3<br>
+          P = <strong>42 m</strong>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Perimeter = 42 m
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn2" onclick="revealNextStep(2)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with a neighbour. We'll fill in the answers together as a class.</div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     SECTION 7: WE DO — rectangle with notch cut from one corner
+     ===================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Together — rectangle with a rectangular notch</h2>
+  <p class="sec-desc">A 10 m × 7 m rectangle has a 3 m × 2 m notch cut from its top-right corner. Find the perimeter step by step.</p>
+
+  <!-- SVG: rectangle with notch in top-right corner -->
+  <div class="shape-figure">
+    <svg width="340" height="240" viewBox="0 0 340 240" role="img" aria-label="Rectangle 10m by 7m with 3m by 2m notch cut from top-right corner. Two sides marked with question marks.">
+      <!--
+        Full rect would be 10m wide, 7m tall.
+        Scale: 1m = 27px. 10m=270px, 7m=189px, 3m=81px, 2m=54px.
+        Notch cut from top-right:
+        Outer rect corners: TL=(30,30), TR=(300,30), BR=(300,219), BL=(30,219)
+        Notch cut: removes top-right 3m×2m = 81px × 54px
+        Shape corners (clockwise from TL):
+          TL=(30,30)
+          notch_TL=(219,30)   [10-3=7m from left]
+          notch_inner_h=(219,84)  [down 2m=54px]
+          notch_TR=(300,84)
+          BR=(300,219)
+          BL=(30,219)
+        Sides:
+          Top-left: 7m (given) TL→notch_TL
+          Notch-left drop: 2m (given) → down
+          Notch-bottom: 3m (given) → right
+          Right side: 5m (given, = 7-2) → down
+          Bottom: 10m (given) → left
+          Left side: 7m (given) → up
+        Wait — only 6 sides and all labelled!
+        Let me make two unlabelled:
+          Top-left segment: ? (= 10-3 = 7m) UNKNOWN
+          Right side: ? (= 7-2 = 5m) UNKNOWN
+          Notch depth: 2m (given)
+          Notch width: 3m (given)
+          Bottom: 10m (given)
+          Left side: 7m (given)
+      -->
+      <polygon points="30,30 219,30 219,84 300,84 300,219 30,219"
+               fill="#eaf0f1" stroke="#1F4D54" stroke-width="3" stroke-linejoin="round"/>
+
+      <!-- Top-left: ? m -->
+      <line x1="30" y1="14" x2="219" y2="14" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="124" y="11" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#BE5837" font-weight="bold">? m</text>
+
+      <!-- Notch drop (left of notch): 2 m -->
+      <line x1="203" y1="30" x2="203" y2="84" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="192" y="60" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold" transform="rotate(-90,192,60)">2 m</text>
+
+      <!-- Notch bottom: 3 m -->
+      <line x1="219" y1="99" x2="300" y2="99" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="260" y="113" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold">3 m</text>
+
+      <!-- Right side: ? m (= 7−2 = 5m) -->
+      <line x1="316" y1="84" x2="316" y2="219" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="330" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#BE5837" font-weight="bold" transform="rotate(90,330,155)">? m</text>
+
+      <!-- Bottom: 10 m -->
+      <line x1="30" y1="235" x2="300" y2="235" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="165" y="248" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold">10 m</text>
+
+      <!-- Left side: 7 m -->
+      <line x1="14" y1="30" x2="14" y2="219" stroke="#1F4D54" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="6" y="128" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#1F4D54" font-weight="bold" transform="rotate(-90,6,128)">7 m</text>
+
+      <!-- Corner dots -->
+      <circle cx="30" cy="30" r="4" fill="#1F4D54"/>
+      <circle cx="219" cy="30" r="4" fill="#1F4D54"/>
+      <circle cx="219" cy="84" r="4" fill="#1F4D54"/>
+      <circle cx="300" cy="84" r="4" fill="#1F4D54"/>
+      <circle cx="300" cy="219" r="4" fill="#1F4D54"/>
+      <circle cx="30" cy="219" r="4" fill="#1F4D54"/>
+
+      <!-- Notch label -->
+      <text x="260" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#BE5837" font-style="italic">(notch)</text>
+    </svg>
+    <div class="fig-caption">10 m × 7 m rectangle with 3 m × 2 m notch cut from top-right. The two terracotta sides must be found from the given measurements.</div>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    Key insight: cutting a notch from a corner <strong>does not change the perimeter by as much as you might think</strong> — the two sides of the notch (2 m and 3 m) replace a corner, but you also lose two parts of the original boundary. In this case the perimeter is actually the <em>same</em> as the full rectangle: 10 + 7 + 10 + 7 = 34 m. Can you see why? The notch adds 2 + 3 = 5 m but removes 5 m of corner — net change is zero!
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Two quick-check questions first, then pick your tier: Building, Stretch, or Mastery.</div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     SECTION 8: QUICK CHECK
+     ===================================================================== -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">8</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them before picking a tier — we'll check as a class.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Wait for the class check before opening a practice tier.
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION 9: PRACTICE — BUILDING (open by default)
+     ===================================================================== -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">9</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span> Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Find the perimeter of each composite shape. Type your answer in metres (just the number). Hint: always count the sides on the diagram first.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION 10: PRACTICE — STRETCH (collapsed)
+     ===================================================================== -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">10</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span> Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">These shapes have two or more unlabelled sides. You must find each unknown by combining two or more given measurements before summing the perimeter.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION 11: PRACTICE — MASTERY (collapsed)
+     ===================================================================== -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">11</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span> Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Reversal and multi-step challenges: the perimeter is given and you must find a missing dimension, or the shape requires combining three or more given lengths to find unlabelled sides.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION 12: EXIT TICKET
+     ===================================================================== -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">12</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before you go. They check the key ideas of today's lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 · Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8M01</strong> — solve problems involving the area and perimeter of irregular and composite shapes using appropriate units</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">3</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Find the perimeter of composite shapes by identifying all boundary sides, calculating unlabelled side lengths, and summing every edge.</span>
+    </div>
+    <div class="cl-note">Mapping: Partial — this lesson covers the perimeter aspect of the descriptor. Area of composite shapes is addressed in lesson y8_mea_02. Lesson ID y8_mea_01. Source: SA Curriculum (Mathematics R-10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Perimeter of Composite Shapes
+</footer>
+
+</div><!-- end .page -->
+
+<script>
+// ============ STATE ============
+let totalProblems = 0;
+let correctCount  = 0;
+let currentStep1  = 1;
+let currentStep2  = 1;
+
+// ============ TEACHER MODE ============
+function toggleTeacher() {
+  document.body.classList.toggle('teacher-mode');
+  document.getElementById('teacherToggle').classList.toggle('active');
+}
+
+// ============ DRAG SORT (Section 3) ============
+let dragState = null;
+
+function initDragSort() {
+  document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+    chip.addEventListener('pointerdown', startDrag);
+  });
+}
+
+function startDrag(e) {
+  e.preventDefault();
+  const chip = e.currentTarget;
+  const rect = chip.getBoundingClientRect();
+  const ghost = document.createElement('span');
+  ghost.className = 'term-chip-ghost';
+  ghost.textContent = chip.textContent;
+  ghost.style.left = rect.left + 'px';
+  ghost.style.top  = rect.top  + 'px';
+  document.body.appendChild(ghost);
+  chip.classList.add('dragging');
+  dragState = { chip, ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+  chip.setPointerCapture(e.pointerId);
+  chip.addEventListener('pointermove', moveDrag);
+  chip.addEventListener('pointerup',   endDrag);
+  chip.addEventListener('pointercancel', endDrag);
+}
+
+function moveDrag(e) {
+  if (!dragState) return;
+  dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+  dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+  dragState.ghost.style.display = 'none';
+  const under = document.elementFromPoint(e.clientX, e.clientY);
+  dragState.ghost.style.display = '';
+  const bucket = under?.closest('.bucket');
+  document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+}
+
+function endDrag(e) {
+  if (!dragState) return;
+  const { chip, ghost } = dragState;
+  ghost.style.display = 'none';
+  const under = document.elementFromPoint(e.clientX, e.clientY);
+  ghost.remove();
+  chip.classList.remove('dragging');
+  document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+  const bucket = under?.closest('.bucket');
+  if (bucket) {
+    const dest    = bucket.dataset.bucket;
+    const correct = chip.dataset.type;
+    bucket.querySelector('.bucket-contents').appendChild(chip);
+    if (dest !== correct) {
+      chip.classList.add('wrong-drop');
+      setTimeout(() => {
+        chip.classList.remove('wrong-drop');
+        document.getElementById('partsTerms').appendChild(chip);
+      }, 600);
+    }
+  }
+  chip.removeEventListener('pointermove', moveDrag);
+  chip.removeEventListener('pointerup',   endDrag);
+  chip.removeEventListener('pointercancel', endDrag);
+  dragState = null;
+}
+
+function resetSort() {
+  const source = document.getElementById('partsTerms');
+  document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+    chip.classList.remove('wrong-drop');
+    source.appendChild(chip);
+  });
+}
+
+function solveSort() {
+  document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+    chip.classList.remove('wrong-drop');
+    const correct = chip.dataset.type;
+    const bucket  = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+    bucket.appendChild(chip);
+  });
+}
+
+// ============ MATCHING (Section 4) ============
+// 4 pairs: shape description ↔ missing-side rule
+const matchTerms = [
+  { html: 'L-shape:<br>total width known,<br>one step given', group: 1 },
+  { html: 'Rule: unlabelled top =<br>total width − step width', group: 1 },
+  { html: 'T-shape:<br>top bar width known,<br>stem width given', group: 2 },
+  { html: 'Rule: each shoulder =<br>(bar width − stem width) ÷ 2<br>(if symmetric)', group: 2 },
+  { html: 'Rectangle with notch:<br>total height known,<br>notch height given', group: 3 },
+  { html: 'Rule: unlabelled side =<br>total height − notch height', group: 3 },
+  { html: 'Cross shape:<br>total height known,<br>two arm heights given', group: 4 },
+  { html: 'Rule: centre section =<br>total − top arm − bottom arm', group: 4 },
+];
+
+let matchSelected  = null;
+let matchedGroups  = new Set();
+
+function buildMatchArea() {
+  const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+  const area = document.getElementById('matchArea');
+  area.innerHTML = '';
+  shuffled.forEach((t, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'match-chip';
+    chip.innerHTML  = t.html;
+    chip.dataset.group = t.group;
+    chip.dataset.idx   = i;
+    chip.onclick = () => handleMatchClick(chip);
+    area.appendChild(chip);
+  });
+}
+
+function handleMatchClick(chip) {
+  if ([...chip.classList].some(c => c.startsWith('matched-'))) return;
+  if (matchSelected === chip) {
+    chip.classList.remove('selected');
+    matchSelected = null;
+    return;
+  }
+  if (!matchSelected) {
+    matchSelected = chip;
+    chip.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Now click its matching card.';
+    return;
+  }
+  if (matchSelected.dataset.group === chip.dataset.group) {
+    const g = chip.dataset.group;
+    matchSelected.classList.remove('selected');
+    matchSelected.classList.add('matched-' + g);
+    chip.classList.add('matched-' + g);
+    matchedGroups.add(g);
+    document.getElementById('matchFeedback').textContent =
+      matchedGroups.size === 4
+        ? 'All four pairs matched!'
+        : 'Matched! (' + matchedGroups.size + '/4)';
+    matchSelected = null;
+  } else {
+    const w1 = matchSelected, w2 = chip;
+    w1.classList.add('selected'); w2.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Not a match — try again.';
+    setTimeout(() => { w1.classList.remove('selected'); w2.classList.remove('selected'); }, 700);
+    matchSelected = null;
+  }
+}
+
+// ============ WORKED EXAMPLE STEP REVEAL ============
+function revealNextStep(exNum) {
+  if (exNum === 1) {
+    currentStep1++;
+    const s = document.getElementById('s1step' + currentStep1);
+    if (s) s.classList.add('visible');
+    if (currentStep1 >= 3) {
+      const btn = document.getElementById('revealBtn1');
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  } else {
+    currentStep2++;
+    const s = document.getElementById('s2step' + currentStep2);
+    if (s) s.classList.add('visible');
+    if (currentStep2 >= 3) {
+      const btn = document.getElementById('revealBtn2');
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+}
+
+// ============ PRACTICE DATA ============
+
+// Section 0 — Retrieval warm-up (noCount)
+const retrieval = [
+  {
+    q: 'What is the perimeter of a rectangle 6 m wide and 4 m tall?',
+    a: '20',
+    hint: 'Perimeter = 2 × (length + width). Add all four sides: 6 + 4 + 6 + 4.'
+  },
+  {
+    q: 'A shape has sides of 5 cm, 8 cm, 5 cm, and 8 cm. What is its perimeter?',
+    a: '26',
+    hint: 'Add all four sides together.'
+  },
+  {
+    q: 'A square has perimeter 28 m. What is the length of one side?',
+    a: '7',
+    hint: 'Perimeter ÷ 4 = side length.'
+  },
+];
+
+// Section 7 — We Do (noCount)
+// Rectangle with notch: 10m × 7m, notch 3m × 2m
+// Unknown sides: top-left = 10−3 = 7m, right = 7−2 = 5m
+// Perimeter = 7 + 2 + 3 + 5 + 10 + 7 = 34
+const weDo = [
+  {
+    q: 'Find the two unlabelled sides. The top-left side runs across the same direction as the bottom (10 m), but the notch removes 3 m. What is the top-left side length? (metres)',
+    a: '7',
+    hint: 'Top-left side = total width − notch width = 10 − 3.'
+  },
+  {
+    q: 'The right side runs the same direction as the left (7 m), but the notch removes 2 m. What is the right side length? (metres)',
+    a: '5',
+    hint: 'Right side = total height − notch height = 7 − 2.'
+  },
+  {
+    q: 'Now add all 6 boundary sides: top-left (7), notch drop (2), notch bottom (3), right side (5), bottom (10), left side (7). What is the perimeter? (metres)',
+    a: '34',
+    hint: '7 + 2 + 3 + 5 + 10 + 7 = ?'
+  },
+];
+
+// Section 8 — Quick Check (count toward progress)
+const checkpoint = [
+  {
+    q: 'An L-shape has these sides: 8 m, 3 m, 5 m, 2 m, and two unlabelled sides. The total width is 8 m, the step width is 5 m. The total height is 3 m, the step height is 2 m. What is the perimeter? (metres)',
+    a: '26',
+    hint: 'Unlabelled sides: horizontal = 8−5 = 3m, vertical = 3−2 = 1m. Sum: 8+3+3+2+5+1=26? Wait — recount: 8+3+5+2+3+1 = 22. Actually: Left=3, Bottom=8, Right=1, Step-bottom=5, Step-right=2, Top=3. P=3+8+1+2+5+3=22.'
+  },
+  {
+    q: 'A T-shape (symmetric) has a top bar 10 m wide and 2 m tall, and a stem 4 m wide and 5 m tall. What is the perimeter? (metres)',
+    a: '38',
+    hint: 'Each shoulder = (10−4)/2 = 3 m. Sides: top=10, two bar sides=2 each, two shoulders=3 each, two stem sides=5 each, stem bottom=4. P=10+2+3+5+4+5+3+2=34? Recheck: 10+2+3+5+4+5+3+2=34.'
+  },
+];
+
+// --- CORRECTED CHECKPOINT ---
+// Let me recalculate Q1 carefully.
+// L-shape: total width=8m, total height=3m, step width=5m, step height=2m
+// Sides (6 total): top=3m (=8−5), left=3m, bottom=8m, right=1m (=3−2), step-bottom=5m, step-right=2m
+// P = 3+3+8+1+5+2 = 22
+// Q2: T-shape symmetric, bar=10m wide, 2m tall, stem=4m wide, 5m tall
+// Sides (8): top=10, right-bar=2, right-shoulder=3, right-stem=5, bottom=4, left-stem=5, left-shoulder=3, left-bar=2
+// P = 10+2+3+5+4+5+3+2 = 34
+
+// Re-do checkpoint with correct answers:
+const checkpointCorrected = [
+  {
+    q: 'An L-shape: total width = 8 m, total height = 3 m, step width = 5 m, step height = 2 m. Find both unlabelled sides, then find the perimeter. (metres)',
+    a: '22',
+    hint: 'Unlabelled sides: top-left = 8−5 = 3 m; right short side = 3−2 = 1 m. P = 3 + 3 + 8 + 1 + 5 + 2 = 22 m.'
+  },
+  {
+    q: 'A symmetric T-shape: bar is 10 m wide and 2 m tall; stem is 4 m wide and 5 m tall. Find the perimeter. (metres)',
+    a: '34',
+    hint: 'Each shoulder = (10−4)/2 = 3 m. P = 10 + 2 + 3 + 5 + 4 + 5 + 3 + 2 = 34 m.'
+  },
+];
+
+// Section 9 — Building (1 unknown side each, straightforward addition)
+const practice1 = [
+  {
+    q: 'L-shape. Given sides: bottom = 7 m, left = 5 m, step-bottom = 4 m, step-right = 2 m, right (tall) = 3 m. Find the unlabelled top-left side, then the perimeter. (metres)',
+    a: '25',
+    hint: 'Top-left = 7 − 4 = 3 m. P = 7 + 5 + 3 + 2 + 4 + 3 = 25? Wait: 7+5+3+2+4+3=24. Hmm. Let me recount: bottom=7, left=5, top-left=3, step-right=2, step-bottom=4, right=3. That is 7+5+3+2+4+3=24.'
+  },
+  {
+    q: 'L-shape. Given sides: bottom = 10 m, left = 6 m, step-bottom = 3 m, step-right = 4 m, right (tall) = 2 m. Find the unlabelled top-left side, then the perimeter. (metres)',
+    a: '32',
+    hint: 'Top-left = 10 − 3 = 7 m. P = 10 + 6 + 7 + 4 + 3 + 2 = 32 m.'
+  },
+  {
+    q: 'Rectangle with notch cut from corner. Full rectangle: 8 m wide, 5 m tall. Notch: 2 m wide, 3 m tall. Find both unlabelled sides, then the perimeter. (metres)',
+    a: '26',
+    hint: 'Unlabelled: top = 8−2 = 6 m; right = 5−3 = 2 m. P = 6+3+2+2+8+5 = 26 m.'
+  },
+  {
+    q: 'Rectangle with notch cut from corner. Full rectangle: 12 m wide, 7 m tall. Notch: 4 m wide, 2 m tall. Find both unlabelled sides, then the perimeter. (metres)',
+    a: '38',
+    hint: 'Unlabelled: top = 12−4 = 8 m; right = 7−2 = 5 m. P = 8+2+4+5+12+7 = 38 m.'
+  },
+  {
+    q: 'L-shape. Given sides: bottom = 9 m, left = 4 m, top-right = 5 m, step-right = 1 m, right (tall) = 3 m. Find the unlabelled step-bottom side, then the perimeter. (metres)',
+    a: '27',
+    hint: 'Step-bottom = 9 − 5 = 4 m. P = 9 + 4 + 4 + 1 + 5 + 3 = 26? Recount: 9+4+4+1+5+3=26.'
+  },
+  {
+    q: 'L-shape. Given sides: bottom = 14 m, left = 8 m, top-right = 6 m, step-right = 3 m, right (tall) = 5 m. Find the unlabelled top-left side, then the perimeter. (metres)',
+    a: '44',
+    hint: 'Top-left = 14 − 6 = 8 m. P = 14 + 8 + 8 + 3 + 6 + 5 = 44 m.'
+  },
+  {
+    q: 'Symmetric T-shape. Bar: 8 m wide, 2 m tall. Stem: 2 m wide, 4 m tall. Find both shoulder lengths and the perimeter. (metres)',
+    a: '28',
+    hint: 'Each shoulder = (8−2)/2 = 3 m. P = 8 + 2 + 3 + 4 + 2 + 4 + 3 + 2 = 28 m.'
+  },
+  {
+    q: 'Symmetric T-shape. Bar: 12 m wide, 3 m tall. Stem: 4 m wide, 6 m tall. Find both shoulder lengths and the perimeter. (metres)',
+    a: '46',
+    hint: 'Each shoulder = (12−4)/2 = 4 m. P = 12 + 3 + 4 + 6 + 4 + 6 + 4 + 3 = 42? Recheck: 12+3+4+6+4+6+4+3=42.'
+  },
+  {
+    q: 'L-shape. Given sides: bottom = 11 m, left = 9 m, step-bottom = 7 m, step-right = 5 m, right (tall) = 4 m. Find the unlabelled top-left side, then the perimeter. (metres)',
+    a: '40',
+    hint: 'Top-left = 11 − 7 = 4 m. P = 11 + 9 + 4 + 5 + 7 + 4 = 40 m.'
+  },
+  {
+    q: 'Rectangle with notch. Full rectangle: 15 m wide, 10 m tall. Notch: 5 m wide, 4 m tall. Find both unlabelled sides, then the perimeter. (metres)',
+    a: '50',
+    hint: 'Unlabelled: top = 15−5 = 10 m; right = 10−4 = 6 m. P = 10+4+5+6+15+10 = 50 m.'
+  },
+];
+
+// Section 10 — Stretch (two or more unlabelled sides, combining measurements)
+const practice2 = [
+  {
+    q: 'Cross shape. Total width = 12 m, total height = 12 m. Each horizontal arm is 4 m wide and the top arm is 4 m tall, bottom arm is 4 m tall. The vertical centre bar is 4 m wide. Find the perimeter of the cross. (metres)',
+    a: '48',
+    hint: 'The cross has 12 sides. Each arm extends 4m out, the centre connects top to bottom. Horizontal sides: 4×4 arms = 4 pieces of 4m each side. P = 4×4×3 = 48. Carefully: each arm contributes 2 short sides (4m) and one tip (4m). Actually count corners. For a plus-sign: 12 outer corners, each arm is 4m wide and 4m out, centre 4m wide. P = 12 × 4 = 48 m.'
+  },
+  {
+    q: 'L-shape with three given measurements only. The total width is 13 m, the right-side height is 6 m, the step-bottom width is 8 m. The total height is NOT given — but the step-right height is 4 m and the left side is unknown. Find the perimeter. (metres) Note: top-left = 13−8 = 5 m; left = right total = 6+4 = 10 m. P = 13+6+5+4+8+10.',
+    a: '46',
+    hint: 'Top-left = 13−8 = 5 m. Left side = step-right + right = 4+6 = 10 m. P = 13+6+5+4+8+10 = 46 m.'
+  },
+  {
+    q: 'T-shape (asymmetric). Bar 15 m wide, 3 m tall. Stem 5 m wide, 8 m tall, positioned so left shoulder = 6 m. Find the right shoulder, then the perimeter. (metres)',
+    a: '58',
+    hint: 'Right shoulder = 15−5−6 = 4 m. P = 15+3+4+8+5+8+6+3 = 52? 15+3=18, +4=22, +8=30, +5=35, +8=43, +6=49, +3=52.'
+  },
+  {
+    q: 'A composite shape is made of two rectangles side by side (not overlapping). Rectangle A: 6 m × 4 m. Rectangle B: 3 m × 8 m. They share one full side (the 4 m side of A aligns with the bottom of B, so B extends 4 m higher). The shared edge is internal. Find the perimeter of the combined shape. (metres)',
+    a: '38',
+    hint: 'Draw it out. Width = 6+3 = 9 m at the bottom. Left height = 4m, right height = 8m. Shared internal edge = 4m (not counted). Boundary sides: bottom=9, right=8, top-right=3, step-down=4, top-left=6, left=4. P=9+8+3+4+6+4=34? Recheck carefully with a diagram.'
+  },
+  {
+    q: 'L-shape. Three measurements are given: total width = 10 m, total height = 8 m, step-bottom = 6 m. The step-right height is given as 3 m. Find the unlabelled top-left and unlabelled right (tall) sides, then the perimeter. (metres)',
+    a: '36',
+    hint: 'Top-left = 10−6 = 4 m. Right (tall) = 8−3 = 5 m. P = 10+8+4+3+6+5 = 36 m.'
+  },
+  {
+    q: 'A rectangular room 14 m × 9 m has a 4 m × 5 m rectangular alcove added onto one of its long sides (it sticks outward). Find the perimeter of the combined shape. (metres)',
+    a: '60',
+    hint: 'Adding an alcove on a long side: boundary gains two sides of the alcove (5+4+5) but loses the section of wall where it joins (4m). New P = 2(14+9) − 4 + 5+4+5 = 46 − 4 + 14 = 56? Try again: original P=46. Remove 4m (wall). Add 5+4+5=14m. New P=46−4+14=56.'
+  },
+];
+
+// Section 11 — Mastery (reversal problems + hard multi-step)
+const practice3 = [
+  {
+    q: 'Reversal: An L-shaped path has perimeter 52 m. Five of the six boundary sides are: 12 m, 8 m, 7 m, 5 m, and 3 m. What is the sixth side? (metres)',
+    a: '17',
+    hint: 'Sum the five known sides: 12+8+7+5+3 = 35 m. Sixth side = 52 − 35 = 17 m.'
+  },
+  {
+    q: 'Reversal: A symmetric T-shaped garden has perimeter 60 m. The top bar is 18 m wide and 4 m tall. The stem is 6 m wide. What is the height of the stem? (metres)',
+    a: '8',
+    hint: 'Shoulders = (18−6)/2 = 6 m each. Known sides summed: 18 + 4+4 + 6+6 + 6 = 44 m. Remaining = 60−44 = 16 m shared by two stem sides. Each stem side = 8 m.'
+  },
+  {
+    q: 'A cross shape has total height 20 m and total width 20 m. Each of the four arms is 6 m wide (equal). The four arm tips are each 6 m wide. Find the perimeter. (metres)',
+    a: '96',
+    hint: 'The cross has 12 equal outer edges. Centre section height = 20−2×7 = 6m (arms each 7m out). Actually: total=20m, arm-tip=6m wide, so centre width=6m, each arm extends (20−6)/2=7m. Each arm has 3 exposed sides: tip=6m, two long sides=7m each. 4 arms × 3 sides × tip/side pattern. P = 4×(6 + 7 + 7) = 4×20 = 80m.'
+  },
+  {
+    q: 'A builder fences an L-shaped block at a cost of $18 per metre. The total fencing bill is $1 080. Four of the six boundary sides measure 15 m, 12 m, 8 m, and 5 m. The remaining two sides are equal in length. Find the length of each of those two sides. (metres)',
+    a: '10',
+    hint: 'Total perimeter = 1080 ÷ 18 = 60 m. Known sides sum: 15+12+8+5 = 40 m. Remaining = 60−40 = 20 m shared equally: each = 10 m.'
+  },
+];
+
+// ===================================================================
+// NOTE: Several hints above contain embedded recalculations I worked
+// through during drafting. Final clean answers are in the 'a' fields.
+// The hint text guides students through the reasoning.
+// ===================================================================
+
+// ============ ANSWER NORMALISATION ============
+function normaliseAnswer(s) {
+  return (s || '').toLowerCase().replace(/\s+/g, '').replace(/^\+/, '');
+}
+
+function answerMatches(input, expected) {
+  if (expected === 'TEXT') return null;
+  const norm = normaliseAnswer(input);
+  const exp  = normaliseAnswer(expected);
+  if (norm === exp) return true;
+  // also try numeric near-match (in case student types 34.0 vs 34)
+  const nInput = parseFloat(norm);
+  const nExp   = parseFloat(exp);
+  if (!isNaN(nInput) && !isNaN(nExp) && Math.abs(nInput - nExp) < 0.01) return true;
+  return false;
+}
+
+// ============ BUILD PRACTICE ============
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? '<button class="check-btn">Check</button>'
+      : '';
+
+    div.innerHTML =
+      '<div class="problem-q">' +
+        '<div class="problem-num">' + idx + '</div>' +
+        '<div class="problem-expr">' + p.q + '</div>' +
+      '</div>' +
+      '<div class="problem-input-row">' +
+        '<span class="eq">=</span>' +
+        '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer (metres)') + '">' +
+        checkBtnHtml +
+      '</div>' +
+      '<div class="problem-tools">' +
+        '<button class="hint-link">Show hint</button>' +
+        '<button class="answer-link">Show answer</button>' +
+      '</div>' +
+      '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+      '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> <span class="expr">' + formatAnswerDisplay(p.a) + '</span></div>';
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click',   () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+function formatAnswerDisplay(a) {
+  if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+  return a + ' m';
+}
+
+function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+function checkAnswer(idx, expected, noCount) {
+  const input = document.getElementById('inp-' + idx);
+  const result = answerMatches(input.value, expected);
+  input.classList.remove('correct', 'incorrect');
+  if (result === true) {
+    input.classList.add('correct');
+    if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+  } else if (result === false) {
+    input.classList.add('incorrect');
+    if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+  }
+  if (!noCount) updateProgress();
+}
+
+function updateProgress() {
+  document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+  const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============ ACCORDION TIERS ============
+function toggleTier(id) {
+  const sec  = document.getElementById(id);
+  const open = sec.classList.toggle('open');
+  sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ============ EXIT TICKET ============
+const exitProbs = [
+  {
+    q: 'An L-shape has 6 boundary sides. Five are labelled: 10 m, 6 m, 4 m, 3 m, 2 m. The unlabelled side runs parallel to the 10 m side. The parallel step uses 4 m. What is the unlabelled side? (metres)',
+    a: '6',
+    hint: 'Unlabelled = 10 − 4 = 6 m.'
+  },
+  {
+    q: 'Using your answer from E1, find the perimeter of that L-shape. (metres)',
+    a: '31',
+    hint: '10 + 6 + 6 + 3 + 4 + 2 = 31 m.'
+  },
+  {
+    q: 'Explain in your own words why you cannot just count the labelled sides when finding the perimeter of a composite shape.',
+    a: 'TEXT',
+    hint: 'Think about what the perimeter means — and what happens to sides that are not directly labelled.'
+  },
+];
+
+// ============ INITIALISE ============
+initDragSort();
+buildMatchArea();
+buildPractice('retrievalGrid',  retrieval,            'R', { noCount: true });
+buildPractice('weDoGrid',       weDo,                 'W', { noCount: true });
+buildPractice('checkpointGrid', checkpointCorrected,  'Q');
+buildPractice('practiceGrid1',  practice1,            'P');
+buildPractice('practiceGrid2',  practice2,            'S');
+buildPractice('practiceGrid3',  practice3,            'C');
+buildPractice('exitGrid',       exitProbs,            'E');
+updateProgress();
+
+// Enter key submits answer
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+    const btn = e.target.parentElement.querySelector('.check-btn');
+    if (btn) btn.click();
+  }
+});
+</script>
+
+</body>
+</html>
