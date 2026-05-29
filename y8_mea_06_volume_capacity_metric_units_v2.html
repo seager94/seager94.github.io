@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volume, Capacity &amp; Metric Unit Conversion — Year 8</title>
+
+<meta name="lesson-id"             content="y8_mea_06">
+<meta name="ac9-descriptor"        content="AC9M8M02">
+<meta name="ac9-elaborations"      content="1,2">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts">
+<meta name="lesson-focus"         content="Convert between cubic units and capacity units; understand that converting cubic units requires cubing the length conversion factor, not just multiplying by it.">
+<meta name="mapping-note"          content="Partial - this lesson covers capacity and metric unit conversion">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg);
+    z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto; padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700;
+    color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; font-size: 1.5rem;
+    color: var(--coral); letter-spacing: 2px; line-height: 1;
+    flex-shrink: 0; padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px;
+    padding: 28px; margin-bottom: 22px;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; color: var(--navy); font-size: 1.4rem;
+    margin: 0 0 6px; display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 200px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold; font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif; font-weight: normal;
+    font-size: 0.72rem; opacity: 0.7; margin-top: 10px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4; text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 10px; padding: 7px 11px 8px;
+    background: var(--hint-bg); border-radius: 6px;
+    font-size: 0.84rem; line-height: 1.4; color: var(--navy);
+    font-style: italic; text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — '; font-style: normal; font-weight: 700;
+    font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* MATCH INTERACTIVE */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1rem;
+    cursor: pointer; transition: all 0.15s; line-height: 1.3;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg); border-radius: 10px;
+    padding: 22px; border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35; transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem; overflow-x: auto; line-height: 1.8;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px; padding: 12px 16px; margin-top: 14px;
+    font-family: Georgia, serif; font-size: 1.1rem; text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9;
+    margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600; margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ERROR ANALYSIS */
+  .error-block {
+    background: #fff6f6; border: 1.5px solid #f0b0b0;
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 18px;
+  }
+  .error-block .error-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--bad); margin-bottom: 10px;
+  }
+  .error-block .error-lines {
+    font-family: Georgia, serif; font-size: 1.1rem; line-height: 2.2;
+  }
+  .error-block .faulty-line {
+    background: #fde2e2; border-left: 3px solid var(--bad);
+    padding: 4px 10px; border-radius: 4px; display: block;
+    margin: 2px 0; color: var(--bad);
+  }
+
+  /* SVG CUBE MODEL */
+  .cube-model-wrap {
+    display: flex; flex-wrap: wrap; gap: 24px;
+    align-items: flex-start; margin: 18px 0;
+  }
+  .cube-model-wrap svg { flex: 1 1 280px; max-width: 360px; height: auto; display: block; }
+  .cube-key {
+    flex: 1 1 240px; padding: 18px;
+    background: var(--hint-bg); border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 0.95rem; line-height: 1.7;
+  }
+  .cube-key .ck-title { font-family: Georgia, serif; font-weight: bold; color: var(--navy); font-size: 1.05rem; margin-bottom: 10px; }
+  .cube-key .ck-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .ck-swatch { width: 22px; height: 22px; border-radius: 4px; flex-shrink: 0; }
+
+  /* CONVERSION CHAIN */
+  .conv-chain {
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: center; gap: 8px; margin: 20px 0;
+  }
+  .conv-box {
+    background: var(--navy); color: white;
+    border-radius: 10px; padding: 14px 18px;
+    text-align: center; font-family: Georgia, serif; min-width: 100px;
+  }
+  .conv-box .unit-label { font-family: -apple-system, sans-serif; font-size: 0.7rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.8px; display: block; margin-bottom: 4px; }
+  .conv-box .unit-val { font-size: 1.3rem; font-weight: bold; }
+  .conv-arrow {
+    display: flex; flex-direction: column; align-items: center;
+    font-size: 0.78rem; color: var(--navy); font-weight: 600; gap: 2px; text-align: center;
+  }
+  .conv-arrow .arr-sym { font-size: 1.4rem; color: var(--coral); line-height: 1; }
+
+  /* CONVERSION TABLE */
+  .conv-table { width: 100%; border-collapse: collapse; font-family: Georgia, serif; font-size: 1rem; margin: 16px 0; }
+  .conv-table th { background: var(--navy); color: white; padding: 10px 14px; text-align: left; font-family: -apple-system, sans-serif; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.7px; }
+  .conv-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .conv-table tr:nth-child(even) td { background: var(--bg); }
+  .conv-table tr.highlight td { background: var(--coral-soft); font-weight: 600; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num {
+    font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif; font-size: 0.92rem;
+    background: white; border: 1px solid var(--border); width: 28px; height: 28px;
+    border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; line-height: 1.55; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px; border: 1.5px solid var(--border);
+    border-radius: 7px; font-family: Georgia, serif; font-size: 1rem; background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px; border-radius: 7px;
+    cursor: pointer; font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px; font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg); padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic; margin-top: 8px;
+    color: var(--navy); display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px; font-size: 0.9rem;
+    margin-top: 8px; font-family: Georgia, serif; display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* PARTS INSTRUCTIONS reuse */
+  .parts-instructions {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 10px 14px; border-radius: 6px;
+    font-size: 0.92rem; margin-bottom: 16px; color: var(--navy);
+  }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px; padding: 0;
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+    border-radius: 4px; font-size: 0.86rem; text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer; padding: 10px 16px;
+    font-weight: 600; color: var(--navy);
+    list-style: none; user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-row .cl-value { color: var(--text); }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .cube-model-wrap { flex-direction: column; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval, section.lesson.exit-ticket {
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem, section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px;
+    border-radius: 999px; font-family: -apple-system, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: white; border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.9rem; color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white; border: 1px solid var(--border); color: var(--muted);
+    padding: 3px 10px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.75rem;
+    font-weight: 600; flex-shrink: 0; white-space: nowrap;
+  }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Volume, Capacity &amp; Metric Unit Conversion</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Measurement</div>
+  </div>
+  <div class="badge">AC9M8M02</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 0 — RETRIEVAL WARM-UP (bookend)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 1 — WHY THIS MATTERS (HOOK)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's measurement challenge.</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start;">
+    <div>
+      <p>You've just bought a new fish tank. The pet shop says it needs at least <strong>180 litres</strong> of water to keep the fish healthy. Your tank measures:</p>
+      <p style="font-family:Georgia,serif; font-size:1.1rem; background:var(--bg); border-radius:8px; padding:12px 16px; border:1px solid var(--border);">
+        90 cm long &times; 40 cm wide &times; 50 cm deep
+      </p>
+      <p>Can the tank hold enough? You need its <strong>capacity in litres</strong> — but the dimensions are in centimetres. To get there, you need to understand how cubic centimetres relate to millilitres, and then millilitres to litres.</p>
+    </div>
+    <div class="parts-instructions" style="margin:0; font-style:normal;">
+      <strong>The big idea today:</strong><br><br>
+      1 cm³ holds exactly <strong>1 mL</strong> of water. That one fact connects volume to capacity.<br><br>
+      From there, the metric ladder takes you the rest of the way:<br>
+      1000 mL = 1 L<br>
+      1 000 000 cm³ = 1 m³<br><br>
+      The tricky part: converting <em>cubic</em> units is not the same as converting lengths. You'll discover exactly why.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, the cube model, and a conversion chain — whole-class exploration.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 2 — VOCABULARY
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and see the definition. These five terms will be used throughout the lesson.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Volume<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The amount of <strong>3-D space</strong> an object occupies, measured in cubic units such as cm³ or m³.<div class="vocab-example">A box 3 cm &times; 4 cm &times; 5 cm has volume <strong>60 cm³.</strong></div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Capacity<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The maximum amount of <strong>liquid a container can hold,</strong> measured in mL or L.<div class="vocab-example">A 600 cm³ jug has capacity <strong>600 mL.</strong></div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Cubic centimetre cm³<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A cube with <strong>each side 1 cm.</strong> It holds exactly <strong>1 mL</strong> of water — the key fact of today's lesson.<div class="vocab-example">A sugar cube is roughly <strong>1 cm³.</strong></div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Litre (L)<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A unit of capacity equal to <strong>1000 mL</strong> or <strong>1000 cm³.</strong><div class="vocab-example">A standard water bottle is <strong>600 mL</strong> — just over half a litre.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Cubic metre m³<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A cube with <strong>each side 1 m.</strong> Contains <strong>1 000 000 cm³</strong> — not 100, because volume is three-dimensional.<div class="vocab-example">A large hot-water unit is about <strong>0.4 m³.</strong></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 3 — CUBIC METRE MODEL + CONVERSION CHAIN
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>The 1 cm³ = 1 mL connection, and the cubic conversion trap</h2>
+  <p class="sec-desc">The diagram shows why converting cubic units requires cubing the length conversion factor — not just using it directly.</p>
+
+  <div class="cube-model-wrap">
+    <!-- Inline SVG: isometric view of 1 m³ cube filled with 1 cm³ small cubes -->
+    <svg viewBox="0 0 360 310" xmlns="http://www.w3.org/2000/svg"
+         role="img" aria-label="Isometric diagram of a 1-metre cube. The large cube is filled with 1 000 000 cubic-centimetre small cubes. One small cube in the bottom-left corner is highlighted in terracotta and labelled 1 cm³ = 1 mL.">
+
+      <!-- Large cube — front face -->
+      <polygon points="60,240 230,240 230,100 60,100" fill="#DDE5F5" stroke="#1F4D54" stroke-width="2.5"/>
+      <!-- Large cube — top face -->
+      <polygon points="60,100 230,100 315,38 145,38" fill="#b4cfe6" stroke="#1F4D54" stroke-width="2.5"/>
+      <!-- Large cube — right face -->
+      <polygon points="230,240 315,178 315,38 230,100" fill="#93b2cc" stroke="#1F4D54" stroke-width="2.5"/>
+
+      <!-- Grid lines on front face — 10 columns × 10 rows -->
+      <line x1="77" y1="100" x2="77" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="94" y1="100" x2="94" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="111" y1="100" x2="111" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="128" y1="100" x2="128" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="145" y1="100" x2="145" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="162" y1="100" x2="162" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="179" y1="100" x2="179" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="196" y1="100" x2="196" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="213" y1="100" x2="213" y2="240" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+
+      <line x1="60" y1="114" x2="230" y2="114" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="128" x2="230" y2="128" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="142" x2="230" y2="142" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="156" x2="230" y2="156" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="170" x2="230" y2="170" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="184" x2="230" y2="184" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="198" x2="230" y2="198" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="212" x2="230" y2="212" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+      <line x1="60" y1="226" x2="230" y2="226" stroke="#1F4D54" stroke-width="0.55" stroke-dasharray="3,3" opacity="0.45"/>
+
+      <!-- Small highlighted cube in bottom-left (1 cm³) — front face -->
+      <rect x="60" y="223" width="17" height="17" fill="#BE5837" stroke="#7a3220" stroke-width="1.5"/>
+      <!-- small cube top face -->
+      <polygon points="60,223 77,223 86,216 69,216" fill="#d96540" stroke="#7a3220" stroke-width="1.5"/>
+      <!-- small cube right face -->
+      <polygon points="77,223 77,240 86,233 86,216" fill="#a03a18" stroke="#7a3220" stroke-width="1.5"/>
+
+      <!-- Arrow + label for small cube -->
+      <line x1="44" y1="232" x2="59" y2="232" stroke="#BE5837" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="42" y="225" font-family="Georgia,serif" font-size="11" fill="#BE5837" font-weight="bold" text-anchor="end">1 cm³</text>
+      <text x="42" y="238" font-family="Georgia,serif" font-size="11" fill="#BE5837" text-anchor="end">= 1 mL</text>
+
+      <!-- 1 m labels -->
+      <text x="28" y="175" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold" text-anchor="middle">1 m</text>
+      <line x1="36" y1="175" x2="58" y2="175" stroke="#1F4D54" stroke-width="1.2"/>
+      <text x="145" y="258" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold" text-anchor="middle">1 m</text>
+
+      <!-- Callout: 1 m³ = 1 000 000 cm³ -->
+      <rect x="192" y="8" width="162" height="28" rx="6" fill="#1F4D54"/>
+      <text x="273" y="27" font-family="Georgia,serif" font-size="13" fill="white" font-weight="bold" text-anchor="middle">1 m³ = 1 000 000 cm³</text>
+      <line x1="273" y1="36" x2="200" y2="105" stroke="#1F4D54" stroke-width="1" stroke-dasharray="5,4"/>
+
+      <!-- Bottom annotation -->
+      <text x="180" y="278" font-family="-apple-system,sans-serif" font-size="12" fill="#1F4D54" text-anchor="middle" font-weight="600">100 × 100 × 100 = 1 000 000 small cubes fit in the big cube</text>
+      <text x="180" y="296" font-family="-apple-system,sans-serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="600">because 1 m = 100 cm in EACH of 3 dimensions</text>
+
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#BE5837"/>
+        </marker>
+      </defs>
+    </svg>
+
+    <div class="cube-key">
+      <div class="ck-title">Reading the diagram</div>
+      <div class="ck-row">
+        <div class="ck-swatch" style="background:#b4cfe6; border:1.5px solid #1F4D54;"></div>
+        <span>Large cube = <strong>1 m³</strong> (each edge = 1 m)</span>
+      </div>
+      <div class="ck-row">
+        <div class="ck-swatch" style="background:#BE5837;"></div>
+        <span>Small cube = <strong>1 cm³ = 1 mL</strong></span>
+      </div>
+      <hr style="border:none; border-top:1px solid var(--border); margin:12px 0;">
+      <p style="margin:0 0 8px; font-weight:600;">Why 1 000 000 and not 100?</p>
+      <p style="margin:0; font-size:0.9rem;">The <em>length</em> conversion is 1 m = 100 cm. But volume fills three directions, so you must cube the factor:</p>
+      <p style="margin:10px 0 0; font-family:Georgia,serif; font-size:1.05rem; text-align:center;">
+        100 &times; 100 &times; 100 = 100<sup>3</sup> = <strong>1 000 000</strong>
+      </p>
+      <p style="margin:10px 0 0; font-size:0.88rem; color:var(--bad); font-weight:600; background:var(--bad-soft); padding:8px 10px; border-radius:6px;">
+        ✗ Named misconception:<br>
+        <em>Linear-versus-cubic conversion-factor error</em><br>
+        Applying the length factor (×100) to a cubic unit gives an answer that is 10 000 times too small.
+      </p>
+    </div>
+  </div>
+
+  <!-- Conversion chain -->
+  <p style="font-family:Georgia,serif; font-weight:bold; color:var(--navy); margin:24px 0 8px; font-size:1.05rem;">
+    Conversion chain — volume and capacity
+  </p>
+  <div class="conv-chain">
+    <div class="conv-box">
+      <span class="unit-label">Volume</span>
+      <span class="unit-val">cm³</span>
+    </div>
+    <div class="conv-arrow">
+      <span style="font-size:0.75rem; color:var(--good); font-weight:600;">× 1</span>
+      <span class="arr-sym">⇄</span>
+      <span style="font-size:0.75rem; color:var(--bad); font-weight:600;">÷ 1</span>
+    </div>
+    <div class="conv-box">
+      <span class="unit-label">Capacity</span>
+      <span class="unit-val">mL</span>
+    </div>
+    <div class="conv-arrow">
+      <span style="font-size:0.75rem; color:var(--good); font-weight:600;">÷ 1000</span>
+      <span class="arr-sym">⇄</span>
+      <span style="font-size:0.75rem; color:var(--bad); font-weight:600;">× 1000</span>
+    </div>
+    <div class="conv-box">
+      <span class="unit-label">Capacity</span>
+      <span class="unit-val">L</span>
+    </div>
+    <div class="conv-arrow">
+      <span style="font-size:0.75rem; color:var(--good); font-weight:600;">× 1000</span>
+      <span class="arr-sym">⇄</span>
+      <span style="font-size:0.75rem; color:var(--bad); font-weight:600;">÷ 1000</span>
+    </div>
+    <div class="conv-box">
+      <span class="unit-label">Volume</span>
+      <span class="unit-val">m³</span>
+    </div>
+  </div>
+
+  <table class="conv-table">
+    <thead>
+      <tr>
+        <th>Conversion</th>
+        <th>To go from left to right</th>
+        <th>To go from right to left</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight"><td>cm³ ↔ mL</td><td>× 1 (they are equal — no calculation needed)</td><td>× 1</td></tr>
+      <tr><td>mL → L</td><td>÷ 1000</td><td>× 1000</td></tr>
+      <tr><td>L → mL</td><td>× 1000</td><td>÷ 1000</td></tr>
+      <tr class="highlight"><td>cm³ ↔ m³</td><td>÷ 1 000 000</td><td>× 1 000 000</td></tr>
+      <tr><td>m³ → L</td><td>× 1000</td><td>÷ 1000</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 4 — MATCHING
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match equivalent measurements</h2>
+  <p class="sec-desc">Click two measurements that are equal to match them. There are five pairs — find them all.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a measurement to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through four core conversion examples, step by step — reveal each one in turn.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 5 — WORKED EXAMPLES (I DO)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples — four key conversion types</h2>
+  <p class="sec-desc">We'll work through: (A) cm³ ↔ mL, (B) mL ↔ L, (C) cm³ ↔ m³, (D) a practical fish-tank problem.</p>
+
+  <div class="worked">
+    <!-- Step 1 always visible -->
+    <div class="step visible" id="step1">
+      <div class="step-num">A</div>
+      <div class="step-body">
+        <div class="step-title">Cubic centimetres to/from millilitres</div>
+        <div class="step-desc">Since 1 cm³ = 1 mL exactly, the <em>number</em> stays the same — only the label on the unit changes.</div>
+        <div class="calc-box">
+          Convert <span class="blue">450 cm³</span> to mL:<br>
+          450 cm³ = <span class="red">450 mL</span><br><br>
+          Convert <span class="blue">3200 mL</span> to cm³:<br>
+          3200 mL = <span class="red">3200 cm³</span><br><br>
+          <span style="font-size:0.88rem; color:var(--muted);">Key fact: cm³ and mL are interchangeable — the number is always identical.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">B</div>
+      <div class="step-body">
+        <div class="step-title">Millilitres to/from litres</div>
+        <div class="step-desc">There are 1000 mL in every litre. Divide to go up to litres; multiply to go back down.</div>
+        <div class="calc-box">
+          Convert <span class="blue">2500 mL</span> to litres:<br>
+          2500 &divide; 1000 = <span class="red">2.5 L</span><br><br>
+          Convert <span class="blue">0.75 L</span> to mL:<br>
+          0.75 &times; 1000 = <span class="red">750 mL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">C</div>
+      <div class="step-body">
+        <div class="step-title">Cubic centimetres to/from cubic metres</div>
+        <div class="step-desc">Length: 1 m = 100 cm. Volume (three dimensions): 100³ = 1 000 000. So 1 m³ = 1 000 000 cm³.</div>
+        <div class="calc-box">
+          Convert <span class="blue">5 000 000 cm³</span> to m³:<br>
+          5 000 000 &divide; 1 000 000 = <span class="red">5 m³</span><br><br>
+          Convert <span class="blue">2.4 m³</span> to cm³:<br>
+          2.4 &times; 1 000 000 = <span class="red">2 400 000 cm³</span><br><br>
+          <span style="font-size:0.9rem; color:var(--bad); font-weight:600;">⚠ The conversion factor is 1 000 000, not 100. Using 100 is the linear-versus-cubic error.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step4">
+      <div class="step-num">D</div>
+      <div class="step-body">
+        <div class="step-title">Fish tank capacity in litres</div>
+        <div class="step-desc">Find volume in cm³ first, then convert step by step: cm³ → mL (same number) → L (÷ 1000).</div>
+        <div class="calc-box">
+          Tank: 90 cm &times; 40 cm &times; 50 cm<br><br>
+          Step 1 — Volume: 90 &times; 40 &times; 50 = <span class="blue">180 000 cm³</span><br>
+          Step 2 — cm³ to mL: 180 000 cm³ = <span class="blue">180 000 mL</span><br>
+          Step 3 — mL to L: 180 000 &divide; 1000 = <span class="red">180 L</span>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          The tank holds exactly 180 L — just enough for the fish!
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next example ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Error analysis — spot and fix the mistake</div>
+    <div class="phase-sub">A student's worked solution has one faulty line. Discuss with your neighbour, then answer the prompts together.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 6 — WE DO (ERROR ANALYSIS)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — identify the linear-versus-cubic conversion-factor error</h2>
+  <p class="sec-desc">A student converted 3 m³ to cm³. Read their working below, find the faulty line, then answer the three prompts together.</p>
+
+  <div class="error-block">
+    <div class="error-label">⚠ Student's attempt — one line contains the named misconception</div>
+    <div class="error-lines">
+      <div>Question: Convert 3 m³ to cm³.</div>
+      <div>Step 1: I know that 1 m = 100 cm. &nbsp; ✓</div>
+      <span class="faulty-line">Step 2: So 1 m³ = 100 cm³. &nbsp; ← Faulty line</span>
+      <div>Step 3: Therefore 3 m³ = 3 × 100 = 300 cm³.</div>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 <strong>Discuss with your neighbour:</strong> Which line is wrong and why? What should Step 2 say? Why can't you just use the length factor?
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top:18px;">
+    💡 <strong>Why the error happens:</strong> The length conversion (1 m = 100 cm) only scales <em>one</em> dimension. Volume fills three dimensions, so the factor must be applied three times: 100 × 100 × 100 = <strong>1 000 000.</strong> The student's answer of 300 cm³ is 10 000 times too small.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first, then choose your tier: Building, Stretch, or Mastery.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 7 — QUICK CHECK
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the key conversions. Try them independently — <strong>then we'll check together as a class</strong> before you open a chilli tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Wait for the class check before opening a chilli tier.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 8 — PRACTICE: BUILDING (open by default)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Single-step conversions between cm³, mL, L, and m³. Type the number only (no unit labels). Use decimal notation where needed (e.g. 0.25, 2.5).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 9 — PRACTICE: STRETCH (collapsed)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Multi-step conversions and practical capacity problems. Some questions require two or three conversion steps — plan before you calculate.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 10 — PRACTICE: MASTERY (collapsed)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Practical problems requiring sensible unit choice, multi-step reasoning, and written explanation. Some open-response questions won't auto-mark — be ready to discuss your reasoning.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 11 — EXIT TICKET (bookend)
+════════════════════════════════════════════════════════════════ -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 &middot; Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8M02</strong> — solve problems involving the volume and capacity of right prisms using appropriate units</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 2</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Convert between cubic units and capacity units; understand that converting cubic units requires cubing the length conversion factor, not just multiplying by it.</span>
+    </div>
+    <div class="cl-note">Mapping: Partial — this lesson covers capacity and metric unit conversion. Lesson ID y8_mea_06. Source: SA Curriculum (Mathematics R-10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics &middot; Year 8 &middot; Volume, Capacity &amp; Metric Unit Conversion
+</footer>
+
+</div><!-- /.page -->
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let totalProblems = 0;
+let correctCount  = 0;
+let currentStep   = 1;
+const MAX_STEPS   = 4;
+
+// ============================================================
+// TEACHER MODE
+// ============================================================
+function toggleTeacher() {
+  document.body.classList.toggle('teacher-mode');
+  document.getElementById('teacherToggle').classList.toggle('active');
+}
+
+// ============================================================
+// WORKED EXAMPLE STEP REVEAL
+// ============================================================
+function revealNextStep() {
+  currentStep++;
+  const step = document.getElementById('step' + currentStep);
+  if (step) step.classList.add('visible');
+  if (currentStep >= MAX_STEPS) {
+    const btn = document.getElementById('revealBtn');
+    btn.disabled = true;
+    btn.textContent = '✓ All examples shown';
+  }
+}
+
+// ============================================================
+// MATCHING
+// ============================================================
+const matchTerms = [
+  { html: '1 cm³',          group: 1 },
+  { html: '1000 mL',        group: 2 },
+  { html: '2500 cm³',       group: 3 },
+  { html: '0.001 m³',       group: 4 },
+  { html: '5 000 000 cm³',  group: 5 },
+  { html: '1 mL',           group: 1 },
+  { html: '1 L',            group: 2 },
+  { html: '2.5 L',          group: 3 },
+  { html: '1000 cm³',       group: 4 },
+  { html: '5 m³',           group: 5 },
+];
+
+let matchSelected = null;
+let matchedGroups = new Set();
+
+function buildMatchArea() {
+  const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+  const area = document.getElementById('matchArea');
+  area.innerHTML = '';
+  shuffled.forEach(function(t, i) {
+    const chip = document.createElement('div');
+    chip.className = 'match-chip expr';
+    chip.innerHTML = t.html;
+    chip.dataset.group = t.group;
+    chip.dataset.idx = i;
+    chip.onclick = function() { handleMatchClick(chip); };
+    area.appendChild(chip);
+  });
+}
+
+function handleMatchClick(chip) {
+  if (chip.className.includes('matched-')) return;
+  if (matchSelected === chip) {
+    chip.classList.remove('selected');
+    matchSelected = null;
+    return;
+  }
+  if (!matchSelected) {
+    matchSelected = chip;
+    chip.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Now pick its equivalent.';
+    return;
+  }
+  if (matchSelected.dataset.group === chip.dataset.group) {
+    var g = chip.dataset.group;
+    matchSelected.classList.remove('selected');
+    matchSelected.classList.add('matched-' + g);
+    chip.classList.add('matched-' + g);
+    matchedGroups.add(g);
+    document.getElementById('matchFeedback').textContent =
+      matchedGroups.size === 5 ? '🎉 All five pairs matched!' : 'Matched! (' + matchedGroups.size + '/5)';
+    matchSelected = null;
+  } else {
+    var w1 = matchSelected, w2 = chip;
+    w1.classList.add('selected'); w2.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = '✗ Not equivalent — check your conversion.';
+    setTimeout(function() {
+      w1.classList.remove('selected'); w2.classList.remove('selected');
+    }, 700);
+    matchSelected = null;
+  }
+}
+
+// ============================================================
+// PROBLEM DATA
+// ============================================================
+
+const retrieval = [
+  {
+    q: 'A rectangular prism is 6 cm &times; 5 cm &times; 4 cm. Calculate its volume in cm³.',
+    a: '120',
+    hint: 'Volume = length × width × height.'
+  },
+  {
+    q: 'How many centimetres are in 1 metre?',
+    a: '100',
+    hint: 'The prefix "centi-" means one-hundredth.'
+  },
+  {
+    q: 'Calculate: 360 000 ÷ 1000.',
+    a: '360',
+    hint: 'Dividing by 1000 shifts the decimal three places to the left.'
+  },
+];
+
+const weDo = [
+  {
+    q: 'Step 2 in the student\'s working says "1 m³ = 100 cm³". What is the <strong>correct</strong> number of cm³ in 1 m³?',
+    a: '1000000',
+    hint: '1 m = 100 cm. For volume you cube this: 100 × 100 × 100 = ?'
+  },
+  {
+    q: 'Using the correct conversion factor, what is <strong>3 m³</strong> expressed in cm³?',
+    a: '3000000',
+    hint: '3 × 1 000 000 = ?'
+  },
+  {
+    q: 'In one sentence, explain <em>why</em> the conversion factor for m³ → cm³ is 1 000 000 and not 100.',
+    a: 'TEXT',
+    hint: 'Think about what "cubic" means — volume is three-dimensional, so the length factor must be applied in each of three directions.'
+  },
+];
+
+const checkpoint = [
+  {
+    q: 'Convert <strong>650 cm³</strong> to mL.',
+    a: '650',
+    hint: '1 cm³ = 1 mL — the number stays the same.'
+  },
+  {
+    q: 'Convert <strong>3500 mL</strong> to litres.',
+    a: '3.5',
+    hint: 'Divide by 1000. 3500 ÷ 1000 = ?'
+  },
+];
+
+const practice1 = [
+  { q: 'Convert <strong>900 cm³</strong> to mL.',          a: '900',     hint: '1 cm³ = 1 mL. The number is unchanged.' },
+  { q: 'Convert <strong>2400 mL</strong> to cm³.',         a: '2400',    hint: '1 mL = 1 cm³. The number is unchanged.' },
+  { q: 'Convert <strong>5000 mL</strong> to litres.',      a: '5',       hint: 'Divide by 1000. 5000 ÷ 1000 = ?' },
+  { q: 'Convert <strong>1.5 L</strong> to mL.',            a: '1500',    hint: 'Multiply by 1000. 1.5 × 1000 = ?' },
+  { q: 'Convert <strong>0.25 L</strong> to mL.',           a: '250',     hint: '0.25 × 1000 = ?' },
+  { q: 'Convert <strong>6 000 000 cm³</strong> to m³.',   a: '6',       hint: 'Divide by 1 000 000.' },
+  { q: 'Convert <strong>0.3 m³</strong> to cm³.',          a: '300000',  hint: '0.3 × 1 000 000 = ?' },
+  { q: 'Convert <strong>750 cm³</strong> to litres.',      a: '0.75',    hint: '750 cm³ = 750 mL. Then 750 ÷ 1000 = ?' },
+  { q: 'Convert <strong>4.8 L</strong> to cm³.',           a: '4800',    hint: '4.8 L = 4800 mL = 4800 cm³.' },
+  { q: 'Convert <strong>500 000 cm³</strong> to m³.',      a: '0.5',     hint: '500 000 ÷ 1 000 000 = ?' },
+];
+
+const practice2 = [
+  {
+    q: 'A swimming pool holds <strong>96 000 L</strong> of water. Convert this to m³.',
+    a: '96',
+    hint: '1 m³ = 1000 L. Divide 96 000 by 1000.'
+  },
+  {
+    q: 'A rectangular tank is <strong>120 cm &times; 50 cm &times; 60 cm.</strong> Find its capacity in litres.',
+    a: '360',
+    hint: 'Volume = 120 × 50 × 60 cm³. Then: cm³ → mL (same), mL → L (÷ 1000).'
+  },
+  {
+    q: 'A garden pond has volume <strong>3.5 m³.</strong> How many litres does it hold? (Use: 1 m³ = 1000 L)',
+    a: '3500',
+    hint: 'Multiply by 1000.'
+  },
+  {
+    q: 'Convert <strong>0.004 m³</strong> to mL.',
+    a: '4000',
+    hint: '0.004 m³ × 1 000 000 = 4000 cm³ = 4000 mL.'
+  },
+  {
+    q: 'A cube-shaped container has side length <strong>40 cm.</strong> Find its capacity in litres.',
+    a: '64',
+    hint: 'Volume = 40³ = 64 000 cm³ = 64 000 mL. Then ÷ 1000.'
+  },
+  {
+    q: 'A water bottle has capacity <strong>750 mL.</strong> How many full bottles are needed to fill a <strong>15 L</strong> bucket?',
+    a: '20',
+    hint: '15 L = 15 000 mL. Divide by 750.'
+  },
+];
+
+const practice3 = [
+  {
+    q: 'A front-loading washing machine has a drum volume of <strong>0.06 m³.</strong> Convert this to litres, then explain whether mL or L is the more sensible unit for describing its capacity.',
+    a: 'TEXT',
+    hint: '0.06 m³ = 60 000 cm³ = 60 000 mL = 60 L. Which gives a more practical number for everyday use?'
+  },
+  {
+    q: 'A builder claims a <strong>0.5 m³</strong> storage tank holds <strong>500 L.</strong> Is the builder correct? Type 500 if yes (show your working on paper).',
+    a: '500',
+    hint: '1 m³ = 1000 L. So 0.5 m³ = 500 L. The builder is correct.'
+  },
+  {
+    q: 'A raised garden bed is <strong>2.5 m &times; 1.2 m &times; 0.3 m.</strong> How many <strong>10-litre</strong> bags of soil fill it exactly?',
+    a: '90',
+    hint: 'Volume = 2.5 × 1.2 × 0.3 = 0.9 m³ = 900 L. Then 900 ÷ 10 = ?'
+  },
+  {
+    q: 'Container A: 60 cm &times; 40 cm &times; 30 cm. Container B: <strong>0.08 m³.</strong> Which holds more, and by how many litres?',
+    a: '8',
+    hint: 'A: 60×40×30 = 72 000 cm³ = 72 L. B: 0.08 m³ = 80 000 cm³ = 80 L. Difference = 80 − 72 = ?'
+  },
+];
+
+const exitProbs = [
+  {
+    q: 'How many mL are in exactly <strong>1 cm³?</strong>',
+    a: '1',
+    hint: 'This is the fundamental equivalence introduced in today\'s lesson.'
+  },
+  {
+    q: 'A student says "1 m³ = 100 cm³ because 1 m = 100 cm." What is the correct value, and what is the name of the error they made?',
+    a: 'TEXT',
+    hint: 'Correct value: 1 m³ = 1 000 000 cm³. The error is the linear-versus-cubic conversion-factor error.'
+  },
+  {
+    q: 'A box is <strong>80 cm &times; 50 cm &times; 30 cm.</strong> Find its capacity in litres.',
+    a: '120',
+    hint: '80 × 50 × 30 = 120 000 cm³ = 120 000 mL. Then ÷ 1000.'
+  },
+];
+
+// ============================================================
+// CORE FRAMEWORK — copy verbatim from template
+// ============================================================
+
+function normaliseAnswer(s) {
+  return (s || '')
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/,/g, '')
+    .replace(/\*/g, '')
+    .replace(/^\+/, '');
+}
+
+function answerMatches(input, expected) {
+  if (expected === 'TEXT') return null;
+  var norm = normaliseAnswer(input);
+  var exp  = normaliseAnswer(expected);
+  if (norm === exp) return true;
+  var n = parseFloat(norm);
+  var e = parseFloat(exp);
+  if (!isNaN(n) && !isNaN(e) && Math.abs(n - e) < 0.005) return true;
+  var splitTerms = function(s) { return s.replace(/-/g, '+-').split('+').filter(Boolean).sort(); };
+  return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+}
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  var grid    = document.getElementById(containerId);
+  var noCount = !!options.noCount;
+
+  problems.forEach(function(p, i) {
+    var idx = prefix + (i + 1);
+    var div = document.createElement('div');
+    div.className = 'problem';
+
+    var checkBtnHtml = p.a !== 'TEXT' ? '<button class="check-btn">Check</button>' : '';
+
+    div.innerHTML =
+      '<div class="problem-q">' +
+        '<div class="problem-num">' + idx + '</div>' +
+        '<div class="problem-expr">' + p.q + '</div>' +
+      '</div>' +
+      '<div class="problem-input-row">' +
+        '<span class="eq">=</span>' +
+        '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">' +
+        checkBtnHtml +
+      '</div>' +
+      '<div class="problem-tools">' +
+        '<button class="hint-link">Show hint</button>' +
+        '<button class="answer-link">Show answer</button>' +
+      '</div>' +
+      '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+      '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> <span class="expr">' + formatAnswerDisplay(p.a) + '</span></div>';
+
+    var cb = div.querySelector('.check-btn');
+    if (cb) {
+      (function(capturedIdx, capturedA, capturedNoCount) {
+        cb.addEventListener('click', function() { checkAnswer(capturedIdx, capturedA, capturedNoCount); });
+      }(idx, p.a, noCount));
+    }
+    (function(capturedIdx) {
+      div.querySelector('.hint-link').addEventListener('click',   function() { toggleHint(capturedIdx); });
+      div.querySelector('.answer-link').addEventListener('click', function() { toggleAnswer(capturedIdx); });
+    }(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+function formatAnswerDisplay(a) {
+  if (a === 'TEXT') return 'Open response — discuss your reasoning with the class.';
+  var r = a.replace(/([a-zA-Z]+)/g, '<span class="var">$1</span>');
+  r = r.replace(/(-?\d+)\/(\d+)/g, function(_, n, d) {
+    var neg = n.charAt(0) === '-';
+    var num = neg ? n.slice(1) : n;
+    return (neg ? '&minus; ' : '') +
+      '<span class="frac"><span class="num">' + num + '</span><span class="den">' + d + '</span></span>';
+  });
+  r = r.replace(/-/g, ' &minus; ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+  return r;
+}
+
+function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+function checkAnswer(idx, expected, noCount) {
+  var input  = document.getElementById('inp-' + idx);
+  var result = answerMatches(input.value, expected);
+  input.classList.remove('correct', 'incorrect');
+  if (result === true) {
+    input.classList.add('correct');
+    if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+  } else if (result === false) {
+    input.classList.add('incorrect');
+    if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+  }
+  if (!noCount) updateProgress();
+}
+
+function updateProgress() {
+  document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+  var pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function toggleTier(id) {
+  var sec  = document.getElementById(id);
+  var open = sec.classList.toggle('open');
+  sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) { setTimeout(function() { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50); }
+}
+
+// ============================================================
+// INITIALISE
+// ============================================================
+buildMatchArea();
+buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+buildPractice('checkpointGrid', checkpoint, 'Q');
+buildPractice('practiceGrid1',  practice1,  'P');
+buildPractice('practiceGrid2',  practice2,  'S');
+buildPractice('practiceGrid3',  practice3,  'C');
+buildPractice('exitGrid',       exitProbs,  'E');
+updateProgress();
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+    var btn = e.target.parentElement.querySelector('.check-btn');
+    if (btn) btn.click();
+  }
+});
+</script>
+
+</body>
+</html>

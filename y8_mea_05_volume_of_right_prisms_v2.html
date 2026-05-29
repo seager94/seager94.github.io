@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON
+  Year 8 · Measurement · Volume of Right Prisms
+  Lesson ID: y8_mea_05
+  AC9: AC9M8M02
+  SA Curriculum Mathematics R-10 Prototype 2
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volume of Right Prisms — Year 8</title>
+
+<meta name="lesson-id"             content="y8_mea_05">
+<meta name="ac9-descriptor"        content="AC9M8M02">
+<meta name="ac9-elaborations"      content="2,3,4">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts">
+<meta name="lesson-focus"          content="Volume of any right prism = area of cross-section × length; apply to rectangular, triangular, trapezoidal and composite cross-sections; rearrange to find a missing dimension.">
+<meta name="mapping-note"          content="Partial - this lesson covers the volume of prisms aspect of the descriptor">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white; font-weight: 700;
+    font-size: 0.78rem; padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px; font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg); z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy); color: var(--navy);
+    padding: 12px 16px; border-radius: 6px; font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700; color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    font-size: 1.5rem; color: var(--coral); letter-spacing: 2px; line-height: 1;
+    flex-shrink: 0; padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px; padding: 28px;
+    margin-bottom: 22px; box-shadow: var(--shadow);
+    border: 1px solid var(--border); position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    color: var(--navy); font-size: 1.4rem; margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white; width: 32px; height: 32px;
+    border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem; flex-shrink: 0;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATHS TYPOGRAPHY */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 200px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.2rem; }
+  .vocab-front .hint-flip { font-family: -apple-system, sans-serif; font-weight: normal; font-size: 0.72rem; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .vocab-back { background: white; color: var(--text); transform: rotateY(180deg); font-size: 0.95rem; line-height: 1.4; text-wrap: balance; }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example { display: block; margin-top: 10px; padding: 7px 11px 8px; background: var(--hint-bg); border-radius: 6px; font-size: 0.84rem; line-height: 1.4; color: var(--navy); font-style: italic; text-wrap: balance; }
+  .vocab-example::before { content: 'EXAMPLE — '; font-style: normal; font-weight: 700; font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px; }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* DRAG SORT */
+  .parts-expr { text-align: center; background: var(--card); border: 1.5px solid var(--border); border-radius: 10px; padding: 26px; margin-bottom: 18px; box-shadow: var(--shadow); }
+  .parts-expr .label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; }
+  .term-chip {
+    display: inline-block; padding: 6px 12px; margin: 4px;
+    border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer;
+    background: white; font-family: Georgia, serif; font-size: 1.05rem;
+    transition: all 0.2s; touch-action: none; user-select: none;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.cross-section { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.length { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white; padding: 6px 12px; border: 1.5px solid var(--navy);
+    border-radius: 8px; font-family: Georgia, serif; font-size: 1.05rem;
+  }
+  .bucket.drop-target { background: var(--coral-soft); border-color: var(--coral); border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18); }
+  .term-chip.wrong-drop { animation: shake 0.45s; background: var(--bad-soft) !important; border-color: var(--bad) !important; color: var(--bad) !important; }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+  .parts-instructions { background: var(--hint-bg); border-left: 4px solid var(--navy); padding: 10px 14px; border-radius: 6px; font-size: 0.92rem; font-style: italic; margin-bottom: 16px; color: var(--navy); }
+  .parts-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .bucket { background: var(--bg); border-radius: 10px; padding: 14px; border: 1.5px dashed var(--border); min-height: 80px; }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* MATCHING */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 10px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 0.95rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: -apple-system, sans-serif; }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow); font-family: Georgia, serif; font-size: 1.15rem; overflow-x: auto; }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner { background: var(--coral); color: white; border-radius: 8px; padding: 12px 16px; margin-top: 14px; font-family: Georgia, serif; font-size: 1.1rem; text-align: center; }
+  .summary-banner .label { font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block; }
+  .reveal-btn { background: var(--navy); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.92rem; font-weight: 600; margin-top: 10px; }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num { font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif; font-size: 0.92rem; background: white; border: 1px solid var(--border); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input { flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px; font-family: Georgia, serif; font-size: 1rem; background: white; }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn { background: var(--coral); color: white; border: none; padding: 8px 14px; border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600; }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link { color: var(--navy); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font: inherit; }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box { background: var(--hint-bg); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none; }
+  .hint-box.visible { display: block; }
+  .answer-box { background: var(--good-soft); color: #1d4a30; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none; }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link { margin: 18px 0 4px; padding: 0; background: #eaf0f1; border-left: 5px solid var(--navy); border-radius: 4px; font-size: 0.86rem; text-align: left; }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-row .cl-value { color: var(--text); }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket { background: #eaf0f1; border-left: 5px solid var(--navy); }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px; font-family: -apple-system, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron { width: 32px; height: 32px; border-radius: 8px; background: white; border: 1.5px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; color: var(--navy); transition: transform 0.25s ease; }
+  .accordion-count { background: white; border: 1px solid var(--border); color: var(--muted); padding: 3px 10px; border-radius: 999px; font-family: -apple-system, sans-serif; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* WORKED EXAMPLE DIAGRAM */
+  .svg-diagram { display: flex; justify-content: center; margin: 10px 0 14px; }
+  .svg-diagram svg { max-width: 100%; height: auto; }
+
+  /* ERROR CALLOUT */
+  .error-callout { background: #fff4f0; border-left: 4px solid var(--coral); border-radius: 6px; padding: 12px 16px; margin: 12px 0; font-size: 0.93rem; }
+  .error-callout .error-label { font-weight: 700; color: var(--coral); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+
+  /* LAYOUT */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .example-block { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .example-block:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .example-heading { font-weight: 700; color: var(--navy); font-family: Georgia, serif; font-size: 1.05rem; margin: 0 0 4px; }
+  .example-subhead { color: var(--muted); font-size: 0.92rem; margin: 0 0 12px; }
+
+  /* KEY FORMULA BOX */
+  .formula-box {
+    background: var(--navy); color: white; border-radius: 12px;
+    padding: 18px 24px; margin: 16px 0; text-align: center;
+  }
+  .formula-box .formula-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-bottom: 6px; }
+  .formula-box .formula-main { font-family: Georgia, serif; font-size: 1.45rem; font-weight: bold; }
+  .formula-box .formula-note { font-size: 0.85rem; opacity: 0.85; margin-top: 6px; font-style: italic; }
+
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Volume of Right Prisms</h1>
+    <div class="subtitle">Year 8 &middot; SA Curriculum &middot; Measurement</div>
+  </div>
+  <div class="badge">AC9M8M02</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>&#128065;</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══ SECTION 0: RETRIEVAL WARM-UP ═══ -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up &mdash; quick recall
+    <span class="retrieval-tag">&#129504; 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions on area formulas &mdash; the exact skills you need today. Try them without looking at notes.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ═══ SECTION 1: WHY THIS MATTERS ═══ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">Real situations where the volume of a prism drives decisions.</p>
+  <div class="two-col">
+    <div>
+      <p>A builder is pouring a concrete footing for a retaining wall. The footing has an L-shaped cross-section and runs for <strong>12 metres.</strong> To order the right amount of concrete, the builder must calculate the exact volume &mdash; too little and the job stalls; too much wastes money.</p>
+      <p>A juice company is switching from square cartons to triangular-prism-shaped bottles. They need to know which holds more liquid at the same packaging cost.</p>
+      <p>Both problems reduce to the same question: <em>how much 3D space does this shape occupy?</em></p>
+    </div>
+    <div style="background: var(--hint-bg); border-left: 4px solid var(--navy); padding: 16px; border-radius: 6px; font-style: italic; color: var(--navy);">
+      Every right prism has a <strong>constant cross-section</strong> &mdash; the same shape all the way through.<br><br>
+      Volume = <strong>area of that cross-section</strong> &times; <strong>length</strong> of the prism.<br><br>
+      Today you will apply this single formula to four different cross-section shapes, including composite ones.
+    </div>
+  </div>
+</section>
+
+<!-- ─── AS A CLASS ─── -->
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration &mdash; whole class activity.</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2: VOCABULARY ═══ -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip it and reveal the definition. You will use all five terms today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Right prism<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A 3D solid with <strong>two identical parallel faces</strong> (the cross-sections) joined by rectangular lateral faces perpendicular to them.<div class="vocab-example">A wooden plank, a Toblerone box, a concrete beam &mdash; all right prisms.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Cross-section<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>face you see</strong> when you slice a prism perpendicular to its length. The same shape appears all the way through.<div class="vocab-example">Cutting a triangular prism through its middle reveals a triangle &mdash; that is the cross-section.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Volume<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The amount of <strong>3D space</strong> a solid occupies, measured in cubic units (cm&sup3;, m&sup3;, mm&sup3;).<div class="vocab-example">A box 10 cm &times; 5 cm &times; 3 cm has volume 150 cm&sup3; &mdash; it fits exactly 150 unit cubes.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Length<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>depth</strong> of a prism &mdash; how far the cross-section is extruded into 3D. Sometimes called depth or height depending on orientation.<div class="vocab-example">A triangular prism lying on its side: the cross-section is the triangle; the length is how far the prism extends.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Composite shape<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A shape built from <strong>two or more simpler shapes</strong> joined together. Its area = sum of the parts (or larger minus the removed part).<div class="vocab-example">An L-shape = two rectangles joined. Calculate each rectangle&rsquo;s area, then add.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 3: DRAG SORT ═══ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Cross-section or length?</h2>
+  <p class="sec-desc">The formula is <span class="expr"><span class="var">V</span> = <span class="var">A</span> &times; <span class="var">l</span></span>. Drag each label into the correct bucket.</p>
+
+  <div class="parts-expr">
+    <div class="label">Sort each dimension &mdash; cross-section face, or length of the prism?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="cross-section">Triangle at the end of a ramp</span>
+      <span class="term-chip" data-type="length">How long the ramp extends</span>
+      <span class="term-chip" data-type="cross-section">Rectangle on the face of a plank</span>
+      <span class="term-chip" data-type="length">Depth of a swimming pool lane</span>
+      <span class="term-chip" data-type="cross-section">Trapezoid cut of a wedge doorstop</span>
+      <span class="term-chip" data-type="length">Run of a concrete footing</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="cross-section">
+        <h4 class="vt">Cross-section &mdash; find its area (A)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="length">
+        <h4 class="ct">Length of the prism (l) &mdash; the extrusion distance</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">&#8634; Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    &#128161; Identifying the cross-section is the key step. Ask: <strong>if I slice this prism cleanly in half, what shape is revealed?</strong> That shape&rsquo;s area goes into the formula.
+  </div>
+</section>
+
+<!-- ═══ SECTION 4: MATCH ═══ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the cross-section to its area formula</h2>
+  <p class="sec-desc">Click two cards that belong together. There are five matching pairs.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<!-- ─── I DO ─── -->
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">Four worked examples &mdash; simple to compound cross-sections. Click Reveal next step on each one.</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5: WORKED EXAMPLES ═══ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples</h2>
+  <p class="sec-desc">Four prism types, each with the cross-section shaded in the diagram. Click <strong>Reveal next step</strong> to see the working unfold.</p>
+
+  <div class="formula-box">
+    <div class="formula-label">Key formula &mdash; works for every right prism</div>
+    <div class="formula-main"><span class="var">V</span> = area of cross-section &times; length</div>
+    <div class="formula-note">Find the area of the shaded end-face first, then multiply by the length of the prism.</div>
+  </div>
+
+  <!-- ── Example A: Rectangular prism ── -->
+  <div class="example-block">
+    <p class="example-heading">Example A &mdash; Rectangular prism</p>
+    <p class="example-subhead">A rectangular prism is 8 cm long, 5 cm wide and 3 cm tall. Find its volume.</p>
+
+    <div class="svg-diagram">
+      <svg viewBox="0 0 300 185" width="300" height="185" xmlns="http://www.w3.org/2000/svg"
+           aria-label="Rectangular prism. Cross-section (5 cm by 3 cm) is the shaded front face. Length 8 cm runs into the page.">
+        <!-- Back face -->
+        <polygon points="110,18 210,18 210,108 110,108" fill="#c5dce0" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Top face -->
+        <polygon points="50,48 110,18 210,18 150,48" fill="#daeef1" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Right lateral face -->
+        <polygon points="210,18 270,48 270,138 210,108" fill="#b8d4d8" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Front face — shaded cross-section -->
+        <polygon points="50,48 150,48 150,138 50,138" fill="#1F4D54" fill-opacity="0.20" stroke="#1F4D54" stroke-width="2.5"/>
+        <!-- hatch lines on front face -->
+        <line x1="80" y1="48" x2="50" y2="78" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="110" y1="48" x2="50" y2="108" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="140" y1="48" x2="50" y2="138" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="150" y1="58" x2="60" y2="148" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="150" y1="88" x2="90" y2="148" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="150" y1="118" x2="120" y2="148" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <!-- Width label (bottom of front face) -->
+        <line x1="50" y1="153" x2="150" y2="153" stroke="#BE5837" stroke-width="1.5" marker-start="url(#arr)" marker-end="url(#arr)"/>
+        <text x="100" y="167" font-family="Georgia,serif" font-size="13" fill="#BE5837" text-anchor="middle" font-weight="bold">5 cm</text>
+        <!-- Height label (left of front face) -->
+        <line x1="36" y1="48" x2="36" y2="138" stroke="#BE5837" stroke-width="1.5"/>
+        <text x="24" y="97" font-family="Georgia,serif" font-size="13" fill="#BE5837" text-anchor="middle" font-weight="bold">3 cm</text>
+        <!-- Length label along top -->
+        <line x1="150" y1="36" x2="270" y2="36" stroke="#1F4D54" stroke-width="1.5"/>
+        <text x="210" y="30" font-family="Georgia,serif" font-size="13" fill="#1F4D54" text-anchor="middle" font-weight="bold">8 cm</text>
+        <!-- cross-section label -->
+        <text x="100" y="98" font-family="-apple-system,sans-serif" font-size="10" fill="#1F4D54" text-anchor="middle" font-weight="700" opacity="0.8">cross-section</text>
+      </svg>
+    </div>
+
+    <div class="worked">
+      <div class="step visible" id="stepA1">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Identify the cross-section and find its area</div>
+          <div class="step-desc">The shaded face is a rectangle, 5 cm wide and 3 cm tall.</div>
+          <div class="calc-box"><span class="blue">A</span> = 5 &times; 3 = <span class="blue">15 cm&sup2;</span></div>
+        </div>
+      </div>
+      <div class="step" id="stepA2">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Multiply by the length</div>
+          <div class="step-desc">The prism extends 8 cm. Apply the formula.</div>
+          <div class="calc-box">
+            <span class="blue">V</span> = <span class="blue">A</span> &times; <span class="var">l</span><br>
+            = 15 &times; 8<br>
+            = <span class="red">120 cm&sup3;</span>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="stepA3">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Note: the same as length &times; width &times; height</div>
+          <div class="step-desc">For rectangular prisms the cross-section is always a rectangle, so V = l &times; w &times; h. The prism formula and the box formula are identical.</div>
+          <div class="summary-banner"><span class="label">Volume of rectangular prism</span>V = 120 cm&sup3;</div>
+        </div>
+      </div>
+      <button class="reveal-btn" id="revealBtnA" onclick="revealStep('A',3)">Reveal next step &darr;</button>
+    </div>
+  </div>
+
+  <!-- ── Example B: Triangular prism ── -->
+  <div class="example-block">
+    <p class="example-heading">Example B &mdash; Triangular prism</p>
+    <p class="example-subhead">A triangular prism has a right-angled triangular cross-section with base 6 cm and perpendicular height 4 cm. The prism is 10 cm long. Find its volume.</p>
+
+    <div class="svg-diagram">
+      <svg viewBox="0 0 300 200" width="300" height="200" xmlns="http://www.w3.org/2000/svg"
+           aria-label="Triangular prism. Right-triangle cross-section (base 6 cm, height 4 cm) is the shaded front face. Length 10 cm.">
+        <!-- Back triangle -->
+        <polygon points="160,28 240,138 160,138" fill="#c5dce0" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Top lateral face -->
+        <polygon points="80,0 160,28 160,138 80,110" fill="#daeef1" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Bottom lateral face -->
+        <polygon points="80,110 160,138 240,138 160,110" fill="#b8d4d8" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Front triangle — shaded cross-section -->
+        <polygon points="80,0 160,110 80,110" fill="#1F4D54" fill-opacity="0.20" stroke="#1F4D54" stroke-width="2.5"/>
+        <!-- right-angle marker -->
+        <rect x="80" y="99" width="11" height="11" fill="none" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- hatch -->
+        <line x1="105" y1="0" x2="80" y2="25" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="130" y1="0" x2="80" y2="50" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="155" y1="5" x2="80" y2="80" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="160" y1="25" x2="85" y2="100" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="160" y1="60" x2="110" y2="110" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="160" y1="90" x2="140" y2="110" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <!-- Base label -->
+        <line x1="80" y1="126" x2="160" y2="126" stroke="#BE5837" stroke-width="1.5"/>
+        <text x="120" y="140" font-family="Georgia,serif" font-size="13" fill="#BE5837" text-anchor="middle" font-weight="bold">6 cm</text>
+        <!-- Height label -->
+        <line x1="65" y1="0" x2="65" y2="110" stroke="#BE5837" stroke-width="1.5"/>
+        <text x="53" y="58" font-family="Georgia,serif" font-size="13" fill="#BE5837" text-anchor="middle" font-weight="bold">4 cm</text>
+        <!-- Length label -->
+        <line x1="160" y1="152" x2="240" y2="152" stroke="#1F4D54" stroke-width="1.5"/>
+        <text x="200" y="167" font-family="Georgia,serif" font-size="13" fill="#1F4D54" text-anchor="middle" font-weight="bold">10 cm</text>
+        <!-- cross-section label -->
+        <text x="103" y="65" font-family="-apple-system,sans-serif" font-size="10" fill="#1F4D54" text-anchor="middle" font-weight="700" opacity="0.8">cross-section</text>
+      </svg>
+    </div>
+
+    <div class="worked">
+      <div class="step visible" id="stepB1">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Find the area of the triangular cross-section</div>
+          <div class="step-desc">Use A = &frac12; &times; base &times; height for a triangle.</div>
+          <div class="calc-box">
+            <span class="blue">A</span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span> &times; 6 &times; 4 = <span class="blue">12 cm&sup2;</span>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="stepB2">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Multiply by the length</div>
+          <div class="step-desc">The prism is 10 cm long.</div>
+          <div class="calc-box">
+            <span class="blue">V</span> = 12 &times; 10 = <span class="red">120 cm&sup3;</span>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="stepB3">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Key reminder</div>
+          <div class="step-desc">Always use the <em>perpendicular</em> height of the triangle &mdash; the height that forms a right angle with the base. Never use a slanted side.</div>
+          <div class="summary-banner"><span class="label">Volume of triangular prism</span>V = 120 cm&sup3;</div>
+        </div>
+      </div>
+      <button class="reveal-btn" id="revealBtnB" onclick="revealStep('B',3)">Reveal next step &darr;</button>
+    </div>
+  </div>
+
+  <!-- ── Example C: Trapezoidal prism ── -->
+  <div class="example-block">
+    <p class="example-heading">Example C &mdash; Trapezoidal prism</p>
+    <p class="example-subhead">The cross-section is a trapezium with parallel sides 5 cm and 9 cm, and perpendicular height 4 cm. The prism is 12 cm long.</p>
+
+    <div class="svg-diagram">
+      <svg viewBox="0 0 320 195" width="320" height="195" xmlns="http://www.w3.org/2000/svg"
+           aria-label="Trapezoidal prism. Cross-section is a trapezium (parallel sides 5 cm and 9 cm, height 4 cm) shaded on the front face. Length 12 cm.">
+        <!-- Back trapezoid offset (+80, +30) -->
+        <polygon points="175,28 215,28 275,128 165,128" fill="#c5dce0" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Top lateral face -->
+        <polygon points="95,0 175,28 215,28 135,0" fill="#daeef1" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Bottom lateral face -->
+        <polygon points="85,98 165,128 275,128 195,98" fill="#b8d4d8" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Right lateral face -->
+        <polygon points="135,0 215,28 275,128 195,98" fill="#c8dee2" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Front trapezoid — shaded cross-section -->
+        <polygon points="95,0 135,0 195,98 85,98" fill="#1F4D54" fill-opacity="0.20" stroke="#1F4D54" stroke-width="2.5"/>
+        <!-- hatch -->
+        <line x1="120" y1="0" x2="85" y2="35" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="135" y1="0" x2="85" y2="50" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="135" y1="15" x2="87" y2="63" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="135" y1="40" x2="88" y2="87" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="143" y1="55" x2="100" y2="98" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="162" y1="63" x2="125" y2="100" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="181" y1="71" x2="150" y2="102" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <!-- Top parallel side label (5 cm) -->
+        <text x="115" y="-6" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">5 cm</text>
+        <line x1="95" y1="-2" x2="135" y2="-2" stroke="#BE5837" stroke-width="1.3"/>
+        <!-- Bottom parallel side label (9 cm) -->
+        <line x1="85" y1="113" x2="195" y2="113" stroke="#BE5837" stroke-width="1.3"/>
+        <text x="140" y="128" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">9 cm</text>
+        <!-- Height label -->
+        <line x1="70" y1="0" x2="70" y2="98" stroke="#BE5837" stroke-width="1.3"/>
+        <text x="57" y="52" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">4 cm</text>
+        <!-- Length label -->
+        <line x1="165" y1="143" x2="275" y2="143" stroke="#1F4D54" stroke-width="1.3"/>
+        <text x="220" y="158" font-family="Georgia,serif" font-size="12" fill="#1F4D54" text-anchor="middle" font-weight="bold">12 cm</text>
+        <!-- cross-section label -->
+        <text x="135" y="52" font-family="-apple-system,sans-serif" font-size="10" fill="#1F4D54" text-anchor="middle" font-weight="700" opacity="0.8">cross-section</text>
+      </svg>
+    </div>
+
+    <div class="worked">
+      <div class="step visible" id="stepC1">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Find the area of the trapezoidal cross-section</div>
+          <div class="step-desc">Use A = &frac12; &times; (a + b) &times; h, where a and b are the two parallel sides.</div>
+          <div class="calc-box">
+            <span class="blue">A</span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span> &times; (5 + 9) &times; 4 = <span class="frac"><span class="num">1</span><span class="den">2</span></span> &times; 14 &times; 4 = <span class="blue">28 cm&sup2;</span>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="stepC2">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Multiply by the length</div>
+          <div class="step-desc">The prism is 12 cm long.</div>
+          <div class="calc-box">
+            <span class="blue">V</span> = 28 &times; 12 = <span class="red">336 cm&sup3;</span>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="stepC3">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Check your trapezium formula</div>
+          <div class="step-desc">Add the two <em>parallel</em> sides (not the slant sides) and use the <em>perpendicular</em> height between them. Label the diagram before substituting.</div>
+          <div class="summary-banner"><span class="label">Volume of trapezoidal prism</span>V = 336 cm&sup3;</div>
+        </div>
+      </div>
+      <button class="reveal-btn" id="revealBtnC" onclick="revealStep('C',3)">Reveal next step &darr;</button>
+    </div>
+  </div>
+
+  <!-- ── Example D: L-shaped cross-section ── -->
+  <div class="example-block">
+    <p class="example-heading">Example D &mdash; Prism with an L-shaped cross-section</p>
+    <p class="example-subhead">The cross-section is an L-shape. Outer dimensions: 8 cm wide, 6 cm tall. A rectangular notch 5 cm wide &times; 4 cm tall is removed from the top-right. The prism is 15 cm long.</p>
+
+    <div class="svg-diagram">
+      <svg viewBox="0 0 360 225" width="360" height="225" xmlns="http://www.w3.org/2000/svg"
+           aria-label="Prism with L-shaped cross-section shaded. Outer 8 cm by 6 cm, notch 5 cm by 4 cm removed from top-right corner. Length 15 cm.">
+        <!--
+          L-shape in pixel coords (scale: 10px per cm):
+          Outer 8×6 cm → 80×60px. Notch: 5×4 cm → 50×40px from top-right.
+          Front face vertices (bottom-left at 50,155):
+            BL(50,155), BR(130,155), step-corner(130,115), inner-corner(80,115), TL-inner(80,95), TL(50,95)
+          Back face: offset (+80, −40) → each point +80 in x, −40 in y
+        -->
+        <!-- Back L-face -->
+        <polygon points="130,115 210,115 210,75 160,75 160,55 130,55"
+                 fill="#c5dce0" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Top face (top strip of L: from TL to TL-back) -->
+        <polygon points="50,95 130,55 160,55 80,95" fill="#daeef1" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Inner ledge top face -->
+        <polygon points="80,115 130,115 210,75 160,75 " fill="#daeef1" stroke="#1F4D54" stroke-width="1.2" opacity="0.9"/>
+        <!-- Right side top portion -->
+        <polygon points="130,55 210,15 210,75 130,115" fill="#b8d4d8" stroke="#1F4D54" stroke-width="1.5"/>
+        <!-- Bottom face -->
+        <polygon points="50,155 130,115 210,75 130,115" fill="none"/>
+        <polygon points="50,155 130,155 210,115 130,75" fill="#b8d4d8" stroke="#1F4D54" stroke-width="1.5" opacity="0.8"/>
+        <!-- Front L-face — shaded cross-section -->
+        <polygon points="50,95 80,95 80,115 130,115 130,155 50,155"
+                 fill="#1F4D54" fill-opacity="0.22" stroke="#1F4D54" stroke-width="2.5"/>
+        <!-- hatch on front face -->
+        <line x1="72" y1="95" x2="50" y2="117" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="80" y1="95" x2="50" y2="125" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="80" y1="106" x2="50" y2="136" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="80" y1="115" x2="51" y2="144" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="95" y1="115" x2="55" y2="155" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="115" y1="115" x2="75" y2="155" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="130" y1="120" x2="95" y2="155" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <line x1="130" y1="140" x2="118" y2="152" stroke="#1F4D54" stroke-width="0.9" opacity="0.35"/>
+        <!-- Total width label (bottom) -->
+        <line x1="50" y1="172" x2="130" y2="172" stroke="#BE5837" stroke-width="1.3"/>
+        <text x="90" y="186" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">8 cm</text>
+        <!-- Total height label (left) -->
+        <line x1="35" y1="95" x2="35" y2="155" stroke="#BE5837" stroke-width="1.3"/>
+        <text x="22" y="128" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">6 cm</text>
+        <!-- Notch width label -->
+        <line x1="80" y1="88" x2="130" y2="88" stroke="#6b7280" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="105" y="83" font-family="Georgia,serif" font-size="11" fill="#6b7280" text-anchor="middle">5 cm notch</text>
+        <!-- Notch height label -->
+        <line x1="136" y1="95" x2="136" y2="115" stroke="#6b7280" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="152" y="108" font-family="Georgia,serif" font-size="11" fill="#6b7280">4 cm</text>
+        <!-- Length label -->
+        <line x1="130" y1="160" x2="210" y2="120" stroke="#1F4D54" stroke-width="1.3"/>
+        <text x="195" y="155" font-family="Georgia,serif" font-size="12" fill="#1F4D54" font-weight="bold">15 cm</text>
+        <!-- cross-section label -->
+        <text x="68" y="138" font-family="-apple-system,sans-serif" font-size="10" fill="#1F4D54" text-anchor="middle" font-weight="700" opacity="0.8">cross-section</text>
+      </svg>
+    </div>
+
+    <div class="error-callout">
+      <div class="error-label">&#9888; Strategy &mdash; split or subtract</div>
+      The L-shape is not a standard formula shape. Either <strong>split it into two rectangles</strong> and add, or calculate the <strong>full outer rectangle minus the removed notch.</strong> Both methods give the same answer.
+    </div>
+
+    <div class="worked">
+      <div class="step visible" id="stepD1">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Find the area of the L-shaped cross-section</div>
+          <div class="step-desc">Method: large outer rectangle minus the missing notch.</div>
+          <div class="calc-box">
+            Outer rectangle: 8 &times; 6 = 48 cm&sup2;<br>
+            Notch removed: 5 &times; 4 = 20 cm&sup2;<br>
+            <span class="blue">A</span> = 48 &minus; 20 = <span class="blue">28 cm&sup2;</span>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="stepD2">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Multiply by the length</div>
+          <div class="step-desc">The prism is 15 cm long.</div>
+          <div class="calc-box">
+            <span class="blue">V</span> = 28 &times; 15 = <span class="red">420 cm&sup3;</span>
+          </div>
+        </div>
+      </div>
+      <div class="step" id="stepD3">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Check via alternative split</div>
+          <div class="step-desc">Left strip: 3 &times; 6 = 18 cm&sup2;. Right bottom strip: 5 &times; 2 = 10 cm&sup2;. Total = 28 cm&sup2;. &#10003; Both methods agree.</div>
+          <div class="summary-banner"><span class="label">Volume of L-shaped prism</span>V = 420 cm&sup3;</div>
+        </div>
+      </div>
+      <button class="reveal-btn" id="revealBtnD" onclick="revealStep('D',3)">Reveal next step &darr;</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ─── WE DO ─── -->
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let&rsquo;s work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour, then we&rsquo;ll confirm as a class.</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 6: WE DO ═══ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together &mdash; a concrete beam</h2>
+  <p class="sec-desc">A concrete beam has a trapezoidal cross-section: parallel sides 40 cm and 60 cm, perpendicular height 30 cm. The beam is 4 m (= 400 cm) long. Work through each step with the person next to you.</p>
+
+  <div class="svg-diagram">
+    <svg viewBox="0 0 320 190" width="320" height="190" xmlns="http://www.w3.org/2000/svg"
+         aria-label="Concrete beam: trapezoidal cross-section (parallel sides 40 cm and 60 cm, height 30 cm) on left face, length 400 cm.">
+      <!-- Back trapezoid -->
+      <polygon points="175,28 215,28 285,128 165,128" fill="#c5dce0" stroke="#1F4D54" stroke-width="1.5"/>
+      <!-- Top face -->
+      <polygon points="95,0 175,28 215,28 135,0" fill="#daeef1" stroke="#1F4D54" stroke-width="1.5"/>
+      <!-- Bottom face -->
+      <polygon points="85,100 165,128 285,128 205,100" fill="#b8d4d8" stroke="#1F4D54" stroke-width="1.5"/>
+      <!-- Right lateral -->
+      <polygon points="135,0 215,28 285,128 205,100" fill="#c8dee2" stroke="#1F4D54" stroke-width="1.5"/>
+      <!-- Front trapezoid — shaded -->
+      <polygon points="95,0 135,0 205,100 85,100" fill="#1F4D54" fill-opacity="0.20" stroke="#1F4D54" stroke-width="2.5"/>
+      <!-- Top parallel side -->
+      <line x1="95" y1="-6" x2="135" y2="-6" stroke="#BE5837" stroke-width="1.3"/>
+      <text x="115" y="-10" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">40 cm</text>
+      <!-- Bottom parallel side -->
+      <line x1="85" y1="114" x2="205" y2="114" stroke="#BE5837" stroke-width="1.3"/>
+      <text x="145" y="128" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">60 cm</text>
+      <!-- Height -->
+      <line x1="70" y1="0" x2="70" y2="100" stroke="#BE5837" stroke-width="1.3"/>
+      <text x="57" y="53" font-family="Georgia,serif" font-size="12" fill="#BE5837" text-anchor="middle" font-weight="bold">30 cm</text>
+      <!-- Length -->
+      <line x1="165" y1="145" x2="285" y2="145" stroke="#1F4D54" stroke-width="1.3"/>
+      <text x="225" y="160" font-family="Georgia,serif" font-size="12" fill="#1F4D54" text-anchor="middle" font-weight="bold">400 cm</text>
+    </svg>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    &#128161; <strong>Always write three lines:</strong> (1) find the cross-section area with its formula, (2) write V = A &times; l with numbers substituted, (3) evaluate and state units. Cubic centimetres for cm inputs; cubic metres for m inputs.
+  </div>
+</section>
+
+<!-- ─── YOU DO ─── -->
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn &mdash; work independently</div>
+    <div class="phase-sub">Quick check first, then choose your tier. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 7: QUICK CHECK ═══ -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check &mdash; try these on your own
+    <span class="checkpoint-tag">&#9995; Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you have the method. Try them independently &mdash; <strong>then we&rsquo;ll check as a class</strong> before you open a tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    &#9995; <strong>Stop here</strong> when you&rsquo;re done. Don&rsquo;t open a tier yet &mdash; wait for the class check.
+  </div>
+</section>
+
+<!-- ═══ SECTION 8: BUILDING ═══ -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice &mdash; Building <span class="diff-badge d1"><span class="dots">&#9679;&#9675;&#9675;</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">&#9654;</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Apply V = A &times; l to rectangular, triangular and trapezoidal prisms. Type your numerical answer.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 9: STRETCH ═══ -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice &mdash; Stretch <span class="diff-badge d2"><span class="dots">&#9679;&#9679;&#9675;</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">&#9654;</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Composite cross-sections and missing-dimension problems.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 10: MASTERY ═══ -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice &mdash; Mastery <span class="diff-badge d3"><span class="dots">&#9679;&#9679;&#9679;</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">&#9654;</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Multi-step reasoning: composite cross-sections, finding a missing dimension, optimal packaging, and an open-response explanation.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 11: EXIT TICKET ═══ -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">&#127919; Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three questions before you go. They check the core ideas of today&rsquo;s lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 &middot; Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8M02</strong> &mdash; solve problems involving the volume and capacity of right prisms using appropriate units</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">2, 3, 4</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Volume of any right prism = area of cross-section &times; length; apply to rectangular, triangular, trapezoidal and composite (L-shaped) cross-sections; rearrange to find a missing dimension given the volume.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Mapping note</span>
+      <span class="cl-value">Partial &mdash; this lesson covers the volume of prisms aspect of the descriptor. Capacity and unit conversion are addressed in y8_mea_06.</span>
+    </div>
+    <div class="cl-note">Lesson ID: y8_mea_05. Source: SA Curriculum Mathematics R-10 Prototype 2.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics &middot; Year 8 &middot; Volume of Right Prisms
+</footer>
+
+</div><!-- end .page -->
+
+<script>
+  // ════════════════════════════════════════════
+  // STATE
+  // ════════════════════════════════════════════
+  let totalProblems = 0;
+  let correctCount  = 0;
+
+  // ════════════════════════════════════════════
+  // TEACHER MODE
+  // ════════════════════════════════════════════
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ════════════════════════════════════════════
+  // WORKED EXAMPLE STEP REVEAL (multiple independent examples)
+  // ════════════════════════════════════════════
+  const exState = { A: 1, B: 1, C: 1, D: 1 };
+
+  function revealStep(letter, maxStep) {
+    exState[letter]++;
+    const n = exState[letter];
+    const el = document.getElementById('step' + letter + n);
+    if (el) el.classList.add('visible');
+    if (n >= maxStep) {
+      const btn = document.getElementById('revealBtn' + letter);
+      btn.disabled = true;
+      btn.textContent = '✓ All steps shown';
+    }
+  }
+
+  // ════════════════════════════════════════════
+  // DRAG AND DROP SORT
+  // ════════════════════════════════════════════
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top  = rect.top  + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+    dragState = { chip, ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup',   endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under && under.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+    const bucket = under && under.closest('.bucket');
+    if (bucket) {
+      const dest    = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+    chip.removeEventListener('pointermove',  moveDrag);
+    chip.removeEventListener('pointerup',    endDrag);
+    chip.removeEventListener('pointercancel',endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const src = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(c => {
+      c.classList.remove('wrong-drop');
+      src.appendChild(c);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const bucket = document.querySelector('.bucket[data-bucket="' + chip.dataset.type + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ════════════════════════════════════════════
+  // MATCHING
+  // ════════════════════════════════════════════
+  const matchTerms = [
+    { html: 'Rectangle<br><small>base <i>b</i>, height <i>h</i></small>',            group: 1 },
+    { html: '<i>A</i> = <i>b</i> &times; <i>h</i>',                                  group: 1 },
+    { html: 'Triangle<br><small>base <i>b</i>, height <i>h</i></small>',             group: 2 },
+    { html: '<i>A</i> = &frac12;<i>bh</i>',                                           group: 2 },
+    { html: 'Trapezium<br><small>sides <i>a</i>, <i>b</i>, height <i>h</i></small>', group: 3 },
+    { html: '<i>A</i> = &frac12;(<i>a</i> + <i>b</i>)<i>h</i>',                     group: 3 },
+    { html: 'L-shape<br><small>8&times;6 outer, 5&times;4 notch</small>',            group: 4 },
+    { html: '<i>A</i> = 48 &minus; 20 = 28 cm&sup2;',                                group: 4 },
+    { html: 'Any right prism',                                                         group: 5 },
+    { html: '<i>V</i> = <i>A</i><sub>cross</sub> &times; <i>l</i>',                  group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach(t => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML  = t.html;
+      chip.dataset.group = t.group;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) { chip.classList.remove('selected'); matchSelected = null; return; }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5 ? '🎉 All five pairs matched!' : 'Matched! (' + matchedGroups.size + '/5)';
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected, w2 = chip;
+      w1.classList.add('selected'); w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — try again.';
+      setTimeout(() => { w1.classList.remove('selected'); w2.classList.remove('selected'); }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ════════════════════════════════════════════
+  // PROBLEM DATA
+  // ════════════════════════════════════════════
+
+  // ── Section 0: Retrieval warm-up (noCount) ──
+  const retrieval = [
+    {
+      q: 'Find the area of a rectangle with base 7 cm and height 4 cm.',
+      a: '28',
+      hint: 'A = base × height = 7 × 4'
+    },
+    {
+      q: 'Find the area of a triangle with base 10 cm and perpendicular height 6 cm.',
+      a: '30',
+      hint: 'A = ½ × base × height = ½ × 10 × 6'
+    },
+    {
+      q: 'Find the area of a trapezium with parallel sides 5 m and 11 m, and perpendicular height 4 m.',
+      a: '32',
+      hint: 'A = ½ × (5 + 11) × 4 = ½ × 16 × 4'
+    },
+  ];
+
+  // ── Section 6: We Do (noCount) ──
+  const weDo = [
+    {
+      q: 'The cross-section is a trapezium with parallel sides 40 cm and 60 cm, perpendicular height 30 cm. What is the area of the cross-section (in cm²)?',
+      a: '1500',
+      hint: 'A = ½ × (40 + 60) × 30 = ½ × 100 × 30 = 1500 cm²'
+    },
+    {
+      q: 'The beam is 400 cm long. Use V = A × l. What is the volume in cm³?',
+      a: '600000',
+      hint: 'V = 1500 × 400 = 600 000 cm³'
+    },
+    {
+      q: 'Convert your answer to cubic metres. There are 1 000 000 cm³ in 1 m³. Give your answer as a decimal.',
+      a: '0.6',
+      hint: '600 000 ÷ 1 000 000 = 0.6 m³'
+    },
+  ];
+
+  // ── Section 7: Quick check ──
+  const checkpoint = [
+    {
+      q: 'A rectangular prism is 9 cm long, 4 cm wide and 2 cm tall. Find its volume (in cm³).',
+      a: '72',
+      hint: 'Cross-section area = 4 × 2 = 8 cm². V = 8 × 9 = 72 cm³'
+    },
+    {
+      q: 'A triangular prism has a cross-section with base 6 cm and perpendicular height 5 cm. The prism is 8 cm long. Find its volume (in cm³).',
+      a: '120',
+      hint: 'A = ½ × 6 × 5 = 15 cm². V = 15 × 8 = 120 cm³'
+    },
+  ];
+
+  // ── Section 8: Building (10 questions) ──
+  const practice1 = [
+    {
+      q: 'A rectangular prism is 12 cm long, 5 cm wide, 3 cm tall. Find its volume (cm³).',
+      a: '180',
+      hint: 'A = 5 × 3 = 15 cm². V = 15 × 12 = 180 cm³'
+    },
+    {
+      q: 'A rectangular prism is 20 cm long, 8 cm wide, 6 cm tall. Find its volume (cm³).',
+      a: '960',
+      hint: 'A = 8 × 6 = 48 cm². V = 48 × 20 = 960 cm³'
+    },
+    {
+      q: 'A triangular prism has a cross-section with base 8 cm and perpendicular height 5 cm. The prism is 10 cm long. Find its volume (cm³).',
+      a: '200',
+      hint: 'A = ½ × 8 × 5 = 20 cm². V = 20 × 10 = 200 cm³'
+    },
+    {
+      q: 'A triangular prism has a cross-section with base 9 cm and perpendicular height 4 cm. The prism is 7 cm long. Find its volume (cm³).',
+      a: '126',
+      hint: 'A = ½ × 9 × 4 = 18 cm². V = 18 × 7 = 126 cm³'
+    },
+    {
+      q: 'A trapezoidal prism has parallel sides 6 cm and 10 cm, perpendicular height 4 cm, length 5 cm. Find its volume (cm³).',
+      a: '160',
+      hint: 'A = ½ × (6 + 10) × 4 = 32 cm². V = 32 × 5 = 160 cm³'
+    },
+    {
+      q: 'A trapezoidal prism has parallel sides 3 m and 7 m, perpendicular height 2 m, length 9 m. Find its volume (m³).',
+      a: '90',
+      hint: 'A = ½ × (3 + 7) × 2 = 10 m². V = 10 × 9 = 90 m³'
+    },
+    {
+      q: 'A wedge door stop is a triangular prism: cross-section base 4 cm, perpendicular height 2 cm, length 14 cm. Find its volume (cm³).',
+      a: '56',
+      hint: 'A = ½ × 4 × 2 = 4 cm². V = 4 × 14 = 56 cm³'
+    },
+    {
+      q: 'A swimming pool has a rectangular cross-section 12 m wide and 1.5 m deep. It is 25 m long. Find its volume (m³).',
+      a: '450',
+      hint: 'A = 12 × 1.5 = 18 m². V = 18 × 25 = 450 m³'
+    },
+    {
+      q: 'A cube has side length 6 cm. Find its volume (cm³).',
+      a: '216',
+      hint: 'A = 6 × 6 = 36 cm². V = 36 × 6 = 216 cm³'
+    },
+    {
+      q: 'A chocolate bar is a triangular prism: cross-section base 3 cm, perpendicular height 2.5 cm, length 12 cm. Find its volume (cm³).',
+      a: '45',
+      hint: 'A = ½ × 3 × 2.5 = 3.75 cm². V = 3.75 × 12 = 45 cm³'
+    },
+  ];
+
+  // ── Section 9: Stretch (6 questions) ──
+  const practice2 = [
+    {
+      q: 'An L-shaped prism: the cross-section is an 8×7 cm outer rectangle with a 5×4 cm notch removed. The prism is 10 cm long. Find its volume (cm³).',
+      a: '360',
+      hint: 'A = (8×7) − (5×4) = 56 − 20 = 36 cm². V = 36 × 10 = 360 cm³'
+    },
+    {
+      q: 'A stepped prism: cross-section has a top rectangle 4×3 cm and a bottom rectangle 6×2 cm (they share the 4 cm width, the bottom extends 2 cm further on one side). The prism is 8 cm long. Find its volume (cm³). [Hint: top area + bottom extension]',
+      a: '160',
+      hint: 'Top part: 4×3 = 12 cm². Bottom extension: 2×2 = 4 cm². Wait — easier split: full bottom 6×2 = 12, top tab 4×1 = 4? Restate: top strip 4×3=12, right bottom strip 2×4=8; total A = 12+8 = 20 cm². V = 20×8 = 160 cm³.'
+    },
+    {
+      q: 'A triangular prism has volume 240 cm³. Its cross-section has base 8 cm and perpendicular height 6 cm. Find the length of the prism (cm).',
+      a: '10',
+      hint: 'A = ½ × 8 × 6 = 24 cm². l = V ÷ A = 240 ÷ 24 = 10 cm'
+    },
+    {
+      q: 'A rectangular prism has volume 360 cm³, length 12 cm, and height 5 cm. Find its width (cm).',
+      a: '6',
+      hint: 'A = V ÷ l = 360 ÷ 12 = 30 cm². Width = A ÷ height = 30 ÷ 5 = 6 cm'
+    },
+    {
+      q: 'A trapezoidal prism has volume 504 cm³. Its cross-section has parallel sides 8 cm and 4 cm, perpendicular height 6 cm. Find the length of the prism (cm).',
+      a: '14',
+      hint: 'A = ½ × (8 + 4) × 6 = 36 cm². l = 504 ÷ 36 = 14 cm'
+    },
+    {
+      q: 'A concrete path has a rectangular cross-section 1.2 m wide and 0.15 m deep. It runs for 20 m. Find its volume in m³ (1 decimal place).',
+      a: '3.6',
+      hint: 'A = 1.2 × 0.15 = 0.18 m². V = 0.18 × 20 = 3.6 m³'
+    },
+  ];
+
+  // ── Section 10: Mastery (4 questions) ──
+  const practice3 = [
+    {
+      q: 'A prism has a composite cross-section: a semicircle of diameter 6 cm sits on top of a rectangle 6 cm wide × 4 cm tall. The prism is 10 cm long. Use π ≈ 3.14159. Find the volume to the nearest whole cm³.',
+      a: '381',
+      hint: 'Rectangle A = 6 × 4 = 24 cm². Semicircle: r = 3, A = ½π(3²) = 4.5π ≈ 14.14 cm². Total A ≈ 38.14 cm². V = 38.14 × 10 ≈ 381 cm³'
+    },
+    {
+      q: 'Two prisms, both 12 cm long. Prism A: rectangular cross-section 8 cm × 5 cm. Prism B: triangular cross-section base 10 cm, perpendicular height 9 cm. Which has the greater volume? Type the difference in cm³ (larger minus smaller).',
+      a: '60',
+      hint: 'Prism A: A = 40 cm², V = 480 cm³. Prism B: A = ½ × 10 × 9 = 45 cm², V = 540 cm³. Difference = 540 − 480 = 60 cm³'
+    },
+    {
+      q: 'A trapezoidal prism has parallel sides 10 cm and 6 cm, perpendicular height 5 cm. Its volume is 800 cm³. Find the length of the prism (cm).',
+      a: '20',
+      hint: 'A = ½ × (10 + 6) × 5 = 40 cm². l = 800 ÷ 40 = 20 cm'
+    },
+    {
+      q: 'Explain in 1–2 sentences why the formula V = area of cross-section × length works for any right prism, regardless of the cross-section shape.',
+      a: 'TEXT',
+      hint: 'Think of stacking identical cross-section “slices” along the length. Each slice has the same area A. There are l of them (in the limit). The formula is one slice’s area times the number of slices.'
+    },
+  ];
+
+  // ── Section 11: Exit ticket ──
+  const exitProbs = [
+    {
+      q: 'A triangular prism has a cross-section with base 10 cm and perpendicular height 6 cm, and is 8 cm long. Find its volume (cm³).',
+      a: '240',
+      hint: 'A = ½ × 10 × 6 = 30 cm². V = 30 × 8 = 240 cm³'
+    },
+    {
+      q: 'A trapezoidal prism has volume 600 cm³. The cross-section is a trapezium with parallel sides 8 cm and 12 cm, perpendicular height 5 cm. Find the length of the prism (cm).',
+      a: '12',
+      hint: 'A = ½ × (8 + 12) × 5 = 50 cm². l = 600 ÷ 50 = 12 cm'
+    },
+    {
+      q: 'Name the two pieces of information you always need to find the volume of a right prism, and explain why you need both.',
+      a: 'TEXT',
+      hint: 'You need (1) the area of the cross-section and (2) the length. The cross-section area tells you how much space one “slice” covers; the length tells you how many slices there are.'
+    },
+  ];
+
+  // ════════════════════════════════════════════
+  // ANSWER NORMALISATION
+  // ════════════════════════════════════════════
+  function normaliseAnswer(s) {
+    return (s || '').toLowerCase().replace(/\s+/g, '').replace(/,/g, '').replace(/\*/g, '').replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp  = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const nNum = parseFloat(norm);
+    const eNum = parseFloat(exp);
+    if (!isNaN(nNum) && !isNaN(eNum)) return Math.abs(nNum - eNum) < 0.55;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+  // ════════════════════════════════════════════
+  // BUILD PRACTICE — load-bearing, copy verbatim from template
+  // ════════════════════════════════════════════
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid    = document.getElementById(containerId);
+    const noCount = !!options.noCount;
+
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+
+      const checkBtnHtml = p.a !== 'TEXT'
+        ? '<button class="check-btn">Check</button>'
+        : '';
+
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}"
+                 placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${checkBtnHtml}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link">Show hint</button>
+          <button class="answer-link">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+
+      const cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+      div.querySelector('.hint-link').addEventListener('click',   () => toggleHint(idx));
+      div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !noCount) totalProblems++;
+    });
+  }
+
+  // ════════════════════════════════════════════
+  // FORMAT ANSWER DISPLAY
+  // ════════════════════════════════════════════
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+    let r = a.replace(/([a-df-z])/gi, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + '<span class="frac"><span class="num">' + num + '</span><span class="den">' + d + '</span></span>';
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  // ════════════════════════════════════════════
+  // TOGGLE HINT / ANSWER
+  // ════════════════════════════════════════════
+  function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+  // ════════════════════════════════════════════
+  // CHECK ANSWER
+  // ════════════════════════════════════════════
+  function checkAnswer(idx, expected, noCount) {
+    const input  = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  // ════════════════════════════════════════════
+  // UPDATE PROGRESS
+  // ════════════════════════════════════════════
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ════════════════════════════════════════════
+  // ACCORDION TIERS
+  // ════════════════════════════════════════════
+  function toggleTier(id) {
+    const sec  = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+
+  // ════════════════════════════════════════════
+  // INITIALISE
+  // ════════════════════════════════════════════
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+  buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1',  practice1,  'P');
+  buildPractice('practiceGrid2',  practice2,  'S');
+  buildPractice('practiceGrid3',  practice3,  'C');
+  buildPractice('exitGrid',       exitProbs,  'E');
+  updateProgress();
+
+  // Enter key triggers check
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
