@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelling Rates — Financial Contexts · Year 8</title>
+
+<meta name="lesson-id"             content="y8_mea_13">
+<meta name="ac9-descriptor"        content="AC9M8M07">
+<meta name="ac9-elaborations"      content="2,3">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts">
+<meta name="lesson-focus"          content="Apply the mathematical modelling cycle to financial rate problems: currency conversion using exchange rates and income tax using marginal tax brackets.">
+<meta name="mapping-note"          content="Partial - this lesson covers the financial rate modelling aspect of the descriptor">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white; font-weight: 700;
+    font-size: 0.78rem; padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar { height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden; flex: 1; max-width: 360px; }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem, .difficulty-2 .problem, .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input, .difficulty-2 .problem-input, .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg); z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy); color: var(--navy);
+    padding: 12px 16px; border-radius: 6px; font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+  @media (max-width: 600px) { .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; } .diff-badge .dots { font-size: 0.72rem; } }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    font-size: 1.5rem; color: var(--coral); letter-spacing: 2px; line-height: 1;
+    flex-shrink: 0; padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) { .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; } .phase-banner { gap: 12px; padding: 12px 14px; } }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px; padding: 28px;
+    margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    color: var(--navy); font-size: 1.4rem; margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.1rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column; vertical-align: middle;
+    text-align: center; line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.1rem; }
+  .vocab-front .hint-flip { font-family: -apple-system, sans-serif; font-weight: normal; font-size: 0.72rem; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .vocab-back { background: white; color: var(--text); transform: rotateY(180deg); font-size: 0.88rem; line-height: 1.4; text-wrap: balance; }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 8px; padding: 6px 10px;
+    background: var(--hint-bg); border-radius: 6px; font-size: 0.78rem;
+    line-height: 1.4; color: var(--navy); font-style: italic;
+  }
+  .vocab-example::before { content: 'EG — '; font-style: normal; font-weight: 700; font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px; }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* FINANCIAL TABLES */
+  .fin-table-wrap {
+    margin: 18px 0 8px;
+    border-radius: 10px; overflow: hidden;
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .fin-table-wrap .table-cap {
+    background: var(--navy); color: white;
+    padding: 8px 14px; font-family: Georgia, serif; font-weight: bold;
+    font-size: 0.92rem; letter-spacing: 0.3px;
+  }
+  .fin-table-wrap .table-cap .table-src {
+    font-family: -apple-system, sans-serif; font-weight: normal;
+    font-size: 0.72rem; opacity: 0.78; margin-left: 8px; font-style: italic;
+  }
+  .fin-table {
+    width: 100%; border-collapse: collapse; background: white;
+    font-size: 0.95rem;
+  }
+  .fin-table th {
+    background: #eaf0f1; color: var(--navy); font-weight: 700;
+    padding: 8px 14px; text-align: left; border-bottom: 1.5px solid var(--border);
+    font-family: -apple-system, sans-serif; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .fin-table td { padding: 8px 14px; border-bottom: 1px solid #eaeef3; font-family: Georgia, Cambria, serif; font-size: 1rem; }
+  .fin-table tr:last-child td { border-bottom: none; }
+  .fin-table tr.highlight-row td { background: var(--coral-soft); font-weight: 700; color: var(--navy); }
+  .fin-table .rate-cell { color: var(--coral); font-weight: 700; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: -apple-system, sans-serif; }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem; overflow-x: auto; line-height: 1.8;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .grn { color: var(--good); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white; border-radius: 8px; padding: 12px 16px;
+    margin-top: 14px; font-family: Georgia, serif; font-size: 1.05rem; text-align: center;
+  }
+  .summary-banner .label { font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block; }
+  .reveal-btn { background: var(--navy); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.92rem; font-weight: 600; margin-top: 10px; }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MODELLING CYCLE */
+  .modelling-cycle {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0;
+    justify-content: flex-start; align-items: center;
+  }
+  .cycle-step {
+    background: var(--navy); color: white; border-radius: 8px;
+    padding: 8px 12px; font-size: 0.82rem; font-weight: 600;
+    text-align: center; flex: 0 0 auto;
+  }
+  .cycle-step .cs-num { font-size: 0.65rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 2px; }
+  .cycle-arrow { color: var(--coral); font-size: 1.2rem; font-weight: bold; flex-shrink: 0; }
+
+  /* ERROR ANALYSIS */
+  .error-block {
+    background: #fff7f5; border: 2px solid var(--coral); border-radius: 10px;
+    padding: 18px 20px; margin: 14px 0;
+  }
+  .error-block .error-label {
+    font-family: -apple-system, sans-serif; font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; color: var(--coral); margin-bottom: 10px;
+  }
+  .error-line { background: #f9f9f9; border-radius: 6px; padding: 8px 12px; margin: 5px 0; font-family: Georgia, serif; font-size: 0.98rem; }
+  .error-line.fault { border-left: 4px solid var(--bad); background: var(--bad-soft); }
+  .misconception-box {
+    background: var(--coral-soft); border-left: 5px solid var(--coral);
+    border-radius: 6px; padding: 12px 16px; margin: 14px 0;
+    font-size: 0.93rem;
+  }
+  .misconception-box .mc-label { font-weight: 700; color: var(--coral); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+
+  /* MATCH INTERACTIVE */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 14px 10px; text-align: center;
+    cursor: pointer; transition: all 0.15s; font-size: 0.9rem; line-height: 1.4;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* DRAG-SORT */
+  .parts-instructions { background: var(--hint-bg); border-left: 4px solid var(--navy); padding: 10px 14px; border-radius: 6px; font-size: 0.92rem; font-style: italic; margin-bottom: 16px; color: var(--navy); }
+  .parts-buckets { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .bucket { background: var(--bg); border-radius: 10px; padding: 14px; border: 1.5px dashed var(--border); min-height: 80px; }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip {
+    touch-action: none; user-select: none; display: inline-block;
+    padding: 6px 10px; margin: 2px; border: 1.5px solid var(--border); border-radius: 8px;
+    cursor: pointer; background: white; font-family: -apple-system, sans-serif; font-size: 0.82rem;
+    transition: all 0.2s; line-height: 1.3;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92; transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22); background: white;
+    padding: 6px 10px; border: 1.5px solid var(--navy); border-radius: 8px;
+    font-family: -apple-system, sans-serif; font-size: 0.82rem;
+  }
+  .bucket.drop-target { background: var(--coral-soft); border-color: var(--coral); border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18); }
+  .term-chip.wrong-drop { animation: shake 0.45s; background: var(--bad-soft) !important; border-color: var(--bad) !important; color: var(--bad) !important; }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num { font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif; font-size: 0.92rem; background: white; border: 1px solid var(--border); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .problem-expr { font-size: 0.95rem; flex: 1; padding-top: 2px; line-height: 1.6; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input { flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px; font-family: Georgia, serif; font-size: 1rem; background: white; }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn { background: var(--coral); color: white; border: none; padding: 8px 14px; border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600; }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link { color: var(--navy); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font: inherit; }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box { background: var(--hint-bg); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none; }
+  .hint-box.visible { display: block; }
+  .answer-box { background: var(--good-soft); color: #1d4a30; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none; }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn1 { display: none; }
+  body.teacher-mode #revealBtn2 { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link { margin: 18px 0 4px; padding: 0; background: #eaf0f1; border-left: 5px solid var(--navy); border-radius: 4px; font-size: 0.86rem; text-align: left; }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) { details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; } }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+    .fin-table td, .fin-table th { padding: 6px 10px; font-size: 0.85rem; }
+    .modelling-cycle { flex-direction: column; align-items: flex-start; }
+    .cycle-arrow { transform: rotate(90deg); }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval, section.lesson.exit-ticket { background: #eaf0f1; border-left: 5px solid var(--navy); }
+  section.lesson.retrieval .problem, section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700; background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron { width: 32px; height: 32px; border-radius: 8px; background: white; border: 1.5px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; color: var(--navy); transition: transform 0.25s ease; }
+  .accordion-count { background: white; border: 1px solid var(--border); color: var(--muted); padding: 3px 10px; border-radius: 999px; font-family: -apple-system, sans-serif; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Modelling Rates — Financial Contexts</h1>
+    <div class="subtitle">Year 8 · SA Curriculum (Mathematics R–10 Prototype 2) · Measurement</div>
+  </div>
+  <div class="badge">AC9M8M07</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ============================================================
+     SECTION 0: RETRIEVAL WARM-UP
+     ============================================================ -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. These warm up the skills you will need today: rates, percentages, and proportional reasoning.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ============================================================
+     SECTION 1: WHY THIS MATTERS
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">Real money decisions that require rate modelling every day.</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start;">
+    <div>
+      <p>Imagine two situations:</p>
+      <ul style="line-height:1.9;">
+        <li>You save up $800 AUD and fly to Japan for school holidays. How much yen do you actually have to spend at a convenience store?</li>
+        <li>Your part-time job pays $22 000 per year. How much tax do you actually owe — and will you be surprised by the ATO bill?</li>
+      </ul>
+      <p>Both questions involve <strong>rates</strong> applied to money. Neither can be answered by guessing — you need a mathematical model: a clear formula, applied step by step, then checked for reasonableness.</p>
+    </div>
+    <div style="background:var(--hint-bg); border-left:4px solid var(--navy); padding:14px 16px; border-radius:8px;">
+      <p style="margin:0 0 8px; font-weight:600; color:var(--navy);">The modelling cycle in finance:</p>
+      <div class="modelling-cycle">
+        <div class="cycle-step"><div class="cs-num">1</div>Formulate</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step"><div class="cs-num">2</div>Build model</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step"><div class="cs-num">3</div>Solve</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step"><div class="cs-num">4</div>Interpret</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step"><div class="cs-num">5</div>Review</div>
+      </div>
+      <p style="margin:10px 0 0; font-size:0.88rem; color:var(--navy);">Today you will work through this cycle with two types of financial rate: <strong>exchange rates</strong> and <strong>marginal income tax brackets.</strong></p>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — whole-class activities before independent work.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 2: VOCABULARY
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You will use these terms throughout the lesson.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Exchange rate<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>rate</strong> that tells you how many units of one currency you receive for each unit of another.
+          <div class="vocab-example">1 AUD = <strong>96.80 JPY</strong> — every Australian dollar buys 96.80 Japanese yen.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Tax bracket<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>range of income</strong> with its own tax rate. You pay that rate only on the portion of income inside that band — not on your whole income.
+          <div class="vocab-example">The $18 201–$45 000 band is taxed at <strong>19c per dollar</strong> over $18 200.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Marginal rate<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The tax rate that applies to the <strong>next dollar</strong> earned — the rate of the highest bracket your income reaches.
+          <div class="vocab-example">On $50 000, the marginal rate is <strong>32.5%</strong> (Band 3: $45 001–$120 000).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Effective rate<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>Total tax paid ÷ total income</strong> — the average proportion of income paid as tax, always lower than the marginal rate.
+          <div class="vocab-example">Earn $58 000, pay $9 317 tax → effective rate = <strong>16.1%</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Mathematical model<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>rule or formula</strong> that represents a real-world situation. Always finish by reviewing: "Does the answer make sense in context?"
+          <div class="vocab-example">Model: Foreign currency = AUD × exchange rate.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3: SORT — Modelling cycle stages
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort — which stage of the modelling cycle?</h2>
+  <p class="sec-desc">Drag each statement into the correct stage. Wrong drops shake and return.</p>
+
+  <div class="parts-instructions" style="font-style:normal;">
+    Stages: <strong style="color:var(--coral)">Formulate</strong> &nbsp;|&nbsp; <strong style="color:var(--navy)">Build / Solve</strong> &nbsp;|&nbsp; <strong style="color:var(--good)">Interpret / Review</strong>
+  </div>
+
+  <div id="sortTerms" class="terms-source">
+    <span class="term-chip" data-type="formulate">"What is the question?"</span>
+    <span class="term-chip" data-type="model">Write: Tax = 0.19 × (income − 18 200)</span>
+    <span class="term-chip" data-type="formulate">Given: $600 AUD, rate 96.8 JPY per AUD</span>
+    <span class="term-chip" data-type="model">Calculate: 600 × 96.8 = 58 080 JPY</span>
+    <span class="term-chip" data-type="interpret">"I can afford ¥58 080 worth of meals."</span>
+    <span class="term-chip" data-type="interpret">"Does this seem reasonable? Check with a price guide."</span>
+  </div>
+
+  <div class="parts-buckets">
+    <div class="bucket" data-bucket="formulate">
+      <h4 class="vt">Formulate</h4>
+      <div class="bucket-contents"></div>
+    </div>
+    <div class="bucket" data-bucket="model">
+      <h4 class="ct">Build model / Solve</h4>
+      <div class="bucket-contents"></div>
+    </div>
+    <div class="bucket" data-bucket="interpret">
+      <h4 style="color:var(--good); text-transform:uppercase; font-size:0.82rem; letter-spacing:0.8px;">Interpret / Review</h4>
+      <div class="bucket-contents"></div>
+    </div>
+  </div>
+
+  <div class="parts-actions">
+    <button class="btn-secondary btn-sm" onclick="resetSort2()">↺ Reset</button>
+    <button class="btn-secondary btn-sm" onclick="solveSort2()">Show solution</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4: MATCH — rate to unit pair
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match — financial term to its description</h2>
+  <p class="sec-desc">Click two cards that belong together. There are four matching pairs.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">Two worked examples — one currency conversion, one income tax — showing every step of the modelling cycle out loud.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 5: WORKED EXAMPLE A — Currency conversion
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example A — Currency conversion &amp; trip budget</h2>
+  <p class="sec-desc">Mia has $800 AUD saved. She is travelling to Japan for 5 days. Use the exchange rate table below to find how many yen she has, then check whether her budget is reasonable.</p>
+
+  <div class="fin-table-wrap" style="max-width:500px;">
+    <div class="table-cap">Figure 1 — Exchange Rate Table
+      <span class="table-src">illustrative rates, not live data</span>
+    </div>
+    <table class="fin-table">
+      <thead><tr><th>Currency</th><th>Code</th><th>1 AUD equals</th></tr></thead>
+      <tbody>
+        <tr><td>Japanese Yen</td><td>JPY</td><td class="rate-cell">96.80 ¥</td></tr>
+        <tr><td>US Dollar</td><td>USD</td><td class="rate-cell">0.635 $</td></tr>
+        <tr><td>Euro</td><td>EUR</td><td class="rate-cell">0.592 €</td></tr>
+        <tr><td>British Pound</td><td>GBP</td><td class="rate-cell">0.503 £</td></tr>
+        <tr><td>Singapore Dollar</td><td>SGD</td><td class="rate-cell">0.862 S$</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="worked" style="margin-top:18px;">
+    <div class="step visible" id="stepA1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Formulate — state the question and given information</div>
+        <div class="step-desc">Identify what is known. Write the question as a mathematical one. Choose the model.</div>
+        <div class="calc-box">
+          <span class="blue">Given:</span> Mia has <span class="red">$800 AUD.</span> From Figure 1: <span class="red">1 AUD = 96.80 JPY.</span><br>
+          <span class="blue">Question:</span> How many yen will Mia receive?<br>
+          <span class="blue">Model chosen:</span> JPY received = AUD amount <strong>×</strong> exchange rate
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="stepA2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Solve — substitute values into the model</div>
+        <div class="step-desc">Replace the variables with the numbers from the problem.</div>
+        <div class="calc-box">
+          JPY = <span class="red">800</span> × <span class="red">96.80</span><br>
+          JPY = <span class="grn">77 440</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="stepA3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Interpret &amp; Review — real money, real context</div>
+        <div class="step-desc">State the answer in context. Review whether the model is appropriate and whether the answer is reasonable.</div>
+        <div class="calc-box">
+          <span class="blue">Interpretation:</span> Mia will receive <span class="red">¥77 440.</span><br><br>
+          <span class="blue">Reasonableness check:</span> Budget hotel in Japan ≈ ¥5 000–¥8 000/night × 5 nights = ¥25 000–¥40 000. Meals ≈ ¥600–¥1 200 each. ¥77 440 is a <em>tight but workable</em> 5-day budget — the answer passes the sense check.<br><br>
+          <span class="blue">Review of model:</span> The model assumes the exchange rate is fixed and ignores bank or conversion fees (typically 1–2%). For an <em>estimate</em> the model is appropriate; for an exact figure, fees should be included.
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          $800 AUD → ¥77 440 JPY &nbsp;·&nbsp; Reasonable for a careful 5-day budget trip.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn1" onclick="revealStepA()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 5b: WORKED EXAMPLE B — Income tax
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5b</span>Worked example B — Income tax using marginal brackets</h2>
+  <p class="sec-desc">Jordan earns $58 000 per year. Calculate the income tax owed using the simplified tax table below, then find the effective tax rate and compare it to the marginal rate.</p>
+
+  <div class="fin-table-wrap" style="max-width:580px;">
+    <div class="table-cap">Figure 2 — Simplified Australian Income Tax Brackets
+      <span class="table-src">illustrative brackets for teaching purposes</span>
+    </div>
+    <table class="fin-table">
+      <thead><tr><th>Taxable income band</th><th>Tax on this portion</th></tr></thead>
+      <tbody>
+        <tr><td>$0 – $18 200</td><td class="rate-cell">Nil</td></tr>
+        <tr><td>$18 201 – $45 000</td><td class="rate-cell">19c for each $1 over $18 200</td></tr>
+        <tr class="highlight-row"><td>$45 001 – $120 000</td><td class="rate-cell">32.5c for each $1 over $45 000</td></tr>
+        <tr><td>$120 001 – $180 000</td><td class="rate-cell">$29 467 + 37c for each $1 over $120 000</td></tr>
+        <tr><td>Over $180 000</td><td class="rate-cell">$51 667 + 45c for each $1 over $180 000</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:0.78rem; color:var(--muted); padding:6px 14px 8px; font-style:italic;">The highlighted row is Jordan's top bracket. Each band is taxed <strong>separately</strong> at its own rate, then the results are added together.</div>
+  </div>
+
+  <div class="worked" style="margin-top:18px;">
+    <div class="step visible" id="stepB1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Formulate — split the income across the brackets</div>
+        <div class="step-desc">$58 000 spans three rows of the tax table. Identify the portion of income that falls in each band.</div>
+        <div class="calc-box">
+          Band 1: <span class="blue">$0 – $18 200</span> → portion = <span class="red">$18 200</span> → tax rate: <span class="grn">nil</span><br>
+          Band 2: <span class="blue">$18 201 – $45 000</span> → portion = <span class="red">$26 800</span> → tax rate: <span class="grn">19c/$</span><br>
+          Band 3: <span class="blue">$45 001 – $58 000</span> → portion = <span class="red">$13 000</span> → tax rate: <span class="grn">32.5c/$</span><br>
+          <span style="font-size:0.88em; color:var(--muted);">Check: 18 200 + 26 800 + 13 000 = 58 000 ✓</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="stepB2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Solve — calculate tax on each band, then total</div>
+        <div class="step-desc">Apply each bracket's rate to only the portion of income within that band.</div>
+        <div class="calc-box">
+          Band 1 tax: <span class="grn">$0</span><br>
+          Band 2 tax: <span class="red">$26 800</span> × 0.19 = <span class="grn">$5 092</span><br>
+          Band 3 tax: <span class="red">$13 000</span> × 0.325 = <span class="grn">$4 225</span><br>
+          <br>
+          <strong>Total tax = $0 + $5 092 + $4 225 = <span class="grn">$9 317</span></strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="stepB3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Interpret &amp; Review — effective rate vs marginal rate</div>
+        <div class="step-desc">State the answer in dollar terms. Compare the effective tax rate to the top marginal rate and explain why they differ.</div>
+        <div class="calc-box">
+          <span class="blue">Interpretation:</span> Jordan owes <span class="red">$9 317</span> in tax on $58 000 earned.<br>
+          Take-home pay = $58 000 − $9 317 = <span class="grn">$48 683</span> per year.<br><br>
+          <span class="blue">Effective rate</span> = total tax ÷ total income = $9 317 ÷ $58 000 ≈ <span class="red">16.1%</span><br>
+          <span class="blue">Top marginal rate</span> = <span class="red">32.5%</span> (Band 3).<br><br>
+          <span class="blue">Review:</span> The effective rate (16.1%) is much lower than the marginal rate (32.5%) because only $13 000 — not all $58 000 — was taxed at 32.5%. The first $18 200 attracted no tax; the next $26 800 was taxed at only 19%. The model is appropriate; the marginal-bracket structure prevents any sudden jump in total tax at each threshold.
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Tax owed = $9 317 &nbsp;·&nbsp; Take-home = $48 683 &nbsp;·&nbsp; Effective rate ≈ 16.1% vs marginal 32.5%
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn2" onclick="revealStepB()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Error analysis — spot the mistake together</div>
+    <div class="phase-sub">A student made a common income tax error. Find the faulty line, write the correction, and explain why the model was wrong.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 6: WE DO — Error analysis
+     ============================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Error analysis — income tax on $72 000</h2>
+  <p class="sec-desc">Alex earns $72 000. A student calculated the tax as shown below. One line contains a critical error. Work through the sub-questions as a class.</p>
+
+  <div class="fin-table-wrap" style="max-width:580px; margin-bottom:20px;">
+    <div class="table-cap">Figure 2 (reference) — Simplified Income Tax Brackets</div>
+    <table class="fin-table">
+      <thead><tr><th>Taxable income band</th><th>Tax on this portion</th></tr></thead>
+      <tbody>
+        <tr><td>$0 – $18 200</td><td class="rate-cell">Nil</td></tr>
+        <tr><td>$18 201 – $45 000</td><td class="rate-cell">19c for each $1 over $18 200</td></tr>
+        <tr class="highlight-row"><td>$45 001 – $120 000</td><td class="rate-cell">32.5c for each $1 over $45 000</td></tr>
+        <tr><td>$120 001 – $180 000</td><td class="rate-cell">$29 467 + 37c for each $1 over $120 000</td></tr>
+        <tr><td>Over $180 000</td><td class="rate-cell">$51 667 + 45c for each $1 over $180 000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="error-block">
+    <div class="error-label">Student's working — identify the fault</div>
+    <div class="error-line">Line 1: Alex earns $72 000. The top bracket this falls into is $45 001–$120 000. ✓</div>
+    <div class="error-line">Line 2: Tax rate in that bracket = 32.5%. ✓</div>
+    <div class="error-line fault">Line 3 (FAULTY): Tax = $72 000 × 0.325 = $23 400 &nbsp; ← <strong>error here</strong></div>
+    <div class="error-line">Line 4: Take-home = $72 000 − $23 400 = $48 600.</div>
+  </div>
+
+  <div class="misconception-box">
+    <div class="mc-label">Named misconception</div>
+    <strong>Applying one bracket's rate to the entire income</strong> rather than to the marginal portion only (the income above the bracket's lower threshold). This ignores the tax-free threshold and the lower-rate bands, dramatically overstating the tax owed.
+  </div>
+
+  <p style="font-size:0.95rem; margin:14px 0 8px; font-weight:600; color:var(--navy);">Work through these sub-questions as a class:</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <div class="parts-instructions" style="margin-top:18px; font-style:normal;">
+    <strong>Correct working for reference:</strong><br>
+    Band 1 ($0–$18 200): $0 tax<br>
+    Band 2 ($18 201–$45 000): $26 800 × 0.19 = $5 092<br>
+    Band 3 ($45 001–$72 000): $27 000 × 0.325 = $8 775<br>
+    <strong>Total tax = $0 + $5 092 + $8 775 = $13 867</strong><br>
+    Effective rate = $13 867 ÷ $72 000 ≈ 19.3%
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then choose your tier. Keep Figure 1 (exchange rates) and Figure 2 (tax table) open as reference throughout.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 7: QUICK CHECK
+     ============================================================ -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two short questions confirming you can apply the basic models. Work independently then wait for the class check.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> — wait for the class check before opening a practice tier.
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 8: BUILDING TIER
+     ============================================================ -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Direct application of exchange rates and single-step tax calculations. Use Figure 1 and Figure 2 as reference. Round currency to the nearest whole unit; round tax to the nearest dollar.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 9: STRETCH TIER
+     ============================================================ -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Multi-step problems: reverse currency conversions, a multi-currency travel budget reviewed for reasonableness, and full marginal tax calculations.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 10: MASTERY TIER
+     ============================================================ -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Comparing effective vs marginal rates, reasoning about model limitations, and evaluating financial decisions. Some questions require written reasoning.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 11: EXIT TICKET
+     ============================================================ -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three questions that check the big ideas of today's lesson. Answer independently.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 · Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8M07</strong> — use mathematical modelling to solve practical problems involving ratios and rates, including financial contexts; formulate problems; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">2, 3</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Apply the mathematical modelling cycle to financial rate problems: currency conversion using exchange rates and income tax using marginal tax brackets.</span>
+    </div>
+    <div class="cl-note">Mapping: Partial — this lesson covers the financial rate modelling aspect of the descriptor. Lesson ID y8_mea_13. Source: SA Curriculum (Mathematics R–10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Modelling Rates — Financial Contexts · SA Curriculum (Mathematics R–10 Prototype 2)
+</footer>
+
+</div><!-- end .page -->
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+var totalProblems = 0;
+var correctCount  = 0;
+var currentStepA  = 1;
+var currentStepB  = 1;
+
+// ============================================================
+// TEACHER MODE
+// ============================================================
+function toggleTeacher() {
+  document.body.classList.toggle('teacher-mode');
+  document.getElementById('teacherToggle').classList.toggle('active');
+}
+
+// ============================================================
+// WORKED EXAMPLE STEP REVEALS
+// ============================================================
+function revealStepA() {
+  currentStepA++;
+  var step = document.getElementById('stepA' + currentStepA);
+  if (step) step.classList.add('visible');
+  if (currentStepA >= 3) {
+    var btn = document.getElementById('revealBtn1');
+    btn.disabled = true;
+    btn.textContent = '✓ All steps shown';
+  }
+}
+
+function revealStepB() {
+  currentStepB++;
+  var step = document.getElementById('stepB' + currentStepB);
+  if (step) step.classList.add('visible');
+  if (currentStepB >= 3) {
+    var btn = document.getElementById('revealBtn2');
+    btn.disabled = true;
+    btn.textContent = '✓ All steps shown';
+  }
+}
+
+// ============================================================
+// DRAG-SORT (Section 3 — modelling cycle)
+// ============================================================
+var dragState = null;
+
+function initDragSort() {
+  var chips = document.querySelectorAll('#sortTerms .term-chip[data-type]');
+  chips.forEach(function(chip) {
+    chip.addEventListener('pointerdown', startDrag);
+  });
+}
+
+function startDrag(e) {
+  e.preventDefault();
+  var chip = e.currentTarget;
+  var rect = chip.getBoundingClientRect();
+  var ghost = document.createElement('span');
+  ghost.className = 'term-chip-ghost';
+  ghost.textContent = chip.textContent;
+  ghost.style.left = rect.left + 'px';
+  ghost.style.top  = rect.top  + 'px';
+  document.body.appendChild(ghost);
+  chip.classList.add('dragging');
+  dragState = { chip: chip, ghost: ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+  chip.setPointerCapture(e.pointerId);
+  chip.addEventListener('pointermove', moveDrag);
+  chip.addEventListener('pointerup',   endDrag);
+  chip.addEventListener('pointercancel', endDrag);
+}
+
+function moveDrag(e) {
+  if (!dragState) return;
+  dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+  dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+  dragState.ghost.style.display = 'none';
+  var under = document.elementFromPoint(e.clientX, e.clientY);
+  dragState.ghost.style.display = '';
+  var bucket = under && under.closest('.bucket');
+  document.querySelectorAll('.bucket').forEach(function(b) {
+    b.classList.toggle('drop-target', b === bucket);
+  });
+}
+
+function endDrag(e) {
+  if (!dragState) return;
+  var chip  = dragState.chip;
+  var ghost = dragState.ghost;
+  ghost.style.display = 'none';
+  var under = document.elementFromPoint(e.clientX, e.clientY);
+  ghost.remove();
+  chip.classList.remove('dragging');
+  document.querySelectorAll('.bucket').forEach(function(b) { b.classList.remove('drop-target'); });
+
+  var bucket = under && under.closest('.bucket');
+  if (bucket) {
+    var dest    = bucket.dataset.bucket;
+    var rawType = chip.dataset.type;
+    // solve, interpret, review all go to 'interpret' bucket
+    var targetBucket = (rawType === 'solve' || rawType === 'interpret' || rawType === 'review') ? 'interpret' : rawType;
+    bucket.querySelector('.bucket-contents').appendChild(chip);
+    if (dest !== targetBucket) {
+      chip.classList.add('wrong-drop');
+      setTimeout(function() {
+        chip.classList.remove('wrong-drop');
+        document.getElementById('sortTerms').appendChild(chip);
+      }, 600);
+    }
+  }
+
+  chip.removeEventListener('pointermove', moveDrag);
+  chip.removeEventListener('pointerup',   endDrag);
+  chip.removeEventListener('pointercancel', endDrag);
+  dragState = null;
+}
+
+function resetSort2() {
+  var source = document.getElementById('sortTerms');
+  document.querySelectorAll('.bucket-contents .term-chip').forEach(function(chip) {
+    chip.classList.remove('wrong-drop');
+    source.appendChild(chip);
+  });
+}
+
+function solveSort2() {
+  var allChips = document.querySelectorAll('#sortTerms .term-chip[data-type], .bucket-contents .term-chip[data-type]');
+  allChips.forEach(function(chip) {
+    chip.classList.remove('wrong-drop');
+    var t = chip.dataset.type;
+    var bucketKey = (t === 'solve' || t === 'interpret' || t === 'review') ? 'interpret' : t;
+    var bucket = document.querySelector('.bucket[data-bucket="' + bucketKey + '"] .bucket-contents');
+    if (bucket) bucket.appendChild(chip);
+  });
+}
+
+// ============================================================
+// MATCHING (Section 4)
+// ============================================================
+var matchTerms = [
+  { html: '1 AUD = 96.80 JPY',           group: 1 },
+  { html: 'An exchange rate',             group: 1 },
+  { html: '$26 800 × 0.19',              group: 2 },
+  { html: 'Band 2 tax calculation',       group: 2 },
+  { html: 'Total tax ÷ Total income',    group: 3 },
+  { html: 'Effective tax rate',           group: 3 },
+  { html: 'Rate on the next $1 earned',  group: 4 },
+  { html: 'Marginal rate',               group: 4 },
+];
+
+var matchSelected  = null;
+var matchedGroups  = {};
+
+function buildMatchArea() {
+  var shuffled = matchTerms.slice().sort(function() { return Math.random() - 0.5; });
+  var area = document.getElementById('matchArea');
+  area.innerHTML = '';
+  shuffled.forEach(function(t, i) {
+    var chip = document.createElement('div');
+    chip.className = 'match-chip';
+    chip.innerHTML  = t.html;
+    chip.dataset.group = t.group;
+    chip.dataset.idx   = i;
+    chip.onclick = function() { handleMatchClick(chip); };
+    area.appendChild(chip);
+  });
+}
+
+function handleMatchClick(chip) {
+  if (chip.className.includes('matched-')) return;
+  if (matchSelected === chip) {
+    chip.classList.remove('selected');
+    matchSelected = null;
+    return;
+  }
+  if (!matchSelected) {
+    matchSelected = chip;
+    chip.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+    return;
+  }
+  if (matchSelected.dataset.group === chip.dataset.group) {
+    var g = chip.dataset.group;
+    matchSelected.classList.remove('selected');
+    matchSelected.classList.add('matched-' + g);
+    chip.classList.add('matched-' + g);
+    matchedGroups[g] = true;
+    var count = Object.keys(matchedGroups).length;
+    document.getElementById('matchFeedback').textContent =
+      count === 4 ? '🎉 All four pairs matched!' : 'Matched! (' + count + '/4)';
+    matchSelected = null;
+  } else {
+    var w1 = matchSelected, w2 = chip;
+    w1.classList.add('selected'); w2.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = '✗ Not a pair — think about what each term means.';
+    setTimeout(function() {
+      w1.classList.remove('selected');
+      w2.classList.remove('selected');
+    }, 700);
+    matchSelected = null;
+  }
+}
+
+// ============================================================
+// PRACTICE DATA ARRAYS
+// ============================================================
+
+// RETRIEVAL (noCount — prior knowledge, do not score)
+var retrieval = [
+  {
+    q: 'A rate compares two quantities with different units. Write the unit for speed if you travel 60 km in 1 hour.',
+    a: 'km/h',
+    hint: 'Rate = quantity ÷ time. Abbreviate: kilometres per hour.'
+  },
+  {
+    q: 'Calculate 19% of $26 800. Round to the nearest dollar.',
+    a: '5092',
+    hint: '0.19 × 26 800'
+  },
+  {
+    q: 'Write the decimal multiplier you use to apply a 32.5% rate.',
+    a: '0.325',
+    hint: '32.5 ÷ 100 = ?'
+  }
+];
+
+// WE DO — error analysis sub-questions (noCount)
+var weDo = [
+  {
+    q: 'Which line number in the student\'s working contains the error? (Answer: just the number)',
+    a: '3',
+    hint: 'Look for where the 32.5% rate is applied. Is it applied to the correct amount of income?'
+  },
+  {
+    q: 'Write the corrected calculation for Line 3. Alex earns $72 000; the Band 3 portion is $72 000 − $45 000 = $27 000. What is the correct Band 3 tax at 32.5c/$?',
+    a: 'TEXT',
+    hint: '$27 000 × 0.325 = $8 775. Then add Band 2 ($5 092) for a total of $13 867.'
+  },
+  {
+    q: 'Explain in one sentence why the student\'s model was inappropriate. Name the misconception.',
+    a: 'TEXT',
+    hint: 'The misconception: applying the marginal rate to the whole income instead of to the marginal portion only.'
+  }
+];
+
+// CHECKPOINT (counts toward progress)
+var checkpoint = [
+  {
+    q: 'Using Figure 1, convert $250 AUD to Japanese yen (1 AUD = 96.80 JPY). Round to the nearest yen.',
+    a: '24200',
+    hint: '250 × 96.80 = ?'
+  },
+  {
+    q: 'A person earns $40 000. How much of their income falls in the $18 201–$45 000 tax band?',
+    a: '21800',
+    hint: '40 000 − 18 200 = ?'
+  }
+];
+
+// BUILDING — 10 questions
+var practice1 = [
+  {
+    q: 'Convert $400 AUD to Japanese yen (1 AUD = 96.80 JPY). Round to nearest yen.',
+    a: '38720',
+    hint: '400 × 96.80'
+  },
+  {
+    q: 'Convert $1 200 AUD to US dollars (1 AUD = 0.635 USD). Round to nearest dollar.',
+    a: '762',
+    hint: '1 200 × 0.635'
+  },
+  {
+    q: 'Convert $350 AUD to euros (1 AUD = 0.592 EUR). Round to nearest euro.',
+    a: '207',
+    hint: '350 × 0.592 — round to whole number.'
+  },
+  {
+    q: 'A person earns $30 000. How much of their income falls in the $18 201–$45 000 band?',
+    a: '11800',
+    hint: '30 000 − 18 200'
+  },
+  {
+    q: 'Calculate the Band 2 tax (19c/$) on $11 800 of income. Give your answer to the nearest dollar.',
+    a: '2242',
+    hint: '11 800 × 0.19'
+  },
+  {
+    q: 'A person earns $50 000. How much income falls in the $45 001–$120 000 band?',
+    a: '5000',
+    hint: '50 000 − 45 000'
+  },
+  {
+    q: 'Calculate the Band 3 tax (32.5c/$) on $5 000 of income. Give your answer to the nearest dollar.',
+    a: '1625',
+    hint: '5 000 × 0.325'
+  },
+  {
+    q: 'Convert $600 AUD to Singapore dollars (1 AUD = 0.862 SGD). Round to nearest dollar.',
+    a: '517',
+    hint: '600 × 0.862 — round to whole number.'
+  },
+  {
+    q: 'A person earns $20 000. Band 2 income = $20 000 − $18 200 = $1 800. Calculate Band 2 tax at 19c/$. Nearest dollar.',
+    a: '342',
+    hint: '1 800 × 0.19'
+  },
+  {
+    q: 'Convert $900 AUD to British pounds (1 AUD = 0.503 GBP). Round to nearest pound.',
+    a: '453',
+    hint: '900 × 0.503 — round to whole number.'
+  }
+];
+
+// STRETCH — 6 questions
+var practice2 = [
+  {
+    q: 'Riley spent ¥45 000 in Japan. How much did she spend in AUD? (1 AUD = 96.80 JPY) Round to nearest dollar.',
+    a: '465',
+    hint: 'Reverse the rate: AUD = JPY ÷ 96.80. 45 000 ÷ 96.80 ≈ ?'
+  },
+  {
+    q: 'Sam earns $55 000. Calculate total income tax (Figure 2). Band 2: $26 800 × 0.19. Band 3: $10 000 × 0.325. Give total tax to nearest dollar.',
+    a: '11342',
+    hint: 'Band 2: $5 092. Band 3: $3 250. Add them. Band 1 is always $0.'
+  },
+  {
+    q: 'Priya converts $500 AUD to GBP (× 0.503) and $300 AUD to USD (× 0.635). How many pounds and dollars does she get? Give answer as two whole numbers separated by a comma (pounds first).',
+    a: '252,191',
+    hint: '500 × 0.503 = 251.5 → 252. 300 × 0.635 = 190.5 → 191.'
+  },
+  {
+    q: 'A 3-city trip costs ¥30 000 (JPY at 96.80), €180 (EUR at 0.592), S$120 (SGD at 0.862). Find total AUD cost. Convert each city separately by dividing; round each to nearest dollar, then add.',
+    a: '753',
+    hint: 'Japan: 30 000÷96.80≈310. Europe: 180÷0.592≈304. Singapore: 120÷0.862≈139. Total = 310+304+139. Is $753 a reasonable cost for brief visits to 3 cities?'
+  },
+  {
+    q: 'Morgan earns $95 000. Band 2 tax = $26 800 × 0.19. Band 3 tax = $50 000 × 0.325. Calculate total tax to nearest dollar.',
+    a: '21342',
+    hint: 'Band 2: $5 092. Band 3: $16 250. Total = $5 092 + $16 250.'
+  },
+  {
+    q: 'Using Morgan\'s income $95 000 and tax $21 342, calculate the effective tax rate as a percentage. Round to one decimal place.',
+    a: '22.5',
+    hint: 'Effective rate = 21 342 ÷ 95 000 × 100'
+  }
+];
+
+// MASTERY — 4 questions
+var practice3 = [
+  {
+    q: 'Morgan\'s marginal rate is 32.5% but the effective rate is 22.5%. Explain in one sentence why the effective rate is lower than the marginal rate.',
+    a: 'TEXT',
+    hint: 'Think about what happened to income below $45 000 — was all of it taxed at 32.5%?'
+  },
+  {
+    q: 'A financial adviser says: "Your bracket is 32.5%, so you\'ll pay 32.5% of your entire income in tax." Is this correct? Use a specific numerical example from Figure 2 to support your answer.',
+    a: 'TEXT',
+    hint: 'Test this claim using any income in Band 3. Calculate actual total tax, then find the effective rate. Is it 32.5%?'
+  },
+  {
+    q: 'Chris gets a pay rise from $44 000 to $46 000, crossing the $45 000 threshold. How much extra tax does he pay on the $2 000 increase? (Give answer in whole dollars.)',
+    a: '460',
+    hint: 'First $1 000 of the raise ($44 001–$45 000) is in Band 2 at 19c: $190. Next $1 000 ($45 001–$46 000) is in Band 3 at 32.5c: $325. (But note: he already paid Band 2 tax on the full $26 800 before. The extra tax is just on the $2 000 raise: $1 000 × 0.19 + $1 000 × 0.325 = 190 + 325 - wait, actually tax on $1000 in band2 = $190; tax on $1000 in band3 = $325; extra total = 515... revisit: raise all in band 3 since $44000 is below $45000 threshold. $44001-45000 band2 rate=19%: $1000*0.19=190; $45001-46000 band3 rate=32.5%: $1000*0.325=325. Extra tax = 190+325 = 515. Hmm. Let me use 515 as the answer.)'
+  },
+  {
+    q: 'You have $1 000 AUD to spend in New York. You convert it all to USD at 0.635, spend $550 USD, then convert the remaining USD back to AUD at the same rate. How much AUD do you get back from the unconverted portion? Round to nearest dollar. Also: identify one assumption in this model and explain whether it is appropriate.',
+    a: 'TEXT',
+    hint: 'Total USD = 1000 × 0.635 = 635. Spent 550, remaining = 85 USD. Convert back: 85 ÷ 0.635 ≈ 134 AUD. Key assumption: the rate is the same in both directions (no spread or fee). Is that realistic?'
+  }
+];
+
+// Fix Chris's question — correct the answer in place
+practice3[2] = {
+  q: 'Chris gets a pay rise from $44 000 to $46 000, crossing the $45 000 bracket threshold. The first $1 000 of the raise ($44 001–$45 000) is taxed at 19c/$. The second $1 000 ($45 001–$46 000) is taxed at 32.5c/$. What is the total extra tax on the $2 000 raise? (Nearest dollar.)',
+  a: '515',
+  hint: 'Band 2 portion: $1 000 × 0.19 = $190. Band 3 portion: $1 000 × 0.325 = $325. Total extra tax = $190 + $325.'
+};
+
+// EXIT TICKET
+var exitProbs = [
+  {
+    q: 'Convert $750 AUD to euros using the rate 1 AUD = 0.592 EUR. Round to the nearest euro.',
+    a: '444',
+    hint: '750 × 0.592'
+  },
+  {
+    q: 'Sam earns $38 000. Band 2 income = $38 000 − $18 200 = $19 800. Calculate Band 2 tax at 19c/$. Nearest dollar.',
+    a: '3762',
+    hint: '19 800 × 0.19'
+  },
+  {
+    q: 'Explain why a person earning $80 000 does NOT pay 32.5% on their entire income. Name the concept your explanation relies on.',
+    a: 'TEXT',
+    hint: 'Key concept: marginal tax brackets — each band of income is taxed at its own rate, not at the rate of the highest band reached.'
+  }
+];
+
+// ============================================================
+// CORE FRAMEWORK — do not modify
+// ============================================================
+
+function normaliseAnswer(s) {
+  return (s || '')
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/\*/g, '')
+    .replace(/^\+/, '');
+}
+
+function answerMatches(input, expected) {
+  if (expected === 'TEXT') return null;
+  var norm = normaliseAnswer(input);
+  var exp  = normaliseAnswer(expected);
+  if (norm === exp) return true;
+  // numeric tolerance ±1 for rounding differences
+  var nNum = parseFloat(norm.replace(/[^0-9.\-]/g, ''));
+  var eNum = parseFloat(exp.replace(/[^0-9.\-]/g, ''));
+  if (!isNaN(nNum) && !isNaN(eNum) && Math.abs(nNum - eNum) <= 1) return true;
+  var splitTerms = function(s) { return s.replace(/-/g, '+-').split('+').filter(Boolean).sort(); };
+  return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+}
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  var grid = document.getElementById(containerId);
+  var noCount = !!options.noCount;
+
+  problems.forEach(function(p, i) {
+    var idx = prefix + (i + 1);
+    var div = document.createElement('div');
+    div.className = 'problem';
+
+    var checkBtnHtml = p.a !== 'TEXT'
+      ? '<button class="check-btn">Check</button>'
+      : '';
+
+    div.innerHTML =
+      '<div class="problem-q">' +
+        '<div class="problem-num">' + idx + '</div>' +
+        '<div class="problem-expr">' + p.q + '</div>' +
+      '</div>' +
+      '<div class="problem-input-row">' +
+        '<span class="eq">=</span>' +
+        '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">' +
+        checkBtnHtml +
+      '</div>' +
+      '<div class="problem-tools">' +
+        '<button class="hint-link">Show hint</button>' +
+        '<button class="answer-link">Show answer</button>' +
+      '</div>' +
+      '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+      '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> <span class="expr">' + formatAnswerDisplay(p.a) + '</span></div>';
+
+    (function(capturedIdx, capturedAnswer, capturedNoCount) {
+      var cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', function() { checkAnswer(capturedIdx, capturedAnswer, capturedNoCount); });
+      div.querySelector('.hint-link').addEventListener('click', function() { toggleHint(capturedIdx); });
+      div.querySelector('.answer-link').addEventListener('click', function() { toggleAnswer(capturedIdx); });
+    })(idx, p.a, noCount);
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+function formatAnswerDisplay(a) {
+  if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+  return String(a);
+}
+
+function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+function checkAnswer(idx, expected, noCount) {
+  var input  = document.getElementById('inp-' + idx);
+  var result = answerMatches(input.value, expected);
+  input.classList.remove('correct', 'incorrect');
+  if (result === true) {
+    input.classList.add('correct');
+    if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+  } else if (result === false) {
+    input.classList.add('incorrect');
+    if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+  }
+  if (!noCount) updateProgress();
+}
+
+function updateProgress() {
+  document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+  var pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============================================================
+// ACCORDION TIERS
+// ============================================================
+function toggleTier(id) {
+  var sec  = document.getElementById(id);
+  var open = sec.classList.toggle('open');
+  sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) {
+    setTimeout(function() { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+  }
+}
+
+// ============================================================
+// INITIALISE
+// ============================================================
+initDragSort();
+buildMatchArea();
+buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+buildPractice('checkpointGrid', checkpoint, 'Q');
+buildPractice('practiceGrid1',  practice1,  'P');
+buildPractice('practiceGrid2',  practice2,  'S');
+buildPractice('practiceGrid3',  practice3,  'C');
+buildPractice('exitGrid',       exitProbs,  'E');
+updateProgress();
+
+// Enter key submits answer
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+    var btn = e.target.parentElement.querySelector('.check-btn');
+    if (btn) btn.click();
+  }
+});
+</script>
+
+</body>
+</html>

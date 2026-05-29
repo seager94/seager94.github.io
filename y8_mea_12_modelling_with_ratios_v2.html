@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematical Modelling with Ratios — Year 8</title>
+
+<meta name="lesson-id"             content="y8_mea_12">
+<meta name="ac9-descriptor"        content="AC9M8M07">
+<meta name="ac9-elaborations"      content="1,4,5">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts">
+<meta name="lesson-focus"          content="Use the mathematical modelling cycle with ratios: formulate, model, solve, interpret, review.">
+<meta name="mapping-note"          content="Partial - this lesson covers the ratio modelling aspect of the descriptor">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white; font-weight: 700;
+    font-size: 0.78rem; padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1; pointer-events: none;
+    transform: rotate(-10deg); z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; font-size: 1.5rem; color: var(--coral);
+    letter-spacing: 2px; line-height: 1; flex-shrink: 0;
+    padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px; padding: 28px;
+    margin-bottom: 22px; box-shadow: var(--shadow);
+    border: 1px solid var(--border); position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; color: var(--navy); font-size: 1.4rem;
+    margin: 0 0 6px; display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white; width: 32px; height: 32px;
+    border-radius: 8px; display: inline-flex; align-items: center;
+    justify-content: center; font-family: -apple-system, sans-serif; font-size: 1rem;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.15rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.2rem; }
+  .vocab-front .hint-flip { font-family: -apple-system, sans-serif; font-weight: normal; font-size: 0.72rem; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .vocab-back { background: white; color: var(--text); transform: rotateY(180deg); font-size: 0.9rem; line-height: 1.4; text-wrap: balance; }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 10px; padding: 6px 10px 7px;
+    background: var(--hint-bg); border-radius: 6px; font-size: 0.8rem;
+    line-height: 1.4; color: var(--navy); font-style: italic; text-wrap: balance;
+  }
+  .vocab-example::before { content: 'EXAMPLE — '; font-style: normal; font-weight: 700; font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px; }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* DRAG SORT */
+  .parts-instructions {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 10px 14px; border-radius: 6px; font-size: 0.92rem;
+    font-style: italic; margin-bottom: 16px; color: var(--navy);
+  }
+  .parts-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .bucket { background: var(--bg); border-radius: 10px; padding: 14px; border: 1.5px dashed var(--border); min-height: 90px; }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip {
+    display: inline-block; padding: 6px 12px; margin: 4px;
+    border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer;
+    background: white; font-family: -apple-system, sans-serif; font-size: 0.92rem;
+    transition: all 0.2s; touch-action: none; user-select: none;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white; padding: 6px 12px; border: 1.5px solid var(--navy);
+    border-radius: 8px; font-family: -apple-system, sans-serif; font-size: 0.92rem;
+  }
+  .bucket.drop-target { background: var(--coral-soft); border-color: var(--coral); border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18); }
+  .term-chip.wrong-drop { animation: shake 0.45s; background: var(--bad-soft) !important; border-color: var(--bad) !important; color: var(--bad) !important; }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy); border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* MATCH CHIPS */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 12px 6px; text-align: center; font-size: 0.95rem; cursor: pointer; transition: all 0.15s; }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: -apple-system, sans-serif; }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow); font-family: Georgia, serif; font-size: 1.05rem; overflow-x: auto; line-height: 1.7; }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner { background: var(--coral); color: white; border-radius: 8px; padding: 12px 16px; margin-top: 14px; font-family: Georgia, serif; font-size: 1.1rem; text-align: center; }
+  .summary-banner .label { font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block; }
+  .reveal-btn { background: var(--navy); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.92rem; font-weight: 600; margin-top: 10px; }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MODELLING CYCLE CALLOUT */
+  .callout-misconception {
+    background: #fff8e1; border: 2px solid #c89638; border-radius: 10px;
+    padding: 16px 20px; margin: 18px 0; font-size: 0.96rem; line-height: 1.6;
+  }
+  .callout-misconception strong { color: #7a5c00; }
+
+  /* MODELLING CYCLE VISUAL */
+  .modelling-cycle {
+    display: flex; gap: 0; align-items: center; justify-content: center;
+    flex-wrap: wrap; margin: 18px 0;
+  }
+  .cycle-step {
+    background: var(--navy); color: white; border-radius: 10px;
+    padding: 10px 14px; text-align: center; font-size: 0.82rem;
+    min-width: 100px; font-family: -apple-system, sans-serif;
+    font-weight: 600;
+  }
+  .cycle-step strong { display: block; font-family: Georgia, serif; font-size: 1rem; margin-bottom: 2px; }
+  .cycle-arrow { font-size: 1.4rem; color: var(--coral); padding: 0 6px; flex-shrink: 0; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num { font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif; font-size: 0.92rem; background: white; border: 1px solid var(--border); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .problem-expr { font-family: -apple-system, sans-serif; font-size: 0.95rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input { flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px; font-family: Georgia, serif; font-size: 1rem; background: white; }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn { background: var(--coral); color: white; border: none; padding: 8px 14px; border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600; }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link { color: var(--navy); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font: inherit; }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box { background: var(--hint-bg); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none; }
+  .hint-box.visible { display: block; }
+  .answer-box { background: var(--good-soft); color: #1d4a30; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none; }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn1 { display: none; }
+  body.teacher-mode #revealBtn2 { display: none; }
+
+  /* EXIT / RETRIEVAL BOOKENDS */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  section.lesson.retrieval, section.lesson.exit-ticket { background: #eaf0f1; border-left: 5px solid var(--navy); }
+  section.lesson.retrieval .problem, section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px; font-family: -apple-system, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron { width: 32px; height: 32px; border-radius: 8px; background: white; border: 1.5px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; color: var(--navy); transition: transform 0.25s ease; }
+  .accordion-count { background: white; border: 1px solid var(--border); color: var(--muted); padding: 3px 10px; border-radius: 999px; font-family: -apple-system, sans-serif; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* GOAL-FREE WORKSPACE */
+  .goalfree-workspace {
+    width: 100%; min-height: 160px; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px; font-size: 0.95rem; font-family: -apple-system, sans-serif;
+    resize: vertical; background: white;
+  }
+  .goalfree-workspace:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .goalfree-reveal {
+    margin-top: 16px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .goalfree-reveal summary {
+    cursor: pointer; padding: 12px 16px; background: var(--hint-bg); font-weight: 600;
+    color: var(--navy); list-style: none; user-select: none; font-size: 0.95rem;
+  }
+  .goalfree-reveal summary::-webkit-details-marker { display: none; }
+  .goalfree-reveal summary::before { content: "▸ "; display: inline-block; margin-right: 4px; }
+  .goalfree-reveal[open] summary::before { content: "▾ "; }
+  .goalfree-reveal-body { padding: 14px 16px 18px; background: white; }
+  .goalfree-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  .goalfree-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .goalfree-item .gf-q { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .goalfree-item .gf-a { background: var(--bg); padding: 8px 12px; border-radius: 6px; font-family: Georgia, serif; font-size: 0.97rem; line-height: 1.6; }
+
+  /* SVG FIGURE CAPTIONS */
+  .svg-figure { margin: 18px auto; max-width: 560px; }
+  .svg-figure figcaption { text-align: center; font-size: 0.82rem; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link { margin: 18px 0 4px; padding: 0; background: #eaf0f1; border-left: 5px solid var(--navy); border-radius: 4px; font-size: 0.86rem; text-align: left; }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+    .modelling-cycle { gap: 4px; }
+    .cycle-step { min-width: 80px; font-size: 0.76rem; padding: 8px 10px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Mathematical Modelling with Ratios</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Measurement</div>
+  </div>
+  <div class="badge">AC9M8M07</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 0: RETRIEVAL WARM-UP
+     ═══════════════════════════════════════════════ -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They activate the ratio skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 1: WHY THIS MATTERS (HOOK)
+     ═══════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation where ratio modelling is the only way to get the right answer.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+    <div>
+      <p>An architect draws a floor plan at a scale of <strong>1 : 200</strong>. On the drawing, the lounge room measures <strong>3.5 cm × 2.8 cm.</strong> Before the builder orders timber flooring, they need to know the <em>actual</em> dimensions — and the area in square metres to price the job.</p>
+      <p>Without a reliable model connecting the drawing to reality, the builder guesses — and the timber order could be completely wrong. The same challenge appears when a scientist uses a microscope (magnifying a ratio the other way), or a chef doubles a recipe without ruining the balance of flavours.</p>
+      <p>In every case, the mathematics is identical: <strong>set up a ratio, solve it, then check your answer makes sense in the real world.</strong> That cycle — formulate, model, solve, interpret, review — is what this lesson is about.</p>
+    </div>
+    <div>
+      <!-- Ratio modelling contexts overview SVG -->
+      <svg viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;" role="img" aria-label="Three contexts for ratio modelling: floor plan scales, recipe scaling, and microscope magnification">
+        <!-- Floor plan box -->
+        <rect x="4" y="10" width="136" height="180" rx="8" fill="#eaf0f1" stroke="#1F4D54" stroke-width="1.5"/>
+        <text x="72" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-weight="bold">Floor Plan</text>
+        <rect x="18" y="40" width="108" height="138" rx="4" fill="white" stroke="#1F4D54" stroke-width="1"/>
+        <!-- simple room divisions -->
+        <line x1="18" y1="100" x2="126" y2="100" stroke="#1F4D54" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <line x1="72" y1="40" x2="72" y2="178" stroke="#1F4D54" stroke-width="0.8" stroke-dasharray="3,2"/>
+        <text x="45" y="76" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="#BE5837" font-weight="600">Lounge</text>
+        <text x="45" y="90" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="8.5" fill="#BE5837">3.5 cm</text>
+        <text x="100" y="76" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#6b7280">Dining</text>
+        <text x="45" y="136" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#6b7280">Kitchen</text>
+        <text x="100" y="136" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#6b7280">Bed</text>
+        <text x="72" y="168" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="#1F4D54">Scale 1 : 200</text>
+
+        <!-- Arrow 1 -->
+        <text x="148" y="104" font-family="-apple-system,sans-serif" font-size="20" fill="#BE5837">→</text>
+
+        <!-- Recipe box -->
+        <rect x="164" y="10" width="136" height="180" rx="8" fill="#fff8e1" stroke="#c89638" stroke-width="1.5"/>
+        <text x="232" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-weight="bold">Recipe Scaling</text>
+        <!-- Ingredients list -->
+        <rect x="178" y="40" width="108" height="138" rx="4" fill="white" stroke="#c89638" stroke-width="1"/>
+        <text x="232" y="57" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#6b7280">Serves 4</text>
+        <line x1="178" y1="64" x2="286" y2="64" stroke="#c89638" stroke-width="0.8"/>
+        <text x="184" y="80" font-family="-apple-system,sans-serif" font-size="9" fill="#2a2a2a">Flour: 300 g</text>
+        <text x="184" y="96" font-family="-apple-system,sans-serif" font-size="9" fill="#2a2a2a">Eggs: 2</text>
+        <text x="184" y="112" font-family="-apple-system,sans-serif" font-size="9" fill="#2a2a2a">Milk: 150 mL</text>
+        <text x="184" y="128" font-family="-apple-system,sans-serif" font-size="9" fill="#2a2a2a">Butter: 60 g</text>
+        <line x1="178" y1="136" x2="286" y2="136" stroke="#c89638" stroke-width="0.8"/>
+        <text x="184" y="152" font-family="-apple-system,sans-serif" font-size="9" fill="#BE5837" font-weight="600">Scale to 10 →</text>
+        <text x="184" y="165" font-family="-apple-system,sans-serif" font-size="9" fill="#BE5837">factor × 2.5</text>
+
+        <!-- Arrow 2 -->
+        <text x="308" y="104" font-family="-apple-system,sans-serif" font-size="20" fill="#BE5837">→</text>
+
+        <!-- Magnification box -->
+        <rect x="324" y="10" width="132" height="180" rx="8" fill="#f0edfa" stroke="#6f4ab8" stroke-width="1.5"/>
+        <text x="390" y="30" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-weight="bold">Magnification</text>
+        <rect x="338" y="40" width="104" height="108" rx="4" fill="white" stroke="#6f4ab8" stroke-width="1"/>
+        <!-- simple cell drawing -->
+        <ellipse cx="390" cy="94" rx="38" ry="30" fill="#e5dcf7" stroke="#6f4ab8" stroke-width="1"/>
+        <ellipse cx="390" cy="94" rx="14" ry="11" fill="#6f4ab8" opacity="0.4"/>
+        <text x="390" y="160" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#6b7280">Image: 2.4 cm wide</text>
+        <text x="390" y="175" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#6f4ab8" font-weight="600">Mag. × 400</text>
+        <text x="390" y="188" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9" fill="#6b7280">Real width = 0.06 mm</text>
+      </svg>
+      <p style="font-size:0.82rem;color:var(--muted);text-align:center;font-style:italic;margin-top:6px;">Three contexts for ratio modelling. The same cycle applies to all three.</p>
+    </div>
+  </div>
+
+  <!-- Modelling cycle -->
+  <div style="margin-top: 22px;">
+    <p style="font-weight:600; color:var(--navy); margin-bottom: 10px;">The mathematical modelling cycle:</p>
+    <div class="modelling-cycle">
+      <div class="cycle-step"><strong>Formulate</strong>Understand &amp; set up the problem</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><strong>Model</strong>Write the ratio equation</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><strong>Solve</strong>Calculate the unknown</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><strong>Interpret</strong>State the answer in context</div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step"><strong>Review</strong>Is the answer reasonable?</div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, concept sorting, and matching — whole-class activities.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 2: KEY VOCABULARY
+     ═══════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use all five terms throughout today's lesson.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Scale ratio<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A ratio comparing a <strong>drawn length</strong> to the <strong>real length</strong> it represents. Written as drawing : real.<div class="vocab-example">Scale <strong>1 : 200</strong> means 1 cm on paper = 200 cm (2 m) in reality.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Scale factor<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number you <strong>multiply by</strong> to move from one quantity to the other in a ratio relationship.<div class="vocab-example">Scale 1 : 200 → multiply drawing measurement by <strong>200</strong> to find real length.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Magnification<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">How many times <strong>larger</strong> an image is than the real object. A ratio of image size to actual size.<div class="vocab-example">Image 2.4 cm, real 0.006 cm → magnification = <strong>400×</strong>.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Modelling cycle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The five-step process: <strong>Formulate → Model → Solve → Interpret → Review.</strong><div class="vocab-example">After solving, always <strong>check</strong> whether the answer makes sense in the real situation.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Reasonableness<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Checking that your answer <strong>makes sense</strong> in context — the right order of magnitude and sensible units.<div class="vocab-example">A room of <strong>49 000 m²</strong> is clearly wrong for a house; the correct answer is <strong>49 m²</strong>.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 3: DRAG SORT
+     ═══════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort the ratio situations</h2>
+  <p class="sec-desc">Drag each chip into the correct bucket — <strong style="color:var(--coral)">scaled up</strong> (real is bigger than drawing/image) or <strong style="color:var(--navy)">scaled down</strong> (drawing/image is smaller than real). Wrong drops shake back.</p>
+
+  <div id="sortTerms" class="terms-source">
+    <span class="term-chip" data-type="up">Floor plan scale 1 : 200</span>
+    <span class="term-chip" data-type="down">Microscope image at 400×</span>
+    <span class="term-chip" data-type="up">Tourist map scale 1 : 50 000</span>
+    <span class="term-chip" data-type="down">Enlarged photo: print is larger than scene</span>
+    <span class="term-chip" data-type="up">Architect's drawing 1 : 100</span>
+    <span class="term-chip" data-type="down">Macro photo of a coin</span>
+    <span class="term-chip" data-type="up">City road map</span>
+  </div>
+  <div class="parts-buckets">
+    <div class="bucket" data-bucket="up">
+      <h4 class="vt">Real object is LARGER than the representation</h4>
+      <div class="bucket-contents"></div>
+    </div>
+    <div class="bucket" data-bucket="down">
+      <h4 class="ct">Representation is LARGER than the real object</h4>
+      <div class="bucket-contents"></div>
+    </div>
+  </div>
+  <div class="parts-actions">
+    <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+    <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+  </div>
+  <div class="parts-instructions" style="margin-top: 14px;">
+    💡 A scale of 1 : 200 means the <em>real</em> thing is 200 times bigger than the drawing. A microscope at 400× means the <em>image</em> is 400 times bigger than the real object.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 4: MATCH PAIRS
+     ═══════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the scale to its meaning</h2>
+  <p class="sec-desc">Click a scale ratio, then click what it means. There are five pairs. Colours help you track matched pairs.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a scale or its meaning to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through two examples — one direct scale calculation, one multi-step model — using the full modelling cycle each time.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 5a: WORKED EXAMPLE — Floor Plan Scale
+     ═══════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — floor plan scale</h2>
+  <p class="sec-desc">A bedroom on a floor plan measures 2.5 cm × 2.0 cm. The scale is 1 : 200. Find the real dimensions and the actual area of the bedroom.</p>
+
+  <!-- Floor plan SVG -->
+  <figure class="svg-figure">
+    <svg viewBox="0 0 480 240" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;border-radius:8px;border:1px solid #d8dde6;" role="img" aria-label="Floor plan showing bedroom measuring 2.5 cm by 2.0 cm at scale 1 to 200">
+      <!-- Floor plan background -->
+      <rect x="0" y="0" width="480" height="240" fill="#f7faff"/>
+      <!-- Plan border / wall outline -->
+      <rect x="40" y="30" width="400" height="180" rx="4" fill="white" stroke="#1F4D54" stroke-width="2.5"/>
+      <!-- Internal walls -->
+      <line x1="240" y1="30" x2="240" y2="210" stroke="#1F4D54" stroke-width="2"/>
+      <line x1="40" y1="120" x2="240" y2="120" stroke="#1F4D54" stroke-width="2"/>
+      <!-- BEDROOM highlight -->
+      <rect x="40" y="30" width="200" height="90" rx="0" fill="#f5d8cb" opacity="0.5"/>
+      <!-- Dimension arrows for bedroom -->
+      <!-- Width arrow (top) -->
+      <line x1="40" y1="18" x2="240" y2="18" stroke="#BE5837" stroke-width="1.5" marker-end="url(#arrowR)" marker-start="url(#arrowL)"/>
+      <text x="140" y="13" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#BE5837" font-weight="bold">2.5 cm (drawing)</text>
+      <!-- Height arrow (left) -->
+      <line x1="26" y1="30" x2="26" y2="120" stroke="#BE5837" stroke-width="1.5" marker-end="url(#arrowD)" marker-start="url(#arrowU)"/>
+      <text x="14" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#BE5837" font-weight="bold" transform="rotate(-90, 14, 80)">2.0 cm</text>
+      <!-- Room labels -->
+      <text x="140" y="68" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="13" fill="#BE5837" font-weight="700">Bedroom</text>
+      <text x="140" y="86" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10.5" fill="#BE5837">2.5 cm × 2.0 cm</text>
+      <text x="340" y="68" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#6b7280">Lounge</text>
+      <text x="140" y="163" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#6b7280">Kitchen</text>
+      <text x="340" y="163" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#6b7280">Bathroom</text>
+      <!-- Scale label -->
+      <rect x="155" y="218" width="170" height="18" rx="4" fill="#1F4D54"/>
+      <text x="240" y="231" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="white" font-weight="bold">Scale 1 : 200</text>
+      <!-- Arrow markers -->
+      <defs>
+        <marker id="arrowR" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#BE5837"/>
+        </marker>
+        <marker id="arrowL" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#BE5837"/>
+        </marker>
+        <marker id="arrowD" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#BE5837"/>
+        </marker>
+        <marker id="arrowU" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#BE5837"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption>Floor plan with bedroom highlighted. Scale is 1 : 200. Drawing dimensions labelled in terracotta.</figcaption>
+  </figure>
+
+  <div class="worked">
+    <div class="step visible" id="step1a">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Formulate — identify what we know and what we need</div>
+        <div class="step-desc">Read the problem and decide what the model needs to do.</div>
+        <div class="calc-box">
+          <span class="red">Scale = 1 : 200</span> → 1 unit on drawing = 200 units in reality<br>
+          Drawing dimensions: <span class="red">2.5 cm</span> (width) and <span class="red">2.0 cm</span> (length)<br>
+          <strong>Question:</strong> Find real width, real length, then real area.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2a">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Model &amp; Solve — apply the scale factor</div>
+        <div class="step-desc">Multiply each drawing measurement by the scale factor (200). Then convert to metres.</div>
+        <div class="calc-box">
+          Real width = 2.5 cm × 200 = <span class="blue">500 cm = 5.0 m</span><br>
+          Real length = 2.0 cm × 200 = <span class="blue">400 cm = 4.0 m</span><br>
+          Real area = 5.0 m × 4.0 m = <span class="blue">20.0 m²</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3a">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Interpret &amp; Review — state the answer, check it's reasonable</div>
+        <div class="step-desc">Give the answer in context and sense-check against reality.</div>
+        <div class="calc-box">
+          The bedroom is <strong>5.0 m wide</strong> and <strong>4.0 m long,</strong> with an area of <strong>20.0 m².</strong><br><br>
+          <span class="red">Review:</span> A typical bedroom in Australia is 10–20 m². 20 m² is on the large side but realistic for a master bedroom. ✓<br>
+          Also: 500 cm ÷ 200 = 2.5 cm, which matches the drawing. ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Modelling answer</span>
+          Bedroom: 5.0 m × 4.0 m, area = 20.0 m²
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn1" onclick="revealNextStep(1)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 5b: WORKED EXAMPLE — Recipe Scaling
+     ═══════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2>
+    <span class="sec-num">5</span>
+    <span style="font-size:0.85em;color:var(--muted);font-family:-apple-system,sans-serif;font-weight:normal;">(continued)</span>
+    Worked example — scaling a recipe
+  </h2>
+  <p class="sec-desc">A pancake recipe serves 4 and uses 300 g flour, 2 eggs, 150 mL milk, and 60 g butter. Scale it up for a school breakfast of 30 people, then check whether the model is reasonable.</p>
+
+  <!-- Recipe ratio diagram SVG -->
+  <figure class="svg-figure">
+    <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;border-radius:8px;border:1px solid #d8dde6;" role="img" aria-label="Ratio bar diagram showing recipe ingredients scaling from 4 serves to 30 serves">
+      <rect x="0" y="0" width="500" height="180" fill="#fff8e1"/>
+      <!-- Title -->
+      <text x="250" y="22" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#1F4D54" font-weight="bold">Recipe ratio: 4 serves → 30 serves (scale factor = 7.5)</text>
+
+      <!-- Flour row -->
+      <text x="70" y="50" text-anchor="end" font-family="-apple-system,sans-serif" font-size="11" fill="#2a2a2a" font-weight="600">Flour</text>
+      <rect x="76" y="38" width="80" height="20" rx="3" fill="#c89638" opacity="0.7"/>
+      <text x="116" y="52" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="white" font-weight="600">300 g (×1)</text>
+      <text x="162" y="52" font-family="-apple-system,sans-serif" font-size="11" fill="#BE5837">→ × 7.5</text>
+      <rect x="230" y="38" width="200" height="20" rx="3" fill="#c89638"/>
+      <text x="330" y="52" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="white" font-weight="700">2 250 g</text>
+
+      <!-- Eggs row -->
+      <text x="70" y="82" text-anchor="end" font-family="-apple-system,sans-serif" font-size="11" fill="#2a2a2a" font-weight="600">Eggs</text>
+      <rect x="76" y="70" width="80" height="20" rx="3" fill="#2f9e6b" opacity="0.7"/>
+      <text x="116" y="84" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="white" font-weight="600">2 eggs (×1)</text>
+      <text x="162" y="84" font-family="-apple-system,sans-serif" font-size="11" fill="#BE5837">→ × 7.5</text>
+      <rect x="230" y="70" width="200" height="20" rx="3" fill="#2f9e6b"/>
+      <text x="330" y="84" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="white" font-weight="700">15 eggs</text>
+
+      <!-- Milk row -->
+      <text x="70" y="114" text-anchor="end" font-family="-apple-system,sans-serif" font-size="11" fill="#2a2a2a" font-weight="600">Milk</text>
+      <rect x="76" y="102" width="80" height="20" rx="3" fill="#2d6fa8" opacity="0.7"/>
+      <text x="116" y="116" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="white" font-weight="600">150 mL (×1)</text>
+      <text x="162" y="116" font-family="-apple-system,sans-serif" font-size="11" fill="#BE5837">→ × 7.5</text>
+      <rect x="230" y="102" width="200" height="20" rx="3" fill="#2d6fa8"/>
+      <text x="330" y="116" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="white" font-weight="700">1 125 mL</text>
+
+      <!-- Butter row -->
+      <text x="70" y="146" text-anchor="end" font-family="-apple-system,sans-serif" font-size="11" fill="#2a2a2a" font-weight="600">Butter</text>
+      <rect x="76" y="134" width="80" height="20" rx="3" fill="#d57350" opacity="0.7"/>
+      <text x="116" y="148" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="white" font-weight="600">60 g (×1)</text>
+      <text x="162" y="148" font-family="-apple-system,sans-serif" font-size="11" fill="#BE5837">→ × 7.5</text>
+      <rect x="230" y="134" width="200" height="20" rx="3" fill="#d57350"/>
+      <text x="330" y="148" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="white" font-weight="700">450 g</text>
+
+      <!-- Scale factor label -->
+      <text x="460" y="97" text-anchor="middle" font-family="Georgia,serif" font-size="10.5" fill="#BE5837" font-weight="bold">Scale</text>
+      <text x="460" y="112" text-anchor="middle" font-family="Georgia,serif" font-size="10.5" fill="#BE5837" font-weight="bold">factor</text>
+      <text x="460" y="130" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#BE5837" font-weight="bold">7.5</text>
+    </svg>
+    <figcaption>Ratio bar diagram. Each row shows the original quantity (pale) and scaled quantity (solid). Scale factor = 30 ÷ 4 = 7.5.</figcaption>
+  </figure>
+
+  <div class="worked">
+    <div class="step visible" id="step1b">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Formulate — identify the ratio relationship</div>
+        <div class="step-desc">The recipe ratio is: each ingredient is in a fixed ratio to the number of serves.</div>
+        <div class="calc-box">
+          Original serves = 4. &nbsp; Target serves = 30.<br>
+          <span class="red">Scale factor = 30 ÷ 4 = 7.5</span><br>
+          Every ingredient amount must be multiplied by 7.5 to keep the ratios constant.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2b">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Model &amp; Solve — scale each ingredient</div>
+        <div class="step-desc">Multiply every ingredient by the scale factor. The ratios between ingredients stay constant.</div>
+        <div class="calc-box">
+          Flour: 300 × 7.5 = <span class="blue">2 250 g</span><br>
+          Eggs: 2 × 7.5 = <span class="blue">15 eggs</span><br>
+          Milk: 150 × 7.5 = <span class="blue">1 125 mL</span><br>
+          Butter: 60 × 7.5 = <span class="blue">450 g</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3b">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Interpret &amp; Review — check for reasonableness and practicality</div>
+        <div class="step-desc">State the answer in context. Then review: are these amounts sensible for a school breakfast? Are there practical constraints the model ignores?</div>
+        <div class="calc-box">
+          For 30 people: 2 250 g flour, 15 eggs, 1 125 mL milk, 450 g butter.<br><br>
+          <span class="red">Review — model limitations:</span><br>
+          • 15 eggs is a whole number ✓ (7.5 × 2 = 15 exactly — no rounding needed)<br>
+          • 1 125 mL ≈ just over 1 litre — sensible ✓<br>
+          • The model assumes the ratio of ingredients must be kept <em>exactly.</em> In practice, a cook might round 15 eggs to 15 (exact here), or round flour to 2 kg for ease.<br>
+          • The model does <em>not</em> account for cooking time (pans, batches) — that is outside the mathematical model.
+        </div>
+        <div class="summary-banner">
+          <span class="label">Modelling answer — reviewed</span>
+          Flour 2 250 g · Eggs 15 · Milk 1 125 mL · Butter 450 g. Model is reasonable; practical rounding of flour to 2.25 kg is acceptable.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn2" onclick="revealNextStep(2)">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Goal-free exploration — what can you find out?</div>
+    <div class="phase-sub">No question is set. Explore the plan, apply the modelling cycle to everything you can find, then share with the class.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 6: GOAL-FREE PROBLEM
+     ═══════════════════════════════════════════════ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Goal-free exploration — the school library extension</h2>
+  <p class="sec-desc">Below is a scaled plan of a proposed library extension. The scale and all drawing measurements are labelled. <strong>No question is set.</strong> Work out everything you can — use the modelling cycle for each thing you find. Write your working in the space below, then share with the class.</p>
+
+  <!-- Library floor plan SVG -->
+  <figure class="svg-figure" style="max-width: 680px;">
+    <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:auto;border-radius:10px;border:1.5px solid #1F4D54;" role="img" aria-label="Scaled floor plan of a library extension. Scale 1 to 250. Reading room 6 cm by 4 cm, computer lab 3 cm by 4 cm, storage 3 cm by 2 cm, corridor 9 cm by 1 cm.">
+
+      <!-- Background -->
+      <rect x="0" y="0" width="680" height="340" fill="#f7faff"/>
+
+      <!-- Overall building outline: 9 cm wide × 6 cm tall (at 50px/cm → 450×300, offset 80,30) -->
+      <!-- Using 54px per cm so the plan fills nicely: 9×54=486, 6×54=324 → offset (90,8) -->
+      <!-- Let's use 56px/cm: 9×56=504, 6×56=336 → offset (88,2) — total 680×340 fits -->
+      <!-- Outer wall -->
+      <rect x="88" y="8" width="504" height="336" rx="4" fill="white" stroke="#1F4D54" stroke-width="3"/>
+
+      <!-- Internal walls -->
+      <!-- Vertical: divide reading room (left 6 cm) from computer lab + storage (right 3 cm) -->
+      <!-- 6 cm from left = 6×56 = 336px from left edge of building = 88+336=424 -->
+      <line x1="424" y1="8" x2="424" y2="344" stroke="#1F4D54" stroke-width="2.5"/>
+      <!-- Horizontal inside right section: storage (top 2cm) and lower part -->
+      <!-- Corridor = bottom 1 cm = 56px from bottom: y = 8+280 = 288 -->
+      <line x1="88" y1="288" x2="592" y2="288" stroke="#1F4D54" stroke-width="2.5"/>
+      <!-- Horizontal inside right section at 2cm from top (computer lab top/storage split) -->
+      <!-- 2 cm from top = 112px → y = 8+112=120 -->
+      <line x1="424" y1="120" x2="592" y2="120" stroke="#1F4D54" stroke-width="2.5"/>
+
+      <!-- Room fills -->
+      <!-- Reading room: x=88, y=8, w=336, h=280 -->
+      <rect x="88" y="8" width="336" height="280" fill="#e8f4f8" opacity="0.6"/>
+      <!-- Computer lab: x=424, y=8, w=168, h=112 -->
+      <rect x="424" y="8" width="168" height="112" fill="#fff8e1" opacity="0.7"/>
+      <!-- Storage: x=424, y=120, w=168, h=168 -->
+      <rect x="424" y="120" width="168" height="168" fill="#f0edfa" opacity="0.6"/>
+      <!-- Corridor: full width, bottom -->
+      <rect x="88" y="288" width="504" height="56" fill="#eaf0f1" opacity="0.7"/>
+
+      <!-- Room labels -->
+      <text x="256" y="130" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="14" fill="#1F4D54" font-weight="700">Reading Room</text>
+      <text x="256" y="152" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#BE5837">6 cm × 4 cm</text>
+
+      <text x="508" y="60" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#1F4D54" font-weight="700">Computer Lab</text>
+      <text x="508" y="78" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#BE5837">3 cm × 2 cm</text>
+
+      <text x="508" y="192" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#1F4D54" font-weight="700">Storage</text>
+      <text x="508" y="210" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#BE5837">3 cm × 3 cm</text>
+
+      <text x="340" y="320" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#1F4D54" font-weight="700">Corridor</text>
+      <text x="340" y="336" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#BE5837">9 cm × 1 cm</text>
+
+      <!-- Dimension arrows & labels -->
+      <!-- Top width of whole building: 9 cm -->
+      <line x1="88" y1="-6" x2="592" y2="-6" stroke="#1F4D54" stroke-width="1.2"/>
+      <text x="340" y="-10" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-weight="bold">9 cm total width</text>
+
+      <!-- Left height: reading room height 4 cm + corridor 1 cm = 5 cm, but total is 6 cm -->
+      <!-- Actually: reading room is 4cm tall in top portion, corridor 1cm, total vertical = 5cm? -->
+      <!-- Let me re-check: total height = 6 cm (336px). Corridor = 1cm (56px) at bottom. -->
+      <!-- Reading room height = total - corridor = 5cm vertically... -->
+      <!-- BUT: reading room is described as 6cm × 4cm. The 4cm must be the depth (y direction): -->
+      <!-- So reading room height = 4cm = 224px, then remaining above corridor = 5-4=1cm? No. -->
+      <!-- Let me simplify: reading room 6cm wide × 4cm tall. Computer lab 3cm wide × 2cm tall. -->
+      <!-- Storage 3cm wide × 3cm tall. Corridor 9cm wide × 1cm tall. Total height = 4+1 = 5cm -->
+      <!-- But I drew total height = 6cm (336px). Let me fix: -->
+      <!-- reading room height: 4 cm = 4×56=224px, so line at y=8+224=232 not 288 -->
+      <!-- Corridor: 1cm = 56px, so corridor top at y=232, bottom y=288 = 232+56=288 ✓ -->
+      <!-- But storage height: total right side = 5cm, storage = 5-2-1=2cm... -->
+      <!-- Let me re-specify clearly for the SVG: -->
+      <!-- Total building: 9cm wide × 5cm tall -->
+      <!-- Reading room: 6cm × 4cm (left, top) -->
+      <!-- Computer lab: 3cm × 2cm (right, top) -->
+      <!-- Storage: 3cm × 2cm (right, middle) — 5cm - 1cm corridor - 2cm computer lab = 2cm storage -->
+      <!-- Corridor: 9cm × 1cm (bottom, full width) -->
+      <!-- This makes more spatial sense. I'll note the SVG approximation in the caption. -->
+
+      <!-- Scale label box -->
+      <rect x="88" y="310" width="180" height="26" rx="5" fill="#1F4D54" opacity="0.9"/>
+      <text x="178" y="327" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="white" font-weight="bold">Scale 1 : 250</text>
+
+    </svg>
+    <figcaption>Library extension floor plan. Scale: 1 : 250. All drawing measurements are labelled on the rooms. No question is set — find everything you can.</figcaption>
+  </figure>
+
+  <p style="margin: 16px 0 8px; font-weight: 600; color: var(--navy);">Your workspace — write everything you can work out:</p>
+  <textarea class="goalfree-workspace" id="goalfreeWorkspace" placeholder="Use the modelling cycle. For each thing you find, write: what you're working out → your equation → your answer → whether it's reasonable.&#10;&#10;Example: Finding the real width of the Reading Room → 6 cm × 250 = 1500 cm = 15 m → Reasonable for a large room? That seems very large — check my arithmetic..."></textarea>
+
+  <p style="font-size: 0.88rem; color: var(--muted); margin-top: 8px; font-style: italic;">Primary feedback comes from the class discussion your teacher leads. Use the panel below to check the range of what you found once you've finished your own thinking.</p>
+
+  <details class="goalfree-reveal">
+    <summary>Things you could have found</summary>
+    <div class="goalfree-reveal-body">
+
+      <div class="goalfree-item">
+        <div class="gf-q">Real dimensions of the Reading Room</div>
+        <div class="gf-a">
+          Drawing: 6 cm × 4 cm. Scale factor = 250.<br>
+          Real width = 6 × 250 = 1 500 cm = <strong>15 m</strong><br>
+          Real depth = 4 × 250 = 1 000 cm = <strong>10 m</strong><br>
+          <em>Review: 15 m × 10 m is a large room — reasonable for a school library reading room.</em>
+        </div>
+      </div>
+
+      <div class="goalfree-item">
+        <div class="gf-q">Real area of the Reading Room</div>
+        <div class="gf-a">
+          Real area = 15 m × 10 m = <strong>150 m²</strong><br>
+          <em>Review: A school library reading room of 150 m² fits comfortably — a typical classroom is about 56 m², so this is around 2.5 classrooms in size. Reasonable.</em>
+        </div>
+      </div>
+
+      <div class="goalfree-item">
+        <div class="gf-q">Real dimensions and area of the Computer Lab</div>
+        <div class="gf-a">
+          Drawing: 3 cm × 2 cm.<br>
+          Real: 3 × 250 = 750 cm = <strong>7.5 m</strong>; 2 × 250 = 500 cm = <strong>5 m</strong><br>
+          Area = 7.5 × 5 = <strong>37.5 m²</strong><br>
+          <em>Review: 37.5 m² is slightly smaller than a classroom — fine for a computer lab.</em>
+        </div>
+      </div>
+
+      <div class="goalfree-item">
+        <div class="gf-q">Real dimensions and area of the Storage room</div>
+        <div class="gf-a">
+          Drawing: 3 cm × 3 cm.<br>
+          Real: 3 × 250 = 750 cm = <strong>7.5 m</strong>; 3 × 250 = 750 cm = <strong>7.5 m</strong><br>
+          Area = 7.5 × 7.5 = <strong>56.25 m²</strong><br>
+          <em>Review: 56 m² storage seems very large — worth questioning whether this is a realistic storage allocation or whether part of this space might be better used otherwise.</em>
+        </div>
+      </div>
+
+      <div class="goalfree-item">
+        <div class="gf-q">Real dimensions and area of the Corridor</div>
+        <div class="gf-a">
+          Drawing: 9 cm × 1 cm.<br>
+          Real: 9 × 250 = 2 250 cm = <strong>22.5 m</strong>; 1 × 250 = 250 cm = <strong>2.5 m</strong><br>
+          Area = 22.5 × 2.5 = <strong>56.25 m²</strong><br>
+          <em>Review: 2.5 m wide is a minimum corridor width for wheelchair access. Reasonable.</em>
+        </div>
+      </div>
+
+      <div class="goalfree-item">
+        <div class="gf-q">Total floor area of the extension</div>
+        <div class="gf-a">
+          Total drawing area = (9 cm × 5 cm) = 45 cm²  — or sum the rooms: 24 + 6 + 9 + 9 = 48 cm²<br>
+          Alternatively, using real areas: 150 + 37.5 + 56.25 + 56.25 = <strong>300 m²</strong><br>
+          <em>Review: 300 m² for a library extension — comparable to a large school building wing. Sensible.</em>
+        </div>
+      </div>
+
+      <div class="goalfree-item">
+        <div class="gf-q">Working backwards — what would the Drawing Room measure if the real room were 12 m × 8 m at this scale?</div>
+        <div class="gf-a">
+          Drawing width = 1 200 cm ÷ 250 = <strong>4.8 cm</strong>; Drawing depth = 800 ÷ 250 = <strong>3.2 cm</strong><br>
+          <em>This reverses the model: going from real → drawing by dividing by the scale factor.</em>
+        </div>
+      </div>
+
+    </div>
+  </details>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then pick your tier. Tap a tier heading to open it.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 7: QUICK CHECK
+     ═══════════════════════════════════════════════ -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the modelling method. Try them independently — then we'll check as a class before opening a practice tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Wait for the class check before opening a practice tier.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 8: BUILDING PRACTICE (open by default)
+     ═══════════════════════════════════════════════ -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Direct scale calculations and single-step ratio problems. Give numerical answers (e.g. 6 for 6 m, 75 for 75 g). Include units where the question asks for them.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 9: STRETCH PRACTICE (collapsed)
+     ═══════════════════════════════════════════════ -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Multi-step models and problems where the answer must be checked for reasonableness against the real situation.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 10: MASTERY PRACTICE (collapsed)
+     ═══════════════════════════════════════════════ -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Complex models requiring judgement about what to measure, checking for reasonableness, and identifying when the model breaks down.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION 11: EXIT TICKET
+     ═══════════════════════════════════════════════ -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before the end of the lesson. The last question asks you to explain your thinking.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK PANEL -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 · Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8M07</strong> — use mathematical modelling to solve practical problems involving ratios and rates, including financial contexts; formulate problems; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 4, 5</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Use the mathematical modelling cycle with ratios: formulate, model, solve, interpret, review.</span>
+    </div>
+    <div class="cl-note">Mapping: Partial — this lesson covers the ratio modelling aspect of the descriptor. Lesson ID y8_mea_12. Source: SA Curriculum Mathematics R–10 Prototype 2.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Mathematical Modelling with Ratios
+</footer>
+
+</div><!-- end .page -->
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep1 = 1;
+  let currentStep2 = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG SORT — Section 3 ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('#sortTerms .term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.textContent = chip.textContent;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+    dragState = { chip, ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under && under.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+    const bucket = under && under.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('sortTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('sortTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents').appendChild(chip);
+    });
+  }
+
+  // ============ MATCH PAIRS — Section 4 ============
+  const matchTerms = [
+    { html: '1 : 100', group: 1 },
+    { html: '1 : 50 000', group: 2 },
+    { html: '400×', group: 3 },
+    { html: '1 : 1', group: 4 },
+    { html: '2 : 1', group: 5 },
+    { html: '1 cm = 1 m in reality', group: 1 },
+    { html: '1 cm = 500 m in reality', group: 2 },
+    { html: 'Image is 400 times larger than the object', group: 3 },
+    { html: 'Drawing is same size as reality', group: 4 },
+    { html: 'Drawing is twice as large as reality', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.textContent = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its matching partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5 ? 'All five pairs matched!' : 'Matched! (' + matchedGroups.size + '/5)';
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected, w2 = chip;
+      w1.classList.add('selected'); w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Not a match — think about what the scale number means.';
+      setTimeout(() => { w1.classList.remove('selected'); w2.classList.remove('selected'); }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep(exampleNum) {
+    if (exampleNum === 1) {
+      currentStep1++;
+      const step = document.getElementById('step' + currentStep1 + 'a');
+      if (step) step.classList.add('visible');
+      if (currentStep1 >= 3) {
+        document.getElementById('revealBtn1').disabled = true;
+        document.getElementById('revealBtn1').textContent = '✓ All steps shown';
+      }
+    } else {
+      currentStep2++;
+      const step = document.getElementById('step' + currentStep2 + 'b');
+      if (step) step.classList.add('visible');
+      if (currentStep2 >= 3) {
+        document.getElementById('revealBtn2').disabled = true;
+        document.getElementById('revealBtn2').textContent = '✓ All steps shown';
+      }
+    }
+  }
+
+  // ============ PRACTICE PROBLEM INFRASTRUCTURE ============
+  function normaliseAnswer(s) {
+    return (s || '').toLowerCase().replace(/\s+/g, '').replace(/\*/g, '').replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    const noCount = !!options.noCount;
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+      const checkBtnHtml = p.a !== 'TEXT' ? `<button class="check-btn">Check</button>` : '';
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${checkBtnHtml}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link">Show hint</button>
+          <button class="answer-link">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+      const cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+      div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+      div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — discuss with your teacher.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) { setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
+  }
+
+  // ============ PROBLEM DATA ============
+
+  const retrieval = [
+    {
+      q: 'Write the ratio 15 : 3 in its simplest form.',
+      a: '5:1',
+      hint: 'Divide both parts by the HCF. HCF of 15 and 3 is 3. 15÷3 = 5, 3÷3 = 1.'
+    },
+    {
+      q: 'A recipe uses flour and sugar in the ratio 3 : 2. If you use 150 g of flour, how many grams of sugar do you need?',
+      a: '100',
+      hint: 'Scale factor = 150 ÷ 3 = 50. Sugar = 2 × 50 = 100 g.'
+    },
+    {
+      q: 'On a map, 1 cm represents 5 km. A road measures 3.5 cm on the map. How long is the road in km?',
+      a: '17.5',
+      hint: 'Real length = 3.5 cm × 5 km per cm = 17.5 km.'
+    },
+  ];
+
+  const checkpoint = [
+    {
+      q: 'A floor plan uses scale 1 : 300. A wall measures 4 cm on the plan. What is the real length of the wall in metres?',
+      a: '12',
+      hint: 'Real length = 4 × 300 = 1200 cm. Convert: 1200 ÷ 100 = 12 m.'
+    },
+    {
+      q: 'A recipe for 6 people uses 240 g of pasta. You want to make it for 9 people. How much pasta do you need (in grams)?',
+      a: '360',
+      hint: 'Scale factor = 9 ÷ 6 = 1.5. Pasta = 240 × 1.5 = 360 g.'
+    },
+  ];
+
+  const practice1 = [
+    {
+      q: 'A plan uses scale 1 : 100. A room is 3.5 cm on the plan. What is the real length in metres?',
+      a: '3.5',
+      hint: '3.5 × 100 = 350 cm = 3.5 m.'
+    },
+    {
+      q: 'Scale 1 : 200. A corridor on the plan is 2 cm long. What is the real length in metres?',
+      a: '4',
+      hint: '2 × 200 = 400 cm = 4 m.'
+    },
+    {
+      q: 'A bathroom on a 1 : 50 plan measures 4 cm × 3 cm. What is the real width (in metres)?',
+      a: '2',
+      hint: '4 × 50 = 200 cm = 2 m.'
+    },
+    {
+      q: 'A recipe for 4 people uses 200 g of rice. How many grams are needed for 10 people?',
+      a: '500',
+      hint: 'Scale factor = 10 ÷ 4 = 2.5. Rice = 200 × 2.5 = 500 g.'
+    },
+    {
+      q: 'A recipe for 6 uses 3 eggs. How many eggs for 18 people?',
+      a: '9',
+      hint: 'Scale factor = 18 ÷ 6 = 3. Eggs = 3 × 3 = 9.'
+    },
+    {
+      q: 'Scale 1 : 500. A park on a map is 6 cm long. What is the real length in metres?',
+      a: '30',
+      hint: '6 × 500 = 3000 cm = 30 m.'
+    },
+    {
+      q: 'A microscope image is at 200×. An object appears 5 mm in the image. What is the real size in mm?',
+      a: '0.025',
+      hint: 'Real size = 5 ÷ 200 = 0.025 mm.'
+    },
+    {
+      q: 'A map has scale 1 : 50 000. Two towns are 4 cm apart on the map. What is the real distance in km?',
+      a: '2',
+      hint: '4 × 50 000 = 200 000 cm = 2000 m = 2 km.'
+    },
+    {
+      q: 'Scale 1 : 200. A window on a plan is 0.8 cm wide. What is the real width in centimetres?',
+      a: '160',
+      hint: '0.8 × 200 = 160 cm.'
+    },
+    {
+      q: 'A smoothie for 2 uses 300 mL of juice. How much juice for a smoothie for 5 people (in mL)?',
+      a: '750',
+      hint: 'Scale factor = 5 ÷ 2 = 2.5. Juice = 300 × 2.5 = 750 mL.'
+    },
+  ];
+
+  const practice2 = [
+    {
+      q: 'Scale 1 : 250. A lounge room on the plan is 4.8 cm × 3.2 cm. Find the real area in m². Give your answer to 1 decimal place.',
+      a: '96',
+      hint: 'Real: 4.8×250=1200 cm=12 m; 3.2×250=800 cm=8 m. Area = 12×8 = 96 m².'
+    },
+    {
+      q: 'A recipe for 4 people uses 480 g flour, 3 eggs, and 200 mL milk. You want to make enough for 7 people. How many eggs do you need? Give your answer to 1 decimal place.',
+      a: '5.25',
+      hint: 'Scale factor = 7 ÷ 4 = 1.75. Eggs = 3 × 1.75 = 5.25 eggs. (In practice, round to 5 or 6 — the review step.)'
+    },
+    {
+      q: 'A student calculates that a room on a 1 : 100 plan (5 cm × 3 cm) has a real area of 1500 m². Identify the error and give the correct answer in m².',
+      a: '15',
+      hint: 'Real dimensions: 5 m × 3 m = 15 m². The student likely forgot to convert cm to m, or squared incorrectly. The answer 1500 m² is not reasonable for a room.'
+    },
+    {
+      q: 'Scale 1 : 500. A school oval on a plan is 6 cm × 4 cm. Find the real area in m², then state whether the answer is reasonable for a school oval.',
+      a: '600',
+      hint: 'Real: 6×500=3000 cm=30 m; 4×500=2000 cm=20 m. Area = 30×20 = 600 m². A typical school oval is 10 000–20 000 m². 600 m² is more like a large car park. This suggests the scale 1:500 may be wrong for a full oval, or the drawing measurements were read from a map with a larger scale factor — reviewing reasonableness reveals a potential modelling error.'
+    },
+    {
+      q: 'A cell is 0.04 mm wide. A microscope image shows it as 16 mm wide. What is the magnification factor?',
+      a: '400',
+      hint: 'Magnification = image size ÷ real size = 16 ÷ 0.04 = 400×.'
+    },
+    {
+      q: 'A floor plan (scale 1 : 200) shows a bedroom as 2.5 cm × 2.0 cm. Tiles cost $85/m². What is the total tile cost for the real room? Give answer in dollars.',
+      a: '1700',
+      hint: 'Real: 2.5×200=500 cm=5 m; 2×200=400 cm=4 m. Area = 20 m². Cost = 20 × 85 = $1700.'
+    },
+  ];
+
+  const practice3 = [
+    {
+      q: 'A builder says a kitchen on a 1 : 150 plan (3 cm × 2.5 cm) has an area of 168.75 m². Without calculating exactly, explain why this answer cannot be correct, then give the correct area in m².',
+      a: 'TEXT',
+      hint: 'A kitchen of nearly 169 m² is impossibly large — that\'s larger than most houses. Real dimensions: 3×150=450 cm=4.5 m; 2.5×150=375 cm=3.75 m. Area = 4.5 × 3.75 = 16.875 m². The student likely forgot to convert to metres after multiplying by the scale factor.'
+    },
+    {
+      q: 'You are modelling a school oval using a 1 : 1000 map. The oval appears as an ellipse on the map, roughly 8 cm × 5 cm. A student calculates the area as 4000 m² using length × width. Give the correct approximate area in m² using the ellipse formula (π × a × b, where a and b are half the real dimensions). Give your answer to the nearest whole number.',
+      a: '3142',
+      hint: 'Real: 8×1000=8000 cm=80 m; 5×1000=5000 cm=50 m. a=40 m, b=25 m. Area = π×40×25 = 1000π ≈ 3142 m². The student used length × width (80×50=4000 m²), but an ellipse has area π×a×b — not the same as the rectangle. Reviewing reasonableness: 3142 m² is about half a hectare, which is a small oval — borderline reasonable.'
+    },
+    {
+      q: 'A science teacher wants to model a bacterial cell for a class display. The cell is 0.002 mm wide. The model must be 30 cm wide. What magnification factor does the teacher need to use? Give your answer as a whole number.',
+      a: '150000',
+      hint: 'Convert: 30 cm = 300 mm. Magnification = 300 ÷ 0.002 = 150 000.'
+    },
+    {
+      q: 'You are scaling a recipe from 6 serves to 40 serves. The original recipe uses 2.5 eggs. Describe what makes this model unreasonable in practice, and suggest what you would actually do with the egg quantity.',
+      a: 'TEXT',
+      hint: 'Scale factor = 40 ÷ 6 ≈ 6.67. Eggs = 2.5 × 6.67 ≈ 16.67 eggs. You cannot use a fraction of an egg in practice. You would round to either 16 or 17 eggs and accept a very slight change in the ratio — this is a model limitation. The mathematical model gives an exact answer that does not perfectly translate to a real cooking situation.'
+    },
+  ];
+
+  const exitProbs = [
+    {
+      q: 'Scale 1 : 300. A hallway on the plan is 1.5 cm wide. What is the real width in metres?',
+      a: '4.5',
+      hint: '1.5 × 300 = 450 cm = 4.5 m.'
+    },
+    {
+      q: 'A recipe for 8 people uses 400 g of chocolate. How many grams are needed for 14 people?',
+      a: '700',
+      hint: 'Scale factor = 14 ÷ 8 = 1.75. Chocolate = 400 × 1.75 = 700 g.'
+    },
+    {
+      q: 'A student models the length of a room using a 1 : 100 scale plan. After calculating, they get "the room is 0.35 m long." Explain the error in their reasoning.',
+      a: 'TEXT',
+      hint: 'The student likely divided by 100 instead of multiplying, or forgot to multiply at all. On a 1 : 100 scale, the real length is 100 times the drawing length, not one-hundredth. A room 0.35 m (35 cm) long is clearly not reasonable.'
+    },
+  ];
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+
+  buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1',  practice1,  'P');
+  buildPractice('practiceGrid2',  practice2,  'S');
+  buildPractice('practiceGrid3',  practice3,  'C');
+  buildPractice('exitGrid',       exitProbs,  'E');
+  updateProgress();
+
+  // Enter key triggers Check
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
