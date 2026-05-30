@@ -1,15 +1,12 @@
-﻿name: Generate Lessons (batch)
-
+name: Generate Lessons (batch)
 on:
   workflow_dispatch:
     inputs:
       batch:
         description: 'Batch file name (without .txt) from the batches/ folder'
         required: true
-
 permissions:
   contents: write
-
 jobs:
   generate:
     runs-on: ubuntu-latest
@@ -17,36 +14,44 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-
       - name: Install Claude Code
         run: npm install -g @anthropic-ai/claude-code
-
       - name: Generate all lessons in the batch
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           BATCH: ${{ inputs.batch }}
         run: |
-          BATCH_FILE="batches/${BATCH}.txt"
+          set -u
+          REPO="$PWD"
+          BATCH_FILE="$REPO/batches/${BATCH}.txt"
           if [ ! -f "$BATCH_FILE" ]; then
             echo "Batch file not found: $BATCH_FILE"
-            echo "Available batches:"
-            ls batches/ || echo "(no batches/ folder)"
+            echo "Available batches:"; ls "$REPO/batches/" || echo "(no batches/ folder)"
             exit 1
           fi
-          mkdir -p lesson-drafts
-          while IFS= read -r task || [ -n "$task" ]; do
-            case "$task" in
-              ""|"#"*) continue ;;
-            esac
-            echo "=== Generating: $task ==="
-            claude -p "$task" --dangerously-skip-permissions --max-turns 100 || echo "!!! FAILED, continuing: $task"
-          done < "$BATCH_FILE"
 
+          # Isolated work dir containing ONLY the skill, so the agent can read the
+          # template/strategies but cannot see sibling lessons or the batch file.
+          WORK="$RUNNER_TEMP/lesson-work"
+          rm -rf "$WORK"; mkdir -p "$WORK"
+          cp -r "$REPO/.claude" "$WORK/.claude"
+
+          while IFS= read -r raw || [ -n "$raw" ]; do
+            # Strip CR (Windows line endings) and trim, so blank/whitespace lines are skipped.
+            task="$(printf '%s' "$raw" | tr -d '\r' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+            [ -z "$task" ] && continue
+            case "$task" in \#*) continue ;; esac
+
+            echo "=== Generating: $task ==="
+            rm -f "$WORK"/*.html
+            ( cd "$WORK" && claude -p "$task" --dangerously-skip-permissions --max-turns 100 ) \
+              || echo "!!! FAILED, continuing: $task"
+            mv "$WORK"/*.html "$REPO/" 2>/dev/null || echo "(no HTML produced for this task)"
+          done < "$BATCH_FILE"
       - name: Commit the generated lessons
         run: |
           git config user.name "github-actions[bot]"
