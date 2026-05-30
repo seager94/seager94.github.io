@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON
+  Year 8 · Measurement · Area of Composite and Irregular Shapes
+  Lesson ID: y8_mea_02
+  AC9 descriptor: AC9M8M01
+  SA Curriculum (Mathematics R–10 Prototype 2)
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Area of Composite &amp; Irregular Shapes — Year 8</title>
+
+<meta name="lesson-id"             content="y8_mea_02">
+<meta name="ac9-descriptor"        content="AC9M8M01">
+<meta name="ac9-elaborations"      content="1,2,3">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts">
+<meta name="lesson-focus"          content="Find the area of composite shapes by decomposing into rectangles/triangles (add method) or using the enclose-and-subtract method; estimate irregular areas by counting grid squares.">
+<meta name="mapping-note"          content="Partial - this lesson covers the area aspect of the descriptor">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; margin: 0; font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white; font-weight: 700;
+    font-size: 0.78rem; padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); padding: 10px 24px 12px;
+    margin: -28px -24px 28px; border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar { height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden; flex: 1; max-width: 360px; }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem, .difficulty-2 .problem, .difficulty-3 .problem { background: white; border-color: rgba(0,0,0,0.07); }
+  .difficulty-1 .problem-input, .difficulty-2 .problem-input, .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before, section.lesson.difficulty-2::before, section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px; font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg); z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700; background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700; color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    font-size: 1.5rem; color: var(--coral); letter-spacing: 2px; line-height: 1;
+    flex-shrink: 0; padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px; padding: 28px;
+    margin-bottom: 22px; box-shadow: var(--shadow); border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    color: var(--navy); font-size: 1.4rem; margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white; width: 32px; height: 32px;
+    border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem; flex-shrink: 0;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.1rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column; vertical-align: middle;
+    text-align: center; line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.1rem; }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif; font-weight: normal;
+    font-size: 0.72rem; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text); transform: rotateY(180deg);
+    font-size: 0.9rem; line-height: 1.4; text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 10px; padding: 7px 11px 8px;
+    background: var(--hint-bg); border-radius: 6px;
+    font-size: 0.8rem; line-height: 1.4; color: var(--navy);
+    font-style: italic; text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — '; font-style: normal; font-weight: 700;
+    font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .sort-source {
+    min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px;
+    margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px;
+    align-items: center; justify-content: center; border: 1px dashed var(--border);
+  }
+  .sort-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .sort-chip {
+    display: inline-block; padding: 6px 14px; border: 1.5px solid var(--border);
+    border-radius: 8px; cursor: pointer; background: white;
+    font-size: 0.95rem; transition: all 0.2s; touch-action: none; user-select: none;
+  }
+  .sort-chip:hover { border-color: var(--navy); }
+  .sort-chip.dragging { opacity: 0.3; }
+  .sort-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white; padding: 6px 14px; border: 1.5px solid var(--navy);
+    border-radius: 8px; font-size: 0.95rem;
+  }
+  .sort-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .sort-bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .sort-bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .sort-bucket .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .sort-bucket.drop-target { background: var(--coral-soft); border-color: var(--coral); border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18); }
+  .sort-chip.wrong-drop { animation: shake 0.45s; background: var(--bad-soft) !important; border-color: var(--bad) !important; color: var(--bad) !important; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+  .sort-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .btn-secondary {
+    background: white; color: var(--navy); border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+  .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+
+  /* MATCHING */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 10px 8px; text-align: center; font-size: 0.92rem; cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white; width: 32px; height: 32px;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; box-shadow: var(--shadow); font-family: Georgia, serif;
+    font-size: 1.05rem; overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white; border-radius: 8px;
+    padding: 12px 16px; margin-top: 14px; font-family: Georgia, serif;
+    font-size: 1.1rem; text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white; border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer; font-size: 0.92rem; font-weight: 600; margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* SVG FIGURES */
+  .svg-figure {
+    background: white; border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px; text-align: center; margin: 14px 0;
+  }
+  .svg-figure svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .svg-figure figcaption {
+    font-size: 0.82rem; color: var(--muted); font-style: italic; margin-top: 8px;
+  }
+  .worked-two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start;
+  }
+  @media (max-width: 680px) { .worked-two-col { grid-template-columns: 1fr; } }
+
+  /* COMPARE TWO SOLUTIONS */
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 16px 0;
+  }
+  @media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-panel {
+    background: white; border: 2px solid var(--border); border-radius: 12px; padding: 18px;
+  }
+  .compare-panel.method-add { border-color: #2d6fa8; }
+  .compare-panel.method-sub { border-color: var(--coral); }
+  .compare-panel h4 {
+    font-family: Georgia, serif; font-size: 1rem; font-weight: bold;
+    margin: 0 0 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .compare-panel.method-add h4 { color: #2d6fa8; }
+  .compare-panel.method-sub h4 { color: var(--coral); }
+  .method-badge {
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; padding: 2px 8px; border-radius: 4px; color: white;
+  }
+  .method-add .method-badge { background: #2d6fa8; }
+  .method-sub .method-badge { background: var(--coral); }
+  .compare-questions {
+    background: var(--hint-bg); border-left: 3px solid var(--navy);
+    border-radius: 6px; padding: 12px 14px; margin-top: 14px;
+    font-size: 0.92rem; color: var(--navy);
+  }
+  .compare-questions li { margin-bottom: 6px; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px;
+  }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num {
+    font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif; font-size: 0.92rem;
+    background: white; border: 1px solid var(--border); width: 28px; height: 28px;
+    border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .problem-expr { font-size: 1rem; flex: 1; padding-top: 2px; line-height: 1.5; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem; background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white; border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px; font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box { background: var(--hint-bg); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none; }
+  .hint-box.visible { display: block; }
+  .answer-box { background: var(--good-soft); color: #1d4a30; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none; }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px; padding: 0; background: #eaf0f1;
+    border-left: 5px solid var(--navy); border-radius: 4px; font-size: 0.86rem; text-align: left;
+  }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; transition: transform 0.15s ease; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-row .cl-value { color: var(--text); }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval, section.lesson.exit-ticket { background: #eaf0f1; border-left: 5px solid var(--navy); }
+  section.lesson.retrieval .problem, section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron {
+    width: 32px; height: 32px; border-radius: 8px; background: white;
+    border: 1.5px solid var(--border); display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.9rem; color: var(--navy); transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white; border: 1px solid var(--border); color: var(--muted);
+    padding: 3px 10px; border-radius: 999px; font-family: -apple-system, sans-serif;
+    font-size: 0.75rem; font-weight: 600; flex-shrink: 0; white-space: nowrap;
+  }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* NOTICE / CALLOUT */
+  .callout {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    border-radius: 6px; padding: 12px 14px; font-size: 0.92rem; color: var(--navy);
+    margin: 14px 0; font-style: italic;
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .sort-buckets { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Area of Composite &amp; Irregular Shapes</h1>
+    <div class="subtitle">Year 8 &middot; SA Curriculum (Mathematics R&ndash;10 Prototype 2) &middot; Measurement</div>
+  </div>
+  <div class="badge">AC9M8M01</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>&#128065;</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ================================================================
+     SECTION 0: RETRIEVAL WARM-UP
+     ================================================================ -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up &mdash; quick recall
+    <span class="retrieval-tag">&#129504; 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work — they warm up the skills you&rsquo;ll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ================================================================
+     SECTION 1: WHY THIS MATTERS
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that&rsquo;s secretly today&rsquo;s maths.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start;">
+    <div>
+      <p>Each summer, Burnside City Council decides which suburban parks to spray for mosquitoes. The catch: they pay the contractor per square metre. A park shaped like an L or a house pentagon doesn&rsquo;t come with a ready-made formula on the invoice.</p>
+      <p>The council officer sketches the park on 1&nbsp;cm grid paper, breaks it into rectangles and triangles she knows how to handle, adds the pieces together — and gets a quoted cost within minutes. For oddly-shaped wetland areas she simply counts squares on the map.</p>
+      <p style="margin: 0;"><strong>Today you&rsquo;ll learn the same two strategies:</strong> decompose-and-add (or enclose-and-subtract) for composite shapes, and grid-counting for truly irregular regions.</p>
+    </div>
+    <div class="callout" style="margin: 0;">
+      <strong>The big idea:</strong> any composite shape can be thought of as <em>two (or more) simple shapes glued together</em>, or equally as a <em>big shape with a piece removed.</em> Both views give the same area — which you&rsquo;ll see side by side later in the lesson.<br><br>
+      For curves and blobs, a grid gives you an <em>estimate</em> that&rsquo;s good enough for practical decisions like spray coverage.
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     AS A CLASS PHASE BANNER
+     ================================================================ -->
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration &mdash; we&rsquo;ll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SECTION 2: VOCABULARY
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five terms are the language of today&rsquo;s lesson.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Composite shape<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A shape made by <strong>joining two or more simple shapes</strong> (rectangles, triangles, etc.).<div class="vocab-example">An L-shape = two rectangles joined together.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Decompose<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>Split a shape</strong> into simpler pieces so you can find each area separately, then add.<div class="vocab-example">Cut an L-shape along an internal line to make two rectangles.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Bounding rectangle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>smallest rectangle</strong> that completely encloses a shape. Used in the enclose-and-subtract method.<div class="vocab-example">Draw a big rectangle around an L-shape, then subtract the missing corner.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Irregular shape<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A shape with <strong>no formula</strong> because the sides are curved or uneven. We estimate its area using a grid.<div class="vocab-example">A lake outline, a puddle, a wetland zone on a map.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Grid-square method<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Count <strong>full squares inside</strong> the shape, then count <strong>part squares</strong> (typically &frac12; each). Multiply count by the area of one square.<div class="vocab-example">On a 1&nbsp;cm grid: 14 full squares + 6 half-squares &rarr; 14 + 3 = 17&nbsp;cm&sup2;.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 3: SORT — COMPOSITE OR IRREGULAR?
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Composite or irregular?</h2>
+  <p class="sec-desc">Drag each shape description into the correct category. Wrong drops shake back; correct ones stay.</p>
+
+  <div class="sort-source" id="sortSource">
+    <span class="sort-chip" data-type="composite">L-shaped room</span>
+    <span class="sort-chip" data-type="irregular">Coastline outline</span>
+    <span class="sort-chip" data-type="composite">House pentagon (rectangle + triangle)</span>
+    <span class="sort-chip" data-type="irregular">Leaf silhouette</span>
+    <span class="sort-chip" data-type="composite">Swimming pool with rectangular steps</span>
+    <span class="sort-chip" data-type="irregular">Amoeba shape</span>
+    <span class="sort-chip" data-type="composite">T-shaped garden bed</span>
+    <span class="sort-chip" data-type="irregular">Cloud outline</span>
+  </div>
+  <div class="sort-buckets">
+    <div class="sort-bucket" data-bucket="composite">
+      <h4 style="color: var(--navy);">&#10063; Composite shape — use add or subtract</h4>
+      <div class="bucket-contents"></div>
+    </div>
+    <div class="sort-bucket" data-bucket="irregular">
+      <h4 style="color: var(--coral);">&#10063; Irregular shape — use grid counting</h4>
+      <div class="bucket-contents"></div>
+    </div>
+  </div>
+  <div class="sort-actions">
+    <button class="btn-secondary btn-sm" onclick="resetSort()">&#8634; Reset</button>
+    <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 4: MATCH — FORMULA TO SHAPE
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the formula to the shape</h2>
+  <p class="sec-desc">Click a formula, then click its matching shape name to pair them. Five pairs to find.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a formula or shape to start.</div>
+</section>
+
+<!-- ================================================================
+     I DO PHASE BANNER
+     ================================================================ -->
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I&rsquo;ll work through each example out loud, showing every step. SVG diagrams show the decomposition lines.</div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SECTION 5a: WORKED EXAMPLE — L-SHAPE (ADD METHOD)
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example A &mdash; L-shape by decompose-and-add</h2>
+  <p class="sec-desc">Find the area of this L-shape. The dashed line shows where we split it into two rectangles.</p>
+
+  <div class="worked-two-col" style="margin-bottom: 18px;">
+    <!-- SVG: L-shape with decomposition dashed line -->
+    <figure class="svg-figure">
+      <svg viewBox="0 0 240 220" width="240" height="220" aria-label="L-shape with dashed decomposition line dividing it into rectangle A (top) and rectangle B (bottom-right)">
+        <!-- L-shape outline -->
+        <polygon points="20,20 120,20 120,100 220,100 220,200 20,200" fill="#f5d8cb" stroke="#BE5837" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- Dashed decomposition line -->
+        <line x1="20" y1="100" x2="120" y2="100" stroke="#1F4D54" stroke-width="2" stroke-dasharray="7,5"/>
+        <!-- Region labels -->
+        <text x="60" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#1F4D54" font-weight="bold">A</text>
+        <text x="170" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#1F4D54" font-weight="bold">B</text>
+        <!-- Dimension labels -->
+        <text x="68" y="13" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a">6 m</text>
+        <text x="235" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a">5 m</text>
+        <text x="170" y="215" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a">10 m</text>
+        <text x="5" y="115" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a" transform="rotate(-90,5,115)">10 m</text>
+        <text x="130" y="55" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a" transform="rotate(-90,130,55)">4 m</text>
+        <!-- Decomposition label -->
+        <text x="66" y="95" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-style="italic">decompose here</text>
+        <!-- Tick marks -->
+        <line x1="20" y1="16" x2="120" y2="16" stroke="#888" stroke-width="1"/>
+        <line x1="20" y1="13" x2="20" y2="19" stroke="#888" stroke-width="1"/>
+        <line x1="120" y1="13" x2="120" y2="19" stroke="#888" stroke-width="1"/>
+      </svg>
+      <figcaption>Dashed line splits the L into rectangle A (top) and rectangle B (bottom-right)</figcaption>
+    </figure>
+
+    <div>
+      <div class="worked">
+        <div class="step visible" id="stepA1">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Identify the two rectangles</div>
+            <div class="step-desc">The dashed line cuts the L into two rectangles. Read off the dimensions of each.</div>
+            <div class="calc-box">
+              <span class="blue">Rectangle A</span>: 6 m &times; 4 m<br>
+              <span class="red">Rectangle B</span>: 10 m &times; 5 m
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepA2">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Find each area</div>
+            <div class="step-desc">Area of a rectangle = length &times; width.</div>
+            <div class="calc-box">
+              <span class="blue">A</span> = 6 &times; 4 = <strong>24 m&sup2;</strong><br>
+              <span class="red">B</span> = 10 &times; 5 = <strong>50 m&sup2;</strong>
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepA3">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Add the pieces</div>
+            <div class="step-desc">Total area = A + B.</div>
+            <div class="calc-box">24 + 50 = <strong>74 m&sup2;</strong></div>
+            <div class="summary-banner">
+              <span class="label">Answer (Add method)</span>
+              Area = 74 m&sup2;
+            </div>
+          </div>
+        </div>
+        <button class="reveal-btn" id="revealBtnA" onclick="revealStep('A', 3)">Reveal next step &darr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 5b: WORKED EXAMPLE — L-SHAPE (SUBTRACT METHOD)
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5b</span>Worked example B &mdash; same L-shape by enclose-and-subtract</h2>
+  <p class="sec-desc">Same shape, same answer — but this time we enclose it in a big rectangle and subtract the missing corner.</p>
+
+  <div class="worked-two-col" style="margin-bottom: 18px;">
+    <!-- SVG: L-shape with bounding rectangle shown as dashed outline, cut-out shaded -->
+    <figure class="svg-figure">
+      <svg viewBox="0 0 240 220" width="240" height="220" aria-label="L-shape enclosed by dashed bounding rectangle. The top-right cut-out corner is shaded grey.">
+        <!-- Bounding rectangle dashed outline -->
+        <rect x="20" y="20" width="200" height="180" fill="none" stroke="#1F4D54" stroke-width="2" stroke-dasharray="8,5"/>
+        <!-- L-shape fill -->
+        <polygon points="20,20 120,20 120,100 220,100 220,200 20,200" fill="#f5d8cb" stroke="#BE5837" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- Cut-out corner (top-right, shaded) -->
+        <polygon points="120,20 220,20 220,100 120,100" fill="#d8dde6" stroke="#888" stroke-width="1.5" stroke-dasharray="5,4" opacity="0.7"/>
+        <text x="168" y="62" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#6b7280" font-style="italic">cut-out</text>
+        <!-- Region labels -->
+        <text x="60" y="130" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#1F4D54" font-weight="bold">Big rect</text>
+        <!-- Dimension labels -->
+        <text x="120" y="13" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a">16 m</text>
+        <text x="235" y="115" text-anchor="start" font-family="Georgia,serif" font-size="13" fill="#2a2a2a">10 m</text>
+        <text x="168" y="95" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#6b7280">10&times;4</text>
+        <!-- Tick marks -->
+        <line x1="20" y1="16" x2="220" y2="16" stroke="#888" stroke-width="1"/>
+        <line x1="20" y1="13" x2="20" y2="19" stroke="#888" stroke-width="1"/>
+        <line x1="220" y1="13" x2="220" y2="19" stroke="#888" stroke-width="1"/>
+      </svg>
+      <figcaption>Dashed border = bounding rectangle. Grey shaded corner = the piece subtracted.</figcaption>
+    </figure>
+
+    <div>
+      <div class="worked">
+        <div class="step visible" id="stepB1">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Draw the bounding rectangle</div>
+            <div class="step-desc">Wrap the whole L in the smallest rectangle that fits around it.</div>
+            <div class="calc-box">
+              Bounding rectangle: 16 m &times; 10 m<br>
+              Area<sub>big</sub> = 16 &times; 10 = <strong>160 m&sup2;</strong>
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepB2">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Find the cut-out corner</div>
+            <div class="step-desc">The missing top-right corner is a rectangle too.</div>
+            <div class="calc-box">
+              Cut-out: 10 m &times; 4 m<br>
+              Area<sub>cut</sub> = 10 &times; 4 = <strong>86 m&sup2;</strong>
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepB3">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Subtract</div>
+            <div class="step-desc">Area of L-shape = big &minus; cut-out.</div>
+            <div class="calc-box">160 &minus; 86 = <strong>74 m&sup2;</strong></div>
+            <div class="summary-banner">
+              <span class="label">Answer (Subtract method)</span>
+              Area = 74 m&sup2; &nbsp;&#10003; Same answer!
+            </div>
+          </div>
+        </div>
+        <button class="reveal-btn" id="revealBtnB" onclick="revealStep('B', 3)">Reveal next step &darr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 5c: WORKED EXAMPLE — HOUSE PENTAGON
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5c</span>Worked example C &mdash; house pentagon (rectangle + triangle)</h2>
+  <p class="sec-desc">A council shed has a house-shaped cross-section. Find its area.</p>
+
+  <div class="worked-two-col" style="margin-bottom: 18px;">
+    <!-- SVG: House pentagon with decomposition line at top of rectangle / base of triangle -->
+    <figure class="svg-figure">
+      <svg viewBox="0 0 240 240" width="240" height="240" aria-label="House-pentagon shape: a rectangle at the bottom with a triangle on top. Dashed line separates the two regions.">
+        <!-- Rectangle base fill -->
+        <rect x="30" y="120" width="180" height="100" fill="#d9efff" stroke="none"/>
+        <!-- Triangle roof fill -->
+        <polygon points="30,120 120,30 210,120" fill="#f5d8cb" stroke="none"/>
+        <!-- Dashed decomposition line -->
+        <line x1="30" y1="120" x2="210" y2="120" stroke="#1F4D54" stroke-width="2" stroke-dasharray="7,5"/>
+        <!-- Full outline -->
+        <polygon points="30,220 30,120 120,30 210,120 210,220" fill="none" stroke="#BE5837" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- Region labels -->
+        <text x="120" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#1F4D54" font-weight="bold">Rectangle</text>
+        <text x="120" y="88" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#1F4D54" font-weight="bold">Triangle</text>
+        <!-- Dashed label -->
+        <text x="120" y="115" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-style="italic">decompose here</text>
+        <!-- Dimension labels -->
+        <text x="120" y="237" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a">12 m</text>
+        <text x="14" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a" transform="rotate(-90,14,178)">5 m</text>
+        <!-- Height of triangle (dashed guide) -->
+        <line x1="120" y1="30" x2="120" y2="120" stroke="#888" stroke-width="1.2" stroke-dasharray="4,3"/>
+        <text x="128" y="80" font-family="Georgia,serif" font-size="12" fill="#888">h=6 m</text>
+        <!-- Base tick -->
+        <line x1="30" y1="233" x2="210" y2="233" stroke="#888" stroke-width="1"/>
+        <line x1="30" y1="230" x2="30" y2="236" stroke="#888" stroke-width="1"/>
+        <line x1="210" y1="230" x2="210" y2="236" stroke="#888" stroke-width="1"/>
+      </svg>
+      <figcaption>Rectangle (blue) + triangle roof (coral). Dashed line = decomposition boundary.</figcaption>
+    </figure>
+
+    <div>
+      <div class="worked">
+        <div class="step visible" id="stepC1">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Split into rectangle and triangle</div>
+            <div class="step-desc">The dashed line separates the rectangular walls from the triangular roof.</div>
+            <div class="calc-box">
+              <span class="blue">Rectangle</span>: 12 m &times; 5 m<br>
+              <span class="red">Triangle</span>: base 12 m, height 6 m
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepC2">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Find each area</div>
+            <div class="step-desc">Use A = l &times; w for the rectangle, A = &frac12; &times; b &times; h for the triangle.</div>
+            <div class="calc-box">
+              <span class="blue">Rectangle</span> = 12 &times; 5 = <strong>60 m&sup2;</strong><br>
+              <span class="red">Triangle</span> = &frac12; &times; 12 &times; 6 = <strong>36 m&sup2;</strong>
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepC3">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Add the areas</div>
+            <div class="calc-box">60 + 36 = <strong>96 m&sup2;</strong></div>
+            <div class="summary-banner">
+              <span class="label">Answer</span>
+              Area of house cross-section = 96 m&sup2;
+            </div>
+          </div>
+        </div>
+        <button class="reveal-btn" id="revealBtnC" onclick="revealStep('C', 3)">Reveal next step &darr;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 5d: WORKED EXAMPLE — IRREGULAR BLOB (GRID COUNTING)
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">5d</span>Worked example D &mdash; irregular wetland area (grid counting)</h2>
+  <p class="sec-desc">Council needs to estimate the area of a wetland breeding zone for mosquitoes. The region is plotted on a 1&nbsp;cm grid where each square represents 4&nbsp;m&sup2;.</p>
+
+  <div class="worked-two-col" style="margin-bottom: 18px;">
+    <!-- SVG: Irregular blob on a grid -->
+    <figure class="svg-figure">
+      <svg viewBox="0 0 260 240" width="260" height="240" aria-label="Irregular blob shape drawn on a 1 cm grid. Approximately 14 full squares and 7 part squares visible inside the blob.">
+        <!-- Grid lines (20px spacing = 1 cm) -->
+        <defs>
+          <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d8dde6" stroke-width="0.8"/>
+          </pattern>
+        </defs>
+        <rect x="10" y="10" width="240" height="220" fill="url(#grid)"/>
+        <!-- Blob shape -->
+        <path d="M 70,50 C 90,30 140,28 165,45 C 190,62 200,85 195,110 C 190,135 175,160 155,175 C 135,190 105,192 85,178 C 65,164 50,140 48,115 C 46,90 50,70 70,50 Z"
+              fill="#f5d8cb" fill-opacity="0.7" stroke="#BE5837" stroke-width="2.5"/>
+        <!-- Label: full squares (shaded darker) — a few representative ones -->
+        <text x="130" y="110" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#1F4D54" font-weight="bold">Wetland</text>
+        <text x="130" y="126" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#1F4D54">breeding zone</text>
+        <!-- Grid axis labels -->
+        <text x="10" y="235" font-family="Georgia,serif" font-size="11" fill="#6b7280">1 cm = 2 m (real scale)</text>
+        <!-- Square count annotation -->
+        <text x="10" y="18" font-family="Georgia,serif" font-size="11" fill="#6b7280" font-style="italic">1 grid square = 4 m&sup2;</text>
+      </svg>
+      <figcaption>Irregular wetland plotted on a 1&nbsp;cm grid. Count full and part squares to estimate area.</figcaption>
+    </figure>
+
+    <div>
+      <div class="worked">
+        <div class="step visible" id="stepD1">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Count the full squares</div>
+            <div class="step-desc">Mark every square completely inside the blob. Count carefully.</div>
+            <div class="calc-box">
+              Full squares inside blob: <span class="blue"><strong>14</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepD2">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Count the part squares</div>
+            <div class="step-desc">Mark squares that are partly inside. Count each as &frac12; (it&rsquo;s an estimate).</div>
+            <div class="calc-box">
+              Part squares: <span class="red"><strong>7</strong></span> &times; &frac12; = <strong>3.5 squares</strong>
+            </div>
+          </div>
+        </div>
+        <div class="step" id="stepD3">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Multiply by the area of one square</div>
+            <div class="step-desc">Total squares &times; area per square gives the estimated real-world area.</div>
+            <div class="calc-box">
+              Total squares = 14 + 3.5 = <strong>17.5</strong><br>
+              Area &asymp; 17.5 &times; 4 m&sup2; = <strong>70 m&sup2;</strong>
+            </div>
+            <div class="summary-banner">
+              <span class="label">Answer</span>
+              Wetland area &asymp; 70 m&sup2; &nbsp;(estimate)
+            </div>
+          </div>
+        </div>
+        <button class="reveal-btn" id="revealBtnD" onclick="revealStep('D', 3)">Reveal next step &darr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Why is it an estimate?</strong> Part squares that are a tiny sliver count the same as part squares that are nearly full. The more accurate rule is to only count part squares that are more than half full — but for Year 8 we use the &frac12; convention unless told otherwise.
+  </div>
+</section>
+
+<!-- ================================================================
+     WE DO PHASE BANNER
+     ================================================================ -->
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Compare two solutions &mdash; class discussion</div>
+    <div class="phase-sub">Look at both methods side by side, then answer the discussion questions together.</div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SECTION 6: COMPARE TWO SOLUTIONS
+     ================================================================ -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Compare two solutions — same shape, two methods</h2>
+  <p class="sec-desc">Below is a U-shaped composite shape. Both solutions give the same area. Study each method, then answer the questions at the bottom.</p>
+
+  <!-- SVG: U-shape for comparison -->
+  <div style="display: flex; justify-content: center; margin-bottom: 18px;">
+    <figure class="svg-figure" style="max-width: 300px;">
+      <svg viewBox="0 0 260 220" width="260" height="220" aria-label="U-shaped composite shape with labelled dimensions: overall width 14 m, height 10 m, inner cut-out 8 m wide and 6 m tall.">
+        <!-- U-shape fill -->
+        <polygon points="20,20 240,20 240,200 160,200 160,80 100,80 100,200 20,200" fill="#f5d8cb" stroke="#BE5837" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- Dimension labels -->
+        <!-- Top width 14 m -->
+        <line x1="20" y1="12" x2="240" y2="12" stroke="#888" stroke-width="1"/>
+        <line x1="20" y1="9" x2="20" y2="15" stroke="#888" stroke-width="1"/>
+        <line x1="240" y1="9" x2="240" y2="15" stroke="#888" stroke-width="1"/>
+        <text x="130" y="9" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a">14 m</text>
+        <!-- Left height 10 m -->
+        <line x1="10" y1="20" x2="10" y2="200" stroke="#888" stroke-width="1"/>
+        <line x1="7" y1="20" x2="13" y2="20" stroke="#888" stroke-width="1"/>
+        <line x1="7" y1="200" x2="13" y2="200" stroke="#888" stroke-width="1"/>
+        <text x="5" y="115" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#2a2a2a" transform="rotate(-90,5,115)">10 m</text>
+        <!-- Inner cut-out width 8 m -->
+        <line x1="100" y1="72" x2="160" y2="72" stroke="#888" stroke-width="1"/>
+        <line x1="100" y1="69" x2="100" y2="75" stroke="#888" stroke-width="1"/>
+        <line x1="160" y1="69" x2="160" y2="75" stroke="#888" stroke-width="1"/>
+        <text x="130" y="69" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#6b7280">8 m</text>
+        <!-- Inner height 6 m -->
+        <text x="130" y="145" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#6b7280">6 m tall</text>
+        <!-- Left column width 3 m -->
+        <text x="60" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#1F4D54">3 m</text>
+        <text x="200" y="155" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#1F4D54">3 m</text>
+      </svg>
+      <figcaption>U-shape: overall 14 m &times; 10 m, inner gap 8 m &times; 6 m. Left and right columns are each 3 m wide.</figcaption>
+    </figure>
+  </div>
+
+  <div class="compare-grid">
+    <!-- METHOD 1: Decompose and add -->
+    <div class="compare-panel method-add">
+      <h4><span class="method-badge">Method 1</span> Decompose &amp; add</h4>
+      <p style="font-size: 0.93rem; color: var(--muted); margin: 0 0 10px;">Split the U into three rectangles: bottom bar + left column + right column.</p>
+      <div style="font-family: Georgia, serif; font-size: 1rem; line-height: 2;">
+        Bottom bar: 14 &times; 4 = <strong>56 m&sup2;</strong><br>
+        Left column: 3 &times; 6 = <strong>18 m&sup2;</strong><br>
+        Right column: 3 &times; 6 = <strong>18 m&sup2;</strong><br>
+        <span style="border-top: 1.5px solid #2d6fa8; display: inline-block; padding-top: 4px;">Total = 56 + 18 + 18 = <strong>92 m&sup2;</strong></span>
+      </div>
+      <!-- Mini SVG showing 3 rectangles -->
+      <figure class="svg-figure" style="margin-top: 12px;">
+        <svg viewBox="0 0 190 160" width="190" height="160" aria-label="U-shape decomposed into three rectangles shown with different shading.">
+          <!-- Bottom bar (orange) -->
+          <rect x="14" y="116" width="162" height="32" fill="#ffe9d6" stroke="#d97c2a" stroke-width="1.5"/>
+          <text x="95" y="136" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#8c4a0e">Bottom 14&times;4</text>
+          <!-- Left col (blue) -->
+          <rect x="14" y="14" width="42" height="102" fill="#d9efff" stroke="#2d6fa8" stroke-width="1.5"/>
+          <text x="35" y="68" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#15446b">Left 3&times;6</text>
+          <!-- Right col (purple) -->
+          <rect x="134" y="14" width="42" height="102" fill="#e5dcf7" stroke="#6f4ab8" stroke-width="1.5"/>
+          <text x="155" y="68" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#3d2773">Right 3&times;6</text>
+          <!-- Outline -->
+          <polygon points="14,14 176,14 176,148 134,148 134,116 56,116 56,148 14,148" fill="none" stroke="#BE5837" stroke-width="2"/>
+        </svg>
+        <figcaption>Three rectangles coloured separately</figcaption>
+      </figure>
+    </div>
+
+    <!-- METHOD 2: Enclose and subtract -->
+    <div class="compare-panel method-sub">
+      <h4><span class="method-badge">Method 2</span> Enclose &amp; subtract</h4>
+      <p style="font-size: 0.93rem; color: var(--muted); margin: 0 0 10px;">Wrap the U in a 14&times;10 bounding rectangle, then subtract the inner cut-out.</p>
+      <div style="font-family: Georgia, serif; font-size: 1rem; line-height: 2;">
+        Bounding rectangle: 14 &times; 10 = <strong>140 m&sup2;</strong><br>
+        Cut-out (inner gap): 8 &times; 6 = <strong>48 m&sup2;</strong><br>
+        &nbsp;<br>
+        <span style="border-top: 1.5px solid #BE5837; display: inline-block; padding-top: 4px;">Total = 140 &minus; 48 = <strong>92 m&sup2;</strong></span>
+      </div>
+      <!-- Mini SVG showing bounding rect + cutout -->
+      <figure class="svg-figure" style="margin-top: 12px;">
+        <svg viewBox="0 0 190 160" width="190" height="160" aria-label="U-shape shown inside dashed bounding rectangle. Inner gap shaded grey.">
+          <!-- Bounding rect -->
+          <rect x="14" y="14" width="162" height="132" fill="#fde4d6" fill-opacity="0.4" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <!-- U shape fill -->
+          <polygon points="14,14 176,14 176,146 134,146 134,116 56,116 56,146 14,146" fill="#f5d8cb" fill-opacity="0.6" stroke="#BE5837" stroke-width="1.5"/>
+          <!-- Cut-out shaded -->
+          <rect x="56" y="14" width="78" height="102" fill="#d8dde6" fill-opacity="0.8" stroke="#888" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="95" y="68" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#6b7280" font-style="italic">cut-out</text>
+          <text x="95" y="82" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#6b7280">8&times;6</text>
+        </svg>
+        <figcaption>Grey = the rectangle subtracted</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- Discussion questions -->
+  <div class="compare-questions">
+    <strong>Class discussion — answer together:</strong>
+    <ol style="margin: 8px 0 0; padding-left: 20px;">
+      <li>What is the same about the two methods?</li>
+      <li>What is different about the two methods?</li>
+      <li>Method 1 needed three rectangles. Method 2 needed only one subtraction. <strong>When is Method 2 (subtract) more efficient?</strong></li>
+      <li>Could you use Method 2 on the house-pentagon example from worked example C? Why or why not?</li>
+    </ol>
+  </div>
+
+  <div style="margin-top: 18px;">
+    <p class="sec-desc" style="margin-bottom: 10px;">After discussion, fill in the we-do check below:</p>
+    <div class="practice-grid" id="weDoGrid"></div>
+  </div>
+</section>
+
+<!-- ================================================================
+     YOU DO PHASE BANNER
+     ================================================================ -->
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn &mdash; work independently</div>
+    <div class="phase-sub">Quick check first &mdash; then choose your tier: Building, Stretch, or Mastery.</div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SECTION 7: QUICK CHECK
+     ================================================================ -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check &mdash; try these on your own
+    <span class="checkpoint-tag">&#9995; Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you&rsquo;ve got the method. Try on your own &mdash; then we&rsquo;ll check as a class before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    &#9995; <strong>Stop here</strong> when you&rsquo;re done. Don&rsquo;t open a chilli tier yet &mdash; wait for the class check.
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 8: BUILDING (accordion, open)
+     ================================================================ -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice &mdash; Building <span class="diff-badge d1"><span class="dots">&#9679;&#9675;&#9675;</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">&#9658;</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Find the area of each composite shape. All are made of rectangles only. Type your answer in m&sup2; (just the number, e.g. <code>48</code>).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 9: STRETCH (accordion, collapsed)
+     ================================================================ -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice &mdash; Stretch <span class="diff-badge d2"><span class="dots">&#9679;&#9679;&#9675;</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">&#9658;</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Shapes now include triangles, and some use the enclose-and-subtract method. Type your answer including units where asked.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 10: MASTERY (accordion, collapsed)
+     ================================================================ -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice &mdash; Mastery <span class="diff-badge d3"><span class="dots">&#9679;&#9679;&#9679;</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">&#9658;</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">A composite shape where subtracting is clearly the most efficient method, plus an irregular shape requiring part-square estimation. Type your answer as a number (units given in the question).</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ================================================================
+     SECTION 11: EXIT TICKET
+     ================================================================ -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">&#127919; Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer all three before you go. They check the big ideas of today&rsquo;s lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link &mdash; teacher reference</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">Lesson ID</span>
+      <span class="cl-value">y8_mea_02</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 &middot; Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8M01</strong> &mdash; solve problems involving the area and perimeter of irregular and composite shapes using appropriate units</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 elaborations</span>
+      <span class="cl-value">1, 2, 3</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Find the area of composite shapes by decomposing into rectangles/triangles (add method) or using the enclose-and-subtract method; estimate irregular areas by counting grid squares.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Mapping note</span>
+      <span class="cl-value">Partial &mdash; this lesson covers the area aspect of the descriptor. See y8_mea_01 for the perimeter aspect.</span>
+    </div>
+    <div class="cl-note">Source: SA Curriculum (Mathematics R&ndash;10 Prototype 2). Lesson ID y8_mea_02. Lesson-map.xlsx row reference.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics &middot; Year 8 &middot; Area of Composite &amp; Irregular Shapes &middot; SA Curriculum (Mathematics R&ndash;10 Prototype 2)
+</footer>
+
+</div><!-- end .page -->
+
+<script>
+// ============ STATE ============
+let totalProblems = 0;
+let correctCount  = 0;
+
+// Step reveal state per worked example (A, B, C, D)
+const stepState = { A: 1, B: 1, C: 1, D: 1 };
+
+// ============ TEACHER MODE ============
+function toggleTeacher() {
+  document.body.classList.toggle('teacher-mode');
+  document.getElementById('teacherToggle').classList.toggle('active');
+}
+
+// ============ STEP REVEAL ============
+function revealStep(key, maxSteps) {
+  stepState[key]++;
+  const step = document.getElementById('step' + key + stepState[key]);
+  if (step) step.classList.add('visible');
+  const btn = document.getElementById('revealBtn' + key);
+  if (stepState[key] >= maxSteps) {
+    btn.disabled = true;
+    btn.textContent = '&#10003; All steps shown';
+  }
+}
+
+// ============ SORT DRAG AND DROP ============
+let sortDragState = null;
+
+function initSortDrag() {
+  document.querySelectorAll('.sort-chip[data-type]').forEach(function(chip) {
+    chip.addEventListener('pointerdown', startSortDrag);
+  });
+}
+
+function startSortDrag(e) {
+  e.preventDefault();
+  var chip = e.currentTarget;
+  var rect = chip.getBoundingClientRect();
+  var ghost = document.createElement('span');
+  ghost.className = 'sort-chip-ghost';
+  ghost.textContent = chip.textContent;
+  ghost.style.left = rect.left + 'px';
+  ghost.style.top  = rect.top  + 'px';
+  document.body.appendChild(ghost);
+  chip.classList.add('dragging');
+  sortDragState = { chip: chip, ghost: ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+  chip.setPointerCapture(e.pointerId);
+  chip.addEventListener('pointermove', moveSortDrag);
+  chip.addEventListener('pointerup',   endSortDrag);
+  chip.addEventListener('pointercancel', endSortDrag);
+}
+
+function moveSortDrag(e) {
+  if (!sortDragState) return;
+  sortDragState.ghost.style.left = (e.clientX - sortDragState.offsetX) + 'px';
+  sortDragState.ghost.style.top  = (e.clientY - sortDragState.offsetY) + 'px';
+  sortDragState.ghost.style.display = 'none';
+  var under = document.elementFromPoint(e.clientX, e.clientY);
+  sortDragState.ghost.style.display = '';
+  var bucket = under && under.closest('.sort-bucket');
+  document.querySelectorAll('.sort-bucket').forEach(function(b) { b.classList.toggle('drop-target', b === bucket); });
+}
+
+function endSortDrag(e) {
+  if (!sortDragState) return;
+  var chip = sortDragState.chip;
+  var ghost = sortDragState.ghost;
+  ghost.style.display = 'none';
+  var under = document.elementFromPoint(e.clientX, e.clientY);
+  ghost.remove();
+  chip.classList.remove('dragging');
+  document.querySelectorAll('.sort-bucket').forEach(function(b) { b.classList.remove('drop-target'); });
+  var bucket = under && under.closest('.sort-bucket');
+  if (bucket) {
+    var dest    = bucket.dataset.bucket;
+    var correct = chip.dataset.type;
+    bucket.querySelector('.bucket-contents').appendChild(chip);
+    if (dest !== correct) {
+      chip.classList.add('wrong-drop');
+      setTimeout(function() {
+        chip.classList.remove('wrong-drop');
+        document.getElementById('sortSource').appendChild(chip);
+      }, 600);
+    }
+  }
+  chip.removeEventListener('pointermove', moveSortDrag);
+  chip.removeEventListener('pointerup',   endSortDrag);
+  chip.removeEventListener('pointercancel', endSortDrag);
+  sortDragState = null;
+}
+
+function resetSort() {
+  var source = document.getElementById('sortSource');
+  document.querySelectorAll('.sort-bucket .bucket-contents .sort-chip').forEach(function(chip) {
+    chip.classList.remove('wrong-drop');
+    source.appendChild(chip);
+  });
+}
+
+function solveSort() {
+  document.querySelectorAll('.sort-chip[data-type]').forEach(function(chip) {
+    chip.classList.remove('wrong-drop');
+    var correct = chip.dataset.type;
+    var bucket  = document.querySelector('.sort-bucket[data-bucket="' + correct + '"] .bucket-contents');
+    bucket.appendChild(chip);
+  });
+}
+
+// ============ MATCHING ============
+var matchTerms = [
+  { html: 'Rectangle<br><small>A = l &times; w</small>',   group: 1 },
+  { html: 'Triangle<br><small>A = &frac12;bh</small>',     group: 2 },
+  { html: 'Parallelogram<br><small>A = bh</small>',        group: 3 },
+  { html: 'Trapezium<br><small>A = &frac12;(a+b)h</small>', group: 4 },
+  { html: 'Circle<br><small>A = &pi;r&sup2;</small>',       group: 5 },
+  { html: 'length &times; width',                           group: 1 },
+  { html: 'half base times height',                          group: 2 },
+  { html: 'base &times; perpendicular height',               group: 3 },
+  { html: 'half sum of parallel sides &times; height',       group: 4 },
+  { html: 'pi times radius squared',                         group: 5 },
+];
+
+var matchSelected  = null;
+var matchedGroups  = new Set();
+
+function buildMatchArea() {
+  var shuffled = matchTerms.slice().sort(function() { return Math.random() - 0.5; });
+  var area = document.getElementById('matchArea');
+  area.innerHTML = '';
+  shuffled.forEach(function(t, i) {
+    var chip = document.createElement('div');
+    chip.className = 'match-chip';
+    chip.innerHTML = t.html;
+    chip.dataset.group = t.group;
+    chip.dataset.idx   = i;
+    chip.onclick = function() { handleMatchClick(chip); };
+    area.appendChild(chip);
+  });
+}
+
+function handleMatchClick(chip) {
+  if (/matched-/.test(chip.className)) return;
+  if (matchSelected === chip) { chip.classList.remove('selected'); matchSelected = null; return; }
+  if (!matchSelected) {
+    matchSelected = chip;
+    chip.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Now click its partner.';
+    return;
+  }
+  if (matchSelected.dataset.group === chip.dataset.group) {
+    var g = chip.dataset.group;
+    matchSelected.classList.remove('selected');
+    matchSelected.classList.add('matched-' + g);
+    chip.classList.add('matched-' + g);
+    matchedGroups.add(g);
+    document.getElementById('matchFeedback').textContent =
+      matchedGroups.size === 5 ? 'All five pairs matched!' : 'Matched! (' + matchedGroups.size + '/5)';
+    matchSelected = null;
+  } else {
+    var w1 = matchSelected, w2 = chip;
+    w2.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Not a match &mdash; think about which formula goes with that shape.';
+    setTimeout(function() { w1.classList.remove('selected'); w2.classList.remove('selected'); }, 700);
+    matchSelected = null;
+  }
+}
+
+// ============ PRACTICE PROBLEMS ============
+
+// Retrieval warm-up (Section 0) — prerequisite skills: area of a rectangle, area of a triangle, unit conversion
+var retrieval = [
+  {
+    q: 'Find the area of a rectangle with length 8&nbsp;m and width 5&nbsp;m.',
+    a: '40',
+    hint: 'Area = length &times; width.'
+  },
+  {
+    q: 'Find the area of a triangle with base 10&nbsp;cm and perpendicular height 6&nbsp;cm.',
+    a: '30',
+    hint: 'Area = &frac12; &times; base &times; height.'
+  },
+  {
+    q: 'How many cm&sup2; is 1&nbsp;m&sup2;? (Enter your answer as a whole number.)',
+    a: '10000',
+    hint: '1 m = 100 cm, so 1 m&sup2; = 100 &times; 100 cm&sup2;.'
+  },
+];
+
+// We-do check (after Compare Two Solutions discussion)
+var weDo = [
+  {
+    q: 'Using the U-shape above (14&nbsp;m &times; 10&nbsp;m, cut-out 8&nbsp;m &times; 6&nbsp;m): what is the area of the bounding rectangle? (m&sup2;)',
+    a: '140',
+    hint: '14 &times; 10 = ?'
+  },
+  {
+    q: 'What is the area of the rectangular cut-out? (m&sup2;)',
+    a: '48',
+    hint: '8 &times; 6 = ?'
+  },
+  {
+    q: 'Subtract to find the area of the U-shape. (m&sup2;)',
+    a: '92',
+    hint: '140 &minus; 48 = ?'
+  },
+];
+
+// Quick check (Section 7) — two straightforward composite shapes
+var checkpoint = [
+  {
+    q: 'An L-shape is made of two rectangles: one 5&nbsp;m &times; 3&nbsp;m and one 4&nbsp;m &times; 2&nbsp;m. What is the total area? (m&sup2;)',
+    a: '23',
+    hint: 'Add the two rectangle areas: (5&times;3) + (4&times;2).'
+  },
+  {
+    q: 'A shape fits inside a 10&nbsp;m &times; 6&nbsp;m bounding rectangle. A 4&nbsp;m &times; 3&nbsp;m corner is missing. What is the shape&rsquo;s area? (m&sup2;)',
+    a: '48',
+    hint: '(10&times;6) &minus; (4&times;3) = 60 &minus; 12.'
+  },
+];
+
+// Building practice (Section 8) — 10 questions, rectangles only, composite shapes
+var practice1 = [
+  {
+    q: '<strong>P1.</strong> An L-shape has two rectangles: 8&nbsp;m &times; 3&nbsp;m on top and 6&nbsp;m &times; 4&nbsp;m on the right. Find the total area. (m&sup2;)',
+    a: '48',
+    hint: '(8&times;3) + (6&times;4) = 24 + 24.'
+  },
+  {
+    q: '<strong>P2.</strong> A T-shape is made of a 10&nbsp;m &times; 2&nbsp;m top bar and a 3&nbsp;m &times; 6&nbsp;m stem. Find the total area. (m&sup2;)',
+    a: '38',
+    hint: '(10&times;2) + (3&times;6) = 20 + 18.'
+  },
+  {
+    q: '<strong>P3.</strong> A bounding rectangle is 12&nbsp;m &times; 8&nbsp;m. A 5&nbsp;m &times; 3&nbsp;m corner is missing. Find the area. (m&sup2;)',
+    a: '81',
+    hint: '(12&times;8) &minus; (5&times;3) = 96 &minus; 15.'
+  },
+  {
+    q: '<strong>P4.</strong> A step-shape is two rectangles: 9&nbsp;cm &times; 4&nbsp;cm and 5&nbsp;cm &times; 3&nbsp;cm. Find the total area. (cm&sup2;)',
+    a: '51',
+    hint: '(9&times;4) + (5&times;3) = 36 + 15.'
+  },
+  {
+    q: '<strong>P5.</strong> An L-shape: bounding rectangle 7&nbsp;m &times; 5&nbsp;m, cut-out 3&nbsp;m &times; 2&nbsp;m. Find the area. (m&sup2;)',
+    a: '29',
+    hint: '(7&times;5) &minus; (3&times;2) = 35 &minus; 6.'
+  },
+  {
+    q: '<strong>P6.</strong> A cross-shape: a 10&nbsp;cm &times; 2&nbsp;cm horizontal bar and a 2&nbsp;cm &times; 6&nbsp;cm vertical bar (the 2&times;2 overlap is counted once). Find the total area. (cm&sup2;)',
+    a: '32',
+    hint: '(10&times;2) + (2&times;6) &minus; (2&times;2) = 20 + 12 &minus; 4. (Subtract the overlap once.)'
+  },
+  {
+    q: '<strong>P7.</strong> A U-shape has bounding rectangle 8&nbsp;m &times; 6&nbsp;m and a 4&nbsp;m &times; 4&nbsp;m cut-out. Find the area. (m&sup2;)',
+    a: '32',
+    hint: '(8&times;6) &minus; (4&times;4) = 48 &minus; 16.'
+  },
+  {
+    q: '<strong>P8.</strong> Three rectangles are stacked: 6&nbsp;m &times; 1&nbsp;m, then 4&nbsp;m &times; 1&nbsp;m, then 2&nbsp;m &times; 1&nbsp;m. Find the total area. (m&sup2;)',
+    a: '12',
+    hint: '6 + 4 + 2 = 12, each 1&nbsp;m wide.'
+  },
+  {
+    q: '<strong>P9.</strong> A rectangular room (10&nbsp;m &times; 8&nbsp;m) has a rectangular alcove (2&nbsp;m &times; 3&nbsp;m) added on. What is the total floor area? (m&sup2;)',
+    a: '86',
+    hint: '(10&times;8) + (2&times;3) = 80 + 6.'
+  },
+  {
+    q: '<strong>P10.</strong> A composite shape fits in a 15&nbsp;cm &times; 10&nbsp;cm bounding rectangle. Two square corners, each 3&nbsp;cm &times; 3&nbsp;cm, are removed. Find the area. (cm&sup2;)',
+    a: '132',
+    hint: '(15&times;10) &minus; 2&times;(3&times;3) = 150 &minus; 18.'
+  },
+];
+
+// Stretch practice (Section 9) — 6 questions, includes triangles and mixed contexts
+var practice2 = [
+  {
+    q: '<strong>S1.</strong> A house cross-section (pentagon): rectangle 8&nbsp;m &times; 4&nbsp;m with a triangle on top, base 8&nbsp;m, height 3&nbsp;m. Find the total area. (m&sup2;)',
+    a: '44',
+    hint: '(8&times;4) + (&frac12;&times;8&times;3) = 32 + 12.'
+  },
+  {
+    q: '<strong>S2.</strong> A composite shape: a 6&nbsp;m &times; 6&nbsp;m square with a right-angled triangle (base 6&nbsp;m, height 4&nbsp;m) attached to one side. Find the total area. (m&sup2;)',
+    a: '48',
+    hint: '(6&times;6) + (&frac12;&times;6&times;4) = 36 + 12.'
+  },
+  {
+    q: '<strong>S3.</strong> A parallelogram-topped composite: a 10&nbsp;cm &times; 3&nbsp;cm rectangle below a triangle with base 10&nbsp;cm and height 5&nbsp;cm. Find the total area. (cm&sup2;)',
+    a: '55',
+    hint: '(10&times;3) + (&frac12;&times;10&times;5) = 30 + 25.'
+  },
+  {
+    q: '<strong>S4 (subtract method).</strong> A shape fits inside a 12&nbsp;m &times; 9&nbsp;m bounding rectangle. Two rectangular cut-outs are removed: one 4&nbsp;m &times; 3&nbsp;m and one 2&nbsp;m &times; 3&nbsp;m. Find the area. (m&sup2;)',
+    a: '90',
+    hint: '(12&times;9) &minus; (4&times;3) &minus; (2&times;3) = 108 &minus; 12 &minus; 6.'
+  },
+  {
+    q: '<strong>S5.</strong> A park is L-shaped: bounding rectangle 20&nbsp;m &times; 15&nbsp;m with a 8&nbsp;m &times; 9&nbsp;m corner removed for a building. What is the park area? (m&sup2;)',
+    a: '228',
+    hint: '(20&times;15) &minus; (8&times;9) = 300 &minus; 72.'
+  },
+  {
+    q: '<strong>S6 (irregular grid).</strong> On a 1&nbsp;cm grid where each square = 9&nbsp;m&sup2;, you count 11 full squares and 8 part squares inside a wetland. Estimate the area. (m&sup2;)',
+    a: '135',
+    hint: 'Total squares = 11 + (8 &times; 0.5) = 11 + 4 = 15. Area = 15 &times; 9.'
+  },
+];
+
+// Mastery practice (Section 10) — 4 questions: subtract-is-clearly-better + grid estimation
+var practice3 = [
+  {
+    q: '<strong>M1 (subtract is efficient).</strong> A square 20&nbsp;m &times; 20&nbsp;m has a 12&nbsp;m &times; 14&nbsp;m rectangular pond cut from its centre. The paths around the pond form the composite shape. What is the area of the paths? (m&sup2;)',
+    a: '232',
+    hint: '(20&times;20) &minus; (12&times;14) = 400 &minus; 168. Subtracting one rectangle is far simpler than adding many path strips.'
+  },
+  {
+    q: '<strong>M2 (subtract is efficient).</strong> An architect designs a frame: a 16&nbsp;m &times; 12&nbsp;m outer rectangle with a 10&nbsp;m &times; 8&nbsp;m hole in the centre. What is the area of the frame? (m&sup2;)',
+    a: '112',
+    hint: '(16&times;12) &minus; (10&times;8) = 192 &minus; 80.'
+  },
+  {
+    q: '<strong>M3 (irregular, part-square estimation).</strong> On a 1&nbsp;cm grid where each square = 1&nbsp;m&sup2;, a spray zone has 19 full squares and 10 part squares. Squares more than half-full count as 1; those less than half-full count as 0. Six of the part squares are more than half full. Estimate the area. (m&sup2;)',
+    a: '25',
+    hint: '19 full + 6 (more than half) = 25. The other 4 part squares are ignored.'
+  },
+  {
+    q: '<strong>M4 (context — explain).</strong> A council officer says &ldquo;I always use the subtract method because it&rsquo;s faster.&rdquo; Describe a composite shape where the <em>add</em> method would actually be simpler, and explain why. (Type your answer.)',
+    a: 'TEXT',
+    hint: 'Think about a shape that is made of clearly separate pieces with no obvious enclosing rectangle &mdash; like a plus sign or a scattered T-shape.'
+  },
+];
+
+// Exit ticket (Section 11)
+var exitProbs = [
+  {
+    q: 'An L-shape fits inside a 9&nbsp;m &times; 7&nbsp;m bounding rectangle. A 4&nbsp;m &times; 3&nbsp;m corner is removed. What is the L-shape&rsquo;s area? (m&sup2;)',
+    a: '51',
+    hint: '(9&times;7) &minus; (4&times;3) = 63 &minus; 12.'
+  },
+  {
+    q: 'On a 1&nbsp;cm grid where each square = 2&nbsp;m&sup2;, you count 18 full squares and 6 part squares inside an irregular region. Estimate the area. (m&sup2;)',
+    a: '42',
+    hint: 'Total squares = 18 + (6&times;0.5) = 21. Area = 21 &times; 2.'
+  },
+  {
+    q: 'Explain in one or two sentences: when would you choose the <em>enclose-and-subtract</em> method over the <em>decompose-and-add</em> method?',
+    a: 'TEXT',
+    hint: 'Think about the number of pieces each method requires and whether there is a clear missing corner.'
+  },
+];
+
+// ============ ANSWER NORMALISATION ============
+function normaliseAnswer(s) {
+  return (s || '')
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/\*/g, '')
+    .replace(/m2|m²|cm2|cm²/g, '')   // strip units — students may or may not include them
+    .replace(/^\+/, '');
+}
+
+function answerMatches(input, expected) {
+  if (expected === 'TEXT') return null;
+  var norm = normaliseAnswer(input);
+  var exp  = normaliseAnswer(expected);
+  if (norm === exp) return true;
+  // also try parsing as numbers (handles 40.0 == 40)
+  var ni = parseFloat(norm), ei = parseFloat(exp);
+  if (!isNaN(ni) && !isNaN(ei) && Math.abs(ni - ei) < 0.01) return true;
+  return false;
+}
+
+// ============ BUILD PRACTICE ============
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  var grid    = document.getElementById(containerId);
+  var noCount = !!options.noCount;
+
+  problems.forEach(function(p, i) {
+    var idx = prefix + (i + 1);
+    var div = document.createElement('div');
+    div.className = 'problem';
+
+    var checkBtnHtml = p.a !== 'TEXT' ? '<button class="check-btn">Check</button>' : '';
+
+    div.innerHTML =
+      '<div class="problem-q">' +
+        '<div class="problem-num">' + idx + '</div>' +
+        '<div class="problem-expr">' + p.q + '</div>' +
+      '</div>' +
+      '<div class="problem-input-row">' +
+        '<span class="eq">=</span>' +
+        '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">' +
+        checkBtnHtml +
+      '</div>' +
+      '<div class="problem-tools">' +
+        '<button class="hint-link">Show hint</button>' +
+        '<button class="answer-link">Show answer</button>' +
+      '</div>' +
+      '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+      '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> ' + formatAnswerDisplay(p.a, p.q) + '</div>';
+
+    var cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', function() { checkAnswer(idx, p.a, noCount); });
+    div.querySelector('.hint-link').addEventListener('click',   function() { toggleHint(idx); });
+    div.querySelector('.answer-link').addEventListener('click', function() { toggleAnswer(idx); });
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+function formatAnswerDisplay(a, q) {
+  if (a === 'TEXT') return 'Open response &mdash; discuss with your teacher.';
+  // detect unit from question context
+  var unit = '';
+  if (q && /cm.?2|cm&sup2;/.test(q)) unit = ' cm&sup2;';
+  else if (q && /m.?2|m&sup2;/.test(q)) unit = ' m&sup2;';
+  return '<span class="expr">' + a + unit + '</span>';
+}
+
+function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+function checkAnswer(idx, expected, noCount) {
+  var input  = document.getElementById('inp-' + idx);
+  var result = answerMatches(input.value, expected);
+  input.classList.remove('correct', 'incorrect');
+  if (result === true) {
+    input.classList.add('correct');
+    if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+  } else if (result === false) {
+    input.classList.add('incorrect');
+    if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+  }
+  if (!noCount) updateProgress();
+}
+
+function updateProgress() {
+  document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+  var pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============ ACCORDION TIERS ============
+function toggleTier(id) {
+  var sec  = document.getElementById(id);
+  var open = sec.classList.toggle('open');
+  sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) setTimeout(function() { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+}
+
+// ============ INITIALISE ============
+initSortDrag();
+buildMatchArea();
+buildPractice('retrievalGrid',   retrieval,  'R', { noCount: true });
+buildPractice('weDoGrid',        weDo,       'W', { noCount: true });
+buildPractice('checkpointGrid',  checkpoint, 'Q');
+buildPractice('practiceGrid1',   practice1,  'P');
+buildPractice('practiceGrid2',   practice2,  'S');
+buildPractice('practiceGrid3',   practice3,  'C');
+buildPractice('exitGrid',        exitProbs,  'E');
+updateProgress();
+
+// Enter key checks answer
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+    var btn = e.target.parentElement.querySelector('.check-btn');
+    if (btn) btn.click();
+  }
+});
+</script>
+</body>
+</html>

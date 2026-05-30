@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON
+  Year 8 · Measurement · Pythagoras' Theorem — Finding a Shorter Side & Applications
+  Lesson ID: y8_mea_08
+  AC9 descriptor: AC9M8M06
+  SA Curriculum: Mathematics R-10 Prototype 2
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pythagoras — Finding a Shorter Side · Year 8</title>
+
+<meta name="lesson-id"                   content="y8_mea_08">
+<meta name="ac9-descriptor"              content="AC9M8M06">
+<meta name="ac9-descriptor-text"         content="use Pythagoras theorem to solve problems involving the side lengths of right-angled triangles">
+<meta name="ac9-elaborations"            content="2,3,4">
+<meta name="sa-year"                     content="8">
+<meta name="sa-strand"                   content="Measurement">
+<meta name="sa-conceptual-understanding" content="Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts">
+<meta name="lesson-focus"                content="Rearrange a² + b² = c² to find a shorter side; identify and correct the add-instead-of-subtract error; classify triangles">
+<meta name="mapping-note"                content="Partial - this lesson covers finding a shorter side and applications">
+
+<style>
+  :root {
+    --navy:       #1F4D54;
+    --navy-dark:  #143438;
+    --coral:      #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg:         #F3F5F8;
+    --hint-bg:    #DDE5F5;
+    --card:       #ffffff;
+    --border:     #d8dde6;
+    --text:       #2a2a2a;
+    --muted:      #6b7280;
+    --good:       #2f9e6b;
+    --good-soft:  #dff5e8;
+    --bad:        #d24a4a;
+    --bad-soft:   #fde2e2;
+    --shadow:     0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy); color: white;
+    padding: 18px 24px; margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; margin: 0; font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white;
+    font-weight: 700; font-size: 0.78rem;
+    padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px;
+    overflow: hidden; flex: 1; max-width: 360px;
+  }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY TIERS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem, .difficulty-2 .problem, .difficulty-3 .problem {
+    background: white; border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input, .difficulty-2 .problem-input, .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg);
+    z-index: 5; letter-spacing: 1px;
+  }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    font-size: 1.5rem; color: var(--coral); letter-spacing: 2px;
+    line-height: 1; flex-shrink: 0;
+    padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card); border-radius: 14px; padding: 28px;
+    margin-bottom: 22px; box-shadow: var(--shadow);
+    border: 1px solid var(--border); position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif; font-weight: bold;
+    color: var(--navy); font-size: 1.4rem; margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem; flex-shrink: 0;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  /* MATHS */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.15rem; letter-spacing: 0.3px; }
+  .var  { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic; font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCAB FLIP CARDS */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border-radius: 10px; padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold; font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif; font-weight: normal;
+    font-size: 0.72rem; opacity: 0.7; margin-top: 10px;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .vocab-back { background: white; color: var(--text); transform: rotateY(180deg); font-size: 0.9rem; line-height: 1.4; }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 10px; padding: 7px 11px 8px;
+    background: var(--hint-bg); border-radius: 6px;
+    font-size: 0.82rem; line-height: 1.4; color: var(--navy); font-style: italic;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — '; font-style: normal; font-weight: 700;
+    font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* DRAG-SORT */
+  .sort-source {
+    min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px;
+    margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px;
+    align-items: center; justify-content: center; border: 1px dashed var(--border);
+  }
+  .sort-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .sort-buckets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+  .sort-bucket { background: var(--bg); border-radius: 10px; padding: 14px; border: 1.5px dashed var(--border); min-height: 80px; }
+  .sort-bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .sort-bucket .vt { color: var(--coral); }
+  .sort-bucket .ct { color: var(--navy); }
+  .sort-bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start; }
+  .sort-bucket.drop-target { background: var(--coral-soft); border-color: var(--coral); border-style: solid; box-shadow: 0 0 0 3px rgba(190,88,55,0.18); }
+  .sort-chip {
+    display: inline-block; padding: 6px 12px; margin: 4px;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    cursor: pointer; background: white;
+    font-family: Georgia, serif; font-size: 1.0rem;
+    transition: all 0.2s; touch-action: none; user-select: none;
+  }
+  .sort-chip:hover { border-color: var(--navy); }
+  .sort-chip.dragging { opacity: 0.3; }
+  .sort-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white; padding: 6px 12px;
+    border: 1.5px solid var(--navy); border-radius: 8px;
+    font-family: Georgia, serif; font-size: 1.0rem;
+  }
+  .sort-chip.wrong-drop { animation: shake 0.45s; background: var(--bad-soft) !important; border-color: var(--bad) !important; color: var(--bad) !important; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+  .sort-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .sort-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* MATCHING */
+  .match-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin: 14px 0; }
+  .match-chip { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 12px 8px; text-align: center; font-size: 0.92rem; cursor: pointer; transition: all 0.15s; line-height: 1.4; }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step { display: grid; grid-template-columns: 36px 1fr; gap: 14px; margin-bottom: 16px; opacity: 0.35; transition: opacity 0.3s; }
+  .step.visible { opacity: 1; }
+  .step-num { background: var(--coral); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: -apple-system, sans-serif; }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem; overflow-x: auto;
+  }
+  .calc-box .red  { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy);  font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white; border-radius: 8px;
+    padding: 12px 16px; margin-top: 14px;
+    font-family: Georgia, serif; font-size: 1.1rem; text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.8px; font-size: 0.72rem; opacity: 0.9;
+    margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white; border: none;
+    padding: 10px 18px; border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600; margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MISCONCEPTION BOX */
+  .misconception-box {
+    background: #fff4f0; border: 2px solid var(--coral); border-radius: 10px;
+    padding: 14px 18px; margin: 16px 0;
+  }
+  .misconception-box .misconception-head {
+    font-weight: 700; color: var(--coral); font-size: 0.97rem; margin-bottom: 6px;
+  }
+  .misconception-box p { margin: 0; font-size: 0.93rem; }
+
+  /* KEY IDEA */
+  .key-idea {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 12px 16px; border-radius: 6px; font-size: 0.93rem;
+    margin: 14px 0; color: var(--navy);
+  }
+
+  /* PYTHAGOREAN TRIPLES TABLE */
+  .triples-table {
+    width: 100%; border-collapse: collapse; font-family: Georgia, serif;
+    font-size: 1.0rem; margin-top: 14px;
+  }
+  .triples-table th {
+    background: var(--navy); color: white; padding: 9px 14px;
+    text-align: center; font-family: -apple-system, sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.5px;
+  }
+  .triples-table td { padding: 8px 14px; text-align: center; border-bottom: 1px solid var(--border); }
+  .triples-table tr:nth-child(even) td { background: var(--bg); }
+  .triples-table .check { color: var(--good); font-weight: bold; }
+
+  /* ERROR ANALYSIS */
+  .err-problem-stem {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    padding: 12px 16px; border-radius: 6px; font-family: Georgia, serif;
+    font-size: 1.05rem; color: var(--navy); margin-bottom: 16px;
+  }
+  .err-solution {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; margin-bottom: 14px;
+  }
+  .err-line {
+    display: grid; grid-template-columns: 34px 1fr 28px;
+    align-items: center; gap: 10px; padding: 10px 12px;
+    margin-bottom: 6px; background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; font-family: Georgia, serif; font-size: 1.05rem;
+  }
+  .err-line:last-child { margin-bottom: 0; }
+  .err-line .err-line-num {
+    background: var(--hint-bg); color: var(--navy); width: 28px; height: 28px;
+    border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 0.88rem; font-weight: 700;
+  }
+  .err-line .err-line-mark { font-size: 1.1rem; text-align: center; }
+  .err-line.is-error { background: var(--bad-soft); border-color: var(--bad); }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num {
+    font-weight: bold; color: var(--coral); font-family: -apple-system, sans-serif;
+    font-size: 0.92rem; background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem; background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct   { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad);  background: var(--bad-soft);  }
+  .check-btn { background: var(--coral); color: white; border: none; padding: 8px 14px; border-radius: 7px; cursor: pointer; font-size: 0.88rem; font-weight: 600; }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link { color: var(--navy); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font: inherit; }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box  { background: var(--hint-bg); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-style: italic; margin-top: 8px; color: var(--navy); display: none; }
+  .hint-box.visible { display: block; }
+  .answer-box { background: var(--good-soft); color: #1d4a30; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-top: 8px; font-family: Georgia, serif; display: none; }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box   { display: block !important; }
+  body.teacher-mode .step       { opacity: 1 !important; }
+  body.teacher-mode .reveal-btn { display: none; }
+
+  /* EXIT TICKET */
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  /* FOOTER */
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px; padding: 0;
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+    border-radius: 4px; font-size: 0.86rem; text-align: left;
+  }
+  details.curriculum-link summary { cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--navy); list-style: none; user-select: none; }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before { content: "▸ "; display: inline-block; margin-right: 4px; transition: transform 0.15s ease; }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row { display: grid; grid-template-columns: 160px 1fr; gap: 6px 12px; margin-bottom: 4px; }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-note { margin-top: 8px; padding-top: 8px; border-top: 1px solid #c7d3d5; color: var(--muted); font-style: italic; }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .sort-buckets { grid-template-columns: 1fr; }
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  /* ACCORDION TIERS */
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; flex-wrap: wrap; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron { width: 32px; height: 32px; border-radius: 8px; background: white; border: 1.5px solid var(--border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; color: var(--navy); transition: transform 0.25s ease; }
+  .accordion-count { background: white; border: 1px solid var(--border); color: var(--muted); padding: 3px 10px; border-radius: 999px; font-family: -apple-system, sans-serif; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* SVG helpers */
+  .svg-centre { display: flex; flex-direction: column; align-items: center; margin: 16px 0; }
+  .svg-caption { font-size: 0.85rem; color: var(--muted); font-style: italic; text-align: center; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Pythagoras — Finding a Shorter Side</h1>
+    <div class="subtitle">Year 8 · SA Curriculum · Measurement</div>
+  </div>
+  <div class="badge">AC9M8M06</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ====================================================================
+     SECTION 0: RETRIEVAL WARM-UP
+     ==================================================================== -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from the last lesson — squaring numbers, square roots, and finding the hypotenuse. These don't count toward your progress score.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- ====================================================================
+     SECTION 1: WHY THIS MATTERS
+     ==================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A situation where we know the longest side — and need to find a shorter one.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center;">
+    <div>
+      <p>A <strong>6 m ladder</strong> leans against a vertical wall. The base sits <strong>2 m from the wall</strong> along the ground. How high up the wall does the ladder reach?</p>
+      <p>The <strong>ladder is the hypotenuse</strong> — the longest side, and we already know it. The unknown is the shorter vertical side (how high up the wall).</p>
+      <p>We cannot just add sides together. We need to <strong>rearrange</strong> Pythagoras' theorem — from <span class="expr"><span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²</span> to <span class="expr"><span class="var">b</span>² = <span class="var">c</span>² − <span class="var">a</span>²</span>. The key step is <strong>subtraction</strong>, not addition. By the end of this lesson, you'll solve this in three steps.</p>
+    </div>
+    <div class="svg-centre" style="margin:0;">
+      <!-- SVG: leaning ladder — wall vertical, ground horizontal, hypotenuse is the ladder -->
+      <svg width="190" height="215" viewBox="0 0 190 215" style="max-width:100%;"
+           aria-label="Right-angled triangle: wall is the vertical side (unknown height), ground is the horizontal side (2 m), and the ladder is the hypotenuse (6 m). Right angle at base of wall.">
+        <!-- wall (vertical side) -->
+        <rect x="18" y="10" width="8" height="178" fill="#c7d3d5" rx="2"/>
+        <!-- ground (horizontal side) -->
+        <rect x="18" y="186" width="160" height="8" fill="#c7d3d5" rx="2"/>
+        <!-- triangle fill -->
+        <polygon points="26,35 26,186 100,186" fill="#f5d8cb" fill-opacity="0.55"/>
+        <!-- right angle marker at base of wall -->
+        <polyline points="26,170 42,170 42,186" fill="none" stroke="#1F4D54" stroke-width="2"/>
+        <!-- ladder (hypotenuse) in coral -->
+        <line x1="26" y1="35" x2="100" y2="186" stroke="#BE5837" stroke-width="4" stroke-linecap="round"/>
+        <!-- vertical label: unknown height -->
+        <text x="12" y="115" fill="#1F4D54" font-family="Georgia,serif" font-size="15" text-anchor="middle" font-style="italic" font-weight="bold">?</text>
+        <!-- horizontal label: 2 m -->
+        <text x="63" y="205" fill="#1F4D54" font-family="Georgia,serif" font-size="13" text-anchor="middle">2 m</text>
+        <!-- hypotenuse label: 6 m ladder -->
+        <text x="76" y="94" fill="#BE5837" font-family="Georgia,serif" font-size="13" text-anchor="middle" transform="rotate(65,76,94)">6 m</text>
+      </svg>
+      <div class="svg-caption">The ladder is the hypotenuse. The height up the wall is the unknown shorter side.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE BANNER: AS A CLASS -->
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, sorting add vs subtract problems, and matching equations to their rearrangements — whole-class discussion.</div>
+  </div>
+</div>
+
+<!-- ====================================================================
+     SECTION 2: VOCABULARY
+     ==================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip it and reveal the definition. These five terms carry the lesson.</p>
+  <div class="vocab-grid">
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Rearrangement<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Changing the <strong>subject</strong> of a formula by applying inverse operations to both sides.<div class="vocab-example">From <strong>a² + b² = c²</strong>, subtract a² from both sides to get <strong>b² = c² − a².</strong></div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Subject of a formula<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The variable expressed <strong>on its own</strong> on one side of the equation.<div class="vocab-example">In <em>b</em>² = <em>c</em>² − <em>a</em>², the subject is <strong><em>b</em>²</strong>. We then take the square root to find <em>b</em>.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Pythagorean triple<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Three whole numbers that <strong>exactly satisfy</strong> <em>a</em>² + <em>b</em>² = <em>c</em>².<div class="vocab-example">(3, 4, 5), (5, 12, 13), (7, 24, 25), (8, 15, 17) are famous triples. Multiples also work: (6, 8, 10).</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Acute triangle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A triangle where <strong>all angles</strong> are less than 90°.<div class="vocab-example">If <em>a</em>² + <em>b</em>² <strong>&gt;</strong> <em>c</em>², the triangle is <strong>acute</strong> — the sum exceeds the hypotenuse square.</div></div>
+      </div>
+    </div>
+
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Obtuse triangle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A triangle with <strong>one angle greater than 90°</strong>.<div class="vocab-example">If <em>a</em>² + <em>b</em>² <strong>&lt;</strong> <em>c</em>², the triangle is <strong>obtuse</strong>. Compare to classify any triangle.</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ====================================================================
+     SECTION 3: SORT — ADD OR SUBTRACT?
+     ==================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort — finding the hypotenuse (add) or a shorter side (subtract)?</h2>
+  <p class="sec-desc">Drag each item into the correct bucket. Wrong drops shake back.</p>
+
+  <div class="key-idea">
+    <strong>Key rule:</strong> Finding the <em>hypotenuse</em> uses addition: <span class="expr"><span class="var">c</span>² = <span class="var">a</span>² + <span class="var">b</span>²</span>. Finding a <em>shorter side</em> requires rearranging — which means <strong>subtraction:</strong> <span class="expr"><span class="var">b</span>² = <span class="var">c</span>² − <span class="var">a</span>²</span>.
+  </div>
+
+  <div id="sortSource" class="sort-source">
+    <span class="sort-chip" data-type="add">Hypotenuse unknown, both legs given</span>
+    <span class="sort-chip" data-type="subtract">One leg unknown, hypotenuse and other leg given</span>
+    <span class="sort-chip expr" data-type="add"><span class="var">c</span>² = <span class="var">a</span>² + <span class="var">b</span>²</span>
+    <span class="sort-chip expr" data-type="subtract"><span class="var">b</span>² = <span class="var">c</span>² − <span class="var">a</span>²</span>
+    <span class="sort-chip expr" data-type="subtract"><span class="var">a</span> = √(<span class="var">c</span>² − <span class="var">b</span>²)</span>
+    <span class="sort-chip expr" data-type="add"><span class="var">c</span> = √(<span class="var">a</span>² + <span class="var">b</span>²)</span>
+  </div>
+
+  <div class="sort-buckets">
+    <div class="sort-bucket" data-bucket="add">
+      <h4 class="vt">Finding the hypotenuse (add)</h4>
+      <div class="sort-bucket-contents"></div>
+    </div>
+    <div class="sort-bucket" data-bucket="subtract">
+      <h4 class="ct">Finding a shorter side (subtract)</h4>
+      <div class="sort-bucket-contents"></div>
+    </div>
+  </div>
+  <div class="sort-actions">
+    <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+    <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+  </div>
+</section>
+
+<!-- ====================================================================
+     SECTION 4: MATCH — EQUATIONS TO REARRANGEMENTS
+     ==================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each triangle setup to its equation</h2>
+  <p class="sec-desc">Click a triangle description, then click the matching equation or answer. Five pairs to find.</p>
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Click a chip to start matching.</div>
+</section>
+
+<!-- PHASE BANNER: I DO -->
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen — the rearrangement, worked examples, and Pythagorean triples</div>
+    <div class="phase-sub">Click Reveal to step through. Notice each time we subtract — not add. Every example has a labelled triangle diagram.</div>
+  </div>
+</div>
+
+<!-- ====================================================================
+     SECTION 5: I DO — WORKED EXAMPLES
+     ==================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>How to find a shorter side — rearrange and subtract</h2>
+  <p class="sec-desc">Three reveal steps cover the rearrangement, two worked examples with labelled triangles, a practical application, and Pythagorean triples.</p>
+
+  <div class="worked">
+
+    <!-- STEP 1 — always visible -->
+    <div class="step visible" id="ido-step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Recap and rearrangement</div>
+        <div class="step-desc">From last lesson: <span class="expr"><span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²</span>. If <span class="var">c</span> and <span class="var">a</span> are known, subtract <span class="var">a</span>² from both sides to isolate <span class="var">b</span>².</div>
+        <div class="calc-box">
+          Start: &nbsp;&nbsp;<span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²<br>
+          Subtract <span class="var">a</span>²: &nbsp;&nbsp;<span class="var">b</span>² = <span class="red"><span class="var">c</span>² − <span class="var">a</span>²</span><br>
+          Take √: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="var">b</span> = <span class="red">√(<span class="var">c</span>² − <span class="var">a</span>²)</span>
+        </div>
+        <div class="misconception-box" style="margin-top:14px;">
+          <div class="misconception-head">⚠ Central misconception — add-instead-of-subtract error</div>
+          <p>When finding a shorter side, students mistakenly <strong>add</strong> the squares instead of subtracting — writing <em>b</em>² = <em>a</em>² + <em>c</em>². This is wrong. When the hypotenuse is already known, you <strong>must subtract</strong> the known leg's square from the hypotenuse's square. Notice also that adding gives a result <em>bigger</em> than the hypotenuse — impossible for a shorter side.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 — revealed by first click -->
+    <div class="step" id="ido-step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Example A — hypotenuse 13, one leg 5, find the other leg</div>
+        <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:flex-start; margin:12px 0;">
+          <!-- SVG: right triangle with c=13, a=5 (horizontal), b=? (vertical) -->
+          <svg viewBox="0 0 210 200" width="210" height="200" style="flex-shrink:0; max-width:100%;"
+               aria-label="Right-angled triangle: horizontal leg a = 5, hypotenuse c = 13, unknown vertical leg b marked with question mark. Right angle at bottom-left.">
+            <!-- triangle: right angle bottom-left (30,160), base to (110,160), top (30,36) -->
+            <!-- a=5 horizontal: 110-30=80px; b=12 vertical: 160-36=124px; c=13: scale 80/5=16 per unit, b=12*16=192 too tall. Use scale 13px/unit: a=65px, b=156px — too tall. Use 9px/unit: a=45,b=108,c=117. Use right angle at (30,150): a=5*9=45→to(75,150), b=12*9=108→to(30,42), c=13*9=117px -->
+            <polygon points="30,150 75,150 30,42" fill="#eaf0f1" stroke="#1F4D54" stroke-width="2.5"/>
+            <!-- right angle marker -->
+            <polyline points="30,134 46,134 46,150" fill="none" stroke="#BE5837" stroke-width="2"/>
+            <!-- leg a=5: horizontal bottom label -->
+            <text x="52" y="168" font-family="Georgia,serif" font-size="14" fill="#1F4D54" text-anchor="middle" font-style="italic" font-weight="bold">a = 5</text>
+            <!-- leg b=?: vertical left label -->
+            <text x="16" y="100" font-family="Georgia,serif" font-size="14" fill="#BE5837" text-anchor="middle" font-style="italic" font-weight="bold">b = ?</text>
+            <!-- hypotenuse c=13 label, rotated along hyp -->
+            <text x="64" y="88" font-family="Georgia,serif" font-size="13" fill="#1F4D54" text-anchor="middle" font-style="italic" font-weight="bold" transform="rotate(67,64,88)">c = 13</text>
+          </svg>
+          <div style="flex:1; min-width:200px;">
+            <div class="calc-box" style="line-height:2.1;">
+              Identify: <span class="blue"><span class="var">c</span> = 13</span>, <span class="var">a</span> = 5, find <span class="red"><span class="var">b</span></span><br>
+              Write: &nbsp;&nbsp;<span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²<br>
+              Sub: &nbsp;&nbsp;&nbsp;&nbsp;5² + <span class="var">b</span>² = 13²<br>
+              Square: &nbsp;25 + <span class="var">b</span>² = 169<br>
+              <span class="red">Subtract: &nbsp;<span class="var">b</span>² = 169 − 25 = 144</span><br>
+              Root: &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">b</span> = √144 = <strong>12</strong>
+            </div>
+          </div>
+        </div>
+        <div class="summary-banner"><span class="label">Answer — shorter side</span><span class="var">b</span> = <strong>12</strong> &nbsp;(This is the 5-12-13 Pythagorean triple.)</div>
+        <div class="misconception-box" style="margin-top:12px;">
+          <div class="misconception-head">⚠ Common error — do NOT do this</div>
+          <p>A student writes: <em>b</em>² = 5² + 13² = 25 + 169 = 194, so <em>b</em> = √194 ≈ 13.9. This is the <strong>add-instead-of-subtract error.</strong> Notice too that 13.9 &gt; 13 (bigger than the hypotenuse) — a shorter side can never exceed the hypotenuse.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 — revealed by second click -->
+    <div class="step" id="ido-step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Example B — hypotenuse 10, leg 6 &nbsp;·&nbsp; Practical application &nbsp;·&nbsp; Pythagorean triples</div>
+
+        <p style="font-weight:600; color:var(--navy); margin:10px 0 4px;">Example B — hypotenuse 10, one leg 6</p>
+        <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:flex-start; margin:10px 0 14px;">
+          <!-- SVG: c=10, a=6, b=? Using scale 12px/unit: a=72px, b=96px, c=120px. right angle at (30,150): base to (30+72,150)=(102,150), top at (30,150-96)=(30,54) -->
+          <svg viewBox="0 0 190 185" width="190" height="185" style="flex-shrink:0; max-width:100%;"
+               aria-label="Right-angled triangle: horizontal leg a = 6, hypotenuse c = 10, unknown vertical leg b. Right angle at bottom-left.">
+            <polygon points="30,150 102,150 30,54" fill="#eaf0f1" stroke="#1F4D54" stroke-width="2.5"/>
+            <polyline points="30,134 46,134 46,150" fill="none" stroke="#BE5837" stroke-width="2"/>
+            <text x="66" y="168" font-family="Georgia,serif" font-size="14" fill="#1F4D54" text-anchor="middle" font-style="italic" font-weight="bold">a = 6</text>
+            <text x="16" y="104" font-family="Georgia,serif" font-size="14" fill="#BE5837" text-anchor="middle" font-style="italic" font-weight="bold">b = ?</text>
+            <text x="78" y="92" font-family="Georgia,serif" font-size="13" fill="#1F4D54" text-anchor="middle" font-style="italic" font-weight="bold" transform="rotate(53,78,92)">c = 10</text>
+          </svg>
+          <div style="flex:1; min-width:180px;">
+            <div class="calc-box" style="line-height:2.1;">
+              <span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²<br>
+              6² + <span class="var">b</span>² = 10²<br>
+              36 + <span class="var">b</span>² = 100<br>
+              <span class="red"><span class="var">b</span>² = 100 − 36 = 64</span><br>
+              <span class="var">b</span> = √64 = <strong>8</strong>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-weight:600; color:var(--navy); margin:18px 0 4px;">Practical application — horizontal distance of a leaning ladder</p>
+        <p style="margin:0 0 8px; font-size:0.93rem;">A 6.5 m ladder leans against a wall and reaches <strong>6 m up the wall</strong>. How far is the base of the ladder from the wall?</p>
+        <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:flex-start; margin:10px 0 14px;">
+          <!-- SVG: leaning ladder — c=6.5 (ladder/hyp), vertical side (wall)=6, horizontal (ground)=? -->
+          <!-- Scale: 6*20=120px vertical, base≈√(6.5²-6²)=√(42.25-36)=√6.25=2.5 → 2.5*20=50px. right angle at (40,175) -->
+          <svg viewBox="0 0 200 215" width="200" height="215" style="flex-shrink:0; max-width:100%;"
+               aria-label="Ladder against a wall: ladder is hypotenuse c = 6.5 m, wall height b = 6 m is the known vertical side, unknown horizontal distance a. Right angle at base of wall.">
+            <rect x="32" y="10" width="8" height="172" fill="#c7d3d5" rx="2"/>
+            <rect x="32" y="180" width="168" height="8" fill="#c7d3d5" rx="2"/>
+            <polygon points="40,40 40,180 90,180" fill="#f5d8cb" fill-opacity="0.55"/>
+            <polyline points="40,164 56,164 56,180" fill="none" stroke="#1F4D54" stroke-width="2"/>
+            <line x1="40" y1="40" x2="90" y2="180" stroke="#BE5837" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- vertical label b=6 -->
+            <text x="26" y="112" font-family="Georgia,serif" font-size="13" fill="#1F4D54" text-anchor="end" font-style="italic" font-weight="bold">6 m</text>
+            <!-- horizontal label a=? -->
+            <text x="65" y="198" font-family="Georgia,serif" font-size="13" fill="#BE5837" text-anchor="middle" font-style="italic" font-weight="bold">a = ?</text>
+            <!-- hypotenuse label -->
+            <text x="76" y="105" font-family="Georgia,serif" font-size="12" fill="#1F4D54" text-anchor="middle" transform="rotate(72,76,105)">6.5 m</text>
+          </svg>
+          <div style="flex:1; min-width:180px;">
+            <div class="calc-box" style="line-height:2.1;">
+              <span class="var">c</span> = 6.5, <span class="var">b</span> = 6, find <span class="red"><span class="var">a</span></span><br>
+              <span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²<br>
+              <span class="var">a</span>² + 36 = 42.25<br>
+              <span class="red"><span class="var">a</span>² = 42.25 − 36 = 6.25</span><br>
+              <span class="var">a</span> = √6.25 = <strong>2.5 m</strong>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-weight:600; color:var(--navy); margin:18px 0 4px;">Pythagorean triples — recognise and verify</p>
+        <p style="margin:0 0 6px; font-size:0.93rem;">These sets of whole numbers exactly satisfy <em>a</em>² + <em>b</em>² = <em>c</em>². Recognising them saves calculation time.</p>
+        <table class="triples-table">
+          <thead>
+            <tr>
+              <th>Triple (<span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>)</th>
+              <th>Check: <span class="var">a</span>² + <span class="var">b</span>²</th>
+              <th>= <span class="var">c</span>²?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>(3, 4, 5)</td><td>9 + 16 = 25</td><td class="check">✓ = 5²</td></tr>
+            <tr><td>(5, 12, 13)</td><td>25 + 144 = 169</td><td class="check">✓ = 13²</td></tr>
+            <tr><td>(7, 24, 25)</td><td>49 + 576 = 625</td><td class="check">✓ = 25²</td></tr>
+            <tr><td>(8, 15, 17)</td><td>64 + 225 = 289</td><td class="check">✓ = 17²</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.9rem; margin:10px 0 0; color:var(--muted);">Any whole-number multiple of a triple is also a triple — e.g. (6, 8, 10) is 2 × (3, 4, 5). When you see numbers from a triple, you can read off the missing side without a calculator.</p>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="idoRevealBtn" onclick="revealIdoStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<!-- PHASE BANNER: WE DO -->
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Error analysis — spot the mistake as a class, then practise correctly</div>
+    <div class="phase-sub">A student used addition instead of subtraction. Identify the faulty line and work through the correct solution together.</div>
+  </div>
+</div>
+
+<!-- ====================================================================
+     SECTION 6: WE DO — ERROR ANALYSIS + GUIDED PRACTICE
+     ==================================================================== -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Spot the mistake — error analysis</h2>
+  <p class="sec-desc">Read the student's working carefully. The add-instead-of-subtract error appears in one of lines 1–4. Identify it, then check the correction.</p>
+
+  <div class="misconception-box">
+    <div class="misconception-head">⚠ Named misconception: add-instead-of-subtract error</div>
+    <p>When finding a shorter side, a student mistakenly <strong>adds</strong> the squares instead of subtracting. The rearrangement <em>b</em>² = <em>c</em>² − <em>a</em>² requires subtraction — the student's sign error cascades through every subsequent line.</p>
+  </div>
+
+  <div class="err-problem-stem">
+    Find the unknown leg when <strong>hypotenuse <span class="var">c</span> = 17</strong> and <strong>one leg <span class="var">a</span> = 8</strong>.
+  </div>
+
+  <!-- Student's incorrect working -->
+  <div class="err-solution">
+    <div class="err-line">
+      <span class="err-line-num">1</span>
+      <span class="expr"><span class="var">a</span>² + <span class="var">b</span>² = <span class="var">c</span>²</span>
+      <span class="err-line-mark" style="color:var(--good);">✓</span>
+    </div>
+    <div class="err-line is-error">
+      <span class="err-line-num">2</span>
+      <span class="expr"><span class="var">b</span>² = 8² + 17² &nbsp;<em style="font-size:0.82rem; color:var(--bad);">[student wrote + instead of −]</em></span>
+      <span class="err-line-mark" style="color:var(--bad);">✗</span>
+    </div>
+    <div class="err-line is-error">
+      <span class="err-line-num">3</span>
+      <span class="expr"><span class="var">b</span>² = 64 + 289 = 353</span>
+      <span class="err-line-mark"></span>
+    </div>
+    <div class="err-line is-error">
+      <span class="err-line-num">4</span>
+      <span class="expr"><span class="var">b</span> = √353 ≈ 18.8</span>
+      <span class="err-line-mark"></span>
+    </div>
+  </div>
+
+  <!-- Collapsible correction -->
+  <details style="margin-bottom: 18px;">
+    <summary style="cursor:pointer; font-weight:600; color:var(--navy); padding:8px 0;">Show the correction ↓</summary>
+    <div style="background:var(--good-soft); border:1px solid var(--good); border-radius:8px; padding:14px 16px; margin-top:8px; font-family:Georgia,serif; font-size:1.05rem; line-height:2.0;">
+      <p style="margin:0 0 8px; font-family:-apple-system,sans-serif; font-size:0.93rem;"><strong style="color:var(--bad);">Line 2 is the faulty line.</strong> The add-instead-of-subtract error: the hypotenuse (17) is already known, so we must <strong>subtract</strong> not add:</p>
+      <span class="var">b</span>² = 17² − 8² = 289 − 64 = <strong>225</strong><br>
+      <span class="var">b</span> = √225 = <strong>15</strong>
+      <p style="margin:10px 0 0; font-size:0.88rem; color:var(--muted); font-family:-apple-system,sans-serif;">Sense-check: 18.8 &gt; 17 (bigger than the hypotenuse) — this is impossible for a shorter side and should trigger immediate suspicion.</p>
+    </div>
+  </details>
+
+  <!-- Guided We Do sub-questions -->
+  <p style="font-weight:600; color:var(--navy); margin:0 0 10px;">Now work through this one correctly, step by step. Find the unknown shorter side when <strong><span class="var">c</span> = 15</strong> and <strong><span class="var">a</span> = 9</strong>.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+</section>
+
+<!-- PHASE BANNER: YOU DO -->
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first, then open your chosen tier. Type your answer and press Check or Enter.</div>
+  </div>
+</div>
+
+<!-- ====================================================================
+     SECTION 7: QUICK CHECK
+     ==================================================================== -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — confirm the method
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions before you open a tier. Try independently, then we check together as a class.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here.</strong> Wait for the class check before opening a chilli tier.
+  </div>
+</section>
+
+<!-- ====================================================================
+     SECTION 8: BUILDING (accordion, open by default)
+     ==================================================================== -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body"
+       onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Find the missing shorter side. All answers are whole numbers — Pythagorean triples and their multiples. Remember: <strong>subtract</strong> the known leg's square from the hypotenuse's square.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- ====================================================================
+     SECTION 9: STRETCH (accordion, collapsed)
+     ==================================================================== -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body"
+       onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Practical word problems and non-integer answers. Read carefully: identify which side is the hypotenuse. Round decimal answers to 2 decimal places.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- ====================================================================
+     SECTION 10: MASTERY (accordion, collapsed)
+     ==================================================================== -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body"
+       onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Triangle classification (R / A / O) and a two-step problem. Compare <em>a</em>² + <em>b</em>² with <em>c</em>² to classify. Type R (right-angled), A (acute), or O (obtuse) for classification questions.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- ====================================================================
+     SECTION 11: EXIT TICKET
+     ==================================================================== -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three closing questions — a calculation, a Pythagorean triple problem, and an open explanation about the misconception.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum alignment — SA Curriculum Mathematics R-10 Prototype 2</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 · Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8M06</strong> — use Pythagoras theorem to solve problems involving the side lengths of right-angled triangles</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">2, 3, 4</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Rearrange a² + b² = c² to find a shorter side; identify and correct the add-instead-of-subtract error; classify triangles using a² + b² vs c²</span>
+    </div>
+    <div class="cl-note">Mapping: Partial — this lesson covers finding a shorter side and applications. Lesson ID: y8_mea_08. Source: SA Curriculum Mathematics R-10 Prototype 2.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 8 · Pythagoras' Theorem — Finding a Shorter Side &amp; Applications · SA Curriculum Mathematics R-10 Prototype 2
+</footer>
+
+</div><!-- .page -->
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let totalProblems = 0;
+let correctCount  = 0;
+let idoStep = 1;
+const IDO_TOTAL_STEPS = 3;
+
+// ============================================================
+// TEACHER MODE
+// ============================================================
+function toggleTeacher() {
+  document.body.classList.toggle('teacher-mode');
+  document.getElementById('teacherToggle').classList.toggle('active');
+}
+
+// ============================================================
+// I DO STEP REVEAL
+// ============================================================
+function revealIdoStep() {
+  idoStep++;
+  var step = document.getElementById('ido-step' + idoStep);
+  if (step) step.classList.add('visible');
+  if (idoStep >= IDO_TOTAL_STEPS) {
+    var btn = document.getElementById('idoRevealBtn');
+    btn.disabled = true;
+    btn.textContent = '✓ All steps shown';
+  }
+}
+
+// ============================================================
+// DRAG-SORT (Section 3)
+// ============================================================
+var dragState = null;
+
+function initDragSort() {
+  document.querySelectorAll('.sort-chip[data-type]').forEach(function(chip) {
+    chip.addEventListener('pointerdown', startDrag);
+  });
+}
+
+function startDrag(e) {
+  e.preventDefault();
+  var chip = e.currentTarget;
+  var rect = chip.getBoundingClientRect();
+  var ghost = document.createElement('span');
+  ghost.className = 'sort-chip-ghost';
+  ghost.innerHTML = chip.innerHTML;
+  ghost.style.left = rect.left + 'px';
+  ghost.style.top  = rect.top  + 'px';
+  document.body.appendChild(ghost);
+  chip.classList.add('dragging');
+  dragState = { chip: chip, ghost: ghost, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+  chip.setPointerCapture(e.pointerId);
+  chip.addEventListener('pointermove', moveDrag);
+  chip.addEventListener('pointerup',   endDrag);
+  chip.addEventListener('pointercancel', endDrag);
+}
+
+function moveDrag(e) {
+  if (!dragState) return;
+  dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+  dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+  dragState.ghost.style.display = 'none';
+  var under = document.elementFromPoint(e.clientX, e.clientY);
+  dragState.ghost.style.display = '';
+  var bucket = under ? under.closest('.sort-bucket') : null;
+  document.querySelectorAll('.sort-bucket').forEach(function(b) {
+    b.classList.toggle('drop-target', b === bucket);
+  });
+}
+
+function endDrag(e) {
+  if (!dragState) return;
+  var chip  = dragState.chip;
+  var ghost = dragState.ghost;
+  ghost.style.display = 'none';
+  var under = document.elementFromPoint(e.clientX, e.clientY);
+  ghost.remove();
+  chip.classList.remove('dragging');
+  document.querySelectorAll('.sort-bucket').forEach(function(b) {
+    b.classList.remove('drop-target');
+  });
+  var bucket = under ? under.closest('.sort-bucket') : null;
+  if (bucket) {
+    var dest    = bucket.dataset.bucket;
+    var correct = chip.dataset.type;
+    bucket.querySelector('.sort-bucket-contents').appendChild(chip);
+    if (dest !== correct) {
+      chip.classList.add('wrong-drop');
+      setTimeout(function() {
+        chip.classList.remove('wrong-drop');
+        document.getElementById('sortSource').appendChild(chip);
+      }, 600);
+    }
+  }
+  chip.removeEventListener('pointermove', moveDrag);
+  chip.removeEventListener('pointerup',   endDrag);
+  chip.removeEventListener('pointercancel', endDrag);
+  dragState = null;
+}
+
+function resetSort() {
+  var source = document.getElementById('sortSource');
+  document.querySelectorAll('.sort-bucket-contents .sort-chip').forEach(function(chip) {
+    chip.classList.remove('wrong-drop');
+    source.appendChild(chip);
+  });
+}
+
+function solveSort() {
+  document.querySelectorAll('.sort-chip[data-type]').forEach(function(chip) {
+    chip.classList.remove('wrong-drop');
+    var correct = chip.dataset.type;
+    var bucket = document.querySelector('.sort-bucket[data-bucket="' + correct + '"] .sort-bucket-contents');
+    bucket.appendChild(chip);
+  });
+}
+
+// ============================================================
+// MATCHING (Section 4)
+// ============================================================
+var matchTerms = [
+  { html: '5² + <span class="var">b</span>² = 13²',                               group: 1 },
+  { html: '<span class="var">b</span> = 12',                                        group: 1 },
+  { html: '6² + <span class="var">b</span>² = 10²',                               group: 2 },
+  { html: '<span class="var">b</span> = 8',                                         group: 2 },
+  { html: '<span class="var">a</span>² + 24² = 25²',                              group: 3 },
+  { html: '<span class="var">a</span> = 7',                                         group: 3 },
+  { html: '<span class="var">a</span>² + 15² = 17²',                              group: 4 },
+  { html: '<span class="var">a</span> = 8',                                         group: 4 },
+  { html: '<span class="var">b</span>² = <span class="var">c</span>² − <span class="var">a</span>²', group: 5 },
+  { html: 'rearrangement (subtract)',                                                group: 5 },
+];
+
+var matchSelected = null;
+var matchedGroups = new Set();
+
+function buildMatchArea() {
+  var shuffled = matchTerms.slice().sort(function() { return Math.random() - 0.5; });
+  var area = document.getElementById('matchArea');
+  area.innerHTML = '';
+  shuffled.forEach(function(t, i) {
+    var chip = document.createElement('div');
+    chip.className = 'match-chip expr';
+    chip.innerHTML = t.html;
+    chip.dataset.group = t.group;
+    chip.dataset.idx   = i;
+    chip.onclick = function() { handleMatchClick(chip); };
+    area.appendChild(chip);
+  });
+}
+
+function handleMatchClick(chip) {
+  if (chip.className.includes('matched-')) return;
+  if (matchSelected === chip) {
+    chip.classList.remove('selected');
+    matchSelected = null;
+    return;
+  }
+  if (!matchSelected) {
+    matchSelected = chip;
+    chip.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Now click its matching pair.';
+    return;
+  }
+  if (matchSelected.dataset.group === chip.dataset.group) {
+    var g = chip.dataset.group;
+    matchSelected.classList.remove('selected');
+    matchSelected.classList.add('matched-' + g);
+    chip.classList.add('matched-' + g);
+    matchedGroups.add(g);
+    document.getElementById('matchFeedback').textContent =
+      matchedGroups.size === 5
+        ? 'All five pairs matched! Well done.'
+        : 'Matched! (' + matchedGroups.size + '/5)';
+    matchSelected = null;
+  } else {
+    var w1 = matchSelected, w2 = chip;
+    w1.classList.add('selected'); w2.classList.add('selected');
+    document.getElementById('matchFeedback').textContent = 'Not a pair — try again.';
+    setTimeout(function() { w1.classList.remove('selected'); w2.classList.remove('selected'); }, 700);
+    matchSelected = null;
+  }
+}
+
+// ============================================================
+// PROBLEM DATA
+// ============================================================
+
+// Section 0 — Retrieval (noCount: true)
+var retrieval = [
+  {
+    q: 'What is 13² − 5²?',
+    a: '144',
+    hint: '169 − 25 = 144'
+  },
+  {
+    q: 'Find the hypotenuse of a right triangle with legs 6 and 8.',
+    a: '10',
+    hint: '<span class="var">c</span>² = 36 + 64 = 100, <span class="var">c</span> = 10'
+  },
+  {
+    q: 'What is √225?',
+    a: '15',
+    hint: '15 × 15 = 225'
+  },
+];
+
+// Section 6 — We Do (noCount: true)
+var weDo = [
+  {
+    q: 'Find the unknown shorter side when <span class="var">c</span> = 15 and <span class="var">a</span> = 9. First: what is <span class="var">c</span>² (i.e. 15²)?',
+    a: '225',
+    hint: '15² = 225'
+  },
+  {
+    q: 'What is <span class="var">a</span>² (i.e. 9²)?',
+    a: '81',
+    hint: '9² = 81'
+  },
+  {
+    q: '<span class="var">b</span>² = <span class="var">c</span>² − <span class="var">a</span>² = 225 − 81 = ?',
+    a: '144',
+    hint: '225 − 81 = 144'
+  },
+  {
+    q: '<span class="var">b</span> = √144 = ?',
+    a: '12',
+    hint: '√144 = 12. This is the 9-12-15 triple (a multiple of 3-4-5).'
+  },
+];
+
+// Section 7 — Quick check (counts toward progress)
+var checkpoint = [
+  {
+    q: 'Find the unknown leg when <span class="var">c</span> = 13 and <span class="var">a</span> = 5.',
+    a: '12',
+    hint: '<span class="var">b</span>² = 13² − 5² = 169 − 25 = 144, so <span class="var">b</span> = √144'
+  },
+  {
+    q: 'Find the unknown leg when <span class="var">c</span> = 10 and <span class="var">a</span> = 6.',
+    a: '8',
+    hint: '<span class="var">b</span>² = 10² − 6² = 100 − 36 = 64, so <span class="var">b</span> = √64'
+  },
+];
+
+// Section 8 — Building (10 questions, all Pythagorean triples / whole-number answers)
+var practice1 = [
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 5, leg <span class="var">a</span> = 3. Find the other leg.',
+    a: '4',
+    hint: '<span class="var">b</span>² = 25 − 9 = 16'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 13, leg <span class="var">a</span> = 12. Find the other leg.',
+    a: '5',
+    hint: '<span class="var">b</span>² = 169 − 144 = 25'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 25, leg <span class="var">a</span> = 24. Find the other leg.',
+    a: '7',
+    hint: '<span class="var">b</span>² = 625 − 576 = 49'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 17, leg <span class="var">a</span> = 15. Find the other leg.',
+    a: '8',
+    hint: '<span class="var">b</span>² = 289 − 225 = 64'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 10, leg <span class="var">a</span> = 8. Find the other leg.',
+    a: '6',
+    hint: '<span class="var">b</span>² = 100 − 64 = 36 (a multiple of 3-4-5)'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 26, leg <span class="var">a</span> = 10. Find the other leg.',
+    a: '24',
+    hint: '<span class="var">b</span>² = 676 − 100 = 576 (a multiple of 5-12-13)'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 15, leg <span class="var">a</span> = 9. Find the other leg.',
+    a: '12',
+    hint: '<span class="var">b</span>² = 225 − 81 = 144 (a multiple of 3-4-5)'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 50, leg <span class="var">a</span> = 40. Find the other leg.',
+    a: '30',
+    hint: '<span class="var">b</span>² = 2500 − 1600 = 900 (a multiple of 3-4-5)'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 25, leg <span class="var">a</span> = 7. Find the other leg.',
+    a: '24',
+    hint: '<span class="var">b</span>² = 625 − 49 = 576 = 24² (the 7-24-25 triple)'
+  },
+  {
+    q: 'Hypotenuse <span class="var">c</span> = 34, leg <span class="var">a</span> = 30. Find the other leg.',
+    a: '16',
+    hint: '<span class="var">b</span>² = 1156 − 900 = 256 = 16²'
+  },
+];
+
+// Section 9 — Stretch (6 questions)
+var practice2 = [
+  {
+    q: 'A 10 m ladder leans against a wall. Its top reaches 8 m up the wall. How far is the base from the wall?',
+    a: '6',
+    hint: '<span class="var">a</span>² = 10² − 8² = 100 − 64 = 36, so <span class="var">a</span> = 6 m'
+  },
+  {
+    q: 'A right triangle has hypotenuse 15 cm and one leg 9 cm. Find the other leg.',
+    a: '12',
+    hint: '<span class="var">b</span>² = 225 − 81 = 144'
+  },
+  {
+    q: 'A rectangle has diagonal 26 cm and one side 10 cm. Find the other side.',
+    a: '24',
+    hint: '<span class="var">b</span>² = 26² − 10² = 676 − 100 = 576'
+  },
+  {
+    q: 'A right triangle has hypotenuse 8 cm and one leg 5 cm. Find the other leg to 2 decimal places.',
+    a: '6.24',
+    hint: '<span class="var">b</span>² = 64 − 25 = 39. <span class="var">b</span> = √39 ≈ 6.24'
+  },
+  {
+    q: 'A ladder 5.5 m long leans against a wall. Its base is 1.5 m from the wall. How high up the wall does it reach? Give to 2 d.p.',
+    a: '5.29',
+    hint: '<span class="var">b</span>² = 5.5² − 1.5² = 30.25 − 2.25 = 28. <span class="var">b</span> = √28 ≈ 5.29'
+  },
+  {
+    q: 'A TV screen measures 65 cm along the diagonal. Its height is 39 cm. How wide is the screen?',
+    a: '52',
+    hint: '<span class="var">w</span>² = 65² − 39² = 4225 − 1521 = 2704. <span class="var">w</span> = √2704 = 52'
+  },
+];
+
+// Section 10 — Mastery (4 questions)
+var practice3 = [
+  {
+    q: 'Triangle with sides 6, 8, 10: compare 6² + 8² with 10². Is it right-angled (R), acute (A), or obtuse (O)? Type R, A, or O.',
+    a: 'R',
+    hint: '36 + 64 = 100 = 10² — exactly equal, so it is right-angled. Type R.'
+  },
+  {
+    q: 'Triangle with sides 5, 7, 9: compare 5² + 7² with 9². Is it R, A, or O?',
+    a: 'O',
+    hint: '5² + 7² = 74, but 9² = 81. Since 74 < 81 (sum of leg squares is less than hypotenuse squared), the triangle is obtuse. Type O.'
+  },
+  {
+    q: 'Triangle with sides 4, 6, 7: compare 4² + 6² with 7². Is it R, A, or O?',
+    a: 'A',
+    hint: '4² + 6² = 16 + 36 = 52, and 7² = 49. Since 52 > 49 (sum exceeds largest side squared), the triangle is acute. Type A.'
+  },
+  {
+    q: '<strong>Two-step problem.</strong> A rectangular field is 40 m long and 30 m wide. A path runs along the diagonal. A second path runs from one corner to the midpoint of the diagonal, perpendicular to it. Find the length of this perpendicular path. (Hint: find the diagonal first, then use the area method.)',
+    a: 'TEXT',
+    hint: 'Step 1: diagonal = √(40² + 30²) = √(2500) = 50 m. Step 2: area of triangle = ½ × 40 × 30 = 600 m². Using base = diagonal: perpendicular = 2 × area ÷ base = 1200 ÷ 50 = 24 m.'
+  },
+];
+
+// Section 11 — Exit ticket (3 questions)
+var exitProbs = [
+  {
+    q: 'Find the unknown leg when <span class="var">c</span> = 17 and <span class="var">a</span> = 8.',
+    a: '15',
+    hint: '<span class="var">b</span>² = 289 − 64 = 225, <span class="var">b</span> = 15 (the 8-15-17 triple)'
+  },
+  {
+    q: 'A right triangle has hypotenuse 25 and one leg 7. Find the other leg.',
+    a: '24',
+    hint: '<span class="var">b</span>² = 625 − 49 = 576, <span class="var">b</span> = 24 (the 7-24-25 triple)'
+  },
+  {
+    q: 'A student wrote <span class="var">b</span>² = 5² + 13² = 194 when finding the shorter leg. Name the error and explain what they should have written instead.',
+    a: 'TEXT',
+    hint: 'Add-instead-of-subtract error. Should be: b² = 13² − 5² = 169 − 25 = 144, so b = 12. Also: the answer of √194 ≈ 13.9 is bigger than the hypotenuse (13) — a clear impossibility.'
+  },
+];
+
+// ============================================================
+// CORE FRAMEWORK — DO NOT MODIFY
+// ============================================================
+
+function normaliseAnswer(s) {
+  return (s || '')
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/\*/g, '')
+    .replace(/^\+/, '')
+    .replace(/×/g, '')
+    .replace(/[²]/g, '2');
+}
+
+function answerMatches(input, expected) {
+  if (expected === 'TEXT') return null;
+  var norm = normaliseAnswer(input);
+  var exp  = normaliseAnswer(expected);
+  if (norm === exp) return true;
+  // Accept reordered terms
+  var splitTerms = function(s) { return s.replace(/-/g, '+-').split('+').filter(Boolean).sort(); };
+  if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
+  // Accept R/A/O classification case-insensitively
+  if (/^[rao]$/.test(norm) && /^[rao]$/.test(exp)) return norm === exp;
+  // Accept close decimal answers
+  var numNorm = parseFloat(norm);
+  var numExp  = parseFloat(exp);
+  if (!isNaN(numNorm) && !isNaN(numExp) && Math.abs(numNorm - numExp) < 0.051) return true;
+  return false;
+}
+
+function formatAnswerDisplay(a) {
+  if (a === 'TEXT') return 'Open response — discuss as a class.';
+  var r = a;
+  r = r.replace(/\b([a-z])\b(?![^<]*>)/g, '<span class="var">$1</span>');
+  r = r.replace(/(-?\d+)\/(\d+)/g, function(_, n, d) {
+    var neg = n.startsWith('-');
+    var num = neg ? n.slice(1) : n;
+    return (neg ? '− ' : '') + '<span class="frac"><span class="num">' + num + '</span><span class="den">' + d + '</span></span>';
+  });
+  r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+  return r;
+}
+
+function toggleHint(idx)   { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+function toggleAnswer(idx) { document.getElementById('ans-'  + idx).classList.toggle('visible'); }
+
+function checkAnswer(idx, expected, noCount) {
+  var input  = document.getElementById('inp-' + idx);
+  var result = answerMatches(input.value, expected);
+  input.classList.remove('correct', 'incorrect');
+  if (result === true) {
+    input.classList.add('correct');
+    if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+  } else if (result === false) {
+    input.classList.add('incorrect');
+    if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+  }
+  if (!noCount) updateProgress();
+}
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  var grid    = document.getElementById(containerId);
+  var noCount = !!options.noCount;
+
+  problems.forEach(function(p, i) {
+    var idx = prefix + (i + 1);
+    var div = document.createElement('div');
+    div.className = 'problem';
+
+    var checkBtnHtml = p.a !== 'TEXT'
+      ? '<button class="check-btn">Check</button>'
+      : '';
+
+    div.innerHTML =
+      '<div class="problem-q">' +
+        '<div class="problem-num">' + idx + '</div>' +
+        '<div class="problem-expr">' + p.q + '</div>' +
+      '</div>' +
+      '<div class="problem-input-row">' +
+        '<span class="eq">=</span>' +
+        '<input class="problem-input" id="inp-' + idx + '" placeholder="' + (p.a === 'TEXT' ? 'Type your explanation' : 'Type answer') + '">' +
+        checkBtnHtml +
+      '</div>' +
+      '<div class="problem-tools">' +
+        '<button class="hint-link">Show hint</button>' +
+        '<button class="answer-link">Show answer</button>' +
+      '</div>' +
+      '<div class="hint-box" id="hint-' + idx + '">' + p.hint + '</div>' +
+      '<div class="answer-box" id="ans-' + idx + '"><strong>Answer:</strong> <span class="expr">' + formatAnswerDisplay(p.a) + '</span></div>';
+
+    var cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', (function(capturedIdx, capturedA, capturedNoCount) {
+      return function() { checkAnswer(capturedIdx, capturedA, capturedNoCount); };
+    })(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click',   (function(capturedIdx) { return function() { toggleHint(capturedIdx); }; })(idx));
+    div.querySelector('.answer-link').addEventListener('click', (function(capturedIdx) { return function() { toggleAnswer(capturedIdx); }; })(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+function updateProgress() {
+  document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+  var pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+// ============================================================
+// ACCORDION TIERS
+// ============================================================
+function toggleTier(id) {
+  var sec  = document.getElementById(id);
+  var open = sec.classList.toggle('open');
+  sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (open) { setTimeout(function() { sec.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50); }
+}
+
+// ============================================================
+// INITIALISE
+// ============================================================
+initDragSort();
+buildMatchArea();
+buildPractice('retrievalGrid',  retrieval,  'R', { noCount: true });
+buildPractice('weDoGrid',       weDo,       'W', { noCount: true });
+buildPractice('checkpointGrid', checkpoint, 'Q');
+buildPractice('practiceGrid1',  practice1,  'P');
+buildPractice('practiceGrid2',  practice2,  'S');
+buildPractice('practiceGrid3',  practice3,  'C');
+buildPractice('exitGrid',       exitProbs,  'E');
+updateProgress();
+
+// Update accordion count badges
+document.getElementById('count-tier1').textContent = practice1.length + ' questions';
+document.getElementById('count-tier2').textContent = practice2.length + ' questions';
+document.getElementById('count-tier3').textContent = practice3.length + ' questions';
+
+// Enter key fires Check button
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+    var btn = e.target.parentElement.querySelector('.check-btn');
+    if (btn) btn.click();
+  }
+});
+</script>
+</body>
+</html>
