@@ -33,25 +33,28 @@ jobs:
             echo "Available batches:"; ls "$REPO/batches/" || echo "(no batches/ folder)"
             exit 1
           fi
-
-          # Isolated work dir containing ONLY the skill, so the agent can read the
-          # template/strategies but cannot see sibling lessons or the batch file.
+          # Read all task lines into memory BEFORE the agent runs.
+          mapfile -t RAW_LINES < "$BATCH_FILE"
+          # Claude Code can read files OUTSIDE its working dir by design, so cd-ing
+          # into an isolated dir does NOT stop the agent finding the full to-do list.
+          # Move batches/ out of the checkout during generation, restore before commit.
+          HIDDEN="$RUNNER_TEMP/batches-hidden"
+          rm -rf "$HIDDEN"; mv "$REPO/batches" "$HIDDEN"
           WORK="$RUNNER_TEMP/lesson-work"
           rm -rf "$WORK"; mkdir -p "$WORK"
           cp -r "$REPO/.claude" "$WORK/.claude"
-
-          while IFS= read -r raw || [ -n "$raw" ]; do
-            # Strip CR (Windows line endings) and trim, so blank/whitespace lines are skipped.
+          for raw in "${RAW_LINES[@]}"; do
             task="$(printf '%s' "$raw" | tr -d '\r' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
             [ -z "$task" ] && continue
             case "$task" in \#*) continue ;; esac
-
             echo "=== Generating: $task ==="
             rm -f "$WORK"/*.html
             ( cd "$WORK" && claude -p "$task" --dangerously-skip-permissions --max-turns 100 ) \
               || echo "!!! FAILED, continuing: $task"
             mv "$WORK"/*.html "$REPO/" 2>/dev/null || echo "(no HTML produced for this task)"
-          done < "$BATCH_FILE"
+          done
+          # Restore batches/ so the commit step doesn't commit its deletion.
+          mv "$HIDDEN" "$REPO/batches"
       - name: Commit the generated lessons
         run: |
           git config user.name "github-actions[bot]"
