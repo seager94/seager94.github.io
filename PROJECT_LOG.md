@@ -55,11 +55,12 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 - **Bin 3 files** (decided 2026-05-30, not yet run): `year-9/probability/probability_rule_choice_lesson_AC9M9P01_AC9M9P02.html` (off-convention; Y9 to be built fresh), `like_terms_lesson_11.html` (repo root), `lesson-drafts/y7_test_lesson.html`. → `git rm` + commit.
 - **Retired Y8 Measurement enrichment ideas** (dropped from the map by the re-map rule; re-add as Planned if still wanted): `applying_circle_formulas`, `pythagoras_in_context`, `scale_and_proportion_in_design`, `modelling_currency_exchange_and_phone_plans`, and a 2nd rates lesson. All seven M-descriptors remain covered without them.
+- **Y9 Algebra A03–A06 forward renumber.** The built 01–06 inserted a dedicated index-laws lesson, displacing the planned gradient/distance/quadratics/modelling/transformations sequence (old rows 128–139) down by one+. Those rows are still Planned but their `Lesson #` no longer aligns with the built sequence. → dedicated Y9-Algebra reconciliation pass to renumber.
 
 ## Build backlog (by priority)
 
 1. **Finish Year 8** — Algebra `#06` (1), Statistics (6), Probability (4), + Y8 SP03 3D coordinates (1). ≈12 lessons.
-2. **Year 9** — nothing built yet (bar the binned orphan). ≈48 lessons, strand by strand.
+2. **Year 9** — Algebra 01–06 published; remainder (Algebra 07+ and all other strands) still to build. ≈42 lessons.
 3. **Year 10** — only the legacy Algebra folder exists; regenerate Algebra to the advanced plan + build Number/Measurement/Space/Statistics/Probability. ≈54 lessons.
 4. **Y7 SP03 transformations** — once the transformation interactive component exists.
 5. **Curriculum index page** — needs a `lessonmap.json` export (does not exist yet); build from the master.
@@ -67,6 +68,15 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 ---
 
 ## Changelog
+
+### 2026-05-31 — Y9 Algebra 01–06 + pipeline batch-hide fix
+- **Fixed the remote batch over-build bug.** The GitHub Actions workflow was building all lessons in a batch on every task line, because `claude -p` reads outside its working dir by design (confirmed vs Claude Code docs) — the agent found `batches/<name>.txt` and "completed the unit". Fix: the workflow now reads task lines into memory, moves `batches/` out of the checkout during generation, then restores it before commit. Proven across two remote batches.
+- **Year 9 Algebra 01–06 built, validated, published** to `year-9/algebra/`. y9_alg_01–02 + 04–06 via remote batches; y9_alg_03 built locally after it alone hit Claude Code's 32k output-token ceiling on the runner (raising `CLAUDE_CODE_MAX_OUTPUT_TOKENS` is unreliable — multiple open bugs; not used). All six click-tested (Check buttons red/green).
+- **Re-mapped Y9 Algebra rows 123–128** per the built-supersedes-planned rule: built decomposition (index laws split across 01–03, then expanding/special-products/factorising 04–06) superseded the planned numbering. Tags/elaborations pulled from each file's `<meta>` block (authoritative). Map now: 110 Published, 111 Planned, 221 rows.
+- Merged `lesson-gen` → `main` (fast-forward); refreshed the project mirror.
+
+### 2026-05-31 — Standing decision: batch-vs-plan cross-check
+- **Before any batch tasks.txt is drafted, the planned lessonmap rows for that year+strand must be read and the batch numbering reconciled against them.** Divergence (different lesson count, reordered/shifted descriptors) is flagged with before/after rows and decided *before* generation — never discovered at closeout. (Origin: this batch's 01–06 collided with 17 pre-planned Y9 Algebra rows because it was drafted without checking the plan.) Also recorded in project instructions.
 
 ### 2026-05-30 — Reconciliation + file consolidation
 - Reconciled the map against the repo: **70 → 104 Published**, 117 Planned, 221 rows. Was recording only 24.
