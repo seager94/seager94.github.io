@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identifying &amp; Graphing Quadratic Functions — Year 9</title>
+
+<meta name="lesson-id"             content="y9_alg_10">
+<meta name="ac9-descriptor"        content="AC9M9A04">
+<meta name="ac9-elaborations"      content="1,2">
+<meta name="sa-year"               content="9">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="The parameters of quadratics and other functions determine the features of the related graph and can be adjusted depending on the purpose, context and application">
+<meta name="lesson-focus"          content="Identify a function as quadratic from its rule, table or graph; read and label the key features of a parabola (vertex, axis of symmetry, x- and y-intercepts).">
+<meta name="mapping-note"          content="Partial - this lesson covers identifying and graphing quadratic functions">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy); color: white;
+    padding: 18px 24px; margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; margin: 0; font-size: 1.65rem;
+  }
+  header.top .subtitle { font-size: 0.9rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    background: var(--coral); color: white;
+    font-weight: 700; font-size: 0.78rem;
+    padding: 5px 11px; border-radius: 999px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill { height: 100%; background: var(--coral); width: 0%; transition: width 0.4s ease; }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem, .difficulty-2 .problem, .difficulty-3 .problem {
+    background: white; border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input, .difficulty-2 .problem-input, .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute; top: -10px; left: 14px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none; transform: rotate(-10deg);
+    z-index: 5; letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint { background: #f7faff; border-left: 5px solid var(--navy); }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg); border-left: 4px solid var(--navy);
+    color: var(--navy); padding: 12px 16px; border-radius: 6px;
+    font-size: 0.92rem; margin-top: 16px; text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700; color: white; white-space: nowrap;
+  }
+  .diff-badge .dots { font-family: Arial, sans-serif; letter-spacing: 2px; font-size: 0.82rem; line-height: 1; }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white; border-left: 6px solid var(--coral);
+    padding: 14px 20px; border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px; box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; font-size: 1.5rem;
+    color: var(--coral); letter-spacing: 2px;
+    line-height: 1; flex-shrink: 0;
+    padding-right: 14px; border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label { font-family: Georgia, serif; font-size: 1.05rem; font-weight: bold; }
+  .phase-banner .phase-sub { font-size: 0.85rem; color: var(--muted); margin-top: 1px; font-style: italic; }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card); border-radius: 14px;
+    padding: 28px; margin-bottom: 22px;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold; color: var(--navy);
+    font-size: 1.4rem; margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif; font-size: 1rem;
+  }
+  section.lesson .sec-desc { color: var(--muted); margin: 0 0 22px; font-size: 0.95rem; }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 14px; }
+  .vocab { perspective: 1000px; height: 210px; cursor: pointer; }
+  .vocab-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px; padding: 16px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; border: 1px solid var(--border);
+  }
+  .vocab-front { background: var(--navy); color: white; font-family: Georgia, serif; font-weight: bold; font-size: 1.15rem; }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal; font-size: 0.72rem; opacity: 0.7;
+    margin-top: 10px; text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .vocab-back { background: white; color: var(--text); transform: rotateY(180deg); font-size: 0.9rem; line-height: 1.4; text-wrap: balance; }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block; margin-top: 10px;
+    padding: 7px 11px 8px; background: var(--hint-bg);
+    border-radius: 6px; font-size: 0.82rem; line-height: 1.4;
+    color: var(--navy); font-style: italic; text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — '; font-style: normal; font-weight: 700;
+    font-size: 0.62rem; letter-spacing: 1px; opacity: 0.6; margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* QUAD-ID INTERACTIVE (Section 3 — spot a quadratic from a table) */
+  .quad-id-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px; margin-top: 14px;
+  }
+  .quad-id-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px;
+  }
+  .quad-id-card h4 {
+    margin: 0 0 8px; color: var(--navy);
+    font-family: Georgia, serif; font-size: 1rem;
+  }
+  .quad-id-card table {
+    width: 100%; border-collapse: collapse;
+    font-family: Georgia, serif; font-size: 0.92rem; margin-bottom: 6px;
+  }
+  .quad-id-card th, .quad-id-card td {
+    border: 1px solid var(--border); padding: 5px 6px;
+    text-align: center; background: white;
+  }
+  .quad-id-card th { background: var(--hint-bg); color: var(--navy); font-weight: bold; }
+  .quad-id-buttons { display: flex; gap: 6px; margin-top: 10px; }
+  .quad-id-btn {
+    flex: 1; padding: 7px 4px;
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--border); border-radius: 7px;
+    cursor: pointer; font-size: 0.82rem; font-weight: 600;
+    transition: all 0.15s;
+  }
+  .quad-id-btn:hover:not(:disabled) { border-color: var(--navy); background: var(--hint-bg); }
+  .quad-id-btn:disabled { cursor: default; opacity: 0.7; }
+  .quad-id-btn.correct { background: var(--good-soft); border-color: var(--good); color: #1d4a30; opacity: 1; }
+  .quad-id-btn.wrong { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+  .quad-id-feedback {
+    margin-top: 8px; font-size: 0.82rem; min-height: 36px;
+    color: var(--muted); font-style: italic;
+    background: white; border-radius: 6px;
+    padding: 6px 9px; border: 1px dashed var(--border);
+  }
+  .quad-id-feedback.correct { color: #1d4a30; background: var(--good-soft); border-style: solid; border-color: var(--good); font-style: normal; }
+  .quad-id-feedback.wrong { color: var(--bad); }
+
+  /* MATCH PAIRS (Section 4 — multiple representations) */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s; min-height: 56px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; min-height: 22px; }
+
+  /* WORKED EXAMPLE */
+  .worked { background: var(--bg); border-radius: 10px; padding: 22px; border: 1px solid var(--border); }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35; transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.08rem; overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .gold { color: #8a6612; font-weight: 600; }
+  .calc-box .green { color: #1f6b3f; font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px; padding: 12px 16px;
+    margin-top: 14px; font-family: Georgia, serif;
+    font-size: 1.05rem; text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white; border: none;
+    padding: 10px 18px; border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600; margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* WORKED-EXAMPLE FAMILY BLOCKS (the 3 simpler examples in Section 5) */
+  .we-block {
+    display: grid; grid-template-columns: 1fr 1.15fr;
+    gap: 18px; align-items: start;
+    background: var(--bg); border-radius: 10px;
+    padding: 16px 18px; border: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .we-block h3 {
+    grid-column: 1 / -1;
+    font-family: Georgia, serif; color: var(--navy);
+    margin: 0 0 4px; font-size: 1.08rem;
+  }
+  .we-block .we-rule { font-size: 0.92rem; color: var(--muted); margin: 0 0 10px; font-style: italic; grid-column: 1 / -1; }
+  .we-table table { border-collapse: collapse; font-family: Georgia, serif; font-size: 0.9rem; width: 100%; }
+  .we-table th, .we-table td { border: 1px solid var(--border); padding: 4px 6px; text-align: center; background: white; }
+  .we-table th { background: var(--hint-bg); color: var(--navy); font-weight: bold; }
+  .we-features {
+    font-size: 0.88rem; background: white;
+    border-left: 3px solid var(--coral);
+    padding: 10px 12px; border-radius: 4px; margin-top: 10px;
+  }
+  .we-features strong { color: var(--coral); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.6px; }
+  .we-features ul { margin: 4px 0 0; padding-left: 18px; line-height: 1.55; }
+  .we-features li { margin-bottom: 2px; }
+  .we-fig-col { display: flex; flex-direction: column; }
+  @media (max-width: 700px) {
+    .we-block { grid-template-columns: 1fr; }
+  }
+
+  /* PARABOLA SVG figure styling */
+  .parabola-fig {
+    display: block; width: 100%;
+    max-width: 460px; height: auto;
+    margin: 8px auto 4px; background: white;
+    border: 1px solid var(--border); border-radius: 8px;
+  }
+  .parabola-fig .grid-line { stroke: #eef1f5; stroke-width: 1; }
+  .parabola-fig .axis { stroke: #4a5566; stroke-width: 1.4; }
+  .parabola-fig .tick-label { font-family: Georgia, serif; font-size: 11px; fill: #4a5566; }
+  .parabola-fig .axis-name { font-family: Georgia, serif; font-size: 14px; fill: #2a2a2a; font-weight: bold; font-style: italic; }
+  .parabola-fig .curve { fill: none; stroke: var(--navy); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  .parabola-fig .asym { stroke: var(--coral); stroke-width: 1.4; stroke-dasharray: 5 4; opacity: 0.75; }
+  .parabola-fig .asym-label { font-family: Georgia, serif; font-size: 11px; fill: var(--coral); font-style: italic; }
+  .parabola-fig .vertex-dot { fill: var(--coral); stroke: white; stroke-width: 2; }
+  .parabola-fig .x-int-dot { fill: #c89638; stroke: white; stroke-width: 2; }
+  .parabola-fig .y-int-dot { fill: #2f9e6b; stroke: white; stroke-width: 2; }
+  .parabola-fig .feature-label { font-family: Georgia, serif; font-size: 11px; font-weight: 600; }
+  .parabola-fig .feature-label.vertex { fill: #973f24; }
+  .parabola-fig .feature-label.xint { fill: #8a6612; }
+  .parabola-fig .feature-label.yint { fill: #1f6b3f; }
+  .parabola-fig .rule-label { font-family: Georgia, serif; font-size: 13px; fill: var(--navy); font-weight: bold; }
+
+  .parabola-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+    margin: 4px auto 8px; font-size: 0.78rem; color: var(--muted);
+  }
+  .parabola-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .parabola-legend .swatch {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 1.5px solid white; box-shadow: 0 0 0 1px var(--border);
+  }
+  .parabola-legend .swatch.vx { background: var(--coral); }
+  .parabola-legend .swatch.xi { background: #c89638; }
+  .parabola-legend .swatch.yi { background: #2f9e6b; }
+  .parabola-legend .swatch.ax { background: transparent; border: 1.5px dashed var(--coral); border-radius: 0; height: 0; width: 22px; box-shadow: none; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .problem-q { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif; font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem; background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white; border: none;
+    padding: 8px 14px; border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.82rem; }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg); padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy); display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif; display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+
+  footer.bottom { margin-top: 28px; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+  details.curriculum-link {
+    margin: 18px 0 4px; padding: 0;
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+    border-radius: 4px; font-size: 0.86rem; text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer; padding: 10px 16px;
+    font-weight: 600; color: var(--navy);
+    list-style: none; user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ "; display: inline-block; margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body { padding: 4px 16px 14px; color: var(--text); }
+  details.curriculum-link .cl-row {
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 6px 12px; margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label { color: var(--navy); font-weight: 600; }
+  details.curriculum-link .cl-row .cl-value { color: var(--text); }
+  details.curriculum-link .cl-note {
+    margin-top: 8px; padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted); font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1; border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag, .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto; padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700;
+    background: var(--navy); color: white; white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion { padding-top: 28px; }
+  .tier-accordion .accordion-head { cursor: pointer; display: flex; align-items: center; gap: 12px; user-select: none; }
+  .tier-accordion .accordion-head:focus { outline: 3px solid var(--coral); outline-offset: 4px; border-radius: 6px; }
+  .tier-accordion h2 { margin: 0; flex: 1; }
+  .accordion-chevron {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: white; border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.9rem; color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white; border: 1px solid var(--border);
+    color: var(--muted); padding: 3px 10px; border-radius: 999px;
+    font-family: -apple-system, sans-serif; font-size: 0.75rem;
+    font-weight: 600; flex-shrink: 0; white-space: nowrap;
+  }
+  .accordion-body { margin-top: 16px; display: none; }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* Hook section layout */
+  .hook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center; }
+  @media (max-width: 700px) { .hook-grid { grid-template-columns: 1fr; } }
+  .hook-fig { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Identifying &amp; Graphing Quadratic Functions</h1>
+    <div class="subtitle">Year 9 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Functions</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's maths.</p>
+  <div class="hook-grid">
+    <div>
+      <p>You kick a football into the air. Its <strong>height</strong> above the ground over <strong>time</strong> traces a smooth, symmetric arc — up to a peak, then back down to the grass.</p>
+      <p>That arc isn't random. It's a <strong>parabola</strong>, the U-shaped curve of a <strong>quadratic function</strong>. A coach analysing a kick reads four key landmarks from the curve: when the ball leaves the boot (a y-intercept), how high it gets (the vertex), when it lands (an x-intercept), and the axis of symmetry that splits "going up" from "coming down."</p>
+      <p>Today we learn how to spot a quadratic from its rule, its table, or its graph — and how to read those four landmarks.</p>
+    </div>
+    <div class="hook-fig">
+      <svg id="p_hook" class="parabola-fig" viewBox="0 0 440 360" role="img" aria-label="A parabola showing a football trajectory: height versus time"></svg>
+      <div class="parabola-legend">
+        <span><span class="swatch vx"></span>vertex</span>
+        <span><span class="swatch xi"></span>x-intercept</span>
+        <span><span class="swatch yi"></span>y-intercept</span>
+        <span><span class="swatch ax"></span>axis of symmetry</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, spot-the-quadratic, and matching — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Quadratic function<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A function whose rule has an <strong><span class="var">x</span>²</strong> term as the highest power, in the form <span class="expr"><span class="var">y</span> = <span class="var">a</span><span class="var">x</span>² + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span></span>.<div class="vocab-example expr"><strong><span class="var">y</span> = <span class="var">x</span>² + 2<span class="var">x</span> − 3</strong> is quadratic.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Parabola<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>U-shaped curve</strong> that is the graph of a quadratic function. It is <strong>symmetric</strong> about a vertical line.<div class="vocab-example">Opens <strong>up</strong> if the coefficient of <span class="var">x</span>² is positive; <strong>down</strong> if negative.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Vertex<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>turning point</strong> — the single lowest or highest point on the parabola. It sits exactly on the axis of symmetry.<div class="vocab-example expr">For <span class="var">y</span> = <span class="var">x</span>² − 4: vertex is <strong>(0, −4)</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Axis of symmetry<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>vertical line</strong> that cuts the parabola into mirror-image halves. It passes through the vertex.<div class="vocab-example expr">For <span class="var">y</span> = (<span class="var">x</span> − 2)²: axis is <strong><span class="var">x</span> = 2</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Intercepts<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Where the graph <strong>crosses the axes</strong>. The <strong>y-intercept</strong> is where <span class="var">x</span> = 0; the <strong>x-intercepts</strong> are where <span class="var">y</span> = 0.<div class="vocab-example expr">For <span class="var">y</span> = <span class="var">x</span>² − 4: y-int <strong>−4</strong>; x-ints <strong>−2, 2</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SPOT A QUADRATIC FROM A TABLE -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Spotting a quadratic from a table</h2>
+  <p class="sec-desc">For each table, look at the differences between consecutive <span class="var">y</span>-values. A <strong>constant first difference</strong> means linear. A <strong>constant second difference</strong> means quadratic. Neither means it's something else. Pick the right category for each — feedback is instant.</p>
+  <div class="quad-id-row" id="quadIdRow"></div>
+  <div style="margin-top:16px; padding:12px 14px; background: var(--hint-bg); border-left:4px solid var(--navy); border-radius:6px; color: var(--navy); font-size:0.92rem;">
+    💡 <strong>Why second differences?</strong> For <span class="expr"><span class="var">y</span> = <span class="var">a</span><span class="var">x</span>² + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span></span> with <span class="var">x</span> stepping by 1, the second differences are always <span class="expr">2<span class="var">a</span></span> — a constant. That's the algebraic signature of a quadratic.
+  </div>
+</section>
+
+<!-- SECTION 4: MULTIPLE REPRESENTATIONS MATCHING -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Multiple representations — match rule to vertex</h2>
+  <p class="sec-desc">Each quadratic rule has one matching vertex. Click two chips that go together. There are five pairs. After today, you'll be able to do this just from looking at the rule.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+
+  <div style="margin-top:14px; font-size:0.88rem; color: var(--muted); font-style:italic;">
+    Tip: a rule of the form <span class="expr"><span class="var">y</span> = (<span class="var">x</span> − <span class="var">h</span>)² + <span class="var">k</span></span> has vertex <span class="expr">(<span class="var">h</span>, <span class="var">k</span>)</span> — the brackets tell you the horizontal shift, the constant tells you the vertical shift.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I&nbsp;DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through the family of quadratics — then one big example with every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: I DO — WORKED EXAMPLES -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples — table to plot to features</h2>
+  <p class="sec-desc">For each example: build a small table, plot the points, sketch the parabola, then read off the four key features (vertex, axis of symmetry, y-intercept, x-intercepts).</p>
+
+  <!-- Example 1: y = x² (the parent) -->
+  <div class="we-block">
+    <h3>Example 1 — the parent parabola: <span class="expr"><span class="var">y</span> = <span class="var">x</span>²</span></h3>
+    <p class="we-rule">Every other parabola in this lesson is a shift of this one. Every feature lives at the origin.</p>
+    <div class="we-table">
+      <table>
+        <tr><th><span class="var">x</span></th><td>−3</td><td>−2</td><td>−1</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+        <tr><th><span class="var">y</span></th><td>9</td><td>4</td><td>1</td><td>0</td><td>1</td><td>4</td><td>9</td></tr>
+      </table>
+      <div class="we-features">
+        <strong>Key features</strong>
+        <ul>
+          <li>Vertex: <strong>(0, 0)</strong></li>
+          <li>Axis of symmetry: <strong><span class="var">x</span> = 0</strong> (the y-axis)</li>
+          <li>y-intercept: <strong>0</strong></li>
+          <li>x-intercept: <strong>0</strong> (only one — the parabola just touches the x-axis)</li>
+          <li>Opens <strong>up</strong> (coefficient of <span class="var">x</span>² is +1)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="we-fig-col">
+      <svg id="p_x2" class="parabola-fig" viewBox="0 0 440 360" role="img" aria-label="Parabola of y equals x squared, vertex at origin"></svg>
+      <div class="parabola-legend">
+        <span><span class="swatch vx"></span>vertex</span>
+        <span><span class="swatch xi"></span>x-int</span>
+        <span><span class="swatch yi"></span>y-int</span>
+        <span><span class="swatch ax"></span>axis</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 2: y = x² - 4 (vertical translation) -->
+  <div class="we-block">
+    <h3>Example 2 — translated down: <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 4</span></h3>
+    <p class="we-rule">The "− 4" pulls the whole parabola down by 4 units. The shape is identical to <span class="var">y</span> = <span class="var">x</span>², just lower.</p>
+    <div class="we-table">
+      <table>
+        <tr><th><span class="var">x</span></th><td>−3</td><td>−2</td><td>−1</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
+        <tr><th><span class="var">y</span></th><td>5</td><td>0</td><td>−3</td><td>−4</td><td>−3</td><td>0</td><td>5</td></tr>
+      </table>
+      <div class="we-features">
+        <strong>Key features</strong>
+        <ul>
+          <li>Vertex: <strong>(0, −4)</strong></li>
+          <li>Axis of symmetry: <strong><span class="var">x</span> = 0</strong></li>
+          <li>y-intercept: <strong>−4</strong> (same point as the vertex here)</li>
+          <li>x-intercepts: <strong>−2</strong> and <strong>2</strong></li>
+          <li>Opens <strong>up</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="we-fig-col">
+      <svg id="p_x2m4" class="parabola-fig" viewBox="0 0 440 360" role="img" aria-label="Parabola of y equals x squared minus 4, vertex at (0, -4)"></svg>
+      <div class="parabola-legend">
+        <span><span class="swatch vx"></span>vertex</span>
+        <span><span class="swatch xi"></span>x-int</span>
+        <span><span class="swatch yi"></span>y-int</span>
+        <span><span class="swatch ax"></span>axis</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 3: y = (x-2)^2 (horizontal translation) -->
+  <div class="we-block">
+    <h3>Example 3 — translated right: <span class="expr"><span class="var">y</span> = (<span class="var">x</span> − 2)²</span></h3>
+    <p class="we-rule">The "(<span class="var">x</span> − 2)" pulls the whole parabola right by 2 units. Vertex moves from the y-axis across to <span class="var">x</span> = 2.</p>
+    <div class="we-table">
+      <table>
+        <tr><th><span class="var">x</span></th><td>−1</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+        <tr><th><span class="var">y</span></th><td>9</td><td>4</td><td>1</td><td>0</td><td>1</td><td>4</td><td>9</td></tr>
+      </table>
+      <div class="we-features">
+        <strong>Key features</strong>
+        <ul>
+          <li>Vertex: <strong>(2, 0)</strong></li>
+          <li>Axis of symmetry: <strong><span class="var">x</span> = 2</strong></li>
+          <li>y-intercept: <strong>4</strong> (substitute <span class="var">x</span> = 0: <span class="expr">(0 − 2)² = 4</span>)</li>
+          <li>x-intercept: <strong>2</strong> (only one — the parabola just touches the x-axis at the vertex)</li>
+          <li>Opens <strong>up</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div class="we-fig-col">
+      <svg id="p_xm2sq" class="parabola-fig" viewBox="0 0 440 360" role="img" aria-label="Parabola of y equals (x minus 2) squared, vertex at (2, 0)"></svg>
+      <div class="parabola-legend">
+        <span><span class="swatch vx"></span>vertex</span>
+        <span><span class="swatch xi"></span>x-int</span>
+        <span><span class="swatch yi"></span>y-int</span>
+        <span><span class="swatch ax"></span>axis</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 4: y = x^2 + 2x - 3 with reveal steps -->
+  <h3 style="font-family:Georgia,serif; color:var(--navy); margin: 26px 0 10px; font-size:1.2rem;">Example 4 — combined shifts: <span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 2<span class="var">x</span> − 3</span></h3>
+  <p style="color: var(--muted); font-style: italic; margin: 0 0 14px;">This is the showcase example — work it from table to plot to features. Reveal each step in turn.</p>
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Build a table of values</div>
+        <div class="step-desc">Substitute <span class="var">x</span> = −4 through 2 into <span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 2<span class="var">x</span> − 3</span>. Then check the second differences to confirm it's quadratic.</div>
+        <div class="calc-box">
+          <table style="border-collapse:collapse; font-size:0.95rem; width:100%;">
+            <tr style="background:var(--hint-bg);">
+              <th style="padding:5px 8px; border:1px solid var(--border);"><span class="var">x</span></th>
+              <th style="padding:5px 8px; border:1px solid var(--border);">−4</th>
+              <th style="padding:5px 8px; border:1px solid var(--border);">−3</th>
+              <th style="padding:5px 8px; border:1px solid var(--border);">−2</th>
+              <th style="padding:5px 8px; border:1px solid var(--border);">−1</th>
+              <th style="padding:5px 8px; border:1px solid var(--border);">0</th>
+              <th style="padding:5px 8px; border:1px solid var(--border);">1</th>
+              <th style="padding:5px 8px; border:1px solid var(--border);">2</th>
+            </tr>
+            <tr>
+              <th style="padding:5px 8px; border:1px solid var(--border); background:var(--hint-bg);"><span class="var">y</span></th>
+              <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">5</td>
+              <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">0</td>
+              <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">−3</td>
+              <td style="padding:5px 8px; border:1px solid var(--border); text-align:center; background: var(--coral-soft);"><strong>−4</strong></td>
+              <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">−3</td>
+              <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">0</td>
+              <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">5</td>
+            </tr>
+            <tr>
+              <th style="padding:5px 8px; border:1px solid var(--border); background:var(--hint-bg); font-size:0.82rem;">1st diff</th>
+              <td colspan="7" style="padding:5px 8px; border:1px solid var(--border); text-align:center; font-style: italic; color: var(--muted);">−5, −3, −1, +1, +3, +5</td>
+            </tr>
+            <tr>
+              <th style="padding:5px 8px; border:1px solid var(--border); background:var(--hint-bg); font-size:0.82rem;">2nd diff</th>
+              <td colspan="7" style="padding:5px 8px; border:1px solid var(--border); text-align:center;"><span class="green"><strong>+2, +2, +2, +2, +2</strong></span> — constant ✓ quadratic</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Plot the points and sketch the parabola</div>
+        <div class="step-desc">Plot each (<span class="var">x</span>, <span class="var">y</span>) from the table and join them with a smooth U-curve. The lowest point sits at <span class="var">x</span> = −1.</div>
+        <svg id="p_x2p2xm3" class="parabola-fig" viewBox="0 0 440 360" role="img" aria-label="Parabola of y equals x squared plus 2x minus 3, vertex at (-1, -4)"></svg>
+        <div class="parabola-legend">
+          <span><span class="swatch vx"></span>vertex</span>
+          <span><span class="swatch xi"></span>x-intercept</span>
+          <span><span class="swatch yi"></span>y-intercept</span>
+          <span><span class="swatch ax"></span>axis of symmetry</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Read off the four key features</div>
+        <div class="step-desc">Find them on the graph, then double-check with the rule.</div>
+        <div class="calc-box">
+          <strong class="red">Vertex:</strong> (−1, −4) — the lowest point of the U.<br>
+          <strong class="red">Axis of symmetry:</strong> <span class="var">x</span> = −1 — the vertical line through the vertex.<br>
+          <strong class="green">y-intercept:</strong> −3 — where the curve crosses the y-axis. Check: sub <span class="var">x</span> = 0 → <span class="expr">0 + 0 − 3 = −3</span> ✓<br>
+          <strong class="gold">x-intercepts:</strong> −3 and 1 — where the curve crosses the x-axis. Check: <span class="expr">(<span class="var">x</span> + 3)(<span class="var">x</span> − 1) = 0</span> gives <span class="var">x</span> = −3 or 1 ✓
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer — the four key features</span>
+          Vertex (−1, −4) · Axis <span class="var">x</span> = −1 · y-int −3 · x-ints −3 and 1
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE&nbsp;DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — sketch and feature-spot <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 2<span class="var">x</span> − 3</span></h2>
+  <p class="sec-desc">Most of the table is filled in already. Find the missing value, then use the graph below to read off the features.</p>
+
+  <div class="calc-box" style="margin-bottom: 14px;">
+    <table style="border-collapse:collapse; font-size:0.95rem; width:100%;">
+      <tr style="background:var(--hint-bg);">
+        <th style="padding:5px 8px; border:1px solid var(--border);"><span class="var">x</span></th>
+        <th style="padding:5px 8px; border:1px solid var(--border);">−2</th>
+        <th style="padding:5px 8px; border:1px solid var(--border);">−1</th>
+        <th style="padding:5px 8px; border:1px solid var(--border);">0</th>
+        <th style="padding:5px 8px; border:1px solid var(--border);">1</th>
+        <th style="padding:5px 8px; border:1px solid var(--border);">2</th>
+        <th style="padding:5px 8px; border:1px solid var(--border);">3</th>
+        <th style="padding:5px 8px; border:1px solid var(--border);">4</th>
+      </tr>
+      <tr>
+        <th style="padding:5px 8px; border:1px solid var(--border); background:var(--hint-bg);"><span class="var">y</span></th>
+        <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">5</td>
+        <td style="padding:5px 8px; border:1px solid var(--border); text-align:center; background: var(--coral-soft);"><strong>?</strong></td>
+        <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">−3</td>
+        <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">−4</td>
+        <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">−3</td>
+        <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">0</td>
+        <td style="padding:5px 8px; border:1px solid var(--border); text-align:center;">5</td>
+      </tr>
+    </table>
+  </div>
+
+  <svg id="p_x2m2xm3" class="parabola-fig" viewBox="0 0 440 360" role="img" aria-label="Parabola of y equals x squared minus 2x minus 3, vertex at (1, -4)"></svg>
+  <div class="parabola-legend">
+    <span><span class="swatch vx"></span>vertex</span>
+    <span><span class="swatch xi"></span>x-intercept</span>
+    <span><span class="swatch yi"></span>y-intercept</span>
+    <span><span class="swatch ax"></span>axis of symmetry</span>
+  </div>
+
+  <div class="practice-grid" id="weDoGrid" style="margin-top:16px;"></div>
+
+  <div style="background: var(--hint-bg); border-left:4px solid var(--navy); padding:10px 14px; border-radius:6px; font-size:0.92rem; font-style:italic; color:var(--navy); margin-top: 16px;">
+    💡 <strong>Why it works:</strong> the two x-intercepts are symmetric about the axis. Once you know <span class="var">x</span> = −1 and <span class="var">x</span> = 3 cross the axis, the axis of symmetry sits half-way between, at <span class="var">x</span> = 1 — and that's exactly where the vertex sits.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU&nbsp;DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you can read the basic features from a rule. Try them yourself first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Read off one key feature each time. Type answers as instructed in each question — e.g. <code>0,-4</code> for a vertex, <code>x=2</code> for an axis of symmetry, <code>-3</code> for a single intercept value.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now you may need to read from a table, factorise, or sketch from given features.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">A negative coefficient flips the parabola upside-down. The same four features still apply.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 9 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">The parameters of quadratics and other functions determine the features of the related graph and can be adjusted depending on the purpose, context and application.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M9A04</strong> — identify and graph quadratic functions, solve quadratic equations graphically and numerically, and solve monic quadratic equations with integer roots algebraically, using graphing software and digital tools as appropriate</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 2</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Identify a function as quadratic from its rule, table or graph; read and label the key features of a parabola (vertex, axis of symmetry, x- and y-intercepts).</span>
+    </div>
+    <div class="cl-note">Mapping: Partial — this lesson covers identifying and graphing quadratic functions. The remainder of AC9M9A04 (solving quadratic equations graphically, numerically and algebraically) is covered in subsequent lessons. Lesson ID y9_alg_10. Source: SA Curriculum (Mathematics R-10 Prototype 2).</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 9 · Identifying &amp; Graphing Quadratic Functions
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ PARABOLA SVG BUILDER ============
+  function fmtNum(n) {
+    if (n < 0) return '−' + Math.abs(n);
+    return String(n);
+  }
+
+  function buildParabolaFig(svgId, fig) {
+    const svg = document.getElementById(svgId);
+    if (!svg) return;
+    const W = 440, H = 360, ox = 220, oy = 240, u = 20;
+    const px = x => ox + u * x;
+    const py = y => oy - u * y;
+    const M = v => v.toFixed(1);
+
+    let s = '';
+
+    // GRID
+    for (let i = -10; i <= 10; i++) {
+      s += '<line class="grid-line" x1="' + px(i) + '" y1="0" x2="' + px(i) + '" y2="' + H + '"/>';
+    }
+    for (let j = -5; j <= 6; j++) {
+      s += '<line class="grid-line" x1="0" y1="' + py(j) + '" x2="' + W + '" y2="' + py(j) + '"/>';
+    }
+
+    // AXES
+    s += '<line class="axis" x1="0" y1="' + py(0) + '" x2="' + W + '" y2="' + py(0) + '"/>';
+    s += '<line class="axis" x1="' + px(0) + '" y1="0" x2="' + px(0) + '" y2="' + H + '"/>';
+
+    // TICK LABELS — every 2 units
+    for (let i = -10; i <= 10; i += 2) {
+      if (i === 0) continue;
+      s += '<text class="tick-label" x="' + px(i) + '" y="' + (py(0) + 14) + '" text-anchor="middle">' + fmtNum(i) + '</text>';
+    }
+    for (let j = -4; j <= 6; j += 2) {
+      if (j === 0) continue;
+      s += '<text class="tick-label" x="' + (px(0) - 6) + '" y="' + (py(j) + 4) + '" text-anchor="end">' + fmtNum(j) + '</text>';
+    }
+    // origin label
+    s += '<text class="tick-label" x="' + (px(0) - 6) + '" y="' + (py(0) + 14) + '" text-anchor="end">0</text>';
+
+    // AXIS NAMES
+    s += '<text class="axis-name" x="' + (W - 8) + '" y="' + (py(0) - 6) + '" text-anchor="end">x</text>';
+    s += '<text class="axis-name" x="' + (px(0) + 8) + '" y="14">y</text>';
+
+    // AXIS OF SYMMETRY
+    if (fig.asym !== undefined) {
+      s += '<line class="asym" x1="' + px(fig.asym) + '" y1="0" x2="' + px(fig.asym) + '" y2="' + H + '"/>';
+      const lbl = 'x = ' + fmtNum(fig.asym);
+      const labX = fig.asym >= 0 ? px(fig.asym) + 6 : px(fig.asym) - 6;
+      const anchor = fig.asym >= 0 ? 'start' : 'end';
+      s += '<text class="asym-label" x="' + labX + '" y="22" text-anchor="' + anchor + '">' + lbl + '</text>';
+    }
+
+    // PARABOLA CURVE (sampled polyline)
+    const pts = [];
+    const xMin = fig.domain[0], xMax = fig.domain[1];
+    for (let x = xMin; x <= xMax + 0.0001; x += 0.2) {
+      const y = fig.a * x * x + fig.b * x + fig.c;
+      const sy = py(y);
+      if (sy >= -5 && sy <= H + 5) pts.push(M(px(x)) + ',' + M(sy));
+    }
+    s += '<polyline class="curve" points="' + pts.join(' ') + '"/>';
+
+    // FEATURE DOTS AND LABELS
+    (fig.feats || []).forEach(f => {
+      const clsMap = { vertex: 'vertex-dot', xint: 'x-int-dot', yint: 'y-int-dot' };
+      const cls = clsMap[f.type];
+      const r = f.type === 'vertex' ? 6 : 5;
+      s += '<circle class="' + cls + '" cx="' + px(f.x) + '" cy="' + py(f.y) + '" r="' + r + '"/>';
+      if (f.label) {
+        const lblClsMap = { vertex: 'vertex', xint: 'xint', yint: 'yint' };
+        const dx = f.dx || 0, dy = (f.dy === undefined ? 18 : f.dy), anchor = f.anchor || 'middle';
+        s += '<text class="feature-label ' + lblClsMap[f.type] + '" x="' + (px(f.x) + dx) + '" y="' + (py(f.y) + dy) + '" text-anchor="' + anchor + '">' + f.label + '</text>';
+      }
+    });
+
+    // OPTIONAL RULE LABEL (top-right of fig)
+    if (fig.rule) {
+      s += '<text class="rule-label" x="' + (W - 12) + '" y="20" text-anchor="end">' + fig.rule + '</text>';
+    }
+
+    svg.innerHTML = s;
+  }
+
+  const figs = {
+    p_hook: {
+      a: -0.5, b: 2, c: 1,  // ball trajectory: peaks around (2, 3), lands ~4.45, leaves ground at ~-0.45
+      domain: [-0.6, 4.6],
+      asym: 2,
+      rule: 'h = −0.5t² + 2t + 1',
+      feats: [
+        { type: 'vertex', x: 2, y: 3,  label: 'Peak (vertex)', dx: 0, dy: -12, anchor: 'middle' },
+        { type: 'yint',   x: 0, y: 1,  label: 'kick height (y-int)', dx: -10, dy: 4, anchor: 'end' },
+        { type: 'xint',   x: 4.45, y: 0, label: 'lands (x-int)', dx: 8, dy: -8, anchor: 'start' }
+      ]
+    },
+    p_x2: {
+      a: 1, b: 0, c: 0,
+      domain: [-3.2, 3.2],
+      asym: 0,
+      rule: 'y = x²',
+      feats: [
+        { type: 'vertex', x: 0, y: 0, label: 'Vertex / y-int / x-int (0, 0)', dx: 12, dy: 22, anchor: 'start' }
+      ]
+    },
+    p_x2m4: {
+      a: 1, b: 0, c: -4,
+      domain: [-3.2, 3.2],
+      asym: 0,
+      rule: 'y = x² − 4',
+      feats: [
+        { type: 'xint',   x: -2, y: 0,  label: 'x-int (−2, 0)', dx: -8, dy: -10, anchor: 'end' },
+        { type: 'xint',   x: 2,  y: 0,  label: 'x-int (2, 0)',  dx: 8,  dy: -10, anchor: 'start' },
+        { type: 'vertex', x: 0,  y: -4, label: 'Vertex / y-int (0, −4)', dx: 14, dy: 5, anchor: 'start' }
+      ]
+    },
+    p_xm2sq: {
+      a: 1, b: -4, c: 4,  // (x-2)^2
+      domain: [-1.2, 5.2],
+      asym: 2,
+      rule: 'y = (x − 2)²',
+      feats: [
+        { type: 'yint',   x: 0, y: 4, label: 'y-int (0, 4)', dx: -10, dy: 5, anchor: 'end' },
+        { type: 'vertex', x: 2, y: 0, label: 'Vertex / x-int (2, 0)', dx: 12, dy: 22, anchor: 'start' }
+      ]
+    },
+    p_x2p2xm3: {
+      a: 1, b: 2, c: -3,
+      domain: [-4.2, 2.2],
+      asym: -1,
+      rule: 'y = x² + 2x − 3',
+      feats: [
+        { type: 'xint',   x: -3, y: 0,  label: 'x-int (−3, 0)', dx: -8, dy: -10, anchor: 'end' },
+        { type: 'xint',   x: 1,  y: 0,  label: 'x-int (1, 0)',  dx: 8,  dy: -10, anchor: 'start' },
+        { type: 'yint',   x: 0,  y: -3, label: 'y-int (0, −3)', dx: 12, dy: -2, anchor: 'start' },
+        { type: 'vertex', x: -1, y: -4, label: 'Vertex (−1, −4)', dx: 0, dy: 22, anchor: 'middle' }
+      ]
+    },
+    p_x2m2xm3: {
+      a: 1, b: -2, c: -3,
+      domain: [-2.2, 4.2],
+      asym: 1,
+      rule: 'y = x² − 2x − 3',
+      feats: [
+        { type: 'xint',   x: -1, y: 0,  label: 'x-int (−1, 0)', dx: -8, dy: -10, anchor: 'end' },
+        { type: 'xint',   x: 3,  y: 0,  label: 'x-int (3, 0)',  dx: 8,  dy: -10, anchor: 'start' },
+        { type: 'yint',   x: 0,  y: -3, label: 'y-int (0, −3)', dx: -10, dy: 5, anchor: 'end' },
+        { type: 'vertex', x: 1,  y: -4, label: 'Vertex (1, −4)', dx: 0, dy: 22, anchor: 'middle' }
+      ]
+    }
+  };
+
+  Object.keys(figs).forEach(k => buildParabolaFig(k, figs[k]));
+
+  // ============ QUAD-ID INTERACTIVE (Section 3) ============
+  const quadIdData = [
+    {
+      id: 'qiA', name: 'Table A',
+      rule: 'y = 2x + 1',
+      pairs: [[-2,-3],[-1,-1],[0,1],[1,3],[2,5]],
+      answer: 'linear',
+      explain: 'First differences: +2, +2, +2, +2 — all the same. Constant first difference means linear.'
+    },
+    {
+      id: 'qiB', name: 'Table B',
+      rule: 'y = x² + 1',
+      pairs: [[-2,5],[-1,2],[0,1],[1,2],[2,5]],
+      answer: 'quadratic',
+      explain: 'First differences: −3, −1, +1, +3 (changing). Second differences: +2, +2, +2 — constant. That signals a quadratic.'
+    },
+    {
+      id: 'qiC', name: 'Table C',
+      rule: 'y = 2ˣ (doubling)',
+      pairs: [[0,1],[1,2],[2,4],[3,8],[4,16]],
+      answer: 'neither',
+      explain: 'y doubles each step. First differences: +1, +2, +4, +8 — not constant. Second differences: +1, +2, +4 — also not constant. Not linear, not quadratic.'
+    },
+    {
+      id: 'qiD', name: 'Table D',
+      rule: 'y = x² − 2x',
+      pairs: [[-1,3],[0,0],[1,-1],[2,0],[3,3]],
+      answer: 'quadratic',
+      explain: 'First differences: −3, −1, +1, +3. Second differences: +2, +2, +2 — constant second difference → quadratic.'
+    }
+  ];
+
+  function buildQuadId() {
+    const row = document.getElementById('quadIdRow');
+    if (!row) return;
+    quadIdData.forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'quad-id-card';
+      const headRow = ['<th><span class="var">x</span></th>'].concat(d.pairs.map(p => '<th>' + fmtNum(p[0]) + '</th>')).join('');
+      const bodyRow = ['<th><span class="var">y</span></th>'].concat(d.pairs.map(p => '<td>' + fmtNum(p[1]) + '</td>')).join('');
+      card.innerHTML =
+        '<h4>' + d.name + '</h4>' +
+        '<table><tr>' + headRow + '</tr><tr>' + bodyRow + '</tr></table>' +
+        '<div class="quad-id-buttons">' +
+          '<button class="quad-id-btn" data-pick="linear">Linear</button>' +
+          '<button class="quad-id-btn" data-pick="quadratic">Quadratic</button>' +
+          '<button class="quad-id-btn" data-pick="neither">Neither</button>' +
+        '</div>' +
+        '<div class="quad-id-feedback" id="qif-' + d.id + '">Pick a category.</div>';
+      const fb = card.querySelector('.quad-id-feedback');
+      card.querySelectorAll('.quad-id-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (btn.disabled) return;
+          const pick = btn.dataset.pick;
+          if (pick === d.answer) {
+            card.querySelectorAll('.quad-id-btn').forEach(b => {
+              b.disabled = true;
+              if (b.dataset.pick === d.answer) b.classList.add('correct');
+            });
+            fb.textContent = '✓ ' + d.explain + ' (Rule: ' + d.rule + ')';
+            fb.className = 'quad-id-feedback correct';
+          } else {
+            btn.classList.add('wrong');
+            setTimeout(() => btn.classList.remove('wrong'), 700);
+            fb.textContent = '✗ Try again — check the first and second differences.';
+            fb.className = 'quad-id-feedback wrong';
+          }
+        });
+      });
+      row.appendChild(card);
+    });
+  }
+  buildQuadId();
+
+  // ============ MATCHING (Section 4 — rule ↔ vertex) ============
+  const matchTerms = [
+    { html: '<span class="expr"><span class="var">y</span> = <span class="var">x</span>²</span>', group: 1 },
+    { html: '(0, 0)', group: 1 },
+    { html: '<span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 4</span>', group: 2 },
+    { html: '(0, −4)', group: 2 },
+    { html: '<span class="expr"><span class="var">y</span> = (<span class="var">x</span> − 2)²</span>', group: 3 },
+    { html: '(2, 0)', group: 3 },
+    { html: '<span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 2<span class="var">x</span> − 3</span>', group: 4 },
+    { html: '(−1, −4)', group: 4 },
+    { html: '<span class="expr"><span class="var">y</span> = (<span class="var">x</span> − 3)² + 1</span>', group: 5 },
+    { html: '(3, 1)', group: 5 }
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five rule-and-vertex pairs matched!'
+          : 'Matched! (' + matchedGroups.size + '/5)';
+      matchSelected = null;
+    } else {
+      const w1 = matchSelected, w2 = chip;
+      w1.classList.add('selected');
+      w2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match. Try reading the rule as (x − h)² + k → vertex (h, k).';
+      setTimeout(() => {
+        w1.classList.remove('selected');
+        w2.classList.remove('selected');
+      }, 800);
+      matchSelected = null;
+    }
+  }
+  buildMatchArea();
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS DATA ============
+
+  const retrieval = [
+    { q: 'Evaluate <span class="expr"><span class="var">y</span> = <span class="var">x</span>²</span> when <span class="var">x</span> = 3.', a: '9', hint: '3 × 3 = ?' },
+    { q: 'If <span class="expr"><span class="var">y</span> = 2<span class="var">x</span> + 1</span>, what is <span class="var">y</span> when <span class="var">x</span> = 0?', a: '1', hint: 'Substitute 0 for x and simplify.' },
+    { q: 'Substitute <span class="var">x</span> = −2 into <span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 1</span>. What is <span class="var">y</span>?', a: '5', hint: '(−2)² = 4. Then add 1.' }
+  ];
+
+  const checkpoint = [
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 1</span>, what are the vertex coordinates? Type as <code>x,y</code>.', a: '0,-1', hint: 'Constant only — shifts the parent down by 1.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = (<span class="var">x</span> + 4)²</span>, what is the y-intercept value? (Substitute <span class="var">x</span> = 0.)', a: '16', hint: '(0 + 4)² = 4² = ?' }
+  ];
+
+  // Building — 10 questions, one feature each.
+  const practice1 = [
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>²</span>, the vertex coordinates? Type as <code>x,y</code>.', a: '0,0', hint: 'The parent parabola sits at the origin.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 3</span>, the y-intercept value?', a: '3', hint: 'Substitute x = 0 into the rule.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = (<span class="var">x</span> − 5)²</span>, the axis of symmetry. Type as <code>x=value</code>.', a: 'x=5', hint: 'Vertex form gives x = h directly.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 16</span>, the <strong>smaller</strong> x-intercept value? (Set <span class="var">y</span> = 0 and solve.)', a: '-4', hint: 'x² = 16 → x = ±4.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 16</span>, the <strong>larger</strong> x-intercept value?', a: '4', hint: 'Same equation as before — pick the positive root.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = (<span class="var">x</span> + 3)²</span>, the vertex coordinates? Type as <code>x,y</code>.', a: '-3,0', hint: '(x + 3)² = (x − (−3))² → vertex (−3, 0).' },
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 4</span>, the y-intercept value?', a: '4', hint: 'Substitute x = 0.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 2<span class="var">x</span></span>, the <strong>smaller</strong> x-intercept value? (Factor: <span class="expr"><span class="var">x</span>(<span class="var">x</span> − 2)</span>.)', a: '0', hint: 'x = 0 or x − 2 = 0.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 2<span class="var">x</span></span>, the <strong>larger</strong> x-intercept value?', a: '2', hint: 'The other root from x(x − 2) = 0.' },
+    { q: 'From the table — <span class="var">x</span>: −2, −1, 0, 1, 2 and <span class="var">y</span>: 4, 1, 0, 1, 4 — the vertex coordinates? Type as <code>x,y</code>.', a: '0,0', hint: 'The lowest point in the table.' }
+  ];
+
+  // Stretch — 6 questions, multi-step or sketch-from-features.
+  const practice2 = [
+    { q: 'A parabola has vertex <span class="expr">(2, −1)</span> and opens up. Axis of symmetry? Type as <code>x=value</code>.', a: 'x=2', hint: 'The axis passes through the vertex vertically.' },
+    { q: '<span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 4<span class="var">x</span> + 3 = (<span class="var">x</span> − 1)(<span class="var">x</span> − 3)</span>. Axis of symmetry? Type as <code>x=value</code>.', a: 'x=2', hint: 'Axis is half-way between the two x-intercepts.' },
+    { q: 'From the table — <span class="var">x</span>: −1, 0, 1, 2, 3 and <span class="var">y</span>: 5, 2, 1, 2, 5 — vertex coordinates? Type as <code>x,y</code>.', a: '1,1', hint: 'The lowest y-value in the table sits at one x — that\'s the vertex.' },
+    { q: '<span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 4<span class="var">x</span> + 3 = (<span class="var">x</span> + 1)(<span class="var">x</span> + 3)</span>. The <strong>smaller</strong> x-intercept value?', a: '-3', hint: 'Solve each factor = 0.' },
+    { q: 'A parabola has x-intercepts at −2 and 6. Axis of symmetry? Type as <code>x=value</code>.', a: 'x=2', hint: 'Average the two x-intercepts: (−2 + 6) ÷ 2.' },
+    { q: '<span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 6<span class="var">x</span> + 5</span>. y-intercept value? (Substitute <span class="var">x</span> = 0.)', a: '5', hint: 'The constant term IS the y-intercept for any y = ax² + bx + c.' }
+  ];
+
+  // Mastery — 4 questions, leading coefficient sign + word problem.
+  const practice3 = [
+    { q: 'For <span class="expr"><span class="var">y</span> = −<span class="var">x</span>²</span>, does the parabola open up or down? Type <code>up</code> or <code>down</code>.', a: 'down', hint: 'A negative coefficient of x² flips the parabola.' },
+    { q: 'For <span class="expr"><span class="var">y</span> = −(<span class="var">x</span> − 2)² + 5</span>, the vertex coordinates? Type as <code>x,y</code>.', a: '2,5', hint: 'Read h and k from y = a(x − h)² + k. The negative a doesn\'t move the vertex.' },
+    { q: '<span class="expr"><span class="var">y</span> = 2<span class="var">x</span>² − 8</span>. Factor as <span class="expr">2(<span class="var">x</span> − 2)(<span class="var">x</span> + 2)</span>. The <strong>smaller</strong> x-intercept value?', a: '-2', hint: 'Set each factor = 0. The leading 2 doesn\'t change where the curve crosses.' },
+    { q: 'A ball\'s height (m) after <span class="var">t</span> seconds is <span class="expr"><span class="var">h</span> = −<span class="var">t</span>² + 4<span class="var">t</span></span>. It lands when <span class="var">h</span> = 0, i.e. <span class="expr"><span class="var">t</span>(−<span class="var">t</span> + 4) = 0</span>. After how many seconds does it land (the non-zero answer)?', a: '4', hint: 't = 0 (launch) or −t + 4 = 0 → t = 4.' }
+  ];
+
+  // We Do — 3 sub-prompts on y = x² − 2x − 3
+  const weDo = [
+    { q: 'Find the missing value: when <span class="var">x</span> = −1, what is <span class="var">y</span>? (Substitute into <span class="expr"><span class="var">y</span> = <span class="var">x</span>² − 2<span class="var">x</span> − 3</span>.)', a: '0', hint: '(−1)² − 2(−1) − 3 = 1 + 2 − 3 = ?' },
+    { q: 'From the graph, the vertex coordinates? Type as <code>x,y</code>.', a: '1,-4', hint: 'Find the lowest point of the U.' },
+    { q: 'List the two x-intercepts, <strong>smaller first</strong>, separated by comma. Type as <code>a,b</code>.', a: '-1,3', hint: 'Where does the curve cross the x-axis?' }
+  ];
+
+  const exitProbs = [
+    { q: '<span class="expr"><span class="var">y</span> = <span class="var">x</span>² + 6<span class="var">x</span> + 5 = (<span class="var">x</span> + 1)(<span class="var">x</span> + 5)</span>. The <strong>smaller</strong> x-intercept value?', a: '-5', hint: 'Solve x + 1 = 0 and x + 5 = 0; pick the smaller.' },
+    { q: 'From the table — <span class="var">x</span>: −1, 0, 1, 2, 3 and <span class="var">y</span>: 4, 1, 0, 1, 4 — vertex coordinates? Type as <code>x,y</code>.', a: '1,0', hint: 'Smallest y-value in the table, with its matching x.' },
+    { q: 'Explain why a table with constant <em>second</em> differences must come from a quadratic function (and not a linear one). Use the words "first difference" and "second difference".', a: 'TEXT', hint: 'A constant FIRST difference signals linear (constant rate of change). What does it mean if only the SECOND difference is constant?' }
+  ];
+
+  // ============ ANSWER NORMALISATION & CHECKING (DO NOT MODIFY PLUMBING) ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'The first difference is the change in y per step. If it\'s constant, the rule is linear. If the first difference itself keeps changing but the second difference (the change in the change) is constant, the rule fits y = ax² + bx + c — i.e. a quadratic.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE PRACTICE ============
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
