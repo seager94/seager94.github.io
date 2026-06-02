@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midpoint and Distance — Year 9</title>
+
+<!-- CURRICULUM METADATA -->
+<meta name="lesson-id"             content="y9_alg_08">
+<meta name="ac9-descriptor"        content="AC9M9A03">
+<meta name="ac9-descriptor-text"   content="find the gradient of a line segment, the midpoint of the line interval and the distance between 2 distinct points on the Cartesian plane">
+<meta name="ac9-elaborations"      content="3,4">
+<meta name="sa-year"               content="9">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="On a Cartesian plane, the coordinates of 2 distinct points can be used to determine a range of measures of their orientation in relation to each other">
+<meta name="lesson-focus"          content="Calculate the midpoint of a line interval as the average of the endpoint coordinates, and the distance between two points using Pythagoras applied to the coordinate differences.">
+<meta name="mapping-note"          content="Partial - this lesson covers the midpoint of a line interval and the distance between two points">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 210px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.15rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.midpoint { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.distance { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 100px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 60px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.95rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .worked + .worked { margin-top: 22px; }
+  .worked-header {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    font-family: Georgia, serif; font-weight: bold; color: var(--navy);
+    font-size: 1.05rem; margin-bottom: 14px;
+  }
+  .worked-header .we-tag {
+    background: var(--navy); color: white;
+    padding: 4px 12px; border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem; letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .worked-layout {
+    display: grid;
+    grid-template-columns: minmax(260px, 360px) 1fr;
+    gap: 22px; align-items: start;
+  }
+  @media (max-width: 760px) {
+    .worked-layout { grid-template-columns: 1fr; }
+  }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem;
+    overflow-x: auto;
+    margin-bottom: 12px;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box .calc-label {
+    display: block;
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .calc-box .work-line { margin: 4px 0; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 6px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+
+  /* COMMON ERROR CALLOUT */
+  .common-error {
+    background: #fde7e2;
+    border-left: 4px solid var(--coral);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 0.93rem;
+    color: #5c2410;
+  }
+  .common-error .ce-label {
+    display: block;
+    font-family: -apple-system, sans-serif;
+    color: var(--coral);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 0.72rem;
+    margin-bottom: 4px;
+  }
+  .common-error .ce-row {
+    margin-top: 6px;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    color: var(--navy);
+  }
+  .common-error .ce-row .x-mark { color: var(--bad); font-weight: 700; }
+  .common-error .ce-row .ok-mark { color: var(--good); font-weight: 700; }
+
+  /* SVG FIGURES */
+  .fig-svg {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .fig-grid line { stroke: #e5e8ed; stroke-width: 0.5; }
+  .fig-axis { stroke: #2a2a2a; stroke-width: 1.5; }
+  .fig-leg { stroke: var(--navy); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .fig-leg-label { font-family: Georgia, serif; font-size: 11px; fill: var(--navy); font-weight: bold; }
+  .fig-hyp { stroke: var(--coral); stroke-width: 2.5; }
+  .fig-pt { fill: var(--navy); }
+  .fig-pt-label { font-family: Georgia, serif; font-size: 12px; fill: var(--navy); font-weight: bold; }
+  .fig-mid { fill: var(--coral); stroke: white; stroke-width: 2; }
+  .fig-mid-label { font-family: Georgia, serif; font-size: 12px; fill: var(--coral); font-weight: bold; }
+  .fig-ra { fill: none; stroke: var(--navy); stroke-width: 1.2; }
+  .fig-tick-label { font-family: Georgia, serif; font-size: 10px; fill: #6b7280; }
+  .fig-axis-name { font-family: Georgia, serif; font-size: 13px; font-style: italic; fill: #2a2a2a; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 0.95rem;
+    cursor: pointer; transition: all 0.15s;
+    line-height: 1.3;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.02rem; flex: 1; padding-top: 2px; line-height: 1.45; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .check-btn, .hint-link, .answer-link { display: none !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Midpoint and Distance</h1>
+    <div class="subtitle">Year 9 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Coordinate Geometry</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the two skills we'll lean on today: averaging and Pythagoras.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's algebra.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+    <div>
+      <p>Your phone shows two pins on a map: your house and your friend's house. Built into every GPS app are two calculations the phone does in the background:</p>
+      <ul style="line-height: 1.9;">
+        <li>📍 <strong>Halfway point</strong> — where should you meet?</li>
+        <li>📏 <strong>Straight-line distance</strong> — how far apart are you?</li>
+      </ul>
+      <p>The phone treats the map like a giant Cartesian plane: every location is just an <span class="expr">(<span class="var">x</span>, <span class="var">y</span>)</span> pair. Today we learn the two formulas that turn coordinates into a midpoint and a distance.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      Two ideas, one plane:
+      <ul style="margin: 8px 0 0; padding-left: 18px; font-style: normal;">
+        <li><strong>Midpoint</strong> = <em>average</em> the two x's, average the two y's.</li>
+        <li><strong>Distance</strong> = build a right triangle from the two points and use <strong>Pythagoras</strong>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five words appear in every question today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Cartesian plane<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A flat grid built from a horizontal <strong>x-axis</strong> and a vertical <strong>y-axis</strong> crossing at the <strong>origin</strong> (0, 0).<div class="vocab-example">Every point on the plane has a unique <strong>(x, y)</strong> address.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Coordinates<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An ordered pair <strong>(x, y)</strong> that locates a point: the x-coordinate first, the y-coordinate second.<div class="vocab-example">The point (3, −5) means 3 right, 5 down from the origin.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Line interval<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A straight segment of a line <strong>with two definite endpoints</strong>. Sometimes called a <em>line segment</em>.<div class="vocab-example">The interval from A(1, 2) to B(7, 10) has length 10.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Midpoint<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The point <strong>exactly halfway</strong> between two endpoints. It's the <strong>average</strong> of the coordinates.<div class="vocab-example">Midpoint of (1, 2) and (7, 10) is (4, 6).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Distance<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>straight-line length</strong> between two points. Found with <strong>Pythagoras</strong> on the horizontal and vertical gaps.<div class="vocab-example">Distance from (0, 0) to (3, 4) is √(9 + 16) = 5.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT THE STEPS -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Which formula does what?</h2>
+  <p class="sec-desc">Drag each instruction into the correct bucket — does it belong to the <strong style="color:var(--coral)">midpoint</strong> calculation or the <strong style="color:var(--navy)">distance</strong> calculation? Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Step instructions — drag each into its bucket</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="midpoint">Add the x-coordinates</span>
+      <span class="term-chip" data-type="distance">Subtract the x-coordinates</span>
+      <span class="term-chip" data-type="midpoint">Divide each sum by 2</span>
+      <span class="term-chip" data-type="distance">Square the differences</span>
+      <span class="term-chip" data-type="midpoint">Add the y-coordinates</span>
+      <span class="term-chip" data-type="distance">Add the squared differences</span>
+      <span class="term-chip" data-type="distance">Take the square root</span>
+      <span class="term-chip" data-type="midpoint">Write the result as a point (x, y)</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="midpoint">
+        <h4 class="vt">Midpoint steps</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="distance">
+        <h4 class="ct">Distance steps</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The midpoint is built by <strong>averaging</strong> (add, divide). The distance is built by <strong>differences</strong> (subtract, square, add, root). Different ingredients, different recipe.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match the calculation to the result</h2>
+  <p class="sec-desc">Click two tiles that belong together — a calculation and its result. There are five pairs in the grid.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a tile to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I&nbsp;DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">Three worked examples. I'll walk through each on the board, calling out the steps and the common errors to avoid.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLES (3 of them) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples</h2>
+  <p class="sec-desc">Each example shows the diagram first, then the calculation. The diagram is the diagnostic — if a student can sketch the triangle, they can write the working.</p>
+
+  <!-- EXAMPLE 1: (1,2) and (7,10) -->
+  <div class="worked">
+    <div class="worked-header">
+      <span class="we-tag">Example 1</span>
+      <span>Find the midpoint and the distance between A(1, 2) and B(7, 10).</span>
+    </div>
+    <div class="worked-layout">
+      <svg class="fig-svg" viewBox="0 0 340 340" role="img" aria-label="Cartesian grid with A(1,2), B(7,10), midpoint (4,6), and dashed legs forming a right triangle">
+        <g class="fig-grid">
+          <line x1="40" y1="23" x2="40" y2="320"/>
+          <line x1="67" y1="23" x2="67" y2="320"/>
+          <line x1="94" y1="23" x2="94" y2="320"/>
+          <line x1="121" y1="23" x2="121" y2="320"/>
+          <line x1="148" y1="23" x2="148" y2="320"/>
+          <line x1="175" y1="23" x2="175" y2="320"/>
+          <line x1="202" y1="23" x2="202" y2="320"/>
+          <line x1="229" y1="23" x2="229" y2="320"/>
+          <line x1="256" y1="23" x2="256" y2="320"/>
+          <line x1="283" y1="23" x2="283" y2="320"/>
+          <line x1="310" y1="23" x2="310" y2="320"/>
+          <line x1="40" y1="320" x2="310" y2="320"/>
+          <line x1="40" y1="293" x2="310" y2="293"/>
+          <line x1="40" y1="266" x2="310" y2="266"/>
+          <line x1="40" y1="239" x2="310" y2="239"/>
+          <line x1="40" y1="212" x2="310" y2="212"/>
+          <line x1="40" y1="185" x2="310" y2="185"/>
+          <line x1="40" y1="158" x2="310" y2="158"/>
+          <line x1="40" y1="131" x2="310" y2="131"/>
+          <line x1="40" y1="104" x2="310" y2="104"/>
+          <line x1="40" y1="77" x2="310" y2="77"/>
+          <line x1="40" y1="50" x2="310" y2="50"/>
+          <line x1="40" y1="23" x2="310" y2="23"/>
+        </g>
+        <line class="fig-axis" x1="40" y1="320" x2="320" y2="320"/>
+        <line class="fig-axis" x1="40" y1="320" x2="40" y2="18"/>
+        <g class="fig-tick-label">
+          <text x="40" y="335" text-anchor="middle">0</text>
+          <text x="94" y="335" text-anchor="middle">2</text>
+          <text x="148" y="335" text-anchor="middle">4</text>
+          <text x="202" y="335" text-anchor="middle">6</text>
+          <text x="256" y="335" text-anchor="middle">8</text>
+          <text x="310" y="335" text-anchor="middle">10</text>
+          <text x="32" y="323" text-anchor="end">0</text>
+          <text x="32" y="269" text-anchor="end">2</text>
+          <text x="32" y="215" text-anchor="end">4</text>
+          <text x="32" y="161" text-anchor="end">6</text>
+          <text x="32" y="107" text-anchor="end">8</text>
+          <text x="32" y="53" text-anchor="end">10</text>
+        </g>
+        <text class="fig-axis-name" x="324" y="324">x</text>
+        <text class="fig-axis-name" x="34" y="16">y</text>
+        <line class="fig-leg" x1="67" y1="266" x2="229" y2="266"/>
+        <line class="fig-leg" x1="229" y1="266" x2="229" y2="50"/>
+        <path class="fig-ra" d="M 229 254 L 217 254 L 217 266"/>
+        <line class="fig-hyp" x1="67" y1="266" x2="229" y2="50"/>
+        <circle class="fig-pt" cx="67" cy="266" r="5"/>
+        <circle class="fig-pt" cx="229" cy="50" r="5"/>
+        <circle class="fig-mid" cx="148" cy="158" r="6"/>
+        <text class="fig-pt-label" x="58" y="282" text-anchor="end">A(1, 2)</text>
+        <text class="fig-pt-label" x="238" y="44" text-anchor="start">B(7, 10)</text>
+        <text class="fig-mid-label" x="156" y="153" text-anchor="start">M(4, 6)</text>
+        <text class="fig-leg-label" x="148" y="282" text-anchor="middle">Δx = 6</text>
+        <text class="fig-leg-label" x="240" y="161" text-anchor="start">Δy = 8</text>
+      </svg>
+      <div>
+        <div class="calc-box">
+          <span class="calc-label">Midpoint — average the coordinates</span>
+          <div class="work-line">M = <span class="red">(</span><span class="frac"><span class="num">x<sub>1</sub> + x<sub>2</sub></span><span class="den">2</span></span>, <span class="frac"><span class="num">y<sub>1</sub> + y<sub>2</sub></span><span class="den">2</span></span><span class="red">)</span></div>
+          <div class="work-line">= (<span class="frac"><span class="num">1 + 7</span><span class="den">2</span></span>, <span class="frac"><span class="num">2 + 10</span><span class="den">2</span></span>)</div>
+          <div class="work-line">= (<span class="frac"><span class="num">8</span><span class="den">2</span></span>, <span class="frac"><span class="num">12</span><span class="den">2</span></span>) = <span class="red">(4, 6)</span></div>
+        </div>
+        <div class="calc-box">
+          <span class="calc-label">Distance — Pythagoras on the differences</span>
+          <div class="work-line">Δx = 7 − 1 = <span class="blue">6</span></div>
+          <div class="work-line">Δy = 10 − 2 = <span class="blue">8</span></div>
+          <div class="work-line"><span class="var">d</span> = √(Δx² + Δy²) = √(6² + 8²)</div>
+          <div class="work-line">= √(36 + 64) = √100 = <span class="blue">10</span></div>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answers</span>
+          M = (4, 6) &nbsp;·&nbsp; AB = 10 units
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAMPLE 2: (-3,4) and (5,-2) — negatives, address common error 1 -->
+  <div class="worked">
+    <div class="worked-header">
+      <span class="we-tag">Example 2</span>
+      <span>Find the midpoint and the distance between A(−3, 4) and B(5, −2).</span>
+    </div>
+    <div class="worked-layout">
+      <svg class="fig-svg" viewBox="0 0 340 280" role="img" aria-label="Cartesian grid with negative coordinates: A(-3,4), B(5,-2), midpoint (1,1), and the right triangle of legs Δx=8, Δy=6">
+        <g class="fig-grid">
+          <line x1="40" y1="40" x2="40" y2="280"/>
+          <line x1="64" y1="40" x2="64" y2="280"/>
+          <line x1="88" y1="40" x2="88" y2="280"/>
+          <line x1="112" y1="40" x2="112" y2="280"/>
+          <line x1="136" y1="40" x2="136" y2="280"/>
+          <line x1="160" y1="40" x2="160" y2="280"/>
+          <line x1="184" y1="40" x2="184" y2="280"/>
+          <line x1="208" y1="40" x2="208" y2="280"/>
+          <line x1="232" y1="40" x2="232" y2="280"/>
+          <line x1="256" y1="40" x2="256" y2="280"/>
+          <line x1="280" y1="40" x2="280" y2="280"/>
+          <line x1="304" y1="40" x2="304" y2="280"/>
+          <line x1="328" y1="40" x2="328" y2="280"/>
+          <line x1="40" y1="40" x2="328" y2="40"/>
+          <line x1="40" y1="64" x2="328" y2="64"/>
+          <line x1="40" y1="88" x2="328" y2="88"/>
+          <line x1="40" y1="112" x2="328" y2="112"/>
+          <line x1="40" y1="136" x2="328" y2="136"/>
+          <line x1="40" y1="160" x2="328" y2="160"/>
+          <line x1="40" y1="184" x2="328" y2="184"/>
+          <line x1="40" y1="208" x2="328" y2="208"/>
+          <line x1="40" y1="232" x2="328" y2="232"/>
+          <line x1="40" y1="256" x2="328" y2="256"/>
+          <line x1="40" y1="280" x2="328" y2="280"/>
+        </g>
+        <line class="fig-axis" x1="40" y1="184" x2="334" y2="184"/>
+        <line class="fig-axis" x1="160" y1="36" x2="160" y2="280"/>
+        <g class="fig-tick-label">
+          <text x="64" y="199" text-anchor="middle">−4</text>
+          <text x="112" y="199" text-anchor="middle">−2</text>
+          <text x="208" y="199" text-anchor="middle">2</text>
+          <text x="256" y="199" text-anchor="middle">4</text>
+          <text x="304" y="199" text-anchor="middle">6</text>
+          <text x="155" y="284" text-anchor="end">−4</text>
+          <text x="155" y="236" text-anchor="end">−2</text>
+          <text x="155" y="140" text-anchor="end">2</text>
+          <text x="155" y="92" text-anchor="end">4</text>
+          <text x="155" y="44" text-anchor="end">6</text>
+          <text x="155" y="200" text-anchor="end">0</text>
+        </g>
+        <text class="fig-axis-name" x="338" y="188">x</text>
+        <text class="fig-axis-name" x="164" y="36">y</text>
+        <line class="fig-leg" x1="88" y1="88" x2="280" y2="88"/>
+        <line class="fig-leg" x1="280" y1="88" x2="280" y2="232"/>
+        <path class="fig-ra" d="M 280 100 L 268 100 L 268 88"/>
+        <line class="fig-hyp" x1="88" y1="88" x2="280" y2="232"/>
+        <circle class="fig-pt" cx="88" cy="88" r="5"/>
+        <circle class="fig-pt" cx="280" cy="232" r="5"/>
+        <circle class="fig-mid" cx="184" cy="160" r="6"/>
+        <text class="fig-pt-label" x="84" y="82" text-anchor="end">A(−3, 4)</text>
+        <text class="fig-pt-label" x="284" y="248" text-anchor="start">B(5, −2)</text>
+        <text class="fig-mid-label" x="192" y="156" text-anchor="start">M(1, 1)</text>
+        <text class="fig-leg-label" x="184" y="80" text-anchor="middle">Δx = 8</text>
+        <text class="fig-leg-label" x="288" y="163" text-anchor="start">Δy = 6</text>
+      </svg>
+      <div>
+        <div class="calc-box">
+          <span class="calc-label">Midpoint — average (even with negatives)</span>
+          <div class="work-line">M = (<span class="frac"><span class="num">−3 + 5</span><span class="den">2</span></span>, <span class="frac"><span class="num">4 + (−2)</span><span class="den">2</span></span>)</div>
+          <div class="work-line">= (<span class="frac"><span class="num">2</span><span class="den">2</span></span>, <span class="frac"><span class="num">2</span><span class="den">2</span></span>) = <span class="red">(1, 1)</span></div>
+        </div>
+        <div class="calc-box">
+          <span class="calc-label">Distance — squaring kills the sign</span>
+          <div class="work-line">Δx = 5 − (−3) = <span class="blue">8</span></div>
+          <div class="work-line">Δy = −2 − 4 = <span class="blue">−6</span></div>
+          <div class="work-line"><span class="var">d</span> = √(8² + (−6)²) = √(64 + 36)</div>
+          <div class="work-line">= √100 = <span class="blue">10</span></div>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answers</span>
+          M = (1, 1) &nbsp;·&nbsp; AB = 10 units
+        </div>
+      </div>
+    </div>
+    <div class="common-error">
+      <span class="ce-label">⚠ Classic error — subtracting instead of averaging</span>
+      A very common mistake is to <em>subtract</em> the coordinates when finding a midpoint. Subtraction gives you a <strong>gap</strong>, not a <strong>halfway point</strong>.
+      <div class="ce-row"><span class="x-mark">✗ Wrong:</span> M = (<span class="frac"><span class="num">5 − (−3)</span><span class="den">2</span></span>, <span class="frac"><span class="num">−2 − 4</span><span class="den">2</span></span>) = (4, −3)</div>
+      <div class="ce-row"><span class="ok-mark">✓ Right:</span> M = (<span class="frac"><span class="num">−3 + 5</span><span class="den">2</span></span>, <span class="frac"><span class="num">4 + (−2)</span><span class="den">2</span></span>) = (1, 1)</div>
+      Memory hook: <strong>midpoint averages, distance differences</strong>. If you find yourself subtracting, you're doing distance — not midpoint.
+    </div>
+  </div>
+
+  <!-- EXAMPLE 3: P(3,4) and origin O(0,0) — address common error 2 -->
+  <div class="worked">
+    <div class="worked-header">
+      <span class="we-tag">Example 3</span>
+      <span>Find the midpoint and the distance from the origin O(0, 0) to the point P(3, 4).</span>
+    </div>
+    <div class="worked-layout">
+      <svg class="fig-svg" viewBox="0 0 220 220" role="img" aria-label="Cartesian grid showing origin O(0,0), point P(3,4), midpoint (1.5, 2), and the classic 3-4-5 right triangle">
+        <g class="fig-grid">
+          <line x1="10" y1="30" x2="10" y2="210"/>
+          <line x1="40" y1="30" x2="40" y2="210"/>
+          <line x1="70" y1="30" x2="70" y2="210"/>
+          <line x1="100" y1="30" x2="100" y2="210"/>
+          <line x1="130" y1="30" x2="130" y2="210"/>
+          <line x1="160" y1="30" x2="160" y2="210"/>
+          <line x1="190" y1="30" x2="190" y2="210"/>
+          <line x1="10" y1="30" x2="190" y2="30"/>
+          <line x1="10" y1="60" x2="190" y2="60"/>
+          <line x1="10" y1="90" x2="190" y2="90"/>
+          <line x1="10" y1="120" x2="190" y2="120"/>
+          <line x1="10" y1="150" x2="190" y2="150"/>
+          <line x1="10" y1="180" x2="190" y2="180"/>
+          <line x1="10" y1="210" x2="190" y2="210"/>
+        </g>
+        <line class="fig-axis" x1="40" y1="180" x2="196" y2="180"/>
+        <line class="fig-axis" x1="40" y1="26" x2="40" y2="210"/>
+        <g class="fig-tick-label">
+          <text x="40" y="195" text-anchor="middle">0</text>
+          <text x="70" y="195" text-anchor="middle">1</text>
+          <text x="100" y="195" text-anchor="middle">2</text>
+          <text x="130" y="195" text-anchor="middle">3</text>
+          <text x="160" y="195" text-anchor="middle">4</text>
+          <text x="190" y="195" text-anchor="middle">5</text>
+          <text x="34" y="153" text-anchor="end">1</text>
+          <text x="34" y="123" text-anchor="end">2</text>
+          <text x="34" y="93" text-anchor="end">3</text>
+          <text x="34" y="63" text-anchor="end">4</text>
+          <text x="34" y="33" text-anchor="end">5</text>
+        </g>
+        <text class="fig-axis-name" x="200" y="184">x</text>
+        <text class="fig-axis-name" x="44" y="24">y</text>
+        <line class="fig-leg" x1="40" y1="180" x2="130" y2="180"/>
+        <line class="fig-leg" x1="130" y1="180" x2="130" y2="60"/>
+        <path class="fig-ra" d="M 130 168 L 118 168 L 118 180"/>
+        <line class="fig-hyp" x1="40" y1="180" x2="130" y2="60"/>
+        <circle class="fig-pt" cx="40" cy="180" r="5"/>
+        <circle class="fig-pt" cx="130" cy="60" r="5"/>
+        <circle class="fig-mid" cx="85" cy="120" r="6"/>
+        <text class="fig-pt-label" x="34" y="196" text-anchor="end">O(0, 0)</text>
+        <text class="fig-pt-label" x="138" y="54" text-anchor="start">P(3, 4)</text>
+        <text class="fig-mid-label" x="92" y="116" text-anchor="start">M(1.5, 2)</text>
+        <text class="fig-leg-label" x="85" y="196" text-anchor="middle">Δx = 3</text>
+        <text class="fig-leg-label" x="138" y="123" text-anchor="start">Δy = 4</text>
+      </svg>
+      <div>
+        <div class="calc-box">
+          <span class="calc-label">Midpoint — origin makes the average easy</span>
+          <div class="work-line">M = (<span class="frac"><span class="num">0 + 3</span><span class="den">2</span></span>, <span class="frac"><span class="num">0 + 4</span><span class="den">2</span></span>)</div>
+          <div class="work-line">= (<span class="frac"><span class="num">3</span><span class="den">2</span></span>, 2) = <span class="red">(1.5, 2)</span></div>
+        </div>
+        <div class="calc-box">
+          <span class="calc-label">Distance — the classic 3-4-5 triangle</span>
+          <div class="work-line">Δx = 3 − 0 = <span class="blue">3</span></div>
+          <div class="work-line">Δy = 4 − 0 = <span class="blue">4</span></div>
+          <div class="work-line"><span class="var">d</span><sup>2</sup> = 3² + 4² = 9 + 16 = 25</div>
+          <div class="work-line"><span class="var">d</span> = √25 = <span class="blue">5</span></div>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answers</span>
+          M = (1.5, 2) &nbsp;·&nbsp; OP = 5 units
+        </div>
+      </div>
+    </div>
+    <div class="common-error">
+      <span class="ce-label">⚠ Classic error — forgetting the square root</span>
+      Pythagoras gives you <strong><span class="var">d</span><sup>2</sup></strong>, not <span class="var">d</span>. Skipping the last step leaves the distance squared — a totally different number.
+      <div class="ce-row"><span class="x-mark">✗ Wrong:</span> <span class="var">d</span> = 3² + 4² = 25 &nbsp;(that's <span class="var">d</span><sup>2</sup>, not <span class="var">d</span>)</div>
+      <div class="ce-row"><span class="ok-mark">✓ Right:</span> <span class="var">d</span> = √(3² + 4²) = √25 = 5</div>
+      Sanity check: the distance should be <em>less than</em> Δx + Δy (the long way around the triangle, 3 + 4 = 7) and <em>greater than</em> either leg (3 or 4). 5 sits between — good. 25 fails this check by a mile.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE&nbsp;DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — points C(2, 1) and D(8, 9)</h2>
+  <p class="sec-desc">Three short prompts. Discuss with the person next to you between each one, then we'll fill it in together. Use the same routine as the worked examples: <strong>average for the midpoint, Pythagoras for the distance</strong>.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this order?</strong> Find the midpoint first — it's just two averages, no signs to worry about. Then build the right triangle (Δx and Δy) and finish with Pythagoras. Same routine, every question.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU&nbsp;DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got both formulas. Type midpoint answers as <code>(x, y)</code> — <strong>include the parentheses</strong>. Type distance answers as a plain number. <strong>Try them on your own first — then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Positive integer coordinates. Type midpoints as <code>(x, y)</code> — include the parentheses. Type distances as plain numbers (e.g. <code>10</code>).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Negative coordinates appear here, and the last two ask you to find a <strong>missing endpoint given a midpoint</strong>. Format midpoints and endpoints as <code>(x, y)</code> with parentheses.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Larger numbers, decimals, and a missing-endpoint puzzle in context. Same rules: <code>(x, y)</code> for points, plain number for distances.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three questions before you leave today. The last one is a short explanation — type a sentence or two.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 9 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">On a Cartesian plane, the coordinates of 2 distinct points can be used to determine a range of measures of their orientation in relation to each other.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M9A03</strong> — find the gradient of a line segment, the midpoint of the line interval and the distance between 2 distinct points on the Cartesian plane</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">3, 4</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Calculate the midpoint of a line interval as the average of the endpoint coordinates, and the distance between two points using Pythagoras applied to the coordinate differences.</span>
+    </div>
+    <div class="cl-note">Mapping: Partial — this lesson covers the midpoint of a line interval and the distance between two points; gradient is treated in the companion lesson. Lesson ID y9_alg_08. Source: SA Curriculum, Mathematics R-10 Prototype 2.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 9 · Midpoint and Distance
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ SORT (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  const matchTerms = [
+    { html: 'Midpoint of (2, 4) and (8, 10)', group: 1 },
+    { html: '(5, 7)', group: 1 },
+    { html: 'Distance from (0, 0) to (5, 12)', group: 2 },
+    { html: '13', group: 2 },
+    { html: 'Midpoint of (−3, 5) and (5, −1)', group: 3 },
+    { html: '(1, 2)', group: 3 },
+    { html: 'Distance from (1, 1) to (4, 5)', group: 4 },
+    { html: '5', group: 4 },
+    { html: 'Midpoint of (0, 8) and (6, 0)', group: 5 },
+    { html: '(3, 4)', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — check the calculation against the result.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ PROBLEM DATA ============
+
+  // Retrieval — prior-knowledge prerequisites
+  const retrieval = [
+    { q: 'What is the mean (average) of 6 and 14?', a: '10', hint: '(6 + 14) ÷ 2 = ?' },
+    { q: 'A right triangle has legs of length 3 and 4. Find the length of the hypotenuse.', a: '5', hint: 'Pythagoras: c² = 3² + 4² = 9 + 16. Then take the square root.' },
+    { q: 'Evaluate <span class="expr">√(64 + 36)</span>.', a: '10', hint: '64 + 36 = 100. √100 = ?' },
+  ];
+
+  // We Do — C(2,1) and D(8,9). Midpoint (5,5), distance 10.
+  const weDo = [
+    { q: 'Find the <strong>x-coordinate</strong> of the midpoint M. Average the x-values: (2 + 8) ÷ 2 = ?', a: '5', hint: '2 + 8 = 10, then ÷ 2.' },
+    { q: 'Find the <strong>y-coordinate</strong> of the midpoint M. Average the y-values: (1 + 9) ÷ 2 = ?', a: '5', hint: '1 + 9 = 10, then ÷ 2.' },
+    { q: 'Find the distance CD. Δx = 6, Δy = 8. Apply Pythagoras: <span class="expr">√(6² + 8²)</span> = ?', a: '10', hint: '36 + 64 = 100. Don\'t forget the square root.' },
+  ];
+
+  // Quick check
+  const checkpoint = [
+    { q: 'Find the midpoint of (2, 6) and (8, 14).', a: '(5,10)', hint: 'Average each coordinate. (2+8)/2 and (6+14)/2.' },
+    { q: 'Find the distance between (0, 0) and (6, 8).', a: '10', hint: 'Δx = 6, Δy = 8. d = √(36 + 64).' },
+  ];
+
+  // Building — 10 questions, positive integers
+  const practice1 = [
+    { q: 'Find the midpoint of (2, 4) and (8, 6).', a: '(5,5)', hint: '(2+8)/2 = 5; (4+6)/2 = 5.' },
+    { q: 'Find the midpoint of (1, 3) and (5, 7).', a: '(3,5)', hint: 'Average the x\'s, then the y\'s.' },
+    { q: 'Find the midpoint of (0, 0) and (10, 8).', a: '(5,4)', hint: 'Half of 10, half of 8.' },
+    { q: 'Find the midpoint of (4, 2) and (6, 8).', a: '(5,5)', hint: '(4+6)/2 and (2+8)/2.' },
+    { q: 'Find the distance between (0, 0) and (3, 4).', a: '5', hint: 'Classic 3-4-5 triangle. √(9+16) = ?' },
+    { q: 'Find the distance between (1, 2) and (4, 6).', a: '5', hint: 'Δx = 3, Δy = 4. Another 3-4-5.' },
+    { q: 'Find the distance between (0, 0) and (5, 12).', a: '13', hint: '5² + 12² = 25 + 144 = 169. Don\'t forget √.' },
+    { q: 'Find the distance between (2, 1) and (8, 9).', a: '10', hint: 'Δx = 6, Δy = 8. 36 + 64 = 100.' },
+    { q: 'Find the midpoint of (3, 5) and (7, 9).', a: '(5,7)', hint: '(3+7)/2 and (5+9)/2.' },
+    { q: 'Find the distance between (1, 1) and (7, 9).', a: '10', hint: 'Δx = 6, Δy = 8. Same triangle as Q8.' },
+  ];
+
+  // Stretch — 6 questions, negatives + find-endpoint
+  const practice2 = [
+    { q: 'Find the midpoint of (−2, 3) and (4, −7).', a: '(1,-2)', hint: '(−2 + 4)/2 = 1. (3 + (−7))/2 = −2.' },
+    { q: 'Find the distance between (−1, −2) and (5, 6).', a: '10', hint: 'Δx = 6, Δy = 8. Squaring removes the signs.' },
+    { q: 'Find the midpoint of (−5, −3) and (1, 7).', a: '(-2,2)', hint: '(−5 + 1)/2 = −2; (−3 + 7)/2 = 2.' },
+    { q: 'Find the distance between (−3, 4) and (5, −2).', a: '10', hint: 'Δx = 8, Δy = −6. d² = 64 + 36.' },
+    { q: 'The midpoint of segment AB is (4, 6). If A = (1, 2), find B.', a: '(7,10)', hint: 'If M is the average, then B = 2M − A. (2·4 − 1, 2·6 − 2).' },
+    { q: 'The midpoint of segment PQ is (0, 0). If P = (−3, 5), find Q.', a: '(3,-5)', hint: 'Q = 2·(0,0) − (−3, 5) = (3, −5).' },
+  ];
+
+  // Mastery — 4 questions, larger numbers/decimals/find-endpoint in context
+  const practice3 = [
+    { q: 'The midpoint of segment AB is (3, −2). Endpoint A is (−4, 5). Find endpoint B.', a: '(10,-9)', hint: 'B = 2M − A = (2·3 − (−4), 2·(−2) − 5).' },
+    { q: 'Find the distance between (−7, 11) and (3, −13).', a: '26', hint: 'Δx = 10, Δy = 24. 100 + 576 = 676. √676 = ?' },
+    { q: 'A drone flies in a straight line from (2, 1) to (14, 6) (km). How far does it travel?', a: '13', hint: 'Δx = 12, Δy = 5. 144 + 25 = 169.' },
+    { q: 'The midpoint of segment OK is (2.5, 3). If O is the origin (0, 0), find K.', a: '(5,6)', hint: 'K = 2M − O = (5, 6).' },
+  ];
+
+  // Exit ticket — includes one open-response
+  const exitProbs = [
+    { q: 'Find the midpoint of (4, −2) and (10, 8).', a: '(7,3)', hint: '(4+10)/2 = 7; (−2+8)/2 = 3.' },
+    { q: 'Find the distance from the origin (0, 0) to (9, 12).', a: '15', hint: '9² + 12² = 81 + 144 = 225. √225.' },
+    { q: 'In your own words, why do we <strong>average</strong> the coordinates to find a midpoint, rather than <strong>subtracting</strong> them?', a: 'TEXT', hint: 'Averaging finds the value halfway between the two; subtracting finds the gap between them.' },
+  ];
+
+  // ============ ANSWER CHECKING (load-bearing — do not refactor) ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Averaging finds the value halfway between the two coordinates. Subtracting finds the gap between them, which would land you at one of the endpoints (or beyond), not the middle.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
