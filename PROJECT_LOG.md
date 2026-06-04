@@ -60,7 +60,7 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 ## Build backlog (by priority)
 
 1. **Finish Year 8** — Algebra `#06` (1), Statistics (6), Probability (4), + Y8 SP03 3D coordinates (1). ≈12 lessons.
-2. **Year 9** — Algebra 01–06 published; Algebra 07–18 planned under the 18-lesson plan, batch files drafted (`y9-alg-03`→`06`), 07–10 running first; all other Y9 strands still to build. ≈41 lessons (12 Algebra + 29 across Measurement/Space/Statistics/Probability).
+2. **Year 9** — Algebra 01–18 **complete and published** (full strand). All other Y9 strands still to build: ≈29 lessons across Measurement (12), Space (7), Statistics (6), Probability (4).
 3. **Year 10** — only the legacy Algebra folder exists; regenerate Algebra to the advanced plan + build Number/Measurement/Space/Statistics/Probability. ≈54 lessons.
 4. **Y7 SP03 transformations** — once the transformation interactive component exists.
 5. **Curriculum index page** — needs a `lessonmap.json` export (does not exist yet); build from the master.
@@ -68,6 +68,12 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 ---
 
 ## Changelog
+
+### 2026-06-04 — Y9 Algebra 07–18 built, published; strand complete
+- **All 12 remaining lessons (07–18) built locally and published** to `year-9/algebra/`, completing the Y9 Algebra strand (01–18). Map rows 129–140 flipped Planned→Published with live URLs and generation dates; map now **122 Published, 100 Planned, 222 rows**. Metadata confirmed present in each file's `<meta>` per generation summaries.
+- **Everything ran local, not on the runner.** The Actions runner failed the whole `y9-alg-03` batch on the 32k output-token ceiling (every task, not just one); the same lessons build cleanly one-at-a-time locally — including 18, the four-family SVG lesson flagged as the heaviest. Confirms the ceiling is a *runner-side* problem (extra context in the checkout), not per-lesson output size. Root-cause investigation split into its own chat. Build/publish flow used: write `tasks.txt` → `run-batch.ps1` local → review → push to `lesson-gen` → merge to `main`.
+- **Two transient failures during the runs, both recovered by simple rerun:** lesson 14 dropped a socket mid-build (network, not size); reran solo and succeeded. No template changes needed.
+- **Workflow learnings:** (1) the browser-download step for batch `.txt` files repeatedly failed silently, causing stale-`tasks.txt` reruns of already-built lessons — switched to writing `tasks.txt` directly (VS Code new file, or PowerShell `Set-Content`), no download in the loop. (2) Always verify `tasks.txt` contents (`Select-String "lesson-id is"`) before running, to catch a failed copy before wasting compute. (3) `run-batch.ps1` skips `#`-prefixed lines (confirmed line 9) as well as blanks. (4) `tasks.txt` should not live in the repo — gitignore candidate.
 
 ### 2026-06-01 — Y9 Algebra re-planned to 18 lessons; 07–10 drafted to run
 - **Found the real Y9-Algebra batch files** (uploaded to the repo, not stored in the project): `y9-alg-01`/`-02` = lessons 01–06 (the published set), plus drafted `y9-alg-03`/`-04` carrying a **13-lesson** decomposition (07–13). The 13-lesson build diverged from the map's 17-row plan and, on review, under-covered the curriculum.
