@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solving Exponential Equations — Year 10</title>
+
+<meta name="lesson-id"             content="y10_alg_13">
+<meta name="ac9-descriptor"        content="AC9M10A03">
+<meta name="ac9-elaborations"      content="3,4">
+<meta name="sa-year"               content="10">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones">
+<meta name="lesson-focus"          content="Solve exponential equations of the form a^x = c by rewriting both sides with a common base and equating exponents; connect the algebraic method to the graphical intersection of y = a^x with y = c.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCAB FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* DRAG-SORT */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.base2 { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.base3 { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .b2 { color: var(--coral); }
+  .bucket .b3 { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED + SUMMARY */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+
+  /* MATCH */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+
+  /* EXIT */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .check-btn, .hint-link, .answer-link { display: none !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* FADED WORKED EXAMPLES */
+  .faded-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 14px;
+  }
+  .faded-ex {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    position: relative;
+  }
+  .faded-ex.read-only { background: #f7faff; border-left: 4px solid var(--navy); }
+  .faded-ex.completion { background: #f9f3df; border-left: 4px solid #c89638; }
+  .faded-ex.independent { background: #fde4d6; border-left: 4px solid #d57350; }
+  .faded-ex .faded-label {
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .faded-ex .faded-stem {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .faded-ex .faded-work {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 2.0;
+    overflow-x: auto;
+  }
+  .faded-ex .faded-work .read { color: var(--navy); }
+  .faded-blank {
+    display: inline-block;
+    width: 56px;
+    padding: 2px 6px;
+    border: 1.5px solid var(--coral);
+    border-radius: 6px;
+    background: white;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .faded-blank.correct { background: var(--good-soft); border-color: var(--good); }
+  .faded-blank.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .faded-ex-actions {
+    display: flex; gap: 10px; align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .faded-ex-actions .faded-check {
+    background: var(--coral); color: white;
+    border: none; padding: 7px 14px; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .faded-ex-actions .faded-reveal {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 7px 14px; border-radius: 8px;
+    font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .faded-ex-actions .faded-status {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-left: auto;
+  }
+
+  /* GRAPHICAL FIGURE */
+  .graph-figure {
+    margin-top: 22px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: minmax(280px, 1.1fr) 1fr;
+    gap: 22px;
+    align-items: center;
+  }
+  .graph-figure .gf-svg-wrap { background: var(--bg); border-radius: 8px; padding: 8px; }
+  .graph-figure svg { width: 100%; height: auto; display: block; }
+  .graph-figure .gf-caption {
+    font-size: 0.92rem;
+    color: var(--text);
+  }
+  .graph-figure .gf-caption .gf-tag {
+    display: inline-block;
+    background: var(--coral); color: white;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .graph-figure .gf-caption strong { color: var(--coral); }
+  @media (max-width: 600px) {
+    .graph-figure { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Solving Exponential Equations</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Lesson 13</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the index laws you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's algebra.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>A small balance in a savings account grows by a constant <em>factor</em> each year — that's compound interest. If $1 doubles every year, you have $2, then $4, then $8, then $16. Each year is a <strong>power of 2</strong>.</p>
+      <p>A question your bank might ask: <em>"After how many years will your balance reach $1024?"</em> You're not multiplying — you're looking for an <strong>exponent</strong>. That's an exponential equation.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      The same kind of question shows up everywhere money compounds, populations grow, or radioactive material decays. Today's tool: when both sides of <span class="expr">2<sup><span class="var">x</span></sup> = 1024</span> can be written as powers of the same base, the exponents must be equal. The exponential equation reduces to a one-line linear solve.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Base<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number being <strong>raised to a power</strong> — it sits underneath the exponent.<div class="vocab-example expr">In 2<sup>5</sup>: the base is <strong>2</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Exponent<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>power</strong> that the base is raised to — it tells you how many times to multiply.<div class="vocab-example expr">In 2<sup>5</sup>: the exponent is <strong>5</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Power form<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A number written as <strong>base<sup>exponent</sup></strong> instead of as a plain integer.<div class="vocab-example expr">32 written in power form (base 2) is <strong>2<sup>5</sup></strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Common base<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">When both sides of an equation are written using the <strong>same base</strong>, so we can compare exponents directly.<div class="vocab-example expr">4<sup><span class="var">x</span></sup> = 8 rewritten as 2<sup>2<span class="var">x</span></sup> = 2<sup>3</sup> — common base <strong>2</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Exponential equation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An equation where the <strong>variable sits in the exponent</strong>, not in the base.<div class="vocab-example expr"><strong>2<sup><span class="var">x</span></sup> = 32</strong> is exponential. 2<span class="var">x</span> = 32 is linear.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: DRAG-SORT — POWERS OF 2 vs POWERS OF 3 -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort by base</h2>
+  <p class="sec-desc">Drag each number into the bucket that names its base. A number can be a <strong style="color:var(--coral)">power of 2</strong> or a <strong style="color:var(--navy)">power of 3</strong>. Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Each of these is one base to a whole-number exponent. Which base?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="base2">8</span>
+      <span class="term-chip expr" data-type="base3">27</span>
+      <span class="term-chip expr" data-type="base2">16</span>
+      <span class="term-chip expr" data-type="base3">81</span>
+      <span class="term-chip expr" data-type="base2">32</span>
+      <span class="term-chip expr" data-type="base3">9</span>
+      <span class="term-chip expr" data-type="base2">64</span>
+      <span class="term-chip expr" data-type="base3">243</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="base2">
+        <h4 class="b2">Powers of 2</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="base3">
+        <h4 class="b3">Powers of 3</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 If you can write a number as 2 multiplied by itself <span class="var">n</span> times, it's a power of 2. Same idea for 3. Knowing these by sight is the secret to today's lesson.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH — number ↔ power form -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each number to its power form</h2>
+  <p class="sec-desc">Click a number, then click its power-form partner. There are five matching pairs in the grid below.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch, then take over</div>
+    <div class="phase-sub">I'll show the method on one equation, then you fill in more and more as we go.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: FADED WORKED EXAMPLES + GRAPHICAL VIEW -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Faded examples — the equate-exponents method</h2>
+  <p class="sec-desc">Four examples of the same routine. Example 1 is fully worked — read it. Each example after has a little less written down. Fill the coral blanks; tap <strong>Check</strong> after each.</p>
+
+  <div class="faded-grid">
+
+    <!-- Example 1: fully worked -->
+    <div class="faded-ex read-only">
+      <div class="faded-label">Example 1 — fully worked</div>
+      <div class="faded-stem">Solve <span class="expr">2<sup><span class="var">x</span></sup> = 32</span></div>
+      <div class="faded-work expr read">
+        2<sup><span class="var">x</span></sup> = 32<br>
+        2<sup><span class="var">x</span></sup> = 2<sup>5</sup> &nbsp;<span style="color:var(--muted); font-size:0.85rem; font-style:italic;">(write 32 as a power of 2)</span><br>
+        <span class="var">x</span> = 5 &nbsp;<span style="color:var(--muted); font-size:0.85rem; font-style:italic;">(equate exponents)</span>
+      </div>
+      <div class="summary-banner">
+        <span class="label">Answer</span>
+        <span class="var">x</span> = 5
+      </div>
+    </div>
+
+    <!-- Example 2: rewrite step blank -->
+    <div class="faded-ex completion" data-faded-id="ex2">
+      <div class="faded-label">Example 2 — fill the rewrite step</div>
+      <div class="faded-stem">Solve <span class="expr">3<sup><span class="var">x</span></sup> = 81</span></div>
+      <div class="faded-work expr">
+        3<sup><span class="var">x</span></sup> = 81<br>
+        3<sup><span class="var">x</span></sup> = 3<sup><input class="faded-blank" data-expected="4"></sup> &nbsp;<span style="color:var(--muted); font-size:0.85rem; font-style:italic;">(write 81 as a power of 3)</span><br>
+        <span class="var">x</span> = 4 &nbsp;<span style="color:var(--muted); font-size:0.85rem; font-style:italic;">(equate exponents)</span>
+      </div>
+      <div class="faded-ex-actions">
+        <button class="faded-check" onclick="checkFaded('ex2')">Check</button>
+        <button class="faded-reveal" onclick="revealFaded('ex2')">Show answer</button>
+        <span class="faded-status" id="status-ex2"></span>
+      </div>
+    </div>
+
+    <!-- Example 3: two blanks -->
+    <div class="faded-ex completion" data-faded-id="ex3">
+      <div class="faded-label">Example 3 — fill more of the work</div>
+      <div class="faded-stem">Solve <span class="expr">5<sup><span class="var">x</span></sup> = 125</span></div>
+      <div class="faded-work expr">
+        5<sup><span class="var">x</span></sup> = 125<br>
+        5<sup><span class="var">x</span></sup> = 5<sup><input class="faded-blank" data-expected="3"></sup><br>
+        <span class="var">x</span> = <input class="faded-blank" data-expected="3">
+      </div>
+      <div class="faded-ex-actions">
+        <button class="faded-check" onclick="checkFaded('ex3')">Check</button>
+        <button class="faded-reveal" onclick="revealFaded('ex3')">Show answer</button>
+        <span class="faded-status" id="status-ex3"></span>
+      </div>
+    </div>
+
+    <!-- Example 4: fully independent -->
+    <div class="faded-ex independent" data-faded-id="ex4">
+      <div class="faded-label">Example 4 — fully independent</div>
+      <div class="faded-stem">Solve <span class="expr">2<sup><span class="var">x</span></sup> = 64</span></div>
+      <div class="faded-work expr">
+        <span class="var">x</span> = <input class="faded-blank" data-expected="6" style="width: 70px;">
+      </div>
+      <div class="faded-ex-actions">
+        <button class="faded-check" onclick="checkFaded('ex4')">Check</button>
+        <button class="faded-reveal" onclick="revealFaded('ex4')">Show answer</button>
+        <span class="faded-status" id="status-ex4"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GRAPHICAL VIEW -->
+  <div class="graph-figure">
+    <div class="gf-svg-wrap">
+      <svg viewBox="0 0 380 290" role="img" aria-label="Graph of y equals 2 to the x intersecting the horizontal line y equals 8 at the point 3 comma 8.">
+        <!-- gridlines -->
+        <g stroke="#e3e6ec" stroke-width="1">
+          <line x1="42" y1="44"  x2="362" y2="44"/>
+          <line x1="42" y1="95"  x2="362" y2="95"/>
+          <line x1="42" y1="146" x2="362" y2="146"/>
+          <line x1="42" y1="197" x2="362" y2="197"/>
+          <line x1="106" y1="18" x2="106" y2="248"/>
+          <line x1="170" y1="18" x2="170" y2="248"/>
+          <line x1="234" y1="18" x2="234" y2="248"/>
+          <line x1="298" y1="18" x2="298" y2="248"/>
+        </g>
+
+        <!-- axes -->
+        <line x1="42" y1="248" x2="362" y2="248" stroke="#2a2a2a" stroke-width="1.5"/>
+        <line x1="42" y1="18"  x2="42"  y2="248" stroke="#2a2a2a" stroke-width="1.5"/>
+
+        <!-- x-axis ticks + labels -->
+        <g font-family="Georgia, serif" font-size="11" fill="#2a2a2a" text-anchor="middle">
+          <text x="42"  y="262">0</text>
+          <text x="106" y="262">1</text>
+          <text x="170" y="262">2</text>
+          <text x="234" y="262">3</text>
+          <text x="298" y="262">4</text>
+        </g>
+        <!-- y-axis ticks + labels -->
+        <g font-family="Georgia, serif" font-size="11" fill="#2a2a2a" text-anchor="end">
+          <text x="38" y="252">0</text>
+          <text x="38" y="201">4</text>
+          <text x="38" y="150">8</text>
+          <text x="38" y="99">12</text>
+          <text x="38" y="48">16</text>
+        </g>
+
+        <!-- axis names -->
+        <text x="370" y="252" font-family="Georgia, serif" font-style="italic" font-size="14" fill="#2a2a2a" text-anchor="end">x</text>
+        <text x="44"  y="14"  font-family="Georgia, serif" font-style="italic" font-size="14" fill="#2a2a2a">y</text>
+
+        <!-- horizontal line y = 8 -->
+        <line x1="42" y1="146" x2="362" y2="146" stroke="#BE5837" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="356" y="139" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#BE5837" text-anchor="end">y = 8</text>
+
+        <!-- curve y = 2^x (polyline through computed points) -->
+        <polyline points="42,235 74,230 106,222 138,212 170,197 202,176 234,146 266,103 298,44"
+                  fill="none" stroke="#1F4D54" stroke-width="2.5"/>
+        <text x="310" y="60" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#1F4D54">y = 2ˣ</text>
+
+        <!-- intersection drop-line and marker -->
+        <line x1="234" y1="146" x2="234" y2="248" stroke="#BE5837" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle cx="234" cy="146" r="5" fill="#BE5837" stroke="white" stroke-width="2"/>
+        <text x="240" y="142" font-family="Georgia, serif" font-size="12" fill="#BE5837">(3, 8)</text>
+        <text x="234" y="278" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#BE5837" text-anchor="middle">x = 3</text>
+      </svg>
+    </div>
+    <div class="gf-caption">
+      <span class="gf-tag">Same answer, seen graphically</span>
+      <p>To solve <span class="expr">2<sup><span class="var">x</span></sup> = 8</span> graphically, plot <span class="expr">y = 2<sup><span class="var">x</span></sup></span> and the horizontal line <span class="expr">y = 8</span>. The two graphs cross at exactly one point. The <span class="var">x</span>-coordinate of that crossing is your answer.</p>
+      <p>Here the curve crosses <span class="expr">y = 8</span> at <strong>(3, 8)</strong>, so <span class="expr"><span class="var">x</span> = 3</span> — which is the same answer you get by rewriting <span class="expr">8 = 2<sup>3</sup></span> and equating exponents. The algebra and the graph agree because <span class="expr">y = 2<sup><span class="var">x</span></sup></span> is one-to-one: each <span class="var">y</span>-value corresponds to a single <span class="var">x</span>.</p>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill the boxes in as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — solve <span class="expr">4<sup><span class="var">x</span></sup> = 8</span></h2>
+  <p class="sec-desc">The two sides aren't powers of the same base yet — 4 and 8 are both powers of 2, but neither is a power of the other. We'll choose base 2, rewrite both sides, then equate exponents. Three small steps.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this method works:</strong> if <span class="expr">2<sup>A</sup> = 2<sup>B</sup></span> then <span class="expr">A = B</span> — because <span class="expr">y = 2<sup><span class="var">x</span></sup></span> is one-to-one. Once both sides share a base, the exponential problem becomes a linear one.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Each equation has the form <span class="expr"><span class="var">a</span><sup><span class="var">x</span></sup> = <span class="var">c</span></span> where <span class="var">c</span> is already a whole-number power of <span class="var">a</span>. Type just the value of <span class="var">x</span> (a whole number).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now the two sides aren't yet powers of the same base — you must rewrite at least one side first. Answers are fractions; type them like <code>3/2</code>, <code>4/3</code>, <code>2/3</code>.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">First Nations Australian Ranger groups across the Top End and the Kimberley monitor feral animals (pigs, cats, camels) that displace native species. In each scenario, write the exponential equation in your book, then enter the value of <span class="var">t</span> (the number of years).</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 10 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M10A03</strong> — recognise the connection between algebraic and graphical representations of exponential relations and solve related exponential equations, using digital tools where appropriate</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">3, 4</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Solve exponential equations of the form a<sup>x</sup> = c by rewriting both sides with a common base and equating exponents; connect the algebraic method to the graphical intersection of y = a<sup>x</sup> with y = c.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y10_alg_13. Source: SA Curriculum (Mathematics R–10 Prototype 2); lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 10 · Solving Exponential Equations
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG-SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING (number ↔ power form) ============
+  const matchTerms = [
+    { html: '8',  group: 1 },
+    { html: '2<sup>3</sup>', group: 1 },
+    { html: '16', group: 2 },
+    { html: '2<sup>4</sup>', group: 2 },
+    { html: '27', group: 3 },
+    { html: '3<sup>3</sup>', group: 3 },
+    { html: '25', group: 4 },
+    { html: '5<sup>2</sup>', group: 4 },
+    { html: '64', group: 5 },
+    { html: '4<sup>3</sup>', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not equal — check the base and the exponent.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ FADED EXAMPLES ============
+  function checkFaded(exId) {
+    const card = document.querySelector('[data-faded-id="' + exId + '"]');
+    const blanks = card.querySelectorAll('.faded-blank');
+    let allCorrect = true, attempted = 0;
+    blanks.forEach(b => {
+      b.classList.remove('correct', 'incorrect');
+      if (b.value.trim() === '') return;
+      attempted++;
+      const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g, '');
+      if (norm(b.value) === norm(b.dataset.expected)) {
+        b.classList.add('correct');
+      } else {
+        b.classList.add('incorrect');
+        allCorrect = false;
+      }
+    });
+    const status = document.getElementById('status-' + exId);
+    if (attempted === 0) {
+      status.textContent = 'Fill in the blank first.';
+    } else if (attempted < blanks.length) {
+      status.textContent = `${attempted}/${blanks.length} attempted — keep going.`;
+    } else if (allCorrect) {
+      status.textContent = '✓ All correct.';
+    } else {
+      status.textContent = '✗ Some incorrect — check the power.';
+    }
+  }
+
+  function revealFaded(exId) {
+    const card = document.querySelector('[data-faded-id="' + exId + '"]');
+    card.querySelectorAll('.faded-blank').forEach(b => {
+      b.value = b.dataset.expected;
+      b.classList.add('correct');
+    });
+    document.getElementById('status-' + exId).textContent = 'Answer shown.';
+  }
+
+  // ============ DATA ============
+
+  // Retrieval (Section 0) — prior-knowledge prerequisites: index laws.
+  const retrieval = [
+    { q: 'Evaluate: <span class="expr">2<sup>5</sup></span>', a: '32', hint: '2 × 2 × 2 × 2 × 2.' },
+    { q: 'Evaluate: <span class="expr">3<sup>4</sup></span>', a: '81', hint: '3 × 3 = 9; 9 × 9 = 81.' },
+    { q: 'Write 64 as a power of 2: <span class="expr">64 = 2<sup>?</sup></span>', a: '6', hint: 'How many times does 2 multiply itself to reach 64?' },
+  ];
+
+  // Worked-with-class (Section 6) — solve 4^x = 8 in 3 sub-steps.
+  const weDo = [
+    { q: 'Choose the common base. Both 4 and 8 are powers of which base?', a: '2', hint: 'A base that divides both 4 and 8 cleanly.' },
+    { q: 'Rewrite the LEFT side as a power of 2: <span class="expr">4<sup><span class="var">x</span></sup> = (2<sup>2</sup>)<sup><span class="var">x</span></sup> = 2<sup>?</sup></span>', a: '2x', hint: 'Apply the index law (2²)ˣ = 2^(2×x).' },
+    { q: 'So <span class="expr">2<sup>2<span class="var">x</span></sup> = 2<sup>3</sup></span>. Equate exponents and solve for <span class="var">x</span>.', a: '3/2', hint: '2x = 3 — divide both sides by 2.' },
+  ];
+
+  // Checkpoint (Section 7)
+  const checkpoint = [
+    { q: 'Solve: <span class="expr">2<sup><span class="var">x</span></sup> = 32</span>', a: '5', hint: 'Write 32 as a power of 2.' },
+    { q: 'Solve: <span class="expr">5<sup><span class="var">x</span></sup> = 125</span>', a: '3', hint: '125 = 5 × 5 × 5.' },
+  ];
+
+  // Building (Section 8) — same-base by inspection.
+  const practice1 = [
+    { q: 'Solve: <span class="expr">2<sup><span class="var">x</span></sup> = 8</span>',     a: '3', hint: '8 = 2³.' },
+    { q: 'Solve: <span class="expr">3<sup><span class="var">x</span></sup> = 27</span>',    a: '3', hint: '27 = 3³.' },
+    { q: 'Solve: <span class="expr">5<sup><span class="var">x</span></sup> = 25</span>',    a: '2', hint: '25 = 5².' },
+    { q: 'Solve: <span class="expr">2<sup><span class="var">x</span></sup> = 16</span>',    a: '4', hint: '16 = 2 × 2 × 2 × 2.' },
+    { q: 'Solve: <span class="expr">10<sup><span class="var">x</span></sup> = 1000</span>', a: '3', hint: '1000 = 10³.' },
+    { q: 'Solve: <span class="expr">7<sup><span class="var">x</span></sup> = 49</span>',    a: '2', hint: '49 = 7 × 7.' },
+    { q: 'Solve: <span class="expr">3<sup><span class="var">x</span></sup> = 81</span>',    a: '4', hint: '81 = 3 × 3 × 3 × 3.' },
+    { q: 'Solve: <span class="expr">4<sup><span class="var">x</span></sup> = 64</span>',    a: '3', hint: '64 = 4 × 4 × 4.' },
+    { q: 'Solve: <span class="expr">6<sup><span class="var">x</span></sup> = 36</span>',    a: '2', hint: '36 = 6 × 6.' },
+    { q: 'Solve: <span class="expr">2<sup><span class="var">x</span></sup> = 64</span>',    a: '6', hint: 'Count the doublings: 2, 4, 8, 16, 32, 64.' },
+  ];
+
+  // Stretch (Section 9) — one side must be rewritten first.
+  const practice2 = [
+    { q: 'Solve: <span class="expr">8<sup><span class="var">x</span></sup> = 16</span>',   a: '4/3', hint: 'Common base 2: 2^(3x) = 2^4, so 3x = 4.' },
+    { q: 'Solve: <span class="expr">4<sup><span class="var">x</span></sup> = 32</span>',   a: '5/2', hint: 'Common base 2: 2^(2x) = 2^5, so 2x = 5.' },
+    { q: 'Solve: <span class="expr">9<sup><span class="var">x</span></sup> = 27</span>',   a: '3/2', hint: 'Common base 3: 3^(2x) = 3^3, so 2x = 3.' },
+    { q: 'Solve: <span class="expr">27<sup><span class="var">x</span></sup> = 9</span>',   a: '2/3', hint: 'Common base 3: 3^(3x) = 3^2, so 3x = 2.' },
+    { q: 'Solve: <span class="expr">4<sup><span class="var">x</span></sup> = 8</span>',    a: '3/2', hint: 'Common base 2: 2^(2x) = 2^3, so 2x = 3.' },
+    { q: 'Solve: <span class="expr">25<sup><span class="var">x</span></sup> = 5</span>',   a: '1/2', hint: 'Common base 5: 5^(2x) = 5^1, so 2x = 1.' },
+  ];
+
+  // Mastery (Section 10) — Ranger feral-vs-native scenarios.
+  const practice3 = [
+    { q: '<strong>Feral pigs, Kakadu region.</strong> A Ranger group models the local feral pig population as <span class="expr">P = 5 × 3<sup><span class="var">t</span></sup></span> after <span class="var">t</span> years. The group plans the next muster when P reaches 405. After how many years?', a: '4', hint: '5 × 3ᵗ = 405 → 3ᵗ = 81. Now find t.' },
+    { q: '<strong>Feral cats, central Australia.</strong> An untreated cat population is modelled by <span class="expr">P = 4 × 2<sup><span class="var">t</span></sup></span> after <span class="var">t</span> years. Without intervention, native bilby numbers collapse once P reaches 256. After how many years?', a: '6', hint: '4 × 2ᵗ = 256 → 2ᵗ = 64. Find t.' },
+    { q: '<strong>Feral pigs, West Arnhem Land.</strong> A Ranger survey gives feral pig numbers as <span class="expr">P = 3 × 4<sup><span class="var">t</span></sup></span>. The cultural-sites threshold is 192 animals. How many years away?', a: '3', hint: '3 × 4ᵗ = 192 → 4ᵗ = 64. Find t.' },
+    { q: '<strong>Feral pigs, Daly River catchment.</strong> Ranger group counts give the model <span class="expr">P = 6 × 2<sup><span class="var">t</span></sup></span>. The team intervenes when P reaches 192. After how many years?', a: '5', hint: '6 × 2ᵗ = 192 → 2ᵗ = 32. Find t.' },
+  ];
+
+  // Exit (Section 11)
+  const exitProbs = [
+    { q: 'Solve: <span class="expr">2<sup><span class="var">x</span></sup> = 64</span>', a: '6', hint: '64 = 2⁶.' },
+    { q: 'Solve: <span class="expr">9<sup><span class="var">x</span></sup> = 81</span>', a: '2', hint: 'You don\'t need to rewrite — 81 is already a power of 9.' },
+    { q: 'In your own words, explain why writing both sides of an exponential equation with the same base lets you reduce it to a linear equation in the exponent.', a: 'TEXT', hint: 'Think about what it means for the function y = aˣ to be one-to-one.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+  function buildPractice(containerId, problems, prefix, options) {
+    options = options || {};
+    const grid = document.getElementById(containerId);
+    const noCount = !!options.noCount;
+
+    problems.forEach((p, i) => {
+      const idx = prefix + (i + 1);
+      const div = document.createElement('div');
+      div.className = 'problem';
+
+      const checkBtnHtml = p.a !== 'TEXT'
+        ? `<button class="check-btn">Check</button>`
+        : '';
+
+      div.innerHTML = `
+        <div class="problem-q">
+          <div class="problem-num">${idx}</div>
+          <div class="problem-expr">${p.q}</div>
+        </div>
+        <div class="problem-input-row">
+          <span class="eq">=</span>
+          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+          ${checkBtnHtml}
+        </div>
+        <div class="problem-tools">
+          <button class="hint-link">Show hint</button>
+          <button class="answer-link">Show answer</button>
+        </div>
+        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+      `;
+
+      const cb = div.querySelector('.check-btn');
+      if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+      div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+      div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+      grid.appendChild(div);
+      if (p.a !== 'TEXT' && !noCount) totalProblems++;
+    });
+  }
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Because y = aˣ is one-to-one, equal outputs come from equal inputs — so aᴬ = aᴮ forces A = B, and the exponential equation collapses to a linear one.';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
