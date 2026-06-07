@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expanding Binomials &amp; Special Products — Year 10</title>
+
+<!-- CURRICULUM METADATA -->
+<meta name="lesson-id"             content="y10_alg_01">
+<meta name="ac9-descriptor"        content="AC9M10A01">
+<meta name="ac9-elaborations"      content="1">
+<meta name="sa-year"               content="10">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones">
+<meta name="lesson-focus"          content="Expand binomial products using the distributive property and the area model; recognise and apply the three special-product patterns (perfect square positive, perfect square negative, difference of squares); extend to non-monic cases.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 220px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.93rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip[data-type="psq"] { background: #fde9d9; border-color: #d57350; color: #6e3318; font-weight: 600; }
+  .term-chip[data-type="dos"] { background: #d8ecde; border-color: #3a8f5f; color: #1d4a30; font-weight: 600; }
+  .term-chip[data-type="gen"] { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+    margin-top: 12px;
+  }
+  @media (max-width: 700px) { .parts-buckets { grid-template-columns: 1fr; } }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 110px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket[data-bucket="psq"] h4 { color: #6e3318; }
+  .bucket[data-bucket="dos"] h4 { color: #1d4a30; }
+  .bucket[data-bucket="gen"] h4 { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 12px; background: var(--bg); border-radius: 8px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* AREA-MODEL SVG CARDS */
+  .area-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 18px 14px;
+    margin-bottom: 16px;
+  }
+  .area-card h3 {
+    margin: 0 0 12px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1.1rem;
+  }
+  .area-card h3 .ex-tag {
+    background: var(--navy);
+    color: white;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.68rem;
+    padding: 3px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .area-layout {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 1.1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  @media (max-width: 700px) { .area-layout { grid-template-columns: 1fr; } }
+  .area-svg-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+  }
+  .area-svg-wrap svg { display: block; width: 100%; height: auto; max-width: 320px; margin: 0 auto; }
+  .area-expansion {
+    font-family: Georgia, serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+  }
+  .area-expansion .lead {
+    color: var(--muted);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+  .area-expansion .result {
+    background: var(--coral);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 14px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.12rem;
+  }
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .pattern-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 16px 14px;
+  }
+  .pattern-card h4 {
+    margin: 0 0 8px;
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 1.02rem;
+  }
+  .pattern-card svg { display: block; width: 100%; max-width: 220px; height: auto; margin: 8px auto 10px; }
+  .pattern-rule {
+    background: var(--hint-bg);
+    color: var(--navy);
+    border-radius: 6px;
+    padding: 8px 10px;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 0.98rem;
+  }
+  .pattern-rule strong { display: block; font-size: 0.7rem; letter-spacing: 0.8px; text-transform: uppercase; font-family: -apple-system, sans-serif; opacity: 0.7; margin-bottom: 3px; font-weight: 700; }
+
+  .three-rules-banner {
+    background: var(--navy);
+    color: white;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 18px;
+    text-align: center;
+  }
+  .three-rules-banner h3 {
+    font-family: Georgia, serif;
+    margin: 0 0 12px;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+  }
+  .three-rules-banner .rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .three-rules-banner .rule-tile {
+    background: rgba(255,255,255,0.1);
+    padding: 12px 10px;
+    border-radius: 8px;
+  }
+  .three-rules-banner .rule-tile small {
+    display: block;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  /* SVG area-model styling helpers (used by all SVGs in this lesson) */
+  svg .am-tl { fill: #fde6da; }    /* top-left cell (ax · cx) */
+  svg .am-tr { fill: #fcf3e0; }    /* top-right cell (b · cx) */
+  svg .am-bl { fill: #e3edf6; }    /* bottom-left cell (ax · d) */
+  svg .am-br { fill: #ecf0f3; }    /* bottom-right cell (b · d) */
+  svg .am-edge { stroke: var(--navy); stroke-width: 1.6; fill: none; }
+  svg .am-celltxt { font-family: Georgia, serif; font-size: 18px; fill: var(--navy); }
+  svg .am-celltxt-sm { font-family: Georgia, serif; font-size: 15px; fill: var(--navy); }
+  svg .am-dim { font-family: Georgia, serif; font-size: 14px; fill: var(--coral); font-weight: bold; }
+  svg .am-dim-sm { font-family: Georgia, serif; font-size: 12px; fill: var(--coral); font-weight: bold; }
+  svg .am-neg { fill: #8b2e1a; }
+
+  /* MATCHING */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 14px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.02rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* ERROR ANALYSIS — for We Do */
+  .err-problem-stem {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .err-solution {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .err-line {
+    display: grid;
+    grid-template-columns: 36px 1fr 24px;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+  }
+  .err-line:last-child { margin-bottom: 0; }
+  .err-line:hover { border-color: var(--navy); }
+  .err-line .err-line-num {
+    background: var(--hint-bg); color: var(--navy);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .err-line .err-line-mark { font-size: 1.1rem; opacity: 0; transition: opacity 0.2s; }
+  .err-line.flagged-correct { background: var(--good-soft); border-color: var(--good); }
+  .err-line.flagged-correct .err-line-mark::before { content: '✓'; color: var(--good); }
+  .err-line.flagged-correct .err-line-mark { opacity: 1; }
+  .err-line.flagged-wrong { animation: err-shake 0.45s; background: var(--bad-soft); border-color: var(--bad); }
+  @keyframes err-shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+  }
+  .err-line.dimmed { opacity: 0.45; cursor: not-allowed; }
+  .err-feedback {
+    background: white;
+    border: 1.5px solid var(--good);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    display: none;
+  }
+  .err-feedback.visible { display: block; }
+  .err-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.05rem; }
+  .err-feedback .err-explain { background: var(--hint-bg); border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; font-size: 0.92rem; color: var(--navy); }
+  .err-correction-row {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .err-correction-row input {
+    flex: 1; min-width: 200px;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .err-correction-row input.correct { background: var(--good-soft); border-color: var(--good); }
+  .err-correction-row input.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .err-correction-row button {
+    background: var(--coral); color: white;
+    border: none; padding: 9px 16px; border-radius: 8px;
+    font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .err-status-msg {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  body.teacher-mode .err-line[data-is-error="true"] { box-shadow: 0 0 0 3px var(--coral); }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Expanding Binomials &amp; Special Products</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Core</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions on the skills you'll need today: the distributive property, signed multiplication, and combining like terms.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's algebra.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+    <div>
+      <p>You're paving a rectangular courtyard. One side is <span class="expr">(2<span class="var">x</span> + 3)</span> metres and the other is <span class="expr">(<span class="var">x</span> + 5)</span> metres — the actual dimensions depend on where you site it.</p>
+      <p>To order tiles you need the <strong>total area</strong> as a single expression in <span class="var">x</span>. You can <em>see</em> it on paper: split the rectangle into four pieces, find each piece's area, and add them up. That's the <strong>area model</strong> — and it's exactly the distributive property, drawn.</p>
+      <p>Today you'll learn the area model, then meet three patterns — perfect squares and the difference of squares — that show up so often they're worth memorising.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0; font-style: normal;">
+      <strong style="display:block; font-style: normal; color: var(--navy); font-size: 0.78rem; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 6px;">Big idea</strong>
+      Expansion = the distributive property, made visual. Three patterns recur often enough — <span class="expr">(<span class="var">a</span>+<span class="var">b</span>)²</span>, <span class="expr">(<span class="var">a</span>−<span class="var">b</span>)²</span>, and <span class="expr">(<span class="var">a</span>+<span class="var">b</span>)(<span class="var">a</span>−<span class="var">b</span>)</span> — that recognising them on sight is faster than expanding from scratch.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary, sorting, and matching — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip it. Five words you'll use constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Binomial<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A polynomial with <strong>exactly two terms</strong>.<div class="vocab-example expr"><strong>2<span class="var">x</span> + 3</strong> is a binomial. So is <strong><span class="var">x</span> − 5</strong>. <strong><span class="var">x</span><sup>2</sup> + 3<span class="var">x</span> − 4</strong> is <em>not</em> — it has three terms.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Expand<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">To <strong>multiply out</strong> brackets so the expression is written as a sum of terms.<div class="vocab-example expr">Expanding <strong>(<span class="var">x</span>+2)(<span class="var">x</span>+3)</strong> gives <strong><span class="var">x</span><sup>2</sup> + 5<span class="var">x</span> + 6</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Distributive property<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A multiplier outside a bracket multiplies <strong>every term</strong> inside.<div class="vocab-example expr"><strong><span class="var">a</span>(<span class="var">b</span>+<span class="var">c</span>) = <span class="var">a</span><span class="var">b</span> + <span class="var">a</span><span class="var">c</span></strong>. Today: each term of one binomial multiplies <strong>every term</strong> of the other.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Perfect square<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A binomial multiplied by itself: <strong>(<span class="var">a</span>+<span class="var">b</span>)<sup>2</sup></strong> or <strong>(<span class="var">a</span>−<span class="var">b</span>)<sup>2</sup></strong>. Expands to three terms with a <strong>middle term ±2<span class="var">a</span><span class="var">b</span></strong>.<div class="vocab-example expr">(<span class="var">x</span>+4)<sup>2</sup> = <span class="var">x</span><sup>2</sup> + <strong>8<span class="var">x</span></strong> + 16. Don't forget the middle term!</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Difference of squares<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A product of the form <strong>(<span class="var">a</span>+<span class="var">b</span>)(<span class="var">a</span>−<span class="var">b</span>)</strong>. The middle terms <strong>cancel</strong>, leaving just <strong><span class="var">a</span><sup>2</sup> − <span class="var">b</span><sup>2</sup></strong>.<div class="vocab-example expr">(<span class="var">x</span>+7)(<span class="var">x</span>−7) = <span class="var">x</span><sup>2</sup> − 49. Two terms only.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — classify products by pattern -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Classify the products</h2>
+  <p class="sec-desc">Drag each product into the matching bucket — <strong style="color:#6e3318">perfect square</strong>, <strong style="color:#1d4a30">difference of squares</strong>, or <strong style="color:var(--navy)">generic binomial product</strong>. Wrong drops will shake.</p>
+
+  <div class="parts-expr">
+    <div class="label">Six products — three patterns</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="psq">(<span class="var">x</span>+3)<sup>2</sup></span>
+      <span class="term-chip expr" data-type="psq">(2<span class="var">x</span>−1)<sup>2</sup></span>
+      <span class="term-chip expr" data-type="dos">(<span class="var">x</span>+5)(<span class="var">x</span>−5)</span>
+      <span class="term-chip expr" data-type="dos">(3<span class="var">x</span>+2)(3<span class="var">x</span>−2)</span>
+      <span class="term-chip expr" data-type="gen">(<span class="var">x</span>+4)(<span class="var">x</span>+7)</span>
+      <span class="term-chip expr" data-type="gen">(2<span class="var">x</span>+3)(<span class="var">x</span>−1)</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="psq">
+        <h4>Perfect square</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="dos">
+        <h4>Difference of squares</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="gen">
+        <h4>Generic product</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Recognise the structure first. The generic bucket is the fallback — but for the two special patterns, the answer can be written down on sight.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each product to its expansion</h2>
+  <p class="sec-desc">Click a product, then click its expansion. Five matching pairs — the colour confirms a match.</p>
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a card to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">One area-model example with reveal steps, then the three patterns side by side, then one non-monic case.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: I DO -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked examples — the area model and three patterns</h2>
+  <p class="sec-desc">Expansion is the distributive property made visual. Every product (a<span class="var">x</span>+b)(c<span class="var">x</span>+d) is a rectangle split into four cells. We'll do the first one slowly, then read the three special patterns off their pictures.</p>
+
+  <!-- WORKED EXAMPLE 1 — full 3-step reveal -->
+  <div class="area-card">
+    <h3><span class="ex-tag">Example 1</span>Expand (2<span class="var">x</span>+3)(<span class="var">x</span>+5) using the area model</h3>
+
+    <div class="worked">
+
+      <div class="step visible" id="step1">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Draw the rectangle and label its sides</div>
+          <div class="step-desc">One side is (2<span class="var">x</span>+3); the other is (<span class="var">x</span>+5). Split each side at its + sign.</div>
+          <div class="calc-box">
+            <div class="area-layout">
+              <div class="area-svg-wrap">
+                <svg viewBox="0 0 320 240">
+                  <!-- top edge labels -->
+                  <text x="105" y="22" text-anchor="middle" class="am-dim">2<tspan font-style="italic">x</tspan></text>
+                  <text x="245" y="22" text-anchor="middle" class="am-dim">+3</text>
+                  <!-- left edge labels -->
+                  <text x="14" y="78" text-anchor="middle" class="am-dim"><tspan font-style="italic">x</tspan></text>
+                  <text x="14" y="170" text-anchor="middle" class="am-dim">+5</text>
+                  <!-- 4 empty cells -->
+                  <rect x="30" y="30" width="160" height="80" class="am-tl"/>
+                  <rect x="190" y="30" width="100" height="80" class="am-tr"/>
+                  <rect x="30" y="110" width="160" height="110" class="am-bl"/>
+                  <rect x="190" y="110" width="100" height="110" class="am-br"/>
+                  <!-- outline -->
+                  <rect x="30" y="30" width="260" height="190" class="am-edge"/>
+                  <line x1="190" y1="30" x2="190" y2="220" class="am-edge"/>
+                  <line x1="30" y1="110" x2="290" y2="110" class="am-edge"/>
+                  <!-- ? marks in cells -->
+                  <text x="110" y="76" text-anchor="middle" class="am-celltxt" opacity="0.4">?</text>
+                  <text x="240" y="76" text-anchor="middle" class="am-celltxt" opacity="0.4">?</text>
+                  <text x="110" y="170" text-anchor="middle" class="am-celltxt" opacity="0.4">?</text>
+                  <text x="240" y="170" text-anchor="middle" class="am-celltxt" opacity="0.4">?</text>
+                </svg>
+              </div>
+              <div class="area-expansion">
+                <div class="lead">What we know so far</div>
+                Width <span class="expr">= 2<span class="var">x</span> + 3</span><br>
+                Height <span class="expr">= <span class="var">x</span> + 5</span><br>
+                Total area <span class="expr">= (2<span class="var">x</span>+3)(<span class="var">x</span>+5)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="step2">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Find each cell's area — multiply the two sides that meet it</div>
+          <div class="step-desc">Each cell's area is its width × its height. Four cells, four sub-products.</div>
+          <div class="calc-box">
+            <div class="area-layout">
+              <div class="area-svg-wrap">
+                <svg viewBox="0 0 320 240">
+                  <text x="105" y="22" text-anchor="middle" class="am-dim">2<tspan font-style="italic">x</tspan></text>
+                  <text x="245" y="22" text-anchor="middle" class="am-dim">+3</text>
+                  <text x="14" y="78" text-anchor="middle" class="am-dim"><tspan font-style="italic">x</tspan></text>
+                  <text x="14" y="170" text-anchor="middle" class="am-dim">+5</text>
+                  <rect x="30" y="30" width="160" height="80" class="am-tl"/>
+                  <rect x="190" y="30" width="100" height="80" class="am-tr"/>
+                  <rect x="30" y="110" width="160" height="110" class="am-bl"/>
+                  <rect x="190" y="110" width="100" height="110" class="am-br"/>
+                  <rect x="30" y="30" width="260" height="190" class="am-edge"/>
+                  <line x1="190" y1="30" x2="190" y2="220" class="am-edge"/>
+                  <line x1="30" y1="110" x2="290" y2="110" class="am-edge"/>
+                  <text x="110" y="76" text-anchor="middle" class="am-celltxt">2<tspan font-style="italic">x</tspan><tspan font-size="13" dy="-6">2</tspan></text>
+                  <text x="240" y="76" text-anchor="middle" class="am-celltxt">3<tspan font-style="italic">x</tspan></text>
+                  <text x="110" y="170" text-anchor="middle" class="am-celltxt">10<tspan font-style="italic">x</tspan></text>
+                  <text x="240" y="170" text-anchor="middle" class="am-celltxt">15</text>
+                </svg>
+              </div>
+              <div class="area-expansion">
+                <div class="lead">The four sub-products</div>
+                Top-left: 2<span class="var">x</span> · <span class="var">x</span> = 2<span class="var">x</span><sup>2</sup><br>
+                Top-right: 3 · <span class="var">x</span> = 3<span class="var">x</span><br>
+                Bottom-left: 2<span class="var">x</span> · 5 = 10<span class="var">x</span><br>
+                Bottom-right: 3 · 5 = 15
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" id="step3">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Add the four areas and collect like terms</div>
+          <div class="step-desc">3<span class="var">x</span> and 10<span class="var">x</span> are like terms — combine them to get the middle term.</div>
+          <div class="calc-box">
+            2<span class="var">x</span><sup>2</sup> + 3<span class="var">x</span> + 10<span class="var">x</span> + 15<br>
+            = 2<span class="var">x</span><sup>2</sup> + <span class="red">13<span class="var">x</span></span> + 15
+          </div>
+          <div class="summary-banner">
+            <span class="label">Answer</span>
+            (2<span class="var">x</span>+3)(<span class="var">x</span>+5) = 2<span class="var">x</span><sup>2</sup> + 13<span class="var">x</span> + 15
+          </div>
+        </div>
+      </div>
+
+      <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+    </div>
+  </div>
+
+  <!-- THE THREE PATTERNS -->
+  <h3 style="font-family: Georgia, serif; color: var(--navy); margin: 26px 0 10px;">Three patterns worth memorising</h3>
+  <p style="color: var(--muted); margin-top: 0; font-size: 0.95rem;">The area model still works — but for these three shapes, the answer can be read off without doing the work each time.</p>
+
+  <div class="pattern-grid">
+
+    <!-- Pattern 2: Perfect square (positive) -->
+    <div class="pattern-card">
+      <h4><span class="ex-tag" style="background: var(--navy); color: white; font-family: -apple-system, sans-serif; font-size: 0.65rem; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; margin-right: 6px;">Example 2</span>(3<span class="var">x</span> + 2)<sup>2</sup></h4>
+      <svg viewBox="0 0 260 200">
+        <text x="80" y="20" text-anchor="middle" class="am-dim-sm">3<tspan font-style="italic">x</tspan></text>
+        <text x="195" y="20" text-anchor="middle" class="am-dim-sm">+2</text>
+        <text x="14" y="80" text-anchor="middle" class="am-dim-sm">3<tspan font-style="italic">x</tspan></text>
+        <text x="14" y="150" text-anchor="middle" class="am-dim-sm">+2</text>
+        <rect x="28" y="28" width="130" height="80" class="am-tl"/>
+        <rect x="158" y="28" width="80" height="80" class="am-tr"/>
+        <rect x="28" y="108" width="130" height="60" class="am-bl"/>
+        <rect x="158" y="108" width="80" height="60" class="am-br"/>
+        <rect x="28" y="28" width="210" height="140" class="am-edge"/>
+        <line x1="158" y1="28" x2="158" y2="168" class="am-edge"/>
+        <line x1="28" y1="108" x2="238" y2="108" class="am-edge"/>
+        <text x="93" y="74" text-anchor="middle" class="am-celltxt-sm">9<tspan font-style="italic">x</tspan><tspan font-size="11" dy="-5">2</tspan></text>
+        <text x="198" y="74" text-anchor="middle" class="am-celltxt-sm">6<tspan font-style="italic">x</tspan></text>
+        <text x="93" y="144" text-anchor="middle" class="am-celltxt-sm">6<tspan font-style="italic">x</tspan></text>
+        <text x="198" y="144" text-anchor="middle" class="am-celltxt-sm">4</text>
+      </svg>
+      <div style="font-family: Georgia, serif; font-size: 0.98rem; text-align: center; margin: 6px 0;">
+        = 9<span class="var">x</span><sup>2</sup> + 6<span class="var">x</span> + 6<span class="var">x</span> + 4<br>
+        = 9<span class="var">x</span><sup>2</sup> + <strong style="color: var(--coral)">12<span class="var">x</span></strong> + 4
+      </div>
+      <div class="pattern-rule">
+        <strong>Pattern (a + b)<sup>2</sup></strong>
+        <span class="expr">(<span class="var">a</span>+<span class="var">b</span>)<sup>2</sup> = <span class="var">a</span><sup>2</sup> + 2<span class="var">a</span><span class="var">b</span> + <span class="var">b</span><sup>2</sup></span>
+      </div>
+    </div>
+
+    <!-- Pattern 3: Perfect square (negative) -->
+    <div class="pattern-card">
+      <h4><span class="ex-tag" style="background: var(--navy); color: white; font-family: -apple-system, sans-serif; font-size: 0.65rem; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; margin-right: 6px;">Example 3</span>(2<span class="var">x</span> − 5)<sup>2</sup></h4>
+      <svg viewBox="0 0 260 200">
+        <text x="80" y="20" text-anchor="middle" class="am-dim-sm">2<tspan font-style="italic">x</tspan></text>
+        <text x="200" y="20" text-anchor="middle" class="am-dim-sm am-neg">−5</text>
+        <text x="14" y="80" text-anchor="middle" class="am-dim-sm">2<tspan font-style="italic">x</tspan></text>
+        <text x="14" y="150" text-anchor="middle" class="am-dim-sm am-neg">−5</text>
+        <rect x="28" y="28" width="120" height="80" class="am-tl"/>
+        <rect x="148" y="28" width="90" height="80" class="am-tr"/>
+        <rect x="28" y="108" width="120" height="60" class="am-bl"/>
+        <rect x="148" y="108" width="90" height="60" class="am-br"/>
+        <rect x="28" y="28" width="210" height="140" class="am-edge"/>
+        <line x1="148" y1="28" x2="148" y2="168" class="am-edge"/>
+        <line x1="28" y1="108" x2="238" y2="108" class="am-edge"/>
+        <text x="88" y="74" text-anchor="middle" class="am-celltxt-sm">4<tspan font-style="italic">x</tspan><tspan font-size="11" dy="-5">2</tspan></text>
+        <text x="193" y="74" text-anchor="middle" class="am-celltxt-sm am-neg">−10<tspan font-style="italic">x</tspan></text>
+        <text x="88" y="144" text-anchor="middle" class="am-celltxt-sm am-neg">−10<tspan font-style="italic">x</tspan></text>
+        <text x="193" y="144" text-anchor="middle" class="am-celltxt-sm">+25</text>
+      </svg>
+      <div style="font-family: Georgia, serif; font-size: 0.98rem; text-align: center; margin: 6px 0;">
+        = 4<span class="var">x</span><sup>2</sup> − 10<span class="var">x</span> − 10<span class="var">x</span> + 25<br>
+        = 4<span class="var">x</span><sup>2</sup> − <strong style="color: var(--coral)">20<span class="var">x</span></strong> + 25
+      </div>
+      <div class="pattern-rule">
+        <strong>Pattern (a − b)<sup>2</sup></strong>
+        <span class="expr">(<span class="var">a</span>−<span class="var">b</span>)<sup>2</sup> = <span class="var">a</span><sup>2</sup> − 2<span class="var">a</span><span class="var">b</span> + <span class="var">b</span><sup>2</sup></span>
+      </div>
+    </div>
+
+    <!-- Pattern 4: Difference of squares -->
+    <div class="pattern-card">
+      <h4><span class="ex-tag" style="background: var(--navy); color: white; font-family: -apple-system, sans-serif; font-size: 0.65rem; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.8px; margin-right: 6px;">Example 4</span>(4<span class="var">x</span> + 7)(4<span class="var">x</span> − 7)</h4>
+      <svg viewBox="0 0 260 200">
+        <text x="80" y="20" text-anchor="middle" class="am-dim-sm">4<tspan font-style="italic">x</tspan></text>
+        <text x="195" y="20" text-anchor="middle" class="am-dim-sm">+7</text>
+        <text x="14" y="80" text-anchor="middle" class="am-dim-sm">4<tspan font-style="italic">x</tspan></text>
+        <text x="14" y="150" text-anchor="middle" class="am-dim-sm am-neg">−7</text>
+        <rect x="28" y="28" width="120" height="80" class="am-tl"/>
+        <rect x="148" y="28" width="90" height="80" class="am-tr"/>
+        <rect x="28" y="108" width="120" height="60" class="am-bl"/>
+        <rect x="148" y="108" width="90" height="60" class="am-br"/>
+        <rect x="28" y="28" width="210" height="140" class="am-edge"/>
+        <line x1="148" y1="28" x2="148" y2="168" class="am-edge"/>
+        <line x1="28" y1="108" x2="238" y2="108" class="am-edge"/>
+        <text x="88" y="74" text-anchor="middle" class="am-celltxt-sm">16<tspan font-style="italic">x</tspan><tspan font-size="11" dy="-5">2</tspan></text>
+        <text x="193" y="74" text-anchor="middle" class="am-celltxt-sm">+28<tspan font-style="italic">x</tspan></text>
+        <text x="88" y="144" text-anchor="middle" class="am-celltxt-sm am-neg">−28<tspan font-style="italic">x</tspan></text>
+        <text x="193" y="144" text-anchor="middle" class="am-celltxt-sm am-neg">−49</text>
+      </svg>
+      <div style="font-family: Georgia, serif; font-size: 0.98rem; text-align: center; margin: 6px 0;">
+        = 16<span class="var">x</span><sup>2</sup> + 28<span class="var">x</span> − 28<span class="var">x</span> − 49<br>
+        = 16<span class="var">x</span><sup>2</sup> <strong style="color: var(--coral)">− 49</strong>  <span style="color: var(--muted); font-size: 0.85rem;">(middle terms cancel)</span>
+      </div>
+      <div class="pattern-rule">
+        <strong>Pattern (a + b)(a − b)</strong>
+        <span class="expr">(<span class="var">a</span>+<span class="var">b</span>)(<span class="var">a</span>−<span class="var">b</span>) = <span class="var">a</span><sup>2</sup> − <span class="var">b</span><sup>2</sup></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="three-rules-banner">
+    <h3>The three patterns — worth memorising</h3>
+    <div class="rules">
+      <div class="rule-tile">
+        <small>Perfect square (+)</small>
+        <span class="expr">(<span class="var">a</span>+<span class="var">b</span>)<sup>2</sup> = <span class="var">a</span><sup>2</sup> + 2<span class="var">a</span><span class="var">b</span> + <span class="var">b</span><sup>2</sup></span>
+      </div>
+      <div class="rule-tile">
+        <small>Perfect square (−)</small>
+        <span class="expr">(<span class="var">a</span>−<span class="var">b</span>)<sup>2</sup> = <span class="var">a</span><sup>2</sup> − 2<span class="var">a</span><span class="var">b</span> + <span class="var">b</span><sup>2</sup></span>
+      </div>
+      <div class="rule-tile">
+        <small>Difference of squares</small>
+        <span class="expr">(<span class="var">a</span>+<span class="var">b</span>)(<span class="var">a</span>−<span class="var">b</span>) = <span class="var">a</span><sup>2</sup> − <span class="var">b</span><sup>2</sup></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAMPLE 5 — non-monic mixed -->
+  <div class="area-card" style="margin-top: 22px;">
+    <h3><span class="ex-tag">Example 5</span>Expand (3<span class="var">x</span> + 4)(2<span class="var">x</span> − 7) — a non-monic mixed product</h3>
+    <p style="color: var(--muted); margin-top: -4px; font-size: 0.92rem;">Neither pattern fits — leading coefficients differ (3 and 2). Fall back to the area model.</p>
+    <div class="area-layout">
+      <div class="area-svg-wrap">
+        <svg viewBox="0 0 320 240">
+          <text x="105" y="22" text-anchor="middle" class="am-dim">3<tspan font-style="italic">x</tspan></text>
+          <text x="245" y="22" text-anchor="middle" class="am-dim">+4</text>
+          <text x="14" y="78" text-anchor="middle" class="am-dim">2<tspan font-style="italic">x</tspan></text>
+          <text x="14" y="170" text-anchor="middle" class="am-dim am-neg">−7</text>
+          <rect x="30" y="30" width="160" height="80" class="am-tl"/>
+          <rect x="190" y="30" width="100" height="80" class="am-tr"/>
+          <rect x="30" y="110" width="160" height="110" class="am-bl"/>
+          <rect x="190" y="110" width="100" height="110" class="am-br"/>
+          <rect x="30" y="30" width="260" height="190" class="am-edge"/>
+          <line x1="190" y1="30" x2="190" y2="220" class="am-edge"/>
+          <line x1="30" y1="110" x2="290" y2="110" class="am-edge"/>
+          <text x="110" y="76" text-anchor="middle" class="am-celltxt">6<tspan font-style="italic">x</tspan><tspan font-size="13" dy="-6">2</tspan></text>
+          <text x="240" y="76" text-anchor="middle" class="am-celltxt">+8<tspan font-style="italic">x</tspan></text>
+          <text x="110" y="170" text-anchor="middle" class="am-celltxt am-neg">−21<tspan font-style="italic">x</tspan></text>
+          <text x="240" y="170" text-anchor="middle" class="am-celltxt am-neg">−28</text>
+        </svg>
+      </div>
+      <div class="area-expansion">
+        <div class="lead">Four sub-products → collect</div>
+        Top-left: 3<span class="var">x</span> · 2<span class="var">x</span> = 6<span class="var">x</span><sup>2</sup><br>
+        Top-right: 4 · 2<span class="var">x</span> = 8<span class="var">x</span><br>
+        Bottom-left: 3<span class="var">x</span> · (−7) = −21<span class="var">x</span><br>
+        Bottom-right: 4 · (−7) = −28<br>
+        <br>
+        = 6<span class="var">x</span><sup>2</sup> + 8<span class="var">x</span> − 21<span class="var">x</span> − 28<br>
+        = 6<span class="var">x</span><sup>2</sup> − 13<span class="var">x</span> − 28
+        <div class="result">
+          (3<span class="var">x</span>+4)(2<span class="var">x</span>−7) = 6<span class="var">x</span><sup>2</sup> − 13<span class="var">x</span> − 28
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Spot the mistake — together</div>
+    <div class="phase-sub">A student forgot the middle term. We'll find the wrong line and write the correct expansion as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO — ERROR ANALYSIS -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Error analysis — where does this expansion go wrong?</h2>
+  <p class="sec-desc">A student tried to expand (2<span class="var">x</span> − 5)<sup>2</sup>. Read each line carefully. <strong>Click the line where the mistake first appears</strong> — then type the correct expansion.</p>
+
+  <div class="err-problem-stem expr">
+    Expand: &nbsp; (2<span class="var">x</span> − 5)<sup>2</sup>
+  </div>
+
+  <div class="err-solution" id="errSolution">
+    <div class="err-line expr" data-line="1" onclick="pickErrLine(this)">
+      <span class="err-line-num">1</span>
+      <span>(2<span class="var">x</span> − 5)<sup>2</sup> = (2<span class="var">x</span> − 5)(2<span class="var">x</span> − 5)</span>
+      <span class="err-line-mark"></span>
+    </div>
+    <div class="err-line expr" data-line="2" data-is-error="true"
+         data-correct-line="4x^2-20x+25"
+         onclick="pickErrLine(this)">
+      <span class="err-line-num">2</span>
+      <span>= (2<span class="var">x</span>)<sup>2</sup> + (−5)<sup>2</sup></span>
+      <span class="err-line-mark"></span>
+    </div>
+    <div class="err-line expr" data-line="3" onclick="pickErrLine(this)">
+      <span class="err-line-num">3</span>
+      <span>= 4<span class="var">x</span><sup>2</sup> + 25</span>
+      <span class="err-line-mark"></span>
+    </div>
+  </div>
+
+  <div class="err-feedback" id="errFeedback">
+    <h4>✓ Right — that's where the mistake first appears.</h4>
+    <div class="err-explain">
+      <strong>Why:</strong> the student squared each term and stopped. But (2<span class="var">x</span> − 5)<sup>2</sup> means (2<span class="var">x</span> − 5)(2<span class="var">x</span> − 5) — and that produces a <strong>middle term</strong> of −2·(2<span class="var">x</span>)·(5) = −20<span class="var">x</span>. Without it, the answer is wrong. The general pattern: <span class="expr">(<span class="var">a</span> − <span class="var">b</span>)<sup>2</sup> = <span class="var">a</span><sup>2</sup> − 2<span class="var">a</span><span class="var">b</span> + <span class="var">b</span><sup>2</sup></span> — three terms, never two.
+    </div>
+    <p style="margin: 0 0 8px; font-size: 0.95rem;"><strong>Now write the correct expansion of (2<span class="var">x</span> − 5)<sup>2</sup>.</strong> Use <code>x^2</code> for <span class="var">x</span><sup>2</sup>, no spaces.</p>
+    <div class="err-correction-row">
+      <input id="errCorrection" placeholder="e.g. 4x^2-20x+25">
+      <button onclick="checkErrCorrection()">Check</button>
+    </div>
+    <div class="err-status-msg" id="errStatusMsg"></div>
+  </div>
+
+  <div class="parts-instructions" style="margin-top: 16px;">
+    💡 <strong>Why we do it this way:</strong> the area-model picture reminds you there are four cells, not two. Whenever you write (anything)<sup>2</sup> and want to expand, expect <strong>three</strong> terms.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the routine. Type your expanded answer — use <code>x^2</code> for <span class="var">x</span><sup>2</sup>. Then we'll check together as a class.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Type your expanded answer. Use <code>x^2</code> for <span class="var">x</span><sup>2</sup>. Examples: <code>x^2+5x+6</code>, <code>x^2-25</code>, <code>x^2-12x+36</code>. Order of terms doesn't matter.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Non-monic now — the leading coefficient of one or both binomials is not 1. The patterns still work; just remember <span class="expr"><span class="var">a</span></span> can include a coefficient like 2<span class="var">x</span> or 5<span class="var">x</span>.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Multi-step — expand more than one product, then combine. Use <code>x^2</code> for <span class="var">x</span><sup>2</sup>.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three before you leave. They check the big ideas of today's lesson. Use <code>x^2</code> for <span class="var">x</span><sup>2</sup>.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 10 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M10A01</strong> — expand, factorise and simplify expressions and solve equations algebraically, applying exponent laws involving products, quotients and powers of variables, and the distributive property</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Expand binomial products using the distributive property and the area model; recognise and apply the three special-product patterns (perfect square positive, perfect square negative, difference of squares); extend to non-monic cases.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y10_alg_01. Source: SA Curriculum (Mathematics R–10 Prototype 2); lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 10 · Expanding Binomials &amp; Special Products
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG & DROP SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING ============
+  // 5 pairs: product ↔ expansion
+  const matchTerms = [
+    { html: '(<span class="var">x</span>+1)(<span class="var">x</span>+2)', group: 1 },
+    { html: '<span class="var">x</span><sup>2</sup>+3<span class="var">x</span>+2',   group: 1 },
+    { html: '(<span class="var">x</span>+4)<sup>2</sup>',          group: 2 },
+    { html: '<span class="var">x</span><sup>2</sup>+8<span class="var">x</span>+16',  group: 2 },
+    { html: '(<span class="var">x</span>−3)(<span class="var">x</span>+3)', group: 3 },
+    { html: '<span class="var">x</span><sup>2</sup>−9',            group: 3 },
+    { html: '(2<span class="var">x</span>−1)<sup>2</sup>',         group: 4 },
+    { html: '4<span class="var">x</span><sup>2</sup>−4<span class="var">x</span>+1',  group: 4 },
+    { html: '(5<span class="var">x</span>+1)(5<span class="var">x</span>−1)', group: 5 },
+    { html: '25<span class="var">x</span><sup>2</sup>−1',          group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not the right pair — check the leading coefficient and the middle term.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ ERROR ANALYSIS (We Do) ============
+  let errFound = false;
+
+  function pickErrLine(el) {
+    if (errFound || el.classList.contains('dimmed')) return;
+    const isError = el.dataset.isError === 'true';
+    if (isError) {
+      el.classList.add('flagged-correct');
+      errFound = true;
+      document.querySelectorAll('.err-line').forEach(o => {
+        if (o !== el) o.classList.add('dimmed');
+      });
+      document.getElementById('errFeedback').classList.add('visible');
+    } else {
+      el.classList.add('flagged-wrong');
+      setTimeout(() => el.classList.remove('flagged-wrong'), 600);
+    }
+  }
+
+  function checkErrCorrection() {
+    const input = document.getElementById('errCorrection');
+    const expected = document.querySelector('.err-line[data-is-error="true"]').dataset.correctLine;
+    const norm = s => (s || '').toLowerCase().replace(/\s+/g, '').replace(/\*/g, '');
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    const msg = document.getElementById('errStatusMsg');
+    input.classList.remove('correct', 'incorrect');
+    const match = norm(input.value) === norm(expected)
+      || JSON.stringify(splitTerms(norm(input.value))) === JSON.stringify(splitTerms(norm(expected)));
+    if (match) {
+      input.classList.add('correct');
+      msg.textContent = '✓ Correct — three terms, with the middle term −20x. That is what (2x − 5)² expands to.';
+    } else {
+      input.classList.add('incorrect');
+      msg.textContent = '✗ Not quite. Remember: square the first term, write the middle term −2·(2x)·(5), then add (−5)² = 25.';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+
+  // Retrieval — prior knowledge: distributive property, signs, like terms
+  const retrieval = [
+    { q: 'Expand: <span class="expr">3(<span class="var">x</span> + 5)</span>', a: '3x+15', hint: 'Multiply 3 by every term inside the brackets.' },
+    { q: 'Expand: <span class="expr">−2(<span class="var">x</span> − 4)</span>', a: '-2x+8', hint: 'Watch the signs. −2 × (−4) = +8.' },
+    { q: 'Simplify: <span class="expr">4<span class="var">x</span> + 7 − 9<span class="var">x</span> + 2</span>', a: '-5x+9', hint: 'Combine the x-terms; then combine the constants.' },
+  ];
+
+  const checkpoint = [
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 4)(<span class="var">x</span> + 2)</span>', a: 'x^2+6x+8', hint: 'Four sub-products: x·x, x·2, 4·x, 4·2. Combine like terms.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 5)<sup>2</sup></span>', a: 'x^2+10x+25', hint: 'Perfect square pattern: (a+b)² = a² + 2ab + b². Here a = x, b = 5.' },
+  ];
+
+  // Building — monic binomials (leading coefficient 1)
+  const practice1 = [
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 2)(<span class="var">x</span> + 3)</span>', a: 'x^2+5x+6', hint: 'Sub-products: x·x, x·3, 2·x, 2·3. Add the middle terms.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 5)(<span class="var">x</span> + 4)</span>', a: 'x^2+9x+20', hint: 'Middle term coefficient: 5 + 4 = 9.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 1)(<span class="var">x</span> + 6)</span>', a: 'x^2+5x-6', hint: 'Middle: −1·x + 6·x = 5x. Constant: −1·6 = −6.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 3)(<span class="var">x</span> − 4)</span>', a: 'x^2-7x+12', hint: 'Both inner terms negative — their product is positive (+12).' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 2)<sup>2</sup></span>', a: 'x^2+4x+4', hint: 'Perfect square (a+b)²: middle term is 2·x·2 = 4x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 6)<sup>2</sup></span>', a: 'x^2-12x+36', hint: 'Perfect square (a−b)²: middle term is −2·x·6 = −12x.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 8)(<span class="var">x</span> − 8)</span>', a: 'x^2-64', hint: 'Difference of squares — middle terms cancel. Only two terms in the answer.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 5)(<span class="var">x</span> + 5)</span>', a: 'x^2-25', hint: 'Difference of squares: a² − b² with a = x, b = 5.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 9)(<span class="var">x</span> − 2)</span>', a: 'x^2+7x-18', hint: 'Middle: 9 − 2 = 7. Constant: 9 · (−2) = −18.' },
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> − 7)(<span class="var">x</span> + 1)</span>', a: 'x^2-6x-7', hint: 'Middle: −7 + 1 = −6. Constant: −7 · 1 = −7.' },
+  ];
+
+  // Stretch — non-monic, including the stretch challenge
+  const practice2 = [
+    { q: 'Expand: <span class="expr">(2<span class="var">x</span> + 1)(<span class="var">x</span> + 5)</span>', a: '2x^2+11x+5', hint: 'Sub-products: 2x·x = 2x², 2x·5 = 10x, 1·x = x, 1·5 = 5.' },
+    { q: 'Expand: <span class="expr">(3<span class="var">x</span> + 2)(<span class="var">x</span> − 4)</span>', a: '3x^2-10x-8', hint: 'Middle term: 3x · (−4) + 2 · x = −12x + 2x = −10x.' },
+    { q: 'Expand: <span class="expr">(5<span class="var">x</span> − 2)<sup>2</sup></span>', a: '25x^2-20x+4', hint: '(a−b)² with a = 5x, b = 2. Middle term: −2·(5x)·(2) = −20x.' },
+    { q: 'Expand: <span class="expr">(4<span class="var">x</span> + 3)(4<span class="var">x</span> − 3)</span>', a: '16x^2-9', hint: 'Difference of squares: (4x)² − 3² = 16x² − 9.' },
+    { q: 'Expand: <span class="expr">(2<span class="var">x</span> + 5)(3<span class="var">x</span> − 1)</span>', a: '6x^2+13x-5', hint: 'Sub-products: 6x², −2x, 15x, −5. Middle: −2x + 15x = 13x.' },
+    { q: 'Expand and simplify: <span class="expr">(2<span class="var">x</span> + 3)<sup>2</sup> − (2<span class="var">x</span> − 3)<sup>2</sup></span>', a: '24x', hint: 'Expand each perfect square first. The x² and constant terms cancel — only the middle terms survive.' },
+  ];
+
+  // Mastery — multi-step combinations
+  const practice3 = [
+    { q: 'Expand: <span class="expr">(3<span class="var">x</span> − 2)(2<span class="var">x</span> + 7)</span>', a: '6x^2+17x-14', hint: 'Sub-products: 6x², +21x, −4x, −14. Middle: 21x − 4x = 17x.' },
+    { q: 'Expand and simplify: <span class="expr">(5<span class="var">x</span> + 4)<sup>2</sup> − (5<span class="var">x</span> − 4)<sup>2</sup></span>', a: '80x', hint: 'Same idea as the Stretch question: only the middle terms survive. They are +40x and −(−40x).' },
+    { q: 'Expand and simplify: <span class="expr">(2<span class="var">x</span> + 1)(2<span class="var">x</span> − 1) + (3<span class="var">x</span> + 2)(3<span class="var">x</span> − 2)</span>', a: '13x^2-5', hint: 'Two difference-of-squares: 4x² − 1 and 9x² − 4. Now add.' },
+    { q: 'Expand and simplify: <span class="expr">2(<span class="var">x</span> + 5)<sup>2</sup> − (<span class="var">x</span> + 5)(<span class="var">x</span> − 5)</span>', a: 'x^2+20x+75', hint: 'Expand 2(x+5)² = 2x² + 20x + 50, then subtract (x² − 25). Be careful with the signs.' },
+  ];
+
+  const weDo = [];
+
+  const exitProbs = [
+    { q: 'Expand: <span class="expr">(<span class="var">x</span> + 7)<sup>2</sup></span>', a: 'x^2+14x+49', hint: 'Perfect square: middle term is 2·x·7 = 14x.' },
+    { q: 'Expand: <span class="expr">(3<span class="var">x</span> − 4)(3<span class="var">x</span> + 4)</span>', a: '9x^2-16', hint: 'Difference of squares: (3x)² − 4².' },
+    { q: 'Explain in one sentence why <span class="expr">(<span class="var">a</span> + <span class="var">b</span>)<sup>2</sup></span> is <strong>not</strong> equal to <span class="expr"><span class="var">a</span><sup>2</sup> + <span class="var">b</span><sup>2</sup></span>.', a: 'TEXT', hint: 'Think about the four cells of the area model — how many of them have an a and a b together?' },
+  ];
+
+  // ============ ANSWER CHECKING ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'The area model shows four cells. The two cross-cells contribute the middle term 2ab — which is missing if you only square the corners. So (a+b)² = a² + 2ab + b², not a² + b².';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+</body>
+</html>
