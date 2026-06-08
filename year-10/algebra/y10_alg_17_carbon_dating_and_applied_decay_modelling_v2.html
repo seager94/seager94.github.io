@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbon Dating &amp; Applied Decay Modelling — Year 10</title>
+
+<!-- CURRICULUM METADATA -->
+<meta name="lesson-id"             content="y10_alg_17">
+<meta name="ac9-descriptor"        content="AC9M10A04">
+<meta name="ac9-elaborations"      content="4,5">
+<meta name="sa-year"               content="10">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones">
+<meta name="lesson-focus"          content="Use exponential decay (carbon-14 half-life) and exponential growth (reproductive rates) to model applied scenarios; evaluate where the exponential model breaks down as a population approaches its environmental carrying capacity.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 220px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.92rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* SORT INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.92rem;
+    transition: all 0.2s;
+    max-width: 220px;
+    line-height: 1.3;
+    text-align: left;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.growth { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.decay { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 90px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 60px; display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-start; }
+  .terms-source { min-height: 80px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    max-width: 220px;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* TWO TRUTHS AND A LIE */
+  .ttal-round {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+  }
+  .ttal-round-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .ttal-round-num {
+    background: var(--navy); color: white;
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .ttal-round-title {
+    font-family: Georgia, serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.02rem;
+  }
+  .ttal-statements {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .ttal-stmt {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    transition: all 0.15s;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .ttal-stmt:hover { border-color: var(--navy); background: var(--hint-bg); }
+  .ttal-stmt .ttal-letter {
+    background: var(--coral); color: white;
+    width: 26px; height: 26px;
+    border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .ttal-stmt.correct-lie {
+    background: var(--good-soft);
+    border-color: var(--good);
+    color: #1d4a30;
+  }
+  .ttal-stmt.correct-lie .ttal-letter { background: var(--good); }
+  .ttal-stmt.wrong-pick {
+    background: var(--bad-soft);
+    border-color: var(--bad);
+    color: #6a2520;
+    animation: shake 0.45s;
+  }
+  .ttal-stmt.wrong-pick .ttal-letter { background: var(--bad); }
+  .ttal-stmt.revealed-truth {
+    background: #eef3f4;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+  .ttal-stmt.disabled { pointer-events: none; }
+  .ttal-feedback {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--good-soft);
+    border-left: 4px solid var(--good);
+    border-radius: 6px;
+    color: #1d4a30;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    display: none;
+  }
+  .ttal-feedback.visible { display: block; }
+  .ttal-feedback strong { color: #144a2a; }
+  .ttal-progress {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* FIGURE / SVG */
+  figure.lesson-fig {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px 10px;
+    margin: 18px 0;
+    box-shadow: var(--shadow);
+  }
+  figure.lesson-fig svg { display: block; width: 100%; height: auto; }
+  figure.lesson-fig figcaption {
+    font-size: 0.83rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 6px;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .axis-line { stroke: var(--text); stroke-width: 1.5; fill: none; }
+  .grid-line { stroke: #e3e6ec; stroke-width: 1; fill: none; }
+  .curve-decay { stroke: var(--coral); stroke-width: 2.5; fill: none; }
+  .curve-exp { stroke: var(--coral); stroke-width: 2.5; fill: none; stroke-dasharray: 6 4; }
+  .curve-real { stroke: var(--navy); stroke-width: 2.5; fill: none; }
+  .marker-line { stroke: var(--navy); stroke-width: 1.5; stroke-dasharray: 5 4; fill: none; opacity: 0.7; }
+  .marker-dot { fill: var(--navy); }
+  .ax-label { font-family: Georgia, serif; font-size: 12px; fill: var(--text); }
+  .ax-tick { font-family: -apple-system, sans-serif; font-size: 11px; fill: var(--muted); }
+  .ax-title { font-family: Georgia, serif; font-size: 13px; fill: var(--navy); font-weight: bold; }
+  .curve-label { font-family: Georgia, serif; font-size: 12px; font-style: italic; }
+  .curve-label.dec { fill: var(--coral); }
+  .curve-label.exp { fill: var(--coral); }
+  .curve-label.real { fill: var(--navy); }
+  .annot { font-family: Georgia, serif; font-size: 12px; fill: var(--navy); }
+  .annot-K { font-family: Georgia, serif; font-size: 13px; fill: var(--navy); font-weight: bold; }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: -apple-system, sans-serif; font-size: 0.95rem; flex: 1; padding-top: 4px; line-height: 1.45; }
+  .problem-expr .expr { font-family: Georgia, serif; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+  body.teacher-mode .ttal-feedback { display: block !important; }
+
+  /* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* RESPECT NOTE */
+  .respect-note {
+    background: #eaf0f1;
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    color: var(--text);
+    margin: 14px 0;
+    line-height: 1.5;
+  }
+  .respect-note strong { color: var(--navy); }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS */
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Carbon Dating &amp; Applied Decay Modelling</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Modelling</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 25</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work on exponents and exponential expressions. They warm up the skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's algebra.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>How do scientists know that a piece of ancient charcoal from a fireplace is <strong>10,000 years old</strong>, or that a wooden tool is <strong>2,500 years old</strong>?</p>
+      <p>They use <strong>carbon-14 dating</strong>. Every living thing — a tree, a kangaroo, you — takes in tiny amounts of a radioactive form of carbon called carbon-14. When the organism dies, it stops taking in carbon-14, and what's already there <strong>decays on a fixed schedule</strong>: every 5,730 years, half of it is gone.</p>
+      <p>So if you measure how much carbon-14 is left in an old piece of wood, you can work backwards to its age. The <strong>fraction remaining tells the age</strong>.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      The exponential decay model lets us read the past from a number. The exponential <em>growth</em> model — same family of curves — also lets us forecast a population's future. But growth models that fit early data can mislead us once a population approaches the limits of its Country/Place. Today we model both, and learn to spot the limit.
+    </div>
+  </div>
+
+  <div class="respect-note">
+    <strong>A note on respect.</strong> Carbon dating of organic materials (such as charcoal from ancient hearths) is conducted by archaeologists in partnership with First Nations Australian Traditional Owners and Elders, who hold the cultural authority over sites and material culture on Country. Carbon dating measures, but it does not replace, the deep time knowledge that Aboriginal and Torres Strait Islander peoples hold of their own histories — knowledge stretching back tens of thousands of years.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Exponential decay<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A quantity that <strong>multiplies by a fraction less than 1</strong> at each fixed time step — so it shrinks faster at first, then more slowly.<div class="vocab-example expr">Carbon-14 multiplies by <strong>½</strong> every 5,730 years.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Exponential growth<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A quantity that <strong>multiplies by a number greater than 1</strong> at each fixed time step — so it grows faster and faster.<div class="vocab-example expr">A colony of 100 quokkas growing 5% per year multiplies by <strong>1.05</strong> each year.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Half-life<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The time it takes for <strong>half</strong> of a decaying substance to be gone. The next half-life takes the same time again.<div class="vocab-example expr">Half-life of carbon-14 is <strong>5,730 years</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Growth/decay factor<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The number you <strong>multiply by each time step</strong>. Above 1 means growth; below 1 means decay.<div class="vocab-example expr">A 20% yearly rise means factor <strong>1.20</strong>. Halving means factor <strong>0.5</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Carrying capacity<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The <strong>maximum population</strong> the environment of a Country/Place can support, written <span class="var">K</span>. Once the population approaches <span class="var">K</span>, the exponential model overestimates.<div class="vocab-example expr">A fenced reserve might support <strong><span class="var">K</span> = 400</strong> bilbies — no more.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — Growth vs Decay scenarios -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort the scenarios</h2>
+  <p class="sec-desc">Drag each scenario into the right bucket — <strong style="color:var(--coral)">exponential growth</strong> (quantity multiplies by &gt; 1 each step) or <strong style="color:var(--navy)">exponential decay</strong> (quantity multiplies by &lt; 1 each step). Wrong drops will shake.</p>
+
+  <div class="parts-expr">
+    <div class="label">Six scenarios — which family does each one belong to?</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="growth">A bacteria colony doubling every 30 minutes</span>
+      <span class="term-chip" data-type="decay">Carbon-14 in a fossil, 5,730-year half-life</span>
+      <span class="term-chip" data-type="decay">A cup of coffee cooling toward room temperature</span>
+      <span class="term-chip" data-type="growth">$1,000 in an account earning 4% interest yearly</span>
+      <span class="term-chip" data-type="decay">Paracetamol concentration in the blood after a dose</span>
+      <span class="term-chip" data-type="growth">A quokka colony with 8% yearly birth surplus (early years)</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="growth">
+        <h4 class="vt">Exponential growth (factor &gt; 1)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="decay">
+        <h4 class="ct">Exponential decay (factor &lt; 1)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Every scenario above can be written as <span class="expr"><span class="var">A</span> × <span class="var">b</span><sup><span class="var">t</span></sup></span>. The number <span class="var">b</span> is what tells you growth from decay — and how fast.
+  </div>
+</section>
+
+<!-- SECTION 4: TWO TRUTHS AND A LIE -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Two truths and a lie</h2>
+  <p class="sec-desc">Each round has <strong>two true statements and one lie</strong> about an exponential model. Click the one you think is false. You'll get feedback explaining <em>why</em> the model breaks down in that case.</p>
+  <p class="ttal-progress" id="ttalProgressNote">Round 1 of 3 — pick the lie.</p>
+  <div id="ttalContainer"></div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) — Carbon dating -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — dating an artefact from its carbon-14</h2>
+  <p class="sec-desc"><strong>Problem.</strong> A piece of charcoal from an ancient hearth is found to contain only <span class="expr"><span class="frac"><span class="num">1</span><span class="den">4</span></span></span> of the carbon-14 that fresh wood from the same plant species contains. Carbon-14 has a half-life of <strong>5,730 years</strong>. How old is the charcoal?</p>
+
+  <figure class="lesson-fig">
+    <svg viewBox="0 0 540 340" role="img" aria-label="Carbon-14 decay curve: fraction remaining versus time, with the half-life of 5,730 years marked.">
+      <!-- grid -->
+      <g class="grid-line">
+        <line x1="70" y1="40" x2="490" y2="40"/>
+        <line x1="70" y1="100" x2="490" y2="100"/>
+        <line x1="70" y1="160" x2="490" y2="160"/>
+        <line x1="70" y1="220" x2="490" y2="220"/>
+        <line x1="70" y1="280" x2="490" y2="280"/>
+        <line x1="70" y1="40" x2="70" y2="280"/>
+        <line x1="154" y1="40" x2="154" y2="280"/>
+        <line x1="238" y1="40" x2="238" y2="280"/>
+        <line x1="322" y1="40" x2="322" y2="280"/>
+        <line x1="406" y1="40" x2="406" y2="280"/>
+        <line x1="490" y1="40" x2="490" y2="280"/>
+      </g>
+      <!-- axes -->
+      <g class="axis-line">
+        <line x1="70" y1="280" x2="495" y2="280"/>
+        <line x1="70" y1="35" x2="70" y2="280"/>
+      </g>
+      <!-- axis ticks (x: thousands of years) -->
+      <g class="ax-tick" text-anchor="middle">
+        <text x="70" y="298">0</text>
+        <text x="154" y="298">5</text>
+        <text x="238" y="298">10</text>
+        <text x="322" y="298">15</text>
+        <text x="406" y="298">20</text>
+        <text x="490" y="298">25</text>
+      </g>
+      <!-- axis ticks (y: fraction) -->
+      <g class="ax-tick" text-anchor="end">
+        <text x="64" y="44">1</text>
+        <text x="64" y="104">0.75</text>
+        <text x="64" y="164">0.5</text>
+        <text x="64" y="224">0.25</text>
+        <text x="64" y="284">0</text>
+      </g>
+      <!-- axis titles -->
+      <text class="ax-title" x="280" y="320" text-anchor="middle">Time (thousands of years since death)</text>
+      <text class="ax-title" x="20" y="160" text-anchor="middle" transform="rotate(-90 20 160)">Fraction of C-14 remaining</text>
+      <!-- decay curve: many sampled points -->
+      <path class="curve-decay" d="M70,40 L86.8,67.3 L103.6,91.5 L120.4,113.1 L137.2,131.9 L154.0,148.9 L170.8,163.8 L187.6,177.0 L204.4,188.7 L221.2,199.1 L238.0,208.3 L254.8,216.5 L271.6,223.7 L288.4,230.1 L305.2,235.8 L322.0,240.8 L338.8,245.3 L355.6,249.2 L372.4,252.7 L389.2,255.8 L406.0,258.6 L422.8,261.0 L439.6,263.2 L456.4,265.1 L473.2,266.8 L490.0,268.3"/>
+      <!-- half-life marker (t = 5730 ≈ x=166.3, frac=0.5 → y=160) -->
+      <line class="marker-line" x1="166.3" y1="160" x2="166.3" y2="280"/>
+      <line class="marker-line" x1="70" y1="160" x2="166.3" y2="160"/>
+      <circle class="marker-dot" cx="166.3" cy="160" r="4"/>
+      <text class="annot" x="174" y="146">half-life: T½ = 5,730 years → ½ left</text>
+      <!-- second half-life (t = 11,460 ≈ x=262.5, frac=0.25 → y=220) -->
+      <line class="marker-line" x1="262.5" y1="220" x2="262.5" y2="280"/>
+      <line class="marker-line" x1="70" y1="220" x2="262.5" y2="220"/>
+      <circle class="marker-dot" cx="262.5" cy="220" r="4"/>
+      <text class="annot" x="270" y="208">2 half-lives = 11,460 years → ¼ left</text>
+      <!-- curve label -->
+      <text class="curve-label dec" x="406" y="252">N = N₀ · (½)^(t/5730)</text>
+    </svg>
+    <figcaption>Figure 1. Carbon-14 decay curve. Each step of 5,730 years halves the remaining fraction. Reading the graph backwards: the fraction left tells you how many half-lives have passed.</figcaption>
+  </figure>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Write the model</div>
+        <div class="step-desc">Let <span class="var">N</span> be the carbon-14 remaining and <span class="var">N</span>₀ the original. Each half-life multiplies by ½.</div>
+        <div class="calc-box">
+          <span class="red"><span class="var">N</span> = <span class="var">N</span>₀ × <span class="frac"><span class="num">1</span><span class="den">2</span></span><sup><span class="var">n</span></sup></span> &nbsp;where <span class="var">n</span> = number of half-lives.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Find how many half-lives have passed</div>
+        <div class="step-desc">Only ¼ of the carbon-14 remains, so we need <span class="expr">(½)<sup><span class="var">n</span></sup> = ¼</span>.</div>
+        <div class="calc-box">
+          <span class="frac"><span class="num">1</span><span class="den">2</span></span><sup><span class="var">n</span></sup> = <span class="frac"><span class="num">1</span><span class="den">4</span></span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span><sup>2</sup><br>
+          ⇒ <span class="red"><span class="var">n</span> = 2 half-lives</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Multiply by the half-life length to get the age</div>
+        <div class="step-desc">Each half-life is 5,730 years, so 2 of them gives the age.</div>
+        <div class="calc-box">
+          Age = <span class="var">n</span> × T½ = 2 × 5,730 = <span class="blue">11,460 years</span>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          The charcoal is about 11,460 years old.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Modelling a native-animal population — and finding where the model breaks.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO — Quokka population and the limit -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Together — modelling a quokka reintroduction</h2>
+  <p class="sec-desc">A fenced reserve on Country has <strong>100 quokkas</strong> reintroduced. In the early years the population grows at a steady <strong>20% per year</strong>. The reserve can ecologically support a maximum of <strong><span class="var">K</span> = 400 quokkas</strong> (its carrying capacity). We'll model the early growth, then critique where the model breaks.</p>
+
+  <div class="practice-grid" id="weDoGrid"></div>
+
+  <figure class="lesson-fig">
+    <svg viewBox="0 0 540 340" role="img" aria-label="Population over time: dashed exponential growth curve continues rising; solid logistic curve flattens at the carrying capacity K.">
+      <!-- grid -->
+      <g class="grid-line">
+        <line x1="70" y1="40" x2="490" y2="40"/>
+        <line x1="70" y1="100" x2="490" y2="100"/>
+        <line x1="70" y1="160" x2="490" y2="160"/>
+        <line x1="70" y1="220" x2="490" y2="220"/>
+        <line x1="70" y1="280" x2="490" y2="280"/>
+        <line x1="70" y1="40" x2="70" y2="280"/>
+        <line x1="154" y1="40" x2="154" y2="280"/>
+        <line x1="238" y1="40" x2="238" y2="280"/>
+        <line x1="322" y1="40" x2="322" y2="280"/>
+        <line x1="406" y1="40" x2="406" y2="280"/>
+        <line x1="490" y1="40" x2="490" y2="280"/>
+      </g>
+      <!-- axes -->
+      <g class="axis-line">
+        <line x1="70" y1="280" x2="495" y2="280"/>
+        <line x1="70" y1="35" x2="70" y2="280"/>
+      </g>
+      <!-- x ticks (time in years) -->
+      <g class="ax-tick" text-anchor="middle">
+        <text x="70" y="298">0</text>
+        <text x="154" y="298">2</text>
+        <text x="238" y="298">4</text>
+        <text x="322" y="298">6</text>
+        <text x="406" y="298">8</text>
+        <text x="490" y="298">10</text>
+      </g>
+      <!-- y ticks (population) -->
+      <g class="ax-tick" text-anchor="end">
+        <text x="64" y="44">600</text>
+        <text x="64" y="104">450</text>
+        <text x="64" y="164">300</text>
+        <text x="64" y="224">150</text>
+        <text x="64" y="284">0</text>
+      </g>
+      <!-- axis titles -->
+      <text class="ax-title" x="280" y="320" text-anchor="middle">Time (years since reintroduction)</text>
+      <text class="ax-title" x="20" y="160" text-anchor="middle" transform="rotate(-90 20 160)">Population N(t)</text>
+      <!-- carrying capacity K = 400 → y = 280 - 400/600*240 = 280 - 160 = 120 -->
+      <line class="marker-line" x1="70" y1="120" x2="490" y2="120"/>
+      <text class="annot-K" x="496" y="124" text-anchor="start">K</text>
+      <text class="annot" x="408" y="112">carrying capacity = 400</text>
+      <!-- exponential curve N=100·1.2^t (dashed): y = 280 - (100·1.2^t / 600)·240 = 280 - 0.4·1.2^t·... wait simplify: 240/600 = 0.4 → y = 280 - 0.4·N -->
+      <!-- Points: t=0,N=100,y=240; t=1,N=120,y=232; t=2,N=144,y=222.4; t=3,N=172.8,y=210.9; t=4,N=207.4,y=197.0; t=5,N=248.8,y=180.5; t=6,N=298.6,y=160.6; t=7,N=358.3,y=136.7; t=8,N=430.0,y=108.0; t=9,N=516.0,y=73.6; t=10,N=619.2,y=32.3 (just off top) -->
+      <path class="curve-exp" d="M70,240 L112,232 L154,222.4 L196,210.9 L238,197.0 L280,180.5 L322,160.6 L364,136.7 L406,108.0 L448,73.6 L490,32.3"/>
+      <!-- logistic curve (solid): P=K/(1+A·e^(-rt)) with K=400, A=3, r=0.5 -->
+      <!-- Points (P then y=280-0.4P): t=0,P=100,y=240; t=1,P=119.2,y=232.3; t=2,P=140.5,y=223.8; t=3,P=163.5,y=214.6; t=4,P=187.6,y=205.0; t=5,P=212.3,y=195.1; t=6,P=236.5,y=185.4; t=7,P=259.6,y=176.2; t=8,P=280.7,y=167.7; t=9,P=299.5,y=160.2; t=10,P=315.7,y=153.7 -->
+      <path class="curve-real" d="M70,240 L112,232.3 L154,223.8 L196,214.6 L238,205.0 L280,195.1 L322,185.4 L364,176.2 L406,167.7 L448,160.2 L490,153.7"/>
+      <!-- divergence annotation -->
+      <text class="curve-label exp" x="412" y="62">exponential model: 100·(1.2)^t</text>
+      <text class="curve-label real" x="412" y="148">real (logistic) curve</text>
+      <!-- arrow pointing to divergence around t=6 -->
+      <text class="annot" x="270" y="60">models agree early —</text>
+      <text class="annot" x="270" y="76">diverge as N → K</text>
+    </svg>
+    <figcaption>Figure 2. Population over time. The dashed exponential growth curve keeps rising; the solid curve (what actually happens in a finite environment) bends and approaches the carrying capacity K. Notice both curves match well in the early years — and then peel apart.</figcaption>
+  </figure>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>What the figure tells us:</strong> the exponential model fits beautifully for the first few years. By year 6 or 7 the real population starts to flatten — food, water and territory are finite, and births slow as the colony fills its range. By year 10, the exponential predicts about 619 quokkas; the carrying capacity is only 400. The model has stopped describing reality.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the routines. Try them on your own first — <strong>then we'll check together</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Half-life reasoning and simple growth/decay factors. Type ages as whole numbers (e.g. <code>11460</code>). Type populations as decimals if needed (e.g. <code>121</code> or <code>121.55</code> — first two decimal places).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now you'll combine the decay/growth model with the situation, and start critiquing where it breaks. Round populations to the nearest whole.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Modelling problems mixing growth and decay — and explanations of model limits. For "explain" questions, type your reasoning in plain English.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<!-- CURRICULUM LINK -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 10 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M10A04</strong> — use mathematical modelling to solve applied problems involving growth and decay, including financial contexts; formulate problems, choosing to apply linear, quadratic or exponential models; interpret solutions in terms of the situation; evaluate and modify models as necessary and report assumptions, methods and findings.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">4, 5</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Use exponential decay (carbon-14 half-life) and exponential growth (reproductive rates) to model applied scenarios; evaluate where the exponential model breaks down as a population approaches its environmental carrying capacity.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y10_alg_17. Source: SA Curriculum (Mathematics R–10 Prototype 2) &middot; lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 10 · Carbon Dating &amp; Applied Decay Modelling
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ TWO TRUTHS AND A LIE ============
+  const ttalRounds = [
+    {
+      title: 'About a quokka population growing at 8% per year (early years)',
+      statements: [
+        { text: "The growth factor in this model is 1.08 — every year the population is multiplied by 1.08.", isLie: false },
+        { text: "After 10 years, a 100-quokka colony modelled by an 8% yearly growth factor will have grown to more than double its starting size.", isLie: false },
+        { text: "The exponential growth model stays accurate as the population approaches the reserve's carrying capacity.", isLie: true },
+      ],
+      explanation: "The lie is C. <strong>As the population nears the carrying capacity K, the exponential model overestimates.</strong> In a finite reserve, food, water, shelter and territory are limited. Once the colony fills its range, births slow and deaths rise — so the real curve bends away from the exponential one (see Figure 2). The model that fitted the early data starts to be wrong. (Statement B is true because 1.08¹⁰ ≈ 2.16, so after 10 years a 100-quokka colony grows to about 216 — more than double.)",
+    },
+    {
+      title: 'About carbon-14 in an organic artefact',
+      statements: [
+        { text: "Every 5,730 years, the amount of carbon-14 in a sample halves.", isLie: false },
+        { text: "If only one quarter of the original carbon-14 remains, the sample is about 11,460 years old.", isLie: false },
+        { text: "Carbon-14 decay can be relied on to date a sample of any age — even one billion years old.", isLie: true },
+      ],
+      explanation: "The lie is C. <strong>Carbon-14 dating works only up to about 50,000–60,000 years — and is unreliable past about 50,000 years.</strong> After 10 half-lives (about 57,300 years), less than 0.1% of the original carbon-14 is left, and that's too little to measure accurately. For samples older than that, scientists use different radioactive isotopes (like potassium-40, half-life 1.25 billion years) — a different model for a different scale.",
+    },
+    {
+      title: 'About modelling in general',
+      statements: [
+        { text: "A model that fits the early data perfectly can still be wrong later, because the assumptions can stop being true.", isLie: false },
+        { text: "When an exponential model and reality start to diverge, it is sensible to switch to a different model (such as a logistic model).", isLie: false },
+        { text: "If a model has worked well so far, it will keep working forever — we never need to revisit our assumptions.", isLie: true },
+      ],
+      explanation: "The lie is C. <strong>Models are only as good as the assumptions behind them.</strong> The exponential growth model assumes resources are unlimited and the growth rate is constant — both of these stop being true as a population fills its environment. Curriculum descriptor AC9M10A04 specifically asks you to <em>evaluate and modify models as necessary, and report your assumptions, methods and findings</em>. That step — checking whether the model still describes reality — is part of doing maths well.",
+    },
+  ];
+
+  let ttalRoundIndex = 0;
+
+  function buildTtal() {
+    const container = document.getElementById('ttalContainer');
+    container.innerHTML = '';
+    ttalRounds.forEach((round, ri) => {
+      const div = document.createElement('div');
+      div.className = 'ttal-round';
+      div.id = 'ttal-round-' + ri;
+      const letters = ['A', 'B', 'C'];
+      div.innerHTML = `
+        <div class="ttal-round-head">
+          <span class="ttal-round-num">${ri + 1}</span>
+          <span class="ttal-round-title">${round.title}</span>
+        </div>
+        <div class="ttal-statements" id="ttal-stmts-${ri}"></div>
+        <div class="ttal-feedback" id="ttal-fb-${ri}"></div>
+      `;
+      container.appendChild(div);
+      const stmtsBox = div.querySelector('#ttal-stmts-' + ri);
+      round.statements.forEach((s, si) => {
+        const btn = document.createElement('div');
+        btn.className = 'ttal-stmt';
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
+        btn.innerHTML = `<span class="ttal-letter">${letters[si]}</span><span>${s.text}</span>`;
+        const handler = () => handleTtalClick(ri, si);
+        btn.addEventListener('click', handler);
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
+        });
+        stmtsBox.appendChild(btn);
+      });
+    });
+  }
+
+  function handleTtalClick(ri, si) {
+    const round = ttalRounds[ri];
+    const stmtsBox = document.getElementById('ttal-stmts-' + ri);
+    const fb = document.getElementById('ttal-fb-' + ri);
+    const buttons = stmtsBox.querySelectorAll('.ttal-stmt');
+    const clicked = buttons[si];
+
+    if (round.statements[si].isLie) {
+      // Correct pick
+      buttons.forEach((b, bi) => {
+        b.classList.add('disabled');
+        if (round.statements[bi].isLie) {
+          b.classList.add('correct-lie');
+        } else {
+          b.classList.add('revealed-truth');
+        }
+      });
+      fb.innerHTML = '<strong>✓ Correct — that is the lie.</strong> ' + round.explanation;
+      fb.classList.add('visible');
+      if (!round._scored) {
+        round._scored = true;
+        correctCount++;
+        updateProgress();
+      }
+      // advance progress note
+      ttalRoundIndex = Math.max(ttalRoundIndex, ri + 1);
+      const note = document.getElementById('ttalProgressNote');
+      if (ttalRoundIndex >= ttalRounds.length) {
+        note.textContent = 'All three rounds done — well played.';
+      } else {
+        note.textContent = `Round ${ttalRoundIndex + 1} of ${ttalRounds.length} — pick the lie.`;
+      }
+    } else {
+      // Wrong pick — shake, allow retry
+      clicked.classList.add('wrong-pick');
+      setTimeout(() => clicked.classList.remove('wrong-pick'), 600);
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+
+  // Retrieval warm-up — prerequisite exponent skills.
+  const retrieval = [
+    { q: 'Evaluate <span class="expr">2<sup>4</sup></span>.', a: '16', hint: '2 × 2 × 2 × 2.' },
+    { q: 'What is <span class="expr">(<span class="frac"><span class="num">1</span><span class="den">2</span></span>)<sup>3</sup></span> as a fraction?', a: '1/8', hint: '(1/2) × (1/2) × (1/2).' },
+    { q: 'A colony of 50 doubles every year. How many after 3 years?', a: '400', hint: '50 × 2 × 2 × 2.' },
+  ];
+
+  // Building practice — half-life reasoning and simple growth factors
+  const practice1 = [
+    { q: 'Carbon-14 has a half-life of 5,730 years. After <strong>one</strong> half-life, what fraction of the original C-14 remains?', a: '1/2', hint: 'That is what "half-life" means.' },
+    { q: 'After <strong>two</strong> half-lives of carbon-14, what fraction of the original C-14 remains?', a: '1/4', hint: 'Half of a half.' },
+    { q: 'After <strong>three</strong> half-lives of carbon-14, what fraction of the original C-14 remains?', a: '1/8', hint: 'Half, then half, then half.' },
+    { q: 'A sample contains <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span> of its original C-14. How old is it, in years?', a: '5730', hint: 'One half-life has passed.' },
+    { q: 'A sample contains <span class="expr"><span class="frac"><span class="num">1</span><span class="den">4</span></span></span> of its original C-14. How old is it, in years?', a: '11460', hint: 'Two half-lives × 5,730 years each.' },
+    { q: 'A sample contains <span class="expr"><span class="frac"><span class="num">1</span><span class="den">8</span></span></span> of its original C-14. How old is it, in years?', a: '17190', hint: 'Three half-lives × 5,730 years each.' },
+    { q: 'A quokka colony starts at 100 and grows by a factor of 1.20 per year. What is the population after <strong>1</strong> year?', a: '120', hint: '100 × 1.20.' },
+    { q: 'Same colony — after <strong>2</strong> years?', a: '144', hint: '100 × 1.20 × 1.20 = 100 × 1.44.' },
+    { q: 'A medicine in your bloodstream decays by a factor of 0.5 every 4 hours. Starting at 200 mg, how much is left after 4 hours?', a: '100', hint: '200 × 0.5.' },
+    { q: 'Same medicine — how much is left after 8 hours?', a: '50', hint: 'Two half-lives have passed.' },
+  ];
+
+  // Stretch — applied modelling and critique
+  const practice2 = [
+    { q: 'A bilby population is reintroduced to a reserve with 80 individuals. The early growth factor is 1.15 per year. What is the population after <strong>5</strong> years? (Round to the nearest whole bilby.)', a: '161', hint: '80 × 1.15^5. Use 1.15^5 ≈ 2.011.' },
+    { q: 'A piece of organic material contains <span class="expr"><span class="frac"><span class="num">1</span><span class="den">16</span></span></span> of its original carbon-14. Estimate its age, in years.', a: '22920', hint: '(1/2)^4 = 1/16, so 4 half-lives have passed.' },
+    { q: 'A population grows at a yearly factor of 1.10. By what factor will it have grown after <strong>2</strong> years? (Answer as a decimal, 2 d.p.)', a: '1.21', hint: '1.10 × 1.10.' },
+    { q: 'A radioactive isotope (not C-14) loses 25% of its mass each year, so the decay factor is 0.75. Starting at 200 g, how many grams remain after <strong>2</strong> years? (Round to 2 d.p.)', a: '112.5', hint: '200 × 0.75 × 0.75 = 200 × 0.5625.' },
+    { q: 'The reserve in Section 6 can support at most <span class="var">K</span> = 400 quokkas. If the exponential model predicts <strong>619</strong> after 10 years, by roughly how many is the model overestimating reality at that point? (Answer as a positive whole number.)', a: '219', hint: '619 − 400 = ?' },
+    { q: 'After 1 half-life, half of a C-14 sample remains; after 2 half-lives, a quarter remains. What general fraction of the original is left after <span class="var">n</span> half-lives? Type as a power, e.g. <code>(1/2)^n</code>.', a: '(1/2)^n', hint: 'Each half-life multiplies by 1/2.' },
+  ];
+
+  // Mastery — explanation + harder modelling
+  const practice3 = [
+    { q: 'A sample contains 12.5% of its original carbon-14. Estimate its age in years.', a: '17190', hint: '12.5% = 1/8 = (1/2)³ → 3 half-lives.' },
+    { q: 'A quokka population is modelled by <span class="expr"><span class="var">N</span>(<span class="var">t</span>) = 100·1.20<sup><span class="var">t</span></sup></span>. The reserve\'s carrying capacity is <span class="var">K</span> = 400. After how many <strong>whole</strong> years does the exponential model first predict a population exceeding <span class="var">K</span>? (Use trial: 1.20^7 ≈ 3.58 and 1.20^8 ≈ 4.30.)', a: '8', hint: 'You want 100·1.20^t > 400, i.e. 1.20^t > 4. Check t=7 (3.58) and t=8 (4.30).' },
+    { q: 'Explain, with reference to Figure 2, why a growth model that fits the first few years of data can still be wrong about year 10. (1–2 sentences.)', a: 'TEXT', hint: 'Think about what assumptions the exponential model makes that stop being true near carrying capacity.' },
+    { q: 'A new artefact is dated at 28,650 years. How many half-lives of carbon-14 is that? (Hint: divide.)', a: '5', hint: '28,650 ÷ 5,730 = ?' },
+  ];
+
+  // Quick check
+  const checkpoint = [
+    { q: 'A sample of organic material has only <span class="expr"><span class="frac"><span class="num">1</span><span class="den">2</span></span></span> of its original carbon-14 left. About how old is it, in years?', a: '5730', hint: 'One half-life of C-14.' },
+    { q: 'A 100-quokka population grows by a factor of 1.20 per year. After <strong>3</strong> years, what is the population? (Round to the nearest whole.)', a: '173', hint: '100 × 1.20 × 1.20 × 1.20 = 100 × 1.728.' },
+  ];
+
+  // We Do — collaborative
+  const weDo = [
+    { q: 'Write the exponential model for the quokka population <span class="expr"><span class="var">N</span>(<span class="var">t</span>)</span> starting at 100 with growth factor 1.20. Type using <code>^</code> for power. (Form: <code>100·1.20^t</code> or <code>100*1.2^t</code>.)', a: '100·1.20^t', hint: 'Initial × (factor)^(time).' },
+    { q: 'Using this model, what is <span class="expr"><span class="var">N</span>(5)</span> — the population after 5 years? (Round to nearest whole. Use 1.20^5 ≈ 2.488.)', a: '249', hint: '100 × 2.488 ≈ 249.' },
+    { q: 'According to the figure, what happens to the actual (solid) curve as it approaches the dashed K = 400 line — does it keep rising at the same rate, slow down, or speed up? (Type one word: rising / slowing / faster.)', a: 'slowing', hint: 'Look at the solid curve\'s shape in the right half of the figure.' },
+  ];
+
+  // Exit ticket
+  const exitProbs = [
+    { q: 'A sample contains <span class="expr"><span class="frac"><span class="num">1</span><span class="den">8</span></span></span> of its original carbon-14. Estimate its age (years).', a: '17190', hint: '3 half-lives of 5,730 each.' },
+    { q: 'A population is modelled by <span class="expr"><span class="var">N</span>(<span class="var">t</span>) = 50·1.10<sup><span class="var">t</span></sup></span>. What is <span class="expr"><span class="var">N</span>(2)</span>? (Round to nearest whole.)', a: '61', hint: '50 × 1.10 × 1.10 = 50 × 1.21.' },
+    { q: 'In one sentence, explain why the exponential growth model for a quokka population starts to overestimate once the population nears the reserve\'s carrying capacity.', a: 'TEXT', hint: 'Think about what limits growth in a finite environment.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/×/g, '*')
+      .replace(/·/g, '*')
+      .replace(/−/g, '-')
+      .replace(/\^/g, '^')
+      .replace(/^\+/, '');
+  }
+
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // Accept "100*1.2^t" or "100·1.20^t" or "100*1.20^t" or "100x1.20^t" etc.
+    const stripTrailZero = s => s.replace(/(\d+\.\d*?)0+(?=\D|$)/g, '$1').replace(/(\d)\.(?=\D|$)/g, '$1');
+    if (stripTrailZero(norm) === stripTrailZero(exp)) return true;
+    // Accept order-invariant for simple sums (rare here)
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — your teacher will check.';
+    // Preserve typed maths fairly literally for this lesson (mixed numerical answers).
+    let r = a;
+    // Stack pure fractions like 1/2, 11/8
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Italicise standalone variable letters (t, n, N, etc.) when adjacent to math operators or parens
+    r = r.replace(/(?<![A-Za-z])([A-Za-z])(?![A-Za-z])/g, '<span class="var">$1</span>');
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildTtal();
+  // TTAL adds 3 scoreable items
+  totalProblems += ttalRounds.length;
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
