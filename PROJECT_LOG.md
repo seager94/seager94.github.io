@@ -3,7 +3,7 @@
 *Decisions, deferrals, and standing rules for the AC9 7–10 lesson library.*
 *This is the third memory layer. It is NOT lesson state and NOT process docs (see "Where things live" below).*
 
-Last updated: 2026-05-30
+Last updated: 2026-06-08
 
 ---
 
@@ -116,3 +116,40 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 **Lessonmap:** y10_alg_01–10 flipped to Published, Generated date 2026-06-07, URLs set. Tally 120 Published / 101 Planned.
 
 **Next:** Batch 2 = y10_alg_11–20 (A03/A04/A05 — exponential functions, growth/decay incl. finance, digital-tool experimentation). Strategy propose-and-pick still pending for those.
+
+## 2026-06-08 — Year 10 Algebra Batch 2 published (y10_alg_11–20)
+
+**Strand completed:** Year 10 Algebra is now fully built (L01–L20). Batch 2 covered AC9M10A03/A04/A05 — exponential functions, growth/decay (incl. finance), and digital-tool experimentation. Plan reconciled against AC9 + SA Prototype 2 before drafting; no decomposition divergence.
+
+**Published (lesson-gen → main, live on Pages):**
+- L11 introducing exponential functions — Hinge Question
+- L12 features of exponential graphs — Always/Sometimes/Never (Slider widget deliberately dropped — SVG-heavy, low marking value)
+- L13 solving exponential equations — Faded Examples (incl. First Nations Ranger feral-animal contexts)
+- L14 choosing linear/quadratic/exponential models — Hinge Question
+- L15 exponential growth and decay — Error Analysis
+- L16 compound interest modelling — Faded Examples (finance flagship)
+- L17 carbon dating + applied decay — Two Truths and a Lie
+- L18 intersections with digital tools — Estimation Ladder (bisection)
+- L19 circle equations and transformations — Error Analysis (centre sign-flip); three labelled-grid circle SVGs
+- L20 intervals and iterative methods — Order the Steps (bisection)
+
+**Strategy re-weighting:** mid-batch, picks were re-weighted toward auto-marking strategies; open-response/discussion-dependent strategies stay excluded. Propose-and-pick (Sam selects) unchanged.
+
+**L16 compound-interest cent-drift bug (found + fixed):** the model rounded the intermediate (1+r/n) before applying the exponent, drifting the final answer by a few cents in every multi-compounding (daily/monthly/quarterly) answer; annual (n=1) was safe. Recomputed all 24 money answers in Python; four were wrong and fixed: S2 daily 6749.29→6749.13, S6 quarterly 10408.86→10408.83, F3 monthly worked line 13610.34→13608.39, M5 difference 38.69→38.61. Added ±5c tolerance to the faded-input checker (checkInline) — but NOT to the locked checkAnswer, which stays exact-match.
+
+**New tool — `verify_answers.py` (repo root, committed):** Tier-1 answer checker. Recomputes compound interest A=P(1+r/n)^(nt), simple interest, and constant-% growth/decay straight from each question's prose, extracts every stored `a:'...'` answer, and flags any drift beyond tolerance; anything it can't parse is listed as MANUAL (never silently passed). Wildcard-expanding, so `python verify_answers.py y10_alg_*.html` sweeps a whole strand. **Rounding-awareness patch:** questions saying "nearest whole/dollar" (or whole-number stored answers) compare at ±$0.50 instead of ±1c — kills the false-positive class (caught three L15 "nearest whole" answers that were correct). Strand-wide sweep of all 20 lessons ran clean: zero real answer errors. Future lift (not done): have the skill emit `data-verify="compound:P=…,r=…,n=…,t=…"` metadata so the checker reads parameters instead of parsing prose — would also reach faded calc-box and difference questions Tier 1 can't.
+
+**Hard lessons this batch (process):**
+- **Excel-lock silent-save trap.** A map flip via openpyxl silently did nothing because lessonmap.xlsx was open in Excel (file locked; save threw nothing, wrote nothing). The committed map sat stale at 120/101 while everyone believed it was 130/91 — surfaced only at the merge. → flip script now REOPENS the file after saving and prints the on-disk tally to confirm persistence; close Excel before any flip.
+- **The 20-file gate.** Batch 2c built only L18 and L20 — L19 was silently skipped by the run (never generated). A merge was attempted at 17/20 on the branch, which (combined with the stale map) produced a long binary-merge tangle. → `git ls-files year-10/algebra/ | Measure-Object -Line` must equal the expected count BEFORE any map flip or merge. L19 rebuilt fine on a single-line re-run (equation notation spelled out as "x squared plus y squared" to dodge any superscript-glyph risk in the prompt).
+- **Binary merge conflict on lessonmap.xlsx recurs on every lesson-gen→main merge.** Git can't auto-merge .xlsx. Resolution that works: `git checkout lesson-gen -- lessonmap.xlsx` (pull the file from the named branch — unambiguous, unlike --ours/--theirs, which resolved to the WRONG side here and staged the stale 120/101). A broken `.gitattributes` line (`merge=theirs`, no such driver) was created then removed. → proper `merge=ours`-driver guard still TO DO.
+
+**Lessonmap:** y10_alg_11–20 flipped to Published, Generated date 2026-06-08, URLs set, reopen-after-save confirmed on disk. Tally 130 Published / 91 Planned.
+
+**Open debt carried forward:**
+- L09 + L19 machine-drawn SVG geometry needs a live browser eyeball (shaded regions / circle centre+radius placement sitting correctly). L05 `a^6/4` fraction-reveal cosmetic quirk still open.
+- L20 share/medicine threshold questions (n=9, n=12): function values confirmed in Python, threshold-vs-answer wording still wants an eyeball.
+- `.gitattributes merge=ours` guard for lessonmap.xlsx not yet set — binary conflict will recur until done.
+- Sweep Y9 and earlier finance lessons for the same multi-compounding intermediate-rounding drift.
+
+**Next:** Y10 Algebra complete. Remaining Y10 strands (Number/Measurement/Space/Statistics/Probability) and the Y9/Y8 backlog per build-backlog priorities.
