@@ -1,3 +1,2 @@
-* text=auto
-
-.github/workflows/*.yml text eol=lf
+lessonmap.xlsx binary
+lessonmap_reconciled.xlsx binary

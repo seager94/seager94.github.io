@@ -3,7 +3,7 @@
 *Decisions, deferrals, and standing rules for the AC9 7–10 lesson library.*
 *This is the third memory layer. It is NOT lesson state and NOT process docs (see "Where things live" below).*
 
-Last updated: 2026-06-01
+Last updated: 2026-06-08
 
 ---
 
@@ -55,12 +55,12 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 - **Bin 3 files** (decided 2026-05-30, not yet run): `year-9/probability/probability_rule_choice_lesson_AC9M9P01_AC9M9P02.html` (off-convention; Y9 to be built fresh), `like_terms_lesson_11.html` (repo root), `lesson-drafts/y7_test_lesson.html`. → `git rm` + commit.
 - **Retired Y8 Measurement enrichment ideas** (dropped from the map by the re-map rule; re-add as Planned if still wanted): `applying_circle_formulas`, `pythagoras_in_context`, `scale_and_proportion_in_design`, `modelling_currency_exchange_and_phone_plans`, and a 2nd rates lesson. All seven M-descriptors remain covered without them.
-- ~~**Y9 Algebra A03–A06 forward renumber.**~~ **RESOLVED 2026-06-01** by the 18-lesson re-map (see changelog). Rows 07–18 now renumber cleanly behind the built 01–06; descriptors run A03→A04→A05→A06 in order.
+- **Y9 Algebra A03–A06 forward renumber.** The built 01–06 inserted a dedicated index-laws lesson, displacing the planned gradient/distance/quadratics/modelling/transformations sequence (old rows 128–139) down by one+. Those rows are still Planned but their `Lesson #` no longer aligns with the built sequence. → dedicated Y9-Algebra reconciliation pass to renumber.
 
 ## Build backlog (by priority)
 
 1. **Finish Year 8** — Algebra `#06` (1), Statistics (6), Probability (4), + Y8 SP03 3D coordinates (1). ≈12 lessons.
-2. **Year 9** — Algebra 01–18 **complete and published** (full strand). All other Y9 strands still to build: ≈29 lessons across Measurement (12), Space (7), Statistics (6), Probability (4).
+2. **Year 9** — Algebra 01–06 published; remainder (Algebra 07+ and all other strands) still to build. ≈42 lessons.
 3. **Year 10** — only the legacy Algebra folder exists; regenerate Algebra to the advanced plan + build Number/Measurement/Space/Statistics/Probability. ≈54 lessons.
 4. **Y7 SP03 transformations** — once the transformation interactive component exists.
 5. **Curriculum index page** — needs a `lessonmap.json` export (does not exist yet); build from the master.
@@ -68,20 +68,6 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 ---
 
 ## Changelog
-
-### 2026-06-04 — Y9 Algebra 07–18 built, published; strand complete
-- **All 12 remaining lessons (07–18) built locally and published** to `year-9/algebra/`, completing the Y9 Algebra strand (01–18). Map rows 129–140 flipped Planned→Published with live URLs and generation dates; map now **122 Published, 100 Planned, 222 rows**. Metadata confirmed present in each file's `<meta>` per generation summaries.
-- **Everything ran local, not on the runner.** The Actions runner failed the whole `y9-alg-03` batch on the 32k output-token ceiling (every task, not just one); the same lessons build cleanly one-at-a-time locally — including 18, the four-family SVG lesson flagged as the heaviest. Confirms the ceiling is a *runner-side* problem (extra context in the checkout), not per-lesson output size. Root-cause investigation split into its own chat. Build/publish flow used: write `tasks.txt` → `run-batch.ps1` local → review → push to `lesson-gen` → merge to `main`.
-- **Two transient failures during the runs, both recovered by simple rerun:** lesson 14 dropped a socket mid-build (network, not size); reran solo and succeeded. No template changes needed.
-- **Workflow learnings:** (1) the browser-download step for batch `.txt` files repeatedly failed silently, causing stale-`tasks.txt` reruns of already-built lessons — switched to writing `tasks.txt` directly (VS Code new file, or PowerShell `Set-Content`), no download in the loop. (2) Always verify `tasks.txt` contents (`Select-String "lesson-id is"`) before running, to catch a failed copy before wasting compute. (3) `run-batch.ps1` skips `#`-prefixed lines (confirmed line 9) as well as blanks. (4) `tasks.txt` should not live in the repo — gitignore candidate.
-
-### 2026-06-01 — Y9 Algebra re-planned to 18 lessons; 07–10 drafted to run
-- **Found the real Y9-Algebra batch files** (uploaded to the repo, not stored in the project): `y9-alg-01`/`-02` = lessons 01–06 (the published set), plus drafted `y9-alg-03`/`-04` carrying a **13-lesson** decomposition (07–13). The 13-lesson build diverged from the map's 17-row plan and, on review, under-covered the curriculum.
-- **Decision: go to an 18-lesson plan (07–18), thoroughness over compression.** Two genuine content gaps in the 13-lesson version are filled: **parallel & perpendicular lines** (A03 elaboration 2, new `y9_alg_09`) and **families of functions** (A06 elaboration 3, new `y9_alg_18`). A05 modelling and A06 transformations each restored from 1 compressed lesson back to 3. Gradient kept as its own lesson (`y9_alg_07`), which is what pushed the total from 17 to 18. A04 decomposition adopted from the uploaded files (graph / graphical-numerical solve / algebraic solve), with the moon-phase First Nations elaboration (A04 e7) folded into `y9_alg_11`.
-- **Quality fixes applied to carried-over lines:** `y9_alg_12` (algebraic solving) now requires a small parabola figure (it was the only solving lesson without one); the modelling and transformation lessons (`13`–`18`) are tagged `auto-marked + open-ended` so generalisation/evaluation items aren't forced through the Check button.
-- **Batch files rewritten** to the 18-lesson plan, grouped by descriptor: `y9-alg-03` = 07–10 (A03 + first A04), `y9-alg-04` = 11–12 (rest of A04), `y9-alg-05` = 13–15 (A05), `y9-alg-06` = 16–18 (A06). `y9-alg-03` runs first; the SVG-heavy lessons (11, 17, 18) are the likely 32k-token-cap repeat offenders — build locally if one comes back truncated.
-- **Lessonmap rewritten** (rows 129–140): old Planned 07–17 replaced with the 18-lesson plan, Measurement+ shifted down one row. All 07–18 left as **Planned** (not yet built) — `Planned`→`Published` flip and `<meta>` confirmation is the closeout pass after the batches run. Map now: **110 Published, 112 Planned, 222 rows.**
-- **Resolved** the open "Y9 Algebra A03–A06 forward renumber" debt — the 18-plan renumbers 07–18 cleanly behind the built 01–06.
 
 ### 2026-05-31 — Y9 Algebra 01–06 + pipeline batch-hide fix
 - **Fixed the remote batch over-build bug.** The GitHub Actions workflow was building all lessons in a batch on every task line, because `claude -p` reads outside its working dir by design (confirmed vs Claude Code docs) — the agent found `batches/<name>.txt` and "completed the unit". Fix: the workflow now reads task lines into memory, moves `batches/` out of the checkout during generation, then restores it before commit. Proven across two remote batches.
@@ -130,3 +116,40 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 **Lessonmap:** y10_alg_01–10 flipped to Published, Generated date 2026-06-07, URLs set. Tally 120 Published / 101 Planned.
 
 **Next:** Batch 2 = y10_alg_11–20 (A03/A04/A05 — exponential functions, growth/decay incl. finance, digital-tool experimentation). Strategy propose-and-pick still pending for those.
+
+## 2026-06-08 — Year 10 Algebra Batch 2 published (y10_alg_11–20)
+
+**Strand completed:** Year 10 Algebra is now fully built (L01–L20). Batch 2 covered AC9M10A03/A04/A05 — exponential functions, growth/decay (incl. finance), and digital-tool experimentation. Plan reconciled against AC9 + SA Prototype 2 before drafting; no decomposition divergence.
+
+**Published (lesson-gen → main, live on Pages):**
+- L11 introducing exponential functions — Hinge Question
+- L12 features of exponential graphs — Always/Sometimes/Never (Slider widget deliberately dropped — SVG-heavy, low marking value)
+- L13 solving exponential equations — Faded Examples (incl. First Nations Ranger feral-animal contexts)
+- L14 choosing linear/quadratic/exponential models — Hinge Question
+- L15 exponential growth and decay — Error Analysis
+- L16 compound interest modelling — Faded Examples (finance flagship)
+- L17 carbon dating + applied decay — Two Truths and a Lie
+- L18 intersections with digital tools — Estimation Ladder (bisection)
+- L19 circle equations and transformations — Error Analysis (centre sign-flip); three labelled-grid circle SVGs
+- L20 intervals and iterative methods — Order the Steps (bisection)
+
+**Strategy re-weighting:** mid-batch, picks were re-weighted toward auto-marking strategies; open-response/discussion-dependent strategies stay excluded. Propose-and-pick (Sam selects) unchanged.
+
+**L16 compound-interest cent-drift bug (found + fixed):** the model rounded the intermediate (1+r/n) before applying the exponent, drifting the final answer by a few cents in every multi-compounding (daily/monthly/quarterly) answer; annual (n=1) was safe. Recomputed all 24 money answers in Python; four were wrong and fixed: S2 daily 6749.29→6749.13, S6 quarterly 10408.86→10408.83, F3 monthly worked line 13610.34→13608.39, M5 difference 38.69→38.61. Added ±5c tolerance to the faded-input checker (checkInline) — but NOT to the locked checkAnswer, which stays exact-match.
+
+**New tool — `verify_answers.py` (repo root, committed):** Tier-1 answer checker. Recomputes compound interest A=P(1+r/n)^(nt), simple interest, and constant-% growth/decay straight from each question's prose, extracts every stored `a:'...'` answer, and flags any drift beyond tolerance; anything it can't parse is listed as MANUAL (never silently passed). Wildcard-expanding, so `python verify_answers.py y10_alg_*.html` sweeps a whole strand. **Rounding-awareness patch:** questions saying "nearest whole/dollar" (or whole-number stored answers) compare at ±$0.50 instead of ±1c — kills the false-positive class (caught three L15 "nearest whole" answers that were correct). Strand-wide sweep of all 20 lessons ran clean: zero real answer errors. Future lift (not done): have the skill emit `data-verify="compound:P=…,r=…,n=…,t=…"` metadata so the checker reads parameters instead of parsing prose — would also reach faded calc-box and difference questions Tier 1 can't.
+
+**Hard lessons this batch (process):**
+- **Excel-lock silent-save trap.** A map flip via openpyxl silently did nothing because lessonmap.xlsx was open in Excel (file locked; save threw nothing, wrote nothing). The committed map sat stale at 120/101 while everyone believed it was 130/91 — surfaced only at the merge. → flip script now REOPENS the file after saving and prints the on-disk tally to confirm persistence; close Excel before any flip.
+- **The 20-file gate.** Batch 2c built only L18 and L20 — L19 was silently skipped by the run (never generated). A merge was attempted at 17/20 on the branch, which (combined with the stale map) produced a long binary-merge tangle. → `git ls-files year-10/algebra/ | Measure-Object -Line` must equal the expected count BEFORE any map flip or merge. L19 rebuilt fine on a single-line re-run (equation notation spelled out as "x squared plus y squared" to dodge any superscript-glyph risk in the prompt).
+- **Binary merge conflict on lessonmap.xlsx recurs on every lesson-gen→main merge.** Git can't auto-merge .xlsx. Resolution that works: `git checkout lesson-gen -- lessonmap.xlsx` (pull the file from the named branch — unambiguous, unlike --ours/--theirs, which resolved to the WRONG side here and staged the stale 120/101). A broken `.gitattributes` line (`merge=theirs`, no such driver) was created then removed. → proper `merge=ours`-driver guard still TO DO.
+
+**Lessonmap:** y10_alg_11–20 flipped to Published, Generated date 2026-06-08, URLs set, reopen-after-save confirmed on disk. Tally 130 Published / 91 Planned.
+
+**Open debt carried forward:**
+- L09 + L19 machine-drawn SVG geometry needs a live browser eyeball (shaded regions / circle centre+radius placement sitting correctly). L05 `a^6/4` fraction-reveal cosmetic quirk still open.
+- L20 share/medicine threshold questions (n=9, n=12): function values confirmed in Python, threshold-vs-answer wording still wants an eyeball.
+- `.gitattributes merge=ours` guard for lessonmap.xlsx not yet set — binary conflict will recur until done.
+- Sweep Y9 and earlier finance lessons for the same multi-compounding intermediate-rounding drift.
+
+**Next:** Y10 Algebra complete. Remaining Y10 strands (Number/Measurement/Space/Statistics/Probability) and the Y9/Y8 backlog per build-backlog priorities.
