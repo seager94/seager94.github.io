@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intervals and Iterative Methods — Year 10</title>
+
+<meta name="lesson-id"             content="y10_alg_20">
+<meta name="ac9-descriptor"        content="AC9M10A05">
+<meta name="ac9-elaborations"      content="2,5,6">
+<meta name="sa-year"               content="10">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones">
+<meta name="lesson-focus"          content="Use the bisection method to trap a root of a quadratic between sign-changing endpoints; build a sign chart; use a table of values to find when an exponential model crosses a threshold.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* SVG figure container */
+  .figure-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin: 14px 0 6px;
+    box-shadow: var(--shadow);
+  }
+  .figure-wrap svg { display: block; width: 100%; height: auto; max-width: 720px; margin: 0 auto; }
+  .figure-caption {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 8px;
+  }
+  .svg-axis { stroke: #2a2a2a; stroke-width: 1.5; }
+  .svg-grid { stroke: #e5e8ee; stroke-width: 1; }
+  .svg-curve { fill: none; stroke: var(--navy); stroke-width: 2.6; }
+  .svg-shade-neg { fill: var(--coral); fill-opacity: 0.10; }
+  .svg-shade-pos { fill: #6ba87c; fill-opacity: 0.10; }
+  .svg-tick-label { font-family: Georgia, serif; font-size: 13px; fill: #6b7280; }
+  .svg-region-label { font-family: Georgia, serif; font-style: italic; font-size: 18px; font-weight: bold; }
+  .svg-region-pos { fill: #2d7a4a; }
+  .svg-region-neg { fill: #a64727; }
+  .svg-root-dot { fill: var(--coral); stroke: white; stroke-width: 2; }
+  .svg-root-label { font-family: Georgia, serif; font-size: 13px; fill: var(--coral); font-weight: bold; }
+  .svg-numline { stroke: #2a2a2a; stroke-width: 2; }
+  .svg-numline-tick { stroke: #2a2a2a; stroke-width: 1.8; }
+  .svg-sign { font-family: Georgia, serif; font-size: 22px; font-weight: bold; }
+  .svg-sign-pos { fill: #2d7a4a; }
+  .svg-sign-neg { fill: #a64727; }
+  .svg-title { font-family: Georgia, serif; font-size: 15px; fill: var(--navy); font-weight: bold; }
+
+  /* Order the steps */
+  .order-problem-stem {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+  .order-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 14px;
+    counter-reset: stepCounter;
+  }
+  .order-card {
+    counter-increment: stepCounter;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    transition: background 0.25s, border-color 0.25s, transform 0.18s;
+  }
+  .order-card::before {
+    content: counter(stepCounter);
+    background: var(--coral); color: white;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+  .order-card.correct { background: var(--good-soft); border-color: var(--good); }
+  .order-card.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .order-card.locked { opacity: 0.7; }
+  .order-card.locked .order-buttons button { display: none; }
+  .order-content {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .order-buttons {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .order-buttons button {
+    background: var(--hint-bg); color: var(--navy);
+    border: 1px solid var(--border);
+    width: 32px; height: 26px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+    transition: background 0.15s;
+  }
+  .order-buttons button:hover { background: var(--navy); color: white; }
+  .order-buttons button:disabled { opacity: 0.3; cursor: not-allowed; background: var(--hint-bg); color: var(--navy); }
+  .order-actions {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .order-actions button {
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .order-actions .order-check { background: var(--coral); color: white; }
+  .order-actions .order-shuffle, .order-actions .order-show {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .order-status {
+    font-size: 0.9rem; color: var(--muted); font-style: italic;
+    margin-left: auto;
+  }
+
+  /* Sub-step table for bisection iteration */
+  .bisect-table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 6px 0 10px;
+    font-family: Georgia, serif;
+    font-size: 0.98rem;
+  }
+  .bisect-table th, .bisect-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .bisect-table thead th {
+    background: var(--hint-bg);
+    color: var(--navy);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .bisect-table .pos { color: #2d7a4a; font-weight: 600; }
+  .bisect-table .neg { color: #a64727; font-weight: 600; }
+  .bisect-table tr:last-child td { border-bottom: none; }
+
+  /* Exponential threshold table */
+  .threshold-table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 8px 0;
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+  }
+  .threshold-table th, .threshold-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .threshold-table thead th {
+    background: var(--hint-bg);
+    color: var(--navy);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .threshold-table .below { background: #fde2e2; color: #6a2520; }
+  .threshold-table .above { background: #dff5e8; color: #1d4a30; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Intervals and Iterative Methods</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Foundation</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 0</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions to wake up the skills you'll need today: substituting into a quadratic, signs, and finding midpoints.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: HOOK -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">Sometimes the answer can't be written as a tidy fraction or surd. You have to <em>close in</em> on it.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
+    <div>
+      <p>A friend buys a share at $50. Each year it grows by 8%. They want to know when it first passes $80.</p>
+      <p>There's no neat answer like "year 5" — the value follows <span class="expr">50 × 1.08<sup><span class="var">n</span></sup></span>, and the moment it crosses $80 lands between two whole years. So you do what mathematicians have done for centuries: you <strong>trap the answer</strong> between two values you can compute, then close the gap.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      Today: the same idea applied to a curve. When a quadratic has roots that aren't whole numbers, the <strong>bisection method</strong> traps each root between two <span class="var">x</span>-values where the function changes sign — then halves the interval, again and again, until you've cornered the answer. The same sign-analysis tells you where the quadratic is positive and where it's negative.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Set up the picture together</div>
+    <div class="phase-sub">Vocabulary, the parabola, and the sign chart — we'll explore as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip it. Five words you'll use constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Root (zero)<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A value of <strong><span class="var">x</span></strong> where <span class="expr">f(<span class="var">x</span>) = 0</span> — where the graph crosses the <span class="var">x</span>-axis.<div class="vocab-example expr">For <span class="var">f</span>(<span class="var">x</span>) = <span class="var">x</span>² − 9, the roots are <strong><span class="var">x</span> = 3</strong> and <strong><span class="var">x</span> = −3</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Interval<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>range of <span class="var">x</span>-values</strong>, written like (<span class="var">a</span>, <span class="var">b</span>). The bisection method works inside an interval.<div class="vocab-example expr">The interval <strong>(2, 3)</strong> means every <span class="var">x</span> between 2 and 3.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Sign change<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">When <span class="var">f</span> goes from <strong>positive to negative</strong> (or back) across an interval. A continuous curve that changes sign <em>must</em> have a root in between.<div class="vocab-example expr">If <span class="var">f</span>(2) = −5 and <span class="var">f</span>(3) = +2, the signs differ — so a root lies in (2, 3).</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Midpoint<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The exact <strong>centre</strong> of an interval: <span class="expr"><span class="frac"><span class="num"><span class="var">a</span> + <span class="var">b</span></span><span class="den">2</span></span></span>.<div class="vocab-example expr">The midpoint of (2, 3) is <strong>2.5</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Bisection<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">An <strong>iterative method</strong>: cut the interval in half, keep the half where the sign change still happens, and repeat.<div class="vocab-example expr">Each step <strong>halves</strong> the width — after 4 steps an interval of width 1 has shrunk to <strong>0.0625</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SIGN SORT -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Where is the quadratic positive? Where is it negative?</h2>
+  <p class="sec-desc">For <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span>: drag each <span class="var">x</span>-value into the bucket that matches the sign of <span class="var">f</span>(<span class="var">x</span>). Wrong drops will shake.</p>
+
+  <div class="parts-expr">
+    <div class="label">Function: <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span></div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="positive"><span class="var">x</span> = −2</span>
+      <span class="term-chip expr" data-type="negative"><span class="var">x</span> = −1</span>
+      <span class="term-chip expr" data-type="negative"><span class="var">x</span> = 0</span>
+      <span class="term-chip expr" data-type="negative"><span class="var">x</span> = 1</span>
+      <span class="term-chip expr" data-type="negative"><span class="var">x</span> = 2</span>
+      <span class="term-chip expr" data-type="positive"><span class="var">x</span> = 3</span>
+      <span class="term-chip expr" data-type="positive"><span class="var">x</span> = 4</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="positive">
+        <h4 class="vt"><span class="var">f</span>(<span class="var">x</span>) &gt; 0 &nbsp;(positive)</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="negative">
+        <h4 class="ct"><span class="var">f</span>(<span class="var">x</span>) &lt; 0 &nbsp;(negative)</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="figure-wrap">
+    <svg viewBox="0 0 720 540" role="img" aria-label="Graph of f(x) = 2x squared minus 3x minus 7 with x-intercepts marked and a number-line sign chart">
+      <!-- Title -->
+      <text x="360" y="20" text-anchor="middle" class="svg-title"><tspan style="font-style:italic">f</tspan>(<tspan style="font-style:italic">x</tspan>) = 2<tspan style="font-style:italic">x</tspan>² − 3<tspan style="font-style:italic">x</tspan> − 7</text>
+
+      <!-- Grid (vertical) at x = -2..4 mapped to px 70..670 (100 px per unit, origin x=270) -->
+      <line class="svg-grid" x1="70"  y1="30" x2="70"  y2="400"/>
+      <line class="svg-grid" x1="170" y1="30" x2="170" y2="400"/>
+      <line class="svg-grid" x1="270" y1="30" x2="270" y2="400"/>
+      <line class="svg-grid" x1="370" y1="30" x2="370" y2="400"/>
+      <line class="svg-grid" x1="470" y1="30" x2="470" y2="400"/>
+      <line class="svg-grid" x1="570" y1="30" x2="570" y2="400"/>
+      <line class="svg-grid" x1="670" y1="30" x2="670" y2="400"/>
+
+      <!-- Grid (horizontal) y = 4, 0, -4, -8 mapped to px 30, 134, 238, 342 (26 px per unit, origin y=134) -->
+      <line class="svg-grid" x1="70" y1="30"  x2="670" y2="30"/>
+      <line class="svg-grid" x1="70" y1="82"  x2="670" y2="82"/>
+      <line class="svg-grid" x1="70" y1="186" x2="670" y2="186"/>
+      <line class="svg-grid" x1="70" y1="290" x2="670" y2="290"/>
+      <line class="svg-grid" x1="70" y1="342" x2="670" y2="342"/>
+      <line class="svg-grid" x1="70" y1="394" x2="670" y2="394"/>
+
+      <!-- Shaded regions: negative between roots (x_px 143 to 547), positive outside -->
+      <rect class="svg-shade-pos" x="70"  y="30" width="73"  height="370"/>
+      <rect class="svg-shade-neg" x="143" y="30" width="404" height="370"/>
+      <rect class="svg-shade-pos" x="547" y="30" width="123" height="370"/>
+
+      <!-- Axes -->
+      <line class="svg-axis" x1="70" y1="134" x2="675" y2="134"/>
+      <line class="svg-axis" x1="270" y1="30" x2="270" y2="405"/>
+
+      <!-- Axis arrowheads -->
+      <polygon points="675,134 668,130 668,138" fill="#2a2a2a"/>
+      <polygon points="270,25 266,33 274,33" fill="#2a2a2a"/>
+
+      <!-- x-axis tick labels -->
+      <text class="svg-tick-label" x="70"  y="152" text-anchor="middle">−2</text>
+      <text class="svg-tick-label" x="170" y="152" text-anchor="middle">−1</text>
+      <text class="svg-tick-label" x="262" y="152" text-anchor="end">0</text>
+      <text class="svg-tick-label" x="370" y="152" text-anchor="middle">1</text>
+      <text class="svg-tick-label" x="470" y="152" text-anchor="middle">2</text>
+      <text class="svg-tick-label" x="570" y="152" text-anchor="middle">3</text>
+      <text class="svg-tick-label" x="670" y="152" text-anchor="middle">4</text>
+
+      <!-- y-axis tick labels -->
+      <text class="svg-tick-label" x="260" y="34"  text-anchor="end">4</text>
+      <text class="svg-tick-label" x="260" y="86"  text-anchor="end">2</text>
+      <text class="svg-tick-label" x="260" y="190" text-anchor="end">−4</text>
+      <text class="svg-tick-label" x="260" y="294" text-anchor="end">−8</text>
+
+      <!-- Axis labels -->
+      <text class="svg-tick-label" x="685" y="138" font-style="italic">x</text>
+      <text class="svg-tick-label" x="276" y="28"  font-style="italic">y</text>
+
+      <!-- Parabola curve -->
+      <polyline class="svg-curve" points="100,33 120,82 143,134 170,186 195,228 220,264 245,293 270,316 295,332 320,342 345,345 370,342 395,332 420,316 445,293 470,264 495,228 520,186 547,134 570,82 590,33"/>
+
+      <!-- x-intercept dots -->
+      <circle class="svg-root-dot" cx="143" cy="134" r="5.5"/>
+      <circle class="svg-root-dot" cx="547" cy="134" r="5.5"/>
+      <text class="svg-root-label" x="143" y="122" text-anchor="middle"><tspan style="font-style:italic">x</tspan> ≈ −1.27</text>
+      <text class="svg-root-label" x="547" y="122" text-anchor="middle"><tspan style="font-style:italic">x</tspan> ≈ 2.77</text>
+
+      <!-- Region labels -->
+      <text class="svg-region-label svg-region-pos" x="105" y="68" text-anchor="middle"><tspan style="font-style:italic">f</tspan> &gt; 0</text>
+      <text class="svg-region-label svg-region-neg" x="345" y="395" text-anchor="middle"><tspan style="font-style:italic">f</tspan> &lt; 0</text>
+      <text class="svg-region-label svg-region-pos" x="610" y="68" text-anchor="middle"><tspan style="font-style:italic">f</tspan> &gt; 0</text>
+
+      <!-- Number line sign chart -->
+      <text class="svg-title" x="60" y="455">Sign chart of <tspan style="font-style:italic">f</tspan>(<tspan style="font-style:italic">x</tspan>):</text>
+      <line class="svg-numline" x1="60"  y1="495" x2="685" y2="495"/>
+      <polygon points="685,495 678,491 678,499" fill="#2a2a2a"/>
+      <polygon points="60,495 67,491 67,499" fill="#2a2a2a"/>
+
+      <!-- Ticks at roots: x=-1.27 → 143 px in main grid; in number-line same scaling -->
+      <line class="svg-numline-tick" x1="143" y1="487" x2="143" y2="503"/>
+      <line class="svg-numline-tick" x1="547" y1="487" x2="547" y2="503"/>
+      <circle class="svg-root-dot" cx="143" cy="495" r="4.5"/>
+      <circle class="svg-root-dot" cx="547" cy="495" r="4.5"/>
+      <text class="svg-root-label" x="143" y="520" text-anchor="middle">−1.27</text>
+      <text class="svg-root-label" x="547" y="520" text-anchor="middle">2.77</text>
+
+      <!-- Sign markers on the number line -->
+      <text class="svg-sign svg-sign-pos" x="100" y="483" text-anchor="middle">+</text>
+      <text class="svg-sign svg-sign-neg" x="345" y="483" text-anchor="middle">−</text>
+      <text class="svg-sign svg-sign-pos" x="615" y="483" text-anchor="middle">+</text>
+    </svg>
+    <div class="figure-caption">The parabola sits below the <span class="var">x</span>-axis between its two roots. The sign chart records the same information on a single line.</div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 The graph above is the picture; the bucket sort and the number line are the same idea in shorthand. A parabola opening up is <strong>negative between its roots</strong> and <strong>positive outside</strong>.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCHING — substitute pairs -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each <span class="var">x</span>-value to its <span class="var">f</span>(<span class="var">x</span>)</h2>
+  <p class="sec-desc">For <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span>. Click two chips that match to lock them in. Five pairs in total.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch the bisection in action</div>
+    <div class="phase-sub">I'll trap the positive root of <span class="var">f</span>(<span class="var">x</span>) between two values, then halve the interval twice.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE — bisection -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — bisection on <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span></h2>
+  <p class="sec-desc">From the graph in Section 3, the positive root sits somewhere in <span class="expr">(2, 3)</span>. Let's close in.</p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Confirm a sign change in the starting interval</div>
+        <div class="step-desc">Evaluate <span class="var">f</span> at both endpoints. If the signs differ, the curve must cross zero somewhere inside.</div>
+        <div class="calc-box">
+          <span class="var">f</span>(2) = 2(2)² − 3(2) − 7 = 8 − 6 − 7 = <span class="red">−5</span> &nbsp;(negative)<br>
+          <span class="var">f</span>(3) = 2(3)² − 3(3) − 7 = 18 − 9 − 7 = <span class="blue">+2</span> &nbsp;(positive)<br>
+          Signs differ ✓ — a root lies in (2, 3).
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Halve the interval — step 1</div>
+        <div class="step-desc">Midpoint <span class="var">m</span> = (2 + 3)/2 = 2.5. Evaluate and check which half still has the sign change.</div>
+        <div class="calc-box">
+          <span class="var">f</span>(2.5) = 2(6.25) − 7.5 − 7 = 12.5 − 14.5 = <span class="red">−2</span> &nbsp;(negative)<br>
+          The sign change is now between 2.5 (−) and 3 (+).<br>
+          New interval: <span class="blue">(2.5, 3)</span> &nbsp;— width 0.5.
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Halve again — step 2</div>
+        <div class="step-desc">Midpoint <span class="var">m</span> = (2.5 + 3)/2 = 2.75. Evaluate and keep the half with the sign change.</div>
+        <div class="calc-box">
+          <span class="var">f</span>(2.75) = 2(7.5625) − 8.25 − 7 = 15.125 − 15.25 = <span class="red">−0.125</span> &nbsp;(negative)<br>
+          The sign change is now between 2.75 (−) and 3 (+).<br>
+          New interval: <span class="blue">(2.75, 3)</span> &nbsp;— width 0.25.
+        </div>
+        <table class="bisect-table" aria-label="Bisection summary">
+          <thead><tr><th>Step</th><th>Interval</th><th><span class="var">m</span></th><th><span class="var">f</span>(<span class="var">m</span>)</th><th>Keep</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>(2, 3)</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>1</td><td>(2, 3)</td><td>2.5</td><td class="neg">−2</td><td>right half (2.5, 3)</td></tr>
+            <tr><td>2</td><td>(2.5, 3)</td><td>2.75</td><td class="neg">−0.125</td><td>right half (2.75, 3)</td></tr>
+          </tbody>
+        </table>
+        <div class="summary-banner">
+          <span class="label">After 2 steps</span>
+          The root is trapped in (2.75, 3) — width <strong>0.25</strong>. A best estimate is the midpoint, <strong>≈ 2.88</strong>.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Order the steps together</div>
+    <div class="phase-sub">The bisection routine — but jumbled. Discuss the logic with the person next to you, then arrange the cards.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: ORDER THE STEPS -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Order the bisection routine</h2>
+  <p class="sec-desc">These six cards describe one full bisection iteration — but they're in the wrong order. Use the ↑ and ↓ buttons to put them right, then tap <strong>Check order</strong>. <em>Hint: the routine starts before you have any midpoint, and ends ready to start over.</em></p>
+
+  <div class="order-problem-stem">
+    Routine: one bisection iteration on a given interval (<span class="var">a</span>, <span class="var">b</span>)
+  </div>
+
+  <ul class="order-list" id="orderList">
+    <li class="order-card" data-correct-pos="4">
+      <div class="order-content expr">Evaluate <span class="var">f</span>(<span class="var">m</span>) at the midpoint.</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="6">
+      <div class="order-content expr">Replace the endpoint with <span class="var">m</span> and repeat from step 1.</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="1">
+      <div class="order-content expr">Evaluate <span class="var">f</span>(<span class="var">a</span>) and <span class="var">f</span>(<span class="var">b</span>) at the endpoints.</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="5">
+      <div class="order-content expr">Decide which half — (<span class="var">a</span>, <span class="var">m</span>) or (<span class="var">m</span>, <span class="var">b</span>) — still has the sign change.</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="2">
+      <div class="order-content expr">Confirm the signs of <span class="var">f</span>(<span class="var">a</span>) and <span class="var">f</span>(<span class="var">b</span>) differ.</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+    <li class="order-card" data-correct-pos="3">
+      <div class="order-content expr">Compute the midpoint <span class="var">m</span> = (<span class="var">a</span> + <span class="var">b</span>)/2.</div>
+      <div class="order-buttons">
+        <button onclick="moveOrder(this, -1)" aria-label="Move up">▲</button>
+        <button onclick="moveOrder(this, 1)" aria-label="Move down">▼</button>
+      </div>
+    </li>
+  </ul>
+
+  <div class="order-actions">
+    <button class="order-check" onclick="checkOrder()">Check order</button>
+    <button class="order-shuffle" onclick="shuffleOrder()">↻ Shuffle</button>
+    <button class="order-show" onclick="showOrderAnswer()">Show answer</button>
+    <span class="order-status" id="orderStatus"></span>
+  </div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this order matters:</strong> if you compute the midpoint <em>before</em> checking signs differ, you might be bisecting an interval with no root in it. Sign-difference is the licence to halve.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">Quick check first — then pick your tier: Building (mechanics), Stretch (sign charts), or Mastery (exponential thresholds).</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the mechanics. Try them on your own — <strong>then we'll check together as a class</strong> before you pick a tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Practise the mechanics of bisection — substituting into <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span> and finding midpoints. Type decimals (e.g. <code>2.5</code>) and signed integers (e.g. <code>-5</code>).</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now sign charts on factorisable quadratics. Find the roots, then read off where the function is positive or negative.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Exponential thresholds and tighter bisection. Use a table of values to find when a growth or decay model crosses a key value, then continue the bisection of <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span> to a narrower interval.</p>
+
+    <div class="parts-instructions" style="margin-bottom: 14px;">
+      💡 <strong>Worked sample — share price.</strong> A share is worth <span class="expr"><span class="var">A</span><sub><span class="var">n</span></sub> = 100 × 1.10<sup><span class="var">n</span></sup></span> dollars after <span class="var">n</span> years. When does it first exceed $150?
+      <table class="threshold-table" style="margin-top: 10px;">
+        <thead><tr><th><span class="var">n</span></th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
+        <tbody>
+          <tr><td><span class="var">A</span><sub><span class="var">n</span></sub></td><td class="below">$133.10</td><td class="below">$146.41</td><td class="above">$161.05</td><td class="above">$177.16</td></tr>
+        </tbody>
+      </table>
+      The first <span class="var">n</span> with <span class="var">A</span><sub><span class="var">n</span></sub> &gt; $150 is <strong><span class="var">n</span> = 5</strong>. Same logic: bracket, then close in.
+    </div>
+
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 10 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M10A05</strong> — experiment with functions and relations using digital tools, making and testing conjectures and generalising emerging patterns</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">2, 5, 6</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Use the bisection method to trap a root of a quadratic between sign-changing endpoints; build a sign chart; use a table of values to find when an exponential model crosses a threshold.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y10_alg_20. Source: SA Curriculum (Mathematics R-10 Prototype 2) / lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 10 · Intervals and Iterative Methods
+</footer>
+
+</div>
+
+<script>
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG-SORT (signs of f) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCH PAIRS ============
+  const matchTerms = [
+    { html: '<span class="var">x</span> = 2',  group: 1 },
+    { html: '<span class="var">f</span>(<span class="var">x</span>) = −5',  group: 1 },
+    { html: '<span class="var">x</span> = −1', group: 2 },
+    { html: '<span class="var">f</span>(<span class="var">x</span>) = −2',  group: 2 },
+    { html: '<span class="var">x</span> = 3',  group: 3 },
+    { html: '<span class="var">f</span>(<span class="var">x</span>) = 2',   group: 3 },
+    { html: '<span class="var">x</span> = −2', group: 4 },
+    { html: '<span class="var">f</span>(<span class="var">x</span>) = 7',   group: 4 },
+    { html: '<span class="var">x</span> = 4',  group: 5 },
+    { html: '<span class="var">f</span>(<span class="var">x</span>) = 13',  group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — substitute again carefully.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ ORDER THE STEPS ============
+  function moveOrder(btn, direction) {
+    const card = btn.closest('.order-card');
+    if (card.classList.contains('locked')) return;
+    const sibling = direction === -1 ? card.previousElementSibling : card.nextElementSibling;
+    if (!sibling) return;
+    const list = card.parentElement;
+    if (direction === -1) list.insertBefore(card, sibling);
+    else list.insertBefore(sibling, card);
+    updateOrderButtons();
+    clearOrderState();
+  }
+  function updateOrderButtons() {
+    const cards = document.querySelectorAll('#orderList .order-card');
+    cards.forEach((c, i) => {
+      const [up, down] = c.querySelectorAll('.order-buttons button');
+      up.disabled = (i === 0);
+      down.disabled = (i === cards.length - 1);
+    });
+  }
+  function clearOrderState() {
+    document.querySelectorAll('.order-card').forEach(c => c.classList.remove('correct', 'incorrect'));
+    document.getElementById('orderStatus').textContent = '';
+  }
+  function checkOrder() {
+    const cards = document.querySelectorAll('#orderList .order-card');
+    let allCorrect = true;
+    cards.forEach((c, i) => {
+      const expected = parseInt(c.dataset.correctPos, 10);
+      const actual = i + 1;
+      c.classList.remove('correct', 'incorrect');
+      if (expected === actual) c.classList.add('correct');
+      else { c.classList.add('incorrect'); allCorrect = false; }
+    });
+    const status = document.getElementById('orderStatus');
+    if (allCorrect) {
+      status.textContent = '✓ Perfect order — the routine is sound.';
+      cards.forEach(c => c.classList.add('locked'));
+    } else {
+      const numCorrect = document.querySelectorAll('.order-card.correct').length;
+      status.textContent = `${numCorrect}/${cards.length} in the right place — keep going.`;
+    }
+  }
+  function shuffleOrder() {
+    const list = document.getElementById('orderList');
+    const cards = Array.from(list.children);
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    cards.forEach(c => { c.classList.remove('locked'); list.appendChild(c); });
+    updateOrderButtons();
+    clearOrderState();
+  }
+  function showOrderAnswer() {
+    const list = document.getElementById('orderList');
+    const cards = Array.from(list.children);
+    cards.sort((a, b) => parseInt(a.dataset.correctPos, 10) - parseInt(b.dataset.correctPos, 10));
+    cards.forEach(c => { list.appendChild(c); c.classList.add('correct'); c.classList.add('locked'); });
+    updateOrderButtons();
+    document.getElementById('orderStatus').textContent = 'Answer shown.';
+  }
+
+  // ============ PRACTICE DATA ============
+  const retrieval = [
+    { q: 'Evaluate <span class="expr"><span class="var">x</span>² − 4</span> when <span class="var">x</span> = 3.', a: '5', hint: '3² − 4 = 9 − 4.' },
+    { q: 'The midpoint of −2 and 6 is what?', a: '2', hint: '(−2 + 6) / 2.' },
+    { q: 'State the sign of <span class="expr">2 × 5 − 14</span>. Enter <code>+</code> or <code>-</code>.', a: '-', hint: '10 − 14 = −4 — that\'s negative.' },
+  ];
+
+  const practice1 = [
+    { q: 'Evaluate <span class="var">f</span>(1) for <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span>.', a: '-8', hint: '2(1)² − 3(1) − 7 = 2 − 3 − 7.' },
+    { q: 'Evaluate <span class="var">f</span>(0) for the same <span class="var">f</span>.', a: '-7', hint: '2(0)² − 3(0) − 7 = 0 − 0 − 7.' },
+    { q: 'Evaluate <span class="var">f</span>(−1) for the same <span class="var">f</span>.', a: '-2', hint: '2(1) − 3(−1) − 7 = 2 + 3 − 7.' },
+    { q: 'Evaluate <span class="var">f</span>(4) for the same <span class="var">f</span>.', a: '13', hint: '2(16) − 12 − 7 = 32 − 19.' },
+    { q: 'Find the midpoint of the interval (2, 3).', a: '2.5', hint: '(2 + 3) / 2.' },
+    { q: 'Find the midpoint of the interval (2.5, 3).', a: '2.75', hint: '(2.5 + 3) / 2.' },
+    { q: 'Find the midpoint of the interval (−2, −1).', a: '-1.5', hint: '(−2 + (−1)) / 2 = −3/2.' },
+    { q: 'Given <span class="var">f</span>(2) = −5 and <span class="var">f</span>(3) = +2: does a root lie in (2, 3)? Enter <code>yes</code> or <code>no</code>.', a: 'yes', hint: 'The signs differ, so the curve must cross zero between them.' },
+    { q: 'Given <span class="var">f</span>(3) = +2 and <span class="var">f</span>(4) = +13: does a root lie in (3, 4)? Enter <code>yes</code> or <code>no</code>.', a: 'no', hint: 'Both values are positive — no sign change.' },
+    { q: 'After bisecting (2, 3) once for <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span> using <span class="var">f</span>(2.5) = −2, what is the new interval\'s left endpoint?', a: '2.5', hint: 'Signs: <span class="var">f</span>(2.5) = − and <span class="var">f</span>(3) = +. The sign change is in the right half.' },
+  ];
+
+  const practice2 = [
+    { q: 'For <span class="expr"><span class="var">g</span>(<span class="var">x</span>) = <span class="var">x</span>² − 9</span>: state the positive root.', a: '3', hint: '<span class="var">x</span>² = 9, so <span class="var">x</span> = ±3.' },
+    { q: 'For the same <span class="var">g</span>: state the sign of <span class="var">g</span>(1). Enter <code>+</code> or <code>-</code>.', a: '-', hint: '1 − 9 = −8.' },
+    { q: 'For <span class="expr"><span class="var">h</span>(<span class="var">x</span>) = <span class="var">x</span>² − 4<span class="var">x</span></span>: state the larger root.', a: '4', hint: '<span class="var">x</span>(<span class="var">x</span> − 4) = 0.' },
+    { q: 'For the same <span class="var">h</span>: state the sign of <span class="var">h</span>(2). Enter <code>+</code> or <code>-</code>.', a: '-', hint: '4 − 8 = −4.' },
+    { q: 'For <span class="expr"><span class="var">p</span>(<span class="var">x</span>) = (2<span class="var">x</span> + 1)(<span class="var">x</span> − 3)</span>: state the larger root.', a: '3', hint: 'Set each factor to zero.' },
+    { q: 'For the same <span class="var">p</span>: state the sign of <span class="var">p</span>(0). Enter <code>+</code> or <code>-</code>.', a: '-', hint: '(1)(−3) = −3.' },
+  ];
+
+  const practice3 = [
+    { q: 'A share is worth <span class="expr">200 × 1.05<sup><span class="var">n</span></sup></span> dollars after <span class="var">n</span> years. Find the smallest whole <span class="var">n</span> such that the value first exceeds $300.', a: '9', hint: 'Tabulate: at <span class="var">n</span> = 8 it\'s about $295; at <span class="var">n</span> = 9 it\'s about $310.' },
+    { q: 'A medicine level is <span class="expr">80 × 0.9<sup><span class="var">n</span></sup></span> mg/L after <span class="var">n</span> hours. Find the smallest <span class="var">n</span> such that the level first drops below 25 mg/L.', a: '12', hint: 'At <span class="var">n</span> = 11 it\'s about 25.1; at <span class="var">n</span> = 12 it\'s about 22.6.' },
+    { q: 'Continue the bisection of <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span>. After 3 bisection steps starting from (2, 3), state the right endpoint of the trapping interval.', a: '2.875', hint: 'Step 1: (2.5, 3). Step 2: (2.75, 3). Step 3: <span class="var">f</span>(2.875) ≈ +0.91, so the new interval is (2.75, 2.875).' },
+    { q: 'From the interval (2.75, 2.875), apply one more bisection step. State the right endpoint of the new interval.', a: '2.8125', hint: 'Midpoint is 2.8125. <span class="var">f</span>(2.8125) ≈ +0.38 (positive), so keep the left half: (2.75, 2.8125).' },
+  ];
+
+  const checkpoint = [
+    { q: 'For <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span>: evaluate <span class="var">f</span>(2).', a: '-5', hint: '2(4) − 6 − 7 = 8 − 13.' },
+    { q: 'Find the midpoint of the interval (2.5, 3).', a: '2.75', hint: '(2.5 + 3) / 2 = 5.5 / 2.' },
+  ];
+
+  const exitProbs = [
+    { q: 'For <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span>: after one bisection step on (2, 3), what is the width of the new interval?', a: '0.5', hint: 'The interval halves each step. 1 ÷ 2.' },
+    { q: 'For <span class="expr"><span class="var">f</span>(<span class="var">x</span>) = 2<span class="var">x</span>² − 3<span class="var">x</span> − 7</span>: state the sign of <span class="var">f</span> at <span class="var">x</span> = 1. Enter <code>+</code> or <code>-</code>.', a: '-', hint: '2 − 3 − 7 = −8.' },
+    { q: 'Explain in your own words <strong>why</strong> a sign change between <span class="var">f</span>(<span class="var">a</span>) and <span class="var">f</span>(<span class="var">b</span>) guarantees a root somewhere in (<span class="var">a</span>, <span class="var">b</span>).', a: 'TEXT', hint: 'Think about what a continuous curve must do to get from a negative value to a positive value.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+(?=\d)/, '')
+      .replace(/−/g, '-');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'A continuous curve cannot jump from negative to positive without passing through zero — so a root must lie between any two endpoints with opposite signs.';
+    let r = a;
+    // numeric / single-sign answers come through unchanged
+    r = r.replace(/-/g, '−');
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateOrderButtons();
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>

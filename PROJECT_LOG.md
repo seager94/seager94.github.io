@@ -98,3 +98,35 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 - Re-mapped four divergent strands from file meta: Y7 Probability (4), Y7 Space (7 + 2 SP03 Planned), Y8 Measurement (13, complete), Y8 Space (10 + 2 Planned; meta inferred).
 - Consolidated 7 scattered copies → one master (`lessonmap.xlsx` on `main`); archived 5 stale copies; gitignored the reconcile output; merged `lesson-gen` → `main`; refreshed the project mirror.
 - Established the file-topology, branch, and chat-convention rules above.
+
+## 2026-06-07 — Year 10 Algebra Batch 1 published (y10_alg_01–10)
+
+**Strand opened:** Year 10 Algebra (AC9M10A01, AC9M10A02). All 20 planned rows reconciled against AC9 + SA Prototype 2 before drafting — plan was clean, 23/23 elaborations covered across 20 lessons, no decomposition divergence. Batch 1 = L01–L10.
+
+**Published (lesson-gen → main, live on Pages):**
+- L01 expanding special products — Error Analysis
+- L02 factorising quadratics (AC method) — Order the Steps
+- L03 completing the square — Faded Examples (+ parabola SVG, turning point)
+- L04 solving quadratics + formula — Hinge Question on discriminant (mapping-note: Implied — formula not in an AC9 elaboration)
+- L05 negative exponents — Always/Sometimes/Never
+- L06 simultaneous graphically — Slider Parameter Widget (match-the-target)
+- L07 simultaneous algebraically — Faded Examples (elimination)
+- L08 modelling — Multiple Representations (explorer, not auto-marked); incl. Weme/Warlpiri investigation
+- L09 graphing inequalities — Hinge Question on shading conventions
+- L10 feasible regions — plain template (tiered practice is the interactive core)
+
+**Strategy rule applied:** interactive + self-marking only; open-response strategies (notice/wonder, goal-free, compare-two-solutions, self-explanation) deliberately excluded per Sam.
+
+**Collision cleaned up:** the old pre-pipeline Year 10 Algebra files (one/two-step equations, index laws, single brackets, etc.) were squatting on y10_alg_02–11 with different topics. Removed 15 files (11 HTML, 2 PDF worksheets, Substitution_Interactive_Lesson.html, placeholder.txt) in commit before the batch merge. Link-search step was skipped — low risk (pre-lessonmap experiment files) but a year-10 index, if one exists, should be re-checked for dead links.
+
+**Known quirks to revisit (cosmetic, not blockers):**
+- L05: Quick Check answer `a^6/4` trips formatAnswerDisplay's fraction regex → reveal renders 6/4 stacked. Auto-mark works. Load-bearing function left untouched. Swap the question later if it bothers students.
+- L09: model self-corrected several SVG boundary/polygon coordinates by eye during the build. Re-confirm each shaded region sits on the test-point side. NEEDS A LIVE EYEBALL.
+
+**Pipeline notes this run:**
+- L07 first attempt died on an API socket drop (~9 min in) — run-batch printed "Task complete" anyway (it does so regardless of claude -p success). Single-line re-run succeeded. Treat sub-5-min builds / socket errors as failed regardless of the completion line.
+- normaliseAnswer additive rewrites this batch: L02 accepts (x-5)^2 ↔ (x-5)(x-5); L06 strips parens + accepts Unicode minus for coordinate pairs.
+
+**Lessonmap:** y10_alg_01–10 flipped to Published, Generated date 2026-06-07, URLs set. Tally 120 Published / 101 Planned.
+
+**Next:** Batch 2 = y10_alg_11–20 (A03/A04/A05 — exponential functions, growth/decay incl. finance, digital-tool experimentation). Strategy propose-and-pick still pending for those.

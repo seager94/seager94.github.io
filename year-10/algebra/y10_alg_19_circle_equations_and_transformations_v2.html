@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circle Equations &amp; Transformations — Year 10</title>
+
+<meta name="lesson-id"             content="y10_alg_19">
+<meta name="ac9-descriptor"        content="AC9M10A05">
+<meta name="ac9-elaborations"      content="3">
+<meta name="sa-year"               content="10">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones">
+<meta name="lesson-focus"          content="Read centre and radius from the standard form of a circle (x−h)²+(y−k)²=r² and describe each circle as a transformation of the unit circle x²+y²=1.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.origin { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+  .term-chip.translated { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.1rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* CARTESIAN GRID SVG STYLES */
+  .coord-fig {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    margin: 12px 0;
+    max-width: 380px;
+  }
+  .coord-fig svg { display: block; width: 100%; height: auto; }
+  .coord-fig .grid-line { stroke: #e3e6ec; stroke-width: 1; }
+  .coord-fig .axis-line { stroke: #2a2a2a; stroke-width: 1.5; }
+  .coord-fig .axis-label { font-family: Georgia, serif; font-size: 13px; fill: #2a2a2a; font-style: italic; }
+  .coord-fig .axis-num { font-family: -apple-system, sans-serif; font-size: 10px; fill: #4b5563; }
+  .coord-fig .circle-shape { fill: rgba(190,88,55,0.12); stroke: var(--coral); stroke-width: 2.5; }
+  .coord-fig .centre-dot { fill: var(--navy); }
+  .coord-fig .centre-lbl { font-family: Georgia, serif; font-size: 12px; fill: var(--navy); font-weight: bold; }
+  .coord-fig .radius-line { stroke: var(--navy); stroke-width: 1.8; stroke-dasharray: 4 3; }
+  .coord-fig .radius-lbl { font-family: Georgia, serif; font-size: 12px; fill: var(--navy); font-style: italic; font-weight: bold; }
+  .coord-fig figcaption { font-size: 0.82rem; color: var(--muted); text-align: center; margin-top: 4px; font-style: italic; }
+  .fig-wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+  .fig-wrap .fig-text { flex: 1 1 240px; min-width: 240px; }
+  .fig-wrap .coord-fig { flex: 0 0 auto; }
+
+  /* WORKED EXAMPLE BLOCKS (Examples B and C) */
+  .further-eg {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--navy);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 20px;
+    margin-top: 16px;
+  }
+  .further-eg h3 {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    margin: 0 0 4px;
+    font-size: 1.1rem;
+  }
+  .further-eg .eg-equation {
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    color: var(--coral);
+    margin-bottom: 10px;
+  }
+  .read-off {
+    background: var(--hint-bg);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 0.95rem;
+    color: var(--navy);
+  }
+  .read-off strong { color: var(--coral); }
+
+  /* ERROR ANALYSIS */
+  .ea-box {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .ea-intro {
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+  }
+  .ea-intro strong { color: var(--coral); }
+  .ea-problem {
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    background: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border-left: 4px solid var(--coral);
+    margin-bottom: 14px;
+    color: var(--navy);
+  }
+  .ea-by {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 4px 0 10px;
+  }
+  .ea-line {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-family: Georgia, serif;
+    font-size: 1.02rem;
+    transition: all 0.18s;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .ea-line:hover { border-color: var(--navy); transform: translateX(2px); }
+  .ea-line .ea-num {
+    background: var(--bg);
+    color: var(--muted);
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ea-line .ea-text { flex: 1; padding-top: 2px; }
+  .ea-line.locked {
+    cursor: default;
+    transform: none;
+  }
+  .ea-line.locked:hover { transform: none; }
+  .ea-line.wrong-found {
+    background: var(--bad-soft);
+    border-color: var(--bad);
+    color: var(--bad);
+  }
+  .ea-line.wrong-found .ea-num {
+    background: var(--bad);
+    color: white;
+  }
+  .ea-line.ok-clicked {
+    animation: shake 0.45s;
+    background: #fff7e6;
+    border-color: #c89638;
+  }
+  .ea-feedback {
+    margin: 12px 0;
+    font-size: 0.92rem;
+    color: var(--muted);
+    font-style: italic;
+    min-height: 22px;
+  }
+  .ea-feedback.success { color: var(--good); font-weight: 600; font-style: normal; }
+  .ea-feedback.miss { color: var(--bad); font-weight: 600; font-style: normal; }
+  .ea-fix {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--coral);
+    margin-top: 6px;
+    display: none;
+  }
+  .ea-fix.shown { display: block; }
+  .ea-fix p { margin: 0 0 10px; color: var(--navy); }
+  .ea-fix-row {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .ea-fix-row .eq-lbl { font-family: Georgia, serif; font-size: 1.05rem; color: var(--muted); }
+  .ea-fix input {
+    flex: 1; max-width: 180px;
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    background: white;
+  }
+  .ea-fix input.correct { border-color: var(--good); background: var(--good-soft); }
+  .ea-fix input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .ea-fix button {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .ea-fix .ea-result { margin-top: 8px; font-size: 0.9rem; color: var(--good); display: none; }
+  .ea-fix .ea-result.shown { display: block; }
+
+  /* MATCHING — equation to (centre, radius) */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 0.98rem;
+    cursor: pointer; transition: all 0.15s;
+    line-height: 1.3;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.05rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  /* Mini-sketch SVGs inside practice problems */
+  .mini-sketch {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+    margin: 8px 0;
+    max-width: 230px;
+  }
+  .mini-sketch svg { display: block; width: 100%; height: auto; }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Circle Equations &amp; Transformations</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Lesson 19</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 25</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the skills you'll need today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real situation that's secretly today's algebra.</p>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;">
+    <div>
+      <p>A gardener installs a sprinkler at the point <span class="expr">(3, −2)</span> on the grid plan of their vegetable plot. The sprinkler reaches everything within <strong>4 metres</strong>.</p>
+      <p>Which seedlings get watered? Rather than measuring each distance by hand, the gardener wants <strong>one tidy equation</strong> they can test any seedling's coordinates against.</p>
+      <p>That equation is exactly today's topic.</p>
+    </div>
+    <div class="parts-instructions" style="margin: 0;">
+      The sprinkler's spray boundary is the circle <span class="expr">(<span class="var">x</span> − 3)<sup>2</sup> + (<span class="var">y</span> + 2)<sup>2</sup> = 16</span>. Any point exactly on the boundary makes the left side equal 16; inside the circle makes it less; outside makes it more. Once we can read centre and radius straight off this form, we can write — and use — the equation of any circle on the plane.
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Centre<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The point a circle is built around — every point on the circle is the same distance from it.<div class="vocab-example expr">In <span class="expr">(<span class="var">x</span>−3)<sup>2</sup>+(<span class="var">y</span>+2)<sup>2</sup>=16</span>, the centre is <strong>(3, −2)</strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Radius<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The distance from the centre to <strong>any point</strong> on the circle.<div class="vocab-example expr">If <span class="var">r</span><sup>2</sup> = 25, then <span class="var">r</span> = <strong>5</strong>. The radius is always positive.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Unit circle<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The circle with <strong>centre (0, 0)</strong> and <strong>radius 1</strong>.<div class="vocab-example expr">Equation: <span class="expr"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=1</span>. Every other circle is a transformation of this one.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Standard form<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">The "centre &amp; radius" version of a circle equation.<div class="vocab-example expr">(<span class="var">x</span>−<span class="var">h</span>)<sup>2</sup>+(<span class="var">y</span>−<span class="var">k</span>)<sup>2</sup>=<span class="var">r</span><sup>2</sup> — centre <strong>(<span class="var">h</span>, <span class="var">k</span>)</strong>, radius <strong><span class="var">r</span></strong>.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Translation<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">A <strong>slide</strong> of the whole graph — no rotation, no resizing.<div class="vocab-example expr">(<span class="var">x</span>−3)<sup>2</sup>+<span class="var">y</span><sup>2</sup>=1 is <strong>3 right</strong> of the unit circle. (<span class="var">y</span>+2) means <strong>2 down</strong>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT — origin vs translated -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort: origin or translated?</h2>
+  <p class="sec-desc">Drag each equation into the correct bucket — <strong style="color:var(--navy)">centred at the origin</strong> (both brackets are bare <span class="var">x</span><sup>2</sup> and <span class="var">y</span><sup>2</sup>) or <strong style="color:var(--coral)">centre translated</strong> (at least one bracket contains a number). Wrong drops will shake; correct ones stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Six circle equations — drag to sort</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip expr" data-type="origin"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=1</span>
+      <span class="term-chip expr" data-type="origin"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=25</span>
+      <span class="term-chip expr" data-type="origin"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=49</span>
+      <span class="term-chip expr" data-type="translated">(<span class="var">x</span>−2)<sup>2</sup>+(<span class="var">y</span>−3)<sup>2</sup>=4</span>
+      <span class="term-chip expr" data-type="translated">(<span class="var">x</span>+1)<sup>2</sup>+<span class="var">y</span><sup>2</sup>=16</span>
+      <span class="term-chip expr" data-type="translated"><span class="var">x</span><sup>2</sup>+(<span class="var">y</span>−5)<sup>2</sup>=9</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="origin">
+        <h4 class="ct">Centred at origin · (0, 0)</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+      <div class="bucket" data-bucket="translated">
+        <h4 class="vt">Centre translated · not (0, 0)</h4>
+        <div class="bucket-contents expr"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 If you can see a number <em>inside</em> a bracket — like (<span class="var">x</span>−2) or (<span class="var">y</span>+5) — the centre has been shifted from the origin. Bare <span class="var">x</span><sup>2</sup> just means <span class="var">x</span> minus 0.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH equation to centre/radius -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match: equation ↔ (centre, radius)</h2>
+  <p class="sec-desc">Click an equation, then click the matching centre &amp; radius — five pairs in total.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through three circles out loud, sketching each one on the grid.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLES (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Three worked examples — read centre &amp; radius from standard form</h2>
+  <p class="sec-desc">Standard form is <span class="expr">(<span class="var">x</span>−<span class="var">h</span>)<sup>2</sup>+(<span class="var">y</span>−<span class="var">k</span>)<sup>2</sup>=<span class="var">r</span><sup>2</sup></span>. Whatever appears in the <span class="var">h</span> and <span class="var">k</span> slots gives the centre <span class="expr">(<span class="var">h</span>, <span class="var">k</span>)</span>; the right side gives <span class="var">r</span><sup>2</sup>.</p>
+
+  <!-- EXAMPLE A — unit circle, 3-step reveal -->
+  <div class="worked">
+    <div style="font-family: Georgia, serif; font-weight: bold; color: var(--coral); margin-bottom: 4px;">Example A</div>
+    <div style="font-family: Georgia, serif; color: var(--navy); margin-bottom: 12px;">Find the centre and radius of <span class="expr"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=1</span> and sketch it.</div>
+
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Match it to standard form</div>
+        <div class="step-desc">Rewrite each bare <span class="var">x</span> as (<span class="var">x</span> − 0) and each bare <span class="var">y</span> as (<span class="var">y</span> − 0).</div>
+        <div class="calc-box">
+          <span class="var">x</span><sup>2</sup> + <span class="var">y</span><sup>2</sup> = 1<br>
+          = (<span class="var">x</span> − <span class="red">0</span>)<sup>2</sup> + (<span class="var">y</span> − <span class="red">0</span>)<sup>2</sup> = <span class="blue">1</span><sup>2</sup>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Read off (<span class="var">h</span>, <span class="var">k</span>) and <span class="var">r</span></div>
+        <div class="step-desc">The numbers inside the brackets give the centre; the square root of the right side gives the radius.</div>
+        <div class="calc-box">
+          <span class="var">h</span> = <span class="red">0</span>, <span class="var">k</span> = <span class="red">0</span> → centre = (<span class="red">0, 0</span>)<br>
+          <span class="var">r</span><sup>2</sup> = 1 → <span class="var">r</span> = <span class="blue">1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Sketch &amp; describe the transformation</div>
+        <div class="step-desc">This is <strong>the unit circle</strong>. It's the base case — no transformation. Every other circle today is a copy of this one that has been resized and/or slid around.</div>
+        <div class="fig-wrap">
+          <div class="fig-text">
+            <div class="calc-box">
+              Centre = (0, 0), radius = 1.<br>
+              The circle passes through (1, 0), (0, 1), (−1, 0) and (0, −1).
+            </div>
+          </div>
+          <figure class="coord-fig">
+            <svg viewBox="0 0 300 300" role="img" aria-label="Unit circle on Cartesian plane">
+              <rect x="0" y="0" width="300" height="300" fill="white"/>
+              <g class="grid-line">
+                <line x1="30" y1="30" x2="30" y2="270"/>
+                <line x1="70" y1="30" x2="70" y2="270"/>
+                <line x1="110" y1="30" x2="110" y2="270"/>
+                <line x1="150" y1="30" x2="150" y2="270"/>
+                <line x1="190" y1="30" x2="190" y2="270"/>
+                <line x1="230" y1="30" x2="230" y2="270"/>
+                <line x1="270" y1="30" x2="270" y2="270"/>
+                <line x1="30" y1="30" x2="270" y2="30"/>
+                <line x1="30" y1="70" x2="270" y2="70"/>
+                <line x1="30" y1="110" x2="270" y2="110"/>
+                <line x1="30" y1="150" x2="270" y2="150"/>
+                <line x1="30" y1="190" x2="270" y2="190"/>
+                <line x1="30" y1="230" x2="270" y2="230"/>
+                <line x1="30" y1="270" x2="270" y2="270"/>
+              </g>
+              <line class="axis-line" x1="30" y1="150" x2="282" y2="150"/>
+              <line class="axis-line" x1="150" y1="282" x2="150" y2="18"/>
+              <polygon points="282,150 274,146 274,154" fill="#2a2a2a"/>
+              <polygon points="150,18 146,26 154,26" fill="#2a2a2a"/>
+              <text class="axis-label" x="288" y="154">x</text>
+              <text class="axis-label" x="156" y="20">y</text>
+              <text class="axis-num" x="30" y="164" text-anchor="middle">−3</text>
+              <text class="axis-num" x="70" y="164" text-anchor="middle">−2</text>
+              <text class="axis-num" x="110" y="164" text-anchor="middle">−1</text>
+              <text class="axis-num" x="190" y="164" text-anchor="middle">1</text>
+              <text class="axis-num" x="230" y="164" text-anchor="middle">2</text>
+              <text class="axis-num" x="270" y="164" text-anchor="middle">3</text>
+              <text class="axis-num" x="144" y="34" text-anchor="end">3</text>
+              <text class="axis-num" x="144" y="74" text-anchor="end">2</text>
+              <text class="axis-num" x="144" y="114" text-anchor="end">1</text>
+              <text class="axis-num" x="144" y="194" text-anchor="end">−1</text>
+              <text class="axis-num" x="144" y="234" text-anchor="end">−2</text>
+              <text class="axis-num" x="144" y="274" text-anchor="end">−3</text>
+              <circle class="circle-shape" cx="150" cy="150" r="40"/>
+              <line class="radius-line" x1="150" y1="150" x2="190" y2="150"/>
+              <text class="radius-lbl" x="170" y="144" text-anchor="middle">r = 1</text>
+              <circle class="centre-dot" cx="150" cy="150" r="3.5"/>
+              <text class="centre-lbl" x="156" y="142">(0, 0)</text>
+            </svg>
+            <figcaption>Example A: x² + y² = 1 — the unit circle</figcaption>
+          </figure>
+        </div>
+        <div class="summary-banner">
+          <span class="label">Answer</span>
+          Centre (0, 0), radius 1 — this is the unit circle.
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+
+  <!-- EXAMPLE B — x²+y²=25 -->
+  <div class="further-eg">
+    <h3>Example B — same centre, bigger radius</h3>
+    <div class="eg-equation"><span class="expr"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=25</span></div>
+    <div class="read-off">
+      Both brackets are bare → <strong><span class="var">h</span> = 0, <span class="var">k</span> = 0</strong>, so centre = <strong>(0, 0)</strong>.<br>
+      <span class="var">r</span><sup>2</sup> = 25 → <span class="var">r</span> = <strong>5</strong>.
+    </div>
+    <div class="fig-wrap">
+      <div class="fig-text">
+        <p style="margin: 4px 0;"><strong>Transformation from the unit circle:</strong> the circle has been <strong>dilated (enlarged) by a scale factor of 5</strong> about the origin. The centre stays where it is; every point on the boundary is now 5 times further out than on the unit circle.</p>
+      </div>
+      <figure class="coord-fig">
+        <svg viewBox="0 0 360 360" role="img" aria-label="Circle x² + y² = 25, centre origin, radius 5">
+          <rect x="0" y="0" width="360" height="360" fill="white"/>
+          <g class="grid-line">
+            <line x1="26" y1="26" x2="26" y2="334"/>
+            <line x1="48" y1="26" x2="48" y2="334"/>
+            <line x1="70" y1="26" x2="70" y2="334"/>
+            <line x1="92" y1="26" x2="92" y2="334"/>
+            <line x1="114" y1="26" x2="114" y2="334"/>
+            <line x1="136" y1="26" x2="136" y2="334"/>
+            <line x1="158" y1="26" x2="158" y2="334"/>
+            <line x1="180" y1="26" x2="180" y2="334"/>
+            <line x1="202" y1="26" x2="202" y2="334"/>
+            <line x1="224" y1="26" x2="224" y2="334"/>
+            <line x1="246" y1="26" x2="246" y2="334"/>
+            <line x1="268" y1="26" x2="268" y2="334"/>
+            <line x1="290" y1="26" x2="290" y2="334"/>
+            <line x1="312" y1="26" x2="312" y2="334"/>
+            <line x1="334" y1="26" x2="334" y2="334"/>
+            <line x1="26" y1="26" x2="334" y2="26"/>
+            <line x1="26" y1="48" x2="334" y2="48"/>
+            <line x1="26" y1="70" x2="334" y2="70"/>
+            <line x1="26" y1="92" x2="334" y2="92"/>
+            <line x1="26" y1="114" x2="334" y2="114"/>
+            <line x1="26" y1="136" x2="334" y2="136"/>
+            <line x1="26" y1="158" x2="334" y2="158"/>
+            <line x1="26" y1="180" x2="334" y2="180"/>
+            <line x1="26" y1="202" x2="334" y2="202"/>
+            <line x1="26" y1="224" x2="334" y2="224"/>
+            <line x1="26" y1="246" x2="334" y2="246"/>
+            <line x1="26" y1="268" x2="334" y2="268"/>
+            <line x1="26" y1="290" x2="334" y2="290"/>
+            <line x1="26" y1="312" x2="334" y2="312"/>
+            <line x1="26" y1="334" x2="334" y2="334"/>
+          </g>
+          <line class="axis-line" x1="26" y1="180" x2="346" y2="180"/>
+          <line class="axis-line" x1="180" y1="346" x2="180" y2="14"/>
+          <polygon points="346,180 338,176 338,184" fill="#2a2a2a"/>
+          <polygon points="180,14 176,22 184,22" fill="#2a2a2a"/>
+          <text class="axis-label" x="350" y="184">x</text>
+          <text class="axis-label" x="186" y="16">y</text>
+          <text class="axis-num" x="26" y="194" text-anchor="middle">−7</text>
+          <text class="axis-num" x="70" y="194" text-anchor="middle">−5</text>
+          <text class="axis-num" x="114" y="194" text-anchor="middle">−3</text>
+          <text class="axis-num" x="158" y="194" text-anchor="middle">−1</text>
+          <text class="axis-num" x="202" y="194" text-anchor="middle">1</text>
+          <text class="axis-num" x="246" y="194" text-anchor="middle">3</text>
+          <text class="axis-num" x="290" y="194" text-anchor="middle">5</text>
+          <text class="axis-num" x="334" y="194" text-anchor="middle">7</text>
+          <text class="axis-num" x="174" y="30" text-anchor="end">7</text>
+          <text class="axis-num" x="174" y="74" text-anchor="end">5</text>
+          <text class="axis-num" x="174" y="118" text-anchor="end">3</text>
+          <text class="axis-num" x="174" y="162" text-anchor="end">1</text>
+          <text class="axis-num" x="174" y="206" text-anchor="end">−1</text>
+          <text class="axis-num" x="174" y="250" text-anchor="end">−3</text>
+          <text class="axis-num" x="174" y="294" text-anchor="end">−5</text>
+          <text class="axis-num" x="174" y="338" text-anchor="end">−7</text>
+          <circle class="circle-shape" cx="180" cy="180" r="110"/>
+          <line class="radius-line" x1="180" y1="180" x2="290" y2="180"/>
+          <text class="radius-lbl" x="235" y="174" text-anchor="middle">r = 5</text>
+          <circle class="centre-dot" cx="180" cy="180" r="3.5"/>
+          <text class="centre-lbl" x="186" y="172">(0, 0)</text>
+        </svg>
+        <figcaption>Example B: x² + y² = 25 — unit circle enlarged ×5</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- EXAMPLE C — translated circle -->
+  <div class="further-eg">
+    <h3>Example C — centre moved off the origin</h3>
+    <div class="eg-equation"><span class="expr">(<span class="var">x</span>−3)<sup>2</sup>+(<span class="var">y</span>+2)<sup>2</sup>=16</span></div>
+    <div class="read-off">
+      Compare to <span class="expr">(<span class="var">x</span>−<span class="var">h</span>)<sup>2</sup>+(<span class="var">y</span>−<span class="var">k</span>)<sup>2</sup>=<span class="var">r</span><sup>2</sup></span>.<br>
+      (<span class="var">x</span> − 3): the <strong>"− 3" matches "− <span class="var">h</span>"</strong>, so <strong><span class="var">h</span> = 3</strong>.<br>
+      (<span class="var">y</span> + 2) = (<span class="var">y</span> − (−2)): the <strong>"+ 2" matches "− <span class="var">k</span>"</strong>, so <strong><span class="var">k</span> = −2</strong>.<br>
+      Centre = <strong>(3, −2)</strong>. <span class="var">r</span><sup>2</sup> = 16 → <span class="var">r</span> = <strong>4</strong>.
+    </div>
+    <div class="fig-wrap">
+      <div class="fig-text">
+        <p style="margin: 4px 0;"><strong>Transformation from the unit circle:</strong> <strong>enlarge by scale factor 4</strong>, then <strong>translate 3 units right and 2 units down</strong>. The brackets slide the centre; the right-hand side stretches the radius.</p>
+        <div class="parts-instructions" style="margin-top: 10px;">
+          ⚠ The bracket signs <strong>flip</strong> when you read out the centre: (<span class="var">x</span> − 3) means <strong>+3</strong>; (<span class="var">y</span> + 2) means <strong>−2</strong>. Watch for this — it's the trap in Section 6.
+        </div>
+      </div>
+      <figure class="coord-fig">
+        <svg viewBox="0 0 360 360" role="img" aria-label="Circle (x−3)²+(y+2)²=16, centre (3,−2), radius 4">
+          <rect x="0" y="0" width="360" height="360" fill="white"/>
+          <g class="grid-line">
+            <line x1="30" y1="30" x2="30" y2="330"/>
+            <line x1="60" y1="30" x2="60" y2="330"/>
+            <line x1="90" y1="30" x2="90" y2="330"/>
+            <line x1="120" y1="30" x2="120" y2="330"/>
+            <line x1="150" y1="30" x2="150" y2="330"/>
+            <line x1="180" y1="30" x2="180" y2="330"/>
+            <line x1="210" y1="30" x2="210" y2="330"/>
+            <line x1="240" y1="30" x2="240" y2="330"/>
+            <line x1="270" y1="30" x2="270" y2="330"/>
+            <line x1="300" y1="30" x2="300" y2="330"/>
+            <line x1="330" y1="30" x2="330" y2="330"/>
+            <line x1="30" y1="30" x2="330" y2="30"/>
+            <line x1="30" y1="60" x2="330" y2="60"/>
+            <line x1="30" y1="90" x2="330" y2="90"/>
+            <line x1="30" y1="120" x2="330" y2="120"/>
+            <line x1="30" y1="150" x2="330" y2="150"/>
+            <line x1="30" y1="180" x2="330" y2="180"/>
+            <line x1="30" y1="210" x2="330" y2="210"/>
+            <line x1="30" y1="240" x2="330" y2="240"/>
+            <line x1="30" y1="270" x2="330" y2="270"/>
+            <line x1="30" y1="300" x2="330" y2="300"/>
+            <line x1="30" y1="330" x2="330" y2="330"/>
+          </g>
+          <line class="axis-line" x1="30" y1="120" x2="346" y2="120"/>
+          <line class="axis-line" x1="90" y1="346" x2="90" y2="14"/>
+          <polygon points="346,120 338,116 338,124" fill="#2a2a2a"/>
+          <polygon points="90,14 86,22 94,22" fill="#2a2a2a"/>
+          <text class="axis-label" x="350" y="124">x</text>
+          <text class="axis-label" x="96" y="16">y</text>
+          <text class="axis-num" x="30" y="134" text-anchor="middle">−2</text>
+          <text class="axis-num" x="60" y="134" text-anchor="middle">−1</text>
+          <text class="axis-num" x="120" y="134" text-anchor="middle">1</text>
+          <text class="axis-num" x="150" y="134" text-anchor="middle">2</text>
+          <text class="axis-num" x="180" y="134" text-anchor="middle">3</text>
+          <text class="axis-num" x="210" y="134" text-anchor="middle">4</text>
+          <text class="axis-num" x="240" y="134" text-anchor="middle">5</text>
+          <text class="axis-num" x="270" y="134" text-anchor="middle">6</text>
+          <text class="axis-num" x="300" y="134" text-anchor="middle">7</text>
+          <text class="axis-num" x="330" y="134" text-anchor="middle">8</text>
+          <text class="axis-num" x="84" y="34" text-anchor="end">3</text>
+          <text class="axis-num" x="84" y="64" text-anchor="end">2</text>
+          <text class="axis-num" x="84" y="94" text-anchor="end">1</text>
+          <text class="axis-num" x="84" y="154" text-anchor="end">−1</text>
+          <text class="axis-num" x="84" y="184" text-anchor="end">−2</text>
+          <text class="axis-num" x="84" y="214" text-anchor="end">−3</text>
+          <text class="axis-num" x="84" y="244" text-anchor="end">−4</text>
+          <text class="axis-num" x="84" y="274" text-anchor="end">−5</text>
+          <text class="axis-num" x="84" y="304" text-anchor="end">−6</text>
+          <text class="axis-num" x="84" y="334" text-anchor="end">−7</text>
+          <circle class="circle-shape" cx="180" cy="180" r="120"/>
+          <line class="radius-line" x1="180" y1="180" x2="300" y2="180"/>
+          <text class="radius-lbl" x="240" y="174" text-anchor="middle">r = 4</text>
+          <circle class="centre-dot" cx="180" cy="180" r="3.5"/>
+          <text class="centre-lbl" x="186" y="172">(3, −2)</text>
+        </svg>
+        <figcaption>Example C: (x − 3)² + (y + 2)² = 16 — enlarge ×4, then slide</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Spot the mistake — together</div>
+    <div class="phase-sub">A classmate has worked through Example C and got the wrong centre. Find their error.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO — Error analysis -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>Error analysis — where did Sam go wrong?</h2>
+  <p class="sec-desc">Below is Sam's working for Example C. Sam says the centre is <strong>(−3, 2)</strong>, but that's not right. Read the four lines carefully. <strong>Click the line that contains the mistake</strong>, then type in the correct centre.</p>
+
+  <div class="ea-box">
+    <div class="ea-intro"><strong>Sam's working:</strong> Find the centre and radius of <span class="expr">(<span class="var">x</span>−3)<sup>2</sup>+(<span class="var">y</span>+2)<sup>2</sup>=16</span>.</div>
+
+    <div id="eaLines">
+      <div class="ea-line" data-ok="true" onclick="eaClick(this)">
+        <span class="ea-num">1</span>
+        <span class="ea-text">Standard form is <span class="expr">(<span class="var">x</span>−<span class="var">h</span>)<sup>2</sup>+(<span class="var">y</span>−<span class="var">k</span>)<sup>2</sup>=<span class="var">r</span><sup>2</sup></span>. I'll compare each bracket.</span>
+      </div>
+      <div class="ea-line" data-ok="false" onclick="eaClick(this)">
+        <span class="ea-num">2</span>
+        <span class="ea-text">From <span class="expr">(<span class="var">x</span>−3)</span> the value next to <span class="var">x</span> is <strong>−3</strong>, so <span class="var">h</span> = <strong>−3</strong>. From <span class="expr">(<span class="var">y</span>+2)</span> the value next to <span class="var">y</span> is <strong>+2</strong>, so <span class="var">k</span> = <strong>2</strong>.</span>
+      </div>
+      <div class="ea-line" data-ok="true" onclick="eaClick(this)">
+        <span class="ea-num">3</span>
+        <span class="ea-text">So the centre is <span class="expr">(<span class="var">h</span>, <span class="var">k</span>) = (−3, 2)</span>.</span>
+      </div>
+      <div class="ea-line" data-ok="true" onclick="eaClick(this)">
+        <span class="ea-num">4</span>
+        <span class="ea-text"><span class="var">r</span><sup>2</sup> = 16, so <span class="var">r</span> = <strong>4</strong>.</span>
+      </div>
+    </div>
+
+    <div class="ea-feedback" id="eaFeedback">Click the line that contains the mistake.</div>
+
+    <div class="ea-fix" id="eaFix">
+      <p><strong>Great — Line 2 is the error.</strong> Sam <em>copied</em> the numbers inside the brackets instead of <em>solving</em> for <span class="var">h</span> and <span class="var">k</span>. Standard form is (<span class="var">x</span> − <span class="var">h</span>), so −<span class="var">h</span> = −3 means <span class="var">h</span> = <strong>+3</strong>; and (<span class="var">y</span> + 2) = (<span class="var">y</span> − (−2)) means <span class="var">k</span> = <strong>−2</strong>.</p>
+      <p>Now you write the <strong>correct centre</strong> as an ordered pair:</p>
+      <div class="ea-fix-row">
+        <span class="eq-lbl">Centre =</span>
+        <input id="eaInput" placeholder="(h, k)">
+        <button onclick="checkEA()">Check</button>
+      </div>
+      <div class="ea-result" id="eaResult">✓ Correct — the centre is (3, −2).</div>
+    </div>
+  </div>
+
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>The flip-the-sign rule:</strong> whatever number appears <em>inside</em> the bracket, <strong>change its sign</strong> to get the coordinate of the centre. (<span class="var">x</span> − 3) → centre <span class="var">x</span> = +3; (<span class="var">y</span> + 2) → centre <span class="var">y</span> = −2. This trips up almost everyone the first time.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Enter ordered pairs as <code>(h, k)</code> — brackets optional. Then <strong>we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">For each circle, identify the centre or radius. Enter centres as ordered pairs like <code>(3,-2)</code>. Enter radii as plain numbers like <code>4</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Sketches and equations — going from picture to algebra. Read the centre off the dot, the radius off the gridlines, and fill in the three blanks of standard form.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Two-step transformations from the unit circle, plus irrational radii. Enter ordered pairs as <code>(h,k)</code> and numerical answers as digits.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">Lesson ID</span>
+      <span class="cl-value">y10_alg_19</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 10 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M10A05</strong> — experiment with functions and relations using digital tools, making and testing conjectures and generalising emerging patterns</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">3</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Read centre and radius from the standard form of a circle (x−h)²+(y−k)²=r² and describe each circle as a transformation of the unit circle x²+y²=1.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Source: SA Curriculum — Mathematics R–10 Prototype 2.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 10 · Circle Equations &amp; Transformations
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG & DROP SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING — equation ↔ centre/radius ============
+  const matchTerms = [
+    { html: '<span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=4', group: 1 },
+    { html: 'Centre (0, 0)<br>r = 2', group: 1 },
+    { html: '(<span class="var">x</span>−1)<sup>2</sup>+<span class="var">y</span><sup>2</sup>=9', group: 2 },
+    { html: 'Centre (1, 0)<br>r = 3', group: 2 },
+    { html: '<span class="var">x</span><sup>2</sup>+(<span class="var">y</span>+3)<sup>2</sup>=16', group: 3 },
+    { html: 'Centre (0, −3)<br>r = 4', group: 3 },
+    { html: '(<span class="var">x</span>+2)<sup>2</sup>+(<span class="var">y</span>−5)<sup>2</sup>=25', group: 4 },
+    { html: 'Centre (−2, 5)<br>r = 5', group: 4 },
+    { html: '(<span class="var">x</span>−4)<sup>2</sup>+(<span class="var">y</span>+1)<sup>2</sup>=1', group: 5 },
+    { html: 'Centre (4, −1)<br>r = 1', group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a match — check the bracket signs flip when you read off the centre.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ ERROR ANALYSIS (Section 6) ============
+  let eaFound = false;
+  function eaClick(el) {
+    if (eaFound) return;
+    if (el.classList.contains('locked')) return;
+    const isError = el.dataset.ok === 'false';
+    if (isError) {
+      el.classList.add('wrong-found', 'locked');
+      document.querySelectorAll('.ea-line').forEach(l => l.classList.add('locked'));
+      const fb = document.getElementById('eaFeedback');
+      fb.textContent = '✓ Found it — Line 2 is where the sign-flip went wrong.';
+      fb.classList.add('success');
+      fb.classList.remove('miss');
+      document.getElementById('eaFix').classList.add('shown');
+      eaFound = true;
+    } else {
+      el.classList.add('ok-clicked');
+      setTimeout(() => el.classList.remove('ok-clicked'), 500);
+      const fb = document.getElementById('eaFeedback');
+      fb.textContent = '✗ That line is correct — look again at how Sam reads h and k from inside the brackets.';
+      fb.classList.add('miss');
+      fb.classList.remove('success');
+    }
+  }
+  function checkEA() {
+    const input = document.getElementById('eaInput');
+    const raw = (input.value || '').toLowerCase().replace(/[\s()]/g, '').replace(/−/g, '-');
+    input.classList.remove('correct', 'incorrect');
+    const result = document.getElementById('eaResult');
+    if (raw === '3,-2') {
+      input.classList.add('correct');
+      result.textContent = '✓ Correct — the centre is (3, −2).';
+      result.classList.add('shown');
+      result.style.color = 'var(--good)';
+      if (!input.dataset.scored) {
+        correctCount++;
+        input.dataset.scored = '1';
+        updateProgress();
+      }
+    } else {
+      input.classList.add('incorrect');
+      result.textContent = '✗ Not quite. Flip the sign of the number inside each bracket: (x − 3) → +3, (y + 2) → −2.';
+      result.classList.add('shown');
+      result.style.color = 'var(--bad)';
+    }
+  }
+
+  // ============ DATA — PROBLEMS ============
+  const retrieval = [
+    { q: 'Evaluate <span class="expr">√49</span>.', a: '7', hint: 'What number squared gives 49?' },
+    { q: 'The graph of <span class="expr"><span class="var">y</span> = (<span class="var">x</span> − 4)<sup>2</sup></span> is the graph of <span class="expr"><span class="var">y</span> = <span class="var">x</span><sup>2</sup></span> shifted ___ units in the positive x-direction.', a: '4', hint: 'Inside the bracket the sign flips when you describe the shift.' },
+    { q: 'Pythagoras: distance from (0, 0) to (3, 4) is ___.', a: '5', hint: '√(3² + 4²) = √25.' },
+  ];
+
+  // Building tier — alternating "centre?" / "radius?" for five circles
+  const practice1 = [
+    { q: '<span class="expr"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=9</span><br><em>Centre?</em>', a: '(0,0)', hint: 'Bare brackets mean the centre is at the origin.' },
+    { q: '<span class="expr"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=9</span><br><em>Radius?</em>', a: '3', hint: 'r² = 9, so r = √9.' },
+    { q: '<span class="expr"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=36</span><br><em>Centre?</em>', a: '(0,0)', hint: 'Centre at the origin again — no shifts.' },
+    { q: '<span class="expr"><span class="var">x</span><sup>2</sup>+<span class="var">y</span><sup>2</sup>=36</span><br><em>Radius?</em>', a: '6', hint: 'r = √36.' },
+    { q: '<span class="expr">(<span class="var">x</span>−2)<sup>2</sup>+(<span class="var">y</span>−5)<sup>2</sup>=4</span><br><em>Centre?</em>', a: '(2,5)', hint: 'Flip the signs inside the brackets to read the centre.' },
+    { q: '<span class="expr">(<span class="var">x</span>−2)<sup>2</sup>+(<span class="var">y</span>−5)<sup>2</sup>=4</span><br><em>Radius?</em>', a: '2', hint: 'r² = 4, so r = 2.' },
+    { q: '<span class="expr">(<span class="var">x</span>+4)<sup>2</sup>+(<span class="var">y</span>−1)<sup>2</sup>=49</span><br><em>Centre?</em>', a: '(-4,1)', hint: '(x + 4) means h = −4; (y − 1) means k = 1.' },
+    { q: '<span class="expr">(<span class="var">x</span>+4)<sup>2</sup>+(<span class="var">y</span>−1)<sup>2</sup>=49</span><br><em>Radius?</em>', a: '7', hint: 'r = √49.' },
+    { q: '<span class="expr">(<span class="var">x</span>−6)<sup>2</sup>+(<span class="var">y</span>+3)<sup>2</sup>=100</span><br><em>Centre?</em>', a: '(6,-3)', hint: 'Bracket signs flip: −6 → +6 and +3 → −3.' },
+    { q: '<span class="expr">(<span class="var">x</span>−6)<sup>2</sup>+(<span class="var">y</span>+3)<sup>2</sup>=100</span><br><em>Radius?</em>', a: '10', hint: 'r² = 100.' },
+  ];
+
+  // Stretch tier — read-from-sketch + fill three blanks of standard form
+  const sketch1 = `<div class="mini-sketch"><svg viewBox="0 0 240 240" role="img" aria-label="Circle sketch centre (1,-3) radius 2"><rect width="240" height="240" fill="white"/><g stroke="#e3e6ec" stroke-width="1"><line x1="10" y1="10" x2="10" y2="230"/><line x1="32" y1="10" x2="32" y2="230"/><line x1="54" y1="10" x2="54" y2="230"/><line x1="76" y1="10" x2="76" y2="230"/><line x1="98" y1="10" x2="98" y2="230"/><line x1="120" y1="10" x2="120" y2="230"/><line x1="142" y1="10" x2="142" y2="230"/><line x1="164" y1="10" x2="164" y2="230"/><line x1="186" y1="10" x2="186" y2="230"/><line x1="208" y1="10" x2="208" y2="230"/><line x1="230" y1="10" x2="230" y2="230"/><line x1="10" y1="10" x2="230" y2="10"/><line x1="10" y1="32" x2="230" y2="32"/><line x1="10" y1="54" x2="230" y2="54"/><line x1="10" y1="76" x2="230" y2="76"/><line x1="10" y1="98" x2="230" y2="98"/><line x1="10" y1="120" x2="230" y2="120"/><line x1="10" y1="142" x2="230" y2="142"/><line x1="10" y1="164" x2="230" y2="164"/><line x1="10" y1="186" x2="230" y2="186"/><line x1="10" y1="208" x2="230" y2="208"/><line x1="10" y1="230" x2="230" y2="230"/></g><line x1="10" y1="120" x2="234" y2="120" stroke="#2a2a2a" stroke-width="1.4"/><line x1="120" y1="234" x2="120" y2="6" stroke="#2a2a2a" stroke-width="1.4"/><g font-family="-apple-system,sans-serif" font-size="9" fill="#4b5563"><text x="10" y="132" text-anchor="middle">−5</text><text x="54" y="132" text-anchor="middle">−3</text><text x="98" y="132" text-anchor="middle">−1</text><text x="142" y="132" text-anchor="middle">1</text><text x="186" y="132" text-anchor="middle">3</text><text x="230" y="132" text-anchor="middle">5</text><text x="116" y="14" text-anchor="end">5</text><text x="116" y="58" text-anchor="end">3</text><text x="116" y="102" text-anchor="end">1</text><text x="116" y="146" text-anchor="end">−1</text><text x="116" y="190" text-anchor="end">−3</text><text x="116" y="234" text-anchor="end">−5</text></g><circle cx="142" cy="186" r="44" fill="rgba(190,88,55,0.12)" stroke="#BE5837" stroke-width="2"/><line x1="142" y1="186" x2="186" y2="186" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="142" cy="186" r="3" fill="#1F4D54"/><text x="148" y="180" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-weight="bold">(1, −3)</text></svg></div>`;
+
+  const sketch2 = `<div class="mini-sketch"><svg viewBox="0 0 240 240" role="img" aria-label="Circle sketch centre (-2,1) radius 3"><rect width="240" height="240" fill="white"/><g stroke="#e3e6ec" stroke-width="1"><line x1="10" y1="10" x2="10" y2="230"/><line x1="32" y1="10" x2="32" y2="230"/><line x1="54" y1="10" x2="54" y2="230"/><line x1="76" y1="10" x2="76" y2="230"/><line x1="98" y1="10" x2="98" y2="230"/><line x1="120" y1="10" x2="120" y2="230"/><line x1="142" y1="10" x2="142" y2="230"/><line x1="164" y1="10" x2="164" y2="230"/><line x1="186" y1="10" x2="186" y2="230"/><line x1="208" y1="10" x2="208" y2="230"/><line x1="230" y1="10" x2="230" y2="230"/><line x1="10" y1="10" x2="230" y2="10"/><line x1="10" y1="32" x2="230" y2="32"/><line x1="10" y1="54" x2="230" y2="54"/><line x1="10" y1="76" x2="230" y2="76"/><line x1="10" y1="98" x2="230" y2="98"/><line x1="10" y1="120" x2="230" y2="120"/><line x1="10" y1="142" x2="230" y2="142"/><line x1="10" y1="164" x2="230" y2="164"/><line x1="10" y1="186" x2="230" y2="186"/><line x1="10" y1="208" x2="230" y2="208"/><line x1="10" y1="230" x2="230" y2="230"/></g><line x1="10" y1="120" x2="234" y2="120" stroke="#2a2a2a" stroke-width="1.4"/><line x1="120" y1="234" x2="120" y2="6" stroke="#2a2a2a" stroke-width="1.4"/><g font-family="-apple-system,sans-serif" font-size="9" fill="#4b5563"><text x="10" y="132" text-anchor="middle">−5</text><text x="54" y="132" text-anchor="middle">−3</text><text x="98" y="132" text-anchor="middle">−1</text><text x="142" y="132" text-anchor="middle">1</text><text x="186" y="132" text-anchor="middle">3</text><text x="230" y="132" text-anchor="middle">5</text><text x="116" y="14" text-anchor="end">5</text><text x="116" y="58" text-anchor="end">3</text><text x="116" y="102" text-anchor="end">1</text><text x="116" y="146" text-anchor="end">−1</text><text x="116" y="190" text-anchor="end">−3</text><text x="116" y="234" text-anchor="end">−5</text></g><circle cx="76" cy="98" r="66" fill="rgba(190,88,55,0.12)" stroke="#BE5837" stroke-width="2"/><line x1="76" y1="98" x2="142" y2="98" stroke="#1F4D54" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="76" cy="98" r="3" fill="#1F4D54"/><text x="82" y="92" font-family="Georgia,serif" font-size="11" fill="#1F4D54" font-weight="bold">(−2, 1)</text></svg></div>`;
+
+  const practice2 = [
+    { q: sketch1 + 'Read the centre of this circle as an ordered pair.', a: '(1,-3)', hint: 'Find the navy dot on the gridlines.' },
+    { q: sketch1 + 'Read the radius (distance from the dot to the boundary along a gridline).', a: '2', hint: 'Count the gridline units along the dashed segment.' },
+    { q: sketch2 + 'Read the centre of this circle as an ordered pair.', a: '(-2,1)', hint: 'The dot is 2 left and 1 up from the origin.' },
+    { q: sketch2 + 'Read the radius.', a: '3', hint: 'Count gridline units along the dashed segment.' },
+    { q: 'A circle has centre <span class="expr">(5, 0)</span> and radius 6. In standard form <span class="expr">(<span class="var">x</span>−<span class="var">h</span>)<sup>2</sup>+(<span class="var">y</span>−<span class="var">k</span>)<sup>2</sup>=<span class="var">r</span><sup>2</sup></span>, what is the right-hand side <span class="var">r</span><sup>2</sup>?', a: '36', hint: 'r² = 6² = ?' },
+    { q: 'A circle has centre <span class="expr">(−1, 4)</span> and radius 8. Write the centre as an ordered pair, <strong>then</strong> verify <span class="var">r</span><sup>2</sup> = ___. Type just <span class="var">r</span><sup>2</sup>.', a: '64', hint: 'r² = 8² = ?' },
+  ];
+
+  const practice3 = [
+    { q: 'The equation <span class="expr">(<span class="var">x</span>−1)<sup>2</sup>+(<span class="var">y</span>+5)<sup>2</sup>=12</span> has centre ___. Enter as an ordered pair.', a: '(1,-5)', hint: '(x − 1) → h = 1; (y + 5) → k = −5.' },
+    { q: 'For <span class="expr">(<span class="var">x</span>−1)<sup>2</sup>+(<span class="var">y</span>+5)<sup>2</sup>=12</span>, what is <span class="var">r</span><sup>2</sup>?', a: '12', hint: 'Just the right-hand side — no square root needed.' },
+    { q: 'The unit circle is enlarged by scale factor 6, then translated 4 units right and 3 units down. In the resulting equation, what is <span class="var">r</span><sup>2</sup>?', a: '36', hint: 'New radius = 6 × 1 = 6; square it.' },
+    { q: 'Same transformations as above (scale factor 6, then 4 right and 3 down). What is the centre? Enter as an ordered pair.', a: '(4,-3)', hint: 'Start at (0, 0). Move 4 right → (4, 0). Move 3 down → (4, −3).' },
+  ];
+
+  const checkpoint = [
+    { q: 'Find the centre and radius of <span class="expr">(<span class="var">x</span>−5)<sup>2</sup>+(<span class="var">y</span>−2)<sup>2</sup>=9</span>. Enter the centre as an ordered pair.', a: '(5,2)', hint: 'Flip the bracket signs: −5 → +5, −2 → +2.' },
+    { q: 'Find the radius of the same circle (above).', a: '3', hint: 'r² = 9, so r = ?' },
+  ];
+
+  const exitProbs = [
+    { q: 'Centre and radius of <span class="expr">(<span class="var">x</span>+7)<sup>2</sup>+(<span class="var">y</span>−2)<sup>2</sup>=81</span>? Enter the centre as an ordered pair.', a: '(-7,2)', hint: '(x + 7) → h = −7; (y − 2) → k = 2.' },
+    { q: 'What is the radius of the same circle (above)?', a: '9', hint: 'r² = 81, so r = ?' },
+    { q: 'Explain in one sentence why the equation of the <strong>unit circle</strong> can be written as <span class="expr">(<span class="var">x</span>−0)<sup>2</sup>+(<span class="var">y</span>−0)<sup>2</sup>=1<sup>2</sup></span>.', a: 'TEXT', hint: 'Think about what h, k and r are for the unit circle.' },
+  ];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/−/g, '-')
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  // Ordered-pair friendly matcher: strip parens, normalise minus signs.
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const stripParens = s => s.replace(/[()]/g, '');
+    const norm = stripParens(normaliseAnswer(input));
+    const exp = stripParens(normaliseAnswer(expected));
+    if (norm === exp) return true;
+    // also accept reordered additive terms (for any algebraic case)
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'The unit circle has centre (0, 0) and radius 1, so h = 0, k = 0 and r = 1 — substituting these into standard form gives exactly (x−0)²+(y−0)²=1².';
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // Error-analysis input also counts toward progress total
+  totalProblems++;
+
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+    if (e.key === 'Enter' && e.target.id === 'eaInput') {
+      checkEA();
+    }
+  });
+</script>
+
+</body>
+</html>
