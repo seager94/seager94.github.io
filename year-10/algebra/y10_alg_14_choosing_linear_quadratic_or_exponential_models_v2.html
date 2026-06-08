@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choosing a Model: Linear, Quadratic or Exponential — Year 10</title>
+
+<meta name="lesson-id"             content="y10_alg_14">
+<meta name="ac9-descriptor"        content="AC9M10A04">
+<meta name="ac9-elaborations"      content="1">
+<meta name="sa-year"               content="10">
+<meta name="sa-strand"             content="Algebra">
+<meta name="sa-conceptual-understanding" content="Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones">
+<meta name="lesson-focus"          content="Diagnose which model — linear, quadratic or exponential — fits a table of values, by testing for constant first difference, constant second difference, or constant ratio.">
+<meta name="mapping-note"          content="Strict">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket h4.linear { color: var(--navy); }
+  .bucket h4.quadratic { color: var(--coral); }
+  .bucket h4.exponential { color: var(--good); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 8px 14px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.05rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .calc-box table { border-collapse: collapse; margin: 6px auto; font-family: Georgia, serif; }
+  .calc-box table th, .calc-box table td {
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    text-align: center;
+    font-size: 0.98rem;
+  }
+  .calc-box table th { background: var(--hint-bg); color: var(--navy); }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 8px;
+    text-align: center; font-family: Georgia, serif; font-size: 0.98rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+  }
+
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  section.lesson.tier-accordion {
+    padding-top: 28px;
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none;
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* HINGE QUESTION */
+  section.lesson.hinge {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  .hinge-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy); color: white;
+    white-space: nowrap;
+  }
+  .hinge-stem {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .hinge-stem table { border-collapse: collapse; margin: 10px auto 4px; }
+  .hinge-stem th, .hinge-stem td {
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+  }
+  .hinge-stem th { background: var(--hint-bg); color: var(--navy); }
+  .hinge-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .hinge-opt {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    text-align: left;
+  }
+  .hinge-opt:hover { border-color: var(--navy); transform: translateY(-1px); }
+  .hinge-opt .opt-letter {
+    background: var(--hint-bg); color: var(--navy);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .hinge-opt.selected.correct { background: var(--good-soft); border-color: var(--good); }
+  .hinge-opt.selected.correct .opt-letter { background: var(--good); color: white; }
+  .hinge-opt.selected.incorrect { background: var(--bad-soft); border-color: var(--bad); }
+  .hinge-opt.selected.incorrect .opt-letter { background: var(--bad); color: white; }
+  .hinge-opt.dimmed { opacity: 0.45; cursor: not-allowed; }
+  .hinge-feedback {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .hinge-feedback.visible { display: block; }
+  .hinge-feedback.correct { background: var(--good-soft); color: #1d4a30; border-left: 4px solid var(--good); }
+  .hinge-feedback.incorrect { background: var(--bad-soft); color: #6a2520; border-left: 4px solid var(--bad); }
+  .hinge-feedback strong { font-weight: 700; }
+  .hinge-reset {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 7px 14px; border-radius: 8px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600;
+    margin-top: 12px;
+  }
+  body.teacher-mode .hinge-opt.correct-answer { box-shadow: 0 0 0 3px var(--good); }
+
+  /* HOOK with SVG side-by-side */
+  .hook-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: center;
+  }
+  @media (max-width: 760px) {
+    .hook-grid { grid-template-columns: 1fr; }
+  }
+  .shape-figure {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: var(--shadow);
+  }
+  .shape-figure svg { display: block; width: 100%; height: auto; }
+  .shape-figure .fig-caption {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    padding: 4px 6px 8px;
+  }
+
+  /* Diagnostic recap card used in worked example */
+  .diagnostic-recap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .diag-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-left-width: 5px;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+  }
+  .diag-card.linear { border-left-color: var(--navy); }
+  .diag-card.quadratic { border-left-color: var(--coral); }
+  .diag-card.exponential { border-left-color: var(--good); }
+  .diag-card .diag-title {
+    font-family: Georgia, serif;
+    font-weight: bold;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .diag-card .diag-title .swatch {
+    display: inline-block;
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .diag-card.linear .swatch { background: var(--navy); }
+  .diag-card.quadratic .swatch { background: var(--coral); }
+  .diag-card.exponential .swatch { background: var(--good); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Choosing a Model — Linear, Quadratic or Exponential?</h1>
+    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+  </div>
+  <div class="badge">Modelling</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 24</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the skills you'll lean on today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A glance at the shape — and a glance at the table — is enough to pick the right model.</p>
+  <div class="hook-grid">
+    <div>
+      <p>A market analyst stares at three columns of numbers — sales, profit, audience size — and has 30 seconds before the meeting starts. Which family of equations should she model each one with?</p>
+      <p>She doesn't graph them. She looks at how the numbers change between rows.</p>
+      <ul style="line-height: 1.8;">
+        <li><strong style="color:var(--navy)">Same amount added each step?</strong> Linear.</li>
+        <li><strong style="color:var(--coral)">Same amount multiplied each step?</strong> Exponential.</li>
+        <li><strong style="color:#3a8f5f">Differences themselves changing by a constant?</strong> Quadratic.</li>
+      </ul>
+      <p>That table-based diagnostic is today's whole lesson. Once you can spot it, you can give the right model the right job — savings growth, falling objects, compound interest, viral spread, projectile motion.</p>
+    </div>
+    <div class="shape-figure">
+      <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three model shapes on one Cartesian grid: a straight line for linear (navy), a parabola for quadratic (terracotta), and a steepening curve for exponential (green).">
+        <rect width="480" height="320" fill="white"/>
+        <!-- gridlines -->
+        <g stroke="#e3e6ec" stroke-width="1">
+          <line x1="90"  y1="40" x2="90"  y2="270"/>
+          <line x1="130" y1="40" x2="130" y2="270"/>
+          <line x1="170" y1="40" x2="170" y2="270"/>
+          <line x1="210" y1="40" x2="210" y2="270"/>
+          <line x1="250" y1="40" x2="250" y2="270"/>
+          <line x1="290" y1="40" x2="290" y2="270"/>
+          <line x1="330" y1="40" x2="330" y2="270"/>
+          <line x1="370" y1="40" x2="370" y2="270"/>
+          <line x1="410" y1="40" x2="410" y2="270"/>
+          <line x1="50" y1="220" x2="450" y2="220"/>
+          <line x1="50" y1="170" x2="450" y2="170"/>
+          <line x1="50" y1="120" x2="450" y2="120"/>
+          <line x1="50" y1="70"  x2="450" y2="70"/>
+        </g>
+        <!-- axes -->
+        <line x1="50" y1="270" x2="450" y2="270" stroke="#2a2a2a" stroke-width="2"/>
+        <line x1="50" y1="270" x2="50"  y2="30"  stroke="#2a2a2a" stroke-width="2"/>
+        <!-- arrowheads -->
+        <polygon points="450,270 444,266 444,274" fill="#2a2a2a"/>
+        <polygon points="50,30 46,36 54,36" fill="#2a2a2a"/>
+        <!-- axis labels -->
+        <text x="250" y="305" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2a2a2a"><tspan font-style="italic">x</tspan> (step)</text>
+        <text x="20" y="155" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2a2a2a" transform="rotate(-90 20 155)"><tspan font-style="italic">y</tspan> (value)</text>
+        <!-- y-axis tick labels -->
+        <text x="44" y="274" text-anchor="end" font-family="Georgia, serif" font-size="11" fill="#6b7280">0</text>
+        <text x="44" y="224" text-anchor="end" font-family="Georgia, serif" font-size="11" fill="#6b7280">5</text>
+        <text x="44" y="174" text-anchor="end" font-family="Georgia, serif" font-size="11" fill="#6b7280">10</text>
+        <text x="44" y="124" text-anchor="end" font-family="Georgia, serif" font-size="11" fill="#6b7280">15</text>
+        <text x="44" y="74"  text-anchor="end" font-family="Georgia, serif" font-size="11" fill="#6b7280">20</text>
+        <!-- x-axis tick labels -->
+        <text x="50"  y="287" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b7280">0</text>
+        <text x="130" y="287" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b7280">2</text>
+        <text x="210" y="287" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b7280">4</text>
+        <text x="290" y="287" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b7280">6</text>
+        <text x="370" y="287" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b7280">8</text>
+        <text x="450" y="287" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b7280">10</text>
+        <!-- LINEAR: y = 1 + 0.8x  (navy) -->
+        <line x1="50" y1="260" x2="450" y2="180" stroke="#1F4D54" stroke-width="3" fill="none"/>
+        <!-- QUADRATIC: y = 1 + 0.2x^2  (coral) -->
+        <polyline points="50,260 70,259 90,258 110,255 130,252 150,247 170,242 190,236 210,228 230,220 250,210 270,199 290,188 310,175 330,162 350,147 370,132 390,116 410,98 430,80 450,60"
+                  stroke="#BE5837" stroke-width="3" fill="none"/>
+        <!-- EXPONENTIAL: y = 1.3^x  (green) -->
+        <polyline points="50,260 70,258.4 90,257 110,255.2 130,253.1 150,250.7 170,248 190,244.9 210,241.4 230,237.4 250,232.9 270,227.7 290,221.7 310,214.9 330,207.3 350,198.4 370,188.4 390,177 410,164 430,149.1 450,132.1"
+                  stroke="#2f9e6b" stroke-width="3" fill="none"/>
+        <!-- legend / curve labels -->
+        <g font-family="Georgia, serif" font-size="13" font-weight="bold">
+          <text x="408" y="175" fill="#1F4D54">Linear</text>
+          <text x="396" y="55"  fill="#BE5837">Quadratic</text>
+          <text x="388" y="127" fill="#2f9e6b">Exponential</text>
+        </g>
+      </svg>
+      <div class="fig-caption">All three curves start at the same value — the diagnostic comes from how fast they pull apart.</div>
+    </div>
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. These five words are the lesson's working vocabulary.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Linear model<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>y = mx + c.</strong> Adds the same amount every step.<div class="vocab-example">A casual job paying <strong>$25 per hour</strong>: pay rises by $25 each hour worked.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Quadratic model<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>y = a<span class="var">x</span>² + b<span class="var">x</span> + c.</strong> Differences grow steadily — second differences are constant.<div class="vocab-example">Distance fallen by a dropped object: <strong>5<span class="var">t</span>²</strong> metres after <span class="var">t</span> seconds.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Exponential model<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back"><strong>y = a · b<sup><span class="var">x</span></sup>.</strong> Multiplies by the same factor every step.<div class="vocab-example">$1000 invested at <strong>5%</strong> per year: balance is multiplied by 1.05 each year.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">First difference<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Subtract consecutive <span class="var">y</span>-values: <strong><span class="var">y</span><sub>2</sub> − <span class="var">y</span><sub>1</sub></strong>, then <span class="var">y</span><sub>3</sub> − <span class="var">y</span><sub>2</sub>, etc.<div class="vocab-example">For <strong>3, 7, 11, 15</strong> the first differences are <strong>4, 4, 4</strong> — constant.</div></div>
+      </div>
+    </div>
+    <div class="vocab" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-inner">
+        <div class="vocab-front">Common ratio<div class="hint-flip">Tap to flip</div></div>
+        <div class="vocab-back">Divide consecutive <span class="var">y</span>-values: <strong><span class="var">y</span><sub>2</sub> ÷ <span class="var">y</span><sub>1</sub></strong>, then <span class="var">y</span><sub>3</sub> ÷ <span class="var">y</span><sub>2</sub>, etc.<div class="vocab-example">For <strong>3, 6, 12, 24</strong> each ratio is <strong>×2</strong> — constant.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SORT TABLES BY MODEL -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Sort the tables by model</h2>
+  <p class="sec-desc">Drag each table of <span class="var">y</span>-values into the model family that fits it. Wrong drops shake and return; correct drops stay put.</p>
+
+  <div class="parts-expr">
+    <div class="label">Each chip shows a sequence of <span class="var">y</span>-values at <span class="var">x</span> = 0, 1, 2, 3</div>
+    <div id="partsTerms" class="terms-source">
+      <span class="term-chip" data-type="linear">5, 8, 11, 14</span>
+      <span class="term-chip" data-type="linear">20, 17, 14, 11</span>
+      <span class="term-chip" data-type="quadratic">1, 4, 9, 16</span>
+      <span class="term-chip" data-type="quadratic">0, 2, 8, 18</span>
+      <span class="term-chip" data-type="exponential">2, 6, 18, 54</span>
+      <span class="term-chip" data-type="exponential">1, 5, 25, 125</span>
+    </div>
+    <div class="parts-buckets">
+      <div class="bucket" data-bucket="linear">
+        <h4 class="linear">Linear (+/− same)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="quadratic">
+        <h4 class="quadratic">Quadratic (2nd diff)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+      <div class="bucket" data-bucket="exponential">
+        <h4 class="exponential">Exponential (× same)</h4>
+        <div class="bucket-contents"></div>
+      </div>
+    </div>
+    <div class="parts-actions">
+      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
+      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
+    </div>
+  </div>
+
+  <div class="parts-instructions">
+    💡 Test in order: first differences first. If they're constant, you're done — it's linear. If not, try ratios. If not, try second differences.
+  </div>
+</section>
+
+<!-- SECTION 4: MATCH TABLES TO THEIR DIAGNOSTIC -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each table to its diagnostic</h2>
+  <p class="sec-desc">Click two chips that belong to the same pair — a table of <span class="var">y</span>-values, and the diagnostic that identifies its family.</p>
+
+  <div class="match-area" id="matchArea"></div>
+  <div class="match-feedback" id="matchFeedback">Pick a chip to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll run the diagnostic on one table out loud, then check the rule against another data point.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) — savings table -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — Mia's savings</h2>
+  <p class="sec-desc">Mia opens a savings account. After <span class="var">x</span> weeks she has <span class="var">y</span> dollars: <strong>(0, 80), (1, 95), (2, 110), (3, 125), (4, 140)</strong>. Which model fits — and what's the rule?</p>
+
+  <div class="worked">
+    <div class="step visible" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Run the diagnostic on first differences</div>
+        <div class="step-desc">Subtract each <span class="var">y</span> from the one after it.</div>
+        <div class="calc-box">
+          <table>
+            <tr><th><span class="var">x</span></th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+            <tr><th><span class="var">y</span></th><td>80</td><td>95</td><td>110</td><td>125</td><td>140</td></tr>
+            <tr><th>1st diff</th><td></td><td class="red">+15</td><td class="red">+15</td><td class="red">+15</td><td class="red">+15</td></tr>
+          </table>
+          <div style="margin-top:8px;">All four first differences are <span class="red"><strong>+15</strong></span> — constant.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Name the family and write the rule</div>
+        <div class="step-desc">Constant first difference ⇒ <strong>linear</strong>. The first difference is the slope (<span class="var">m</span>); the value at <span class="var">x</span> = 0 is the intercept (<span class="var">c</span>).</div>
+        <div class="calc-box">
+          <span class="blue"><span class="var">m</span> = 15</span> (rises $15 per week), <span class="blue"><span class="var">c</span> = 80</span> (starting balance)<br>
+          ⟹ <span class="expr"><span class="var">y</span> = <span class="red">15</span><span class="var">x</span> + <span class="red">80</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Check the rule against one further data point</div>
+        <div class="step-desc">Try <span class="var">x</span> = 4 — we should get 140.</div>
+        <div class="calc-box">
+          <span class="var">y</span> = 15(4) + 80 = 60 + 80 = <span class="red">140</span> ✓<br>
+          And one beyond the table — predict <span class="var">x</span> = 10: <span class="var">y</span> = 15(10) + 80 = <span class="red">230</span>. After 10 weeks Mia will have $230.
+        </div>
+        <div class="summary-banner">
+          <span class="label">Linear model — answer</span>
+          y = 15x + 80
+        </div>
+      </div>
+    </div>
+
+    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
+  </div>
+
+  <div class="diagnostic-recap">
+    <div class="diag-card linear">
+      <div class="diag-title"><span class="swatch"></span>Linear</div>
+      Constant <strong>first difference</strong>. Rule: <span class="expr"><span class="var">y</span> = <span class="var">m</span><span class="var">x</span> + <span class="var">c</span></span>
+    </div>
+    <div class="diag-card quadratic">
+      <div class="diag-title"><span class="swatch"></span>Quadratic</div>
+      Constant <strong>second difference</strong>. Rule: <span class="expr"><span class="var">y</span> = <span class="var">a</span><span class="var">x</span>² + <span class="var">b</span><span class="var">x</span> + <span class="var">c</span></span>
+    </div>
+    <div class="diag-card exponential">
+      <div class="diag-title"><span class="swatch"></span>Exponential</div>
+      Constant <strong>ratio</strong>. Rule: <span class="expr"><span class="var">y</span> = <span class="var">a</span> · <span class="var">b</span><sup><span class="var">x</span></sup></span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: HINGE QUESTION (after I Do) -->
+<section class="lesson hinge">
+  <h2>
+    <span class="sec-num">6</span>Hinge check
+    <span class="hinge-tag">🎯 Pick one</span>
+  </h2>
+  <p class="sec-desc">A community garden tracks plant height in cm each week. Which model best fits this table?</p>
+
+  <div class="hinge-stem">
+    <table>
+      <tr><th><span class="var">x</span> (week)</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+      <tr><th><span class="var">y</span> (cm)</th><td>2</td><td>6</td><td>18</td><td>54</td><td>162</td></tr>
+    </table>
+  </div>
+
+  <div class="hinge-options" id="hingeOpts">
+    <button class="hinge-opt" data-feedback-id="fb-A" onclick="pickHingeOption(this)"><span class="opt-letter">A</span><span>Linear</span></button>
+    <button class="hinge-opt" data-feedback-id="fb-B" onclick="pickHingeOption(this)"><span class="opt-letter">B</span><span>Quadratic</span></button>
+    <button class="hinge-opt correct-answer" data-correct="true" data-feedback-id="fb-C" onclick="pickHingeOption(this)"><span class="opt-letter">C</span><span>Exponential</span></button>
+    <button class="hinge-opt" data-feedback-id="fb-D" onclick="pickHingeOption(this)"><span class="opt-letter">D</span><span>None of the above</span></button>
+  </div>
+
+  <div class="hinge-feedback incorrect" id="fb-A">
+    <strong>Watch out — you've read a ratio as a difference.</strong> The first differences are +4, +12, +36, +108 — they are <em>not</em> constant, so it isn't linear. What stays constant is the <em>ratio</em>: 6 ÷ 2 = 3, 18 ÷ 6 = 3, 54 ÷ 18 = 3. Constant ratio ⇒ <strong>exponential</strong>.
+  </div>
+  <div class="hinge-feedback incorrect" id="fb-B">
+    <strong>You stopped at first differences.</strong> First differences (+4, +12, +36, +108) aren't constant — fair enough to keep going. But check second differences (+8, +24, +72) — those aren't constant either. Try ratios next: each is ×3. Constant ratio ⇒ <strong>exponential</strong>.
+  </div>
+  <div class="hinge-feedback correct" id="fb-C">
+    <strong>Correct.</strong> Each <span class="var">y</span>-value is 3× the previous one — a constant ratio means the family is exponential. The rule is <span class="expr"><span class="var">y</span> = 2 · 3<sup><span class="var">x</span></sup></span>, and a quick check at <span class="var">x</span> = 4 gives 2 · 81 = 162 ✓.
+  </div>
+  <div class="hinge-feedback incorrect" id="fb-D">
+    <strong>One of A/B/C does fit.</strong> Run the three tests in order — first difference, then ratio, then second difference. Here the ratio is constant at ×3, so it's <strong>exponential</strong>, rule <span class="expr"><span class="var">y</span> = 2 · 3<sup><span class="var">x</span></sup></span>.
+  </div>
+
+  <button class="hinge-reset" onclick="resetHinge()">↺ Try again</button>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each prompt with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: WE DO — falling object (quadratic) -->
+<section class="lesson">
+  <h2><span class="sec-num">7</span>Together — a dropped ball</h2>
+  <p class="sec-desc">A ball is dropped. Time <span class="var">t</span> (seconds) and distance fallen <span class="var">d</span> (metres): <strong>(0, 0), (1, 5), (2, 20), (3, 45), (4, 80)</strong>. We'll run the diagnostic together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why this routine works:</strong> testing 1st diff → ratio → 2nd diff in that order means you stop as soon as one is constant. Notice the bookkeeping discipline — read down columns carefully and don't lose signs.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 8: QUICK CHECK -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">8</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two tables to identify. Type <code>linear</code>, <code>quadratic</code>, or <code>exponential</code>. Try them on your own — <strong>then we'll check together as a class</strong> before you open a tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — BUILDING -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">9</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">For each table, identify the family. Type one of <code>linear</code>, <code>quadratic</code>, <code>exponential</code>, or <code>none</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — STRETCH -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">10</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Identify the family <em>and</em> predict the next <span class="var">y</span>-value. Write the family then the number separated by a comma — e.g. <code>linear,17</code> or <code>exponential,48</code>.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 11: PRACTICE — MASTERY -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">11</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Applied biology and physics contexts. Justify the family in your head, then predict the requested value. Answer with a single number.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<!-- SECTION 12: EXIT TICKET -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">12</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Three questions before you leave. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+</section>
+
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 10 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M10A04</strong> — use mathematical modelling to solve applied problems involving growth and decay, including financial contexts; formulate problems, choosing to apply linear, quadratic or exponential models; interpret solutions in terms of the situation; evaluate and modify models as necessary and report assumptions, methods and findings.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Diagnose which model — linear, quadratic or exponential — fits a table of values, by testing for constant first difference, constant second difference, or constant ratio.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y10_alg_14. Source: SA Curriculum (Mathematics R-10 Prototype 2) · lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Mathematics · Year 10 · Choosing a Model (Linear / Quadratic / Exponential)
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ DRAG & DROP SORT ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING — table ↔ diagnostic ============
+  // 5 pairs: each chip's "group" pairs it with one other chip
+  const matchTerms = [
+    { html: '<strong>10, 14, 18, 22</strong>', group: 1 },
+    { html: 'Linear (1st diff = +4)',          group: 1 },
+    { html: '<strong>1, 4, 9, 16</strong>',    group: 2 },
+    { html: 'Quadratic (2nd diff = 2)',        group: 2 },
+    { html: '<strong>3, 6, 12, 24</strong>',   group: 3 },
+    { html: 'Exponential (ratio ×2)',          group: 3 },
+    { html: '<strong>100, 95, 90, 85</strong>',group: 4 },
+    { html: 'Linear (1st diff = −5)',          group: 4 },
+    { html: '<strong>80, 40, 20, 10</strong>', group: 5 },
+    { html: 'Exponential (ratio ×½)',          group: 5 },
+  ];
+
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not a pair — re-run the diagnostic.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ HINGE QUESTION ============
+  function pickHingeOption(btn) {
+    if (btn.classList.contains('dimmed')) return;
+    const isCorrect = btn.dataset.correct === 'true';
+    btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');
+    document.querySelectorAll('.hinge-opt').forEach(o => {
+      if (o !== btn) o.classList.add('dimmed');
+    });
+    document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));
+    const fbId = btn.dataset.feedbackId;
+    if (fbId) document.getElementById(fbId).classList.add('visible');
+  }
+
+  function resetHinge() {
+    document.querySelectorAll('.hinge-opt').forEach(o => {
+      o.classList.remove('selected', 'correct', 'incorrect', 'dimmed');
+    });
+    document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));
+  }
+
+  // ============ PRACTICE PROBLEMS — DATA ============
+
+  // Helper to render a values table inside a problem prompt
+  function tbl(xs, ys, xlabel, ylabel) {
+    let h = '<table style="border-collapse:collapse; margin:6px 0; font-family:Georgia,serif; font-size:0.95rem;">';
+    h += '<tr><th style="border:1px solid #d8dde6; background:#DDE5F5; padding:4px 10px; color:#1F4D54;">' + xlabel + '</th>';
+    xs.forEach(x => h += '<td style="border:1px solid #d8dde6; padding:4px 10px; text-align:center;">' + x + '</td>');
+    h += '</tr><tr><th style="border:1px solid #d8dde6; background:#DDE5F5; padding:4px 10px; color:#1F4D54;">' + ylabel + '</th>';
+    ys.forEach(y => h += '<td style="border:1px solid #d8dde6; padding:4px 10px; text-align:center;">' + y + '</td>');
+    h += '</tr></table>';
+    return h;
+  }
+
+  const retrieval = [
+    { q: 'What is the next term in the sequence <strong>4, 9, 14, 19, …</strong>?', a: '24', hint: 'How much is added each step?' },
+    { q: 'Multiply <strong>3 × 2 × 2 × 2</strong>.', a: '24', hint: 'Three doublings of 3.' },
+    { q: 'Evaluate <span class="expr">2<span class="var">x</span>² + 1</span> when <span class="var">x</span> = 3.', a: '19', hint: '2 × 3² + 1 = 2 × 9 + 1.' },
+  ];
+
+  const checkpoint = [
+    { q: tbl([0,1,2,3,4], [7,11,15,19,23], 'x', 'y'), a: 'linear', hint: 'First differences are all the same.' },
+    { q: tbl([0,1,2,3,4], [3,6,12,24,48], 'x', 'y'), a: 'exponential', hint: 'Each y-value doubles.' },
+  ];
+
+  const weDo = [
+    { q: 'Compute the first differences of <strong>0, 5, 20, 45, 80</strong>.', a: '5,15,25,35', hint: '5−0, 20−5, 45−20, 80−45.' },
+    { q: 'Now compute the <em>second</em> differences of those first differences.', a: '10,10,10', hint: '15−5, 25−15, 35−25.' },
+    { q: 'Name the model family this table belongs to.', a: 'quadratic', hint: 'Which model has constant 2nd differences?' },
+  ];
+
+  const practice1 = [
+    { q: tbl([0,1,2,3,4], [2,5,8,11,14], 'x', 'y'), a: 'linear', hint: 'First differences: 3, 3, 3, 3.' },
+    { q: tbl([0,1,2,3,4], [1,2,4,8,16], 'x', 'y'), a: 'exponential', hint: 'Ratio of consecutive values: 2, 2, 2, 2.' },
+    { q: tbl([0,1,2,3,4], [0,1,4,9,16], 'x', 'y'), a: 'quadratic', hint: 'First differences: 1, 3, 5, 7. Second differences?' },
+    { q: tbl([0,1,2,3,4], [20,16,12,8,4], 'x', 'y'), a: 'linear', hint: 'First differences are all −4.' },
+    { q: tbl([0,1,2,3,4], [1,3,9,27,81], 'x', 'y'), a: 'exponential', hint: 'Each y-value is tripled.' },
+    { q: tbl([0,1,2,3,4], [3,4,7,12,19], 'x', 'y'), a: 'quadratic', hint: 'First differences: 1, 3, 5, 7. Second differences: 2.' },
+    { q: tbl([0,1,2,3,4], [50,40,32,25.6,20.48], 'x', 'y'), a: 'exponential', hint: 'Try ratios — each pair divides to 0.8.' },
+    { q: tbl([0,1,2,3,4], [10,17,24,31,38], 'x', 'y'), a: 'linear', hint: 'First differences: +7 every step.' },
+    { q: tbl([0,1,2,3,4], [5,8,13,20,29], 'x', 'y'), a: 'quadratic', hint: 'First differences: 3, 5, 7, 9 — second differences 2.' },
+    { q: tbl([0,1,2,3,4], [1,2,3,5,8], 'x', 'y'), a: 'none', hint: 'Differences not constant, ratios not constant, second differences not constant. (It\'s the Fibonacci-style pattern!)' },
+  ];
+
+  const practice2 = [
+    { q: tbl([0,1,2,3,4], [4,7,10,13,16], 'x', 'y') + '<div style="margin-top:6px;">Predict <span class="var">y</span> at <span class="var">x</span> = 5.</div>', a: 'linear,19', hint: 'Linear with +3 each step; continue.' },
+    { q: tbl([0,1,2,3,4], [3,6,12,24,48], 'x', 'y') + '<div style="margin-top:6px;">Predict <span class="var">y</span> at <span class="var">x</span> = 5.</div>', a: 'exponential,96', hint: 'Ratio ×2; double once more.' },
+    { q: tbl([0,1,2,3,4], [1,3,9,27,81], 'x', 'y') + '<div style="margin-top:6px;">Predict <span class="var">y</span> at <span class="var">x</span> = 5.</div>', a: 'exponential,243', hint: 'Each y triples.' },
+    { q: tbl([0,1,2,3,4], [2,3,6,11,18], 'x', 'y') + '<div style="margin-top:6px;">Predict <span class="var">y</span> at <span class="var">x</span> = 5.</div>', a: 'quadratic,27', hint: 'First diffs: 1, 3, 5, 7 — next is 9. So next y is 18 + 9.' },
+    { q: tbl([0,1,2,3,4], [100,90,80,70,60], 'x', 'y') + '<div style="margin-top:6px;">Predict <span class="var">y</span> at <span class="var">x</span> = 5.</div>', a: 'linear,50', hint: 'Linear, −10 each step.' },
+    { q: tbl([0,1,2,3,4], [1000,800,640,512,409.6], 'x', 'y') + '<div style="margin-top:6px;">Predict <span class="var">y</span> at <span class="var">x</span> = 5.</div>', a: 'exponential,327.68', hint: 'Ratio 0.8 each step. 409.6 × 0.8 = 327.68.' },
+  ];
+
+  const practice3 = [
+    { q: '<strong>Biology — bacteria.</strong> A culture doubles every hour: <strong>(0, 50), (1, 100), (2, 200), (3, 400)</strong>. How many at <span class="var">t</span> = 6?', a: '3200', hint: 'Exponential, ratio ×2. 50 × 2⁶ = 50 × 64.' },
+    { q: '<strong>Physics — projectile.</strong> Height above ground (m) at time <span class="var">t</span> (s): <strong>(0, 0), (1, 25), (2, 40), (3, 45), (4, 40)</strong>. Use the quadratic rule <span class="expr"><span class="var">h</span> = 30<span class="var">t</span> − 5<span class="var">t</span>²</span> to predict the height at <span class="var">t</span> = 5.', a: '25', hint: '30(5) − 5(25) = 150 − 125.' },
+    { q: '<strong>Finance — investment.</strong> $2000 invested earns 10% per year: <strong>(0, 2000), (1, 2200), (2, 2420), (3, 2662)</strong>. What is the balance at year 4? (Round to nearest dollar.)', a: '2928', hint: 'Exponential, ratio ×1.1. 2662 × 1.1 = 2928.2.' },
+    { q: '<strong>Biology — pendulum (a trick!).</strong> A pendulum has period <span class="expr"><span class="var">T</span> = 2π√(<span class="var">L</span>/9.8)</span>. Table: <strong>(1, 2.01), (2, 2.84), (4, 4.01), (9, 6.02)</strong>. Which family fits? Type one of <code>linear</code>, <code>quadratic</code>, <code>exponential</code>, <code>none</code>.', a: 'none', hint: 'T grows as √L — not linear, quadratic, or exponential. The right family is a square-root model.' },
+  ];
+
+  const exitProbs = [
+    { q: tbl([0,1,2,3,4], [4,12,36,108,324], 'x', 'y') + '<div style="margin-top:6px;">Which model fits? (Type <code>linear</code>, <code>quadratic</code>, <code>exponential</code>, or <code>none</code>.)</div>', a: 'exponential', hint: 'Try ratios — each is ×3.' },
+    { q: tbl([0,1,2,3,4], [1,2,5,10,17], 'x', 'y') + '<div style="margin-top:6px;">Which model fits, and what is the rule?</div>', a: 'quadratic', hint: 'First diffs: 1, 3, 5, 7 — second diffs 2. Rule: y = x² + 1.' },
+    { q: 'In one or two sentences, describe the order in which you should run the three diagnostics on a table, and why that order is efficient.', a: 'TEXT', hint: 'Start with first differences; only escalate if needed.' },
+  ];
+
+  // ============ NORMALISATION & MATCHING ============
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');
+  }
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null;
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">⟶</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return '(Open response — teacher to mark.)';
+    // Word-only answers (e.g. "linear", "quadratic") — show plainly.
+    if (/^[a-z,\s]+$/i.test(a)) return a;
+    // Mixed "family,number" answers (e.g. "linear,19") — split and join.
+    if (/^[a-z]+,[-\d.]+$/i.test(a)) {
+      const [fam, num] = a.split(',');
+      return fam + ', next value = ' + num;
+    }
+    // Numeric / algebraic answers — fall through to original formatter.
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
