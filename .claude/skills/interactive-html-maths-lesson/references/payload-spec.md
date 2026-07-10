@@ -1,8 +1,9 @@
 # Payload mode — two-stage lesson generation
 
-**Status:** pilot (Y8 Statistics). Classic full-HTML mode remains available and is still the
-right mode for lessons needing bespoke full-page interactives (e.g. the Y7 transformation
-component). Payload mode is the default for standard-shape lessons.
+**Status:** proven (2026-07-10 pilot: y8_sta_01, y8_sta_02 published live). Payload mode is
+the batch default for standard-shape lessons. Classic full-HTML mode remains the right mode
+for lessons needing bespoke full-page interactives (simulations, matching builds, open-ended
+investigations — e.g. Y8 Statistics L03–L06, the Y7 transformation component).
 
 **Why.** ~85–90% of every generated lesson is invariant boilerplate (CSS + locked JS + section
 structure). In payload mode the model emits only the topic content as JSON; the deterministic
@@ -11,9 +12,12 @@ assembler stitches it into the frozen frame. Output tokens per lesson collapse (
 answers are structurally safe (JSON encoding, `</` escaped).
 
 **Install locations:**
-- This spec: `C:\Users\sdavi\.claude\skills\interactive-html-maths-lesson\references\payload-spec.md`
-- Frame: `...\interactive-html-maths-lesson\assets\lesson_frame.html` (built once — see below)
-- Assembler: `C:\Users\sdavi\projects\seager94.github.io\assemble_lesson.py`
+- This spec: `.claude/skills/interactive-html-maths-lesson/references/payload-spec.md` (repo)
+- Frame: `.claude/skills/interactive-html-maths-lesson/assets/lesson_frame.html` (repo)
+- Assembler: `assemble_lesson.py` (repo root)
+- The installed skill path `C:\Users\sdavi\.claude\skills\interactive-html-maths-lesson` is a
+  directory junction into the repo copy (created 2026-07-10). There is ONE physical copy;
+  editing the repo edits the installed skill.
 
 ---
 
@@ -29,6 +33,7 @@ One file per lesson: `y8_sta_NN_topic_v2.payload.json`
   "header": { "title": "…", "subtitle": "…", "badge": "Year 8 · Statistics" },
   "meta": {
     "lesson-id": "y8_sta_01",
+    "lesson-focus": "one-line focus statement for the lesson",
     "ac9-descriptor": "AC9M8ST01",
     "ac9-descriptor-text": "full ACARA descriptor sentence",
     "ac9-elaborations": "1,3",
@@ -53,6 +58,37 @@ One file per lesson: `y8_sta_NN_topic_v2.payload.json`
 }
 ```
 
+**Full slot inventory (29 slots, verified against the frame 2026-07-10):**
+
+Metadata (9): `meta_lesson_id`, `meta_lesson_focus`, `meta_ac9_descriptor`,
+`meta_ac9_descriptor_text`, `meta_ac9_elaborations`, `meta_sa_year`, `meta_sa_strand`,
+`meta_mapping_note`, `meta_sa_conceptual_understanding`
+
+Title/header (4): `title`, `header_title`, `header_subtitle`, `header_badge`
+
+Section text (9): `section0_intro`, `section_warmup`, `section3_heading`, `section3_desc`,
+`section4_heading`, `section6_heading`, `vocab_cards`, `sort_activity`, `we_do_intro`
+
+Content (2): `worked_example`, `footer_title`
+
+Strategy (2): `strategy_section`, `strategy_js` (both may be `""`)
+
+Machine-filled by the assembler — never in the payload: `js_arrays`, `count_practice2`,
+`count_practice3`, `assembly_stamp`
+
+**Slot changelog:**
+- 2026-07-10 (post-pilot tokenisation fixes): added `section3_heading`, `section3_desc`,
+  `section4_heading`, `section6_heading`, `footer_title` — the pilot found these hardcoded
+  to the algebra template example. Payloads written before this date lack them and will
+  fail assembly against the current frame. `meta_lesson_focus` also confirmed in the frame
+  (was absent from the original spec schema).
+
+**Bare-year rule (2026-07-10):** `sa-year` is the bare number (`"8"`). The frame prefixes
+the literal word "Year " in the visible curriculum panel and footer. Never write
+"Year 8" into `sa-year` or `footer_title`-adjacent content — you'd get "Year Year 8",
+and `qa_lessons.py` now FAILs any lesson whose visible panel doesn't read
+"Year N · Strand" matching the meta.
+
 Rules for the generating model:
 - **The frame manifest is authoritative.** Read the HTML comment at the top of
   `lesson_frame.html` — it lists every slot name and the exact object shape of each array.
@@ -70,6 +106,9 @@ Rules for the generating model:
 
 ## 2. Assembling and gating (batch folder)
 
+Run FROM the batch folder — the assembler writes output HTML to the current working
+directory:
+
 ```powershell
 python C:\Users\sdavi\projects\seager94.github.io\assemble_lesson.py --frame C:\Users\sdavi\.claude\skills\interactive-html-maths-lesson\assets\lesson_frame.html *.payload.json
 python C:\Users\sdavi\projects\seager94.github.io\qa_lessons.py *.html
@@ -78,54 +117,37 @@ python C:\Users\sdavi\projects\seager94.github.io\qa_lessons.py *.html
 Assembler guarantees: every frame slot resolved (else FAIL, nothing written), accordion count
 badges computed from array lengths, arrays serialised with `</` escaped so no content can
 terminate the script block, and an `assembled` meta stamp recording assembler version, date
-and source payload. The click test (wrong → red, right → green) is still mandatory.
+and source payload.
 
-## 3. Building the frame (one-time, on the Dell, AFTER patches 0–3 are applied)
+QA gate (updated 2026-07-10): in addition to the original checks, `qa_lessons.py` now FAILs
+on meta/panel mismatch — the visible curriculum panel must show "Year N · Strand" matching
+the meta tags, and every AC9 code in the meta must appear in the visible body. (The pilot
+proved the old gate checked `<head>` meta only; a hardcoded panel sailed through.)
 
-Run interactively and watch it:
+The click test (wrong → red, right → green) is still mandatory.
 
-```powershell
-cd C:\Users\sdavi\.claude\skills\interactive-html-maths-lesson
-claude "Read references\payload-spec.md in full. Create assets\lesson_frame.html as an exact copy of assets\lesson_template.html in which ONLY the following are replaced by {{SLOT:name}} tokens: the <title> text ({{SLOT:title}}); the content value of each of the eight curriculum meta tags ({{SLOT:meta_lesson_id}}, {{SLOT:meta_ac9_descriptor}}, {{SLOT:meta_ac9_descriptor_text}}, {{SLOT:meta_ac9_elaborations}}, {{SLOT:meta_sa_year}}, {{SLOT:meta_sa_strand}}, {{SLOT:meta_mapping_note}}, {{SLOT:meta_sa_conceptual_understanding}}); the header h1, subtitle and badge ({{SLOT:header_title}}, {{SLOT:header_subtitle}}, {{SLOT:header_badge}}); the topic-specific inner HTML of the retrieval intro, the Why-this-matters section, the vocab cards, the Section 3 sort chips-and-buckets, the worked example, and the We Do intro (name these slots section0_intro, section_warmup, vocab_cards, sort_activity, worked_example, we_do_intro); the numeric question-count text in the Stretch and Mastery accordion badges ({{SLOT:count_practice2}}, {{SLOT:count_practice3}}); and the ENTIRE block of const problem-array declarations in the script, replaced by a single {{SLOT:js_arrays}} token — the INITIALISE calls below it stay exactly as they are. Insert {{SLOT:strategy_section}} on its own line immediately before the exit-ticket section and {{SLOT:strategy_js}} on its own line at the end of the script before the closing tag. Insert {{SLOT:assembly_stamp}} on its own line directly after the template-version meta tag. Change NOTHING else — no CSS, no function bodies, no section order. Finally, add an HTML comment manifest at the very top of lesson_frame.html listing every slot name, stating which are html-fragment slots, and documenting the exact object shape each array expects (copy the shapes from the arrays you removed, including matchTerms). Then print the manifest."
-```
+**Keep the payloads.** Payload JSONs are the cheap-rebuild source: any frame improvement can
+be rolled out to every payload-built lesson by re-running the assembler. Batch folders under
+`overnight-lessons\` retain them; do not delete after publish.
 
-Sanity before first use:
+## 3. Frame history (do not rebuild)
+
+The frame was built once (2026-07-08, via the tokenisation prompt archived in git history of
+this file) and then hand-fixed during the pilot when three sections were found still
+hardcoded. It is a maintained artefact now — edit it directly (VS Code, watching for glyph
+corruption) and bump slots here when you do. Rebuilding it from the template would discard
+the pilot fixes.
+
+Sanity after any frame edit:
 
 ```powershell
 Select-String -Path assets\lesson_frame.html -Pattern '\{\{SLOT:' | Measure-Object -Line
 Select-String -Path assets\lesson_frame.html -Pattern 'function buildPractice' | Measure-Object -Line
 ```
 
-Expect ~22 slot lines and exactly 1 buildPractice. The first pilot payload is the live smoke
-test — the assembler refuses to write anything if the frame and payload disagree.
+Expect 29 unique slots (32 slot lines — three slots appear twice) and exactly 1 buildPractice.
 
 ## 4. Task-line template (payload mode)
 
 Identical to the classic pattern (metadata block, visual requirement, strategy, overwrite
 language all still mandatory) with the mode, output and filename changed:
-
-```
-Use the interactive-html-maths-lesson skill in payload mode: read references/payload-spec.md and the slot manifest at the top of assets/lesson_frame.html, then emit ONLY a content payload JSON for a [YEAR] [STRAND] lesson on [TOPIC]. Follow the I Do / We Do / You Do gradual release structure. Set curriculum metadata exactly: [full 8-field block as usual]. [VISUAL REQUIREMENT]. [PEDAGOGY]. [EXAMPLES]. [STRATEGY]. Building, Stretch and Mastery practice tiers, auto-marked, 10/6/4 questions. Reference the SA Curriculum (Mathematics R-10 Prototype 2). Do not emit an HTML file. Do not check for existing files - create this payload fresh and overwrite if a file with this name already exists. Save as [ID]_[topic]_v2.payload.json in the current directory.
-```
-
-## 5. SKILL.md addition (paste under "Workflow")
-
-```markdown
-### Payload mode (two-stage generation)
-
-If the request says "payload mode", do NOT produce an HTML file. Read
-`references/payload-spec.md` and the slot manifest at the top of
-`assets/lesson_frame.html`, then emit a single `<lesson-id>_<topic>_vN.payload.json`
-conforming to payload_version 1: metadata, title/header, one HTML fragment per
-manifest slot, and every problem array. All maths-typography, pedagogy, tier and
-metadata rules apply unchanged inside the fragments. The deterministic assembler
-(`assemble_lesson.py`) builds the final lesson — never write CSS, framework
-JavaScript, or boilerplate into the payload.
-```
-
-## 6. Pilot scope and exit criteria
-
-Pilot = Y8 Statistics (6 planned lessons, standard-shape). Success = all six assemble, pass
-`qa_lessons.py`, pass the click test, and per-lesson generation time/tokens drop materially
-vs classic mode. If it holds, payload mode becomes the batch default and classic mode is
-reserved for bespoke-interactive lessons; if it doesn't, nothing else in the pipeline changed.
