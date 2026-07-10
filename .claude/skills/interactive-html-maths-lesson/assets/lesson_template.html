@@ -70,6 +70,7 @@
 <meta name="sa-conceptual-understanding" content="Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.">
 <meta name="lesson-focus"          content="Collect like terms in linear and simple polynomial expressions; recognise that only terms with identical variable parts can combine.">
 <meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+<meta name="template-version" content="2026-07-08.1">
 
 <style>
   :root {
@@ -1191,6 +1192,8 @@
   let totalProblems = 0;
   let correctCount = 0;
   let currentStep = 1;
+  const answerKey = {};        // idx -> expected answer (single source for Check buttons)
+  const noCountSet = new Set(); // idx values excluded from the progress score
 
   // ============ TEACHER MODE ============
   function toggleTeacher() {
@@ -1434,6 +1437,7 @@
   function normaliseAnswer(s) {
     return (s || '')
       .toLowerCase()
+      .replace(/[\u2212\u2013\u2014]/g, '-')
       .replace(/\s+/g, '')
       .replace(/\*/g, '')
       .replace(/^\+/, '');  // strip leading +
@@ -1456,6 +1460,8 @@ function buildPractice(containerId, problems, prefix, options) {
 
   problems.forEach((p, i) => {
     const idx = prefix + (i + 1);
+    answerKey[idx] = p.a;
+    if (options.noCount) noCountSet.add(idx);
     const div = document.createElement('div');
     div.className = 'problem';
 
@@ -1498,11 +1504,14 @@ function buildPractice(containerId, problems, prefix, options) {
     // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
     let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
     // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
-    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+    r = r.replace(/(\^)?(-?\d+)\/(\d+)/g, (m, caret, n, d) => {
+      if (caret) return m;  // exponent like a^6/4 — do not stack, handled below
       const neg = n.startsWith('-');
       const num = neg ? n.slice(1) : n;
       return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
     });
+    // Step 2.5: remaining carets become superscripts (a^6/4 -> a<sup>6</sup>/4, x^2 -> x<sup>2</sup>)
+    r = r.replace(/\^(-?\d+)/g, '<sup>$1</sup>');
     // Step 3: tidy operators — typographic minus, space around +/−.
     r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
     return r;
@@ -1512,6 +1521,8 @@ function buildPractice(containerId, problems, prefix, options) {
   function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
 
   function checkAnswer(idx, expected, noCount) {
+    if (expected === undefined || expected === null) expected = answerKey[idx];
+    if (noCount === undefined || noCount === null) noCount = noCountSet.has(idx);
     const input = document.getElementById('inp-' + idx);
     const result = answerMatches(input.value, expected);
     input.classList.remove('correct', 'incorrect');

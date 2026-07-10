@@ -1,3 +1,92 @@
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON — FRAME (payload mode)  ·  SLOT MANIFEST
+  ============================================================================
+  Built by tokenising assets/lesson_template.html per references/payload-spec.md
+  §3. The assembler (assemble_lesson.py) reads THIS comment as the authoritative
+  slot list and substitutes every {{SLOT:…}} token from a payload_version 1
+  JSON. Every slot below MUST be supplied by the payload — the assembler
+  hard-fails on any gap. CSS, framework JS, function bodies and section order are
+  unchanged from the template.
+
+  ── SCALAR / TEXT SLOTS (plain string, no markup expected) ──────────────────
+    title                              <title> text
+    meta_lesson_id                     content of <meta name="lesson-id">
+    meta_ac9_descriptor                content of <meta name="ac9-descriptor">
+    meta_ac9_elaborations              content of <meta name="ac9-elaborations">
+    meta_sa_year                       content of <meta name="sa-year">
+    meta_sa_strand                     content of <meta name="sa-strand">
+    meta_sa_conceptual_understanding   content of <meta name="sa-conceptual-understanding">
+    meta_lesson_focus                  content of <meta name="lesson-focus">
+    meta_mapping_note                  content of <meta name="mapping-note">
+    header_title                       header <h1> text
+    header_subtitle                    header .subtitle text
+    header_badge                       header .badge text
+    count_practice2                    Stretch accordion count badge (e.g. "6 questions")
+    count_practice3                    Mastery accordion count badge (e.g. "4 questions")
+    assembly_stamp                     assembler-injected <meta> stamp (version/date/source)
+
+    NOTE ON SLOT NAMING: the template ships a <meta name="lesson-focus"> tag (not
+    the "ac9-descriptor-text" tag named in the spec's §3 slot list). Per the
+    change-nothing-else constraint the tag was not renamed, so its content slot
+    is meta_lesson_focus. Payload meta key: "lesson-focus".
+
+  ── HTML-FRAGMENT SLOTS (raw HTML; maths-typography rules apply: stacked .frac,
+     .var spans, U+2212 minus, <sup> powers) ─────────────────────────────────
+    section0_intro      inner HTML of the Section 0 retrieval intro <p>
+    section_warmup      Section 1 "Why this matters" body (everything after the <h2>)
+    vocab_cards         the .vocab card elements inside .vocab-grid (Section 2)
+    sort_activity       Section 3 sort chips-and-buckets (the .parts-expr block
+                        incl. #partsTerms, .bucket[data-bucket], .term-chip[data-type],
+                        plus the trailing .parts-instructions note)
+    worked_example      Section 5 worked-example body after the <h2> (the .worked
+                        block incl. #step1/#step2/#step3 and #revealBtn)
+    we_do_intro         inner HTML of the Section 6 We-Do intro <p>
+    strategy_section    optional strategy-enrichment <section> before the exit ticket
+                        (payload html.strategy_section; "" when unused)
+    strategy_js         optional strategy-enrichment <script> body at end of script
+                        (payload html.strategy_js; "" when unused)
+
+  ── JS-ARRAY SLOT ───────────────────────────────────────────────────────────
+    js_arrays           Replaces the ENTIRE block of const problem-array
+                        declarations. The INITIALISE calls below it are unchanged.
+                        The payload's html.js_arrays (or assembler-serialised
+                        arrays.*) MUST declare ALL of the following consts, using
+                        these exact names and object shapes. Strings are HTML
+                        fragments/answers; the assembler escapes "</" so nothing
+                        can terminate the <script> block.
+
+      const matchTerms = [ { html: <HTML>, group: <int 1..N> }, … ]
+          // Section 4 "Spot the like terms". Even count; each `group` id must
+          // appear on exactly two chips (the two like terms that match).
+          // (Relocated here from the Matching section per spec §3.)
+
+      const retrieval  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 0 warm-up. noCount (excluded from progress). a: 'TEXT' allowed.
+
+      const practice1  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 8 Building tier (counts toward progress).
+
+      const practice2  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 9 Stretch tier. Length should match count_practice2.
+
+      const practice3  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 10 Mastery tier. Length should match count_practice3.
+
+      const checkpoint = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 7 quick check (counts toward progress).
+
+      const weDo       = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 6 We-Do sub-prompts. noCount.
+
+      const exitProbs  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 11 exit ticket. a: 'TEXT' for open-response (not auto-marked).
+
+      // Shared q/a/hint shape: q = HTML question fragment; a = plain keyboard-form
+      // answer string (hyphen minus, "/" fractions, "^" powers) or 'TEXT' for
+      // open response — never empty; hint = plain string.
+  ============================================================================
+-->
 <!DOCTYPE html>
 <!--
   ============================================================================
@@ -12,14 +101,24 @@
   Keep ALL of the following intact:
     • The <style> block (palette, layout, all component CSS)
     • The <script> block's framework code (buildPractice, drag-and-drop,
-      teacher mode, progress tracking, answer normalisation)
-    • The section ordering (Warm-up → AS A CLASS → I DO → WE DO → YOU DO →
-      Exit ticket) and phase banner placement
-    • The numbering convention (sections 1–11 sequential)
+      teacher mode, progress tracking, answer normalisation, toggleTier)
+    • The section ordering (Retrieval → Hook → AS A CLASS → I DO → WE DO →
+      YOU DO → Exit ticket) and phase banner placement
+    • The numbering convention (sections 0–11 sequential)
+    • The accordion structure for the three practice tiers (Sections 8–10):
+      Building expanded by default, Stretch and Mastery collapsed with
+      question-count badges
+    • The matching visual treatment of Retrieval (Section 0) and Exit ticket
+      (Section 11) as bookends
 
   Replace the following with topic-specific content:
+    • Curriculum metadata (<meta> tags in <head> AND the "Curriculum link"
+      <details> block before the footer — must match each other)
     • Page <title>, header h1, header subtitle, badge text
-    • Section 1 hook (real-world analogy)
+    • Footer line: "Mathematics · Year [N] · [Topic]" — no school branding,
+      no "Built with Claude" tagline; keep it factual and short
+    • Section 0 retrieval warm-up problems (retrieval array)
+    • Section 1 "Why this matters" hook (real-world scenario)
     • Section 2 vocab cards (5 terms, ordered concrete → abstract)
     • Section 3 drag-sort items (data-type values + chip contents)
     • Section 4 match pairs (matchTerms array in JS)
@@ -43,13 +142,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collecting Like Terms — Year 10</title>
+<title>{{SLOT:title}}</title>
+
+<!--
+  ============================================================================
+  CURRICULUM METADATA — populate these on every lesson.
+  These tags are scrapable for coverage audits and feed the visible
+  "Curriculum link" panel in the footer. Source: lesson-map.xlsx row.
+  ============================================================================
+-->
+<meta name="lesson-id"             content="{{SLOT:meta_lesson_id}}">
+<meta name="ac9-descriptor"        content="{{SLOT:meta_ac9_descriptor}}">
+<meta name="ac9-elaborations"      content="{{SLOT:meta_ac9_elaborations}}">
+<meta name="sa-year"               content="{{SLOT:meta_sa_year}}">
+<meta name="sa-strand"             content="{{SLOT:meta_sa_strand}}">
+<meta name="sa-conceptual-understanding" content="{{SLOT:meta_sa_conceptual_understanding}}">
+<meta name="lesson-focus"          content="{{SLOT:meta_lesson_focus}}">
+<meta name="mapping-note"          content="{{SLOT:meta_mapping_note}}"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+<meta name="template-version" content="2026-07-08.1">
+{{SLOT:assembly_stamp}}
+
 <style>
   :root {
-    --navy: #1D2B5E;
-    --navy-dark: #141f48;
-    --coral: #E8485A;
-    --coral-soft: #fbe1e4;
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
     --bg: #F3F5F8;
     --hint-bg: #DDE5F5;
     --card: #ffffff;
@@ -451,7 +569,7 @@
     background: var(--coral-soft);
     border-color: var(--coral);
     border-style: solid;
-    box-shadow: 0 0 0 3px rgba(232,72,90,0.18);
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
   }
   .term-chip.wrong-drop {
     animation: shake 0.45s;
@@ -589,7 +707,7 @@
     font-family: Georgia, serif; font-size: 1rem;
     background: white;
   }
-  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,43,94,0.12); }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
   .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
   .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
   .check-btn {
@@ -598,7 +716,7 @@
     border-radius: 7px; cursor: pointer;
     font-size: 0.88rem; font-weight: 600;
   }
-  .check-btn:hover { background: #d63a4d; }
+  .check-btn:hover { background: #a04829; }
   .problem-tools {
     display: flex; justify-content: space-between; align-items: center;
     margin-top: 8px;
@@ -644,6 +762,62 @@
     font-size: 0.82rem;
   }
 
+  /* CURRICULUM LINK panel — collapsible metadata footer.
+     Reference info for teachers/auditors, not for students. */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
   /* PRINT */
   @media print {
     .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
@@ -660,21 +834,128 @@
     header.top h1 { font-size: 1.35rem; }
     .parts-buckets { grid-template-columns: 1fr; }
   }
+
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket (Section 11) share visual treatment */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS — Sections 8, 9, 10 */
+  section.lesson.tier-accordion {
+    padding-top: 28px; /* preserve chilli-sticker breathing room */
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none; /* default collapsed */
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* constant-area triangle component */
+  .cat{display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+  .cat-stage{ flex:1 1 340px; min-width:300px; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:10px; }
+  .cat svg{display:block; width:100%; height:auto; touch-action:none;}
+  .cat-apex{cursor:grab; touch-action:none;}
+  .cat-apex:active{cursor:grabbing;}
+  .cat-apex:focus{outline:none;}
+  .cat-panel{ flex:1 1 240px; min-width:230px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+  .cat-panel h3{font-family:Georgia,serif; color:var(--navy); margin:0 0 10px; font-size:1.05rem;}
+  .cat-row{ display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px dashed var(--border); font-size:.95rem; }
+  .cat-row:last-of-type{border-bottom:none;}
+  .cat-row .lab{color:var(--muted);}
+  .cat-row .val{font-family:Georgia,Cambria,serif; color:var(--navy); font-weight:bold;}
+  .cat-area-line{ margin-top:12px; padding:12px; border-radius:9px; background:var(--coral-soft); text-align:center; font-family:Georgia,Cambria,serif; color:var(--navy); font-size:1.05rem; }
+  .cat-area-line .big{color:var(--coral); font-weight:bold; font-size:1.3rem;}
+  .cat-status{ margin-top:12px; font-size:.85rem; color:var(--muted); background:var(--hint-bg); border-radius:8px; padding:9px 11px; }
+  .cat-status.done{color:var(--good); font-weight:600;}
+  .cat-q{ margin-top:16px; font-style:italic; color:var(--navy); border-left:3px solid var(--coral); padding-left:12px; font-size:.92rem; }
+  .cat-baseext{stroke:var(--border); stroke-width:2; stroke-dasharray:4 5;}
+  .cat-guide{stroke:var(--coral); stroke-width:2; stroke-dasharray:6 5; opacity:.65;}
+  .cat-guide-label{font-family:Georgia,serif; font-size:13px; fill:var(--coral); opacity:.8;}
+  .cat-fill{fill:var(--coral); fill-opacity:.12;}
+  .cat-base{stroke:var(--navy); stroke-width:3.5;}
+  .cat-slant{stroke:var(--navy); stroke-width:3;}
+  .cat-perp{stroke:var(--coral); stroke-width:2; stroke-dasharray:5 4;}
+  .cat-ra{fill:none; stroke:var(--coral); stroke-width:2;}
+  .cat-vlabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-hlabel{font-family:Georgia,serif; font-size:14px; fill:var(--coral);}
+  .cat-baselabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-vdot{fill:var(--navy);}
+  .cat-ring{fill:none; stroke:var(--navy); stroke-width:2; transition:opacity .15s;}
+  .cat-handle{fill:var(--coral); stroke:#ffffff; stroke-width:3;}
 </style>
 </head>
 <body>
 
 <header class="top">
   <div>
-    <h1>Collecting Like Terms</h1>
-    <div class="subtitle">Year 10 · SA Curriculum · Algebra</div>
+    <h1>{{SLOT:header_title}}</h1>
+    <div class="subtitle">{{SLOT:header_subtitle}}</div>
   </div>
-  <div class="badge">Foundation</div>
+  <div class="badge">{{SLOT:header_badge}}</div>
 </header>
 
 <div class="progress-wrap">
   <div class="progress-row">
-    <span>Progress: <strong id="progressLabel">0 / 16</strong></span>
+    <span>Progress: <strong id="progressLabel">0 / 21</strong></span>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
       <span>👁</span><span>Teacher mode</span>
@@ -684,25 +965,26 @@
 
 <div class="page">
 
-<!-- SECTION 1: WARM-UP -->
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<!-- 2–3 quick recall questions on prerequisite skills for today's lesson.
+     Replace the retrieval array in JS to swap content. These do NOT count
+     toward the student's progress score (they're noCount). -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">{{SLOT:section0_intro}}</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<!-- A real-world scenario that's secretly today's maths. Two-column layout —
+     left side tells the story, right side connects it to the algebra.
+     Should read in ~30 seconds. Finance contexts work especially well. -->
 <section class="lesson">
-  <h2><span class="sec-num">1</span>Warm-up — what belongs together?</h2>
-  <p class="sec-desc">Before we deal with algebra, think about everyday sorting.</p>
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;">
-    <div>
-      <p>Suppose you have these items in your school bag:</p>
-      <ul style="line-height: 1.9;">
-        <li>3 apples 🍎🍎🍎</li>
-        <li>2 bananas 🍌🍌</li>
-        <li>4 apples 🍎🍎🍎🍎</li>
-        <li>1 banana 🍌</li>
-      </ul>
-      <p>If someone asks "how much fruit do you have?", you naturally group <strong>apples with apples</strong> and <strong>bananas with bananas</strong>: 7 apples and 3 bananas. You don't say "10 fruit-things" and you definitely don't say "5 apple-banana-mixtures."</p>
-    </div>
-    <div class="parts-instructions" style="margin: 0;">
-      Algebra works the same way. The expression <span class="expr">3<span class="var">a</span> + 2<span class="var">b</span> + 4<span class="var">a</span> + <span class="var">b</span></span> simplifies to <span class="expr">7<span class="var">a</span> + 3<span class="var">b</span></span> — we group the <span class="var">a</span>'s together and the <span class="var">b</span>'s together. Today we learn the rules for doing this with any algebraic expression.
-    </div>
-  </div>
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  {{SLOT:section_warmup}}
 </section>
 
 <div class="phase-banner">
@@ -718,36 +1000,7 @@
   <h2><span class="sec-num">2</span>Key vocabulary</h2>
   <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
   <div class="vocab-grid">
-    <div class="vocab" onclick="this.classList.toggle('flipped')">
-      <div class="vocab-inner">
-        <div class="vocab-front">Constant<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A term with <strong>no variable</strong> — just a number.<div class="vocab-example expr">In 4<span class="var">x</span> − 7: the constant is <strong>−7</strong>.</div></div>
-      </div>
-    </div>
-    <div class="vocab" onclick="this.classList.toggle('flipped')">
-      <div class="vocab-inner">
-        <div class="vocab-front">Variable<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A letter that represents an unknown value.<div class="vocab-example expr">In 7<span class="var">k</span> − 2: the variable is <strong><span class="var">k</span></strong>.</div></div>
-      </div>
-    </div>
-    <div class="vocab" onclick="this.classList.toggle('flipped')">
-      <div class="vocab-inner">
-        <div class="vocab-front">Coefficient<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">The number that <strong>multiplies a variable</strong> — it sits in front.<div class="vocab-example expr">In −5<span class="var">y</span>: the coefficient is <strong>−5</strong>. In <span class="var">x</span>: the coefficient is <strong>1</strong>.</div></div>
-      </div>
-    </div>
-    <div class="vocab" onclick="this.classList.toggle('flipped')">
-      <div class="vocab-inner">
-        <div class="vocab-front">Term<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">A single number, variable, or product separated by + or − signs.<div class="vocab-example expr">In 3<span class="var">x</span> + 5: the terms are <strong>3<span class="var">x</span></strong> and <strong>5</strong>.</div></div>
-      </div>
-    </div>
-    <div class="vocab" onclick="this.classList.toggle('flipped')">
-      <div class="vocab-inner">
-        <div class="vocab-front">Like terms<div class="hint-flip">Tap to flip</div></div>
-        <div class="vocab-back">Terms with <strong>the same variable to the same power.</strong> Constants are like terms with each other.<div class="vocab-example expr">3<span class="var">x</span> and −7<span class="var">x</span> are like terms. 3<span class="var">x</span> and 3<span class="var">x</span>² are <em>not</em>.</div></div>
-      </div>
-    </div>
+    {{SLOT:vocab_cards}}
   </div>
 </section>
 
@@ -756,35 +1009,7 @@
   <h2><span class="sec-num">3</span>Parts of an expression</h2>
   <p class="sec-desc">Drag each term from the strip below into the correct bucket — <strong style="color:var(--coral)">variable terms</strong> or <strong style="color:var(--navy)">constant terms</strong>. Wrong drops will shake; correct ones stay put.</p>
 
-  <div class="parts-expr">
-    <div class="label">Expression: 14<span class="var">x</span> + 9 − 2<span class="var">x</span> + 8 − 5<span class="var">x</span> + 1</div>
-    <div id="partsTerms" class="terms-source">
-      <span class="term-chip expr" data-type="variable">14<span class="var">x</span></span>
-      <span class="term-chip expr" data-type="constant">+ 9</span>
-      <span class="term-chip expr" data-type="variable">− 2<span class="var">x</span></span>
-      <span class="term-chip expr" data-type="constant">+ 8</span>
-      <span class="term-chip expr" data-type="variable">− 5<span class="var">x</span></span>
-      <span class="term-chip expr" data-type="constant">+ 1</span>
-    </div>
-    <div class="parts-buckets">
-      <div class="bucket" data-bucket="variable">
-        <h4 class="vt">Variable terms</h4>
-        <div class="bucket-contents expr"></div>
-      </div>
-      <div class="bucket" data-bucket="constant">
-        <h4 class="ct">Constant terms</h4>
-        <div class="bucket-contents expr"></div>
-      </div>
-    </div>
-    <div class="parts-actions">
-      <button class="btn-secondary btn-sm" onclick="resetSort()">↺ Reset</button>
-      <button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button>
-    </div>
-  </div>
-
-  <div class="parts-instructions">
-    💡 The coefficients of the variable terms are 14, −2, and −5. Notice the sign sticks with the term that follows.
-  </div>
+  {{SLOT:sort_activity}}
 </section>
 
 <!-- SECTION 4: MATCHING LIKE TERMS -->
@@ -809,47 +1034,7 @@
 <!-- SECTION 5: WORKED EXAMPLE (I DO) -->
 <section class="lesson">
   <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
-  <p class="sec-desc">Simplify: <span class="expr">14<span class="var">x</span> + 9 − 2<span class="var">x</span> + 8 − 5<span class="var">x</span> + 1</span></p>
-
-  <div class="worked">
-    <div class="step visible" id="step1">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Identify like terms</div>
-        <div class="step-desc">Colour-code the <span class="var">x</span>-terms and the constants.</div>
-        <div class="calc-box">
-          <span class="red">14<span class="var">x</span></span> + <span class="blue">9</span> <span class="red">− 2<span class="var">x</span></span> + <span class="blue">8</span> <span class="red">− 5<span class="var">x</span></span> + <span class="blue">1</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="step" id="step2">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Combine the coefficients of each group</div>
-        <div class="step-desc">Add the coefficients of like terms. Keep the variable unchanged.</div>
-        <div class="calc-box">
-          <span class="red">(14 − 2 − 5)<span class="var">x</span></span> + <span class="blue">(9 + 8 + 1)</span><br>
-          = <span class="red">7<span class="var">x</span></span> + <span class="blue">18</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="step" id="step3">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Check by substituting a value</div>
-        <div class="step-desc">If <span class="var">x</span> = 2: the original is 14(2) + 9 − 2(2) + 8 − 5(2) + 1 = 28 + 9 − 4 + 8 − 10 + 1 = 32. The simplified form gives 7(2) + 18 = 14 + 18 = 32. ✓</div>
-        <div class="calc-box">Both expressions give 32 when <span class="var">x</span> = 2 — the simplification is correct.</div>
-        <div class="summary-banner">
-          <span class="label">Answer</span>
-          7<span class="var">x</span> + 18
-        </div>
-      </div>
-    </div>
-
-    <button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step ↓</button>
-  </div>
+  {{SLOT:worked_example}}
 </section>
 
 <div class="phase-banner">
@@ -863,7 +1048,7 @@
 <!-- SECTION 6: WE DO -->
 <section class="lesson">
   <h2><span class="sec-num">6</span>Together — simplify <span class="expr">6<span class="var">m</span> + 4 − 9<span class="var">m</span> + 2 − <span class="var">m</span></span></h2>
-  <p class="sec-desc">We'll break it into three small steps. After each prompt, discuss with the person next to you, then we'll fill in the box together.</p>
+  <p class="sec-desc">{{SLOT:we_do_intro}}</p>
   <div class="practice-grid" id="weDoGrid"></div>
   <div class="parts-instructions" style="margin-top: 18px;">
     💡 <strong>Why we do it this way:</strong> tackling one group of like terms at a time keeps the work tidy and reduces sign errors. When you tackle the "You do" practice next, follow the same routine — variable terms first, then constants, then write the answer.
@@ -874,7 +1059,7 @@
   <div class="phase-mono">YOU DO</div>
   <div class="phase-text">
     <div class="phase-label">Your turn — work independently</div>
-    <div class="phase-sub">A quick check first — then onto the three practice tiers: Building, Stretch, Mastery.</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
   </div>
 </div>
 
@@ -884,44 +1069,100 @@
     <span class="sec-num">7</span>Quick check — try these on your own
     <span class="checkpoint-tag">✋ Stop &amp; check</span>
   </h2>
-  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you move on to the practice.</p>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
   <div class="practice-grid" id="checkpointGrid"></div>
   <div class="stop-banner">
-    ✋ <strong>Stop here</strong> when you're done. Don't start the chilli practice yet — wait for the class check.
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
   </div>
 </section>
 
-<!-- SECTION 8: PRACTICE -->
-<section class="lesson difficulty-1">
-  <h2><span class="sec-num">8</span>Practice — single variable <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
-  <p class="sec-desc">Type your simplified answer in each box. Use <code>x</code>, <code>y</code>, etc. for variables. Examples: <code>3x+5</code>, <code>-2y+7</code>, <code>4a-6b</code>.</p>
-  <div class="practice-grid" id="practiceGrid1"></div>
+<!-- SECTION 8: PRACTICE — BUILDING (accordion, open by default) -->
+<!-- Building is the entry tier. .open class shows it expanded.
+     Update the count badge text to match the actual number of problems. -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Type your simplified answer in each box. Use <code>x</code>, <code>y</code>, etc. for variables. Examples: <code>3x+5</code>, <code>-2y+7</code>, <code>4a-6b</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
 </section>
 
-<!-- SECTION 9: PRACTICE - MULTI-VARIABLE -->
-<section class="lesson difficulty-2">
-  <h2><span class="sec-num">9</span>Practice — two variables <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
-  <p class="sec-desc">Now the expressions contain two different variables. Group each variable separately.</p>
-  <div class="practice-grid" id="practiceGrid2"></div>
+<!-- SECTION 9: PRACTICE — STRETCH (accordion, collapsed) -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">{{SLOT:count_practice2}}</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now the expressions contain two different variables. Group each variable separately.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
 </section>
 
-<!-- SECTION 10: CHALLENGE -->
-<section class="lesson difficulty-3">
-  <h2><span class="sec-num">10</span>Challenge — fraction coefficients <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
-  <p class="sec-desc">Same rules — but the coefficients are fractions. Common denominators may help. Type fractions like <code>3/4x</code> or <code>5/12y</code>.</p>
-  <div class="practice-grid" id="practiceGrid3"></div>
+<!-- SECTION 10: PRACTICE — MASTERY (accordion, collapsed) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">{{SLOT:count_practice3}}</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Same rules — but the coefficients are fractions. Common denominators may help. Type fractions like <code>3/4x</code> or <code>5/12y</code>.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
 </section>
 
-<!-- SECTION 11: EXIT TICKET -->
-<section class="lesson" style="background: linear-gradient(180deg, #fff, #fafbfd);">
-  <h2><span class="sec-num">11</span>Exit ticket</h2>
+{{SLOT:strategy_section}}
+
+<!-- SECTION 11: EXIT TICKET (bookend with retrieval) -->
+<!-- Visual treatment mirrors Section 0 retrieval — same teal-tint, same accent.
+     They are bookends framing the lesson. -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
   <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
   <div class="exit-grid" id="exitGrid"></div>
 </section>
 
+<!-- CURRICULUM LINK — reference info for teachers and curriculum audits.
+     Mirror values from the <meta> tags in <head>. Collapsed by default;
+     teachers click to expand. Students never need to open this. -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 10 &middot; Algebra</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M10A01</strong> — expand, factorise and simplify expressions and solve equations algebraically, applying exponent laws involving products, quotients and powers of variables, and the distributive property</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1, 2</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Collect like terms in linear and simple polynomial expressions; recognise that only terms with identical variable parts can combine.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y10_alg_05. Source: lesson-map.xlsx.</div>
+  </div>
+</details>
+
 <footer class="bottom">
-  Aberfoyle Park High School · Mathematics · Year 10 · Collecting Like Terms<br>
-  Built with Claude · Adapted for SA Curriculum
+  Mathematics · Year 10 · Collecting Like Terms
 </footer>
 
 </div>
@@ -931,6 +1172,8 @@
   let totalProblems = 0;
   let correctCount = 0;
   let currentStep = 1;
+  const answerKey = {};        // idx -> expected answer (single source for Check buttons)
+  const noCountSet = new Set(); // idx values excluded from the progress score
 
   // ============ TEACHER MODE ============
   function toggleTeacher() {
@@ -1036,20 +1279,6 @@
   }
 
   // ============ MATCHING LIKE TERMS ============
-  // 5 pairs; each pair has a "group" id 1-5
-  const matchTerms = [
-    { html: '3<span class="var">x</span>', group: 1 },
-    { html: '7<span class="var">y</span>', group: 2 },
-    { html: '−4<span class="var">a</span>', group: 3 },
-    { html: '12', group: 4 },
-    { html: '8<span class="var">x</span>²', group: 5 },
-    { html: '−<span class="var">y</span>', group: 2 },
-    { html: '11<span class="var">x</span>', group: 1 },
-    { html: '15<span class="var">a</span>', group: 3 },
-    { html: '−3<span class="var">x</span>²', group: 5 },
-    { html: '−7', group: 4 },
-  ];
-
   let matchSelected = null;
   let matchedGroups = new Set();
 
@@ -1119,118 +1348,87 @@
 
   // ============ PRACTICE PROBLEMS ============
   // Answers normalised: strip spaces, lowercase. Accept reordered terms.
-  const practice1 = [
-    { q: '4<span class="var">x</span> + 7<span class="var">x</span>', a: '11x', hint: 'Both terms have x. Add the coefficients: 4 + 7.' },
-    { q: '<span class="var">k</span> − 6<span class="var">k</span>', a: '-5k', hint: 'k means 1k. So 1 − 6 = −5.' },
-    { q: '6<span class="var">c</span> + 1 + 11<span class="var">c</span>', a: '17c+1', hint: 'Combine the c-terms: 6 + 11. The 1 stays as a constant.' },
-    { q: '7 − 2<span class="var">y</span> + 12', a: '-2y+19', hint: 'There is only one y-term. Combine the constants 7 + 12.' },
-    { q: '11<span class="var">m</span> − 5<span class="var">m</span> − 13', a: '6m-13', hint: '11 − 5 = 6. The constant −13 stays.' },
-    { q: '−6 + 8<span class="var">a</span> − 16', a: '8a-22', hint: 'Combine constants: −6 − 16 = −22.' },
-    { q: '9<span class="var">v</span> + 7 − 3<span class="var">v</span> − <span class="var">v</span>', a: '5v+7', hint: '9 − 3 − 1 = 5.' },
-    { q: '4 − 2<span class="var">n</span> − 3<span class="var">n</span> − 19', a: '-5n-15', hint: '−2 − 3 = −5 for n; 4 − 19 = −15.' },
-    { q: '−14<span class="var">w</span> + 10<span class="var">w</span> − 11 + 2<span class="var">w</span>', a: '-2w-11', hint: '−14 + 10 + 2 = −2.' },
-    { q: '−1 − 6 − 5<span class="var">r</span> + 13<span class="var">r</span>', a: '8r-7', hint: 'Constants: −1 − 6 = −7. Variables: −5 + 13 = 8.' },
-  ];
 
-  const practice2 = [
-    { q: '−8<span class="var">x</span> − 2<span class="var">y</span> + 23<span class="var">x</span> − 6<span class="var">y</span>', a: '15x-8y', hint: 'Group the x-terms (−8 + 23) and the y-terms (−2 − 6) separately.' },
-    { q: '−<span class="var">a</span> − 5<span class="var">b</span> + 4<span class="var">b</span> − 11<span class="var">b</span> + 2 − 3<span class="var">a</span>', a: '-4a-12b+2', hint: 'Three groups: a-terms, b-terms, constants.' },
-    { q: '9<span class="var">m</span> − 5<span class="var">n</span> + 14 + <span class="var">m</span> − 2<span class="var">n</span> − 7', a: '10m-7n+7', hint: 'm: 9 + 1 = 10. n: −5 − 2 = −7. Constants: 14 − 7 = 7.' },
-    { q: '2<span class="var">c</span> + 7<span class="var">d</span> − 8<span class="var">c</span> − <span class="var">c</span> − 5 + 4<span class="var">d</span>', a: '-7c+11d-5', hint: 'c: 2 − 8 − 1 = −7. d: 7 + 4 = 11.' },
-  ];
-
-  const practice3 = [
-    { q: '<span class="frac"><span class="num">11</span><span class="den">4</span></span><span class="var">k</span> − <span class="frac"><span class="num">3</span><span class="den">8</span></span><span class="var">k</span>', a: '19/8k', hint: 'Common denominator 8: 11/4 = 22/8. So 22/8 − 3/8 = 19/8.' },
-    { q: '<span class="frac"><span class="num">3</span><span class="den">4</span></span> − <span class="frac"><span class="num">1</span><span class="den">6</span></span><span class="var">v</span> + <span class="frac"><span class="num">7</span><span class="den">15</span></span><span class="var">v</span> − <span class="frac"><span class="num">1</span><span class="den">2</span></span>', a: '3/10v+1/4', hint: 'v-terms: common denom 30. −5/30 + 14/30 = 9/30 = 3/10. Constants: 3/4 − 1/2 = 1/4.' },
-    { q: '8 + <span class="frac"><span class="num">2</span><span class="den">3</span></span><span class="var">k</span> − <span class="frac"><span class="num">4</span><span class="den">15</span></span><span class="var">k</span> − <span class="frac"><span class="num">1</span><span class="den">4</span></span>', a: '2/5k+31/4', hint: 'k-terms: common denom 15. 10/15 − 4/15 = 6/15 = 2/5. Constants: 8 − 1/4 = 31/4.' },
-  ];
-
-  const checkpoint = [
-    { q: '4<span class="var">n</span> + 5 − 2<span class="var">n</span> + 3', a: '2n+8', hint: 'Combine n-terms (4 − 2), then combine the constants (5 + 3).' },
-    { q: '6<span class="var">k</span> − 7 + 2<span class="var">k</span> − 1', a: '8k-8', hint: 'k-terms: 6 + 2 = 8. Constants: −7 − 1 = −8.' },
-  ];
-
-  const weDo = [
-    { q: 'Combine the <span class="var">m</span>-terms. (Coefficients: 6, −9, −1)', a: '-4m', hint: '6 + (−9) + (−1) = ?' },
-    { q: 'Combine the constants. (4 and 2)', a: '6', hint: '4 + 2 = ?' },
-    { q: 'Write the simplified expression.', a: '-4m+6', hint: 'Variable term first, then constant.' },
-  ];
-
-  const exitProbs = [
-    { q: 'Identify the coefficients in: <span class="expr">−7<span class="var">a</span> + 12 − <span class="var">b</span></span>', a: '-7,-1', hint: 'Each variable term has a coefficient. Don\'t forget the implied 1.' },
-    { q: 'Simplify: <span class="expr">5<span class="var">p</span> + 8 − 9<span class="var">p</span> + 2</span>', a: '-4p+10', hint: 'p: 5 − 9. Constants: 8 + 2.' },
-    { q: 'Explain why <span class="expr">3<span class="var">x</span></span> and <span class="expr">3<span class="var">x</span>²</span> are <strong>not</strong> like terms.', a: 'TEXT', hint: 'Look at the power on the variable.' },
-  ];
+{{SLOT:js_arrays}}
 
   function normaliseAnswer(s) {
     return (s || '')
       .toLowerCase()
+      .replace(/[\u2212\u2013\u2014]/g, '-')
       .replace(/\s+/g, '')
       .replace(/\*/g, '')
       .replace(/^\+/, '');  // strip leading +
   }
   // accept reordered terms: 3x+5 == 5+3x
-  // accept reordered factors: (x+4)(x+5) == (x+5)(x+4)
   function answerMatches(input, expected) {
     if (expected === 'TEXT') return null; // open-ended, don't auto-mark
     const norm = normaliseAnswer(input);
     const exp = normaliseAnswer(expected);
     if (norm === exp) return true;
-    // try sorting terms (handles 3x+5 == 5+3x within a single expression)
+    // try sorting terms
     const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
-    if (JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp))) return true;
-    // try swapping factors for two-bracket products: (a)(b) == (b)(a)
-    // also handles optional leading coefficient on each: 2(x+1)(x+3) == 2(x+3)(x+1)
-    const factorPattern = /^(-?\d*)\(([^()]+)\)\(([^()]+)\)$/;
-    const m1 = norm.match(factorPattern);
-    const m2 = exp.match(factorPattern);
-    if (m1 && m2 && m1[1] === m2[1]) {
-      const inputFactors = [m1[2], m1[3]].map(f => splitTerms(f)).sort();
-      const expectedFactors = [m2[2], m2[3]].map(f => splitTerms(f)).sort();
-      if (JSON.stringify(inputFactors) === JSON.stringify(expectedFactors)) return true;
-    }
-    return false;
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
   }
 
-  function buildPractice(containerId, problems, prefix, options) {
-    options = options || {};
-    const grid = document.getElementById(containerId);
-    problems.forEach((p, i) => {
-      const idx = prefix + (i + 1);
-      const div = document.createElement('div');
-      div.className = 'problem';
-      div.innerHTML = `
-        <div class="problem-q">
-          <div class="problem-num">${idx}</div>
-          <div class="problem-expr">${p.q}</div>
-        </div>
-        <div class="problem-input-row">
-          <span class="eq">=</span>
-          <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
-          ${p.a !== 'TEXT' ? `<button class="check-btn" onclick="checkAnswer('${idx}', '${p.a}', ${options.noCount ? 'true' : 'false'})">Check</button>` : ''}
-        </div>
-        <div class="problem-tools">
-          <button class="hint-link" onclick="toggleHint('${idx}')">Show hint</button>
-          <button class="answer-link" onclick="toggleAnswer('${idx}')">Show answer</button>
-        </div>
-        <div class="hint-box" id="hint-${idx}">${p.hint}</div>
-        <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
-      `;
-      grid.appendChild(div);
-      if (p.a !== 'TEXT' && !options.noCount) totalProblems++;
-    });
-  }
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    answerKey[idx] = p.a;
+    if (options.noCount) noCountSet.add(idx);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
 
   function formatAnswerDisplay(a) {
     if (a === 'TEXT') return 'They have different powers of x (x¹ vs x²), so they\'re not like terms.';
     // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
     let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
     // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
-    r = r.replace(/(-?\d+)\/(\d+)/g, (_, n, d) => {
+    r = r.replace(/(\^)?(-?\d+)\/(\d+)/g, (m, caret, n, d) => {
+      if (caret) return m;  // exponent like a^6/4 — do not stack, handled below
       const neg = n.startsWith('-');
       const num = neg ? n.slice(1) : n;
       return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
     });
+    // Step 2.5: remaining carets become superscripts (a^6/4 -> a<sup>6</sup>/4, x^2 -> x<sup>2</sup>)
+    r = r.replace(/\^(-?\d+)/g, '<sup>$1</sup>');
     // Step 3: tidy operators — typographic minus, space around +/−.
     r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
     return r;
@@ -1240,6 +1438,8 @@
   function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
 
   function checkAnswer(idx, expected, noCount) {
+    if (expected === undefined || expected === null) expected = answerKey[idx];
+    if (noCount === undefined || noCount === null) noCount = noCountSet.has(idx);
     const input = document.getElementById('inp-' + idx);
     const result = answerMatches(input.value, expected);
     input.classList.remove('correct', 'incorrect');
@@ -1259,13 +1459,25 @@
     document.getElementById('progressFill').style.width = pct + '%';
   }
 
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      // smooth-scroll the opened section to the top of the viewport
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
   // ============ INITIALISE ============
   initDragSort();
   buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
   buildPractice('weDoGrid', weDo, 'W', { noCount: true });
   buildPractice('checkpointGrid', checkpoint, 'Q');
   buildPractice('practiceGrid1', practice1, 'P');
-  buildPractice('practiceGrid2', practice2, 'M');
+  buildPractice('practiceGrid2', practice2, 'S');
   buildPractice('practiceGrid3', practice3, 'C');
   buildPractice('exitGrid', exitProbs, 'E');
   updateProgress();
@@ -1277,6 +1489,88 @@
       if (btn) btn.click();
     }
   });
+
+  function initConstantAreaTriangle(cfg){
+  const svg   = document.getElementById(cfg.svgId);
+  if(!svg) return;
+  const apex  = svg.querySelector('#'+cfg.ids.apex);
+  const ring  = svg.querySelector('#'+cfg.ids.focusRing);
+  const fill  = svg.querySelector('#'+cfg.ids.fill);
+  const slA   = svg.querySelector('#'+cfg.ids.slantA);
+  const slB   = svg.querySelector('#'+cfg.ids.slantB);
+  const perp  = svg.querySelector('#'+cfg.ids.perp);
+  const ra    = svg.querySelector('#'+cfg.ids.rightAngle);
+  const cLab  = svg.querySelector('#'+cfg.ids.cLabel);
+  const hLab  = svg.querySelector('#'+cfg.ids.hLabel);
+  const elArea= document.getElementById(cfg.ids.area);
+  const elType= document.getElementById(cfg.ids.type);
+  const elStat= document.getElementById(cfg.ids.status);
+  const btnRst= document.getElementById(cfg.ids.reset);
+
+  const Ax=cfg.Ax, Bx=cfg.Bx, baseY=cfg.baseY, guideY=cfg.guideY;
+  const minX=cfg.minX, maxX=cfg.maxX;
+  const areaValue = 0.5 * cfg.baseCm * cfg.heightCm;
+  const typesSeen = {};
+  let apexX = cfg.startX;
+
+  function svgX(clientX){
+    const pt = svg.createSVGPoint();
+    pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  function clamp(v){ return Math.max(minX, Math.min(maxX, v)); }
+  function classify(x){
+    if(Math.abs(x-Ax)<2 || Math.abs(x-Bx)<2) return 'right-angled';
+    if(x>Ax && x<Bx) return 'acute';
+    return 'obtuse';
+  }
+  function redraw(){
+    apexX = clamp(apexX);
+    fill.setAttribute('points', Ax+','+baseY+' '+Bx+','+baseY+' '+apexX+','+guideY);
+    slA.setAttribute('x2', apexX); slA.setAttribute('y2', guideY);
+    slB.setAttribute('x2', apexX); slB.setAttribute('y2', guideY);
+    perp.setAttribute('x1', apexX); perp.setAttribute('x2', apexX);
+    ra.setAttribute('points', apexX+','+(baseY-12)+' '+(apexX+12)+','+(baseY-12)+' '+(apexX+12)+','+baseY);
+    cLab.setAttribute('x', apexX);
+    hLab.setAttribute('x', apexX+12);
+    hLab.setAttribute('y', (guideY+baseY)/2);
+    apex.setAttribute('cx', apexX);
+    ring.setAttribute('cx', apexX);
+    elArea.textContent = Number.isInteger(areaValue) ? areaValue : areaValue.toFixed(1);
+    const t = classify(apexX);
+    elType.textContent = t;
+    typesSeen[t] = true;
+    apex.setAttribute('aria-valuenow', Math.round((apexX-minX)/(maxX-minX)*100));
+    if(typesSeen['right-angled'] && typesSeen['acute'] && typesSeen['obtuse']){
+      elStat.textContent = "You've made all three triangle types — and the area stayed "+elArea.textContent+" cm² every time.";
+      elStat.classList.add('done');
+    }
+  }
+
+  let dragging=false;
+  apex.addEventListener('pointerdown', function(e){ dragging=true; apex.setPointerCapture(e.pointerId); e.preventDefault(); });
+  apex.addEventListener('pointermove', function(e){ if(dragging){ apexX=clamp(svgX(e.clientX)); redraw(); } });
+  apex.addEventListener('pointerup',   function(){ dragging=false; });
+  apex.addEventListener('pointercancel', function(){ dragging=false; });
+  apex.addEventListener('keydown', function(e){
+    const step = e.shiftKey ? 30 : 10;
+    if(e.key==='ArrowLeft' || e.key==='ArrowDown'){ apexX-=step; redraw(); e.preventDefault(); }
+    if(e.key==='ArrowRight'|| e.key==='ArrowUp'){   apexX+=step; redraw(); e.preventDefault(); }
+  });
+  apex.addEventListener('focus', function(){ ring.setAttribute('opacity','1'); });
+  apex.addEventListener('blur',  function(){ ring.setAttribute('opacity','0'); });
+  btnRst.addEventListener('click', function(){
+    apexX = cfg.startX;
+    elStat.classList.remove('done');
+    elStat.textContent = 'Drag C to a few positions. Notice the area readout.';
+    for(const k in typesSeen) delete typesSeen[k];
+    redraw();
+  });
+
+  redraw();
+}
+
+{{SLOT:strategy_js}}
 </script>
 
 </body>
