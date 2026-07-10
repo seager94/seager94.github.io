@@ -3,7 +3,7 @@
 *Decisions, deferrals, and standing rules for the AC9 7–10 lesson library.*
 *This is the third memory layer. It is NOT lesson state and NOT process docs (see "Where things live" below).*
 
-Last updated: 2026-06-08
+Last updated: 2026-07-10
 
 ---
 
@@ -63,7 +63,7 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 2. **Year 9** — Algebra 01–06 published; remainder (Algebra 07+ and all other strands) still to build. ≈42 lessons.
 3. **Year 10** — only the legacy Algebra folder exists; regenerate Algebra to the advanced plan + build Number/Measurement/Space/Statistics/Probability. ≈54 lessons.
 4. **Y7 SP03 transformations** — once the transformation interactive component exists.
-5. **Curriculum index page** — needs a `lessonmap.json` export (does not exist yet); build from the master.
+5. **Curriculum index page** — needs a `lessonmap.json` export (export exists and is tracked on main as of 2026-07-10; build the page from it); build from the master.
 
 ---
 
@@ -153,3 +153,31 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 - Sweep Y9 and earlier finance lessons for the same multi-compounding intermediate-rounding drift.
 
 **Next:** Y10 Algebra complete. Remaining Y10 strands (Number/Measurement/Space/Statistics/Probability) and the Y9/Y8 backlog per build-backlog priorities.
+
+## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)
+
+Nine-step run order executed after the payload pilot. All closed.
+
+**Structural changes:**
+- **Skill has ONE physical copy now.** The installed path `C:\Users\sdavi\.claude\skills\interactive-html-maths-lesson` is a directory junction into the repo's `.claude/skills/` copy. Editing the repo edits the installed skill; the sync step is dead. The pre-junction folder is parked at `...\interactive-html-maths-lesson.bak` — delete after the next successful lesson build through the junction.
+- **`lessonmap.json` tracked on main** (was committed at close-out 2026-07-09; verified, refreshed). Unblocks the curriculum index page.
+- **Execution policy set permanently:** `CurrentUser = RemoteSigned`. Per-terminal Bypass ritual dead. Side effect (wanted): browser-downloaded .ps1 stays blocked until `Unblock-File`.
+- **`check-ascii.ps1`** (projects root): scans all .ps1 for non-ASCII. Rule: run against any new .ps1 before first execution. Deployed `run-batch-v2.ps1` cleaned (21 chars — em-dashes and ≥ in comments/notes).
+- **`close-out.ps1`** (projects root): scripted close-out. Checks branch, optional 20-file gate (`-LessonFolder`/`-ExpectedCount`), ASCII sweep, JSON export (catches Excel-lock), commit-landed proof (the silent-non-commit trap), branch levelling, both-branches-same-hash proof. `-Commit -Message "..."` to ship; bare = check-only. Proven live both modes.
+
+**Frame + QA (the "Year" fix and the gate that enforces it):**
+- Frame curriculum panel and footer now prefix the literal "Year " before the bare `meta_sa_year` slot ("Year 8 · Statistics", was "8 · Statistics").
+- `qa_lessons.py` gained a FAIL-class visible-panel check: panel `cl-value` row must read "Year N · Strand" matching the meta, and every AC9 code in meta must appear in the visible body. Closes the pilot's blind spot (gate checked `<head>` only). Proof-of-failure run: both pilots FAILed on the stale panel before re-assembly — gate works.
+- Both pilots re-assembled through the fixed frame from retained payloads, QA-passed, click-tested, republished. Cheap re-assembly worked exactly as designed — **keep payload JSONs forever** (rule now in payload-spec).
+
+**payload-spec.md rewritten:** status pilot→proven; full 29-slot inventory verified against the frame; slot changelog (the five post-pilot slots); **`meta_lesson_focus` documented — it was in the frame and manifest but missing from the spec schema; any payload written from the old spec alone would have failed assembly.** Bare-year rule documented ("Year " lives in the frame, never in the slot value). Frame is a maintained artefact — edit directly, never rebuild from template.
+
+**Retrofit audit (149 published lessons, all three symptom classes):**
+- Unicode dash inside stored answers: **0 files.** No retrofit needed — dash class closed with data. (Dashes in script display strings are house typography, not faults.)
+- Fraction-reveal (`^` + `/` in answers): 3 files — y10_alg_03, y10_alg_05 (already logged), y10_alg_17. Cosmetic reveal-display only; marking unaffected. Logged, not touched.
+- Cent-drift sweep (verify_answers.py over Y7/Y8 finance lessons): **y8_num_09 had 3 genuinely wrong Mastery answers** (multi-step percentage chains: 9270→9183, 5539.32→5555.44, 96219→93443 — one contradicted the question's own hint). Hand-recomputed, fixed, click-tested, republished. Y10 finance-sweep debt from 2026-06-08 now covered for Y7/Y8; Y9 has no finance lessons built yet.
+
+**Open debts added/refreshed:**
+- verify_answers.py misparsed the y8_num_09 const-% questions (wrong P/r extracted from prose) — verdicts were right, parameters weren't. Strengthens the case for the `data-verify` metadata lift already logged 2026-06-08.
+- y10_alg_03 / y10_alg_17 join y10_alg_05 on the fraction-reveal cosmetic list.
+- `.bak` skill folder deletion pending first junction build.
