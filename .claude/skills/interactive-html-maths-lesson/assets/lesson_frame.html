@@ -13,12 +13,15 @@
     title                              <title> text
     meta_lesson_id                     content of <meta name="lesson-id">
     meta_ac9_descriptor                content of <meta name="ac9-descriptor">
+    meta_ac9_descriptor_text           AC9 descriptor sentence shown after the code
+                                       in the Curriculum-link panel
     meta_ac9_elaborations              content of <meta name="ac9-elaborations">
     meta_sa_year                       content of <meta name="sa-year">
     meta_sa_strand                     content of <meta name="sa-strand">
     meta_sa_conceptual_understanding   content of <meta name="sa-conceptual-understanding">
     meta_lesson_focus                  content of <meta name="lesson-focus">
     meta_mapping_note                  content of <meta name="mapping-note">
+    footer_title                       lesson title shown in the page footer line
     header_title                       header <h1> text
     header_subtitle                    header .subtitle text
     header_badge                       header .badge text
@@ -36,9 +39,14 @@
     section0_intro      inner HTML of the Section 0 retrieval intro <p>
     section_warmup      Section 1 "Why this matters" body (everything after the <h2>)
     vocab_cards         the .vocab card elements inside .vocab-grid (Section 2)
+    section3_heading    Section 3 <h2> heading text (after the .sec-num span)
+    section3_desc       inner HTML of the Section 3 .sec-desc line
     sort_activity       Section 3 sort chips-and-buckets (the .parts-expr block
                         incl. #partsTerms, .bucket[data-bucket], .term-chip[data-type],
                         plus the trailing .parts-instructions note)
+    section4_heading    Section 4 <h2> heading text (after the .sec-num span)
+    section6_heading    Section 6 We-Do <h2> heading (after the .sec-num span;
+                        may include the trailing .expr span)
     worked_example      Section 5 worked-example body after the <h2> (the .worked
                         block incl. #step1/#step2/#step3 and #revealBtn)
     we_do_intro         inner HTML of the Section 6 We-Do intro <p>
@@ -1006,15 +1014,15 @@
 
 <!-- SECTION 3: PARTS OF AN EXPRESSION -->
 <section class="lesson">
-  <h2><span class="sec-num">3</span>Parts of an expression</h2>
-  <p class="sec-desc">Drag each term from the strip below into the correct bucket — <strong style="color:var(--coral)">variable terms</strong> or <strong style="color:var(--navy)">constant terms</strong>. Wrong drops will shake; correct ones stay put.</p>
+  <h2><span class="sec-num">3</span>{{SLOT:section3_heading}}</h2>
+  <p class="sec-desc">{{SLOT:section3_desc}}</p>
 
   {{SLOT:sort_activity}}
 </section>
 
 <!-- SECTION 4: MATCHING LIKE TERMS -->
 <section class="lesson">
-  <h2><span class="sec-num">4</span>Spot the like terms</h2>
+  <h2><span class="sec-num">4</span>{{SLOT:section4_heading}}</h2>
   <p class="sec-desc">Click two terms that are alike to match them. There are five matching pairs in the grid below.</p>
 
   <div class="match-area" id="matchArea">
@@ -1047,7 +1055,7 @@
 
 <!-- SECTION 6: WE DO -->
 <section class="lesson">
-  <h2><span class="sec-num">6</span>Together — simplify <span class="expr">6<span class="var">m</span> + 4 − 9<span class="var">m</span> + 2 − <span class="var">m</span></span></h2>
+  <h2><span class="sec-num">6</span>{{SLOT:section6_heading}}</h2>
   <p class="sec-desc">{{SLOT:we_do_intro}}</p>
   <div class="practice-grid" id="weDoGrid"></div>
   <div class="parts-instructions" style="margin-top: 18px;">
@@ -1139,30 +1147,30 @@
   <div class="cl-body">
     <div class="cl-row">
       <span class="cl-label">SA Year &amp; Strand</span>
-      <span class="cl-value">Year 10 &middot; Algebra</span>
+      <span class="cl-value">{{SLOT:meta_sa_year}} &middot; {{SLOT:meta_sa_strand}}</span>
     </div>
     <div class="cl-row">
       <span class="cl-label">Conceptual understanding</span>
-      <span class="cl-value">Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones.</span>
+      <span class="cl-value">{{SLOT:meta_sa_conceptual_understanding}}</span>
     </div>
     <div class="cl-row">
       <span class="cl-label">AC9 descriptor</span>
-      <span class="cl-value"><strong>AC9M10A01</strong> — expand, factorise and simplify expressions and solve equations algebraically, applying exponent laws involving products, quotients and powers of variables, and the distributive property</span>
+      <span class="cl-value"><strong>{{SLOT:meta_ac9_descriptor}}</strong> — {{SLOT:meta_ac9_descriptor_text}}</span>
     </div>
     <div class="cl-row">
       <span class="cl-label">Elaborations covered</span>
-      <span class="cl-value">1, 2</span>
+      <span class="cl-value">{{SLOT:meta_ac9_elaborations}}</span>
     </div>
     <div class="cl-row">
       <span class="cl-label">Lesson focus</span>
-      <span class="cl-value">Collect like terms in linear and simple polynomial expressions; recognise that only terms with identical variable parts can combine.</span>
+      <span class="cl-value">{{SLOT:meta_lesson_focus}}</span>
     </div>
-    <div class="cl-note">Mapping: Strict. Lesson ID y10_alg_05. Source: lesson-map.xlsx.</div>
+    <div class="cl-note">Mapping: {{SLOT:meta_mapping_note}}. Lesson ID {{SLOT:meta_lesson_id}}. Source: lesson-map.xlsx.</div>
   </div>
 </details>
 
 <footer class="bottom">
-  Mathematics · Year 10 · Collecting Like Terms
+  {{SLOT:meta_sa_strand}} · {{SLOT:meta_sa_year}} · {{SLOT:footer_title}}
 </footer>
 
 </div>
