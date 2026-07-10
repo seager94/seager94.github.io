@@ -9,6 +9,7 @@ Run after a batch, before renaming/publishing. Catches, per file:
     - any of the 8 locked framework functions missing
     - 'TODO' anywhere in a <meta> tag (the y7-elaborations failure class)
     - a required curriculum <meta> field missing or empty
+    - visible curriculum panel missing 'Year N · Strand' or AC9 codes (meta/panel mismatch)
 
   WARN-class (eyeball before publish):
     - external dependency: http(s):// inside src= / <link href= / @import
@@ -75,6 +76,18 @@ def qa_file(path, min_bytes):
     for m in re.finditer(r".{0,40}TODO.{0,40}", stripped):
         warns.append(f"TODO in body: …{m.group(0).strip()}…")
         break  # one example is enough
+        # Visible curriculum panel must match the meta.
+    # (The pilot proved the gate checked meta only -- a hardcoded panel sailed through.)
+    year = metas.get("sa-year", "").strip()
+    strand = metas.get("sa-strand", "").strip()
+    if year and strand:
+        panel_rows = re.findall(r'class="cl-value">([^<]*(?:&middot;|\u00b7)[^<]*)<', text)
+        if panel_rows and not any(f"Year {year}" in r and strand in r for r in panel_rows):
+            fails.append(f"curriculum panel shows '{panel_rows[0].strip()[:60]}' instead of 'Year {year} - {strand}' (meta/panel mismatch)")
+    desc = metas.get("ac9-descriptor", "")
+    for code in [c.strip() for c in re.split(r"[,;/]", desc) if c.strip()]:
+        if code not in stripped:
+            fails.append(f"AC9 code {code} in meta but not in visible body (panel not populated)")
 
     for m in EXTERNAL_RE.finditer(text):
         warns.append(f"external dependency (must work offline): {m.group(1)[:70]}")
