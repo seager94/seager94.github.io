@@ -658,7 +658,11 @@
   body.teacher-mode .step { opacity: 1 !important; }
   body.teacher-mode #revealBtn { display: none; }
 
-  /* RESULTS COPY BAR */
+  /* RESET BUTTON */
+.reset-btn { background: none; border: 1.5px solid #c9d4d6; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+.reset-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+/* RESULTS COPY BAR */
 .results-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
 .results-name { flex: 1 1 160px; max-width: 240px; padding: 8px 10px; border: 1.5px solid #c9d4d6; border-radius: 8px; font: inherit; background: white; }
 .results-copy-btn { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font: inherit; font-weight: 600; cursor: pointer; }
@@ -875,6 +879,7 @@
   <div class="progress-row">
     <span>Progress: <strong id="progressLabel">0 / 21</strong></span>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="reset-btn" id="resetProgressBtn" type="button" title="Clear saved answers on this device">Reset</button>
     <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
       <span>👁</span><span>Teacher mode</span>
     </div>
@@ -1616,6 +1621,47 @@ function buildPractice(containerId, problems, prefix, options) {
   }
   const crb = document.getElementById('copyResultsBtn');
   if (crb) crb.addEventListener('click', copyResults);
+
+  // ============ PROGRESS PERSISTENCE (display-layer; restore re-marks via checkAnswer's front door) ============
+  const LS_KEY = 'aphs-lesson:' + (location.pathname.split('/').pop() || 'lesson');
+  let saveTimer = null;
+  function saveProgress() {
+    try {
+      const state = { name: '', inputs: {} };
+      const nm = document.getElementById('studentName');
+      if (nm) state.name = nm.value;
+      document.querySelectorAll('input.problem-input').forEach(el => {
+        const idx = el.id.slice(4);
+        const c = el.classList.contains('correct') ? 'y' : (el.classList.contains('incorrect') ? 'n' : '');
+        if (el.value || c) state.inputs[idx] = { v: el.value, c: c };
+      });
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+  function queueSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveProgress, 400); }
+  function restoreProgress() {
+    let state = null;
+    try { state = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+    if (!state) return;
+    const nm = document.getElementById('studentName');
+    if (nm && state.name) nm.value = state.name;
+    Object.keys(state.inputs || {}).forEach(idx => {
+      const el = document.getElementById('inp-' + idx);
+      if (!el) return;
+      el.value = state.inputs[idx].v;
+      if (state.inputs[idx].c) checkAnswer(idx);
+    });
+  }
+  function resetProgress() {
+    if (!confirm('Clear saved progress for this lesson on this device?')) return;
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    location.reload();
+  }
+  document.addEventListener('input', e => { if (e.target && (e.target.classList.contains('problem-input') || e.target.id === 'studentName')) queueSave(); });
+  document.addEventListener('click', e => { if (e.target && (e.target.classList.contains('check-btn') || e.target.id === 'copyResultsBtn')) setTimeout(saveProgress, 60); });
+  const rpb = document.getElementById('resetProgressBtn');
+  if (rpb) rpb.addEventListener('click', resetProgress);
+  restoreProgress();
 
   // Enter key checks answer
   document.addEventListener('keydown', e => {

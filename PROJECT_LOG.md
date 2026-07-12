@@ -161,6 +161,8 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Patch 1 (results copy button) landed** in lesson_frame.html + lesson_template.html: name box + Copy my results in Section 11; display-layer only (tier scores + exit answers read from DOM at click; locked functions untouched). Browser-validated on pilot 1 (payload mode) and template demo (classic mode).
 
+**Patch 2 (localStorage persistence + Reset) landed** both files: state keyed 'aphs-lesson:<filename>'; restore re-marks via checkAnswer's front door (answerKey/noCountSet fallbacks) so scores rebuild through locked logic; Reset button with confirm in the progress bar. Browser-validated both modes (F5 survives, Reset clears, cancel safe).
+
 **Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
 
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)
