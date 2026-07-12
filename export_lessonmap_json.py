@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 export_lessonmap_json.py — export lessonmap.xlsx (master) to lessonmap.json
 
@@ -153,7 +153,7 @@ def main():
 
     if not args.check:
         out = {
-            "generated": datetime.now().isoformat(timespec="seconds"),
+            "latest_generated_date": max((l["generated_date"] for l in lessons if l["generated_date"]), default=""),
             "source": args.map,
             "tallies": dict(tallies),
             "coverage": [

@@ -84,11 +84,10 @@ def classify_and_check(q, stored, tol):
 
 def extract(text):
     items = []  # (kind, question, answer, lineno)
-    lines = text.split('\n')
     # practice/retrieval arrays: { q: '...', a: '...' ... }
-    for i, ln in enumerate(lines, 1):
-        for m in re.finditer(r"q:\s*'((?:[^'\\]|\\.)*)'\s*,\s*a:\s*'((?:[^'\\]|\\.)*)'", ln):
-            items.append(('practice', m.group(1), m.group(2), i))
+    # whole-text scan: \s* spans newlines, so one-key-per-line objects match too
+    for m in re.finditer(r"q:\s*'((?:[^'\\]|\\.)*)'\s*,\s*a:\s*'((?:[^'\\]|\\.)*)'", text):
+        items.append(('practice', m.group(1), m.group(2), text.count('\n', 0, m.start()) + 1))
     return items
 
 def run(path, tol):

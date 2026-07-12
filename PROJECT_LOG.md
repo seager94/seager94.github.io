@@ -1,4 +1,4 @@
-# Project Log — Interactive HTML Maths Lesson Library
+﻿# Project Log — Interactive HTML Maths Lesson Library
 
 *Decisions, deferrals, and standing rules for the AC9 7–10 lesson library.*
 *This is the third memory layer. It is NOT lesson state and NOT process docs (see "Where things live" below).*
@@ -46,6 +46,7 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 ## Open debts (quality / consistency)
 
+- **verify_answers.py extraction is line-based - multi-line practice objects are invisible.** Confirmed 2026-07-12 on y8_mea_13 + y8_num_11: both store 32/33 answers as one-key-per-line objects (q: and a: on separate lines), so the same-line q/a regex (line 90) finds zero stored answers. Original faded/explorer-wiring hypothesis wrong - pure formatting. FIXED 2026-07-12: extract() now whole-text finditer (line numbers derived from match offset); y8_mea_13/y8_num_11 report 32/33 answers (all MANUAL - rates/tax, outside Tier-1 formulas). Regression: y8_num_09 still 35 answers; its 3 MISMATCHes are the known prose-misparse false positives (stored values are the 2026-07-10 corrections) - killed properly by the data-verify lift.
 - **Y8 Space files carry NO metadata block.** All 10 `y8_space_*` files have empty `lesson-id` / `ac9-descriptor` / `ac9-elaborations`. In the map their descriptors are *inferred* and elaborations are `TODO: backfill (file meta missing)`. The `parallel_lines_angle_reasoning` → AC9M8SP02 tag is unconfirmed. → backfill the meta blocks in the files.
 - **Year-7 in-file meta backfill.** Several published Y7 files have `TODO` elaborations; two have `TODO` **descriptors**: `y7_alg_07` (likely AC9M7A02) and `y7_num_12`. Also TODO-elaboration files: `y7_alg_05`, `y7_mea_02/03/04/05/07/08/10/11`. (Sheet has the numbers; the *files* need them written in.)
 - **Strand-code convention drift:** `spa` (Y7) vs `space` (Y8), `prb` vs `pro`. Rule for now: match the siblings already in each folder. Whole-repo reconciliation is separate housekeeping.
@@ -149,7 +150,7 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 **Open debt carried forward:**
 - L09 + L19 machine-drawn SVG geometry needs a live browser eyeball (shaded regions / circle centre+radius placement sitting correctly). L05 `a^6/4` fraction-reveal cosmetic quirk still open.
 - L20 share/medicine threshold questions (n=9, n=12): function values confirmed in Python, threshold-vs-answer wording still wants an eyeball.
-- `.gitattributes merge=ours` guard for lessonmap.xlsx not yet set — binary conflict will recur until done.
+- ~~`.gitattributes merge=ours` guard for lessonmap.xlsx~~ RETIRED 2026-07-10: obsolete under single-editing-home-on-main (map is edited only on main; lesson-gen fast-forwards to match, so the lesson-gen -> main binary-merge path no longer exists).
 - Sweep Y9 and earlier finance lessons for the same multi-compounding intermediate-rounding drift.
 
 **Next:** Y10 Algebra complete. Remaining Y10 strands (Number/Measurement/Space/Statistics/Probability) and the Y9/Y8 backlog per build-backlog priorities.
