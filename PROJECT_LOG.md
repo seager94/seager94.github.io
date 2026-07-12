@@ -163,6 +163,10 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Patch 2 (localStorage persistence + Reset) landed** both files: state keyed 'aphs-lesson:<filename>'; restore re-marks via checkAnswer's front door (answerKey/noCountSet fallbacks) so scores rebuild through locked logic; Reset button with confirm in the progress bar. Browser-validated both modes (F5 survives, Reset clears, cancel safe).
 
+**Patch 3 (input ergonomics) landed** both files. Locked-function edit #2 (additive, precedented): answerMatches gained a numeric-equivalence branch - decimal<->fraction interchangeable, leading $ and thousands-commas stripped for numeric compare, 1e-9 relative tolerance; algebraic strings fall through untouched. Display layer: inputmode=decimal on plain-numeric answers (non-negative only - iPad decimal pad lacks minus); format hints under inputs for whole-answer fractions and ^-answers. Console-validated both modes incl. false-case; algebraic fraction-coefficient answers (19/8k etc.) correctly excluded.
+
+**Patch 4 (I Do step-reveal): already present in both files** - pre-existing feature, no edit. revealNextStep() + #step1-3 + #revealBtn in frame (steps arrive via payload worked-example slot per spec line ~51) and template; teacher-mode bypass and print-hide rules already wired. Hardcoded 3-step ceiling matches the payload spec's 3-step contract - not a defect.
+
 **Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
 
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)

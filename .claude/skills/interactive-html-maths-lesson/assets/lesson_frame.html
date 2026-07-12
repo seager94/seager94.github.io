@@ -756,7 +756,9 @@
   body.teacher-mode .step { opacity: 1 !important; }
   body.teacher-mode #revealBtn { display: none; }
 
-  /* RESET BUTTON */
+  .format-hint { margin: 4px 0 0 26px; font-size: 0.78rem; color: var(--muted); }
+
+/* RESET BUTTON */
 .reset-btn { background: none; border: 1.5px solid #c9d4d6; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
 .reset-btn:hover { border-color: var(--coral); color: var(--coral); }
 
@@ -1391,6 +1393,17 @@
     const norm = normaliseAnswer(input);
     const exp = normaliseAnswer(expected);
     if (norm === exp) return true;
+    // numeric equivalence (additive 2026-07-12): decimals and fractions interchangeable;
+    // leading $ and thousands-commas stripped for the numeric compare only.
+    const toNum = s => {
+      s = s.replace(/^\$/, '').replace(/,(?=\d{3}(\D|$))/g, '');
+      if (/^-?\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+      const fm = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+      if (fm && parseFloat(fm[2]) !== 0) return parseFloat(fm[1]) / parseFloat(fm[2]);
+      return null;
+    };
+    const nIn = toNum(norm), nExp = toNum(exp);
+    if (nIn !== null && nExp !== null) return Math.abs(nIn - nExp) < 1e-9 * Math.max(1, Math.abs(nExp));
     // try sorting terms
     const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
     return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
@@ -1588,6 +1601,24 @@ function buildPractice(containerId, problems, prefix, options) {
   const rpb = document.getElementById('resetProgressBtn');
   if (rpb) rpb.addEventListener('click', resetProgress);
   restoreProgress();
+
+  // ============ INPUT ERGONOMICS (display-layer) ============
+  Object.keys(answerKey).forEach(idx => {
+    const a = answerKey[idx];
+    const el = document.getElementById('inp-' + idx);
+    if (!el || a === 'TEXT') return;
+    if (/^[\d.,$\s]+$/.test(a)) el.setAttribute('inputmode', 'decimal');
+    let fmt = '';
+    if (/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(a.replace(/\s+/g, ''))) fmt = 'Fraction or decimal both fine \u2014 e.g. 3/4 or 0.75';
+    else if (a.indexOf('^') !== -1) fmt = 'Use ^ for powers \u2014 e.g. x^2';
+    if (fmt) {
+      const d = document.createElement('div');
+      d.className = 'format-hint';
+      d.textContent = fmt;
+      const row = el.closest('.problem-input-row');
+      if (row) row.insertAdjacentElement('afterend', d);
+    }
+  });
 
   // Enter key checks answer
   document.addEventListener('keydown', e => {
