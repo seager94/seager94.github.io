@@ -1,4 +1,4 @@
-<!--
+﻿<!--
   ============================================================================
   INTERACTIVE HTML MATHS LESSON — FRAME (payload mode)  ·  SLOT MANIFEST
   ============================================================================
@@ -167,8 +167,8 @@
 <meta name="sa-conceptual-understanding" content="Valid inferences about populations can be made by drawing conclusions from representative samples">
 <meta name="lesson-focus"          content="Choose between a census and a sample by weighing cost, accuracy and practicality — a well-chosen representative sample can be small.">
 <meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
-<meta name="template-version" content="2026-07-08.1">
-<meta name="assembled" content="assemble_lesson.py v1.0 2026-07-10 from C:\Users\sdavi\projects\overnight-lessons\2026-07-10-y8stats\y8_sta_01_census_vs_sample_v2.payload.json">
+<meta name="template-version" content="2026-07-12.1">
+<meta name="assembled" content="assemble_lesson.py v1.0 2026-07-12 from C:\Users\sdavi\projects\overnight-lessons\2026-07-10-y8stats\y8_sta_01_census_vs_sample_v2.payload.json">
 
 <style>
   :root {
@@ -555,7 +555,7 @@
     border: 1.5px dashed var(--border); min-height: 80px;
   }
   .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
-  .bucket .vt { color: var(--coral); }
+  .bucket .vt { color: var(--coral); font-weight: 600; }
   .bucket .ct { color: var(--navy); }
   .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
   .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
@@ -756,7 +756,30 @@
   body.teacher-mode .step { opacity: 1 !important; }
   body.teacher-mode #revealBtn { display: none; }
 
-  /* EXIT TICKET */
+  .format-hint { margin: 4px 0 0 26px; font-size: 0.78rem; color: var(--muted); }
+
+/* RESET BUTTON */
+.reset-btn { background: none; border: 1.5px solid #c9d4d6; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+.reset-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+.misconception-box { display: none; margin: 6px 0 0 26px; padding: 8px 12px; background: var(--coral-soft); border-left: 3px solid var(--coral); border-radius: 6px; font-size: 0.85rem; color: var(--text); }
+.misconception-box.show { display: block; }
+
+/* FOCUS VISIBILITY (patch 6) */
+.check-btn:focus-visible, .hint-link:focus-visible, .answer-link:focus-visible,
+.reset-btn:focus-visible, .results-copy-btn:focus-visible, .reveal-btn:focus-visible {
+  outline: 3px solid var(--coral); outline-offset: 2px;
+}
+
+/* RESULTS COPY BAR */
+.results-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+.results-name { flex: 1 1 160px; max-width: 240px; padding: 8px 10px; border: 1.5px solid #c9d4d6; border-radius: 8px; font: inherit; background: white; }
+.results-copy-btn { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+.results-copy-btn:hover { background: var(--coral); }
+.results-copied { display: none; color: var(--navy); font-weight: 600; font-size: 0.9em; }
+.results-copied.show { display: inline; }
+
+/* EXIT TICKET */
   .exit-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 14px;
@@ -829,6 +852,11 @@
   /* PRINT */
   @media print {
     .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .accordion-body { display: block !important; }
+    .accordion-chevron, .accordion-count { display: none !important; }
+    .results-bar, .reset-btn, .format-hint { display: none !important; }
+    .tier-accordion .accordion-head { cursor: default; }
+    .problem-input { min-height: 26px; }
     .step { opacity: 1 !important; }
     section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
     body { background: white; }
@@ -923,7 +951,7 @@
   .cat svg{display:block; width:100%; height:auto; touch-action:none;}
   .cat-apex{cursor:grab; touch-action:none;}
   .cat-apex:active{cursor:grabbing;}
-  .cat-apex:focus{outline:none;}
+  .cat-apex:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
   .cat-panel{ flex:1 1 240px; min-width:230px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
   .cat-panel h3{font-family:Georgia,serif; color:var(--navy); margin:0 0 10px; font-size:1.05rem;}
   .cat-row{ display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px dashed var(--border); font-size:.95rem; }
@@ -965,6 +993,7 @@
   <div class="progress-row">
     <span>Progress: <strong id="progressLabel">0 / 21</strong></span>
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="reset-btn" id="resetProgressBtn" type="button" title="Clear saved answers on this device">Reset</button>
     <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
       <span>👁</span><span>Teacher mode</span>
     </div>
@@ -1245,6 +1274,11 @@
   </h2>
   <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
   <div class="exit-grid" id="exitGrid"></div>
+  <div class="results-bar">
+    <input class="results-name" id="studentName" placeholder="Your name" autocomplete="off">
+    <button class="results-copy-btn" id="copyResultsBtn" type="button">Copy my results</button>
+    <span class="results-copied" id="copyFeedback">Copied &mdash; paste into Daymap</span>
+  </div>
 </section>
 
 <!-- CURRICULUM LINK — reference info for teachers and curriculum audits.
@@ -1698,6 +1732,17 @@ const retrieval = [
     const norm = normaliseAnswer(input);
     const exp = normaliseAnswer(expected);
     if (norm === exp) return true;
+    // numeric equivalence (additive 2026-07-12): decimals and fractions interchangeable;
+    // leading $ and thousands-commas stripped for the numeric compare only.
+    const toNum = s => {
+      s = s.replace(/^\$/, '').replace(/,(?=\d{3}(\D|$))/g, '');
+      if (/^-?\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+      const fm = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+      if (fm && parseFloat(fm[2]) !== 0) return parseFloat(fm[1]) / parseFloat(fm[2]);
+      return null;
+    };
+    const nIn = toNum(norm), nExp = toNum(exp);
+    if (nIn !== null && nExp !== null) return Math.abs(nIn - nExp) < 1e-9 * Math.max(1, Math.abs(nExp));
     // try sorting terms
     const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
     return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
@@ -1750,7 +1795,7 @@ function buildPractice(containerId, problems, prefix, options) {
 }
 
   function formatAnswerDisplay(a) {
-    if (a === 'TEXT') return 'They have different powers of x (x¹ vs x²), so they\'re not like terms.';
+    if (a === 'TEXT') return 'Open response — no single right answer. Compare your explanation with the hint.';
     // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
     let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
     // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
@@ -1814,6 +1859,140 @@ function buildPractice(containerId, problems, prefix, options) {
   buildPractice('practiceGrid3', practice3, 'C');
   buildPractice('exitGrid', exitProbs, 'E');
   updateProgress();
+
+  // ============ RESULTS COPY (display-layer only; reads marked state from the DOM) ============
+  function tierScore(prefix) {
+    const inputs = document.querySelectorAll('input[id^="inp-' + prefix + '"]');
+    let right = 0;
+    inputs.forEach(el => { if (el.classList.contains('correct')) right++; });
+    return right + '/' + inputs.length;
+  }
+  function buildResultsLine() {
+    const nameEl = document.getElementById('studentName');
+    const name = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : '(no name)';
+    const exits = [];
+    document.querySelectorAll('input[id^="inp-E"]').forEach(el => {
+      const idx = el.id.slice(4);
+      let mark = '';
+      if (el.classList.contains('correct')) mark = ' \u2713';
+      else if (el.classList.contains('incorrect')) mark = ' \u2717';
+      exits.push(idx + ' "' + (el.value.trim() || 'blank') + '"' + mark);
+    });
+    return name + ' | ' + document.title +
+      ' | Building ' + tierScore('P') + ' \u00B7 Stretch ' + tierScore('S') + ' \u00B7 Mastery ' + tierScore('C') +
+      ' | Exit: ' + exits.join('; ');
+  }
+  function copyResults() {
+    const line = buildResultsLine();
+    const fb = document.getElementById('copyFeedback');
+    const show = function () { fb.classList.add('show'); setTimeout(function () { fb.classList.remove('show'); }, 2500); };
+    const fallback = function () {
+      const ta = document.createElement('textarea');
+      ta.value = line; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); show();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(line).then(show, fallback);
+    } else { fallback(); }
+  }
+  const crb = document.getElementById('copyResultsBtn');
+  if (crb) crb.addEventListener('click', copyResults);
+
+  // ============ PROGRESS PERSISTENCE (display-layer; restore re-marks via checkAnswer's front door) ============
+  const LS_KEY = 'aphs-lesson:' + (location.pathname.split('/').pop() || 'lesson');
+  let saveTimer = null;
+  function saveProgress() {
+    try {
+      const state = { name: '', inputs: {} };
+      const nm = document.getElementById('studentName');
+      if (nm) state.name = nm.value;
+      document.querySelectorAll('input.problem-input').forEach(el => {
+        const idx = el.id.slice(4);
+        const c = el.classList.contains('correct') ? 'y' : (el.classList.contains('incorrect') ? 'n' : '');
+        if (el.value || c) state.inputs[idx] = { v: el.value, c: c };
+      });
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+  function queueSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveProgress, 400); }
+  function restoreProgress() {
+    let state = null;
+    try { state = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+    if (!state) return;
+    const nm = document.getElementById('studentName');
+    if (nm && state.name) nm.value = state.name;
+    Object.keys(state.inputs || {}).forEach(idx => {
+      const el = document.getElementById('inp-' + idx);
+      if (!el) return;
+      el.value = state.inputs[idx].v;
+      if (state.inputs[idx].c) checkAnswer(idx);
+    });
+  }
+  function resetProgress() {
+    if (!confirm('Clear saved progress for this lesson on this device?')) return;
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    location.reload();
+  }
+  document.addEventListener('input', e => { if (e.target && (e.target.classList.contains('problem-input') || e.target.id === 'studentName')) queueSave(); });
+  document.addEventListener('click', e => { if (e.target && (e.target.classList.contains('check-btn') || e.target.id === 'copyResultsBtn')) setTimeout(saveProgress, 60); });
+  const rpb = document.getElementById('resetProgressBtn');
+  if (rpb) rpb.addEventListener('click', resetProgress);
+  restoreProgress();
+
+  // ============ MISCONCEPTION FEEDBACK (patch 8, display-layer) ============
+  // Optional per-question key: fb: { 'wrong answer': 'targeted feedback', ... }
+  const fbKey = {};
+  [['R', typeof retrieval !== 'undefined' ? retrieval : []],
+   ['W', typeof weDo !== 'undefined' ? weDo : []],
+   ['Q', typeof checkpoint !== 'undefined' ? checkpoint : []],
+   ['P', typeof practice1 !== 'undefined' ? practice1 : []],
+   ['S', typeof practice2 !== 'undefined' ? practice2 : []],
+   ['C', typeof practice3 !== 'undefined' ? practice3 : []],
+   ['E', typeof exitProbs !== 'undefined' ? exitProbs : []]
+  ].forEach(([pre, arr]) => arr.forEach((p, i) => { if (p && p.fb) fbKey[pre + (i + 1)] = p.fb; }));
+  document.addEventListener('click', e => {
+    if (!e.target || !e.target.classList.contains('check-btn')) return;
+    const inp = e.target.closest('.problem-input-row') && e.target.closest('.problem-input-row').querySelector('.problem-input');
+    if (!inp) return;
+    const idx = inp.id.slice(4);
+    let box = document.getElementById('fb-' + idx);
+    if (inp.classList.contains('incorrect') && fbKey[idx]) {
+      let msg = '';
+      Object.keys(fbKey[idx]).forEach(k => { if (!msg && answerMatches(inp.value, k) === true) msg = fbKey[idx][k]; });
+      if (msg) {
+        if (!box) {
+          box = document.createElement('div');
+          box.className = 'misconception-box';
+          box.id = 'fb-' + idx;
+          inp.closest('.problem-input-row').insertAdjacentElement('afterend', box);
+        }
+        box.textContent = msg;
+        box.classList.add('show');
+        return;
+      }
+    }
+    if (box) box.classList.remove('show');
+  });
+
+  // ============ INPUT ERGONOMICS (display-layer) ============
+  Object.keys(answerKey).forEach(idx => {
+    const a = answerKey[idx];
+    const el = document.getElementById('inp-' + idx);
+    if (!el || a === 'TEXT') return;
+    if (/^[\d.,$\s]+$/.test(a)) el.setAttribute('inputmode', 'decimal');
+    let fmt = '';
+    if (/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(a.replace(/\s+/g, ''))) fmt = 'Fraction or decimal both fine \u2014 e.g. 3/4 or 0.75';
+    else if (a.indexOf('^') !== -1) fmt = 'Use ^ for powers \u2014 e.g. x^2';
+    if (fmt) {
+      const d = document.createElement('div');
+      d.className = 'format-hint';
+      d.textContent = fmt;
+      const row = el.closest('.problem-input-row');
+      if (row) row.insertAdjacentElement('afterend', d);
+    }
+  });
 
   // Enter key checks answer
   document.addEventListener('keydown', e => {
