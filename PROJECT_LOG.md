@@ -173,6 +173,8 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Patch 7 (verify metadata) landed** - checker side. Design decision: per-question payload field (verify: 'compound:P=5000,r=0.045,n=12,t=3'; r decimal, n optional), NOT HTML data-attributes - cleaner emission/extraction, inert to frame runtime, zero assembler/locked-function contact. verify_answers.py: extract() captures optional verify key; check_verify() computes compound/simple/growth/decay from params, verify-first with prose fallback (old lessons unchanged, MANUAL stays MANUAL). Proven on synthetic file: planted wrong answer caught on a prose-unparseable question; y8_num_09 regression identical. Emission rules for the skill go into SKILL.md/payload-spec at the close-out doc pass. TEXT model-answer field decided OUT (no third locked-function edit); stays queued.
 
+**Patch 8 (misconception feedback map) landed** both files - display-layer only. Optional per-question payload key fb: { 'wrong answer': 'targeted feedback' }; document-level bubble-phase click listener reads marked state after checkAnswer runs; matching via answerMatches() call (same tolerance as marking - numeric equivalence, $/commas, term reorder; amended from string-normalise after 2.50/2.5 failed validation). No map or no match = existing behaviour. Coral-soft box under input, house style. Browser-validated both modes via console-injected maps. PATCH TRAIN COMPLETE (1-8).
+
 **Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
 
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)

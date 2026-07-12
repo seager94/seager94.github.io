@@ -664,6 +664,9 @@
 .reset-btn { background: none; border: 1.5px solid #c9d4d6; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
 .reset-btn:hover { border-color: var(--coral); color: var(--coral); }
 
+.misconception-box { display: none; margin: 6px 0 0 26px; padding: 8px 12px; background: var(--coral-soft); border-left: 3px solid var(--coral); border-radius: 6px; font-size: 0.85rem; color: var(--text); }
+.misconception-box.show { display: block; }
+
 /* FOCUS VISIBILITY (patch 6) */
 .check-btn:focus-visible, .hint-link:focus-visible, .answer-link:focus-visible,
 .reset-btn:focus-visible, .results-copy-btn:focus-visible, .reveal-btn:focus-visible {
@@ -1686,6 +1689,41 @@ function buildPractice(containerId, problems, prefix, options) {
   const rpb = document.getElementById('resetProgressBtn');
   if (rpb) rpb.addEventListener('click', resetProgress);
   restoreProgress();
+
+  // ============ MISCONCEPTION FEEDBACK (patch 8, display-layer) ============
+  // Optional per-question key: fb: { 'wrong answer': 'targeted feedback', ... }
+  const fbKey = {};
+  [['R', typeof retrieval !== 'undefined' ? retrieval : []],
+   ['W', typeof weDo !== 'undefined' ? weDo : []],
+   ['Q', typeof checkpoint !== 'undefined' ? checkpoint : []],
+   ['P', typeof practice1 !== 'undefined' ? practice1 : []],
+   ['S', typeof practice2 !== 'undefined' ? practice2 : []],
+   ['C', typeof practice3 !== 'undefined' ? practice3 : []],
+   ['E', typeof exitProbs !== 'undefined' ? exitProbs : []]
+  ].forEach(([pre, arr]) => arr.forEach((p, i) => { if (p && p.fb) fbKey[pre + (i + 1)] = p.fb; }));
+  document.addEventListener('click', e => {
+    if (!e.target || !e.target.classList.contains('check-btn')) return;
+    const inp = e.target.closest('.problem-input-row') && e.target.closest('.problem-input-row').querySelector('.problem-input');
+    if (!inp) return;
+    const idx = inp.id.slice(4);
+    let box = document.getElementById('fb-' + idx);
+    if (inp.classList.contains('incorrect') && fbKey[idx]) {
+      let msg = '';
+      Object.keys(fbKey[idx]).forEach(k => { if (!msg && answerMatches(inp.value, k) === true) msg = fbKey[idx][k]; });
+      if (msg) {
+        if (!box) {
+          box = document.createElement('div');
+          box.className = 'misconception-box';
+          box.id = 'fb-' + idx;
+          inp.closest('.problem-input-row').insertAdjacentElement('afterend', box);
+        }
+        box.textContent = msg;
+        box.classList.add('show');
+        return;
+      }
+    }
+    if (box) box.classList.remove('show');
+  });
 
   // ============ INPUT ERGONOMICS (display-layer) ============
   Object.keys(answerKey).forEach(idx => {
