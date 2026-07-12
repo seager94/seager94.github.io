@@ -155,6 +155,14 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Next:** Y10 Algebra complete. Remaining Y10 strands (Number/Measurement/Space/Statistics/Probability) and the Y9/Y8 backlog per build-backlog priorities.
 
+## 2026-07-12 - Frame patches (in progress) + TEXT-reveal contamination fix
+
+**Contamination found via patch-1 validation:** formatAnswerDisplay's TEXT branch (a locked function) hardcoded the template demo's like-terms model answer - every payload lesson showed algebra on every TEXT Show-answer. Both Y8 Stats pilots affected live. Payloads were clean; fault was frame+template residue. Fixed with one-line string swap in both files (locked-function edit justified: demo residue, provably wrong for all payload lessons, branch structure untouched). Republish of pilots pending (with patch set at close-out). Queued lift: optional model-answer field for TEXT questions in payload schema - decide during patch-7 spec work.
+
+**Patch 1 (results copy button) landed** in lesson_frame.html + lesson_template.html: name box + Copy my results in Section 11; display-layer only (tier scores + exit answers read from DOM at click; locked functions untouched). Browser-validated on pilot 1 (payload mode) and template demo (classic mode).
+
+**Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
+
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)
 
 Nine-step run order executed after the payload pilot. All closed.

@@ -756,7 +756,15 @@
   body.teacher-mode .step { opacity: 1 !important; }
   body.teacher-mode #revealBtn { display: none; }
 
-  /* EXIT TICKET */
+  /* RESULTS COPY BAR */
+.results-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+.results-name { flex: 1 1 160px; max-width: 240px; padding: 8px 10px; border: 1.5px solid #c9d4d6; border-radius: 8px; font: inherit; background: white; }
+.results-copy-btn { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+.results-copy-btn:hover { background: var(--coral); }
+.results-copied { display: none; color: var(--navy); font-weight: 600; font-size: 0.9em; }
+.results-copied.show { display: inline; }
+
+/* EXIT TICKET */
   .exit-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 14px;
@@ -1137,6 +1145,11 @@
   </h2>
   <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
   <div class="exit-grid" id="exitGrid"></div>
+  <div class="results-bar">
+    <input class="results-name" id="studentName" placeholder="Your name" autocomplete="off">
+    <button class="results-copy-btn" id="copyResultsBtn" type="button">Copy my results</button>
+    <span class="results-copied" id="copyFeedback">Copied &mdash; paste into Daymap</span>
+  </div>
 </section>
 
 <!-- CURRICULUM LINK — reference info for teachers and curriculum audits.
@@ -1425,7 +1438,7 @@ function buildPractice(containerId, problems, prefix, options) {
 }
 
   function formatAnswerDisplay(a) {
-    if (a === 'TEXT') return 'They have different powers of x (x¹ vs x²), so they\'re not like terms.';
+    if (a === 'TEXT') return 'Open response — no single right answer. Compare your explanation with the hint.';
     // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
     let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
     // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
@@ -1489,6 +1502,46 @@ function buildPractice(containerId, problems, prefix, options) {
   buildPractice('practiceGrid3', practice3, 'C');
   buildPractice('exitGrid', exitProbs, 'E');
   updateProgress();
+
+  // ============ RESULTS COPY (display-layer only; reads marked state from the DOM) ============
+  function tierScore(prefix) {
+    const inputs = document.querySelectorAll('input[id^="inp-' + prefix + '"]');
+    let right = 0;
+    inputs.forEach(el => { if (el.classList.contains('correct')) right++; });
+    return right + '/' + inputs.length;
+  }
+  function buildResultsLine() {
+    const nameEl = document.getElementById('studentName');
+    const name = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : '(no name)';
+    const exits = [];
+    document.querySelectorAll('input[id^="inp-E"]').forEach(el => {
+      const idx = el.id.slice(4);
+      let mark = '';
+      if (el.classList.contains('correct')) mark = ' \u2713';
+      else if (el.classList.contains('incorrect')) mark = ' \u2717';
+      exits.push(idx + ' "' + (el.value.trim() || 'blank') + '"' + mark);
+    });
+    return name + ' | ' + document.title +
+      ' | Building ' + tierScore('P') + ' \u00B7 Stretch ' + tierScore('S') + ' \u00B7 Mastery ' + tierScore('C') +
+      ' | Exit: ' + exits.join('; ');
+  }
+  function copyResults() {
+    const line = buildResultsLine();
+    const fb = document.getElementById('copyFeedback');
+    const show = function () { fb.classList.add('show'); setTimeout(function () { fb.classList.remove('show'); }, 2500); };
+    const fallback = function () {
+      const ta = document.createElement('textarea');
+      ta.value = line; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); show();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(line).then(show, fallback);
+    } else { fallback(); }
+  }
+  const crb = document.getElementById('copyResultsBtn');
+  if (crb) crb.addEventListener('click', copyResults);
 
   // Enter key checks answer
   document.addEventListener('keydown', e => {
