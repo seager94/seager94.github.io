@@ -745,6 +745,11 @@
   /* PRINT */
   @media print {
     .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .accordion-body { display: block !important; }
+    .accordion-chevron, .accordion-count { display: none !important; }
+    .results-bar, .reset-btn, .format-hint { display: none !important; }
+    .tier-accordion .accordion-head { cursor: default; }
+    .problem-input { min-height: 26px; }
     .step { opacity: 1 !important; }
     section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
     body { background: white; }

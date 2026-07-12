@@ -167,6 +167,8 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Patch 4 (I Do step-reveal): already present in both files** - pre-existing feature, no edit. revealNextStep() + #step1-3 + #revealBtn in frame (steps arrive via payload worked-example slot per spec line ~51) and template; teacher-mode bypass and print-hide rules already wired. Hardcoded 3-step ceiling matches the payload spec's 3-step contract - not a defect.
 
+**Patch 5 (print stylesheet) landed** both files - pure CSS additions to the existing @media print block: accordion bodies forced open (chevrons/count badges hidden), patch 1-3 interactive chrome hidden (results bar, Reset, format hints), input boxes given min-height as answer lines. Lesson now doubles as a relief worksheet. Print-preview validated both modes; live page unaffected.
+
 **Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
 
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)
