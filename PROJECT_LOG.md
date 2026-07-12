@@ -175,6 +175,8 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Patch 8 (misconception feedback map) landed** both files - display-layer only. Optional per-question payload key fb: { 'wrong answer': 'targeted feedback' }; document-level bubble-phase click listener reads marked state after checkAnswer runs; matching via answerMatches() call (same tolerance as marking - numeric equivalence, $/commas, term reorder; amended from string-normalise after 2.50/2.5 failed validation). No map or no match = existing behaviour. Coral-soft box under input, house style. Browser-validated both modes via console-injected maps. PATCH TRAIN COMPLETE (1-8).
 
+**UNIT CLOSED 2026-07-12.** Template-version bumped to 2026-07-12.1 both files; SKILL.md + payload-spec.md document verify (required on formula-computed finance/growth answers) and fb (optional misconception maps); both Y8 Stats pilots re-assembled on the final frame, QA-passed, click-tested, republished (contamination gone from live). Junction PROVEN: claude -p smoke lesson carried the new stamp, all patch markers, and well-formed fb maps only learnable through the junction path; .bak deleted. Optional extras (pacing line, traffic-light self-rating) skipped - cheap later mini-unit; parameterised similar-question stays parked. Payload-repo-home decision: pilot payloads remain in overnight-lessons for now - revisit when Y8 Stats L03-06 generates its payloads.
+
 **Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
 
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)
