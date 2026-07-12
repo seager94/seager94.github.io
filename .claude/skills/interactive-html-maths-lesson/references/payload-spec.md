@@ -46,7 +46,7 @@ One file per lesson: `y8_sta_NN_topic_v2.payload.json`
     "<one entry per HTML slot named in the frame manifest>": "raw HTML fragment"
   },
   "arrays": {
-    "retrieval":  [ {"q": "…", "a": "…", "hint": "…"}, … ],
+    "retrieval":  [ {"q": "…", "a": "…", "hint": "…", "verify": "… (optional)", "fb": {… (optional)}}, … ],
     "matchTerms": [ …shape per frame manifest… ],
     "weDo":       [ … ],
     "checkpoint": [ … ],
@@ -72,6 +72,30 @@ Section text (9): `section0_intro`, `section_warmup`, `section3_heading`, `secti
 Content (2): `worked_example`, `footer_title`
 
 Strategy (2): `strategy_section`, `strategy_js` (both may be `""`)
+
+### Optional per-question keys (2026-07-12, template-version 2026-07-12.1)
+
+Any question object in any array may carry two optional keys. Both are inert to the frame's
+locked functions; omitting them gives exactly the pre-2026-07-12 behaviour.
+
+- **`verify`** - machine-readable parameters so `verify_answers.py` recomputes the answer from
+  parameters instead of parsing prose. String format: `"type:key=value,key=value,..."`.
+  Types and required keys (r always a DECIMAL, not a percent; n optional, default 1):
+  - `"compound:P=5000,r=0.045,n=12,t=3"` - A = P(1+r/n)^(nt)
+  - `"simple:P=2000,r=0.05,t=3"` - I = Prt (checker accepts interest OR balance)
+  - `"growth:P=10000,r=0.05,t=3"` / `"decay:P=30000,r=0.08,t=4"` - P(1 +/- r)^t
+  EMIT on every question whose stored answer is computed by one of these formulas
+  (compound/simple interest, constant-% growth or decay). Do not emit on threshold,
+  difference, multiplier-only, or conceptual questions.
+
+- **`fb`** - misconception feedback map: `{"wrong answer": "targeted feedback", ...}`.
+  When a student checks an incorrect answer that matches a key (matched via answerMatches -
+  numeric equivalence, $ and comma tolerance, term reordering all apply), the feedback shows
+  in a coral box under the input. OPTIONAL - emit only where a wrong answer has a nameable
+  cause worth naming (e.g. decimal-shift errors, order-of-operations, adding unlike terms,
+  decay-instead-of-growth). One or two mapped answers per question maximum; feedback names
+  the error and points to the fix in one sentence, never gives the answer.
+
 
 Machine-filled by the assembler — never in the payload: `js_arrays`, `count_practice2`,
 `count_practice3`, `assembly_stamp`

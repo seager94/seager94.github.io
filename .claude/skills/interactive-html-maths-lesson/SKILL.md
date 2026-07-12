@@ -117,6 +117,14 @@ For maths content:
 
 Each practice/exit/checkpoint/we-do section has a corresponding array in the script block. The `buildPractice` function is generic — pass the array, container ID, and prefix character (R for Retrieval, P for Practice 1 / Building, S for Practice 2 / Stretch, C for Practice 3 / Mastery / Challenge, Q for Quick check, W for We do, E for Exit). Use `{ noCount: true }` for We Do problems and Retrieval problems (co-produced or prior-knowledge — shouldn't affect the student's individual progress score for *today's* lesson content).
 
+Two optional per-question keys (see payload-spec.md for full syntax; identical in classic mode):
+**`verify`** - REQUIRED on every compound-interest, simple-interest, and constant-% growth/decay
+question: machine-readable parameters (`verify: 'compound:P=5000,r=0.045,n=12,t=3'`, r as a
+decimal) so the answer checker recomputes from parameters instead of parsing prose.
+**`fb`** - optional misconception feedback: `fb: { '21': 'Multiplication before addition - 5 x 3 first, then + 2.' }`
+maps predictable wrong answers to one-sentence targeted feedback (names the error, points to the
+fix, never reveals the answer). Emit only where a wrong answer has a nameable cause.
+
 For open-response questions (qualitative explanations rather than numerical/algebraic answers), set `a: 'TEXT'`. This switches off auto-marking and shows a "Type your explanation" placeholder; the user collects these verbally or visually.
 
 ### 7. Save and present
