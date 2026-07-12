@@ -169,6 +169,8 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Patch 5 (print stylesheet) landed** both files - pure CSS additions to the existing @media print block: accordion bodies forced open (chevrons/count badges hidden), patch 1-3 interactive chrome hidden (results bar, Reset, format hints), input boxes given min-height as answer lines. Lesson now doubles as a relief worksheet. Print-preview validated both modes; live page unaffected.
 
+**Patch 6 (accessibility) landed** both files. Audit found aria-expanded/role/tabindex/keyboard on tier accordions fully pre-existing (no edit). Contrast computed: coral #BE5837 = 4.52:1 on white (AA pass), 4.14:1 on #F3F5F8 grey (AA fail at normal weight; 3:1 large/bold passes). Nearly all coral text already bold/large; sole fail .bucket .vt fixed with font-weight 600 - house colour untouched. .cat-apex:focus outline:none antipattern replaced with coral focus-visible ring; consistent :focus-visible added to all action buttons (keyboard-only, no mouse-click outlines). Keyboard tab-through validated both modes.
+
 **Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
 
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)

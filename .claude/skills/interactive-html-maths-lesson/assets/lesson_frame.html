@@ -555,7 +555,7 @@
     border: 1.5px dashed var(--border); min-height: 80px;
   }
   .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
-  .bucket .vt { color: var(--coral); }
+  .bucket .vt { color: var(--coral); font-weight: 600; }
   .bucket .ct { color: var(--navy); }
   .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
   .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
@@ -762,6 +762,12 @@
 .reset-btn { background: none; border: 1.5px solid #c9d4d6; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
 .reset-btn:hover { border-color: var(--coral); color: var(--coral); }
 
+/* FOCUS VISIBILITY (patch 6) */
+.check-btn:focus-visible, .hint-link:focus-visible, .answer-link:focus-visible,
+.reset-btn:focus-visible, .results-copy-btn:focus-visible, .reveal-btn:focus-visible {
+  outline: 3px solid var(--coral); outline-offset: 2px;
+}
+
 /* RESULTS COPY BAR */
 .results-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
 .results-name { flex: 1 1 160px; max-width: 240px; padding: 8px 10px; border: 1.5px solid #c9d4d6; border-radius: 8px; font: inherit; background: white; }
@@ -942,7 +948,7 @@
   .cat svg{display:block; width:100%; height:auto; touch-action:none;}
   .cat-apex{cursor:grab; touch-action:none;}
   .cat-apex:active{cursor:grabbing;}
-  .cat-apex:focus{outline:none;}
+  .cat-apex:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
   .cat-panel{ flex:1 1 240px; min-width:230px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
   .cat-panel h3{font-family:Georgia,serif; color:var(--navy); margin:0 0 10px; font-size:1.05rem;}
   .cat-row{ display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px dashed var(--border); font-size:.95rem; }
