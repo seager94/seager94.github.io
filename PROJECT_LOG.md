@@ -171,6 +171,8 @@ One chat per work-unit — a batch, a strand review, a skill change, a reconcili
 
 **Patch 6 (accessibility) landed** both files. Audit found aria-expanded/role/tabindex/keyboard on tier accordions fully pre-existing (no edit). Contrast computed: coral #BE5837 = 4.52:1 on white (AA pass), 4.14:1 on #F3F5F8 grey (AA fail at normal weight; 3:1 large/bold passes). Nearly all coral text already bold/large; sole fail .bucket .vt fixed with font-weight 600 - house colour untouched. .cat-apex:focus outline:none antipattern replaced with coral focus-visible ring; consistent :focus-visible added to all action buttons (keyboard-only, no mouse-click outlines). Keyboard tab-through validated both modes.
 
+**Patch 7 (verify metadata) landed** - checker side. Design decision: per-question payload field (verify: 'compound:P=5000,r=0.045,n=12,t=3'; r decimal, n optional), NOT HTML data-attributes - cleaner emission/extraction, inert to frame runtime, zero assembler/locked-function contact. verify_answers.py: extract() captures optional verify key; check_verify() computes compound/simple/growth/decay from params, verify-first with prose fallback (old lessons unchanged, MANUAL stays MANUAL). Proven on synthetic file: planted wrong answer caught on a prose-unparseable question; y8_num_09 regression identical. Emission rules for the skill go into SKILL.md/payload-spec at the close-out doc pass. TEXT model-answer field decided OUT (no third locked-function edit); stays queued.
+
 **Side-finding:** retained pilot payloads live in overnight-lessons\2026-07-10-y8stats, not the repo - 'keep payload JSONs forever' wants a repo home. Decide at close-out.
 
 ## 2026-07-10 (session 2) — Pipeline hardening pass (post-pilot)

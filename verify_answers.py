@@ -48,7 +48,32 @@ def find_freq(t):
         if k in t.lower(): return v
     return None
 
-def classify_and_check(q, stored, tol):
+def check_verify(verify, sv, rtol):
+    """verify strings: 'compound:P=5000,r=0.045,n=12,t=3' | 'simple:P=..,r=..,t=..' |
+    'growth:P=..,r=..,t=..' | 'decay:P=..,r=..,t=..'  (r as a decimal; n optional, default 1).
+    Returns (status, detail) or None if unparseable (caller falls back to prose)."""
+    try:
+        vtype, _, params = verify.partition(':')
+        vtype = vtype.strip().lower()
+        kv = dict(x.split('=', 1) for x in params.split(',') if '=' in x)
+        g = lambda k: float(kv[k]) if k in kv else None
+        P, r, t, n = g('P'), g('r'), g('t'), g('n')
+        if vtype == 'compound' and None not in (P, r, t):
+            true = round(P*(1+r/(n or 1))**((n or 1)*t), 2)
+            return ('OK' if abs(sv-true) <= rtol else 'MISMATCH', f'[verify] compound P={P} r={r} n={n or 1} t={t} -> true {true:.2f}, stored {sv:.2f}')
+        if vtype == 'simple' and None not in (P, r, t):
+            I = round(P*r*t, 2); bal = round(P+I, 2)
+            if abs(sv-I) <= rtol or abs(sv-bal) <= rtol:
+                return ('OK', f'[verify] simple I {I:.2f} / balance {bal:.2f}')
+            return ('MISMATCH', f'[verify] simple -> I {I:.2f} or balance {bal:.2f}, stored {sv:.2f}')
+        if vtype in ('growth', 'decay') and None not in (P, r, t):
+            true = round(P*(1+r)**t, 2) if vtype == 'growth' else round(P*(1-r)**t, 2)
+            return ('OK' if abs(sv-true) <= rtol else 'MISMATCH', f'[verify] {vtype} P={P} r={r} t={t} -> true {true:.2f}, stored {sv:.2f}')
+    except Exception:
+        pass
+    return None
+
+def classify_and_check(q, stored, tol, verify=''):
     """returns (status, detail). status in OK / MISMATCH / MANUAL"""
     t = strip(q)
     low = t.lower()
@@ -56,6 +81,11 @@ def classify_and_check(q, stored, tol):
         sv = num(stored)
     except Exception:
         return ('MANUAL', 'non-numeric answer')
+    # verify-first (patch 7): machine-readable params beat prose parsing; reaches types prose cannot
+    if verify:
+        rtol0 = 0.5 if (re.search(r'nearest (whole|dollar)|whole dollar|whole number', low) or ('.' not in str(stored))) else tol
+        res = check_verify(verify, sv, rtol0)
+        if res: return res
     # skip obvious non-final-value question types
     if any(p in low for p in ['how many whole years','how many years','difference','how much more','real value','real return','real growth','as a decimal','rounded to 5 dp','% per year. enter a whole','approximately']):
         return ('MANUAL', 'threshold/difference/conceptual - check by hand')
@@ -86,8 +116,8 @@ def extract(text):
     items = []  # (kind, question, answer, lineno)
     # practice/retrieval arrays: { q: '...', a: '...' ... }
     # whole-text scan: \s* spans newlines, so one-key-per-line objects match too
-    for m in re.finditer(r"q:\s*'((?:[^'\\]|\\.)*)'\s*,\s*a:\s*'((?:[^'\\]|\\.)*)'", text):
-        items.append(('practice', m.group(1), m.group(2), text.count('\n', 0, m.start()) + 1))
+    for m in re.finditer(r"q:\s*'((?:[^'\\]|\\.)*)'\s*,\s*a:\s*'((?:[^'\\]|\\.)*)'(?:\s*,\s*hint:\s*'(?:[^'\\]|\\.)*')?(?:\s*,\s*verify:\s*'((?:[^'\\]|\\.)*)')?", text):
+        items.append(('practice', m.group(1), m.group(2), m.group(3) or '', text.count('\n', 0, m.start()) + 1))
     return items
 
 def run(path, tol):
@@ -96,16 +126,16 @@ def run(path, tol):
     items = extract(text)
     print(f"\n=== {path} : {len(items)} stored answers ===")
     bad=man=ok=0
-    for kind,q,a,ln in items:
-        st,detail = classify_and_check(q, a, tol)
+    for kind,q,a,vf,ln in items:
+        st,detail = classify_and_check(q, a, tol, vf)
         if st=='MISMATCH':
             bad+=1; print(f"  L{ln}  MISMATCH  ans='{a}'  | {detail}")
         elif st=='MANUAL':
             man+=1
     if man:
         print(f"  ... {man} MANUAL items (not auto-checkable) - listing:")
-        for kind,q,a,ln in items:
-            st,detail = classify_and_check(q,a,tol)
+        for kind,q,a,vf,ln in items:
+            st,detail = classify_and_check(q,a,tol,vf)
             if st=='MANUAL': print(f"      L{ln}  ans='{a}'  | {strip(q)[:70]}")
     ok = len(items)-bad-man
     print(f"  SUMMARY: {ok} verified OK, {bad} MISMATCH, {man} manual.  {'>>> FIX MISMATCHES BEFORE PUBLISH' if bad else 'no formula errors found'}")
