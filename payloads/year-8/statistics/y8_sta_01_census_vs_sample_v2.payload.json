@@ -1,0 +1,102 @@
+{
+  "payload_version": 1,
+  "filename": "y8_sta_01_census_vs_sample_v2.html",
+  "title": "Census vs Sample — Year 8 Statistics",
+  "header": {
+    "title": "Census or Sample?",
+    "subtitle": "Choosing how to collect data — and why a good sample doesn't have to be huge",
+    "badge": "Year 8 · Statistics"
+  },
+  "meta": {
+    "lesson-id": "y8_sta_01",
+    "ac9-descriptor": "AC9M8ST01",
+    "ac9-descriptor-text": "distinguish between a population and a sample and investigate techniques for data collection including census, sampling, observation, experiment and using digital tools; make inferences about populations from samples",
+    "ac9-elaborations": "1",
+    "sa-year": "8",
+    "sa-strand": "Statistics",
+    "lesson-focus": "Choose between a census and a sample by weighing cost, accuracy and practicality — a well-chosen representative sample can be small.",
+    "mapping-note": "Strict",
+    "sa-conceptual-understanding": "Valid inferences about populations can be made by drawing conclusions from representative samples"
+  },
+  "html": {
+    "section0_intro": "Three quick questions from earlier work — data types, a percentage, and the word for a whole group. They warm up the thinking you'll use today.",
+
+    "section_warmup": "<p class=\"sec-desc\">A real decision that's secretly today's statistics.</p>\n  <div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;\">\n    <div>\n      <p>Every five years the Australian Government runs the <strong>Census</strong> — by law, it tries to count <em>every single person</em> in the country on one night. It costs hundreds of millions of dollars and takes years to process.</p>\n      <p>Yet a TV company can tell how many people watched the grand final by asking only a few thousand households — not the whole nation. And a company can guess how long its light globes last without burning out every globe it makes.</p>\n    </div>\n    <div class=\"parts-instructions\" style=\"margin: 0;\">\n      Statisticians make this choice constantly. A <strong>census</strong> collects data from <strong>every</strong> member of the population; a <strong>sample</strong> collects it from a <strong>representative subset</strong>. Today you'll learn to decide which one fits — by weighing <strong>cost</strong>, <strong>accuracy</strong> and <strong>practicality</strong>. The key idea: a well-chosen sample can be surprisingly <em>small</em> and still be trusted.\n    </div>\n  </div>",
+
+    "vocab_cards": "<div class=\"vocab\" onclick=\"this.classList.toggle('flipped')\">\n      <div class=\"vocab-inner\">\n        <div class=\"vocab-front\">Population<div class=\"hint-flip\">Tap to flip</div></div>\n        <div class=\"vocab-back\">The <strong>whole group</strong> you want to learn about.<div class=\"vocab-example\">The population might be <strong>all Australian teenagers</strong>, or <strong>every biscuit made today</strong>.</div></div>\n      </div>\n    </div>\n    <div class=\"vocab\" onclick=\"this.classList.toggle('flipped')\">\n      <div class=\"vocab-inner\">\n        <div class=\"vocab-front\">Census<div class=\"hint-flip\">Tap to flip</div></div>\n        <div class=\"vocab-back\">Collecting data from <strong>every member</strong> of the population.<div class=\"vocab-example\">Counting <strong>every student</strong> in one class is a census.</div></div>\n      </div>\n    </div>\n    <div class=\"vocab\" onclick=\"this.classList.toggle('flipped')\">\n      <div class=\"vocab-inner\">\n        <div class=\"vocab-front\">Sample<div class=\"hint-flip\">Tap to flip</div></div>\n        <div class=\"vocab-back\">Collecting data from a <strong>subset</strong> of the population, then inferring about the whole.<div class=\"vocab-example\">Asking <strong>2000 teenagers</strong> about screen-time to estimate all of them.</div></div>\n      </div>\n    </div>\n    <div class=\"vocab\" onclick=\"this.classList.toggle('flipped')\">\n      <div class=\"vocab-inner\">\n        <div class=\"vocab-front\">Representative<div class=\"hint-flip\">Tap to flip</div></div>\n        <div class=\"vocab-back\">A sample that <strong>reflects the population's mix</strong>, so conclusions carry across.<div class=\"vocab-example\">A representative sample of a school includes <strong>every year level</strong>, not just Year 12.</div></div>\n      </div>\n    </div>\n    <div class=\"vocab\" onclick=\"this.classList.toggle('flipped')\">\n      <div class=\"vocab-inner\">\n        <div class=\"vocab-front\">Bias<div class=\"hint-flip\">Tap to flip</div></div>\n        <div class=\"vocab-back\">When a sample <strong>over-represents one group</strong>, so it misleads about the population.<div class=\"vocab-example\">Surveying only the computer club about screen-time is <strong>biased</strong>.</div></div>\n      </div>\n    </div>",
+
+    "sort_activity": "<div class=\"parts-expr\">\n    <div class=\"label\">Where does each data-collection job belong?</div>\n    <div id=\"partsTerms\" class=\"terms-source\">\n      <span class=\"term-chip\" data-type=\"census\">Count every student in one Year 8 class</span>\n      <span class=\"term-chip\" data-type=\"sample\">Estimate average screen-time of all Australian teenagers</span>\n      <span class=\"term-chip\" data-type=\"sample\">Test whether each parachute opens reliably</span>\n      <span class=\"term-chip\" data-type=\"census\">The national population count held every 5 years</span>\n      <span class=\"term-chip\" data-type=\"sample\">Check the ripeness of a 50-tonne truckload of mangoes</span>\n      <span class=\"term-chip\" data-type=\"census\">Record the height of every player on one netball team</span>\n    </div>\n    <div class=\"parts-buckets\">\n      <div class=\"bucket\" data-bucket=\"census\">\n        <h4 class=\"ct\">Census fits</h4>\n        <div class=\"bucket-contents\"></div>\n      </div>\n      <div class=\"bucket\" data-bucket=\"sample\">\n        <h4 class=\"vt\">Sample needed</h4>\n        <div class=\"bucket-contents\"></div>\n      </div>\n    </div>\n    <div class=\"parts-actions\">\n      <button class=\"btn-secondary btn-sm\" onclick=\"resetSort()\">↺ Reset</button>\n      <button class=\"btn-secondary btn-sm\" onclick=\"solveSort()\">Show solution</button>\n    </div>\n  </div>\n\n  <div class=\"parts-instructions\">\n    💡 A census fits when the population is <strong>small and easy to reach</strong>, or when the law demands an exact count. A sample is needed when the population is <strong>too large</strong>, when a census is <strong>too costly</strong>, or when testing <strong>destroys</strong> the item (you can't open every parachute and still sell them).\n  </div>",
+
+    "worked_example": "<p class=\"sec-desc\">Decide: a parachute factory must know whether its parachutes open reliably. Should it test <strong>every</strong> parachute (a census) or a <strong>representative sample</strong>?</p>\n\n  <div class=\"worked\">\n    <div class=\"step visible\" id=\"step1\">\n      <div class=\"step-num\">1</div>\n      <div class=\"step-body\">\n        <div class=\"step-title\">Name the population and the variable</div>\n        <div class=\"step-desc\">Say exactly what group we care about and what we're measuring.</div>\n        <div class=\"calc-box\">\n          Population = <span class=\"blue\">every parachute the factory makes</span>.<br>\n          Variable = <span class=\"red\">does it open reliably when deployed?</span>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"step\" id=\"step2\">\n      <div class=\"step-num\">2</div>\n      <div class=\"step-body\">\n        <div class=\"step-title\">Ask: is a census practical? (cost · accuracy · practicality)</div>\n        <div class=\"step-desc\">Weigh what a census would actually cost here.</div>\n        <div class=\"calc-box\">\n          Testing a parachute means <strong>deploying it</strong> — the test <strong>uses it up</strong>.<br>\n          A census would test (and destroy) <span class=\"red\">100%</span> of the stock → <strong>none left to sell</strong>.<br>\n          Cost of a census here = <strong>impossibly high</strong>. This is <strong>destructive testing</strong>.\n        </div>\n      </div>\n    </div>\n\n    <div class=\"step\" id=\"step3\">\n      <div class=\"step-num\">3</div>\n      <div class=\"step-body\">\n        <div class=\"step-title\">Decide and justify</div>\n        <div class=\"step-desc\">Because a census is impossible, take a representative sample and infer about the whole batch.</div>\n        <div class=\"calc-box\">Test a <strong>representative sample</strong> (e.g. a fixed fraction from each production batch). If the sample opens reliably, we <strong>infer</strong> the whole population does — accepting a small, measured risk.</div>\n        <div class=\"summary-banner\">\n          <span class=\"label\">Decision</span>\n          Sample — destructive testing makes a census impossible\n        </div>\n      </div>\n    </div>\n\n    <button class=\"reveal-btn\" id=\"revealBtn\" onclick=\"revealNextStep()\">Reveal next step ↓</button>\n  </div>",
+
+    "we_do_intro": "Let's run the same 3-step method together for a new job: estimating the <strong>average daily screen-time of all Australian teenagers</strong>. Discuss each prompt with your neighbour — we'll agree the answers as a class.",
+
+    "section3_heading": "Census or sample — where does each job belong?",
+    "section3_desc": "Drag each data-collection job into <strong>Census fits</strong> or <strong>Sample needed</strong>.",
+    "section4_heading": "Match each term to its meaning",
+    "section6_heading": "We do: census or sample for teenage screen-time?",
+    "footer_title": "Census vs Sample",
+
+    "strategy_section": "",
+    "strategy_js": ""
+  },
+  "arrays": {
+    "retrieval": [
+      { "q": "A survey records each Year 8 student's favourite sport. Is \"favourite sport\" <strong>categorical</strong> or <strong>numerical</strong> data?", "a": "categorical", "hint": "It sorts people into named groups (netball, soccer…), not numbers." },
+      { "q": "What is 10% of 250?", "a": "25", "hint": "10% means one tenth — divide by 10." },
+      { "q": "In statistics, the whole group we want to learn about is called the ____.", "a": "population", "hint": "It starts with 'p' and means everyone/everything in the group." }
+    ],
+    "matchTerms": [
+      { "html": "Census", "group": 1 },
+      { "html": "Data from <strong>everyone</strong>", "group": 1 },
+      { "html": "Sample", "group": 2 },
+      { "html": "Data from a <strong>subset</strong>", "group": 2 },
+      { "html": "Population", "group": 3 },
+      { "html": "The <strong>whole group</strong>", "group": 3 },
+      { "html": "Representative", "group": 4 },
+      { "html": "<strong>Reflects the mix</strong>", "group": 4 },
+      { "html": "Bias", "group": 5 },
+      { "html": "<strong>Over-represents a group</strong>", "group": 5 }
+    ],
+    "weDo": [
+      { "q": "Step 1 — Name the population and the variable. Population = all Australian teenagers. What is the variable we want to measure? (answer in a few words)", "a": "TEXT", "hint": "We want an average of something measured in hours each day." },
+      { "q": "Step 2 — Is a census practical? A census would survey every Australian teenager. Give the single biggest reason that is impractical: the population is too ____.", "a": "large", "hint": "There are millions of them — cost and time would be enormous." },
+      { "q": "Step 3 — Decide. Because a census is impractical, we take a representative ____ and infer the average for all teenagers.", "a": "sample", "hint": "A subset chosen to reflect the whole population." }
+    ],
+    "checkpoint": [
+      { "q": "<strong>Hinge question.</strong> A company makes 2&nbsp;million light globes a year and wants the <strong>average lifetime</strong> (hours until each globe fails). Testing a globe means running it until it burns out. Which method should it use, and why?<br><br><strong>A.</strong> Census — test every globe, because only measuring all of them can be accurate.<br><strong>B.</strong> Sample — test a representative selection, because the test destroys each globe, so a census would leave none to sell.<br><strong>C.</strong> Census — test every globe, because 2&nbsp;million is so large that a sample would be too small to trust.<br><strong>D.</strong> Sample — just test whichever globes are easiest to grab, because any small sample will do.<br><br><em>Type the letter of the best answer.</em>", "a": "B", "hint": "Two things rule out a census here: the test is destructive AND the population is huge. Which option names the destructive problem without the 'samples must be huge' myth?" },
+      { "q": "A teacher wants the eye colour of every student in her class of 28. It's quick and harmless. Best method — <strong>census</strong> or <strong>sample</strong>?", "a": "census", "hint": "The population is tiny and easy to reach, so you can include everyone." }
+    ],
+    "practice1": [
+      { "q": "The whole group you want to study is called the ____.", "a": "population", "hint": "Everyone/everything in the group." },
+      { "q": "Collecting data from <strong>every</strong> member of the population is called a ____.", "a": "census", "hint": "Same word as Australia's 5-yearly count." },
+      { "q": "Collecting data from a representative subset is called a ____.", "a": "sample", "hint": "Part of the population, not all of it." },
+      { "q": "Counting every student in your class of 25 — <strong>census</strong> or <strong>sample</strong>?", "a": "census", "hint": "Small, easy to reach — you can include everyone." },
+      { "q": "Estimating the average screen-time of all Australian teenagers — <strong>census</strong> or <strong>sample</strong>?", "a": "sample", "hint": "Millions of people — surveying all is impractical." },
+      { "q": "Testing whether each parachute opens (the test destroys it) — <strong>census</strong> or <strong>sample</strong>?", "a": "sample", "hint": "You can't destroy every one and still sell them." },
+      { "q": "The Australian national population count held every 5 years — <strong>census</strong> or <strong>sample</strong>?", "a": "census", "hint": "The law requires counting everyone." },
+      { "q": "A sample that reflects the whole population's mix is said to be ____.", "a": "representative", "hint": "It 'represents' the population fairly." },
+      { "q": "True or false: a good sample must always be very large.", "a": "false", "hint": "A well-chosen representative sample can be small." },
+      { "q": "A chef tastes one spoonful to judge a whole pot of soup — <strong>census</strong> or <strong>sample</strong>?", "a": "sample", "hint": "One well-mixed spoonful stands in for the whole pot." }
+    ],
+    "practice2": [
+      { "q": "A match is used up each time you test whether it lights, so the factory can't test them all. This kind of testing is called ____ testing.", "a": "destructive", "hint": "It destroys the item being tested — starts with 'd'." },
+      { "q": "A principal wants every student's favourite lunch in a school of 30. A census is practical here mainly because the population is ____.", "a": "small", "hint": "Few people, easy to reach." },
+      { "q": "Which is the BEST reason to sample rather than run a census when measuring all Australian teenagers' screen-time?<br><strong>A.</strong> samples are always more accurate<br><strong>B.</strong> the population is far too large to survey everyone<br><strong>C.</strong> a census is illegal<br><strong>D.</strong> samples don't need to be representative<br><em>Type the letter.</em>", "a": "B", "hint": "Think about how many teenagers there are and what a census would cost." },
+      { "q": "A census includes everyone, so it is usually more ____ than a sample — but it costs far more.", "a": "accurate", "hint": "No estimation error when you measure everyone." },
+      { "q": "The Australian Census counts everyone because the government requires it. We say it is a census by ____.", "a": "law", "hint": "It's legally compulsory." },
+      { "q": "A screen-time survey is given only to students in the school computer club. Why is this a poor sample?<br><strong>A.</strong> it is too accurate<br><strong>B.</strong> it is not representative of all teenagers<br><strong>C.</strong> it is actually a census<br><strong>D.</strong> it is destructive<br><em>Type the letter.</em>", "a": "B", "hint": "Computer-club members probably use screens more than average — the sample is biased." }
+    ],
+    "practice3": [
+      { "q": "A light-globe maker (2 million globes) wants average lifetime; testing burns out each globe tested. Best method and why?<br><strong>A.</strong> census — it is the most accurate<br><strong>B.</strong> sample — the test is destructive, so a census would leave nothing to sell<br><strong>C.</strong> census — the population is too big for a sample to work<br><strong>D.</strong> sample — any small group of globes will do<br><em>Type the letter.</em>", "a": "B", "hint": "Destructive testing forces a sample; and a good sample needn't be huge, so C and D are wrong." },
+      { "q": "A manager says: 'Our sample of 500 mangoes stands in for the whole 50-tonne truckload, so we needn't check them all.' The property that makes this valid is that the sample is ____.", "a": "representative", "hint": "It must fairly reflect the whole load." },
+      { "q": "A student claims a sample must be at least half the population to be trusted. This claim is:<br><strong>A.</strong> correct<br><strong>B.</strong> incorrect — a well-chosen representative sample can be small<br><strong>C.</strong> correct only for a census<br><strong>D.</strong> correct only for destructive testing<br><em>Type the letter.</em>", "a": "B", "hint": "This is today's central trap — size matters far less than being representative." },
+      { "q": "Why does a national population count use a census rather than a sample?<br><strong>A.</strong> counting everyone is cheap<br><strong>B.</strong> the law requires an exact count of the whole population<br><strong>C.</strong> the population is small<br><strong>D.</strong> counting people is destructive<br><em>Type the letter.</em>", "a": "B", "hint": "It's legally compulsory and needs an exact total." }
+    ],
+    "exitProbs": [
+      { "q": "A census collects data from ____ member of the population.", "a": "every", "hint": "Not just some — all of them." },
+      { "q": "Name one real situation where a census is impossible, and explain why sampling must be used instead.", "a": "TEXT", "hint": "Think destructive testing (parachutes, matches, light globes) or a population that's far too large." },
+      { "q": "A classmate says: 'A sample is only trustworthy if it is very large.' Explain why this is wrong.", "a": "TEXT", "hint": "Focus on being representative rather than being big." }
+    ]
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "payload_version": 1,
+  "filename": "y8_sta_03_sampling_methods_compared_v2.html",
+  "title": "Comparing Sampling Methods — Year 8",
+  "header": {
+    "title": "Comparing Sampling Methods",
+    "subtitle": "Matching the method to the population and the question",
+    "badge": "Year 8 · Statistics"
+  },
+  "meta": {
+    "lesson-id": "y8_sta_03",
+    "ac9-descriptor": "AC9M8ST02, AC9M8ST01",
+    "ac9-descriptor-text": "AC9M8ST02 — analyse and report on the distribution of data from primary and secondary sources using random and non-random sampling techniques to select and study samples. AC9M8ST01 — investigate techniques for data collection including census, sampling, experiment and observation, and explain the practicalities and implications of obtaining data through these techniques.",
+    "ac9-elaborations": "AC9M8ST02: 1,2,3,4; AC9M8ST01: 2",
+    "sa-year": "8",
+    "sa-strand": "Statistics",
+    "mapping-note": "Strict + cross-tag",
+    "sa-conceptual-understanding": "A representative sample depends on the nature of the population and the question being considered",
+    "lesson-focus": "Compare simple random, systematic, stratified, quota, cluster, convenience and judgement sampling; match the method to the population structure; define probabilistic terms — random, sample space, sample, sample distribution."
+  },
+  "html": {
+    "section0_intro": "Last lesson you learned that a <strong>large sample can still be biased</strong> — size never fixes who was left out. Today we compare the actual <strong>methods</strong> used to choose a sample. These three questions check the ideas of census, sample and bias that we build on. (Referenced against the SA Curriculum, Mathematics R–10 Prototype 2.)",
+    "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's statistics.</p>\n<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>\n  <div>\n    <p>In 1936 an American magazine, the <em>Literary Digest</em>, mailed out a survey and collected a staggering <strong>2.4 million replies</strong> predicting who would win the presidential election.</p>\n    <p>A young pollster named George Gallup used a carefully chosen sample of only about <strong>50,000 people</strong>.</p>\n    <p style='font-family: Georgia, serif; font-size: 1.2rem; color: var(--coral); font-weight: bold;'>Gallup was right. The 2.4-million survey was badly wrong.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    The magazine drew its names from car and telephone owners — wealthier people, not a fair slice of all voters. A huge sample chosen the <strong>wrong way</strong> lost to a small sample chosen the <strong>right way</strong>. The <em>method</em> of sampling matters more than the size. Today we meet seven sampling methods, split them into <strong>random</strong> and <strong>non-random</strong>, and learn to match each one to the population and the question it suits.\n  </div>\n</div>",
+    "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Sample<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A <strong>selected part</strong> of the population, chosen to stand in for the whole.<div class='vocab-example'>60 students chosen from a school of 900.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Random<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>Every member has a <strong>known, non-zero chance</strong> of selection, and no individual choice can be predicted in advance.<div class='vocab-example'>Names drawn from a hat — not \"whoever is nearest\".</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Sample space<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The <strong>set of all possible outcomes</strong> that could be selected — everyone the method could reach.<div class='vocab-example'>For a class draw, the sample space is all 30 names in the hat.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Sample distribution<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>How the <strong>values in the sample are spread</strong> — the shape you get when you graph the sampled data.<div class='vocab-example'>The spread of heights among the 30 students you measured.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Representative sample<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A sample whose make-up <strong>mirrors the population</strong>, so its distribution roughly matches the whole. Whether a sample is representative <strong>depends on the population and the question</strong>.<div class='vocab-example'>A stratified sample that keeps each year level in proportion.</div></div>\n  </div>\n</div>",
+    "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Sort each sampling method</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='random'>Simple random (names from a hat)</span>\n    <span class='term-chip constant' data-type='random'>Systematic (every 10th on a list)</span>\n    <span class='term-chip constant' data-type='random'>Stratified (random pick within each group)</span>\n    <span class='term-chip constant' data-type='random'>Cluster (survey all of randomly chosen groups)</span>\n    <span class='term-chip variable' data-type='nonrandom'>Quota (fill group totals by convenience)</span>\n    <span class='term-chip variable' data-type='nonrandom'>Convenience (whoever is easiest to reach)</span>\n    <span class='term-chip variable' data-type='nonrandom'>Judgement (an expert hand-picks)</span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='random'>\n      <h4 style='color:var(--navy)'>🎲 Random (probability) sampling</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='nonrandom'>\n      <h4 style='color:var(--coral)'>✋ Non-random sampling</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 A method is <strong>random</strong> only if every member has a known chance of being picked. In quota, convenience and judgement sampling a person chooses <em>who</em> gets in — so chances are neither known nor equal.\n</div>",
+    "worked_example": "<p class='sec-desc'>A sports club has <strong>20 members</strong> in three squads: <strong>Juniors (10)</strong>, <strong>Intermediates (6)</strong> and <strong>Seniors (4)</strong>. The committee wants a representative sample of <strong>10 members</strong> to trial new training times. Use <strong>stratified sampling</strong>.</p>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Identify the strata and the sampling fraction</div>\n      <div class='step-desc'>Split the population into its natural groups (strata), then find what fraction of the whole population we are sampling.</div>\n      <div class='calc-box'>\n        Strata: <span class='blue'>Juniors 10</span>, <span class='blue'>Intermediates 6</span>, <span class='blue'>Seniors 4</span> &nbsp;→&nbsp; total = 20<br>\n        Sampling fraction = <span class='frac'><span class='num'>sample</span><span class='den'>population</span></span> = <span class='frac'><span class='num'>10</span><span class='den'>20</span></span> = <span class='frac'><span class='num'>1</span><span class='den'>2</span></span>\n      </div>\n    </div>\n  </div>\n\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Apply the fraction to each stratum</div>\n      <div class='step-desc'>Take <span class='frac'><span class='num'>1</span><span class='den'>2</span></span> of each squad, then choose those members <strong>at random</strong> within the squad.</div>\n      <div class='calc-box'>\n        Juniors: <span class='frac'><span class='num'>1</span><span class='den'>2</span></span> × 10 = <span class='red'>5</span> &nbsp;·&nbsp; Intermediates: <span class='frac'><span class='num'>1</span><span class='den'>2</span></span> × 6 = <span class='red'>3</span> &nbsp;·&nbsp; Seniors: <span class='frac'><span class='num'>1</span><span class='den'>2</span></span> × 4 = <span class='red'>2</span>\n      </div>\n      <div style='text-align:center;margin:12px 0;'>\n        <svg viewBox='0 0 480 250' role='img' aria-label='Stratified sample of a 20-member club shown as three rows of circles, one row per squad, with half the circles in each row highlighted as the sampled members' style='max-width:480px;width:100%;height:auto;font-family:Georgia,serif;'>\n          <text x='240' y='22' text-anchor='middle' font-size='15' font-weight='bold' fill='#1F4D54'>Population = 20 · sample = 10 (half of each squad)</text>\n          <text x='14' y='75' font-size='13' fill='#1F4D54'>Juniors (10)</text>\n          <circle cx='118' cy='70' r='11' fill='#BE5837'/><circle cx='147' cy='70' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><circle cx='176' cy='70' r='11' fill='#BE5837'/><circle cx='205' cy='70' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><circle cx='234' cy='70' r='11' fill='#BE5837'/><circle cx='263' cy='70' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><circle cx='292' cy='70' r='11' fill='#BE5837'/><circle cx='321' cy='70' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><circle cx='350' cy='70' r='11' fill='#BE5837'/><circle cx='379' cy='70' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/>\n          <text x='14' y='135' font-size='13' fill='#1F4D54'>Inters (6)</text>\n          <circle cx='118' cy='130' r='11' fill='#BE5837'/><circle cx='147' cy='130' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><circle cx='176' cy='130' r='11' fill='#BE5837'/><circle cx='205' cy='130' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><circle cx='234' cy='130' r='11' fill='#BE5837'/><circle cx='263' cy='130' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/>\n          <text x='14' y='195' font-size='13' fill='#1F4D54'>Seniors (4)</text>\n          <circle cx='118' cy='190' r='11' fill='#BE5837'/><circle cx='147' cy='190' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><circle cx='176' cy='190' r='11' fill='#BE5837'/><circle cx='205' cy='190' r='11' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/>\n          <circle cx='150' cy='228' r='8' fill='#BE5837'/><text x='164' y='232' font-size='12' fill='#333'>sampled</text>\n          <circle cx='250' cy='228' r='8' fill='#dfe4e8' stroke='#aab3bb' stroke-width='1.5'/><text x='264' y='232' font-size='12' fill='#333'>not sampled</text>\n        </svg>\n      </div>\n    </div>\n  </div>\n\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Verify the total and explain why stratified fits</div>\n      <div class='step-desc'>Check the parts add to the sample, and connect the method to the population and the question.</div>\n      <div class='calc-box'>5 + 3 + 2 = <span class='blue'>10</span> ✓ &nbsp; and every squad appears in proportion to its size.</div>\n      <div class='summary-banner'>\n        <span class='label'>Why stratified</span>\n        The squads differ in size and may want different training times, so each must be represented in proportion — the method is chosen to match the population's structure and the question being asked.\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+    "we_do_intro": "Now let's <strong>choose a method</strong> together. A principal wants to know what the whole school — Years 7 to 12, six year levels of quite different sizes — thinks about a new timetable. (Ignore the fixed heading above; our task today is picking the right sampling method.) Discuss each prompt with the person next to you, then we'll fill in the box as a class.",
+    "section3_heading": "Random or non-random — sort each method",
+    "section3_desc": "Drag each sampling method into <strong>🎲 Random</strong> or <strong>✋ Non-random</strong>.",
+    "section4_heading": "Match each method to the population it suits",
+    "section6_heading": "We do: choose the right method for the whole school",
+    "footer_title": "Comparing Sampling Methods",
+    "strategy_section": "",
+    "strategy_js": ""
+  },
+  "arrays": {
+    "retrieval": [
+      {
+        "q": "A <strong>census</strong> collects data from every member of the population. What is a <strong>sample</strong>? (A) every member of the population (B) a selected part of the population (C) only the largest group",
+        "a": "B",
+        "hint": "It's a subset chosen to stand in for the whole population."
+      },
+      {
+        "q": "True or false: making a biased sample much bigger removes the bias. Type true or false.",
+        "a": "false",
+        "hint": "A large but poorly chosen sample is still biased — size can't fix who was left out."
+      },
+      {
+        "q": "A sample is only useful if it truly ______ the population it comes from. (A) copies it exactly (B) represents it (C) outnumbers it",
+        "a": "B",
+        "hint": "We want the sample to mirror the whole population - a smaller version with the same mix."
+      }
+    ],
+    "matchTerms": [
+      {
+        "html": "Population splits into subgroups of different sizes that must appear in proportion",
+        "group": 1
+      },
+      {
+        "html": "<strong>Stratified</strong> sampling",
+        "group": 1
+      },
+      {
+        "html": "Population spread across many natural groups; reaching individuals is too costly",
+        "group": 2
+      },
+      {
+        "html": "<strong>Cluster</strong> sampling",
+        "group": 2
+      },
+      {
+        "html": "Members already sit in a fixed order or list (a production line)",
+        "group": 3
+      },
+      {
+        "html": "<strong>Systematic</strong> sampling",
+        "group": 3
+      },
+      {
+        "html": "Small, uniform population with a complete list; everyone equally likely",
+        "group": 4
+      },
+      {
+        "html": "<strong>Simple random</strong> sampling",
+        "group": 4
+      },
+      {
+        "html": "Subgroup totals must be filled fast, with no random step",
+        "group": 5
+      },
+      {
+        "html": "<strong>Quota</strong> sampling",
+        "group": 5
+      }
+    ],
+    "weDo": [
+      {
+        "q": "The population is all students across six year levels of different sizes. Which method makes sure each year level appears in the right proportion? (A) convenience (B) stratified (C) judgement",
+        "a": "B",
+        "hint": "We need every subgroup represented in proportion to its size."
+      },
+      {
+        "q": "Why would surveying only the Year 12 common room be a poor choice? (A) it's a convenience sample that leaves out five year levels (B) it's stratified (C) it's too random",
+        "a": "A",
+        "hint": "Think about who gets left out."
+      },
+      {
+        "q": "True or false: doubling a Year-12-only survey would make it represent the whole school. Type true or false.",
+        "a": "false",
+        "hint": "More of one year level still ignores the other five — a bigger biased sample is still biased."
+      }
+    ],
+    "checkpoint": [
+      {
+        "q": "<strong>Quick check.</strong> A shop asks the first 15 customers after opening about its opening hours. Which claim is the LIE?<br>(A) This is a convenience sample.<br>(B) Early customers may not represent evening shoppers.<br>(C) The first 15 customers form a random sample.",
+        "a": "C",
+        "hint": "Whoever happens to be first is convenience, not a random draw — chances are not equal."
+      },
+      {
+        "q": "<strong>Quick check.</strong> Stratified and quota sampling both split the population into groups. Which claim is the LIE?<br>(A) Stratified sampling selects randomly within each group.<br>(B) Quota sampling fills each group's total by convenience.<br>(C) The two methods are identical.",
+        "a": "C",
+        "hint": "The random step inside each group is what separates stratified from quota."
+      }
+    ],
+    "practice1": [
+      {
+        "q": "<strong>Scenario:</strong> A student surveys the first 20 people they meet in the canteen queue. Which claim is the LIE?<br>(A) This is a convenience sample — the easiest people to reach.<br>(B) Because no names were written down first, it counts as a random sample.<br>(C) Canteen-queue students might not represent people who bring lunch from home.",
+        "a": "B",
+        "hint": "In a random sample every member has a known, equal chance. Grabbing whoever is nearest gives no such chance.",
+        "fb": {
+          "A": "A is true — reaching for whoever is easiest is exactly what a convenience sample is.",
+          "C": "C is true — that possible bias is the risk of convenience sampling."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> An online poll on a football club's fan page asks 10,000 fans whether the club is the best in the league. Which claim is the LIE?<br>(A) Only people who already like the club tend to visit the page, so the sample is biased.<br>(B) Collecting 10,000 responses instead of 1,000 removes the bias.<br>(C) A smaller random sample of all league supporters would be more trustworthy.",
+        "a": "B",
+        "hint": "Bias is about WHO is in the sample, not how many. A bigger biased sample is still biased.",
+        "fb": {
+          "B": "B is the lie: 10,000 self-selected fans are still a one-sided crowd — size can't fix it.",
+          "A": "A is true — the fan page draws a self-selected, one-sided crowd."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> A researcher splits a school into year levels, then randomly selects students from each year in proportion to its size. Which claim is the LIE?<br>(A) This is stratified sampling.<br>(B) Selection within each year level is random.<br>(C) This is exactly the same as quota sampling.",
+        "a": "C",
+        "hint": "Stratified uses RANDOM selection inside each group; quota fills the totals by convenience, with no random step.",
+        "fb": {
+          "C": "C is the lie: the random step inside each stratum makes it stratified, not quota.",
+          "A": "A is true — dividing into strata then sampling each in proportion is stratified sampling."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> Every student's name is put in a hat and 30 are drawn out. Which claim is the LIE?<br>(A) This is simple random sampling.<br>(B) Every student has an equal chance of being chosen.<br>(C) Students who sit at the front are more likely to be drawn.",
+        "a": "C",
+        "hint": "In a fair draw from a hat, where you sit has no effect on your chance of selection."
+      },
+      {
+        "q": "<strong>Scenario:</strong> A factory checks every 50th tin coming off the production line. Which claim is the LIE?<br>(A) This is systematic sampling.<br>(B) The gap between chosen items is fixed at 50.<br>(C) The inspector personally picks the tins that look faulty.",
+        "a": "C",
+        "hint": "Systematic sampling follows a fixed interval; choosing by appearance would be judgement sampling."
+      },
+      {
+        "q": "<strong>Scenario:</strong> A council divides a city into suburbs, randomly picks 4 suburbs, and surveys everyone living in them. Which claim is the LIE?<br>(A) This is cluster sampling.<br>(B) Whole groups (suburbs) are selected, then everyone inside is surveyed.<br>(C) This guarantees every suburb in the city is represented.",
+        "a": "C",
+        "hint": "Cluster sampling surveys only the chosen suburbs — the ones left out are not represented."
+      },
+      {
+        "q": "<strong>Scenario:</strong> An expert hand-picks the 12 students she believes best represent the school. Which claim is the LIE?<br>(A) This is judgement sampling.<br>(B) The choice relies on the expert's opinion.<br>(C) Personal opinion cannot introduce bias into the sample.",
+        "a": "C",
+        "hint": "Any choice based on opinion can carry that person's bias — the main weakness of judgement sampling."
+      },
+      {
+        "q": "<strong>Scenario:</strong> An interviewer is told to survey 20 teenagers and 20 adults, choosing whoever is willing to stop and talk. Which claim is the LIE?<br>(A) This is quota sampling.<br>(B) The subgroup totals (20 and 20) are set in advance.<br>(C) Each person had an equal, random chance of being selected.",
+        "a": "C",
+        "hint": "Quota sampling fills the totals by convenience — no random step, so chances are not equal.",
+        "fb": {
+          "C": "C is the lie: quota sampling has NO random step, so it is not the same as stratified sampling."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> A blogger surveys only their own followers because it is quick and free. Which claim is the LIE?<br>(A) This is a convenience sample.<br>(B) It is convenient but may not represent the wider population.<br>(C) Being easy to collect makes the data more accurate.",
+        "a": "C",
+        "hint": "Ease of collection says nothing about accuracy — convenient samples are often the least representative."
+      },
+      {
+        "q": "<strong>Scenario:</strong> We call a selection method <em>random</em>. Which claim is the LIE?<br>(A) Random means every outcome in the sample space has a known chance of occurring.<br>(B) In a random sample, no individual's selection can be predicted in advance.<br>(C) 'Random' just means 'whatever is most convenient at the time'.",
+        "a": "C",
+        "hint": "Random has a precise meaning: known, non-zero chances for each member — not 'whatever is easiest'.",
+        "fb": {
+          "C": "C is the lie — confusing 'random' with 'convenient' is the classic error."
+        }
+      }
+    ],
+    "practice2": [
+      {
+        "q": "<strong>Scenario:</strong> Two studies both aim for 60% girls, 40% boys. Study P randomly selects names within each group; Study Q lets interviewers approach anyone until each total is filled. Which claim is the LIE?<br>(A) Study P is stratified sampling.<br>(B) Study Q is quota sampling.<br>(C) Because both end with the same 60:40 split, both are stratified samples.",
+        "a": "C",
+        "hint": "The final proportions can match, but only the study with a random step inside each group is stratified.",
+        "fb": {
+          "C": "C is the lie: matching proportions doesn't make Q stratified — it lacks the random selection that defines stratified sampling."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> A survey left off everyone without internet access, then doubled its sample size to improve results. Which claim is the LIE?<br>(A) Doubling the size does not reach the people who were excluded.<br>(B) The larger sample is now representative of the whole population.<br>(C) The bias comes from who is missing, not from the sample being too small.",
+        "a": "B",
+        "hint": "If a whole group is excluded, adding more of the included group cannot fix it — size never repairs coverage.",
+        "fb": {
+          "B": "B is the lie: a bigger sample from the same biased source stays biased."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> A teacher grabs whichever exercise books are on top of the pile to check homework. Which claim is the LIE?<br>(A) Books on top were probably handed in last, so they are a particular group.<br>(B) This is a convenience sample.<br>(C) Grabbing the top books gives every book an equal chance, so it is random.",
+        "a": "C",
+        "hint": "Position in the pile is not random — late finishers cluster on top, so chances are not equal.",
+        "fb": {
+          "C": "C is the lie: 'easy to grab' is convenience, not random selection."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> A researcher randomly chooses 3 of the school's 30 classes and surveys every student in those 3 classes. Which claim is the LIE?<br>(A) This is cluster sampling.<br>(B) Students in the 27 unchosen classes have no chance of being in the sample.<br>(C) This is stratified sampling because the school was split into classes.",
+        "a": "C",
+        "hint": "Stratified samples take some members from EVERY group; cluster sampling surveys only the groups that were picked.",
+        "fb": {
+          "C": "C is the lie: sampling only the chosen groups is cluster, not stratified."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> Every 10th house on a street is surveyed, but the larger corner houses happen to fall on every 10th position. Which claim is the LIE?<br>(A) The method is systematic sampling.<br>(B) A hidden pattern in the list can make a systematic sample unrepresentative.<br>(C) A fixed interval always guarantees a representative sample.",
+        "a": "C",
+        "hint": "If the list has a repeating pattern that lines up with the interval, systematic sampling can go badly wrong."
+      },
+      {
+        "q": "<strong>Scenario:</strong> A principal picks the students she thinks are 'typical' to represent the school's opinion. Which claim is the LIE?<br>(A) This is judgement sampling.<br>(B) Whether the sample is representative depends on the population and the question being asked.<br>(C) Because an expert chose them, the sample is guaranteed to be representative.",
+        "a": "C",
+        "hint": "Expert choice still carries opinion and bias; representativeness depends on the population and question, not on who picked."
+      }
+    ],
+    "practice3": [
+      {
+        "q": "<strong>Scenario:</strong> A national study needs opinions from a population spread across 500 remote towns, with three age bands that must appear in the right proportions, on a tight travel budget. A statistician randomly selects 8 towns, then within each randomly samples people to hit the age-band proportions. Which claim is the LIE?<br>(A) Choosing 8 towns at random is a cluster step, chosen partly to cut travel cost.<br>(B) Sampling to fixed age proportions within each town uses a stratified idea.<br>(C) This design is pure convenience sampling with no random element.",
+        "a": "C",
+        "hint": "There are two random steps (towns, then people) — the opposite of convenience sampling.",
+        "fb": {
+          "C": "C is the lie: the design is a random, multi-stage method, not convenience sampling."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> Poll X asks 200 randomly chosen voters; Poll Y asks 50,000 people who chose to phone in. Poll Y predicts the wrong election result. Which claim is the LIE?<br>(A) Poll Y's phone-in method is self-selecting and biased.<br>(B) Poll Y's huge size makes it more reliable than Poll X.<br>(C) Poll X's smaller random sample can beat Poll Y's larger biased one.",
+        "a": "B",
+        "hint": "The classic result: a small random sample outperforms a giant self-selected one. Size cannot cure bias.",
+        "fb": {
+          "B": "B is the lie: 50,000 self-selected responses are still biased — Poll X's random 200 is more trustworthy."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> A market team must reflect a city that is 70% adults, 30% teens. Team A draws names randomly from a full register until the split is reached; Team B sends staff to a mall to approach people until 70 adults and 30 teens agree. Which claim is the LIE?<br>(A) Team A is stratified; Team B is quota.<br>(B) Team B's mall location may exclude people who never visit malls.<br>(C) Team A and Team B use identical methods because their proportions match.",
+        "a": "C",
+        "hint": "Same proportions, different methods: only Team A selects randomly within each group. Quota (B) has no random step.",
+        "fb": {
+          "C": "C is the lie: matching the 70:30 split doesn't make quota the same as stratified — the random step is missing."
+        }
+      },
+      {
+        "q": "<strong>Scenario:</strong> Researchers record the heights of a sample and draw the <strong>sample distribution</strong> to compare with the population. Which claim is the LIE?<br>(A) A sample distribution shows how the sampled values are spread.<br>(B) A representative sample's distribution should roughly mirror the population's.<br>(C) A convenience sample always produces a distribution identical to the population's.",
+        "a": "C",
+        "hint": "Convenience samples often produce a skewed distribution — there is no guarantee it matches the population.",
+        "fb": {
+          "C": "C is the lie: convenience samples frequently give a distribution that does NOT match the population."
+        }
+      }
+    ],
+    "exitProbs": [
+      {
+        "q": "<strong>Scenario:</strong> A café asks only its lunchtime regulars to rate a new menu. Which claim is the LIE?<br>(A) This is a convenience sample.<br>(B) Lunchtime regulars may not represent breakfast or dinner customers.<br>(C) Because it was easy and quick, it is a random sample.",
+        "a": "C",
+        "hint": "Easy and quick describes convenience, not random selection."
+      },
+      {
+        "q": "Name the method: a population is split into year levels and students are chosen <strong>at random</strong> from each year in proportion to its size. Type one word.",
+        "a": "stratified",
+        "hint": "Random selection inside each proportional group — not quota, which has no random step."
+      },
+      {
+        "q": "In your own words, explain the difference between <strong>stratified</strong> and <strong>quota</strong> sampling, and why a bigger sample does not fix a biased method.",
+        "a": "TEXT",
+        "hint": "Mention the random step that stratified has and quota lacks, and that bias is about WHO is left out — not size."
+      }
+    ]
+  }
+}

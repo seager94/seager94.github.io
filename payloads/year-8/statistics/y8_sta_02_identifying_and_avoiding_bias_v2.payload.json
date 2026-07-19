@@ -1,0 +1,95 @@
+{
+  "payload_version": 1,
+  "filename": "y8_sta_02_identifying_and_avoiding_bias_v2.html",
+  "title": "Identifying and Avoiding Bias in Data Collection — Year 8",
+  "header": {
+    "title": "Identifying and Avoiding Bias in Data Collection",
+    "subtitle": "Why a big sample can still be a biased sample",
+    "badge": "Year 8 · Statistics"
+  },
+  "meta": {
+    "lesson-id": "y8_sta_02",
+    "ac9-descriptor": "AC9M8ST01",
+    "ac9-descriptor-text": "distinguish between a population and a sample and investigate techniques for data collection including census, sampling, observation, experiment and using digital tools; make inferences about populations from samples",
+    "ac9-elaborations": "3,4",
+    "sa-year": "8",
+    "sa-strand": "Statistics",
+    "mapping-note": "Strict",
+    "sa-conceptual-understanding": "Valid inferences about populations can be made by drawing conclusions from representative samples",
+    "lesson-focus": "Identify sampling, response and observer bias in data collection, and redesign methods to reduce it — recognising that a large sample can still be biased."
+  },
+  "html": {
+    "section0_intro": "Last lesson you sorted a <strong>census</strong> (data from every member of the population) from a <strong>sample</strong> (a selected part of it). These three questions check that idea — because a sample is only useful if it truly represents the population it comes from.",
+    "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's statistics.</p>\n<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>\n  <div>\n    <p>A local news website runs a poll: <em>\"Should the town skate park be knocked down?\"</em></p>\n    <p>A banner shouts:</p>\n    <p style='font-family: Georgia, serif; font-size: 1.25rem; color: var(--coral); font-weight: bold;'>“OVER 8,000 VOTES — 91% say YES!”</p>\n    <p>The council almost acts on it — until someone asks: <strong>who actually voted?</strong> The poll was open online to anyone, any number of times, and it was shared on a page for people who already dislike the skate park.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    8,000 is a big number — but the sample <strong>chose itself</strong>. The people who clicked are not a fair slice of the town, so the 91% tells us almost nothing. A <strong>large sample can still be biased</strong>. Today we hunt down three ways bias sneaks into data: <strong>who</strong> you ask (sampling bias), <strong>how</strong> you ask (response bias), and <strong>how</strong> you measure or record (observer bias) — and how to redesign a study to keep bias out.\n  </div>\n</div>",
+    "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Bias<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A <strong>systematic error</strong> that pushes results consistently in one direction — not just random chance.<div class='vocab-example'>A poll that <strong>always</strong> over-counts “yes” is biased.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Sampling bias<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The sample <strong>leaves part of the population out</strong>, so it doesn't represent the whole — it's about <strong>who</strong> is asked.<div class='vocab-example'>Surveying only weekday-morning shoppers.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Response bias<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The <strong>wording or delivery</strong> of a question pushes people toward a particular answer — it's about <strong>how</strong> you ask.<div class='vocab-example'>“Do you agree the <em>unfair</em> rule should be scrapped?”</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Observer bias<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The way results are <strong>measured or recorded</strong> distorts the data — it's about <strong>how</strong> you observe.<div class='vocab-example'>A digital tool read to the wrong decimal place every time.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Representative sample<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A sample whose make-up <strong>mirrors the population</strong>, so inferences drawn from it are valid.<div class='vocab-example'>100 students chosen at random from the full roll.</div></div>\n  </div>\n</div>",
+    "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Sort each data-collection method</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip variable' data-type='biased'>Survey only weekday-morning shoppers</span>\n    <span class='term-chip constant' data-type='fair'>Randomly pick 100 names from the full class roll</span>\n    <span class='term-chip variable' data-type='biased'>Online poll anyone can click, again and again</span>\n    <span class='term-chip constant' data-type='fair'>Ask every 10th person, at all exits, all day</span>\n    <span class='term-chip variable' data-type='biased'>Ask: “Do you agree the unfair rule should go?”</span>\n    <span class='term-chip constant' data-type='fair'>Ask: “Should the rule stay the same or change?”</span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='biased'>\n      <h4 style='color:var(--coral)'>⚠️ Biased method</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='fair'>\n      <h4 style='color:var(--navy)'>✓ Fair / representative method</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 The biased methods all skew <em>who</em> answers or <em>how</em> they're pushed to answer. The fair methods give everyone in the population a real, equal chance to be counted.\n</div>",
+    "worked_example": "<p class='sec-desc'>A shopping centre surveys people about a proposed new bus route — but only on <strong>Tuesday and Wednesday mornings</strong>. 500 people respond, and 78% say “no bus needed”. Should the council trust it?</p>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Identify the population and the sample</div>\n      <div class='step-desc'>Ask: who is the result meant to describe, and who actually got asked?</div>\n      <div class='calc-box'>\n        <span class='blue'>Population</span> = everyone the route serves (the whole community)<br>\n        <span class='red'>Sample</span> = only people in the centre on weekday mornings\n      </div>\n    </div>\n  </div>\n\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Name the bias — spot who is missing</div>\n      <div class='step-desc'>Weekday mornings miss full-time workers, students, and weekend and evening shoppers. The method systematically leaves people out.</div>\n      <div class='calc-box'>\n        This is <span class='red'>sampling bias</span> — the sample doesn't mirror the population.<br>\n        <strong>The trap:</strong> 500 responses <em>feels</em> large — but a large biased sample is <span class='red'>still biased</span>. More weekday-morning responses can't speak for the people never asked.\n      </div>\n    </div>\n  </div>\n\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Redesign to reduce the bias</div>\n      <div class='step-desc'>Give every kind of community member a fair chance to appear.</div>\n      <div class='calc-box'>Collect across <span class='blue'>different days and times</span> (weekdays and weekends, mornings and evenings), at <span class='blue'>several exits</span>, and select at random — e.g. every 10th person who passes.</div>\n      <div class='summary-banner'>\n        <span class='label'>Verdict</span>\n        Sampling bias — don't trust it. Redesign: sample all days &amp; times, at random.\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+    "we_do_intro": "Now let's fix a biased survey <em>question</em> together. A student council asks: <em>“Do you agree that the unfair new phone ban should be scrapped?”</em> (Ignore the fixed heading above — our expression today is this survey question.) Discuss each prompt with the person next to you, then we'll fill in the box as a class.",
+    "section3_heading": "Biased or fair — sort each method",
+    "section3_desc": "Drag each data-collection method into <strong>⚠️ Biased</strong> or <strong>✓ Fair / representative</strong>.",
+    "section4_heading": "Match each method to the bias it shows",
+    "section6_heading": "We do: fix a biased survey question",
+    "footer_title": "Identifying and Avoiding Bias",
+    "strategy_section": "",
+    "strategy_js": ""
+  },
+  "arrays": {
+    "retrieval": [
+      { "q": "A <strong>census</strong> collects data from every member of the population. What is a <strong>sample</strong>? (A) every member of the population (B) a selected part of the population (C) only the largest group", "a": "B", "hint": "It's a subset chosen to stand in for the whole population." },
+      { "q": "A school wants the average height of its 900 students and measures all 900. Is this a <strong>census</strong> or a <strong>sample</strong>? Type one word.", "a": "census", "hint": "Every member of the population was measured, so it's not a sample." },
+      { "q": "Why do researchers often use a sample instead of a census? (A) it is cheaper and faster (B) it is always more accurate (C) it uses the whole population", "a": "A", "hint": "Think about time, cost, and effort." }
+    ],
+    "matchTerms": [
+      { "html": "Only weekday-morning shoppers surveyed", "group": 1 },
+      { "html": "<strong>Sampling bias</strong> — who is left out", "group": 1 },
+      { "html": "Web poll open to anyone who clicks", "group": 2 },
+      { "html": "<strong>Self-selection</strong> (a sampling bias)", "group": 2 },
+      { "html": "“Do you agree the unfair rule should be scrapped?”", "group": 3 },
+      { "html": "<strong>Response bias</strong> — loaded wording", "group": 3 },
+      { "html": "Digital scale misread to the wrong decimal", "group": 4 },
+      { "html": "<strong>Observer bias</strong> — recording error", "group": 4 },
+      { "html": "10,000 votes, all from one fan page", "group": 5 },
+      { "html": "<strong>Large sample — still biased</strong>", "group": 5 }
+    ],
+    "weDo": [
+      { "q": "Which <strong>type</strong> of bias does the wording create? Type one word: sampling, response, or observer.", "a": "response", "hint": "The problem is how the question is worded, not who was asked or how it was measured." },
+      { "q": "Which words push people toward answering 'yes, scrap it'? (A) 'agree' and 'unfair' (B) 'phone' (C) 'new'", "a": "A", "hint": "Which words tell you the 'right' answer before you've even replied?" },
+      { "q": "Choose the fairer rewrite. (A) 'Don't you think the ban is unfair?' (B) 'Should the phone ban stay the same, change, or end?' (C) 'Should we scrap the terrible ban?'", "a": "B", "hint": "A fair question offers balanced options and no loaded words." }
+    ],
+    "checkpoint": [
+      { "q": "A radio show asks listeners to phone in to vote on a new law. Only people who feel strongly bother to call. Which bias is this? Type one word: sampling, response, or observer.", "a": "sampling", "hint": "The callers select themselves — a self-selection form of sampling bias." },
+      { "q": "True or false: making a biased sample much bigger removes the bias. Type true or false.", "a": "false", "hint": "A large but poorly chosen sample is still biased — size can't fix who was left out." }
+    ],
+    "practice1": [
+      { "q": "The first kind of bias is <strong>sampling</strong> bias and the second is <strong>response</strong> bias. What is the third — where measurement or recording distorts data? Type one word.", "a": "observer", "hint": "It's about the person or tool doing the observing and recording." },
+      { "q": "A survey is taken only on a weekday morning at one shop entrance. Which bias? Type one word: sampling, response, or observer.", "a": "sampling", "hint": "Think about who is left out." },
+      { "q": "An online poll is open to anyone who clicks, as often as they like. Which bias? Type one word: sampling, response, or observer.", "a": "sampling", "hint": "People choose themselves — self-selection is a form of sampling bias." },
+      { "q": "The question 'Do you agree the unfair rule should be scrapped?' shows which bias? Type one word: sampling, response, or observer.", "a": "response", "hint": "It's the wording pushing you toward an answer." },
+      { "q": "A digital thermometer is always read to the wrong decimal place, so every value is recorded slightly high. Which bias? Type one word: sampling, response, or observer.", "a": "observer", "hint": "The measurement/recording distorts the results — this links to precision and error." },
+      { "q": "True or false: a large sample is automatically unbiased. Type true or false.", "a": "false", "hint": "Size alone doesn't fix a poorly chosen sample." },
+      { "q": "Which sample is more representative of a whole school? (A) 30 students picked at random from the roll (B) 30 students from the basketball team", "a": "A", "hint": "Which group mirrors the whole school rather than one part of it?" },
+      { "q": "To reduce sampling bias in a shopping-centre survey you should collect data… (A) only on Monday mornings (B) across different days and times (C) from the first 500 people through one door", "a": "B", "hint": "Give every kind of shopper a chance to appear." },
+      { "q": "Which is the fairer, more neutral question? (A) 'Should the canteen keep prices the same or change them?' (B) 'Do you agree the greedy canteen overcharges?'", "a": "A", "hint": "Neutral wording with balanced options avoids response bias." },
+      { "q": "A poll meant to represent a town's adults is answered only by readers of one football fan page. Even with 9,000 replies, the sample is… (A) representative (B) still biased", "a": "B", "hint": "Ask who is missing — and whether a big number fixes that." }
+    ],
+    "practice2": [
+      { "q": "A gym surveys members about opening hours by asking only people who attend at 6am. Name the bias in one word: sampling, response, or observer.", "a": "sampling", "hint": "Evening members never get asked." },
+      { "q": "Best redesign for that gym survey? (A) ask only 6am members, but more of them (B) ask members across all times of day, chosen at random (C) ask the staff instead", "a": "B", "hint": "Cover the whole membership fairly — more of the same biased group won't help." },
+      { "q": "A researcher records reaction times but always rounds down to the nearest second, throwing away the decimals. This systematic recording error is which bias? Type one word: sampling, response, or observer.", "a": "observer", "hint": "It links directly to precision and measurement error." },
+      { "q": "Why does adding more responses NOT fix a self-selecting online poll? (A) the same unrepresentative group keeps answering (B) bigger samples are always worse (C) it does fix it", "a": "A", "hint": "Extra clicks come from the same skewed crowd." },
+      { "q": "Which change reduces <strong>response</strong> bias the most? (A) survey more people (B) reword the question to be neutral and balanced (C) survey at more locations", "a": "B", "hint": "Response bias is about wording — not who or where you ask." },
+      { "q": "A single class of 28 is surveyed to represent a whole Year 8 of 180. To make the sample representative you should… (A) use the one class because it's easy (B) randomly select students from every Year 8 class (C) survey only the top set", "a": "B", "hint": "Every part of the year level needs a chance of being picked." }
+    ],
+    "practice3": [
+      { "q": "A council gets 12,000 online votes (open to anyone) AND a separate random sample of 400 residents. Which should it trust more? Type the number: 400 or 12000.", "a": "400", "hint": "A smaller, well-chosen sample beats a huge self-selected one." },
+      { "q": "'Wouldn't you agree our wonderful library deserves more funding?' is asked during a book-club meeting. The question has both a wording problem and a who-is-asked problem. Which bias comes from the <strong>wording</strong>? Type one word: sampling, response, or observer.", "a": "response", "hint": "The loaded phrase ('wouldn't you agree our wonderful') is the response-bias part; the book-club venue is the sampling part." },
+      { "q": "A digital scale rounds every mass to the nearest kilogram, so 5.6 kg and 6.4 kg are both recorded as 6 kg. This distortion in the recorded measurements is best called which bias? Type one word: sampling, response, or observer.", "a": "observer", "hint": "It's about how the tool measures and records — a precision/rounding error." },
+      { "q": "Best overall redesign for a representative town survey? (A) a huge online poll anyone can enter (B) a random sample across all suburbs, ages and times, using neutral questions (C) surveying everyone at one busy café", "a": "B", "hint": "Attack all three biases at once — who is asked, how it's asked, and how it's recorded." }
+    ],
+    "exitProbs": [
+      { "q": "Name the bias: a town survey is answered only by people who saw it shared in one Facebook group. Type one word: sampling, response, or observer.", "a": "sampling", "hint": "Ask who never saw the survey at all." },
+      { "q": "True or false: a large sample is guaranteed to be representative. Type true or false.", "a": "false", "hint": "Only a well-chosen sample is representative — size is not enough." },
+      { "q": "In your own words, explain why a survey with 5,000 responses can still be biased — and give one change you would make to fix it.", "a": "TEXT", "hint": "Talk about WHO was left out or HOW the question was worded, then describe your redesign." }
+    ]
+  }
+}
