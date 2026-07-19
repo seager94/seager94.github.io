@@ -1,0 +1,1981 @@
+﻿<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON — FRAME (payload mode)  ·  SLOT MANIFEST
+  ============================================================================
+  Built by tokenising assets/lesson_template.html per references/payload-spec.md
+  §3. The assembler (assemble_lesson.py) reads THIS comment as the authoritative
+  slot list and substitutes every {{SLOT:…}} token from a payload_version 1
+  JSON. Every slot below MUST be supplied by the payload — the assembler
+  hard-fails on any gap. CSS, framework JS, function bodies and section order are
+  unchanged from the template.
+
+  ── SCALAR / TEXT SLOTS (plain string, no markup expected) ──────────────────
+    title                              <title> text
+    meta_lesson_id                     content of <meta name="lesson-id">
+    meta_ac9_descriptor                content of <meta name="ac9-descriptor">
+    meta_ac9_descriptor_text           AC9 descriptor sentence shown after the code
+                                       in the Curriculum-link panel
+    meta_ac9_elaborations              content of <meta name="ac9-elaborations">
+    meta_sa_year                       content of <meta name="sa-year">
+    meta_sa_strand                     content of <meta name="sa-strand">
+    meta_sa_conceptual_understanding   content of <meta name="sa-conceptual-understanding">
+    meta_lesson_focus                  content of <meta name="lesson-focus">
+    meta_mapping_note                  content of <meta name="mapping-note">
+    footer_title                       lesson title shown in the page footer line
+    header_title                       header <h1> text
+    header_subtitle                    header .subtitle text
+    header_badge                       header .badge text
+    count_practice2                    Stretch accordion count badge (e.g. "6 questions")
+    count_practice3                    Mastery accordion count badge (e.g. "4 questions")
+    assembly_stamp                     assembler-injected <meta> stamp (version/date/source)
+
+    NOTE ON SLOT NAMING: the template ships a <meta name="lesson-focus"> tag (not
+    the "ac9-descriptor-text" tag named in the spec's §3 slot list). Per the
+    change-nothing-else constraint the tag was not renamed, so its content slot
+    is meta_lesson_focus. Payload meta key: "lesson-focus".
+
+  ── HTML-FRAGMENT SLOTS (raw HTML; maths-typography rules apply: stacked .frac,
+     .var spans, U+2212 minus, <sup> powers) ─────────────────────────────────
+    section0_intro      inner HTML of the Section 0 retrieval intro <p>
+    section_warmup      Section 1 "Why this matters" body (everything after the <h2>)
+    vocab_cards         the .vocab card elements inside .vocab-grid (Section 2)
+    section3_heading    Section 3 <h2> heading text (after the .sec-num span)
+    section3_desc       inner HTML of the Section 3 .sec-desc line
+    sort_activity       Section 3 sort chips-and-buckets (the .parts-expr block
+                        incl. #partsTerms, .bucket[data-bucket], .term-chip[data-type],
+                        plus the trailing .parts-instructions note)
+    section4_heading    Section 4 <h2> heading text (after the .sec-num span)
+    section6_heading    Section 6 We-Do <h2> heading (after the .sec-num span;
+                        may include the trailing .expr span)
+    worked_example      Section 5 worked-example body after the <h2> (the .worked
+                        block incl. #step1/#step2/#step3 and #revealBtn)
+    we_do_intro         inner HTML of the Section 6 We-Do intro <p>
+    strategy_section    optional strategy-enrichment <section> before the exit ticket
+                        (payload html.strategy_section; "" when unused)
+    strategy_js         optional strategy-enrichment <script> body at end of script
+                        (payload html.strategy_js; "" when unused)
+
+  ── JS-ARRAY SLOT ───────────────────────────────────────────────────────────
+    js_arrays           Replaces the ENTIRE block of const problem-array
+                        declarations. The INITIALISE calls below it are unchanged.
+                        The payload's html.js_arrays (or assembler-serialised
+                        arrays.*) MUST declare ALL of the following consts, using
+                        these exact names and object shapes. Strings are HTML
+                        fragments/answers; the assembler escapes "</" so nothing
+                        can terminate the <script> block.
+
+      const matchTerms = [ { html: <HTML>, group: <int 1..N> }, … ]
+          // Section 4 "Spot the like terms". Even count; each `group` id must
+          // appear on exactly two chips (the two like terms that match).
+          // (Relocated here from the Matching section per spec §3.)
+
+      const retrieval  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 0 warm-up. noCount (excluded from progress). a: 'TEXT' allowed.
+
+      const practice1  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 8 Building tier (counts toward progress).
+
+      const practice2  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 9 Stretch tier. Length should match count_practice2.
+
+      const practice3  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 10 Mastery tier. Length should match count_practice3.
+
+      const checkpoint = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 7 quick check (counts toward progress).
+
+      const weDo       = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 6 We-Do sub-prompts. noCount.
+
+      const exitProbs  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 11 exit ticket. a: 'TEXT' for open-response (not auto-marked).
+
+      // Shared q/a/hint shape: q = HTML question fragment; a = plain keyboard-form
+      // answer string (hyphen minus, "/" fractions, "^" powers) or 'TEXT' for
+      // open response — never empty; hint = plain string.
+  ============================================================================
+-->
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON — TEMPLATE
+  ============================================================================
+  This file is the canonical structure for interactive HTML maths lessons.
+  The example content shown here is Year 10 Collecting Like Terms; treat that
+  as a worked reference for the patterns, not as the lesson to ship.
+
+  HOW TO ADAPT:
+  -----------------------------------------------------------------------------
+  Keep ALL of the following intact:
+    • The <style> block (palette, layout, all component CSS)
+    • The <script> block's framework code (buildPractice, drag-and-drop,
+      teacher mode, progress tracking, answer normalisation, toggleTier)
+    • The section ordering (Retrieval → Hook → AS A CLASS → I DO → WE DO →
+      YOU DO → Exit ticket) and phase banner placement
+    • The numbering convention (sections 0–11 sequential)
+    • The accordion structure for the three practice tiers (Sections 8–10):
+      Building expanded by default, Stretch and Mastery collapsed with
+      question-count badges
+    • The matching visual treatment of Retrieval (Section 0) and Exit ticket
+      (Section 11) as bookends
+
+  Replace the following with topic-specific content:
+    • Curriculum metadata (<meta> tags in <head> AND the "Curriculum link"
+      <details> block before the footer — must match each other)
+    • Page <title>, header h1, header subtitle, badge text
+    • Footer line: "Mathematics · Year [N] · [Topic]" — no school branding,
+      no "Built with Claude" tagline; keep it factual and short
+    • Section 0 retrieval warm-up problems (retrieval array)
+    • Section 1 "Why this matters" hook (real-world scenario)
+    • Section 2 vocab cards (5 terms, ordered concrete → abstract)
+    • Section 3 drag-sort items (data-type values + chip contents)
+    • Section 4 match pairs (matchTerms array in JS)
+    • Section 5 worked-example problem and the 3 steps
+    • Section 6 we-do sub-prompts (weDo array)
+    • Section 7 quick check problems (checkpoint array)
+    • Section 8/9/10 practice problems (practice1/practice2/practice3 arrays)
+    • Section 11 exit ticket questions (exitProbs array)
+
+  MATHS TYPOGRAPHY RULES (non-negotiable):
+    • Fractions: <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+      — NEVER inline like "3/4"
+    • Variables: <span class="var">x</span> — italic via CSS
+    • Minus sign: − (U+2212) — NOT a hyphen -
+    • Powers: <sup>2</sup>
+
+  For full guidance see SKILL.md and the references/ folder.
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistical Investigations with Sampling — Year 8</title>
+
+<!--
+  ============================================================================
+  CURRICULUM METADATA — populate these on every lesson.
+  These tags are scrapable for coverage audits and feed the visible
+  "Curriculum link" panel in the footer. Source: lesson-map.xlsx row.
+  ============================================================================
+-->
+<meta name="lesson-id"             content="y8_sta_06">
+<meta name="ac9-descriptor"        content="AC9M8ST04">
+<meta name="ac9-elaborations"      content="1,2,3">
+<meta name="sa-year"               content="8">
+<meta name="sa-strand"             content="Statistics">
+<meta name="sa-conceptual-understanding" content="Valid inferences about populations can be made by drawing conclusions from representative samples">
+<meta name="lesson-focus"          content="Plan and conduct a full sample-based investigation: pose a question, design the sample, collect data, analyse with appropriate summary statistics, report findings with acknowledgement of uncertainty; example contexts include pandemic-impact electricity data and reconciliation progress.">
+<meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+<meta name="template-version" content="2026-07-12.1">
+<meta name="assembled" content="assemble_lesson.py v1.0 2026-07-19 from y8_sta_06_statistical_investigation_with_sampling_v2.payload.json">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS-OF-EXPRESSION INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); font-weight: 600; }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING LIKE TERMS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .format-hint { margin: 4px 0 0 26px; font-size: 0.78rem; color: var(--muted); }
+
+/* RESET BUTTON */
+.reset-btn { background: none; border: 1.5px solid #c9d4d6; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+.reset-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+.misconception-box { display: none; margin: 6px 0 0 26px; padding: 8px 12px; background: var(--coral-soft); border-left: 3px solid var(--coral); border-radius: 6px; font-size: 0.85rem; color: var(--text); }
+.misconception-box.show { display: block; }
+
+/* FOCUS VISIBILITY (patch 6) */
+.check-btn:focus-visible, .hint-link:focus-visible, .answer-link:focus-visible,
+.reset-btn:focus-visible, .results-copy-btn:focus-visible, .reveal-btn:focus-visible {
+  outline: 3px solid var(--coral); outline-offset: 2px;
+}
+
+/* RESULTS COPY BAR */
+.results-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+.results-name { flex: 1 1 160px; max-width: 240px; padding: 8px 10px; border: 1.5px solid #c9d4d6; border-radius: 8px; font: inherit; background: white; }
+.results-copy-btn { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+.results-copy-btn:hover { background: var(--coral); }
+.results-copied { display: none; color: var(--navy); font-weight: 600; font-size: 0.9em; }
+.results-copied.show { display: inline; }
+
+/* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel — collapsible metadata footer.
+     Reference info for teachers/auditors, not for students. */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .accordion-body { display: block !important; }
+    .accordion-chevron, .accordion-count { display: none !important; }
+    .results-bar, .reset-btn, .format-hint { display: none !important; }
+    .tier-accordion .accordion-head { cursor: default; }
+    .problem-input { min-height: 26px; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket (Section 11) share visual treatment */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS — Sections 8, 9, 10 */
+  section.lesson.tier-accordion {
+    padding-top: 28px; /* preserve chilli-sticker breathing room */
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none; /* default collapsed */
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* constant-area triangle component */
+  .cat{display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+  .cat-stage{ flex:1 1 340px; min-width:300px; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:10px; }
+  .cat svg{display:block; width:100%; height:auto; touch-action:none;}
+  .cat-apex{cursor:grab; touch-action:none;}
+  .cat-apex:active{cursor:grabbing;}
+  .cat-apex:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+  .cat-panel{ flex:1 1 240px; min-width:230px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+  .cat-panel h3{font-family:Georgia,serif; color:var(--navy); margin:0 0 10px; font-size:1.05rem;}
+  .cat-row{ display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px dashed var(--border); font-size:.95rem; }
+  .cat-row:last-of-type{border-bottom:none;}
+  .cat-row .lab{color:var(--muted);}
+  .cat-row .val{font-family:Georgia,Cambria,serif; color:var(--navy); font-weight:bold;}
+  .cat-area-line{ margin-top:12px; padding:12px; border-radius:9px; background:var(--coral-soft); text-align:center; font-family:Georgia,Cambria,serif; color:var(--navy); font-size:1.05rem; }
+  .cat-area-line .big{color:var(--coral); font-weight:bold; font-size:1.3rem;}
+  .cat-status{ margin-top:12px; font-size:.85rem; color:var(--muted); background:var(--hint-bg); border-radius:8px; padding:9px 11px; }
+  .cat-status.done{color:var(--good); font-weight:600;}
+  .cat-q{ margin-top:16px; font-style:italic; color:var(--navy); border-left:3px solid var(--coral); padding-left:12px; font-size:.92rem; }
+  .cat-baseext{stroke:var(--border); stroke-width:2; stroke-dasharray:4 5;}
+  .cat-guide{stroke:var(--coral); stroke-width:2; stroke-dasharray:6 5; opacity:.65;}
+  .cat-guide-label{font-family:Georgia,serif; font-size:13px; fill:var(--coral); opacity:.8;}
+  .cat-fill{fill:var(--coral); fill-opacity:.12;}
+  .cat-base{stroke:var(--navy); stroke-width:3.5;}
+  .cat-slant{stroke:var(--navy); stroke-width:3;}
+  .cat-perp{stroke:var(--coral); stroke-width:2; stroke-dasharray:5 4;}
+  .cat-ra{fill:none; stroke:var(--coral); stroke-width:2;}
+  .cat-vlabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-hlabel{font-family:Georgia,serif; font-size:14px; fill:var(--coral);}
+  .cat-baselabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-vdot{fill:var(--navy);}
+  .cat-ring{fill:none; stroke:var(--navy); stroke-width:2; transition:opacity .15s;}
+  .cat-handle{fill:var(--coral); stroke:#ffffff; stroke-width:3;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Planning & Conducting a Statistical Investigation</h1>
+    <div class="subtitle">Pose a question · design a sample · collect · analyse · report with uncertainty</div>
+  </div>
+  <div class="badge">Year 8 · Statistics</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 21</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="reset-btn" id="resetProgressBtn" type="button" title="Clear saved answers on this device">Reset</button>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<!-- 2–3 quick recall questions on prerequisite skills for today's lesson.
+     Replace the retrieval array in JS to swap content. These do NOT count
+     toward the student's progress score (they're noCount). -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Three quick questions from earlier work. They warm up the statistics skills you&rsquo;ll use today.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<!-- A real-world scenario that's secretly today's maths. Two-column layout —
+     left side tells the story, right side connects it to the algebra.
+     Should read in ~30 seconds. Finance contexts work especially well. -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class="sec-desc">A real investigation that is secretly today&rsquo;s statistics.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:center;"><div><p>During the 2020 pandemic lockdowns, many people stayed home all day. Energy companies wanted to know: <strong>did households use more electricity than before?</strong></p><p>There are hundreds of thousands of households in South Australia. Measuring <em>every single one</em> would cost too much and take too long, so researchers studied a carefully chosen <strong>sample</strong> instead.</p></div><div class="parts-instructions" style="margin:0;">From a sample of just a few hundred households, statisticians estimated the change for the <strong>whole population</strong> &mdash; then reported it honestly as an <em>estimate with uncertainty</em>, not an exact fact. Today you will plan and run your own investigation the same way: <strong>pose a question &rarr; design a sample &rarr; collect &rarr; analyse &rarr; report</strong>.</div></div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class="vocab" onclick="this.classList.toggle('flipped')"><div class="vocab-inner"><div class="vocab-front">Population<div class="hint-flip">Tap to flip</div></div><div class="vocab-back">The <strong>whole group</strong> you want to draw a conclusion about.<div class="vocab-example">Example: every household in South Australia.</div></div></div></div><div class="vocab" onclick="this.classList.toggle('flipped')"><div class="vocab-inner"><div class="vocab-front">Census<div class="hint-flip">Tap to flip</div></div><div class="vocab-back">Collecting data from <strong>every member</strong> of the population &mdash; a complete count.<div class="vocab-example">Example: the national Census counts every resident.</div></div></div></div><div class="vocab" onclick="this.classList.toggle('flipped')"><div class="vocab-inner"><div class="vocab-front">Sample<div class="hint-flip">Tap to flip</div></div><div class="vocab-back">A <strong>smaller group</strong> chosen from the population that you actually collect data from.<div class="vocab-example">Example: 500 households chosen from all SA households.</div></div></div></div><div class="vocab" onclick="this.classList.toggle('flipped')"><div class="vocab-inner"><div class="vocab-front">Random sample<div class="hint-flip">Tap to flip</div></div><div class="vocab-back">A sample where <strong>every member has an equal chance</strong> of being chosen &mdash; this helps avoid <em>bias</em>.<div class="vocab-example">Example: numbering every student and drawing names at random.</div></div></div></div><div class="vocab" onclick="this.classList.toggle('flipped')"><div class="vocab-inner"><div class="vocab-front">Inference<div class="hint-flip">Tap to flip</div></div><div class="vocab-back">A <strong>conclusion about the whole population</strong> drawn from sample data &mdash; it always carries some <em>uncertainty</em>.<div class="vocab-example">Example: &ldquo;use rose by about 4 kWh/day&rdquo; estimated from a sample.</div></div></div></div>
+  </div>
+</section>
+
+<!-- SECTION 3: PARTS OF AN EXPRESSION -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>When do we need a sample?</h2>
+  <p class="sec-desc">Sometimes we can measure the whole population; sometimes a census would cost too much, take too long, or be impossible. Drag each task into the right bucket &mdash; take a sample, or do a census.</p>
+
+  <div class="parts-expr"><div class="label">Drag each task into the bucket that fits it best.</div><div id="partsTerms" class="terms-source"><span class="term-chip" data-type="sample">Find the average nightly electricity use of all 700&nbsp;000 SA households</span><span class="term-chip" data-type="census">Record the marks of all 28 students in one class</span><span class="term-chip" data-type="sample">Test the battery life of every phone a factory makes</span><span class="term-chip" data-type="census">List the age of each of the 10 players in a netball team</span><span class="term-chip" data-type="sample">Measure the height of every gum tree in a large national park</span><span class="term-chip" data-type="census">The national Census of Population and Housing</span></div><div class="parts-buckets"><div class="bucket" data-bucket="sample"><h4 class="vt">Take a sample</h4><div class="bucket-contents"></div></div><div class="bucket" data-bucket="census"><h4 class="ct">Do a census (survey everyone)</h4><div class="bucket-contents"></div></div></div><div class="parts-actions"><button class="btn-secondary btn-sm" onclick="resetSort()">&#8634; Reset</button><button class="btn-secondary btn-sm" onclick="solveSort()">Show solution</button></div></div><div class="parts-instructions">&#128161; A sample is chosen when a census would cost too much, take too long, be impractical, or <em>destroy</em> what you are testing. A census is fine when the population is small or a complete count is needed.</div>
+</section>
+
+<!-- SECTION 4: MATCHING LIKE TERMS -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each investigation stage to what you do</h2>
+  <p class="sec-desc">Click two terms that are alike to match them. There are five matching pairs in the grid below.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a term to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
+  <p class="sec-desc">Investigation: <span class="expr">Did households use more electricity during the 2020 lockdown than in 2019?</span></p><div class="worked"><div class="step visible" id="step1"><div class="step-num">1</div><div class="step-body"><div class="step-title">Pose the question &amp; design the sample</div><div class="step-desc">The <strong>population</strong> is all SA households. Measuring every one is impractical, so we take a <strong>random sample of 10 households</strong> and record the <em>increase</em> in daily electricity use (kWh) from 2019 to 2020. Choosing them randomly keeps the sample fair and representative.</div><div class="calc-box">Population: all SA households &nbsp;&bull;&nbsp; Sample: 10 randomly chosen households &nbsp;&bull;&nbsp; Variable: increase in daily use (kWh)</div></div></div><div class="step" id="step2"><div class="step-num">2</div><div class="step-body"><div class="step-title">Collect &amp; organise the data</div><div class="step-desc">Here is the increase in daily use (kWh) for the 10 sampled households, sorted smallest to largest:</div><div class="calc-box">2, &nbsp;3, &nbsp;3, &nbsp;4, &nbsp;4, &nbsp;4, &nbsp;5, &nbsp;5, &nbsp;6, &nbsp;8</div></div></div><div class="step" id="step3"><div class="step-num">3</div><div class="step-body"><div class="step-title">Analyse with summary statistics, then report</div><div class="step-desc">Plot the data and summarise it. Mean = 44 &divide; 10 = <strong>4.4 kWh</strong>; median = (4 + 4) &divide; 2 = <strong>4 kWh</strong>; mode = <strong>4 kWh</strong>; range = 8 − 2 = <strong>6 kWh</strong>.</div><div class="calc-box" style="text-align:center;"><svg viewBox="0 0 480 200" role="img" aria-label="Dot plot showing the increase in daily electricity use, in kilowatt-hours, for 10 sampled households: one household at 2, two at 3, three at 4, two at 5, one at 6 and one at 8" style="max-width:100%;height:auto;font-family:-apple-system,BlinkMacSystemFont,sans-serif;"><line x1="20" y1="150" x2="450" y2="150" stroke="#1F4D54" stroke-width="2"/><line x1="40" y1="150" x2="40" y2="156" stroke="#1F4D54" stroke-width="2"/><text x="40" y="172" text-anchor="middle" fill="#2a2a2a" font-size="14">2</text><line x1="100" y1="150" x2="100" y2="156" stroke="#1F4D54" stroke-width="2"/><text x="100" y="172" text-anchor="middle" fill="#2a2a2a" font-size="14">3</text><line x1="160" y1="150" x2="160" y2="156" stroke="#1F4D54" stroke-width="2"/><text x="160" y="172" text-anchor="middle" fill="#2a2a2a" font-size="14">4</text><line x1="220" y1="150" x2="220" y2="156" stroke="#1F4D54" stroke-width="2"/><text x="220" y="172" text-anchor="middle" fill="#2a2a2a" font-size="14">5</text><line x1="280" y1="150" x2="280" y2="156" stroke="#1F4D54" stroke-width="2"/><text x="280" y="172" text-anchor="middle" fill="#2a2a2a" font-size="14">6</text><line x1="340" y1="150" x2="340" y2="156" stroke="#1F4D54" stroke-width="2"/><text x="340" y="172" text-anchor="middle" fill="#2a2a2a" font-size="14">7</text><line x1="400" y1="150" x2="400" y2="156" stroke="#1F4D54" stroke-width="2"/><text x="400" y="172" text-anchor="middle" fill="#2a2a2a" font-size="14">8</text><circle cx="40" cy="138" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="100" cy="138" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="100" cy="118" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="160" cy="138" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="160" cy="118" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="160" cy="98" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="220" cy="138" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="220" cy="118" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="280" cy="138" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><circle cx="400" cy="138" r="7" fill="#BE5837" stroke="#ffffff" stroke-width="1.5"/><text x="235" y="194" text-anchor="middle" fill="#6b7280" font-size="13">Increase in daily electricity use (kWh)</text></svg></div><div class="summary-banner"><span class="label">Report (acknowledging uncertainty)</span>On average, sampled households increased daily use by about <strong>4.4 kWh</strong>. Because this comes from a sample of only 10, the true population figure may differ &mdash; a larger sample would make the estimate more reliable.</div></div></div><button class="reveal-btn" id="revealBtn" onclick="revealNextStep()">Reveal next step &darr;</button></div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>We do — a reconciliation attitudes survey</h2>
+  <p class="sec-desc">Reconciliation Australia runs a national survey, the Australian Reconciliation Barometer, to measure progress in the relationship between First Nations (Aboriginal and Torres Strait Islander) peoples and non-Indigenous Australians. A school cannot survey all 900 of its students, so it takes a <strong>random sample of 8 students</strong> and asks each to rate, from 1 to 10, how well they understand the histories and cultures of First Nations Australians. Sample ratings: <span class="expr">5, 6, 6, 7, 7, 8, 8, 9</span>. Let&rsquo;s analyse it together.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why we do it this way:</strong> tackling one group of like terms at a time keeps the work tidy and reduces sign errors. When you tackle the "You do" practice next, follow the same routine — variable terms first, then constants, then write the answer.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK (you do — checkpoint) -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING (accordion, open by default) -->
+<!-- Building is the entry tier. .open class shows it expanded.
+     Update the count badge text to match the actual number of problems. -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Type your simplified answer in each box. Use <code>x</code>, <code>y</code>, etc. for variables. Examples: <code>3x+5</code>, <code>-2y+7</code>, <code>4a-6b</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH (accordion, collapsed) -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now the expressions contain two different variables. Group each variable separately.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY (accordion, collapsed) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Same rules — but the coefficients are fractions. Common denominators may help. Type fractions like <code>3/4x</code> or <code>5/12y</code>.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<style>.ots-block{margin:0 0 26px;}.ots-block:last-of-type{margin-bottom:0;}.order-problem-stem{background:var(--hint-bg);border-left:4px solid var(--navy);padding:12px 16px;border-radius:6px;color:var(--navy);margin-bottom:14px;font-weight:600;}.order-list{list-style:none;padding:0;margin:0 0 12px;counter-reset:stepCounter;}.order-card{counter-increment:stepCounter;background:white;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;transition:background .25s,border-color .25s;}.order-card::before{content:counter(stepCounter);background:var(--coral);color:white;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:700;}.order-card.correct{background:var(--good-soft);border-color:var(--good);}.order-card.incorrect{background:var(--bad-soft);border-color:var(--bad);}.order-card.locked{opacity:.75;}.order-card.locked .order-buttons button{display:none;}.order-content{font-size:1rem;color:var(--text);}.order-buttons{display:flex;flex-direction:column;gap:4px;}.order-buttons button{background:var(--hint-bg);color:var(--navy);border:1px solid var(--border);width:32px;height:26px;border-radius:6px;cursor:pointer;font-size:.9rem;line-height:1;}.order-buttons button:hover{background:var(--navy);color:white;}.order-buttons button:disabled{opacity:.3;cursor:not-allowed;background:var(--hint-bg);color:var(--navy);}.order-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}.order-actions button{border:none;padding:8px 15px;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;}.order-actions .order-check{background:var(--coral);color:white;}.order-actions .order-shuffle,.order-actions .order-show{background:white;color:var(--navy);border:1.5px solid var(--navy);}.order-status{font-size:.88rem;color:var(--muted);font-style:italic;margin-left:auto;}body.teacher-mode .order-card::after{content:"(pos " attr(data-correct-pos) ")";font-size:.7rem;color:var(--muted);grid-column:2/3;}</style><div class="phase-banner"><div class="phase-mono">PRACTICE&nbsp;CORE</div><div class="phase-text"><div class="phase-label">Order the steps</div><div class="phase-sub">Put each investigation into the correct sequence, then press Check order.</div></div></div><section class="lesson"><h2><span class="sec-num">&#129513;</span>Order the investigation steps</h2><p class="sec-desc">Each investigation below has its five stages jumbled. Use the &#9650; and &#9660; buttons to put them in order &mdash; <strong>pose &rarr; design the sample &rarr; collect &rarr; analyse &rarr; report</strong> &mdash; then press <strong>Check order</strong>. Correct cards turn green and lock.</p><div class="ots-block"><div class="order-problem-stem">Scenario 1 &mdash; Did SA households use more electricity during the 2020 lockdown?</div><ul class="order-list" id="otsList1" data-status="otsStatus1"><li class="order-card" data-correct-pos="3"><div class="order-content">Record each sampled household&rsquo;s daily electricity use for 2019 and 2020.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="1"><div class="order-content">Ask: did households use more electricity during the 2020 lockdown than in 2019?</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="5"><div class="order-content">Conclude that use rose by about 4 kWh/day on average, noting the estimate carries uncertainty.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="2"><div class="order-content">Randomly select 500 households from all SA households to keep the study manageable.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="4"><div class="order-content">Find the mean increase and draw a dot plot of the differences.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li></ul><div class="order-actions"><button class="order-check" onclick="otsCheck('otsList1')">Check order</button><button class="order-shuffle" onclick="otsShuffle('otsList1')">&#8635; Shuffle</button><button class="order-show" onclick="otsShow('otsList1')">Show answer</button><span class="order-status" id="otsStatus1"></span></div></div><div class="ots-block"><div class="order-problem-stem">Scenario 2 &mdash; Testing a factory&rsquo;s light globes (a census would destroy the stock).</div><ul class="order-list" id="otsList2" data-status="otsStatus2"><li class="order-card" data-correct-pos="2"><div class="order-content">Because testing every globe destroys it, randomly select 60 globes to test.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="4"><div class="order-content">Calculate the mean and median burn-time of the 60 sampled globes.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="1"><div class="order-content">Ask: what is the mean burn-time of the globes this factory makes?</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="5"><div class="order-content">Estimate the mean burn-time for all globes, acknowledging the sample may not be exact.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="3"><div class="order-content">Burn each of the 60 sampled globes and record how many hours each one lasts.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li></ul><div class="order-actions"><button class="order-check" onclick="otsCheck('otsList2')">Check order</button><button class="order-shuffle" onclick="otsShuffle('otsList2')">&#8635; Shuffle</button><button class="order-show" onclick="otsShow('otsList2')">Show answer</button><span class="order-status" id="otsStatus2"></span></div></div><div class="ots-block"><div class="order-problem-stem">Scenario 3 &mdash; Has students&rsquo; understanding of First Nations histories and cultures grown over the year?</div><ul class="order-list" id="otsList3" data-status="otsStatus3"><li class="order-card" data-correct-pos="4"><div class="order-content">Compare the mean survey scores and the spread between the start and end of the year.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="2"><div class="order-content">Randomly select 50 students from across all year levels so the sample is representative.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="5"><div class="order-content">Report whether understanding appears to have improved, acknowledging the uncertainty of a sample.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="1"><div class="order-content">Ask: has students&rsquo; understanding of First Nations histories and cultures grown over the year?</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li><li class="order-card" data-correct-pos="3"><div class="order-content">Survey the same 50 students with the same questions at the start and end of the year.</div><div class="order-buttons"><button onclick="otsMove(this,-1)" aria-label="Move up">&#9650;</button><button onclick="otsMove(this,1)" aria-label="Move down">&#9660;</button></div></li></ul><div class="order-actions"><button class="order-check" onclick="otsCheck('otsList3')">Check order</button><button class="order-shuffle" onclick="otsShuffle('otsList3')">&#8635; Shuffle</button><button class="order-show" onclick="otsShow('otsList3')">Show answer</button><span class="order-status" id="otsStatus3"></span></div></div></section>
+
+<!-- SECTION 11: EXIT TICKET (bookend with retrieval) -->
+<!-- Visual treatment mirrors Section 0 retrieval — same teal-tint, same accent.
+     They are bookends framing the lesson. -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+  <div class="results-bar">
+    <input class="results-name" id="studentName" placeholder="Your name" autocomplete="off">
+    <button class="results-copy-btn" id="copyResultsBtn" type="button">Copy my results</button>
+    <span class="results-copied" id="copyFeedback">Copied &mdash; paste into Daymap</span>
+  </div>
+</section>
+
+<!-- CURRICULUM LINK — reference info for teachers and curriculum audits.
+     Mirror values from the <meta> tags in <head>. Collapsed by default;
+     teachers click to expand. Students never need to open this. -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 8 &middot; Statistics</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Valid inferences about populations can be made by drawing conclusions from representative samples</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M8ST04</strong> — plan and conduct statistical investigations involving samples of a population; use ethical and fair methods to make inferences about the population and report findings, acknowledging uncertainty</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1,2,3</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Plan and conduct a full sample-based investigation: pose a question, design the sample, collect data, analyse with appropriate summary statistics, report findings with acknowledgement of uncertainty; example contexts include pandemic-impact electricity data and reconciliation progress.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y8_sta_06. Source: lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Statistics · Year 8 · Statistical Investigations with Sampling
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+  const answerKey = {};        // idx -> expected answer (single source for Check buttons)
+  const noCountSet = new Set(); // idx values excluded from the progress score
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ PARTS OF EXPRESSION (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    // hide ghost momentarily to find element underneath
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          // pop it back to source after the shake
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING LIKE TERMS ============
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    // we have two selected
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not alike — check the variable and its power.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // Answers normalised: strip spaces, lowercase. Accept reordered terms.
+
+const retrieval = [
+  {
+    "q": "Find the <strong>mean<\/strong> of this small sample: 4, 6, 6, 8, 11.",
+    "a": "7",
+    "hint": "Add all five values (35), then divide by how many there are (5)."
+  },
+  {
+    "q": "Find the <strong>median<\/strong> of: 3, 7, 9, 12, 20.",
+    "a": "9",
+    "hint": "The values are already in order &mdash; the median is the middle one."
+  },
+  {
+    "q": "A group surveys 50 of the 1200 students at a school. The 50 students are the <em>sample<\/em>; the 1200 students are the &hellip; Type <strong>population<\/strong> or <strong>sample<\/strong>.",
+    "a": "population",
+    "hint": "The population is the whole group you want a conclusion about."
+  }
+];
+
+  const matchTerms = [
+  {
+    "html": "Pose the question",
+    "group": 1
+  },
+  {
+    "html": "Decide what to find out and identify the population",
+    "group": 1
+  },
+  {
+    "html": "Design the sample",
+    "group": 2
+  },
+  {
+    "html": "Choose a fair, random method to select who to survey",
+    "group": 2
+  },
+  {
+    "html": "Collect the data",
+    "group": 3
+  },
+  {
+    "html": "Record measurements or responses from the sample",
+    "group": 3
+  },
+  {
+    "html": "Analyse the data",
+    "group": 4
+  },
+  {
+    "html": "Work out the mean, median and range and draw a plot",
+    "group": 4
+  },
+  {
+    "html": "Report findings",
+    "group": 5
+  },
+  {
+    "html": "State a conclusion about the population, noting the uncertainty",
+    "group": 5
+  }
+];
+
+  const weDo = [
+  {
+    "q": "How many students are in this sample?",
+    "a": "8",
+    "hint": "Count the ratings: 5, 6, 6, 7, 7, 8, 8, 9."
+  },
+  {
+    "q": "Find the <strong>mean<\/strong> rating of the sample.",
+    "a": "7",
+    "hint": "Add the eight ratings (56), then divide by 8."
+  },
+  {
+    "q": "The whole school has 900 students. Can we say the mean rating of ALL 900 is exactly 7? Type <strong>A<\/strong> (yes, exactly) or <strong>B<\/strong> (no &mdash; 7 is an estimate that carries uncertainty).",
+    "a": "B",
+    "hint": "A sample gives an estimate of the population, not its exact value."
+  }
+];
+
+  const checkpoint = [
+  {
+    "q": "Put the investigation stages in order. Using the letters, type them in the correct sequence separated by commas (e.g. B,D,A,E,C):<br>A&nbsp;Collect data &bull; B&nbsp;Pose the question &bull; C&nbsp;Report findings &bull; D&nbsp;Design the sample &bull; E&nbsp;Analyse the data.",
+    "a": "B,D,A,E,C",
+    "hint": "What must you decide first, before collecting anything? What comes last?"
+  },
+  {
+    "q": "A sample is <strong>representative<\/strong> when it: A) is as large as the whole population, B) has characteristics similar to the population, C) only includes people who volunteer. Type <strong>A<\/strong>, <strong>B<\/strong> or <strong>C<\/strong>.",
+    "a": "B",
+    "hint": "Representative means the sample looks like the population in miniature."
+  }
+];
+
+  const practice1 = [
+  {
+    "q": "Find the mean of this sample: 5, 7, 7, 9, 12.",
+    "a": "8",
+    "hint": "Sum is 40; divide by 5."
+  },
+  {
+    "q": "Find the median of: 6, 9, 10, 15, 22.",
+    "a": "10",
+    "hint": "Already in order &mdash; take the middle value."
+  },
+  {
+    "q": "Find the range of: 14, 9, 20, 6, 11.",
+    "a": "14",
+    "hint": "Largest minus smallest: 20 − 6."
+  },
+  {
+    "q": "Find the mode of: 3, 5, 5, 5, 8, 9.",
+    "a": "5",
+    "hint": "The mode is the value that appears most often."
+  },
+  {
+    "q": "You want the average daily electricity use of all 700&nbsp;000 SA households. Should you take a census or a sample? Type <strong>census<\/strong> or <strong>sample<\/strong>.",
+    "a": "sample",
+    "hint": "A census of 700 000 households would cost far too much and take too long."
+  },
+  {
+    "q": "A survey selects 300 people from a city of 50&nbsp;000. The 50&nbsp;000 people are the &hellip; Type <strong>population<\/strong> or <strong>sample<\/strong>.",
+    "a": "population",
+    "hint": "The whole city is the group we want a conclusion about."
+  },
+  {
+    "q": "Type the 5 stages in the correct order using letters (e.g. B,E,D,A,C):<br>A&nbsp;Analyse &bull; B&nbsp;Pose the question &bull; C&nbsp;Report &bull; D&nbsp;Collect data &bull; E&nbsp;Design the sample.",
+    "a": "B,E,D,A,C",
+    "hint": "Pose, then design the sample, then collect, then analyse, then report."
+  },
+  {
+    "q": "A sample of 6 households recorded these weekly recycling amounts (kg): 1, 2, 2, 3, 4, 6. Find the mean.",
+    "a": "3",
+    "hint": "Sum is 18; divide by 6."
+  },
+  {
+    "q": "Which sampling method is the most fair and least biased? A) ask only your friends, B) number every student and use a random number generator, C) ask the first 10 people who arrive early. Type <strong>A<\/strong>, <strong>B<\/strong> or <strong>C<\/strong>.",
+    "a": "B",
+    "hint": "A fair method gives every member of the population an equal chance."
+  },
+  {
+    "q": "A sample mean is 4.4 kWh. The best way to report this about the population is: A) &lsquo;Every household increased by exactly 4.4 kWh&rsquo;, B) &lsquo;Household use increased by about 4.4 kWh on average, though the true value may differ&rsquo;, C) &lsquo;No household changed&rsquo;. Type <strong>A<\/strong>, <strong>B<\/strong> or <strong>C<\/strong>.",
+    "a": "B",
+    "hint": "Report a sample result as an estimate, acknowledging uncertainty."
+  }
+];
+
+  const practice2 = [
+  {
+    "q": "Find the median of this sample (even count): 4, 6, 7, 9, 10, 14.",
+    "a": "8",
+    "hint": "Average the two middle values: (7 + 9) &divide; 2."
+  },
+  {
+    "q": "Find the mean of: 4, 5, 5, 6, 6, 7.",
+    "a": "5.5",
+    "hint": "Sum is 33; divide by 6."
+  },
+  {
+    "q": "Sample of 10 households, increases in kWh: 1, 2, 2, 3, 3, 4, 4, 5, 6, 10. The value 10 is much larger than the rest. Which is <em>less<\/em> affected by this outlier &mdash; mean or median? Type <strong>mean<\/strong> or <strong>median<\/strong>.",
+    "a": "median",
+    "hint": "An outlier pulls the mean toward it, but barely moves the middle value."
+  },
+  {
+    "q": "For that same data (1, 2, 2, 3, 3, 4, 4, 5, 6, 10), find the median.",
+    "a": "3.5",
+    "hint": "Average the 5th and 6th values: (3 + 4) &divide; 2."
+  },
+  {
+    "q": "A researcher samples 250 people from 5000 customers. What percentage of the population is sampled? Type just the number of percent.",
+    "a": "5",
+    "hint": "250 &divide; 5000 &times; 100."
+  },
+  {
+    "q": "True or false: increasing the sample size generally makes an inference about the population more reliable. Type <strong>true<\/strong> or <strong>false<\/strong>.",
+    "a": "true",
+    "hint": "Larger samples usually reduce the uncertainty of the estimate."
+  }
+];
+
+  const practice3 = [
+  {
+    "q": "A council samples 8 households&rsquo; quarterly electricity bills ($): 210, 240, 240, 260, 275, 290, 300, 425. Find the <strong>median<\/strong> bill (in dollars).",
+    "a": "267.5",
+    "hint": "They are in order; average the 4th and 5th values: (260 + 275) &divide; 2."
+  },
+  {
+    "q": "For the same 8 bills (210, 240, 240, 260, 275, 290, 300, 425), find the <strong>mean<\/strong> bill (in dollars).",
+    "a": "280",
+    "hint": "Sum is 2240; divide by 8. Notice the mean is above the median &mdash; the $425 bill is an outlier."
+  },
+  {
+    "q": "A school of 800 students runs the reconciliation attitudes survey on a random sample of 40 students. 28 of the 40 agree that &lsquo;learning First Nations histories is important&rsquo;. Using the sample proportion, estimate how many of all 800 students would agree.",
+    "a": "560",
+    "hint": "Sample proportion is 28 &divide; 40 = 0.7; multiply by 800."
+  },
+  {
+    "q": "A group surveys only their own friendship circle about a school-wide question. Their inference is likely to be: A) unbiased and representative, B) biased because the sample is not representative, C) certain and exact. Type <strong>A<\/strong>, <strong>B<\/strong> or <strong>C<\/strong>.",
+    "a": "B",
+    "hint": "A friendship circle is not chosen randomly, so it may not reflect the whole school."
+  }
+];
+
+  const exitProbs = [
+  {
+    "q": "Type the 5 stages of a statistical investigation in order using letters (e.g. C,E,B,D,A):<br>A&nbsp;Report findings &bull; B&nbsp;Collect data &bull; C&nbsp;Pose the question &bull; D&nbsp;Analyse &bull; E&nbsp;Design the sample.",
+    "a": "C,E,B,D,A",
+    "hint": "Pose, design the sample, collect, analyse, then report."
+  },
+  {
+    "q": "Why do we acknowledge uncertainty when reporting a sample result? A) because samples are always wrong, B) because a sample is only part of the population, so it gives an estimate, C) because maths is hard. Type <strong>A<\/strong>, <strong>B<\/strong> or <strong>C<\/strong>.",
+    "a": "B",
+    "hint": "A sample gives an estimate of the population, not an exact certainty."
+  },
+  {
+    "q": "In one or two sentences, explain why a <strong>random sample<\/strong> is fairer than surveying only your friends when investigating a school-wide question.",
+    "a": "TEXT",
+    "hint": "Think about who gets a chance to be included, and whether your friends represent the whole school."
+  }
+];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/[\u2212\u2013\u2014]/g, '-')
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');  // strip leading +
+  }
+  // accept reordered terms: 3x+5 == 5+3x
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null; // open-ended, don't auto-mark
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // numeric equivalence (additive 2026-07-12): decimals and fractions interchangeable;
+    // leading $ and thousands-commas stripped for the numeric compare only.
+    const toNum = s => {
+      s = s.replace(/^\$/, '').replace(/,(?=\d{3}(\D|$))/g, '');
+      if (/^-?\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+      const fm = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+      if (fm && parseFloat(fm[2]) !== 0) return parseFloat(fm[1]) / parseFloat(fm[2]);
+      return null;
+    };
+    const nIn = toNum(norm), nExp = toNum(exp);
+    if (nIn !== null && nExp !== null) return Math.abs(nIn - nExp) < 1e-9 * Math.max(1, Math.abs(nExp));
+    // try sorting terms
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    answerKey[idx] = p.a;
+    if (options.noCount) noCountSet.add(idx);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — no single right answer. Compare your explanation with the hint.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
+    r = r.replace(/(\^)?(-?\d+)\/(\d+)/g, (m, caret, n, d) => {
+      if (caret) return m;  // exponent like a^6/4 — do not stack, handled below
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 2.5: remaining carets become superscripts (a^6/4 -> a<sup>6</sup>/4, x^2 -> x<sup>2</sup>)
+    r = r.replace(/\^(-?\d+)/g, '<sup>$1</sup>');
+    // Step 3: tidy operators — typographic minus, space around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    if (expected === undefined || expected === null) expected = answerKey[idx];
+    if (noCount === undefined || noCount === null) noCount = noCountSet.has(idx);
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      // smooth-scroll the opened section to the top of the viewport
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // ============ RESULTS COPY (display-layer only; reads marked state from the DOM) ============
+  function tierScore(prefix) {
+    const inputs = document.querySelectorAll('input[id^="inp-' + prefix + '"]');
+    let right = 0;
+    inputs.forEach(el => { if (el.classList.contains('correct')) right++; });
+    return right + '/' + inputs.length;
+  }
+  function buildResultsLine() {
+    const nameEl = document.getElementById('studentName');
+    const name = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : '(no name)';
+    const exits = [];
+    document.querySelectorAll('input[id^="inp-E"]').forEach(el => {
+      const idx = el.id.slice(4);
+      let mark = '';
+      if (el.classList.contains('correct')) mark = ' \u2713';
+      else if (el.classList.contains('incorrect')) mark = ' \u2717';
+      exits.push(idx + ' "' + (el.value.trim() || 'blank') + '"' + mark);
+    });
+    return name + ' | ' + document.title +
+      ' | Building ' + tierScore('P') + ' \u00B7 Stretch ' + tierScore('S') + ' \u00B7 Mastery ' + tierScore('C') +
+      ' | Exit: ' + exits.join('; ');
+  }
+  function copyResults() {
+    const line = buildResultsLine();
+    const fb = document.getElementById('copyFeedback');
+    const show = function () { fb.classList.add('show'); setTimeout(function () { fb.classList.remove('show'); }, 2500); };
+    const fallback = function () {
+      const ta = document.createElement('textarea');
+      ta.value = line; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); show();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(line).then(show, fallback);
+    } else { fallback(); }
+  }
+  const crb = document.getElementById('copyResultsBtn');
+  if (crb) crb.addEventListener('click', copyResults);
+
+  // ============ PROGRESS PERSISTENCE (display-layer; restore re-marks via checkAnswer's front door) ============
+  const LS_KEY = 'aphs-lesson:' + (location.pathname.split('/').pop() || 'lesson');
+  let saveTimer = null;
+  function saveProgress() {
+    try {
+      const state = { name: '', inputs: {} };
+      const nm = document.getElementById('studentName');
+      if (nm) state.name = nm.value;
+      document.querySelectorAll('input.problem-input').forEach(el => {
+        const idx = el.id.slice(4);
+        const c = el.classList.contains('correct') ? 'y' : (el.classList.contains('incorrect') ? 'n' : '');
+        if (el.value || c) state.inputs[idx] = { v: el.value, c: c };
+      });
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+  function queueSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveProgress, 400); }
+  function restoreProgress() {
+    let state = null;
+    try { state = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+    if (!state) return;
+    const nm = document.getElementById('studentName');
+    if (nm && state.name) nm.value = state.name;
+    Object.keys(state.inputs || {}).forEach(idx => {
+      const el = document.getElementById('inp-' + idx);
+      if (!el) return;
+      el.value = state.inputs[idx].v;
+      if (state.inputs[idx].c) checkAnswer(idx);
+    });
+  }
+  function resetProgress() {
+    if (!confirm('Clear saved progress for this lesson on this device?')) return;
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    location.reload();
+  }
+  document.addEventListener('input', e => { if (e.target && (e.target.classList.contains('problem-input') || e.target.id === 'studentName')) queueSave(); });
+  document.addEventListener('click', e => { if (e.target && (e.target.classList.contains('check-btn') || e.target.id === 'copyResultsBtn')) setTimeout(saveProgress, 60); });
+  const rpb = document.getElementById('resetProgressBtn');
+  if (rpb) rpb.addEventListener('click', resetProgress);
+  restoreProgress();
+
+  // ============ MISCONCEPTION FEEDBACK (patch 8, display-layer) ============
+  // Optional per-question key: fb: { 'wrong answer': 'targeted feedback', ... }
+  const fbKey = {};
+  [['R', typeof retrieval !== 'undefined' ? retrieval : []],
+   ['W', typeof weDo !== 'undefined' ? weDo : []],
+   ['Q', typeof checkpoint !== 'undefined' ? checkpoint : []],
+   ['P', typeof practice1 !== 'undefined' ? practice1 : []],
+   ['S', typeof practice2 !== 'undefined' ? practice2 : []],
+   ['C', typeof practice3 !== 'undefined' ? practice3 : []],
+   ['E', typeof exitProbs !== 'undefined' ? exitProbs : []]
+  ].forEach(([pre, arr]) => arr.forEach((p, i) => { if (p && p.fb) fbKey[pre + (i + 1)] = p.fb; }));
+  document.addEventListener('click', e => {
+    if (!e.target || !e.target.classList.contains('check-btn')) return;
+    const inp = e.target.closest('.problem-input-row') && e.target.closest('.problem-input-row').querySelector('.problem-input');
+    if (!inp) return;
+    const idx = inp.id.slice(4);
+    let box = document.getElementById('fb-' + idx);
+    if (inp.classList.contains('incorrect') && fbKey[idx]) {
+      let msg = '';
+      Object.keys(fbKey[idx]).forEach(k => { if (!msg && answerMatches(inp.value, k) === true) msg = fbKey[idx][k]; });
+      if (msg) {
+        if (!box) {
+          box = document.createElement('div');
+          box.className = 'misconception-box';
+          box.id = 'fb-' + idx;
+          inp.closest('.problem-input-row').insertAdjacentElement('afterend', box);
+        }
+        box.textContent = msg;
+        box.classList.add('show');
+        return;
+      }
+    }
+    if (box) box.classList.remove('show');
+  });
+
+  // ============ INPUT ERGONOMICS (display-layer) ============
+  Object.keys(answerKey).forEach(idx => {
+    const a = answerKey[idx];
+    const el = document.getElementById('inp-' + idx);
+    if (!el || a === 'TEXT') return;
+    if (/^[\d.,$\s]+$/.test(a)) el.setAttribute('inputmode', 'decimal');
+    let fmt = '';
+    if (/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(a.replace(/\s+/g, ''))) fmt = 'Fraction or decimal both fine \u2014 e.g. 3/4 or 0.75';
+    else if (a.indexOf('^') !== -1) fmt = 'Use ^ for powers \u2014 e.g. x^2';
+    if (fmt) {
+      const d = document.createElement('div');
+      d.className = 'format-hint';
+      d.textContent = fmt;
+      const row = el.closest('.problem-input-row');
+      if (row) row.insertAdjacentElement('afterend', d);
+    }
+  });
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+
+  function initConstantAreaTriangle(cfg){
+  const svg   = document.getElementById(cfg.svgId);
+  if(!svg) return;
+  const apex  = svg.querySelector('#'+cfg.ids.apex);
+  const ring  = svg.querySelector('#'+cfg.ids.focusRing);
+  const fill  = svg.querySelector('#'+cfg.ids.fill);
+  const slA   = svg.querySelector('#'+cfg.ids.slantA);
+  const slB   = svg.querySelector('#'+cfg.ids.slantB);
+  const perp  = svg.querySelector('#'+cfg.ids.perp);
+  const ra    = svg.querySelector('#'+cfg.ids.rightAngle);
+  const cLab  = svg.querySelector('#'+cfg.ids.cLabel);
+  const hLab  = svg.querySelector('#'+cfg.ids.hLabel);
+  const elArea= document.getElementById(cfg.ids.area);
+  const elType= document.getElementById(cfg.ids.type);
+  const elStat= document.getElementById(cfg.ids.status);
+  const btnRst= document.getElementById(cfg.ids.reset);
+
+  const Ax=cfg.Ax, Bx=cfg.Bx, baseY=cfg.baseY, guideY=cfg.guideY;
+  const minX=cfg.minX, maxX=cfg.maxX;
+  const areaValue = 0.5 * cfg.baseCm * cfg.heightCm;
+  const typesSeen = {};
+  let apexX = cfg.startX;
+
+  function svgX(clientX){
+    const pt = svg.createSVGPoint();
+    pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  function clamp(v){ return Math.max(minX, Math.min(maxX, v)); }
+  function classify(x){
+    if(Math.abs(x-Ax)<2 || Math.abs(x-Bx)<2) return 'right-angled';
+    if(x>Ax && x<Bx) return 'acute';
+    return 'obtuse';
+  }
+  function redraw(){
+    apexX = clamp(apexX);
+    fill.setAttribute('points', Ax+','+baseY+' '+Bx+','+baseY+' '+apexX+','+guideY);
+    slA.setAttribute('x2', apexX); slA.setAttribute('y2', guideY);
+    slB.setAttribute('x2', apexX); slB.setAttribute('y2', guideY);
+    perp.setAttribute('x1', apexX); perp.setAttribute('x2', apexX);
+    ra.setAttribute('points', apexX+','+(baseY-12)+' '+(apexX+12)+','+(baseY-12)+' '+(apexX+12)+','+baseY);
+    cLab.setAttribute('x', apexX);
+    hLab.setAttribute('x', apexX+12);
+    hLab.setAttribute('y', (guideY+baseY)/2);
+    apex.setAttribute('cx', apexX);
+    ring.setAttribute('cx', apexX);
+    elArea.textContent = Number.isInteger(areaValue) ? areaValue : areaValue.toFixed(1);
+    const t = classify(apexX);
+    elType.textContent = t;
+    typesSeen[t] = true;
+    apex.setAttribute('aria-valuenow', Math.round((apexX-minX)/(maxX-minX)*100));
+    if(typesSeen['right-angled'] && typesSeen['acute'] && typesSeen['obtuse']){
+      elStat.textContent = "You've made all three triangle types — and the area stayed "+elArea.textContent+" cm² every time.";
+      elStat.classList.add('done');
+    }
+  }
+
+  let dragging=false;
+  apex.addEventListener('pointerdown', function(e){ dragging=true; apex.setPointerCapture(e.pointerId); e.preventDefault(); });
+  apex.addEventListener('pointermove', function(e){ if(dragging){ apexX=clamp(svgX(e.clientX)); redraw(); } });
+  apex.addEventListener('pointerup',   function(){ dragging=false; });
+  apex.addEventListener('pointercancel', function(){ dragging=false; });
+  apex.addEventListener('keydown', function(e){
+    const step = e.shiftKey ? 30 : 10;
+    if(e.key==='ArrowLeft' || e.key==='ArrowDown'){ apexX-=step; redraw(); e.preventDefault(); }
+    if(e.key==='ArrowRight'|| e.key==='ArrowUp'){   apexX+=step; redraw(); e.preventDefault(); }
+  });
+  apex.addEventListener('focus', function(){ ring.setAttribute('opacity','1'); });
+  apex.addEventListener('blur',  function(){ ring.setAttribute('opacity','0'); });
+  btnRst.addEventListener('click', function(){
+    apexX = cfg.startX;
+    elStat.classList.remove('done');
+    elStat.textContent = 'Drag C to a few positions. Notice the area readout.';
+    for(const k in typesSeen) delete typesSeen[k];
+    redraw();
+  });
+
+  redraw();
+}
+
+function otsButtons(list){var cards=list.querySelectorAll(".order-card");cards.forEach(function(c,i){var b=c.querySelectorAll(".order-buttons button");b[0].disabled=(i===0);b[1].disabled=(i===cards.length-1);});}function otsClear(list){list.querySelectorAll(".order-card").forEach(function(c){c.classList.remove("correct","incorrect");});var s=document.getElementById(list.dataset.status);if(s)s.textContent="";}function otsMove(btn,dir){var card=btn.closest(".order-card");if(card.classList.contains("locked"))return;var list=card.parentElement;var sib=dir===-1?card.previousElementSibling:card.nextElementSibling;if(!sib)return;if(dir===-1)list.insertBefore(card,sib);else list.insertBefore(sib,card);otsButtons(list);otsClear(list);}function otsCheck(id){var list=document.getElementById(id);var cards=list.querySelectorAll(".order-card");var all=true;cards.forEach(function(c,i){var exp=parseInt(c.dataset.correctPos,10);c.classList.remove("correct","incorrect");if(exp===i+1){c.classList.add("correct");}else{c.classList.add("incorrect");all=false;}});var s=document.getElementById(list.dataset.status);if(all){if(s)s.textContent="\u2713 Correct order \u2014 the investigation flows.";cards.forEach(function(c){c.classList.add("locked");});}else{var n=list.querySelectorAll(".order-card.correct").length;if(s)s.textContent=n+"/"+cards.length+" in the right place \u2014 keep going.";}}function otsShuffle(id){var list=document.getElementById(id);var cards=Array.from(list.children);for(var i=cards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=cards[i];cards[i]=cards[j];cards[j]=tmp;}cards.forEach(function(c){c.classList.remove("locked");list.appendChild(c);});otsButtons(list);otsClear(list);}function otsShow(id){var list=document.getElementById(id);var cards=Array.from(list.children).sort(function(a,b){return parseInt(a.dataset.correctPos,10)-parseInt(b.dataset.correctPos,10);});cards.forEach(function(c){list.appendChild(c);c.classList.add("correct");c.classList.add("locked");});otsButtons(list);var s=document.getElementById(list.dataset.status);if(s)s.textContent="Answer shown.";}document.querySelectorAll(".order-list").forEach(function(l){otsButtons(l);});
+</script>
+
+</body>
+</html>
