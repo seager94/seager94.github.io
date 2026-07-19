@@ -1,9 +1,9 @@
 {
- "latest_generated_date": "2026-07-10",
+ "latest_generated_date": "2026-07-19",
  "source": "lessonmap.xlsx",
  "tallies": {
-  "Published": 132,
-  "Planned": 89
+  "Published": 136,
+  "Planned": 85
  },
  "coverage": [
   {
@@ -129,14 +129,8 @@
   {
    "year": "8",
    "strand": "Statistics",
-   "status": "Planned",
-   "count": 4
-  },
-  {
-   "year": "8",
-   "strand": "Statistics",
    "status": "Published",
-   "count": 2
+   "count": 6
   },
   {
    "year": "9",
@@ -2551,9 +2545,9 @@
    "prerequisites": [
     "y8_sta_01"
    ],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-07-19",
+   "url": "https://seager94.github.io/year-8/statistics/y8_sta_03_sampling_methods_compared_v2.html"
   },
   {
    "id": "y8_sta_04",
@@ -2573,9 +2567,9 @@
    "prerequisites": [
     "y8_sta_03"
    ],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-07-19",
+   "url": "https://seager94.github.io/year-8/statistics/y8_sta_04_sample_to_sample_variation_v2.html"
   },
   {
    "id": "y8_sta_05",
@@ -2595,9 +2589,9 @@
    "prerequisites": [
     "y8_sta_04"
    ],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-07-19",
+   "url": "https://seager94.github.io/year-8/statistics/y8_sta_05_effect_of_sample_size_v2.html"
   },
   {
    "id": "y8_sta_06",
@@ -2618,9 +2612,9 @@
     "y8_sta_03",
     "y8_sta_05"
    ],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-07-19",
+   "url": "https://seager94.github.io/year-8/statistics/y8_sta_06_statistical_investigation_with_sampling_v2.html"
   },
   {
    "id": "y8_pro_01",

@@ -206,3 +206,36 @@ Nine-step run order executed after the payload pilot. All closed.
 - verify_answers.py misparsed the y8_num_09 const-% questions (wrong P/r extracted from prose) — verdicts were right, parameters weren't. Strengthens the case for the `data-verify` metadata lift already logged 2026-06-08.
 - y10_alg_03 / y10_alg_17 join y10_alg_05 on the fraction-reveal cosmetic list.
 - `.bak` skill folder deletion pending first junction build.
+
+## 2026-07-19 - Y8 Statistics L03-06 published (payload-mode production proof)
+
+**The batch:** 4 lessons, 37 min wall clock, all four OK on the first pass, no CHECKs, no FAILs. L03 + L06 payload mode; L04 + L05 classic (novel resampling widget). Opus 4.8 pinned via `$env:ANTHROPIC_MODEL`, Claude Code v2.1.206. Timings: L03 6.5 min, L04 11.3, L05 10.8, L06 8.7.
+
+**Patch unit acceptance test: PASSED.** Both payload lines emitted payload JSON (not HTML) with verify/fb emission per SKILL.md. Assembler and QA gate re-run independently rather than trusting the agent's self-report: frame 2026-07-12.1 confirmed, 4/4 PASS, exit 0.
+
+**payloads/ repo home DECIDED - deferred item closed.** `payloads/year-N/<strand>/<lesson>.payload.json` mirror tree at repo root, with a README carrying the keep-forever rule. Pilots L01/L02 moved in alongside L03/L06. Versioned, and out of the Pages paths students use.
+
+**batch-hide added to run-batch-v2.ps1.** The local runner now matches the GH Actions protection: tasks.txt is moved to `..\_tasks-hidden\` for the duration of the run and restored at the end. `$tasks` is read into memory once at the top, so the move is safe. Needed because `claude -p` reads anywhere, and this batch's L05 line explicitly instructed the agent to read the working directory.
+
+**NEW FINDING - `acceptsSynonym` does not exist.** Zero references in the frame and zero in every generated lesson. It has been carried in the toolkit notes as "the non-locked fallback for free-text vocabulary answers" but it was only ever a plan; nothing was built. Free-text word answers mark on exact string match alone. This makes the MCQ rule below load-bearing, not cosmetic.
+
+**Two content rules adopted (queued for SKILL.md):**
+- (a) Never demand an answer form the marker does not enforce. The numeric-equivalence patch (2026-07-12) makes decimals and fractions interchangeable, so "as a decimal" and "(simplest fraction)" are unenforceable instructions. Three instances fixed in L05. Typing 18/30 for a "simplest fraction" question goes green, and that is now correct behaviour - the question was the defect, not the marker.
+- (b) One-word vocabulary recall is MCQ by default. Free-text word answers only where free recall is the actual objective AND the answer set is closed by the question itself (true/false, mean vs median, sample vs census). L03 retrieval[2] shipped answer "represents" with a hint reading "mirror" - converted to MCQ. L03 exitProbs[1] ("stratified") kept as free recall by decision: naming the method unprompted is the exit ticket's job.
+
+**lesson-focus must be supplied from the map in the task line.** It was omitted, so the agent authored one for all four lessons and all four diverged from the planned `lesson_focus`; L03's diverged substantively (advertised the strategy, dropped the probabilistic terms). All four synced to map values. Note L05's visible panel carried different text from its own meta tag - panel and meta must both be checked, a single-anchor replace only catches one.
+
+**L04 sample-size toggle stripped.** L04 built an unrequested 10/20/40 toggle, inferred from AC9M8ST03 (which legitimately covers both variation and sample-size effect, as L04 and L05 share that descriptor). L05 owns sample size properly with n=5 vs n=30, so L04 now holds n fixed at 10 and L05's reveal lands as a discovery. Removed the container div; `setSize()` left in place as dead-but-harmless code, and the three `querySelectorAll('.rs-size-btn')` calls are safe no-ops on an empty list.
+
+**Widget harvest note.** L04 and L05 ended with two widget variants, not one shared component - L05 re-themed the population to 100 Ranger quadrat counts (mean ~14.1) with two persistent piles on a shared axis. Pedagogically the better outcome, but the harvest into the strategy kit is a pattern, not a copyable block. L05's Always/Sometimes/Never is a bespoke drag-sort (bounce-back on wrong drops) - iPad touch-tested, passed.
+
+**New tooling gotchas:**
+- `publish-lesson-v2.ps1` was blocked by mark-of-the-web on first use (RemoteSigned policy + Zone.Identifier stream). `Unblock-File` fixed it; no policy change needed. Any new .ps1 arriving via download or certain copy paths will hit this - check with `Get-Item -Stream Zone.Identifier`.
+- `check-ascii.ps1` does not exist as a file anywhere under projects\. It is in the toolkit list but never landed. close-out.ps1's built-in sweep covers .ps1 files; inline sweeps used for anything else.
+- `run-batch-v2.ps1` numbers tasks by line including blanks, so a 4-line list reports Task 1, 3, 5, 7. Cosmetic, but the re-run guidance quotes the same numbers.
+- `[System.IO.File]::ReadAllText/WriteAllText` resolve relative paths against the process working directory (C:\windows\system32), NOT PowerShell's location. Always `Resolve-Path` first or build from `$PWD`. A guarded edit caught this silently - anchors read 0 occurrences and nothing was written.
+- `payloads/` is not covered by .gitattributes - LF to CRLF warnings on commit. Harmless for JSON; worth a rule line eventually.
+
+**Non-ASCII in payload JSONs is normal and expected.** Em-dashes, middot separators, "R-10" en dash and proper minus are lesson typography, and the published pilots carry the same (28 and 30 lines). JSON is UTF-8 by spec. The em-dash hazard rule applies to generated .ps1 files only - a mis-flag corrected this session.
+
+**Map:** rows 113-116 flipped to Published, dated 2026-07-19, URLs written from the pilot's pattern. Conventions read from y8_sta_01 rather than assumed; reopen-after-save confirmation passed. Published count 132 -> 136.
