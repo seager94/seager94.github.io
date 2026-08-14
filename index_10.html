@@ -1,0 +1,2283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1D2B5E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Eager4Maths">
+<title>Eager4Maths</title>
+<style>
+  /* Palette: house navy/coral/light-grey + spec-semantic state colours.
+     Contrast verified (computed): body/muted text >=4.5:1; large display
+     text (>=24px) >=3:1. Coral (#E8485A, 3.81:1 on white) is reserved for
+     backgrounds and large bold text; small coral text uses --coral-deep
+     (5.09:1 on white, 4.66:1 on bg). State is never carried by colour alone
+     (always paired with a glyph + text label); no red/green slip axis.
+     Known residual: the fact grids are colour-coded cells backed by a text
+     legend; per-cell glyphs for colour-blind discrimination are deferred. */
+  :root{
+    --bg:#F3F5F8; --surface:#FFFFFF; --navy:#1D2B5E; --ink:#2A2F3A;
+    --muted:#586273; --line:#DDE5F5; --line2:#E7ECF5;
+    --coral:#E8485A; --coral-press:#CF3F50; --coral-deep:#C9374A;
+    --gold-fill:#F2B705; --gold-edge:#6B4E00; --star-outline:#6B7280;
+    --refresh:#4E78B8; --lock:#7A8290; --ok:#1B7F4B; --soft:#8A5A00;
+    --hint-bg:#DDE5F5;
+    --shadow:0 1px 2px rgba(29,43,94,.06),0 3px 10px rgba(29,43,94,.06);
+    --r:16px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  #app{max-width:440px;margin:0 auto;min-height:100vh;min-height:100dvh}
+  .screen{padding:22px 20px calc(28px + env(safe-area-inset-bottom))}
+  .brand{font:700 14px/1 Georgia,serif;letter-spacing:.04em;color:var(--navy);text-transform:uppercase;opacity:.75;margin-bottom:14px}
+  .greet{font:600 17px/1.2 Georgia,serif;color:var(--navy);margin:0 0 14px}
+  .h1{font:700 26px/1.18 Georgia,serif;color:var(--navy);margin:6px 0 10px}
+  .lede{color:var(--muted);margin:0 0 18px}
+  .muted{color:var(--muted)}
+  b{color:var(--ink)}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin:0 0 16px}
+  .card.pad{padding:18px}
+  .ctitle{font:600 15px/1.2 Georgia,serif;color:var(--navy);margin-bottom:8px}
+  .ctitle.small{font-size:13px;letter-spacing:.02em;text-transform:uppercase;opacity:.8;margin-bottom:10px}
+
+  /* collection */
+  .collection{text-align:center;padding-top:20px}
+  .count-big{font:800 56px/1 Georgia,serif;color:var(--navy);margin:2px 0 12px}
+  .bar{height:10px;border-radius:999px;background:var(--line2);overflow:hidden;margin:0 auto 6px;max-width:240px}
+  .bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#9FB4E6,var(--navy));transition:width .5s ease}
+  .growing{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+  .tiers{display:flex;flex-direction:column;gap:6px;align-items:center}
+  .tier{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink)}
+  .tier b{min-width:1.4em;text-align:right}
+  .tier span{color:var(--muted)}
+  .glyph{vertical-align:middle;flex:none}
+
+  /* buttons */
+  .cta{display:block;width:100%;border:0;border-radius:14px;background:var(--coral);color:#fff;
+    font:700 18px/1.2 inherit;padding:16px;cursor:pointer;box-shadow:0 2px 8px rgba(232,72,90,.28);
+    transition:transform .06s ease,background .15s ease;margin:2px 0 16px}
+  .cta:active{transform:translateY(1px);background:var(--coral-press)}
+  .cta.big{padding:20px}
+  .cta small{display:block;font:500 13px/1 inherit;opacity:.92;margin-top:6px}
+  .btn{display:inline-block;border:1.5px solid var(--line);background:var(--surface);color:var(--navy);
+    font:600 16px/1.2 inherit;padding:13px 16px;border-radius:12px;cursor:pointer;transition:border-color .15s}
+  .btn:active{border-color:#c4cfe6}
+  .btn.wide{display:block;width:100%;text-align:center}
+  .link{background:none;border:0;color:var(--navy);font:600 15px/1 inherit;padding:10px 4px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#b9c4df}
+  .link.suggest{display:block;margin:2px auto 14px;text-align:center}
+  .link.back{padding-left:0;margin-bottom:6px;text-decoration:none}
+  .link.skip{display:block;margin:14px auto 0;color:var(--muted);font-weight:500}
+  .links{display:flex;justify-content:center;gap:20px;margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+
+  .lbl{display:block;font-size:14px;color:var(--ink);margin-bottom:8px}
+  .textin{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font:500 18px/1.2 inherit;color:var(--ink)}
+  .textin:focus{outline:none;border-color:var(--navy)}
+
+  /* family chain */
+  .chain-card{padding:14px 12px}
+  .chain{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 4px}
+  .node{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:54px}
+  .nq{font:600 13px/1 inherit;color:var(--ink)}
+  .arrow{color:#aeb8cc;font-size:14px;padding:0 1px;align-self:center;margin-top:-10px}
+
+  .row{font-size:15px;color:var(--ink);margin:0 0 10px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .row.streak{justify-content:space-between}
+  .row.trend{color:var(--navy)}
+  .big-row{font-size:17px}
+  .up{color:var(--ok);font-weight:700;font-size:14px}
+
+  /* play screen */
+  .play{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+  .beat{font:600 13px/1 inherit;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .prog{color:var(--muted);font-weight:500;text-transform:none;letter-spacing:0;margin-left:6px}
+  .qcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);
+    padding:34px 20px;text-align:center;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px;min-height:130px}
+  .prompt{font:700 40px/1 Georgia,serif;color:var(--navy)}
+  .eq{font:700 34px/1 Georgia,serif;color:#8792AB}
+  .answer{font:700 40px/1 Georgia,serif;color:var(--ink);min-width:64px;text-align:left}
+  .answer.ok{color:var(--ok)} .answer.soft{color:var(--soft)}
+  .cursor{color:#c4cfe6;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+
+  .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto}
+  .key{border:1px solid var(--line);background:var(--surface);color:var(--navy);
+    font:600 24px/1 Georgia,serif;padding:18px 0;border-radius:14px;cursor:pointer;box-shadow:var(--shadow);
+    transition:transform .05s ease,background .12s}
+  .key:active{transform:translateY(1px);background:#f2f5fb}
+  .key.go{background:var(--coral);color:#fff;border-color:var(--coral);box-shadow:0 2px 8px rgba(232,72,90,.28)}
+  .key.go:active{background:var(--coral-press)}
+  .key.sub{color:var(--muted);font-size:22px}
+
+  .fb{margin-top:auto;text-align:center;font:600 22px/1.3 Georgia,serif;padding:24px 0}
+  .fb.ok{color:var(--ok)} .fb.soft{color:var(--soft)}
+  .metacog{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:10px}
+  .mq{text-align:center;color:var(--muted);font-size:14px;margin-bottom:2px}
+  .mbtn{border:1.5px solid var(--line);background:var(--surface);color:var(--navy);font:600 16px/1.2 inherit;padding:14px;border-radius:12px;cursor:pointer}
+  .mbtn:active{border-color:#c4cfe6}
+
+  /* strategy card */
+  .cardface{padding:24px 20px;text-align:center}
+  .cprompt{font:700 34px/1 Georgia,serif;color:var(--navy);margin-bottom:14px}
+  .ctalk{font:600 19px/1.4 inherit;color:var(--ink);margin-bottom:12px}
+  .cegs{font:500 16px/1.4 inherit;color:var(--muted);background:var(--hint-bg);border-radius:12px;padding:10px 12px;display:inline-block}
+
+  .goldwin{display:flex;align-items:center;gap:10px;font:700 20px/1 Georgia,serif;color:var(--navy);padding:6px 0}
+
+  .legend{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;color:var(--muted);font-size:13px;margin-bottom:14px}
+  .fam{padding:14px 12px}
+  .filein{cursor:pointer}
+
+  .hint{background:var(--hint-bg);color:#3a4a78;font-style:italic;font-size:14px;border-radius:12px;padding:11px 14px;margin-top:14px}
+
+  /* facts grid + per-op summary */
+  .mapnote{color:var(--muted);font-size:13px;margin:0 0 12px}
+  .mt{margin-top:18px}
+  .gtabs{display:flex;gap:6px;margin-bottom:12px}
+  .gtab{flex:1;padding:8px 6px;border:none;border-radius:10px;background:var(--line2);color:var(--muted);font:600 13px/1.1 inherit;cursor:pointer}
+  .gtab.active{background:var(--navy);color:#fff}
+  .gcar{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .gcar::-webkit-scrollbar{display:none}
+  .gslide{flex:0 0 94%;scroll-snap-align:start;min-width:0}
+  .tapnote{margin:10px 0 0;text-align:center}
+  .mgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+  .gc{aspect-ratio:1;border-radius:3px;background:#E8ECF3;box-shadow:inset 0 0 0 1px rgba(29,43,94,.04)}
+  /* aspect-ratio needs Safari 15 (2021). On older hand-me-down phones the
+     cells would otherwise collapse to zero height — fall back to a fixed
+     height (slightly non-square beats invisible). */
+  @supports not (aspect-ratio: 1){ .gc{height:26px} }
+  .glabel,.gcorner{background:none;box-shadow:none;display:flex;align-items:center;justify-content:center;font:600 10px/1 Georgia,serif;color:var(--muted)}
+  .glabel.tap{color:var(--coral-deep);cursor:pointer;font-size:11px}
+  .glabel.tap:hover{text-decoration:underline}
+  .srows{display:flex;flex-direction:column}
+  .srow{display:flex;align-items:center;justify-content:space-between;padding:9px 4px;border-bottom:1px solid var(--line2);font-size:16px;color:var(--ink)}
+  .srow:last-child{border-bottom:none}
+  .srow.locked{color:var(--muted)}
+  .srow .sq{font-variant-numeric:tabular-nums}
+  .gc.new{background:#E8ECF3}
+  .gc.acq{background:#F4C20D}
+  .gc.flu{background:#5B8DD6}
+  .gc.auto{background:#1B9E57}
+  .gc.refresh{background:#1B9E57;box-shadow:inset 0 0 0 2px #1D2B5E}
+  .gridleg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12px;color:var(--muted)}
+  .gridleg span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:13px;height:13px;border-radius:3px;display:inline-block;box-shadow:inset 0 0 0 1px rgba(29,43,94,.06)}
+  .sw.new{background:#E8ECF3}.sw.acq{background:#F4C20D}.sw.flu{background:#5B8DD6}.sw.auto{background:#1B9E57}
+  .opsum{display:flex;flex-direction:column;gap:9px}
+  .opr{display:flex;align-items:center;gap:10px;font-size:13px}
+  .opl{width:96px;color:var(--ink);flex:none}
+  .opbar{flex:1;height:8px;border-radius:999px;background:var(--line2);overflow:hidden}
+  .opbar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#3FB873,#1B9E57)}
+  .opn{width:46px;text-align:right;color:var(--muted);flex:none}
+  .clabel{font:600 12px/1 inherit;letter-spacing:.04em;text-transform:uppercase;color:var(--coral-deep);margin-bottom:10px}
+  .cworked{font:600 17px/1.45 inherit;color:var(--ink);background:var(--hint-bg);border-radius:12px;padding:12px 14px;display:inline-block;margin-top:4px}
+
+  /* ?debug engine report */
+  .report{padding:20px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace}
+  .report h1{font:600 20px/1.3 Georgia,serif;color:var(--navy);margin:0 0 2px}
+  .report h2{font:600 14px/1.4 ui-monospace,monospace;color:var(--navy);margin:18px 0 6px}
+  .report .sub{color:var(--muted)} .report .ok{color:var(--ok);font-weight:700} .report .bad{color:#C0392B;font-weight:700}
+  .report section{border-top:1px solid var(--line);padding-top:6px}
+  .report table{border-collapse:collapse;margin-top:8px;font-size:12px;width:100%}
+  .report th,.report td{border:1px solid var(--line);padding:5px 7px;text-align:left}
+  .report .foot{margin-top:18px;padding-top:10px;border-top:2px solid var(--coral);color:var(--navy);font-weight:600}
+
+  /* Respect the OS "reduce motion" setting: no blink, no slide, no smooth
+     scroll. Nothing is conveyed by motion alone, so this is purely comfort. */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;scroll-behavior:auto !important}
+    .cursor{animation:none}
+    .bar span{transition:none}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ============================================================================
+ * Eager4Maths — Checkpoint A: headless fact-fluency engine
+ * ----------------------------------------------------------------------------
+ * Single-file architecture (build plan §3). This file is DUAL-MODE:
+ *   - run with `node engine.js`  -> prints a test/sim report to the console
+ *   - embedded in index.html     -> renders the same report into #app
+ * The Content / Engine / Store / Debug namespaces are byte-identical in both;
+ * only the bottom dispatch differs (window present => browser, else => node).
+ *
+ * Checkpoint A is HEADLESS: no student UI. Verified entirely through
+ * Debug.validateContent() + Debug.runTests() + Debug.simulate().
+ * UI (the five-beat session, dashboard, cards) is Checkpoint B (M6+).
+ * ==========================================================================*/
+
+/* ---- injected Clock + seeded Rng (testability; build plan §3) ------------ */
+const Clock = { now: () => Date.now() };          // .now is swappable (sim/tests)
+function makeRng(seed) {                            // mulberry32 (deterministic)
+  let s = seed >>> 0;
+  return () => {
+    s |= 0; s = (s + 0x6D2B79F5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+let Rng = makeRng(Date.now());
+
+/* ===========================================================================
+ * CONTENT  — pure data + pure functions. No DOM, no state, no Clock/Rng.
+ *   fact universe, INTRO_ORDER, helper maps (all four ops), ordering keys,
+ *   card copy, empty-state copy, DEFAULT_SETTINGS.
+ * ==========================================================================*/
+const Content = (() => {
+  const ADD_MAX = 10;   // addends 0..10 (10 needed so add_10_10 backs 2x10)
+  const MUL_MAX = 10;   // factors 0..10 (covers the whole INTRO_ORDER)
+  const INTRO_ORDER = [2, 10, 5, 1, 0, 9, 4, 8, 3, 6, 7]; // settled mul order
+
+  // ---- id construction (canonical: smaller factor/addend first) ----------
+  const addId = (a, b) => { const x = Math.min(a, b), y = Math.max(a, b); return `add_${x}_${y}`; };
+  const subId = (min, sub) => `sub_${min}_${sub}`;
+  const mulId = (a, b) => { const x = Math.min(a, b), y = Math.max(a, b); return `mul_${x}_${y}`; };
+  const divId = (prod, divisor) => `div_${prod}_${divisor}`;
+  const parse = (id) => { const p = id.split('_'); return { op: p[0], a: +p[1], b: +p[2] }; };
+
+  // ---- universe (deduped, sorted for stable iteration) -------------------
+  function buildUniverse() {
+    const ids = new Set();
+    for (let a = 0; a <= ADD_MAX; a++) {
+      for (let b = a; b <= ADD_MAX; b++) {
+        ids.add(addId(a, b));
+        const s = a + b;
+        ids.add(subId(s, a));
+        ids.add(subId(s, b));            // a===b => same id, Set dedupes
+      }
+    }
+    for (let a = 0; a <= MUL_MAX; a++) {
+      for (let b = a; b <= MUL_MAX; b++) {
+        ids.add(mulId(a, b));
+        if (a >= 1 && b >= 1) {          // division excludes all ÷0 and 0÷ facts
+          const p = a * b;
+          ids.add(divId(p, a));
+          ids.add(divId(p, b));
+        }
+      }
+    }
+    return [...ids].sort();
+  }
+  const ALL = buildUniverse();
+  const allFactIds = () => ALL;
+  const domainOf = (id) => {
+    const op = id.split('_')[0];
+    return (op === 'add' || op === 'sub') ? 'add_sub' : 'mul_div';
+  };
+
+  // ---- multiplication lead-factor machinery (engine §6.2) ----------------
+  const introIdx = (n) => INTRO_ORDER.indexOf(n);
+  const leadFactor = (a, b) => (introIdx(a) <= introIdx(b) ? a : b);
+  const otherFactor = (a, b) => (leadFactor(a, b) === a ? b : a);
+  function helpersOfMul(a, b) {
+    const L = leadFactor(a, b), O = otherFactor(a, b);
+    switch (L) {
+      case 0: case 1: case 10: return [];          // anchors
+      case 2: return [addId(O, O)];                // double the other factor
+      case 5: return [mulId(10, O)];               // half of x10
+      case 9: return [mulId(10, O)];               // x10 minus a group
+      case 4: return [mulId(2, O)];                // double-double
+      case 8: return [mulId(4, O)];                // x4 then double
+      case 3: return [mulId(2, O)];                // distributive off x2
+      case 6: return [mulId(5, O)];                // distributive off x5
+      case 7: return [mulId(5, O)];                // distributive off x5
+      default: return [];
+    }
+  }
+
+  // ---- helpersOf: the unlock dependency for every fact (engine §6.2) -----
+  // ENGINEERING DECISION (fills a spec gap): addition has NO hard helper
+  // gates — the engine spec gives helper maps only for sub/div/mul. The
+  // addition introduction ORDER is expressed as a sort key (addPhaseRank),
+  // not a hard interlock. See README/summary note.
+  function helpersOf(id) {
+    const { op, a, b } = parse(id);
+    if (op === 'add') return [];
+    if (op === 'sub') return [addId(b, a - b)];     // think-addition parent
+    if (op === 'mul') return helpersOfMul(a, b);
+    if (op === 'div') return [mulId(b, a / b)];     // think-multiplication parent
+    return [];
+  }
+
+  // ---- introduction ordering ---------------------------------------------
+  // Addition phase priority (count-on -> doubles -> partners-to-ten ->
+  // make-ten -> near-doubles -> leftovers). Ordering only; tunable content.
+  function addPhaseRank(a, b) {
+    const small = Math.min(a, b), large = Math.max(a, b), sum = a + b;
+    if (small <= 2) return 0;                       // +0/+1/+2 count-on
+    if (a === b) return 1;                          // doubles
+    if (sum === 10) return 2;                       // partners to ten
+    if (small === 8 || small === 9 || large === 8 || large === 9) return 3; // make-ten
+    if (Math.abs(a - b) === 1) return 4;            // near-doubles
+    return 5;                                       // leftovers
+  }
+  const leadIdxOf = (id) => {
+    const { op, a, b } = parse(id);
+    if (op === 'mul') return introIdx(leadFactor(a, b));
+    if (op === 'div') return introIdx(leadFactor(b, a / b)); // inherit mul parent
+    return -1;
+  };
+  function orderKey(id) {
+    const { op, a, b } = parse(id);
+    if (op === 'add') return [0, addPhaseRank(a, b), a + b, Math.min(a, b)];
+    if (op === 'sub') { const p = parse(helpersOf(id)[0]); return [0, addPhaseRank(p.a, p.b), p.a + p.b, Math.min(p.a, p.b), 1]; }
+    if (op === 'mul') return [1, leadIdxOf(id), a * b, Math.min(a, b)];
+    if (op === 'div') { const p = parse(helpersOf(id)[0]); return [1, leadIdxOf(id), p.a * p.b, Math.min(p.a, p.b), 1]; }
+    return [9];
+  }
+  function compareKeys(x, y) {
+    const n = Math.max(x.length, y.length);
+    for (let i = 0; i < n; i++) {
+      const xv = i < x.length ? x[i] : -1;
+      const yv = i < y.length ? y[i] : -1;
+      if (xv !== yv) return xv - yv;
+    }
+    return 0;
+  }
+
+  // ---- strategy-card copy (data only; rendered at Checkpoint B) -----------
+  // First-person self-talk + worked example per strategy (strategy spec §5-8).
+  const CARDS = {
+    add_doubles:      { helper: null,          talk: "I just know my doubles.",                       eg: "6 + 6 = 12." },
+    add_counton:      { helper: null,          talk: "I start at the big number and count on.",        eg: "8 + 2 -> 9, 10." },
+    add_make_ten:     { helper: "partners_ten",talk: "I give one number enough to make ten, then add the rest.", eg: "8 + 6 -> 8+2=10, +4 = 14." },
+    add_near_double:  { helper: "doubles",     talk: "I use the double I know and adjust by one.",      eg: "7 + 8 -> 7+7=14, +1 = 15." },
+    sub_think_add:    { helper: "addition",    talk: "I think: what do I add to get back?",             eg: "13 - 6 -> 6 + ? = 13, so 7." },
+    mul_x2:           { helper: "add_doubles", talk: "Two groups is the number doubled.",               eg: "2 x 7 -> double 7 = 14." },
+    mul_x5:           { helper: "mul_x10",     talk: "Five is half of ten.",                            eg: "5 x 8 -> 10x8=80, half = 40." },
+    mul_x9:           { helper: "mul_x10",     talk: "Nine is ten groups take one group away.",          eg: "9 x 6 -> 60 - 6 = 54." },
+    mul_x4:           { helper: "mul_x2",      talk: "Four is double, then double again.",              eg: "4 x 7 -> 14, double = 28." },
+    mul_x8:           { helper: "mul_x4",      talk: "Eight is four groups doubled.",                   eg: "8 x 6 -> 24, double = 48." },
+    mul_x3:           { helper: "mul_x2",      talk: "Three is two groups plus one more group.",         eg: "3 x 7 -> 14 + 7 = 21." },
+    mul_x6:           { helper: "mul_x5",      talk: "Six is five groups plus one more group.",          eg: "6 x 7 -> 35 + 7 = 42." },
+    mul_x7:           { helper: "mul_x5",      talk: "Seven is five groups plus two more groups.",       eg: "7 x 8 -> 40 + 16 = 56." },
+    div_think_mul:    { helper: "mul",         talk: "I think: what times the divisor gives this?",      eg: "42 / 6 -> 6 x ? = 42, so 7." }
+  };
+
+  // ---- empty-state / first-run copy (dashboard §2.9; rendered at B) -------
+  const COPY = {
+    greetingNoName: "Hi \uD83D\uDC4B",
+    greetingName:   (n) => `Hi ${n} \uD83D\uDC4B`,
+    collectionEmpty: "Your collection starts here. Do a session to find your first facts.",
+    canDo:           "can do",
+    knowByHeart:     "know it off by heart",
+    streakStart:     "You've started a streak — come back tomorrow to keep it going."
+  };
+
+  // ---- defaults (engine §7, placement §9, dashboard §9) ------------------
+  const DAY = 86400000;
+  const DEFAULT_SETTINGS = {
+    version: 1,
+    automaticThresholdMs: 3000,         // ship-fixed "kinder" value; revisit in pilot
+    retrievedMs: 3000,                  // placement fast/slow boundary (== auto in v1)
+    currentDomain: 'add_sub',
+    domainAdvanceThreshold: 0.85,
+    activeTargetCap: 3,
+    knownRatio: 0.8,
+    newPerSession: 1,
+    trialsPerSession: 24,
+    placementWarmupItems: 2,            // untimed warm-up (no-op headless)
+    placementRetrievedMs: 3000,
+    basalCreditThreshold: 0.85,         // addition accuracy that credits the add/sub domain
+    streakGraceDays: 1,
+    reviewScheduleMs: [1, 3, 7, 16, 35].map(d => d * DAY),
+    recentCap: 5,
+    attemptLogCap: 5000                 // append-only RT log for pilot calibration (~275KB max)
+  };
+
+  // ---- render a fact as a question (UI uses this; pure) ------------------
+  function factQuestion(id, rng) {
+    const { op, a, b } = parse(id);
+    const swap = !!rng && rng() < 0.5;                  // present both orientations
+    if (op === 'add') { const x = swap ? b : a, y = swap ? a : b; return { prompt: x + ' + ' + y, answer: a + b }; }
+    if (op === 'sub') { return { prompt: a + ' \u2212 ' + b, answer: a - b }; }
+    if (op === 'mul') { const x = swap ? b : a, y = swap ? a : b; return { prompt: x + ' \u00D7 ' + y, answer: a * b }; }
+    if (op === 'div') { return { prompt: a + ' \u00F7 ' + b, answer: a / b }; }
+    return { prompt: '?', answer: 0 };
+  }
+  // ---- which strategy card applies to a fact (or null) -------------------
+  function cardKeyFor(id) {
+    const { op, a, b } = parse(id);
+    if (op === 'sub') return 'sub_think_add';
+    if (op === 'div') return 'div_think_mul';
+    if (op === 'add') { const r = addPhaseRank(a, b); return r === 0 ? 'add_counton' : r === 1 ? 'add_doubles' : r === 3 ? 'add_make_ten' : r === 4 ? 'add_near_double' : null; }
+    if (op === 'mul') { const m = { 2: 'mul_x2', 5: 'mul_x5', 9: 'mul_x9', 4: 'mul_x4', 8: 'mul_x8', 3: 'mul_x3', 6: 'mul_x6', 7: 'mul_x7' }; return m[leadFactor(a, b)] || null; }
+    return null;
+  }
+  function cardForFact(id) { const k = cardKeyFor(id); return k ? Object.assign({ key: k }, CARDS[k]) : null; }
+  // ---- fact-family helpers (the dashboard chain; pure) -------------------
+  function familyPairOf(id) {
+    const { op, a, b } = parse(id);
+    if (op === 'add' || op === 'mul') return [Math.min(a, b), Math.max(a, b)];
+    if (op === 'sub') { const d = a - b; return [Math.min(b, d), Math.max(b, d)]; }
+    if (op === 'div') { const q = a / b; return [Math.min(b, q), Math.max(b, q)]; }
+    return [0, 0];
+  }
+  function familyMembers(a, b) {
+    const sum = a + b, prod = a * b, ids = [addId(a, b), subId(sum, a)];
+    if (a !== b) ids.push(subId(sum, b));
+    ids.push(mulId(a, b));
+    if (a >= 1 && b >= 1) { ids.push(divId(prod, a)); if (a !== b) ids.push(divId(prod, b)); }
+    return ids;
+  }
+
+  // ---- worked strategy card for a SPECIFIC fact (computed, not generic) --
+  function cardContent(id) {
+    const { op, a, b } = parse(id);
+    if (op === 'add') {
+      const r = addPhaseRank(a, b), sum = a + b, small = Math.min(a, b), large = Math.max(a, b);
+      if (r === 0) {
+        if (small === 0) return { label: 'Adding zero', talk: "Adding zero doesn't change the number.", worked: `${large} + 0 = ${large}` };
+        const s = []; for (let i = 1; i <= small; i++) s.push(large + i);
+        return { label: 'Count on', talk: 'Start at the bigger number and count on.', worked: `${large} + ${small} \u2192 start at ${large}: ${s.join(', ')}` };
+      }
+      if (r === 1) return { label: 'Doubles', talk: 'A double is a number added to itself \u2014 worth knowing by heart.', worked: `${a} + ${b} = ${sum}` };
+      if (r === 3) { const need = 10 - large; if (need <= 0) return null; const rest = small - need; return { label: 'Make ten', talk: "Make a ten first, then add what's left.", worked: `${large} + ${small} \u2192 ${large} + ${need} = 10, then + ${rest} = ${sum}` }; }
+      if (r === 4) return { label: 'Near double', talk: 'Use the double you know, then adjust.', worked: `${small} + ${large} \u2192 ${small} + ${small} = ${2 * small}, + ${large - small} = ${sum}` };
+      return null;
+    }
+    if (op === 'sub') { const diff = a - b; return { label: 'Think addition', talk: 'Think: what do you add to get back up?', worked: `${a} \u2212 ${b} \u2192 ${b} + ${diff} = ${a}, so ${diff}` }; }
+    if (op === 'mul') {
+      const L = leadFactor(a, b), O = otherFactor(a, b), p = a * b, show = `${a} \u00D7 ${b}`;
+      if (L === 2) return { label: 'Double it', talk: 'Two groups is the number doubled.', worked: `${show} \u2192 double ${O} = ${p}` };
+      if (L === 5) return { label: 'Half of ten', talk: 'Five is half of ten.', worked: `${show} \u2192 10 \u00D7 ${O} = ${10 * O}, half = ${p}` };
+      if (L === 9) return { label: 'Almost ten', talk: 'Ten groups, then take one group away.', worked: `${show} \u2192 10 \u00D7 ${O} = ${10 * O}, \u2212 ${O} = ${p}` };
+      if (L === 4) return { label: 'Double, double', talk: 'Double, then double again.', worked: `${show} \u2192 2 \u00D7 ${O} = ${2 * O}, double = ${p}` };
+      if (L === 8) return { label: 'Double three times', talk: 'Double the number three times.', worked: `${show} \u2192 ${O} \u2192 ${2 * O} \u2192 ${4 * O} \u2192 ${p}` };
+      if (L === 3) return { label: 'Two groups + one', talk: 'Two groups, then one more group.', worked: `${show} \u2192 2 \u00D7 ${O} = ${2 * O}, + ${O} = ${p}` };
+      if (L === 6) return { label: 'Five groups + one', talk: 'Five groups, then one more group.', worked: `${show} \u2192 5 \u00D7 ${O} = ${5 * O}, + ${O} = ${p}` };
+      if (L === 7) return { label: 'Five groups + two', talk: 'Five groups, then two more groups.', worked: `${show} \u2192 5 \u00D7 ${O} = ${5 * O}, + 2 \u00D7 ${O} = ${2 * O}, = ${p}` };
+      return null;
+    }
+    if (op === 'div') { const q = a / b; return { label: 'Think multiplication', talk: `Think: what times ${b} gives ${a}?`, worked: `${a} \u00F7 ${b} \u2192 ${b} \u00D7 ${q} = ${a}, so ${q}` }; }
+    return null;
+  }
+
+  return {
+    INTRO_ORDER, allFactIds, domainOf, parse,
+    addId, subId, mulId, divId,
+    introIdx, leadFactor, otherFactor, helpersOf, helpersOfMul,
+    addPhaseRank, leadIdxOf, orderKey, compareKeys,
+    factQuestion, cardKeyFor, cardForFact, cardContent, familyPairOf, familyMembers,
+    CARDS, COPY, DEFAULT_SETTINGS
+  };
+})();
+
+/* ===========================================================================
+ * ENGINE  — pure logic over a `profile`. Reads Content/Clock/Rng.
+ *   state machine, gates + latch + domain transition, item selection,
+ *   review scheduling, reduced placement (Option B), streak. No DOM.
+ * ==========================================================================*/
+const Engine = (() => {
+  const S0 = Content.DEFAULT_SETTINGS;
+
+  // ---- fresh profile: ALL facts initialised to `new` (clean gate logic) --
+  function newProfile() {
+    const facts = {};
+    for (const id of Content.allFactIds()) {
+      facts[id] = { state: 'new', attempts: 0, recent: [], medianMs: undefined, lastSeen: 0, reviewInterval: S0.reviewScheduleMs[0], everFluent: false, everAutomatic: false };
+    }
+    // COUNT-ON CREDIT (pacing decision, Jul 2026): the 30 addition facts with
+    // an addend <= 2 are credited fluent at creation. Card A1's own pedagogy
+    // says counting IS the sanctioned move for these — they are not retrieval
+    // targets in Baroody's sense, so spending the two-session introduction
+    // pipeline on each mismatches the model and walls off the curriculum
+    // (~60 sessions for a skip-placement student). Same signature as basal
+    // credit (fluent, attempts:0, everFluent): the credited-first
+    // confirmation draw surfaces them early and a miss regresses them, so
+    // over-crediting self-corrects. Side benefit: day-1 sessions have a real
+    // known pool to interleave against. Placement probes of these facts
+    // simply override the credit with observed evidence.
+    for (const id of Content.allFactIds()) {
+      const { op, a, b } = Content.parse(id);
+      if (op === 'add' && Content.addPhaseRank(a, b) === 0) {
+        facts[id].state = 'fluent'; facts[id].everFluent = true;
+      }
+    }
+    return {
+      version: 1,
+      createdAt: Clock.now(),
+      name: '',
+      settings: JSON.parse(JSON.stringify(S0)),
+      facts,
+      sessions: [],
+      streak: { current: 0, longest: 0, lastSessionDate: null },
+      lastIntroducedId: null,
+      placementResolved: false,
+      attemptLog: [],                    // per-attempt {id,c,ms,s,t,w} for pilot RT calibration
+      lastBackupAt: null,
+      lastBackupPromptAt: null
+    };
+  }
+
+  // append to the capped attempt log (the raw data automaticThresholdMs
+  // calibration needs; recent[] keeps only the last 5 per fact, so RT
+  // distributions are unrecoverable without this)
+  function logAttempt(profile, entry, cap) {
+    const log = profile.attemptLog || (profile.attemptLog = []);
+    log.push(entry);
+    const c = cap || 5000;
+    if (log.length > c) log.splice(0, log.length - c);
+  }
+
+  // ---- date utils (streak) ----------------------------------------------
+  const DAY = 86400000;
+  // LOCAL calendar day, not UTC: the UTC day boundary lands mid-morning in
+  // Australia, so toISOString() split streaks across the wrong days (two
+  // consecutive local days could share a UTC date -> no streak credit; two
+  // sessions in one local morning could span UTC dates -> double credit).
+  // daysBetween is unaffected: differences of local YYYY-MM-DD strings
+  // (parsed as UTC midnights) are still exact day counts.
+  const isoDay = (ms) => { const d = new Date(ms), z = (n) => (n < 10 ? '0' : '') + n; return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()); };
+  const daysBetween = (d1, d2) => Math.round((Date.parse(d2) - Date.parse(d1)) / DAY);
+
+  // ---- small stats -------------------------------------------------------
+  const lastN = (arr, n) => arr.slice(-n);
+  const distinctSessions = (arr) => new Set(arr.map(a => a.sessionId)).size;
+  function median(nums) {
+    if (!nums.length) return undefined;
+    const s = [...nums].sort((a, b) => a - b), m = Math.floor(s.length / 2);
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  }
+
+  // ---- promotion gates (engine §3) ---------------------------------------
+  // ≥3 of last 4 attempts qualifying, across ≥2 distinct sessions, min 3 in
+  // window. Reconciles engine §3 (≥3/4) with placement §2 ("first real
+  // encounter") in favour of §3 rigour — protects the trophy case.
+  function canPromoteToFluent(recent) {
+    const w = lastN(recent, 4);
+    return w.length >= 3 && w.filter(a => a.correct).length >= 3 && distinctSessions(w) >= 2;
+  }
+  function canPromoteToAutomatic(recent, thr) {
+    const w = lastN(recent, 4);
+    const good = w.filter(a => a.correct && a.ms != null && a.ms <= thr);
+    return w.length >= 3 && good.length >= 3 && distinctSessions(w) >= 2;
+  }
+
+  // ---- the state machine (engine §3/§4) ----------------------------------
+  // Regression interpretation (ambiguous §3/§4, resolved toward the evidence
+  // base): a MISS regresses any level one step (auto->fluent, fluent->
+  // acquiring); a SLOW-but-correct answer only regresses an AUTOMATIC fact
+  // (speed matters only for automatic). Floor is acquiring (never -> new).
+  // At most one level moves per attempt.
+  function applyAttempt(profile, factId, attempt) { // attempt={correct,ms,sessionId,ts}
+    const S = profile.settings;
+    let f = profile.facts[factId];
+    if (!f) { f = { state: 'new', attempts: 0, recent: [], medianMs: undefined, lastSeen: 0, reviewInterval: S.reviewScheduleMs[0], everFluent: false, everAutomatic: false }; profile.facts[factId] = f; }
+    if (f.state === 'new') f.state = 'acquiring';   // first attempt latches out of `new`
+    f.recent.push(attempt);
+    if (f.recent.length > S.recentCap) f.recent.shift();
+    f.attempts++;
+    f.lastSeen = attempt.ts;
+    logAttempt(profile, { id: factId, c: attempt.correct ? 1 : 0, ms: attempt.ms == null ? null : attempt.ms, s: attempt.sessionId, t: attempt.ts, w: attempt.warmup ? 1 : 0 }, S.attemptLogCap);
+    f.medianMs = median(f.recent.filter(a => a.ms != null && a.correct).map(a => a.ms));
+
+    const miss = !attempt.correct;
+    // Speed only demotes an AUTOMATIC fact, and never during warm-up: warm-up
+    // is an ease-in, not an automaticity test, so a slow-but-correct warm-up
+    // answer must not knock a hard-won automatic fact back down. A genuine
+    // miss still regresses (real signal); slowness alone in warm-up does not.
+    const slow = attempt.ms != null && attempt.ms > S.automaticThresholdMs && !attempt.warmup;
+
+    if (f.state === 'automatic' && (miss || slow)) {
+      f.state = 'fluent'; f.reviewInterval = S.reviewScheduleMs[0];
+    } else if (f.state === 'fluent' && miss) {
+      f.state = 'acquiring'; f.reviewInterval = S.reviewScheduleMs[0];
+    } else if (f.state === 'acquiring' && miss) {
+      /* floor: stays acquiring */
+    } else {
+      if (f.state === 'acquiring' && canPromoteToFluent(f.recent)) {
+        f.state = 'fluent'; f.reviewInterval = S.reviewScheduleMs[0];
+      } else if (f.state === 'fluent' && canPromoteToAutomatic(f.recent, S.automaticThresholdMs)) {
+        f.state = 'automatic'; f.reviewInterval = S.reviewScheduleMs[0];
+      } else if (f.state === 'automatic' && attempt.correct && !slow) {
+        const idx = S.reviewScheduleMs.indexOf(f.reviewInterval);
+        const ni = Math.min((idx < 0 ? 0 : idx) + 1, S.reviewScheduleMs.length - 1);
+        f.reviewInterval = S.reviewScheduleMs[ni];
+      }
+    }
+    if (f.state === 'fluent' || f.state === 'automatic') f.everFluent = true;
+    if (f.state === 'automatic') f.everAutomatic = true;
+    return f;
+  }
+
+  // ---- gates + latch (engine §6.2, §6.4) ---------------------------------
+  const isFluentOrAbove = (f) => !!f && (f.state === 'fluent' || f.state === 'automatic');
+  function isEligible(profile, id) {
+    const f = profile.facts[id];
+    if (!f || f.state !== 'new') return false;               // structural latch
+    if (Content.domainOf(id) !== profile.settings.currentDomain) return false;
+    return Content.helpersOf(id).every(h => isFluentOrAbove(profile.facts[h]));
+  }
+  function newPool(profile) {
+    const key = (x, y) => Content.compareKeys(Content.orderKey(x), Content.orderKey(y));
+    const cur = Content.allFactIds().filter(id => isEligible(profile, id)).sort(key);
+    const turn = profile.sessions.length % 3;
+    if (profile.settings.currentDomain === 'add_sub') {
+      // ADDITION LEADS 2:1 (judgment extension of the addition-only bar):
+      // sub facts inherit their parent's early positions, so a plain orderKey
+      // walk would spend ~114 sessions on trivial sub children of the
+      // credited count-on facts before the first new addition fact — putting
+      // subtraction right back on the critical path the bar just removed.
+      // Two introduction slots in three prefer addition (the multiplication
+      // prerequisite); one in three prefers subtraction, keeping the
+      // think-addition inverse thread alive rather than parking it.
+      const adds = cur.filter(id => Content.parse(id).op === 'add');
+      const subs = cur.filter(id => Content.parse(id).op === 'sub');
+      if (!adds.length || !subs.length) return cur;
+      return turn === 2 ? [...subs, ...adds] : [...adds, ...subs];
+    }
+    // COMPANION RULE to the addition-only advance bar: add/sub facts not yet
+    // introduced when the domain flipped must not strand (post-flip the
+    // domain filter would otherwise exclude them forever, and subtraction has
+    // no choice-grid on-ramp). One introduction slot in three goes to a
+    // straggler (judgment: keeps tables — the destination — as the main
+    // thread while old ground still gets covered).
+    const strag = Content.allFactIds().filter(id => {
+      const f = profile.facts[id];
+      return !!f && f.state === 'new' && Content.domainOf(id) === 'add_sub'
+        && Content.helpersOf(id).every(h => isFluentOrAbove(profile.facts[h]));
+    }).sort(key);
+    if (!strag.length) return cur;
+    return turn === 0 ? [...strag, ...cur] : [...cur, ...strag];
+  }
+
+  // ---- domain transition (engine §6.5) -----------------------------------
+  const additionDoubleIds = () => Content.allFactIds().filter(id => { const { op, a, b } = Content.parse(id); return op === 'add' && a === b; });
+  function doublesAllFluent(profile) { return additionDoubleIds().every(id => isFluentOrAbove(profile.facts[id])); }
+  function fluentFraction(profile, domain) {
+    const ids = Content.allFactIds().filter(id => Content.domainOf(id) === domain);
+    if (!ids.length) return 0;
+    return ids.filter(id => isFluentOrAbove(profile.facts[id])).length / ids.length;
+  }
+  function fluentFractionOp(profile, op) {
+    const ids = Content.allFactIds().filter(id => Content.parse(id).op === op);
+    return ids.filter(id => isFluentOrAbove(profile.facts[id])).length / ids.length;
+  }
+  function maybeAdvanceDomain(profile) {
+    const S = profile.settings;
+    // ADVANCE BAR = ADDITION ONLY (pacing decision, Jul 2026). Every
+    // multiplication prerequisite is addition-side (no mul fact has a
+    // subtraction helper), so gating tables on 121 serially-introduced
+    // subtraction facts put ~240 sessions of sub on the critical path for no
+    // structural reason. Subtraction still progresses: think-addition keeps
+    // its ELIGIBILITY tracking addition, and the straggler rule in newPool()
+    // keeps introducing leftover sub facts after the flip so nothing strands.
+    if (S.currentDomain === 'add_sub' && doublesAllFluent(profile) && fluentFractionOp(profile, 'add') >= S.domainAdvanceThreshold) {
+      S.currentDomain = 'mul_div';
+      return true;
+    }
+    return false;
+  }
+
+  // ---- item selection (engine §4) ----------------------------------------
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+  function buildSession(profile) {
+    const S = profile.settings, facts = profile.facts;
+    const acquiring = Content.allFactIds().filter(id => facts[id].state === 'acquiring');
+    const pool = newPool(profile);
+    const known = Content.allFactIds().filter(id => isFluentOrAbove(facts[id]));
+
+    // INTRODUCE: serial, mastery-paced — blocked only while the last-introduced
+    // fact is still `acquiring`. A still-`new` lastIntroduced means the session
+    // ended before the fact was ever shown; it must not deadlock the pipeline
+    // (it is simply re-picked as pool[0]).
+    const li = profile.lastIntroducedId;
+    const lastIntroDone = !li || !facts[li] || facts[li].state !== 'acquiring';
+    let introducedList = [];
+    if (acquiring.length < S.activeTargetCap && lastIntroDone && pool.length > 0) {
+      // EMPTY-PROFILE EXCEPTION (judgment, flagged): with zero known facts the
+      // 80/20 interleave has no substrate (placement spec §0.1) and a single
+      // target degenerates to one fact repeated back-to-back. Only then,
+      // introduce up to the cap so the first session has variety. The moment
+      // any known fact exists this is 1-at-a-time again — steady-state pacing
+      // and the mastery throttle are untouched.
+      const n = known.length === 0 ? Math.max(1, S.activeTargetCap - acquiring.length) : 1;
+      introducedList = pool.slice(0, n);
+    }
+    const introduced = introducedList.length ? introducedList[introducedList.length - 1] : null;
+    const focus = [...acquiring, ...introducedList];
+
+    const now = Clock.now();
+    const dueSet = new Set(known.filter(id => facts[id].state === 'automatic' && (now - facts[id].lastSeen) > facts[id].reviewInterval));
+    const due = [...dueSet];
+
+    const total = S.trialsPerSession;
+    // residual guard: one lone focus fact and nothing known to separate it —
+    // cap its back-to-back reps rather than drilling it five times in a row
+    let focusTrials = focus.length ? Math.max(focus.length, Math.round(total * (1 - S.knownRatio))) : 0;
+    if (known.length === 0 && focus.length === 1) focusTrials = Math.min(focusTrials, 3);
+    const knownTrials = Math.max(0, total - focusTrials);
+
+    // known fill: due first, then placement-credited facts awaiting their first
+    // real confirmation (state fluent + attempts 0, placement spec §8 — the
+    // "credited, not yet demonstrated" signature), then earned knowns; each
+    // block seeded-shuffled, cycled to length.
+    const credited = known.filter(id => !dueSet.has(id) && facts[id].attempts === 0);
+    const earned = known.filter(id => !dueSet.has(id) && facts[id].attempts > 0);
+    const knownSource = [...due, ...shuffle(credited), ...shuffle(earned)];
+    const knownList = [];
+    for (let i = 0; i < knownTrials && knownSource.length; i++) knownList.push(knownSource[i % knownSource.length]);
+
+    const focusReps = [];
+    for (let i = 0; i < focusTrials; i++) focusReps.push(focus[i % focus.length]);
+
+    // sequence: focus reps separated by widening gaps of known facts so no
+    // two focus facts are adjacent (whenever a known pool exists).
+    const trials = [];
+    let fi = 0, ki = 0, gap = 1;
+    if (knownList.length) {                          // ease in with a known fact
+      trials.push(knownList[ki++]);
+    }
+    while (fi < focusReps.length || ki < knownList.length) {
+      if (fi < focusReps.length) trials.push(focusReps[fi++]);
+      for (let g = 0; g < gap && ki < knownList.length; g++) trials.push(knownList[ki++]);
+      gap++;
+      if (fi >= focusReps.length) { while (ki < knownList.length) trials.push(knownList[ki++]); }
+    }
+    return { trials, focus, introduced, due };
+  }
+
+  // ---- student choice (tap a table to practise) --------------------------
+  // Choice is gated by HELPER fluency, not by the current domain: a student
+  // can choose a table once the fact it's built on is solid, even before the
+  // structured add_sub -> mul_div transition. (Design decision — see notes.)
+  function choiceUnlocked(profile, id) {
+    const f = profile.facts[id];
+    if (!f) return false;
+    if (f.state !== 'new') return true;                 // already started / known
+    return Content.helpersOf(id).every(h => isFluentOrAbove(profile.facts[h]));
+  }
+  function mulTableIds(n) { const a = []; for (let k = 0; k <= 10; k++) a.push(Content.mulId(n, k)); return a; }
+  function tableUnlocked(profile, n) { return mulTableIds(n).some(id => choiceUnlocked(profile, id)); }
+  // The choice grid is the OFFICIAL multiplication on-ramp during the add_sub
+  // era (pacing decision, Jul 2026): the earliest table in intro order with
+  // unlocked, not-yet-secure facts gets surfaced on home. Anchors (x0/x1/x10)
+  // and the credited tiny doubles mean something is almost always open, so
+  // the least confident students don't have to go exploring to find it.
+  function suggestedTable(profile) {
+    if (profile.settings.currentDomain !== 'add_sub') return null;   // on-ramp era only
+    for (const n of Content.INTRO_ORDER) {
+      const ids = mulTableIds(n);
+      if (ids.every(id => profile.facts[id].everFluent)) continue;   // table already secure
+      if (ids.some(id => choiceUnlocked(profile, id) && !profile.facts[id].everFluent)) return n;
+    }
+    return null;
+  }
+  function tableHelper(n) {            // prerequisite label for the locked explainer
+    if (n === 0 || n === 1 || n === 10) return null;    // anchors
+    if (n === 2) return 'doubles';                      // addition doubles
+    if (n === 5 || n === 9) return '10';
+    if (n === 3 || n === 4) return '2';
+    if (n === 8) return '4';
+    return '5';                                         // 6, 7
+  }
+  function buildFocusedSession(profile, focusIds) {
+    const S = profile.settings, facts = profile.facts;
+    const rank = id => { const st = facts[id].state; return st === 'acquiring' ? 0 : st === 'new' ? 1 : st === 'fluent' ? 2 : 3; };
+    const focus = [...focusIds].filter(id => choiceUnlocked(profile, id)).sort((a, b) => rank(a) - rank(b)).slice(0, 4);
+    const known = Content.allFactIds().filter(id => isFluentOrAbove(facts[id]));
+    const now = Clock.now();
+    const dueSet = new Set(known.filter(id => facts[id].state === 'automatic' && (now - facts[id].lastSeen) > facts[id].reviewInterval));
+    const total = S.trialsPerSession;
+    const focusTrials = focus.length ? Math.max(focus.length, Math.round(total * (1 - S.knownRatio))) : 0;
+    const knownTrials = Math.max(0, total - focusTrials);
+    // Student-chosen practice should FEEL like the chosen table: fill with the
+    // table's own known facts first, then same-operation knowns, then anything
+    // (the fallback keeps the 80/20 success rate when the same-op pool is
+    // thin). Due review still leads — spaced retrieval keeps priority. This is
+    // placement spec §7.5's same-domain ALLOCATE preference, applied to the
+    // choice path where the mismatch is most visible.
+    const seedId = focus[0] || focusIds[0];
+    const fop = seedId ? Content.parse(seedId).op : null;
+    const tableSet = new Set(focusIds);
+    const rest = known.filter(id => !dueSet.has(id));
+    const sameTable = rest.filter(id => tableSet.has(id));
+    const sameOp = rest.filter(id => !tableSet.has(id) && Content.parse(id).op === fop);
+    const other = rest.filter(id => !tableSet.has(id) && Content.parse(id).op !== fop);
+    // Prefer cycling a same-operation pool over importing cross-op facts —
+    // repeating known reviews is normal here, and a "practise ×7" session
+    // shouldn't be mostly take-aways. Fall back cross-op only when the
+    // same-op pool is too thin to cycle without monotony (<6 distinct).
+    const preferred = [...shuffle(sameTable), ...shuffle(sameOp)];
+    const knownSource = [...dueSet, ...preferred, ...(preferred.length < 6 ? shuffle(other) : [])];
+    const knownList = [];
+    for (let i = 0; i < knownTrials && knownSource.length; i++) knownList.push(knownSource[i % knownSource.length]);
+    const focusReps = [];
+    for (let i = 0; i < focusTrials && focus.length; i++) focusReps.push(focus[i % focus.length]);
+    const trials = [];
+    let fi = 0, ki = 0, gap = 1;
+    if (knownList.length) trials.push(knownList[ki++]);
+    while (fi < focusReps.length || ki < knownList.length) {
+      if (fi < focusReps.length) trials.push(focusReps[fi++]);
+      for (let g = 0; g < gap && ki < knownList.length; g++) trials.push(knownList[ki++]);
+      gap++;
+      if (fi >= focusReps.length) { while (ki < knownList.length) trials.push(knownList[ki++]); }
+    }
+    return { trials, focus, introduced: null, due: [...dueSet] };
+  }
+
+  // ---- run a session (used by simulator; real UI mirrors the loop) -------
+  function runSession(profile, plan, studentModel, sessionId) {
+    const errors = {}, retired = new Set();
+    let attempted = 0, correct = 0, msSum = 0, msN = 0;
+    const newlyAutomatic = [];
+    const focusSet = new Set(plan.focus);
+    for (const fid of plan.trials) {
+      if (focusSet.has(fid) && retired.has(fid)) continue; // 3-error retire (this session)
+      const ans = studentModel(fid);                       // {correct, ms}
+      const before = profile.facts[fid] ? profile.facts[fid].state : 'new';
+      applyAttempt(profile, fid, { correct: ans.correct, ms: ans.ms, sessionId, ts: Clock.now() });
+      const after = profile.facts[fid].state;
+      if (after === 'automatic' && before !== 'automatic') newlyAutomatic.push(fid);
+      attempted++; if (ans.correct) correct++;
+      if (ans.ms != null) { msSum += ans.ms; msN++; }
+      if (focusSet.has(fid) && !ans.correct) { errors[fid] = (errors[fid] || 0) + 1; if (errors[fid] >= 3) retired.add(fid); }
+    }
+    if (plan.introduced) profile.lastIntroducedId = plan.introduced;
+    profile.sessions.push({ id: sessionId, date: isoDay(Clock.now()), domain: profile.settings.currentDomain, attempted, correct, meanMs: msN ? Math.round(msSum / msN) : 0, newlyAutomatic, metacog: [] });
+    maybeAdvanceDomain(profile);
+    return profile.sessions[profile.sessions.length - 1];
+  }
+
+  // ---- streak with one grace day (dashboard §; placement does NOT start) -
+  function updateStreak(profile, today) {
+    const st = profile.streak, last = st.lastSessionDate, grace = profile.settings.streakGraceDays;
+    if (last === today) return;
+    if (!last) { st.current = 1; }
+    else {
+      const diff = daysBetween(last, today);
+      if (diff <= 0) { /* clock anomaly: ignore */ return; }
+      else if (diff <= 1 + grace) st.current += 1;       // consecutive or within grace
+      else st.current = 1;                                // gap too big -> reset
+    }
+    st.longest = Math.max(st.longest, st.current);
+    st.lastSessionDate = today;
+  }
+
+  // ---- placement: REDUCED (Option B, MVP) --------------------------------
+  // Phase A (always): addition doubles probed individually + a small
+  // representative add sample; seed by the §2 map; basal credit from strong
+  // add evidence; run the §6.5 transition check.
+  // Phase B (gated, placement §3): the mul sample runs ONLY when Phase A
+  // shows an add-strong student — an add-weak student never faces a run of
+  // multiplication they can't do. Under Option B the gate is the same
+  // condition that drives basal credit (all doubles fast-correct + add
+  // accuracy >= basalCreditThreshold), which is the probe-level equivalent
+  // of the spec's fluentFraction >= probeMulBar once credit is applied.
+  // Still deferred to Option C: ceiling credit, peer inference, per-table
+  // adaptive Phase B probing. Skip-placement => all `new`.
+  const REDUCED_SAMPLE = ['add_1_2', 'add_3_4', 'add_6_8', 'add_7_9', 'add_6_7'];
+  const MUL_SAMPLE = ['mul_2_3', 'mul_2_8', 'mul_4_5', 'mul_5_7', 'mul_6_10', 'mul_4_7', 'mul_6_7', 'mul_7_8'];
+  function seedStateFromProbe(probe, retrievedMs) {
+    if (!probe.correct) return 'new';
+    return probe.ms > retrievedMs ? 'acquiring' : 'fluent';
+  }
+  function placementPhaseAIds() { return [...additionDoubleIds(), ...REDUCED_SAMPLE]; }
+  function placementPhaseBIds() { return [...MUL_SAMPLE]; }
+  function placementProbeIds() { return [...placementPhaseAIds(), ...placementPhaseBIds()]; }
+  // Phase B gate, computed from Phase A results alone (usable mid-placement).
+  function phaseBFromProbes(results, S) {
+    const dbl = new Set(additionDoubleIds());
+    const dRes = results.filter(r => dbl.has(r.factId));
+    const dOk = dRes.length > 0 && dRes.every(r => r.correct && r.ms != null && r.ms <= S.placementRetrievedMs);
+    const addRes = results.filter(r => r.factId.indexOf('add_') === 0);
+    const acc = addRes.length ? addRes.filter(r => r.correct).length / addRes.length : 0;
+    return dOk && acc >= S.basalCreditThreshold;
+  }
+  // seed from collected probe results [{factId, correct, ms}] (UI-driven or sim)
+  function seedFromProbeResults(profile, results) {
+    const S = profile.settings, ts = Clock.now();
+    let correct = 0;
+    for (const r of results) {
+      if (r.correct) correct++;
+      logAttempt(profile, { id: r.factId, c: r.correct ? 1 : 0, ms: r.ms == null ? null : r.ms, s: 'placement', t: ts, w: 0 }, S.attemptLogCap);
+      const f = profile.facts[r.factId];
+      if (!f) continue;
+      const st = seedStateFromProbe(r, S.placementRetrievedMs);
+      if (st === 'new') continue;                          // leave new, attempts 0
+      f.state = st; f.attempts = 1;
+      f.recent = [{ correct: r.correct, ms: r.ms, sessionId: 'placement', ts }];
+      f.medianMs = r.ms; f.lastSeen = ts; f.reviewInterval = S.reviewScheduleMs[0];
+      if (st === 'fluent') f.everFluent = true;            // seeded-fluent counts as known
+    }
+    // BASAL CREDIT (placement spec §3/§4): a student who clearly has addition is
+    // credited the remaining add/sub facts as fluent so they don't re-grind what
+    // they know. attempts:0 marks these inferred/unconfirmed; a miss in later
+    // cross-domain review regresses them, so over-crediting self-corrects.
+    // Subtraction is credited too — it derives from addition (think-addition).
+    const addProbes = results.filter(r => r.factId.indexOf('add_') === 0);
+    const addCorrect = addProbes.filter(r => r.correct).length;
+    if (addProbes.length && doublesAllFluent(profile) && addCorrect / addProbes.length >= S.basalCreditThreshold) {
+      for (const id of Content.allFactIds()) {
+        if (Content.domainOf(id) !== 'add_sub') continue;
+        const f = profile.facts[id];
+        if (f.state === 'new') { f.state = 'fluent'; f.attempts = 0; f.everFluent = true; f.lastSeen = ts; f.reviewInterval = S.reviewScheduleMs[0]; }
+      }
+    }
+    profile.sessions.push({ id: 'placement', date: isoDay(ts), domain: 'placement', attempted: results.length, correct, meanMs: 0, newlyAutomatic: [], metacog: [] });
+    maybeAdvanceDomain(profile);                           // now fires for a strong student
+    profile.placementResolved = true;                      // completing the check resolves placement
+    return profile;
+  }
+  function runReducedPlacement(profile, studentModel) {
+    const probe = (id) => { const ans = studentModel(id); return { factId: id, correct: ans.correct, ms: ans.ms }; };
+    const results = placementPhaseAIds().map(probe);
+    if (phaseBFromProbes(results, profile.settings)) for (const id of placementPhaseBIds()) results.push(probe(id));
+    return seedFromProbeResults(profile, results);
+  }
+
+  // ---- view selectors (pure reads for the dashboard) ---------------------
+  function collectionCounts(profile) {
+    let gold = 0, canDo = 0, refresh = 0, total = 0;
+    for (const id of Content.allFactIds()) {
+      const f = profile.facts[id];
+      if (!f.everFluent) continue;                          // collection = ever-known (monotonic)
+      total++;
+      if (f.state === 'automatic') gold++;
+      else if (f.state === 'fluent' && !f.everAutomatic) canDo++;
+      else refresh++;                                       // slipped, still counted (never-shrink)
+    }
+    return { gold, canDo, refresh, total };
+  }
+  function domainProgress(profile) {
+    const dom = profile.settings.currentDomain;
+    const ids = Content.allFactIds().filter(id => Content.domainOf(id) === dom);
+    if (!ids.length) return 0;
+    return ids.filter(id => profile.facts[id].everFluent).length / ids.length;
+  }
+  function featuredFamilyPair(profile) {
+    const facts = profile.facts;
+    let best = null, bestT = -1;
+    for (const id of Content.allFactIds()) { const f = facts[id]; if (f.state === 'acquiring' && f.lastSeen > bestT) { best = id; bestT = f.lastSeen; } }
+    if (!best) for (const id of Content.allFactIds()) { const f = facts[id]; if (f.everFluent && f.lastSeen > bestT) { best = id; bestT = f.lastSeen; } }
+    return best ? Content.familyPairOf(best) : null;
+  }
+  function trendNote(profile) {
+    const real = profile.sessions.filter(s => s.domain !== 'placement' && s.meanMs > 0);
+    if (real.length < 2) return null;
+    return real[real.length - 1].meanMs < real[real.length - 2].meanMs ? 'quicker' : null;
+  }
+  // per-operation [known, total] for the dashboard breakdown
+  function opSummary(profile) {
+    const ops = { add: [0, 0], sub: [0, 0], mul: [0, 0], div: [0, 0] };
+    for (const id of Content.allFactIds()) {
+      const op = Content.parse(id).op, f = profile.facts[id];
+      ops[op][1]++; if (f.everFluent) ops[op][0]++;
+    }
+    return ops;
+  }
+
+  // ---- parent summary (dashboard §5.2) — one pure projection, two renders --
+  // Everything here is qualitative or a simple count: no raw response times,
+  // no speed targets, no normative comparison (§5.3). Thresholds are judgment
+  // calls flagged in the build notes.
+  const ADD_PHASE_LABEL = { 0: 'count on', 1: 'doubles', 2: 'pairs to ten', 3: 'make ten', 4: 'near doubles', 5: 'mixed adding' };
+  function parentFocus(profile) {
+    const acq = Content.allFactIds().filter(id => profile.facts[id].state === 'acquiring');
+    if (!acq.length) return null;
+    let recent = acq[0], t = -1;
+    for (const id of acq) if (profile.facts[id].lastSeen > t) { t = profile.facts[id].lastSeen; recent = id; }
+    const op = Content.parse(recent).op;
+    const inOp = acq.filter(id => Content.parse(id).op === op);
+    if (op === 'mul') {
+      const leads = [...new Set(inOp.map(id => { const { a, b } = Content.parse(id); return Content.leadFactor(a, b); }))]
+        .sort((x, y) => Content.introIdx(x) - Content.introIdx(y)).slice(0, 3);
+      return 'Multiplication \u2014 ' + leads.map(n => '\u00D7' + n).join(', ');
+    }
+    if (op === 'div') return 'Division';
+    if (op === 'sub') return 'Subtraction';
+    const phases = [...new Set(inOp.map(id => { const { a, b } = Content.parse(id); return Content.addPhaseRank(a, b); }))]
+      .sort((x, y) => x - y).slice(0, 3);
+    return 'Addition \u2014 ' + phases.map(r => ADD_PHASE_LABEL[r]).join(', ');
+  }
+  function parentSummary(profile, todayIso) {
+    const today = todayIso || isoDay(Clock.now());
+    const ops = opSummary(profile);
+    // journey status per operation: done >= 90% secure; in progress once
+    // anything in the operation has started; otherwise coming (judgment)
+    const journey = {};
+    for (const op of ['add', 'sub', 'mul', 'div']) {
+      const [k, t] = ops[op];
+      const started = k > 0 || Content.allFactIds().some(id => Content.parse(id).op === op && profile.facts[id].state !== 'new');
+      journey[op] = (t && k / t >= 0.9) ? 'done' : (started ? 'progress' : 'coming');
+    }
+    const real = profile.sessions.filter(s => s.domain !== 'placement');
+    const week = real.filter(s => { const d = daysBetween(s.date, today); return d >= 0 && d <= 6; }).length;
+    // accuracy over the last <=5 real sessions, mapped to plain language
+    const last5 = real.slice(-5);
+    let att = 0, cor = 0;
+    for (const s of last5) { att += s.attempted; cor += s.correct; }
+    const accuracy = att === 0 ? null : (cor / att >= 0.9 ? 'high' : cor / att >= 0.75 ? 'good' : 'building');
+    // getting quicker: mean of last 2 real sessions vs the 2 before, shown
+    // only as a qualitative tick and only when clearly true (never negative)
+    const timed = real.filter(s => s.meanMs > 0);
+    let quicker = false;
+    if (timed.length >= 4) {
+      const avg = (arr) => arr.reduce((a, s) => a + s.meanMs, 0) / arr.length;
+      quicker = avg(timed.slice(-2)) < avg(timed.slice(-4, -2)) * 0.97;
+    }
+    return { focus: parentFocus(profile), journey, secure: ops, week, regular: week >= 3, accuracy, quicker, today };
+  }
+
+  return {
+    newProfile, applyAttempt,
+    isFluentOrAbove, isEligible, newPool,
+    additionDoubleIds, doublesAllFluent, fluentFraction, maybeAdvanceDomain,
+    buildSession, buildFocusedSession, runSession, updateStreak,
+    choiceUnlocked, mulTableIds, tableUnlocked, tableHelper, suggestedTable,
+    seedStateFromProbe, placementProbeIds, placementPhaseAIds, placementPhaseBIds, phaseBFromProbes,
+    seedFromProbeResults, runReducedPlacement, REDUCED_SAMPLE, MUL_SAMPLE,
+    collectionCounts, domainProgress, featuredFamilyPair, trendNote, opSummary, parentSummary, parentFocus,
+    canPromoteToFluent, canPromoteToAutomatic, isoDay, daysBetween
+  };
+})();
+
+/* ===========================================================================
+ * STORE  — the only code that knows localStorage + JSON (build plan §3).
+ *   load/save/validate (version-checked), export/import (the v1 loss net).
+ * ==========================================================================*/
+const Store = (() => {
+  const KEY = 'eager4maths_profile_v1';
+  const hasLS = () => (typeof localStorage !== 'undefined');
+  function validate(obj) {
+    return !!obj && obj.version === 1 && !!obj.facts && !!obj.settings && Array.isArray(obj.sessions);
+  }
+  // Fill any missing fields against a fresh template so an older or partial
+  // backup (e.g. one exported before a field existed) can't crash the UI when
+  // it later reads f.everFluent / placementResolved / etc. Idempotent.
+  function normalize(obj) {
+    const t = Engine.newProfile();
+    const out = {
+      version: 1,
+      createdAt: obj.createdAt || t.createdAt,
+      name: typeof obj.name === 'string' ? obj.name : '',
+      settings: Object.assign({}, t.settings, obj.settings || {}),
+      facts: {},
+      sessions: Array.isArray(obj.sessions) ? obj.sessions : [],
+      streak: Object.assign({}, t.streak, obj.streak || {}),
+      lastIntroducedId: obj.lastIntroducedId != null ? obj.lastIntroducedId : null,
+      placementResolved: obj.placementResolved != null
+        ? obj.placementResolved
+        : (Array.isArray(obj.sessions) && obj.sessions.length > 0), // legacy: used => resolved
+      attemptLog: Array.isArray(obj.attemptLog) ? obj.attemptLog : [],
+      lastBackupAt: obj.lastBackupAt != null ? obj.lastBackupAt : null,
+      lastBackupPromptAt: obj.lastBackupPromptAt != null ? obj.lastBackupPromptAt : null
+    };
+    const src = obj.facts || {};
+    for (const id of Content.allFactIds()) {
+      const f = Object.assign({}, t.facts[id], src[id] || {});
+      if (!Array.isArray(f.recent)) f.recent = [];
+      out.facts[id] = f;
+    }
+    return out;
+  }
+  function load() {
+    try { if (!hasLS()) return null; const raw = localStorage.getItem(KEY); if (!raw) return null; const obj = JSON.parse(raw); return validate(obj) ? normalize(obj) : null; }
+    catch (e) { return null; }
+  }
+  function save(p) {
+    try { if (!hasLS()) return false; localStorage.setItem(KEY, JSON.stringify(p)); return true; }
+    catch (e) { return false; }
+  }
+  function exportJSON(p) { return JSON.stringify(p, null, 2); }
+  function importJSON(text) { const obj = JSON.parse(text); if (!validate(obj)) throw new Error('invalid profile'); return normalize(obj); }
+  // migrate(): future versions bump `version` and transform here. v1 = identity.
+  function migrate(obj) { return obj; }
+  return { KEY, validate, normalize, load, save, exportJSON, importJSON, migrate };
+})();
+
+/* ===========================================================================
+ * DEBUG  — test/sim harness. Gated out of production at Checkpoint B.
+ *   validateContent, runTests, checkInvariants, simulate.
+ * ==========================================================================*/
+const Debug = (() => {
+  function reseed(seed) { Rng = makeRng(seed >>> 0); }
+  function tester() { const fails = []; return { a: (c, m) => { if (!c) fails.push(m); }, fails }; }
+
+  // ---- content integrity (build plan §3 / engine §9 TODO 4) --------------
+  function chainTerminates(id, idSet, seen) {
+    seen = seen || new Set();
+    if (seen.has(id)) return false;                 // cycle
+    seen.add(id);
+    const hs = Content.helpersOf(id);
+    if (!hs.length) return true;
+    return hs.every(h => idSet.has(h) && chainTerminates(h, idSet, new Set(seen)));
+  }
+  function validateContent() {
+    const { a, fails } = tester();
+    const ids = Content.allFactIds(), idSet = new Set(ids);
+    for (const id of ids) {
+      for (const h of Content.helpersOf(id)) a(idSet.has(h), `helper "${h}" of "${id}" is not in the universe`);
+      const { op } = Content.parse(id);
+      if (op === 'mul') {                            // §9 TODO 4: mul helpers must precede
+        for (const h of Content.helpersOf(id)) {
+          if (Content.parse(h).op === 'mul') a(Content.leadIdxOf(h) < Content.leadIdxOf(id), `precedence: "${h}" does not precede "${id}" in INTRO_ORDER`);
+        }
+      }
+      a(chainTerminates(id, idSet), `helper chain for "${id}" does not terminate (cycle/dangling)`);
+    }
+    // Placement probe sets must be real universe ids — a non-canonical id
+    // (e.g. "mul_5_4" for "mul_4_5") is asked but silently never seeded.
+    for (const pid of Engine.placementProbeIds()) a(idSet.has(pid), `placement probe "${pid}" is not a canonical universe id`);
+    return { pass: fails.length === 0, failures: fails };
+  }
+
+  // ---- runtime invariants ------------------------------------------------
+  function checkInvariants(p) {
+    const { a, fails } = tester();
+    for (const id of Content.allFactIds()) {
+      const f = p.facts[id];
+      a(!(f.state === 'new' && f.attempts > 0), `invariant: "${id}" is new but has attempts>0`);
+      a(['new', 'acquiring', 'fluent', 'automatic'].includes(f.state), `invariant: "${id}" has bad state "${f.state}"`);
+      a(!(f.everAutomatic && !f.everFluent), `invariant: "${id}" everAutomatic without everFluent`);
+      // An attempts-0 fact can only be `new` (never presented) or `fluent`
+      // (basal-credited/inferred at placement, §3/§4). It must never be
+      // `acquiring` or `automatic` with zero presentations. The old invariant
+      // ("everFluent => attempts>0") was FALSE against basal credit and only
+      // ever ran at sim-end, so it silently masked the violation.
+      a(!(f.attempts === 0 && (f.state === 'acquiring' || f.state === 'automatic')), `invariant: "${id}" has attempts 0 but state ${f.state}`);
+    }
+    a(p.streak.longest >= p.streak.current, 'invariant: streak.longest < streak.current');
+    a(!p.attemptLog || p.attemptLog.length <= (p.settings.attemptLogCap || 5000), 'invariant: attemptLog exceeds its cap');
+    return { pass: fails.length === 0, failures: fails };
+  }
+
+  // ---- unit + integration tests ------------------------------------------
+  function runTests() {
+    const { a, fails } = tester();
+    const P = () => Engine.newProfile();
+    const feed = (p, id, seq) => seq.forEach(x => Engine.applyAttempt(p, id, { correct: x.c, ms: x.ms, sessionId: x.s, ts: 1 }));
+    const toFluent = (p, id) => feed(p, id, [{ c: true, ms: 1000, s: 's1' }, { c: true, ms: 1000, s: 's1' }, { c: true, ms: 1000, s: 's2' }]);
+    const toAuto = (p, id) => { toFluent(p, id); feed(p, id, [{ c: true, ms: 800, s: 's3' }]); };
+    let p;
+
+    // -- state machine --
+    p = P(); Engine.applyAttempt(p, 'add_6_7', { correct: true, ms: 2000, sessionId: 's1', ts: 1 });
+    a(p.facts['add_6_7'].state === 'acquiring', 'T1 new->acquiring on first attempt');
+    a(p.facts['add_6_7'].attempts === 1, 'T1 attempts incremented');
+
+    p = P(); feed(p, 'add_6_7', [{ c: true, ms: 900, s: 's1' }, { c: true, ms: 900, s: 's1' }, { c: true, ms: 900, s: 's1' }, { c: true, ms: 900, s: 's1' }]);
+    a(p.facts['add_6_7'].state === 'acquiring', 'T2 no single-session promotion');
+
+    p = P(); feed(p, 'add_6_7', [{ c: true, ms: 5000, s: 's1' }, { c: true, ms: 5000, s: 's1' }, { c: true, ms: 5000, s: 's2' }]);
+    a(p.facts['add_6_7'].state === 'fluent', 'T3 acquiring->fluent on accuracy across 2 sessions (slow ok)');
+
+    p = P(); toFluent(p, 'add_6_7'); a(p.facts['add_6_7'].state === 'fluent', 'T4a reached fluent');
+    feed(p, 'add_6_7', [{ c: true, ms: 800, s: 's3' }]);
+    a(p.facts['add_6_7'].state === 'automatic', 'T4b fluent->automatic on fast across 2 sessions');
+
+    p = P(); feed(p, 'add_6_7', [{ c: true, ms: 5000, s: 's1' }, { c: true, ms: 5000, s: 's1' }, { c: true, ms: 5000, s: 's2' }]);
+    a(p.facts['add_6_7'].state === 'fluent', 'T5a accuracy-only (slow) path reaches fluent');
+    feed(p, 'add_6_7', [{ c: true, ms: 5000, s: 's3' }]);
+    a(p.facts['add_6_7'].state === 'fluent', 'T5b slow-correct keeps fluent (no regress; no promote without speed)');
+
+    p = P(); toFluent(p, 'add_6_7'); feed(p, 'add_6_7', [{ c: false, ms: 1000, s: 's3' }]);
+    a(p.facts['add_6_7'].state === 'acquiring', 'T6 miss regresses fluent->acquiring');
+
+    p = P(); toAuto(p, 'add_6_7'); a(p.facts['add_6_7'].state === 'automatic', 'T7a reached automatic');
+    feed(p, 'add_6_7', [{ c: true, ms: 5000, s: 's4' }]); a(p.facts['add_6_7'].state === 'fluent', 'T7b automatic->fluent on slow');
+    p = P(); toAuto(p, 'add_6_7'); feed(p, 'add_6_7', [{ c: false, ms: 800, s: 's4' }]); a(p.facts['add_6_7'].state === 'fluent', 'T7c automatic->fluent on miss');
+
+    p = P(); feed(p, 'add_6_7', [{ c: false, ms: 2000, s: 's1' }]); a(p.facts['add_6_7'].state === 'acquiring', 'T8 acquiring floor (miss never -> new)');
+
+    // -- gates --
+    p = P(); a(!Engine.isEligible(p, 'sub_13_6'), 'T10a sub gated while add parent is new');
+    toFluent(p, 'add_6_7'); a(Engine.isEligible(p, 'sub_13_6'), 'T10b sub eligible once add parent fluent');
+
+    p = P(); a(!Engine.isEligible(p, 'mul_2_3'), 'T11 mul gated by add_sub domain');
+
+    p = P(); p.settings.currentDomain = 'mul_div'; toFluent(p, 'add_7_7');
+    a(Engine.isEligible(p, 'mul_2_7'), 'T12 x2 eligible after its addition double is fluent');
+
+    p = P(); p.settings.currentDomain = 'mul_div'; toFluent(p, 'mul_6_7');
+    a(Engine.isEligible(p, 'div_42_6'), 'T13 div eligible after its mul parent is fluent');
+
+    // -- LATCH (engine §6.4 worked example) --
+    p = P(); p.settings.currentDomain = 'mul_div';
+    toFluent(p, 'add_7_7'); toFluent(p, 'mul_2_7');
+    a(Engine.isEligible(p, 'mul_4_7'), 'T14a 4x7 eligible once 2x7 fluent');
+    toFluent(p, 'mul_4_7');                               // introduce + make fluent (attempts>0)
+    feed(p, 'mul_2_7', [{ c: false, ms: 900, s: 's9' }]); // regress the parent
+    a(p.facts['mul_2_7'].state === 'acquiring', 'T14b parent 2x7 regressed to acquiring');
+    a(p.facts['mul_4_7'].state !== 'new', 'T14c dependant 4x7 NOT relocked (latch)');
+    a(!Engine.isEligible(p, 'mul_4_7'), 'T14d dependant not re-added to newPool');
+
+    // -- mirror: parent regresses while child still new -> child waits --
+    p = P(); p.settings.currentDomain = 'mul_div'; toFluent(p, 'add_7_7');
+    a(Engine.isEligible(p, 'mul_2_7'), 'T15a 2x7 eligible');
+    feed(p, 'add_7_7', [{ c: false, ms: 900, s: 's9' }]);
+    a(!Engine.isEligible(p, 'mul_2_7'), 'T15b 2x7 waits when helper drops below fluent');
+
+    // -- domain transition (engine §6.5) --
+    p = P();
+    for (const id of Content.allFactIds()) if (Content.domainOf(id) === 'add_sub') { p.facts[id].state = 'fluent'; p.facts[id].attempts = 1; }
+    a(Engine.maybeAdvanceDomain(p) && p.settings.currentDomain === 'mul_div', 'T16 transition when all add/sub fluent');
+
+    p = P();
+    for (const id of Content.allFactIds()) if (Content.domainOf(id) === 'add_sub') { p.facts[id].state = 'fluent'; p.facts[id].attempts = 1; }
+    p.facts[Engine.additionDoubleIds()[0]].state = 'acquiring';
+    a(!Engine.maybeAdvanceDomain(p), 'T17 no transition if a double is not fluent');
+
+    p = P();
+    for (const id of Engine.additionDoubleIds()) { p.facts[id].state = 'fluent'; p.facts[id].attempts = 1; }
+    a(Engine.doublesAllFluent(p) && Engine.fluentFraction(p, 'add_sub') < 0.85, 'T18a doubles fluent but fraction low');
+    a(!Engine.maybeAdvanceDomain(p), 'T18b no transition while fraction < 0.85');
+
+    // -- placement seed map + reduced placement --
+    a(Engine.seedStateFromProbe({ correct: false, ms: 1000 }, 3000) === 'new', 'T19a wrong -> new');
+    a(Engine.seedStateFromProbe({ correct: true, ms: 5000 }, 3000) === 'acquiring', 'T19b correct+slow -> acquiring');
+    a(Engine.seedStateFromProbe({ correct: true, ms: 900 }, 3000) === 'fluent', 'T19c correct+fast -> fluent');
+
+    const strong = () => ({ correct: true, ms: 800 });
+    p = Engine.runReducedPlacement(Engine.newProfile(), strong);
+    a(Engine.doublesAllFluent(p), 'T20a reduced placement seeds all doubles fluent for a strong student');
+    a(p.settings.currentDomain === 'mul_div', 'T20b basal credit flips a strong student to mul_div at placement');
+    a(p.facts['sub_13_6'].state === 'fluent' && p.facts['sub_13_6'].attempts === 0, 'T20c subtraction basal-credited (fluent, attempts:0 = inferred)');
+    a(p.facts['add_7_7'].attempts === 1 && p.facts['add_7_7'].recent[0].sessionId === 'placement', 'T21 probed fact recorded as placement session, attempts=1 (not overwritten by basal credit)');
+
+    const weakish = (id) => { const { op, a: x, b: y } = Content.parse(id); return (op === 'add' && (x === y || Math.min(x, y) <= 2)) ? { correct: true, ms: 800 } : { correct: false, ms: 4000 }; };
+    p = Engine.runReducedPlacement(Engine.newProfile(), weakish);
+    a(p.settings.currentDomain === 'add_sub', 'T20d a student who misses harder addition is NOT basal-credited (stays add_sub)');
+
+    p = Engine.newProfile();
+    a(Content.allFactIds().every(id => {
+      const { op, a: x, b: y } = Content.parse(id), f = p.facts[id];
+      return (op === 'add' && Content.addPhaseRank(x, y) === 0)
+        ? (f.state === 'fluent' && f.attempts === 0)
+        : f.state === 'new';
+    }), 'T22 skip-placement => count-on credits only, everything else new');
+
+    // -- placement resolved flag (drives mount resume routing) --
+    a(Engine.newProfile().placementResolved === false, 'T20e new profile: placement unresolved');
+    p = Engine.runReducedPlacement(Engine.newProfile(), strong);
+    a(p.placementResolved === true, 'T20f completing placement resolves it');
+
+    // -- harness honesty: invariants must hold IMMEDIATELY after basal credit,
+    //    not only at sim-end. The old everFluent=>attempts>0 invariant was
+    //    FALSE against basal credit and only ran at sim-end, masking it. --
+    a(Object.values(p.facts).some(f => f.everFluent && f.attempts === 0), 'T23a basal credit really creates everFluent/attempts:0 facts');
+    a(checkInvariants(p).pass, 'T23b invariants hold right after a basal-credited placement');
+
+    // -- warm-up must not demote an automatic fact on slowness (daily-punishment fix) --
+    p = P(); toAuto(p, 'add_6_7'); a(p.facts['add_6_7'].state === 'automatic', 'T24a reached automatic');
+    Engine.applyAttempt(p, 'add_6_7', { correct: true, ms: 5000, sessionId: 'w', ts: 1, warmup: true });
+    a(p.facts['add_6_7'].state === 'automatic', 'T24b slow warm-up does NOT regress automatic');
+    Engine.applyAttempt(p, 'add_6_7', { correct: true, ms: 5000, sessionId: 'w2', ts: 1 });
+    a(p.facts['add_6_7'].state === 'fluent', 'T24c slow non-warm-up still regresses automatic (control)');
+
+    // -- import/load normalise: a partial backup fills to a complete valid profile --
+    const partial = { version: 1, settings: {}, sessions: [], facts: { add_1_2: { state: 'fluent', everFluent: true, attempts: 2 } } };
+    const norm = Store.normalize(partial);
+    a(Store.validate(norm), 'T25a normalised partial profile validates');
+    a(Object.keys(norm.facts).length === Content.allFactIds().length, 'T25b every fact present after normalise');
+    a(norm.facts['add_3_4'].state === 'new' && Array.isArray(norm.facts['add_3_4'].recent), 'T25c missing facts filled with defaults');
+    a(norm.facts['add_1_2'].state === 'fluent' && norm.facts['add_1_2'].attempts === 2, 'T25d present fact fields preserved');
+    let threw = false; try { Engine.collectionCounts(norm); } catch (e) { threw = true; }
+    a(!threw, 'T25e normalised profile is safe for the dashboard selectors');
+    const norm2 = Store.normalize(norm);
+    a(Store.validate(norm2) && Object.keys(norm2.facts).length === Content.allFactIds().length, 'T25f normalise is idempotent');
+
+    // -- streak semantics + local-day dates (the UTC-boundary fix) --
+    p = P();
+    Engine.updateStreak(p, '2026-07-01'); Engine.updateStreak(p, '2026-07-01');
+    a(p.streak.current === 1, 'T26a two sessions on one day count once');
+    Engine.updateStreak(p, '2026-07-02');
+    a(p.streak.current === 2, 'T26b consecutive days increment');
+    Engine.updateStreak(p, '2026-07-04');
+    a(p.streak.current === 3, 'T26c one missed day is covered by grace');
+    Engine.updateStreak(p, '2026-07-08');
+    a(p.streak.current === 1 && p.streak.longest === 3, 'T26d a longer gap resets; longest kept');
+    const dref = new Date(2026, 6, 1, 9, 0, 0);            // 9:00am LOCAL, 1 Jul 2026
+    a(Engine.isoDay(dref.getTime()) === '2026-07-01', 'T26e isoDay reports the LOCAL calendar day');
+
+    // -- Phase B gate: mul sample only for an add-strong Phase A --
+    const strongA = Engine.placementPhaseAIds().map(id => ({ factId: id, correct: true, ms: 800 }));
+    a(Engine.phaseBFromProbes(strongA, Content.DEFAULT_SETTINGS), 'T27a add-strong Phase A opens Phase B');
+    const weakA = Engine.placementPhaseAIds().map(id => { const { op, a: x, b: y } = Content.parse(id); return { factId: id, correct: x === y ? false : true, ms: 800 }; });
+    a(!Engine.phaseBFromProbes(weakA, Content.DEFAULT_SETTINGS), 'T27b a missed double closes Phase B');
+    const weakish2 = (id) => { const { op, a: x, b: y } = Content.parse(id); return (op === 'add' && (x === y || Math.min(x, y) <= 2)) ? { correct: true, ms: 800 } : { correct: false, ms: 4000 }; };
+    p = Engine.runReducedPlacement(Engine.newProfile(), weakish2);
+    a(p.sessions[0].attempted === Engine.placementPhaseAIds().length, 'T27c gated-out student is never asked the mul sample');
+    a(Content.allFactIds().filter(id => Content.parse(id).op === 'mul').every(id => p.facts[id].state === 'new'), 'T27d no mul fact seeded when Phase B is skipped');
+    p = Engine.runReducedPlacement(Engine.newProfile(), strong);
+    a(p.facts['mul_4_5'].state === 'fluent' && p.facts['mul_6_10'].state === 'fluent', 'T27e canonical mul probes actually seed (mul_4_5 / mul_6_10 regression)');
+
+    // -- day-1 shape: count-on credit gives a real known pool from creation --
+    p = P();
+    a(Content.allFactIds().filter(id => p.facts[id].state === 'fluent' && p.facts[id].attempts === 0).length === 30,
+      'T28a fresh profile credits the 30 count-on addition facts');
+    let plan = Engine.buildSession(p);
+    a(plan.trials.length === p.settings.trialsPerSession && plan.focus.length === 1,
+      'T28b day-1 session is full-size with a single introduction');
+    a(plan.trials.every((t, i) => i === 0 || t !== plan.trials[i - 1]), 'T28c no fact repeats back-to-back on day 1');
+    // the zero-known safety net still batches to the cap (contrived profile)
+    p = P(); for (const id of Content.allFactIds()) { const f = p.facts[id]; f.state = 'new'; f.everFluent = false; }
+    plan = Engine.buildSession(p);
+    a(plan.focus.length === p.settings.activeTargetCap && plan.trials.every((t, i) => i === 0 || t !== plan.trials[i - 1]),
+      'T28d zero-known safety net batches to the cap without adjacency');
+    p = P(); p.lastIntroducedId = 'add_3_4';   // "introduced" but never shown (still new)
+    a(Engine.buildSession(p).focus.length === 1, 'T28e a never-shown lastIntroduced does not deadlock introduction');
+
+    // -- credited-first known fill (placement spec §8 early confirmation) --
+    p = P();
+    const addIds = Content.allFactIds().filter(x => Content.parse(x).op === 'add');
+    addIds.slice(0, 20).forEach(id => { const f = p.facts[id]; f.state = 'fluent'; f.attempts = 0; f.everFluent = true; });
+    addIds.slice(20, 40).forEach(id => { const f = p.facts[id]; f.state = 'fluent'; f.attempts = 5; f.everFluent = true; });
+    plan = Engine.buildSession(p);
+    const fill = plan.trials.filter(t => plan.focus.indexOf(t) === -1);
+    a(fill.length > 0 && fill.every(t => p.facts[t].attempts === 0), 'T29 credited (attempts:0) facts are drawn first in the known fill');
+
+    // -- chosen-table fill prefers the chosen operation --
+    p = P(); p.settings.currentDomain = 'mul_div';
+    for (const id of Content.allFactIds()) if (Content.domainOf(id) === 'add_sub') { const f = p.facts[id]; f.state = 'fluent'; f.attempts = 1; f.everFluent = true; }
+    for (let k = 0; k <= 10; k++) { const f = p.facts[Content.mulId(5, k)]; f.state = 'fluent'; f.attempts = 1; f.everFluent = true; }
+    const fplan = Engine.buildFocusedSession(p, Engine.mulTableIds(7));
+    a(fplan.trials.length > 0 && fplan.trials.every(t => Content.parse(t).op === 'mul'), 'T30 chosen-table session fills with same-operation facts');
+
+    // -- attempt log: appended, capped, placement probes included, normalised --
+    p = P(); p.settings.attemptLogCap = 3;
+    for (let i = 0; i < 5; i++) Engine.applyAttempt(p, 'add_6_7', { correct: true, ms: 1000 + i, sessionId: 's1', ts: i });
+    a(p.attemptLog.length === 3 && p.attemptLog[0].ms === 1002, 'T31a attempt log capped, oldest dropped');
+    a(p.attemptLog.every(e => e.id === 'add_6_7' && e.c === 1), 'T31b log entries carry fact id and correctness');
+    p = Engine.runReducedPlacement(Engine.newProfile(), strong);
+    a(p.attemptLog.length === Engine.placementPhaseAIds().length + Engine.placementPhaseBIds().length
+      && p.attemptLog.every(e => e.s === 'placement'), 'T31c placement probes are logged');
+    const norm3 = Store.normalize({ version: 1, settings: {}, sessions: [], facts: {} });
+    a(Array.isArray(norm3.attemptLog) && norm3.lastBackupAt === null, 'T31d normalise fills attempt log + backup fields');
+
+    // -- parent summary selectors (dashboard §5.2) --
+    p = P();
+    let ps = Engine.parentSummary(p, '2026-07-03');
+    a(ps.focus === null && ps.week === 0 && ps.accuracy === null && ps.quicker === false, 'T32a fresh profile: calm empty-state summary');
+    a(ps.journey.add === 'progress' && ps.journey.div === 'coming', 'T32b credited addition reads in progress; untouched ops read coming');
+    for (const id of Content.allFactIds()) if (Content.parse(id).op === 'add') { const f = p.facts[id]; f.state = 'fluent'; f.attempts = 1; f.everFluent = true; }
+    p.facts['mul_5_6'].state = 'acquiring'; p.facts['mul_5_6'].attempts = 1; p.facts['mul_5_6'].lastSeen = 5;
+    p.facts['mul_9_9'].state = 'acquiring'; p.facts['mul_9_9'].attempts = 1; p.facts['mul_9_9'].lastSeen = 6;
+    ps = Engine.parentSummary(p, '2026-07-03');
+    a(ps.journey.add === 'done' && ps.journey.mul === 'progress' && ps.journey.div === 'coming', 'T32c journey states map from secure fractions');
+    a(ps.focus === 'Multiplication \u2014 \u00D75, \u00D79', 'T32d focus names the tables in intro order, got "' + ps.focus + '"');
+
+    p = P();
+    const mkSess = (date, att, cor, ms) => p.sessions.push({ id: 'x', date, domain: 'add_sub', attempted: att, correct: cor, meanMs: ms, newlyAutomatic: [], metacog: [] });
+    mkSess('2026-06-20', 24, 24, 3000); mkSess('2026-06-22', 24, 20, 2900);
+    mkSess('2026-07-01', 24, 23, 2500); mkSess('2026-07-02', 24, 23, 2400);
+    ps = Engine.parentSummary(p, '2026-07-03');
+    a(ps.week === 2 && !ps.regular, 'T33a sessions this week counted over the last 7 days');
+    mkSess('2026-07-03', 24, 24, 2300);
+    ps = Engine.parentSummary(p, '2026-07-03');
+    a(ps.week === 3 && ps.regular, 'T33b three in a week reads as practising regularly');
+    a(ps.accuracy === 'high', 'T33c aggregated accuracy maps to plain language');
+    a(ps.quicker === true, 'T33d clearly-faster recent sessions read as quicker');
+    p.sessions.forEach(s => { s.domain = 'placement'; });
+    ps = Engine.parentSummary(p, '2026-07-03');
+    a(ps.week === 0 && ps.accuracy === null && ps.quicker === false, 'T33e placement sessions never count as activity');
+
+    // -- advance bar is addition-only (sub lag no longer gates the tables) --
+    p = P();
+    for (const id of Content.allFactIds()) if (Content.parse(id).op === 'add') { const f = p.facts[id]; f.state = 'fluent'; f.everFluent = true; f.attempts = 1; }
+    a(Engine.maybeAdvanceDomain(p) === true && p.settings.currentDomain === 'mul_div', 'T34a all-addition-fluent flips the domain despite untouched subtraction');
+    p = P();
+    const allAdds = Content.allFactIds().filter(id => Content.parse(id).op === 'add');
+    allAdds.slice(0, Math.floor(allAdds.length * 0.8)).forEach(id => { const f = p.facts[id]; f.state = 'fluent'; f.everFluent = true; });
+    a(Engine.maybeAdvanceDomain(p) === false, 'T34b below-threshold addition does not flip');
+
+    // -- companion rule: 1-in-3 introduction slots go to add_sub stragglers --
+    p = P(); p.settings.currentDomain = 'mul_div';
+    for (const id of Content.allFactIds()) if (Content.parse(id).op === 'add') { const f = p.facts[id]; f.state = 'fluent'; f.everFluent = true; f.attempts = 1; }
+    const intro0 = Engine.buildSession(p).introduced;              // sessions.length 0 -> straggler turn
+    a(!!intro0 && Content.parse(intro0).op === 'sub', 'T35a straggler turn introduces leftover subtraction');
+    p.sessions.push({ id: 'x', date: '2026-07-01', domain: 'mul_div', attempted: 1, correct: 1, meanMs: 0, newlyAutomatic: [], metacog: [] });
+    const intro1 = Engine.buildSession(p).introduced;
+    a(!!intro1 && Content.parse(intro1).op !== 'sub', 'T35b other turns stay on the current domain');
+
+    // -- choice-grid on-ramp: suggested table --
+    p = P();
+    a(Engine.suggestedTable(p) === 2, 'T36a fresh profile suggests \u00D72 (partially open via credited tiny doubles)');
+    p.settings.currentDomain = 'mul_div';
+    a(Engine.suggestedTable(p) === null, 'T36b suggestion is add_sub-era only');
+
+    // -- addition leads 2:1 within the add_sub era --
+    p = P();
+    const introA = Engine.buildSession(p).introduced;               // turn 0 -> addition
+    a(!!introA && Content.parse(introA).op === 'add', 'T37a day-1 introduction is an addition fact, not a credited parent\u2019s sub child');
+    p.sessions.push({ id: 'a', date: '2026-07-01', domain: 'add_sub', attempted: 1, correct: 1, meanMs: 0, newlyAutomatic: [], metacog: [] });
+    p.sessions.push({ id: 'b', date: '2026-07-02', domain: 'add_sub', attempted: 1, correct: 1, meanMs: 0, newlyAutomatic: [], metacog: [] });
+    const introS = Engine.buildSession(p).introduced;               // turn 2 -> subtraction
+    a(!!introS && Content.parse(introS).op === 'sub', 'T37b one introduction in three keeps the subtraction thread alive');
+
+    return { pass: fails.length === 0, failures: fails };
+  }
+
+  // ---- simulator ---------------------------------------------------------
+  // studentModel(factId) -> {correct, ms}. opts.placement: 'skip'|'reduced'.
+  function simulate(studentModel, nSessions, opts) {
+    opts = opts || {};
+    reseed(opts.seed != null ? opts.seed : 12345);
+    const savedNow = Clock.now;
+    let day = Date.UTC(2026, 0, 1);
+    Clock.now = () => day;                                // sim clock
+    try {
+      let p = Engine.newProfile();
+      if (opts.placement === 'reduced') p = Engine.runReducedPlacement(p, studentModel);
+      const transitionAt = { session: null };
+      const DAYMS = 86400000;
+      for (let i = 0; i < nSessions; i++) {
+        day += DAYMS;                                     // a session per day
+        const before = p.settings.currentDomain;
+        const plan = Engine.buildSession(p);
+        Engine.runSession(p, plan, studentModel, 'sess_' + i);
+        Engine.updateStreak(p, Engine.isoDay(day));
+        if (before === 'add_sub' && p.settings.currentDomain === 'mul_div' && transitionAt.session === null) transitionAt.session = i;
+      }
+      const counts = (pred) => Content.allFactIds().filter(pred).length;
+      const byState = (st) => counts(id => p.facts[id].state === st);
+      const opState = (op, st) => counts(id => Content.parse(id).op === op && p.facts[id].state === st);
+      return {
+        final: p,
+        summary: {
+          sessions: nSessions,
+          finalDomain: p.settings.currentDomain,
+          transitionAtSession: transitionAt.session,
+          states: { new: byState('new'), acquiring: byState('acquiring'), fluent: byState('fluent'), automatic: byState('automatic') },
+          autoMul: opState('mul', 'automatic'), autoDiv: opState('div', 'automatic'),
+          streak: p.streak.current
+        }
+      };
+    } finally { Clock.now = savedNow; }
+  }
+
+  // ---- integration assertions (exit criterion) ---------------------------
+  function runSimChecks() {
+    const { a, fails } = tester();
+    const perfect = () => ({ correct: true, ms: 800 });
+    const anchors = (id) => { const { op, a: x, b: y } = Content.parse(id); return (op === 'add' && Math.min(x, y) <= 1) ? { correct: true, ms: 800 } : { correct: false, ms: 4000 }; };
+
+    let s1 = simulate(perfect, 80, { placement: 'skip' });
+    a(s1.final.sessions.length === 80, 'SIM1 ran 80 sessions');
+    a(s1.summary.states.automatic > 0, 'SIM1 perfect student reaches some automatic facts');
+    a(checkInvariants(s1.final).pass, 'SIM1 invariants hold');
+
+    let s2 = simulate(perfect, 420, { placement: 'reduced' });
+    a(s2.summary.finalDomain === 'mul_div', 'SIM2 perfect student eventually transitions to mul_div');
+    const divAhead = Content.allFactIds().filter(id => {
+      if (Content.parse(id).op !== 'div') return false;
+      const f = s2.final.facts[id];
+      if (!(f.state === 'fluent' || f.state === 'automatic')) return false;
+      const pf = s2.final.facts[Content.helpersOf(id)[0]];
+      return !(pf.state === 'fluent' || pf.state === 'automatic');
+    });
+    a(divAhead.length === 0, 'SIM2 no division fact runs ahead of its multiplication parent');
+    a(checkInvariants(s2.final).pass, 'SIM2 invariants hold');
+
+    let s3 = simulate(anchors, 60, { placement: 'skip' });
+    a(s3.summary.finalDomain === 'add_sub', 'SIM3 anchors-only student never transitions');
+
+    return { pass: fails.length === 0, failures: fails, samples: { s1: s1.summary, s2: s2.summary, s3: s3.summary } };
+  }
+
+  return { reseed, validateContent, checkInvariants, runTests, simulate, runSimChecks };
+})();
+/* ===========================================================================
+ * UI  — Checkpoint B (M6): the student-facing app.
+ *   Render = pure function of state (innerHTML), one delegated listener.
+ *   Never mutates the profile directly — calls Engine, then re-renders.
+ *   Screens: firstRun -> name2 -> placement -> home <-> session -> post,
+ *            plus browse and grown-ups (backup/restore).
+ * ==========================================================================*/
+const UI = (() => {
+  let state = { screen: 'firstRun', profile: null, session: null, placement: null, aq: null };
+  let _gid = 0;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+  const save = () => { if (state.profile) Store.save(state.profile); };
+  const shuffleArr = (arr) => { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const realSessions = (p) => p.sessions.filter(s => s.domain !== 'placement');
+  const reducedMotion = () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  /* ---- star-fill glyph language (dashboard §7) -------------------------- */
+  const STAR = 'M12 2.6l2.74 5.56 6.14.89-4.44 4.33 1.05 6.11L12 16.7l-5.49 2.89 1.05-6.11L3.12 9.05l6.14-.89z';
+  function starSvg(fill, refresh, size) {
+    size = size || 24; const id = 'c' + (_gid++);
+    let inner;
+    if (fill >= 1) inner = `<path d="${STAR}" fill="var(--gold-fill)" stroke="var(--gold-edge)" stroke-width="1.1" stroke-linejoin="round"/>`;
+    else if (fill > 0) inner = `<clipPath id="${id}"><rect x="0" y="0" width="12" height="24"/></clipPath><path d="${STAR}" fill="var(--gold-fill)" clip-path="url(#${id})"/><path d="${STAR}" fill="none" stroke="var(--gold-edge)" stroke-width="1.1" stroke-linejoin="round"/>`;
+    else inner = `<path d="${STAR}" fill="none" stroke="var(--star-outline)" stroke-width="1.6" stroke-linejoin="round"/>`;
+    const badge = refresh ? `<circle cx="19.6" cy="4.8" r="4.7" fill="var(--refresh)"/><text x="19.6" y="7.4" text-anchor="middle" font-size="7.4" fill="#fff">\u21BB</text>` : '';
+    return `<svg class="glyph" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true">${inner}${badge}</svg>`;
+  }
+  function lockSvg(size) { size = size || 24; return `<svg class="glyph" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true"><rect x="5.5" y="10.5" width="13" height="9" rx="2" fill="var(--lock)"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="var(--lock)" stroke-width="2"/></svg>`; }
+  function glyphFor(f, size) {
+    // Never-shrink fidelity (dashboard §3/§6.3): a slipped automatic fact
+    // KEEPS its full gold star and wears the ↻ badge; only hard, repeated
+    // failure (falling all the way to acquiring) demotes the visible label,
+    // and even then it reads as refreshing, not lost.
+    if (f.state === 'automatic') return starSvg(1, false, size);
+    if (f.everAutomatic) return starSvg(f.state === 'fluent' ? 1 : 0.5, true, size);
+    if (f.state === 'fluent') return starSvg(0.5, false, size);
+    if (f.everFluent) return starSvg(0.5, true, size);     // slipped can-do: keeps its half star
+    if (f.state === 'acquiring') return starSvg(0, false, size); // genuinely learning
+    return lockSvg(size);
+  }
+
+  function describeFocus(p) {
+    const acq = Content.allFactIds().filter(id => p.facts[id].state === 'acquiring');
+    if (!acq.length) return null;
+    let id = acq[0], t = -1; for (const x of acq) if (p.facts[x].lastSeen > t) { t = p.facts[x].lastSeen; id = x; }
+    const { op, a, b } = Content.parse(id);
+    if (op === 'mul') return '\u00D7' + Content.leadFactor(a, b) + ' facts';
+    if (op === 'div') return 'division facts';
+    if (op === 'sub') return 'take-away facts';
+    if (op === 'add') { const r = Content.addPhaseRank(a, b); return r === 1 ? 'doubles' : r === 2 ? 'pairs that make ten' : r === 3 ? 'make-ten facts' : r === 4 ? 'near-doubles' : 'adding facts'; }
+    return null;
+  }
+
+  /* ---- root render dispatch -------------------------------------------- */
+  function render() {
+    const app = $('app'); if (!app) return;
+    const screens = { firstRun: renderFirstRun, name2: renderPlacementChoice, placement: renderPlay, home: renderHome, session: renderSession, post: renderPost, browse: renderBrowse, grownups: renderGrownups, skill: renderSkill };
+    app.innerHTML = (screens[state.screen] || renderHome)();
+    if (window.scrollTo) window.scrollTo(0, 0);
+    wireCarousel();   // re-attach the swipe->tab sync whenever the carousel is on screen
+  }
+  function setActiveTab(i) {
+    const tabs = document.querySelectorAll ? document.querySelectorAll('.gtabs .gtab') : null;
+    if (!tabs) return;
+    for (let k = 0; k < tabs.length; k++) {
+      if (tabs[k].classList) tabs[k].classList.toggle('active', k === i);
+      if (tabs[k].setAttribute) tabs[k].setAttribute('aria-pressed', k === i ? 'true' : 'false');
+    }
+  }
+  function wireCarousel() {
+    const car = $('gcar'); if (!car || car._wired) return; car._wired = true;
+    let ticking = false;
+    car.addEventListener('scroll', () => {
+      if (ticking) return; ticking = true;
+      const settle = () => {
+        ticking = false;
+        const kids = car.children; if (!kids || !kids.length) return;
+        const base = kids[0].offsetLeft || 0;   // page-relative -> carousel-relative (see gridTab)
+        let best = 0, bd = Infinity;
+        for (let k = 0; k < kids.length; k++) { const d = Math.abs(((kids[k].offsetLeft || 0) - base) - car.scrollLeft); if (d < bd) { bd = d; best = k; } }
+        setActiveTab(best);   // swiping the grids updates which tab reads active
+      };
+      if (window.requestAnimationFrame) window.requestAnimationFrame(settle); else setTimeout(settle, 80);
+    });
+  }
+
+  /* ---- first run: name (skippable) + placement choice ------------------ */
+  function renderFirstRun() {
+    return `<div class="screen">
+      <div class="brand">Eager4Maths</div>
+      <h1 class="h1">Welcome \uD83D\uDC4B</h1>
+      <p class="lede">A few minutes of maths facts, most days. Your stars fill in as you go.</p>
+      <div class="card pad">
+        <label class="lbl" for="nameInput">What should we call you? <span class="muted">(optional)</span></label>
+        <input id="nameInput" class="textin" type="text" maxlength="20" autocomplete="off" placeholder="First name">
+      </div>
+      <button class="cta" data-action="saveName">Let's go</button>
+    </div>`;
+  }
+  function renderPlacementChoice() {
+    const name = state.profile.name && state.profile.name.trim();
+    return `<div class="screen">
+      <h1 class="h1">${name ? 'Hi ' + esc(name) + ' \uD83D\uDC4B' : 'Nice to meet you \uD83D\uDC4B'}</h1>
+      <p class="lede">Want a quick check first, so we start at the right spot? About two minutes \u2014 and it's fine to guess or skip any.</p>
+      <button class="cta" data-action="placementBegin">Yes, quick check</button>
+      <button class="btn wide" data-action="placementSkipAll">Skip \u2014 just start</button>
+    </div>`;
+  }
+
+  /* ---- reduced placement (Option B) ------------------------------------ */
+  // The first `placementWarmupItems` are an on-ramp (placement spec §2):
+  // presented like any other item but DISCARDED from seeding, so the timing
+  // of the real probes isn't polluted by find-the-keypad latency — which
+  // otherwise lands on the first doubles and can silently cost the basal
+  // credit. Warm-up items are easy count-on facts outside the probe set.
+  const PLACEMENT_WARMUP_POOL = ['add_1_3', 'add_2_4', 'add_1_4'];
+  function beginPlacement() {
+    const n = state.profile.settings.placementWarmupItems || 0;
+    const warm = PLACEMENT_WARMUP_POOL.slice(0, n).map(id => Object.assign({ id, discard: true }, Content.factQuestion(id, Rng)));
+    const items = warm.concat(Engine.placementPhaseAIds().map(id => Object.assign({ id }, Content.factQuestion(id, Rng))));
+    state.placement = { items, idx: 0, results: [], phaseB: false };
+    loadPlacementQ();
+  }
+  function loadPlacementQ() {
+    const pl = state.placement, it = pl.items[pl.idx];
+    state.aq = { kind: 'placement', id: it.id, prompt: it.prompt, answer: it.answer, discard: !!it.discard, input: '', shownAt: Date.now(), locked: false, feedback: null };
+    state.screen = 'placement'; render();
+  }
+
+  /* ---- home dashboard --------------------------------------------------- */
+  function renderHome() {
+    const p = state.profile, c = Engine.collectionCounts(p), first = realSessions(p).length === 0;
+    const name = p.name && p.name.trim();
+    const greeting = name ? 'Hi ' + esc(name) + ' \uD83D\uDC4B' : 'Hi \uD83D\uDC4B';
+    const prog = Math.round(Engine.domainProgress(p) * 100);
+    const focus = describeFocus(p);
+    const trend = Engine.trendNote(p);
+    const pair = Engine.featuredFamilyPair(p);
+
+    const tiers = `
+      <div class="tier">${starSvg(1, false, 20)}<b>${c.gold}</b><span>know off by heart</span></div>
+      <div class="tier">${starSvg(0.5, false, 20)}<b>${c.canDo}</b><span>can do</span></div>
+      ${c.refresh ? `<div class="tier">${starSvg(0.5, true, 20)}<b>${c.refresh}</b><span>needs a refresh</span></div>` : ''}`;
+    const collection = `<div class="card collection">
+      <div class="ctitle">\uD83C\uDFC6 Facts you know</div>
+      <div class="count-big">${c.total}</div>
+      <div class="bar" aria-hidden="true"><span style="width:${Math.max(4, prog)}%"></span></div>
+      <div class="growing">growing</div>
+      <div class="tiers">${tiers}</div>
+    </div>`;
+    const intro = first
+      ? `<p class="lede">${c.total > 0
+        ? "You're not starting from scratch \u2014 you already know <b>" + c.total + "</b> facts. Half stars are facts you can do; gold stars are facts you know off by heart."
+        : "As you practise, your stars fill in \u2014 half stars for facts you can do, gold stars for facts you know off by heart."}</p>`
+      : '';
+    const cta = `<button class="cta big" data-action="startSession">\u25B6 Start today<small>~10 min${focus ? ' \u00B7 ' + esc(focus) : ''}</small></button>`;
+    // choice-grid on-ramp: surface the next open table so times tables are a
+    // visible destination during the add_sub era, not something to stumble on
+    const sug = Engine.suggestedTable(p);
+    const suggest = sug != null ? `<button class="link suggest" data-action="gotoSuggested" data-n="${sug}">Times tables are open \u2014 try \u00D7${sug} \u2192</button>` : '';
+    const gridsCard = `<div class="card">
+      <div class="gtabs">
+        <button class="gtab active" aria-pressed="true" data-action="gridTab" data-i="0">Times tables</button>
+        <button class="gtab" aria-pressed="false" data-action="gridTab" data-i="1">Addition</button>
+      </div>
+      <div class="gcar" id="gcar">
+        <div class="gslide">${renderGrid(p, 'mul')}<p class="mapnote tapnote">Tap a row number to practise that table.</p></div>
+        <div class="gslide">${renderGrid(p, 'add')}<p class="mapnote tapnote">Tap a row number to practise adding that number.</p></div>
+      </div>
+      ${gridLegend()}
+    </div>`;
+    const summary = `<div class="card"><div class="ctitle small">All your facts</div>${renderOpSummary(p)}</div>`;
+    const chain = pair ? `<div class="card chain-card"><div class="ctitle small">Today's family \u2014 ${pair[0]} &amp; ${pair[1]}</div>${renderChain(pair)}</div>` : '';
+    const streak = !first ? `<div class="row streak"><span>\uD83D\uDD25 ${p.streak.current}-day streak</span><span class="muted">best ${p.streak.longest}</span></div>` : '';
+    const trendLine = trend === 'quicker' ? `<div class="row trend">\uD83D\uDCC8 You're getting quicker \u2014 that's facts becoming automatic.</div>` : '';
+    const links = `<div class="links">
+      <button class="link" data-action="gotoBrowse">See all my facts</button>
+      <button class="link" data-action="gotoGrownups">For grown-ups</button>
+    </div>`;
+
+    return `<div class="screen">
+      <div class="brand">Eager4Maths</div>
+      <div class="greet">${greeting}</div>
+      ${collection}${intro}${cta}${suggest}${gridsCard}${summary}${chain}${streak}${trendLine}${links}
+    </div>`;
+  }
+
+  function renderChain(pair) {
+    const ids = Content.familyMembers(pair[0], pair[1]);
+    const nodes = ids.map(id => {
+      const f = state.profile.facts[id];
+      return `<div class="node"><div class="nq">${esc(Content.factQuestion(id).prompt)}</div>${glyphFor(f, 26)}</div>`;
+    }).join('<span class="arrow">\u2192</span>');
+    return `<div class="chain">${nodes}</div>`;
+  }
+
+  function tierClass(f) {
+    if (f.state === 'automatic') return 'auto';
+    if (f.state === 'fluent') return f.everAutomatic ? 'refresh' : 'flu';
+    if (f.everFluent) return 'refresh';
+    if (f.state === 'acquiring') return 'acq';
+    return 'new';
+  }
+  function renderGrid(p, op) {
+    const idOf = op === 'mul' ? Content.mulId : Content.addId;
+    const sym = op === 'mul' ? '\u00D7' : '+';
+    const lab = (n) => `<div class="gc glabel tap" data-action="chooseTable" data-op="${op}" data-n="${n}">${n}</div>`;
+    let cells = `<div class="gc gcorner">${sym}</div>`;
+    for (let c = 0; c <= 10; c++) cells += lab(c);
+    for (let r = 0; r <= 10; r++) {
+      cells += lab(r);
+      for (let c = 0; c <= 10; c++) { const f = p.facts[idOf(r, c)]; cells += `<div class="gc ${tierClass(f)}" title="${r}${sym}${c}"></div>`; }
+    }
+    return `<div class="mgrid" role="img" aria-label="${op === 'mul' ? 'Multiplication' : 'Addition'} progress grid; fact counts are in the summary below">${cells}</div>`;
+  }
+  function gridLegend() {
+    return `<div class="gridleg">
+      <span><i class="sw new"></i>not started</span>
+      <span><i class="sw acq"></i>working</span>
+      <span><i class="sw flu"></i>can do</span>
+      <span><i class="sw auto"></i>off by heart</span>
+    </div>`;
+  }
+  function renderOpSummary(p) {
+    const o = Engine.opSummary(p);
+    const row = (label, key) => { const k = o[key][0], t = o[key][1], pct = t ? Math.round(k / t * 100) : 0; return `<div class="opr"><span class="opl">${label}</span><span class="opbar"><span style="width:${pct}%"></span></span><span class="opn">${k}/${t}</span></div>`; };
+    return `<div class="opsum">${row('Addition', 'add')}${row('Subtraction', 'sub')}${row('Multiplication', 'mul')}${row('Division', 'div')}</div>`;
+  }
+
+  /* ---- the session: warm-up -> strategy card -> timed practice --------- */
+  function beginSession(focusIds) {
+    const p = state.profile;
+    const focused = Array.isArray(focusIds) && focusIds.length > 0;
+    const plan = focused ? Engine.buildFocusedSession(p, focusIds) : Engine.buildSession(p);
+    let known;
+    if (focused) {
+      const fop = Content.parse(plan.focus[0] || focusIds[0]).op;
+      known = Content.allFactIds().filter(id => Engine.isFluentOrAbove(p.facts[id]) && Content.parse(id).op === fop);
+    } else {
+      const dom = p.settings.currentDomain;
+      known = Content.allFactIds().filter(id => Engine.isFluentOrAbove(p.facts[id]) && Content.domainOf(id) === dom);
+    }
+    const warmup = shuffleArr(known).slice(0, 3).map(id => Object.assign({ id }, Content.factQuestion(id, Rng)));
+    // Strategy card only for a fact being LEARNED (new/acquiring). Cards are
+    // retired once retrieval is the job — showing one for a fluent/automatic
+    // fact (possible in chosen-table sessions) would invite continued
+    // deriving, the exact pattern the retire-at-automatic scoping exists to
+    // stop (strategy spec §1).
+    const learnable = plan.focus.filter(id => { const st = p.facts[id].state; return st === 'new' || st === 'acquiring'; });
+    const primary = plan.introduced || (learnable.length ? learnable[learnable.length - 1] : null);
+    const card = primary ? Content.cardContent(primary) : null;
+    state.session = {
+      id: 'sess_' + Date.now(), plan, phase: null, focused: focused,
+      warmup, wIdx: 0, card, primary,
+      practice: plan.trials.slice(), pIdx: 0,
+      errors: {}, retired: new Set(), focusSet: new Set(plan.focus),
+      metacogShown: 0, metacog: [],
+      attempted: 0, correct: 0, msSum: 0, msN: 0, newlyAutomatic: [],
+      collectionBefore: Engine.collectionCounts(p), streakBefore: p.streak.current
+    };
+    state.screen = 'session';
+    if (warmup.length) startPhase('warmup');
+    else if (card) startPhase('card');
+    else startPhase('practice');
+  }
+  function startPhase(phase) {
+    const s = state.session; s.phase = phase;
+    if (phase === 'warmup') loadWarmupQ();
+    else if (phase === 'card') render();
+    else loadPracticeQ();
+  }
+  function loadWarmupQ() {
+    const s = state.session, it = s.warmup[s.wIdx];
+    state.aq = { kind: 'warmup', id: it.id, prompt: it.prompt, answer: it.answer, input: '', shownAt: Date.now(), locked: false, feedback: null };
+    render();
+  }
+  function loadPracticeQ() {
+    const s = state.session;
+    while (s.pIdx < s.practice.length) {
+      const id = s.practice[s.pIdx];
+      if (s.focusSet.has(id) && s.retired.has(id)) { s.pIdx++; continue; }
+      const q = Content.factQuestion(id, Rng);
+      state.aq = { kind: 'practice', id, prompt: q.prompt, answer: q.answer, input: '', shownAt: Date.now(), locked: false, feedback: null };
+      render(); return;
+    }
+    endSession();
+  }
+  function renderSession() {
+    const s = state.session;
+    if (s.phase === 'card') return renderCard();
+    if (s.phase === 'warmup') return renderPlay({ label: '\uD83C\uDF31 Warm-up', prog: (s.wIdx + 1) + ' of ' + s.warmup.length, hint: 'Easy ones to start.', stop: 'session' });
+    return renderPlay({ label: 'Practice', prog: Math.min(s.pIdx + 1, s.practice.length) + ' of ' + s.practice.length, stop: 'session' });
+  }
+  function renderCard() {
+    const s = state.session, card = s.card, q = Content.factQuestion(s.primary);
+    return `<div class="screen">
+      <div class="beat">A way to think about it</div>
+      <div class="card cardface">
+        <div class="clabel">${esc(card.label)}</div>
+        <div class="cprompt">${esc(q.prompt)}</div>
+        <div class="ctalk">${esc(card.talk)}</div>
+        <div class="cworked">${esc(card.worked)}</div>
+      </div>
+      <button class="cta" data-action="gotCard">Got it</button>
+    </div>`;
+  }
+
+  /* ---- shared question screen (warm-up / practice / placement) --------- */
+  function renderPlay(opts) {
+    opts = opts || (state.screen === 'placement'
+      ? { label: 'Quick check', prog: (state.placement.idx + 1) + ' of ' + state.placement.items.length, hint: "Answer what you can \u2014 guessing or skipping is fine.", skip: true, stop: 'placement' }
+      : {});
+    const aq = state.aq, fb = aq.feedback;
+    let body;
+    if (fb && fb.metacog) {
+      body = `<div class="metacog">
+        <div class="mq">How did you get it?</div>
+        <button class="mbtn" data-action="metacog" data-m="counted">I counted</button>
+        <button class="mbtn" data-action="metacog" data-m="usedfact">I used a fact I knew</button>
+        <button class="mbtn" data-action="metacog" data-m="knew">I just knew it</button>
+      </div>`;
+    } else if (fb) {
+      body = fb.correct
+        ? `<div class="fb ok" role="status" aria-live="polite">\u2713 Yes!</div>`
+        : `<div class="fb soft" role="status" aria-live="polite">Not quite \u2014 ${esc(aq.prompt)} = <b>${fb.answer}</b></div>`;
+    } else {
+      body = keypad();
+    }
+    const ansClass = fb ? (fb.correct ? 'ok' : fb.metacog ? '' : 'soft') : '';
+    return `<div class="screen play">
+      <div class="beat">${esc(opts.label || '')}${opts.prog ? ` <span class="prog">${esc(opts.prog)}</span>` : ''}</div>
+      <div class="qcard">
+        <div class="prompt">${esc(aq.prompt)}</div><div class="eq">=</div>
+        <div class="answer ${ansClass}" id="answer">${esc(aq.input) || '<span class="cursor">_</span>'}</div>
+      </div>
+      ${body}
+      ${opts.hint && !fb ? `<div class="hint">${esc(opts.hint)}</div>` : ''}
+      ${opts.skip && !fb ? `<button class="link skip" data-action="placementSkipOne">I don't know this one</button>` : ''}
+      ${opts.stop && !fb ? (opts.stop === 'placement'
+        ? `<button class="link skip" data-action="placementStop">Stop here \u2014 keep what we've done</button>`
+        : `<button class="link skip" data-action="sessionStop">Stop here for today</button>`) : ''}
+    </div>`;
+  }
+  function keypad() {
+    const k = (d) => `<button class="key" data-action="digit" data-d="${d}">${d}</button>`;
+    return `<div class="keypad">
+      ${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(k).join('')}
+      <button class="key sub" data-action="back" aria-label="delete">\u232B</button>
+      ${k(0)}
+      <button class="key go" data-action="enter" aria-label="enter">\u2713</button>
+    </div>`;
+  }
+
+  /* ---- answer evaluation ----------------------------------------------- */
+  function commitAnswer() {
+    const aq = state.aq; if (!aq || aq.locked || aq.input === '') return;
+    const ms = Date.now() - aq.shownAt;
+    const correct = parseInt(aq.input, 10) === aq.answer;
+    aq.locked = true;
+    if (aq.kind === 'placement') {
+      if (!aq.discard) state.placement.results.push({ factId: aq.id, correct, ms });
+      aq.feedback = { correct, answer: aq.answer }; render();
+      setTimeout(advancePlacement, correct ? 520 : 1100); return;
+    }
+    const p = state.profile, s = state.session;
+    const before = p.facts[aq.id].state;
+    Engine.applyAttempt(p, aq.id, { correct, ms, sessionId: s.id, ts: Clock.now(), warmup: aq.kind === 'warmup' });
+    s.attempted++; if (correct) s.correct++; s.msSum += ms; s.msN++;
+    if (p.facts[aq.id].state === 'automatic' && before !== 'automatic') s.newlyAutomatic.push(aq.id);
+    if (aq.kind === 'practice' && s.focusSet.has(aq.id) && !correct) { s.errors[aq.id] = (s.errors[aq.id] || 0) + 1; if (s.errors[aq.id] >= 3) s.retired.add(aq.id); }
+    save();  // persist per attempt: an interrupted session never loses fact progress
+    const wantMeta = aq.kind === 'practice' && correct && s.focusSet.has(aq.id) && s.metacogShown < 2 && Rng() < 0.5;
+    if (wantMeta) { s.metacogShown++; aq.feedback = { metacog: true }; render(); return; }
+    aq.feedback = { correct, answer: aq.answer }; render();
+    setTimeout(aq.kind === 'warmup' ? advanceWarmup : advancePractice, correct ? 520 : 1100);
+  }
+  function advancePlacement() {
+    const pl = state.placement; if (!pl) return;   // timer outlived the flow: drop it
+    pl.idx++;
+    if (pl.idx >= pl.items.length) {
+      // Phase B (placement spec §3): only an add-strong Phase A opens the mul
+      // sample; everyone else finishes here and never faces it.
+      if (!pl.phaseB && Engine.phaseBFromProbes(pl.results, state.profile.settings)) {
+        pl.phaseB = true;
+        pl.items = pl.items.concat(Engine.placementPhaseBIds().map(id => Object.assign({ id }, Content.factQuestion(id, Rng))));
+        loadPlacementQ(); return;
+      }
+      Engine.seedFromProbeResults(state.profile, pl.results); // seeds + sets placementResolved + maybeAdvanceDomain
+      state.placement = null; state.aq = null;                // drop transient probe state
+      save(); state.screen = 'home'; render(); return;
+    }
+    loadPlacementQ();
+  }
+  function advanceWarmup() {
+    const s = state.session; if (!s) return;
+    s.wIdx++;
+    if (s.wIdx >= s.warmup.length) { startPhase(s.card ? 'card' : 'practice'); return; }
+    loadWarmupQ();
+  }
+  function advancePractice() { const s = state.session; if (!s) return; s.pIdx++; loadPracticeQ(); }
+  function endSession() {
+    const p = state.profile, s = state.session;
+    if (s.plan.introduced) p.lastIntroducedId = s.plan.introduced;
+    p.sessions.push({
+      id: s.id, date: Engine.isoDay(Clock.now()), domain: p.settings.currentDomain,
+      attempted: s.attempted, correct: s.correct,
+      meanMs: s.msN ? Math.round(s.msSum / s.msN) : 0,
+      newlyAutomatic: s.newlyAutomatic.slice(),
+      metacog: s.metacog.slice()
+    });
+    Engine.updateStreak(p, Engine.isoDay(Clock.now()));
+    Engine.maybeAdvanceDomain(p);
+    // Milestone backup prompt (dashboard §9): couple the ask to a win — a new
+    // gold star, or the collection crossing a 25 boundary — at most once a
+    // fortnight, and only while there's no recent backup. The prompt itself is
+    // a quiet card on the post screen, never a blocker.
+    const cNow = Engine.collectionCounts(p);
+    const milestone = s.newlyAutomatic.length > 0 || Math.floor(cNow.total / 25) > Math.floor(s.collectionBefore.total / 25);
+    const lastTouch = Math.max(p.lastBackupAt || 0, p.lastBackupPromptAt || 0);
+    s.backupPrompt = milestone && (Clock.now() - lastTouch > 14 * 86400000);
+    if (s.backupPrompt) p.lastBackupPromptAt = Clock.now();
+    state.aq = null;   // question state is done with; don't leak it into later screens
+    save(); state.screen = 'post'; render();
+  }
+
+  /* ---- post-session delta ---------------------------------------------- */
+  function renderPost() {
+    const p = state.profile, s = state.session, c = Engine.collectionCounts(p);
+    const delta = c.total - s.collectionBefore.total;
+    const name = p.name && p.name.trim();
+    const na = s.newlyAutomatic;
+    let lead;
+    if (na.length) {
+      const items = na.map(id => `<div class="goldwin">${starSvg(1, false, 22)} ${esc(Content.factQuestion(id).prompt)}</div>`).join('');
+      lead = `<div class="card"><div class="ctitle small">Now off by heart</div>${items}</div>`;
+    } else {
+      const climbing = Content.allFactIds().filter(id => { const f = p.facts[id]; return f.state === 'fluent' && !f.everAutomatic; }).length;
+      lead = `<p class="lede">Solid work. ${climbing ? 'A few facts are on their way \u2014 a couple more goes and they turn gold ' : 'Keep going and your first gold stars are close '}${starSvg(0.5, false, 18)}</p>`;
+    }
+    const grew = `<div class="row big-row">\uD83C\uDFC6 Facts you know: <b>${c.total}</b>${delta > 0 ? ` <span class="up">\u25B2 +${delta} today</span>` : ''}</div>`;
+    const acc = `<div class="row muted">You got ${s.correct} of ${s.attempted} today</div>`;
+    const streak = `<div class="row">\uD83D\uDD25 ${p.streak.current}-day streak${p.streak.current > s.streakBefore ? '!' : ''}</div>`;
+    const trend = Engine.trendNote(p) === 'quicker' ? `<div class="row muted">\uD83D\uDCC8 A bit quicker than last time</div>` : '';
+    const backup = s.backupPrompt ? `<div class="card pad"><div class="ctitle small">Keep it safe</div><p class="muted">Good moment to save a backup \u2014 progress lives only on this device.</p><button class="btn wide" data-action="exportData">Save a backup</button></div>` : '';
+    return `<div class="screen">
+      <h1 class="h1">Nice work${name ? ', ' + esc(name) : ''} \uD83C\uDF89</h1>
+      ${lead}${grew}${acc}${streak}${trend}${backup}
+      <button class="cta" data-action="gotoHome">Back to home</button>
+    </div>`;
+  }
+
+  /* ---- skill screen: a chosen table / addition row --------------------- */
+  function renderSkill() {
+    const p = state.profile, op = state.skillOp || 'mul', n = state.skillTable;
+    const sym = op === 'mul' ? '\u00D7' : '+';
+    const idOf = op === 'mul' ? Content.mulId : Content.addId;
+    const ids = Array.from({ length: 11 }, (_, k) => idOf(n, k));
+    const anyUnlocked = ids.some(id => Engine.choiceUnlocked(p, id));
+    let rows = '';
+    for (let k = 0; k <= 10; k++) {
+      const id = idOf(n, k), f = p.facts[id], locked = !Engine.choiceUnlocked(p, id);
+      rows += `<div class="srow${locked ? ' locked' : ''}"><span class="sq">${n} ${sym} ${k} = ${op === 'mul' ? n * k : n + k}</span>${locked ? lockSvg(20) : glyphFor(f, 20)}</div>`;
+    }
+    const title = op === 'mul' ? `The ${n}\u00D7 table` : `Adding ${n}`;
+    let foot;
+    if (anyUnlocked) {
+      const verb = op === 'mul' ? `the ${n}\u00D7 table` : `adding ${n}`;
+      foot = `<button class="cta" data-action="practiseTable" data-op="${op}" data-n="${n}">\u25B6 Practise ${verb}</button>`;
+    } else {
+      const h = Engine.tableHelper(n);
+      const hLabel = h === 'doubles' ? 'your addition doubles' : 'your ' + h + '\u00D7 table';
+      foot = `<div class="hint">This one opens up once you know ${hLabel} \u2014 that's the fact this table is built on.</div>`
+        + (h && h !== 'doubles' ? `<button class="btn wide" data-action="chooseTable" data-op="mul" data-n="${h}">Go to your ${h}\u00D7 table</button>` : '');
+    }
+    return `<div class="screen">
+      <button class="link back" data-action="gotoHome">\u2190 Home</button>
+      <h1 class="h1">${title}</h1>
+      <div class="card"><div class="srows">${rows}</div></div>
+      ${foot}
+    </div>`;
+  }
+
+  /* ---- browse all families --------------------------------------------- */
+  function renderBrowse() {
+    const p = state.profile, seen = new Map();
+    for (const id of Content.allFactIds()) {
+      const f = p.facts[id]; if (f.state === 'new' && !f.everFluent) continue;
+      const pair = Content.familyPairOf(id), key = pair[0] + '_' + pair[1];
+      const prev = seen.get(key);
+      seen.set(key, { pair, t: Math.max(prev ? prev.t : -1, f.lastSeen) });
+    }
+    const fams = [...seen.values()].sort((a, b) => b.t - a.t);
+    const legend = `<div class="legend">${lockSvg(18)}not started ${starSvg(0, false, 18)}working on it ${starSvg(0.5, false, 18)}can do ${starSvg(1, false, 18)}off by heart</div>`;
+    const grids = `
+      <div class="card"><div class="ctitle small">Times tables <span class="muted">\u00B7 tap a row to practise</span></div>${renderGrid(p, 'mul')}${gridLegend()}</div>
+      <div class="card"><div class="ctitle small">Addition facts <span class="muted">\u00B7 tap a row to practise</span></div>${renderGrid(p, 'add')}${gridLegend()}</div>
+      <div class="card"><div class="ctitle small">All your facts</div>${renderOpSummary(p)}</div>`;
+    const body = fams.length
+      ? fams.map(f => `<div class="card fam"><div class="ctitle small">${f.pair[0]} &amp; ${f.pair[1]}</div>${renderChain(f.pair)}</div>`).join('')
+      : `<p class="lede">Nothing here yet \u2014 do a session and your families will show up.</p>`;
+    return `<div class="screen">
+      <button class="link back" data-action="gotoHome">\u2190 Home</button>
+      <h1 class="h1">My facts</h1>${grids}
+      <div class="ctitle small mt">My fact families</div>${legend}${body}
+    </div>`;
+  }
+
+  /* ---- grown-ups: parent summary (Tier 1) + backup / restore ------------ */
+  // One layout, two deliveries (dashboard §5.1): parentBlocksHtml() is the
+  // single source of the summary markup; the in-app screen (Tier 1) and the
+  // exported standalone file (Tier 0) both render it. Qualitative only — no
+  // raw times, no speed targets, no comparison (§5.3).
+  function fmtDate(ms) {
+    try { return new Date(ms).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }); }
+    catch (e) { return Engine.isoDay(ms); }
+  }
+  function parentBlocksHtml(p, m) {
+    const anySecure = m.secure.add[0] + m.secure.sub[0] + m.secure.mul[0] + m.secure.div[0] > 0;
+    const focus = m.focus || (anySecure ? 'Reviewing known facts' : 'Just getting started');
+    const jt = (st) => st === 'done' ? '\u2713' : st === 'progress' ? '(in progress)' : '(coming)';
+    const journey = `Add ${jt(m.journey.add)} \u00B7 Sub ${jt(m.journey.sub)} \u00B7 Mult ${jt(m.journey.mul)} \u00B7 Div ${jt(m.journey.div)}`;
+    const where = `<div class="card"><div class="ctitle small">Where things are</div>
+      <div class="row">Working on: <b>${esc(focus)}</b></div>
+      <div class="row">Journey: ${journey}</div>
+      <div class="row muted">Facts secure</div>${renderOpSummary(p)}</div>`;
+    const accMap = { high: 'high (most answers correct)', good: 'good (usually correct)', building: 'building (lots of new facts in the mix)' };
+    const activity = `<div class="card"><div class="ctitle small">Recent activity</div>
+      <div class="row">Sessions this week: <b>${m.week}</b></div>
+      ${m.week === 0 ? `<div class="row muted">Hasn't practised this week</div>`
+        : m.regular ? `<div class="row">Practising regularly \u2713</div>`
+        : `<div class="row muted">Practised ${m.week === 1 ? 'once' : 'twice'} this week</div>`}
+      ${m.accuracy ? `<div class="row">Accuracy: ${accMap[m.accuracy]}</div>` : ''}
+      ${m.quicker ? `<div class="row">Getting quicker over time \u2713</div>` : ''}</div>`;
+    const means = `<div class="card"><div class="ctitle small">What this means</div>
+      <div class="row">\u2022 Division comes <b>after</b> \u2014 and lags \u2014 multiplication. That's by design, not falling behind.</div>
+      <div class="row">\u2022 Facts marked "for a refresh" are normal upkeep, not lost ground.</div>
+      <div class="row">\u2022 The best support is encouraging <b>showing up and effort</b> \u2014 not speed. Praise the process, not the person.</div>
+      <div class="row">\u2022 About 10 minutes most days beats long occasional sessions.</div></div>`;
+    return where + activity + means;
+  }
+  function summaryFileHtml(p, m) {
+    const name = p.name && p.name.trim();
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eager4Maths \u2014 progress summary</title><style>
+  body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#2A2F3A;background:#fff;margin:0 auto;padding:28px 20px;max-width:560px}
+  h1{font:700 24px/1.2 Georgia,serif;color:#1D2B5E;margin:0 0 2px}
+  .sub{color:#586273;margin:0 0 20px}
+  .card{border:1px solid #DDE5F5;border-radius:14px;padding:16px;margin:0 0 14px}
+  .ctitle{font:600 13px/1.2 Georgia,serif;color:#1D2B5E;text-transform:uppercase;letter-spacing:.02em;margin-bottom:10px}
+  .row{margin:0 0 8px;font-size:15px}
+  .muted{color:#586273}
+  b{color:#2A2F3A}
+  .opsum{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .opr{display:flex;align-items:center;gap:10px;font-size:13px}
+  .opl{width:96px;flex:none}
+  .opbar{flex:1;height:8px;border-radius:99px;background:#E7ECF5;overflow:hidden}
+  .opbar span{display:block;height:100%;background:linear-gradient(90deg,#3FB873,#1B9E57);border-radius:99px}
+  .opn{width:52px;text-align:right;color:#586273;flex:none}
+  .foot{margin-top:18px;color:#586273;font-size:13px}
+  @media print{.card{break-inside:avoid}}
+</style></head><body>
+<h1>Progress summary</h1>
+<p class="sub">${name ? esc(name) + ' \u00B7 ' : ''}as of ${esc(fmtDate(Clock.now()))}</p>
+${parentBlocksHtml(p, m)}
+<p class="foot">Made with Eager4Maths. Progress stays on the family device \u2014 this summary is a snapshot to keep, print, or email to the teacher.</p>
+</body></html>`;
+  }
+  function renderGrownups() {
+    const p = state.profile, m = Engine.parentSummary(p);
+    const name = p.name && p.name.trim();
+    return `<div class="screen">
+      <button class="link back" data-action="gotoHome">\u2190 Home</button>
+      <h1 class="h1">For grown-ups</h1>
+      <p class="lede">Progress is saved on this device only \u2014 nothing leaves it. Because of that, clearing the browser or switching device loses it, so keep a backup now and then.</p>
+      <p class="mapnote">Progress summary${name ? ' \u2014 ' + esc(name) : ''} \u00B7 as of ${esc(fmtDate(Clock.now()))}</p>
+      ${parentBlocksHtml(p, m)}
+      <button class="btn wide" data-action="exportSummary">Export / print summary</button>
+      <p class="mapnote tapnote">Saves this summary as a page you can print or email to the teacher.</p>
+      <div class="card pad">
+        <div class="ctitle small">Back up progress</div>
+        <p class="muted">Saves a small file you can keep or email to the teacher.</p>
+        <button class="cta" data-action="exportData">Save a backup</button>
+      </div>
+      <div class="card pad">
+        <div class="ctitle small">Restore from a backup</div>
+        <p class="muted">Load a backup file to bring progress back, or move it to another device.</p>
+        <label class="btn wide filein">Choose backup file<input id="importFile" type="file" accept="application/json,.json" data-action="importFile" hidden></label>
+      </div>
+    </div>`;
+  }
+
+  /* ---- digit entry shared by keypad + physical keyboard ---------------- */
+  function pushDigit(d) { const aq = state.aq; if (!aq || aq.locked || aq.input.length >= 4) return; aq.input += d; const el = $('answer'); if (el) el.innerHTML = esc(aq.input); }
+  function popDigit() { const aq = state.aq; if (!aq || aq.locked) return; aq.input = aq.input.slice(0, -1); const el = $('answer'); if (el) el.innerHTML = esc(aq.input) || '<span class="cursor">_</span>'; }
+  function onKeyDown(e) {
+    if (state.screen === 'firstRun' && e.key === 'Enter') { e.preventDefault(); ACTIONS.saveName(); return; }
+    const aq = state.aq; if (!aq) return;
+    const inQ = state.screen === 'placement' || (state.screen === 'session' && state.session && state.session.phase !== 'card');
+    if (!inQ || aq.locked) return;
+    if (e.key >= '0' && e.key <= '9') { e.preventDefault(); pushDigit(e.key); }
+    else if (e.key === 'Enter') { e.preventDefault(); commitAnswer(); }
+    else if (e.key === 'Backspace') { e.preventDefault(); popDigit(); }
+  }
+
+  /* ---- delegated actions ----------------------------------------------- */
+  const ACTIONS = {
+    saveName: () => { const v = $('nameInput') ? $('nameInput').value.trim().slice(0, 20) : ''; state.profile = Engine.newProfile(); state.profile.name = v; save(); state.screen = 'name2'; render(); },
+    placementBegin: () => beginPlacement(),
+    placementSkipAll: () => { state.profile.placementResolved = true; save(); state.screen = 'home'; render(); },
+    placementSkipOne: () => { const aq = state.aq; if (!aq || aq.locked) return; aq.locked = true; if (!aq.discard) state.placement.results.push({ factId: aq.id, correct: false, ms: 0 }); advancePlacement(); },
+    startSession: () => beginSession(),
+    // Early exit that keeps everything honest: fact progress is already
+    // persisted per answer; if anything was attempted, close the session out
+    // properly (record + streak + post screen). Nothing attempted -> just home.
+    sessionStop: () => {
+      const s = state.session; if (!s) return;
+      if (s.attempted > 0) { endSession(); }
+      else { state.session = null; state.aq = null; state.screen = 'home'; render(); }
+    },
+    // Partial placement is a valid seed by construction (placement spec §12.3):
+    // probed facts seed, the rest stay `new`. Nothing probed yet -> same as skip.
+    placementStop: () => {
+      const pl = state.placement; if (!pl) return;
+      if (pl.results.length) Engine.seedFromProbeResults(state.profile, pl.results);
+      else state.profile.placementResolved = true;
+      state.placement = null; state.aq = null;
+      save(); state.screen = 'home'; render();
+    },
+    gotCard: () => startPhase('practice'),
+    digit: (t) => pushDigit(t.getAttribute('data-d')),
+    back: () => popDigit(),
+    enter: () => commitAnswer(),
+    metacog: (t) => { const s = state.session, aq = state.aq; s.metacog.push({ id: aq.id, m: t.getAttribute('data-m') }); aq.feedback = { correct: true, answer: aq.answer }; render(); setTimeout(advancePractice, 460); },
+    gotoHome: () => { state.session = null; state.placement = null; state.aq = null; state.screen = 'home'; render(); },
+    gotoBrowse: () => { state.screen = 'browse'; render(); },
+    gotoGrownups: () => { state.screen = 'grownups'; render(); },
+    chooseTable: (t) => { state.skillOp = t.getAttribute('data-op') || 'mul'; state.skillTable = +t.getAttribute('data-n'); state.screen = 'skill'; render(); },
+    gotoSuggested: (t) => { state.skillOp = 'mul'; state.skillTable = +t.getAttribute('data-n'); state.screen = 'skill'; render(); },
+    gridTab: (t) => {
+      const i = +t.getAttribute('data-i');
+      const car = $('gcar');
+      if (car && car.children && car.children[i]) {
+        // offsetLeft is relative to the nearest POSITIONED ancestor — with
+        // none, that's the page. On a centred desktop layout every slide's
+        // offsetLeft therefore exceeded the carousel's max scroll, so
+        // scrollTo clamped to the LAST slide and "Times tables" became
+        // unreachable. Normalise against the first slide so the target is
+        // carousel-relative in any layout. (Mobile masked this: the page
+        // x-offset is small enough there that scroll-snap absorbed it.)
+        const base = car.children[0].offsetLeft || 0;
+        const x = (car.children[i].offsetLeft || 0) - base;
+        if (car.scrollTo) car.scrollTo({ left: x, behavior: reducedMotion() ? 'auto' : 'smooth' }); else car.scrollLeft = x;
+      }
+      setActiveTab(i);
+    },
+    practiseTable: (t) => { const op = t.getAttribute('data-op') || 'mul', n = +t.getAttribute('data-n'); beginSession(op === 'mul' ? Engine.mulTableIds(n) : Array.from({ length: 11 }, (_, k) => Content.addId(n, k))); },
+    exportData: () => {
+      try {
+        const blob = new Blob([Store.exportJSON(state.profile)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob), a = document.createElement('a');
+        a.href = url; a.download = 'eager4maths-backup-' + Engine.isoDay(Date.now()) + '.json';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        state.profile.lastBackupAt = Clock.now(); save();   // a fresh backup quiets the milestone prompt
+      } catch (e) { alert('Could not create a backup file.'); }
+    },
+    // Tier 0 (dashboard §5.5): the HUMAN-read summary file. Deliberately does
+    // NOT touch lastBackupAt — only the machine-read JSON is the safety net.
+    exportSummary: () => {
+      try {
+        const html = summaryFileHtml(state.profile, Engine.parentSummary(state.profile));
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob), a = document.createElement('a');
+        a.href = url; a.download = 'eager4maths-summary-' + Engine.isoDay(Date.now()) + '.html';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+      } catch (e) { alert('Could not create the summary file.'); }
+    }
+  };
+  function onAppClick(e) {
+    const t = e.target.closest ? e.target.closest('[data-action]') : null;
+    if (!t) return;
+    if (t.isConnected === false) return;   // a re-render already replaced this node: drop the stale click
+    const fn = ACTIONS[t.getAttribute('data-action')];
+    if (fn) { e.preventDefault(); fn(t, e); }
+  }
+  function onAppChange(e) {
+    const t = e.target.closest ? e.target.closest('[data-action]') : null;
+    if (!t || t.getAttribute('data-action') !== 'importFile') return;
+    const file = t.files && t.files[0];
+    t.value = '';   // clear selection so the same file can be re-imported later
+    if (!file) return;
+    if (state.profile && typeof window.confirm === 'function' &&
+        !window.confirm('This replaces the progress saved on this device with the backup. Continue?')) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const obj = Store.importJSON(reader.result);   // validates + normalises
+        state.profile = obj; save();
+        state.session = null; state.placement = null; state.aq = null;
+        state.screen = 'home'; render();
+      } catch (err) { alert('That file could not be read as a backup.'); }
+    };
+    reader.readAsText(file);
+  }
+
+  function mount() {
+    const app = $('app'); if (!app) return;
+    app.addEventListener('click', onAppClick);
+    app.addEventListener('change', onAppChange);
+    if (document.addEventListener) document.addEventListener('keydown', onKeyDown);
+    const loaded = Store.load();
+    if (loaded) { state.profile = loaded; state.screen = loaded.placementResolved ? 'home' : 'name2'; }
+    else { state.profile = null; state.screen = 'firstRun'; }
+    render();
+  }
+
+  return { mount };
+})();
+/* ===========================================================================
+ * BOOT (dual-mode).
+ *   node                -> full test/sim report + exit code (verification)
+ *   browser ?debug=1    -> render the engine report into #app
+ *   browser (default)   -> cheap content-integrity guard, then UI.mount()
+ * ==========================================================================*/
+function __computeReport() {
+  return { validate: Debug.validateContent(), tests: Debug.runTests(), sims: Debug.runSimChecks() };
+}
+function __renderReport(r) {
+  const el = document.getElementById('app'); if (!el) return;
+  const ok = (b) => b ? '<span class="ok">PASS</span>' : '<span class="bad">FAIL</span>';
+  const list = (arr) => arr.length ? '<ul>' + arr.map(x => `<li class="bad">${x}</li>`).join('') + '</ul>' : '<div class="ok">none</div>';
+  const s = r.sims.samples, s1 = s.s1, s2 = s.s2, s3 = s.s3;
+  el.innerHTML = `
+    <div class="report">
+    <h1>Eager4Maths — engine report</h1>
+    <p class="sub">Diagnostic view (?debug=1). The app itself is at the same URL without the flag.</p>
+    <section><h2>Content integrity ${ok(r.validate.pass)}</h2>${list(r.validate.failures)}</section>
+    <section><h2>Unit + behaviour ${ok(r.tests.pass)}</h2><div class="muted">${r.tests.failures.length ? r.tests.failures.length + ' failing' : 'all checks green'}</div>${list(r.tests.failures)}</section>
+    <section><h2>Simulator integration ${ok(r.sims.pass)}</h2>${list(r.sims.failures)}
+      <table>
+        <tr><th></th><th>perfect/skip (80)</th><th>perfect/reduced (420)</th><th>anchors/skip (60)</th></tr>
+        <tr><td>final domain</td><td>${s1.finalDomain}</td><td>${s2.finalDomain}</td><td>${s3.finalDomain}</td></tr>
+        <tr><td>transition @</td><td>${s1.transitionAtSession}</td><td>${s2.transitionAtSession}</td><td>${s3.transitionAtSession}</td></tr>
+        <tr><td>n/acq/flu/auto</td><td>${s1.states.new}/${s1.states.acquiring}/${s1.states.fluent}/${s1.states.automatic}</td><td>${s2.states.new}/${s2.states.acquiring}/${s2.states.fluent}/${s2.states.automatic}</td><td>${s3.states.new}/${s3.states.acquiring}/${s3.states.fluent}/${s3.states.automatic}</td></tr>
+        <tr><td>auto mul/div</td><td>${s1.autoMul}/${s1.autoDiv}</td><td>${s2.autoMul}/${s2.autoDiv}</td><td>${s3.autoMul}/${s3.autoDiv}</td></tr>
+      </table>
+    </section>
+    <p class="foot">${(r.validate.pass && r.tests.pass && r.sims.pass) ? 'Engine green against spec.' : 'NOT green — see failures.'}</p>
+    </div>`;
+}
+
+if (typeof window === 'undefined') {
+  const r = __computeReport(), line = '\u2500'.repeat(64), mark = (b) => b ? 'PASS' : 'FAIL';
+  console.log(line);
+  console.log('Eager4Maths — engine verification (node)');
+  console.log(line);
+  console.log('Content integrity : ' + mark(r.validate.pass)); r.validate.failures.forEach(f => console.log('   - ' + f));
+  console.log('Unit + behaviour  : ' + mark(r.tests.pass) + '  (' + r.tests.failures.length + ' failing)'); r.tests.failures.forEach(f => console.log('   - ' + f));
+  console.log('Simulator checks  : ' + mark(r.sims.pass)); r.sims.failures.forEach(f => console.log('   - ' + f));
+  console.log(line);
+  for (const [k, v] of Object.entries(r.sims.samples)) console.log(`${k}: domain=${v.finalDomain} transition@=${v.transitionAtSession} states[n/a/f/au]=${v.states.new}/${v.states.acquiring}/${v.states.fluent}/${v.states.automatic} autoMul/Div=${v.autoMul}/${v.autoDiv}`);
+  console.log(line);
+  const green = r.validate.pass && r.tests.pass && r.sims.pass;
+  console.log(green ? 'EXIT CRITERION MET \u2713' : 'NOT GREEN \u2717');
+  if (typeof process !== 'undefined') process.exitCode = green ? 0 : 1;
+} else {
+  const vc = Debug.validateContent();             // cheap always-on guard
+  if (!vc.pass) {
+    const el = document.getElementById('app');
+    if (el) el.innerHTML = '<div style="padding:20px;font-family:monospace;color:#C0392B"><b>Content check failed — not launching.</b><ul>' + vc.failures.map(f => '<li>' + f + '</li>').join('') + '</ul></div>';
+  } else if (/[?&]debug=1\b/.test(location.search)) {
+    __renderReport(__computeReport());
+  } else {
+    UI.mount();
+    // PWA: offline shell + add-to-home-screen. Registration is best-effort —
+    // the app is fully functional without it (e.g. older browsers, file://).
+    if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
+      try { navigator.serviceWorker.register('./sw.js'); } catch (e) { /* non-fatal */ }
+    }
+  }
+}
+</script>
+</body>
+</html>
