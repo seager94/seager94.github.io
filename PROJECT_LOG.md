@@ -239,3 +239,19 @@ Nine-step run order executed after the payload pilot. All closed.
 **Non-ASCII in payload JSONs is normal and expected.** Em-dashes, middot separators, "R-10" en dash and proper minus are lesson typography, and the published pilots carry the same (28 and 30 lines). JSON is UTF-8 by spec. The em-dash hazard rule applies to generated .ps1 files only - a mis-flag corrected this session.
 
 **Map:** rows 113-116 flipped to Published, dated 2026-07-19, URLs written from the pilot's pattern. Conventions read from y8_sta_01 rather than assumed; reopen-after-save confirmation passed. Published count 132 -> 136.
+
+## 2026-10-02 - y9_mea_01 published (first /next-lesson build) + checker and branch-divergence fix
+
+**The lesson:** y9_mea_01 Surface area of right prisms (AC9M9M01 E1) built via `/next-lesson` in classic mode on Opus. Strategies: Geometric Proof (click-to-advance unfolding of a box into its net) + Error Analysis (perpendicular height used as a wall width on a tent prism). Merged to lesson-gen via PR #9, then to main, and published.
+
+**PR #8 - `/next-lesson` command.** Added `.claude/commands/next-lesson.md` plus `tasks-pattern.md` and the two curriculum JSONs (`ac9-mathematics-7-10-curriculum.json`, `sa-curriculum-cu-mapping.json`) at repo root, all read by the command.
+
+**PR #10 - lesson checker.** Added `check_lesson.py` (browser checker) and the `Lesson checks` workflow (`.github/workflows/lesson-checks.yml`), which runs on PRs into lesson-gen against any changed lesson HTML.
+
+**main/lesson-gen divergence.** Caused by a GitHub web upload of `index_10.html` committed straight to main (3a0a452, 2026-08-14), so `main` could no longer fast-forward to `origin/lesson-gen`. Resolved by merging origin/main into lesson-gen (c551735), keeping `index_10.html`, then fast-forwarding main. Rule: web uploads should target lesson-gen, never main.
+
+**Checker found live-lesson bugs still to fix:**
+- y8_sta_01 / y8_sta_02: lesson-focus differs from lessonmap.
+- y8_sta_03: 12 misconception entries keyed to the correct answer.
+
+**Map:** row 140 (y9_mea_01) flipped to Published, dated 2026-10-02, URL written. Conventions read from y8_sta_01 rather than assumed; reopen-after-save confirmation passed, and a cell-by-cell diff against the pre-edit copy showed only N140/O140/P140 changed. Published count 136 -> 137.
