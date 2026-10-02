@@ -255,3 +255,15 @@ Nine-step run order executed after the payload pilot. All closed.
 - y8_sta_03: 12 misconception entries keyed to the correct answer.
 
 **Map:** row 140 (y9_mea_01) flipped to Published, dated 2026-10-02, URL written. Conventions read from y8_sta_01 rather than assumed; reopen-after-save confirmation passed, and a cell-by-cell diff against the pre-edit copy showed only N140/O140/P140 changed. Published count 136 -> 137.
+
+## 2026-10-02 - y9_mea_02 published (first nightly cloud routine build)
+
+**The lesson:** y9_mea_02 Surface area and volume of cylinders (AC9M9M01 E1, E2) - the first lesson built end-to-end by the nightly cloud routine via `/next-lesson-auto` (PR #11 added the command and `strategy-queue.md`). Built in payload mode; payload kept at `payloads/year-9/measurement/`. Merged to lesson-gen via PR #12, then fast-forwarded to main and published.
+
+**Strategy chosen by the routine:** Geometric Proof / Dissection - no strategy-queue line existed for this lesson, so the routine picked and justified it in the PR.
+
+**Model:** the run was on Sonnet 5.5, not Opus, because the routine's model was set to "Default". The routine is now pinned to Opus.
+
+**In-sandbox drag-sort FAIL was environment-only.** The routine's own check reported a FAIL on the mouse drag-sort, but the cause was the sandbox, not the lesson: its Chromium build needed Playwright 1.56.0. The `Lesson checks` workflow on the PR passed.
+
+**Map:** row 141 (y9_mea_02) flipped to Published, dated 2026-10-02, URL written, formats copied from the y9_mea_01 row. Edited on main (the map's single editing home) after the lesson merged. A cell-by-cell diff against the pre-edit copy showed only N141/O141/P141 changed; reopen-after-save confirmation passed. Published count 137 -> 138 (Planned 83).
