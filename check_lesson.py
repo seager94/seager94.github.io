@@ -28,7 +28,7 @@ Usage:
     python check_lesson.py lesson.html --lessonmap lessonmap.json --out-dir check-output
 
 Setup (once):
-    pip install playwright
+    pip install playwright==1.56.0   (pinned to match .github/workflows/lesson-checks.yml)
     python -m playwright install chromium
 """
 
@@ -298,7 +298,10 @@ def ensure_pair_in_view(page, a, b):
     vh = page.viewport_size["height"]
     top, bottom = min(ba["y"], bb["y"]), max(ba["y"] + ba["height"], bb["y"] + bb["height"])
     if top < 0 or bottom > vh:
-        page.evaluate("dy => window.scrollBy(0, dy)", (top + bottom) / 2 - vh / 2)
+        # behavior 'instant' overrides a lesson's `html { scroll-behavior: smooth }`. Older Chromium
+        # (e.g. build 1194) animates a plain scrollBy for ~1 s, so the boxes would be read mid-scroll
+        # and the drag aimed at where the chip and bucket used to be.
+        page.evaluate("dy => window.scrollBy({top: dy, behavior: 'instant'})", (top + bottom) / 2 - vh / 2)
         page.wait_for_timeout(50)
         ba, bb = a.bounding_box(), b.bounding_box()
     return ba, bb
