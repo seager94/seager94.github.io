@@ -1,0 +1,71 @@
+name: Lesson checks
+on:
+  pull_request:
+    branches: [lesson-gen]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Find lesson HTML changed in this PR
+        id: changed
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Added/modified/renamed .html files that carry a lesson-id meta tag.
+          : > "$RUNNER_TEMP/lessons.txt"
+          git diff --name-only --diff-filter=AMR "$BASE_SHA...$HEAD_SHA" -- '*.html' |
+          while IFS= read -r f; do
+            if [ -f "$f" ] && grep -qE '<meta[[:space:]]+name="lesson-id"' "$f"; then
+              echo "$f" >> "$RUNNER_TEMP/lessons.txt"
+            fi
+          done
+          echo "Lessons to check:"; cat "$RUNNER_TEMP/lessons.txt"
+          echo "count=$(wc -l < "$RUNNER_TEMP/lessons.txt")" >> "$GITHUB_OUTPUT"
+      - name: Set up Python
+        if: steps.changed.outputs.count != '0'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright + Chromium
+        if: steps.changed.outputs.count != '0'
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Run check_lesson.py on each changed lesson
+        id: check
+        if: steps.changed.outputs.count != '0'
+        run: |
+          failed=0
+          while IFS= read -r f; do
+            echo "::group::check_lesson.py $f"
+            python check_lesson.py "$f" || { failed=1; echo "::error file=$f::check_lesson.py reported FAIL"; }
+            echo "::endgroup::"
+          done < "$RUNNER_TEMP/lessons.txt"
+          # Report summaries (header + results table) into the job summary.
+          for r in check-output/*-report.md; do
+            [ -f "$r" ] && sed '/^## /,$d' "$r" >> "$GITHUB_STEP_SUMMARY" && echo >> "$GITHUB_STEP_SUMMARY"
+          done
+          echo "failed=$failed" >> "$GITHUB_OUTPUT"
+      - name: Upload reports and figure contact sheets
+        if: always() && steps.changed.outputs.count != '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: lesson-check-output
+          path: check-output/
+          if-no-files-found: warn
+      - name: Fail on any FAIL
+        if: steps.check.outputs.failed == '1'
+        run: |
+          echo "check_lesson.py reported FAIL for at least one lesson - see the job summary and the lesson-check-output artifact."
+          exit 1
+      - name: No lessons changed
+        if: steps.changed.outputs.count == '0'
+        run: echo "No lesson HTML changed in this PR - nothing to check."
