@@ -2,8 +2,8 @@
  "latest_generated_date": "2026-10-02",
  "source": "lessonmap.xlsx",
  "tallies": {
-  "Published": 137,
-  "Planned": 84
+  "Published": 138,
+  "Planned": 83
  },
  "coverage": [
   {
@@ -148,13 +148,13 @@
    "year": "9",
    "strand": "Measurement",
    "status": "Planned",
-   "count": 11
+   "count": 10
   },
   {
    "year": "9",
    "strand": "Measurement",
    "status": "Published",
-   "count": 1
+   "count": 2
   },
   {
    "year": "9",
@@ -3165,9 +3165,9 @@
    "prerequisites": [
     "y9_mea_01"
    ],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-02",
+   "url": "https://seager94.github.io/year-9/measurement/y9_mea_02_surface_area_and_volume_of_cylinders_v2.html"
   },
   {
    "id": "y9_mea_03",
