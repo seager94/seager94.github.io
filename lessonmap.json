@@ -1,9 +1,9 @@
 {
- "latest_generated_date": "2026-07-19",
+ "latest_generated_date": "2026-10-02",
  "source": "lessonmap.xlsx",
  "tallies": {
-  "Published": 136,
-  "Planned": 85
+  "Published": 137,
+  "Planned": 84
  },
  "coverage": [
   {
@@ -148,7 +148,13 @@
    "year": "9",
    "strand": "Measurement",
    "status": "Planned",
-   "count": 12
+   "count": 11
+  },
+  {
+   "year": "9",
+   "strand": "Measurement",
+   "status": "Published",
+   "count": 1
   },
   {
    "year": "9",
@@ -3137,9 +3143,9 @@
    "lesson_focus": "Use nets to derive surface-area formulas for rectangular and triangular right prisms; calculate surface area by summing component face areas; verify by re-drawing the net in a different layout.",
    "practice_style": "auto-marked",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-02",
+   "url": "https://seager94.github.io/year-9/measurement/y9_mea_01_surface_area_of_right_prisms_v2.html"
   },
   {
    "id": "y9_mea_02",
