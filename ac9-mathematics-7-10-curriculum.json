@@ -1,0 +1,1241 @@
+{
+  "source": "Australian Curriculum, Assessment and Reporting Authority (ACARA), Australian Curriculum Version 9.0 Mathematics",
+  "source_document": "mathematics-curriculum-content-7-10-v9.docx",
+  "source_url": "https://www.australiancurriculum.edu.au/content/dam/en/curriculum/ac-version-9/downloads/mathematics/mathematics-curriculum-content-7-10-v9.docx",
+  "licence": "CC BY 4.0",
+  "years_covered": [
+    7,
+    8,
+    9,
+    10
+  ],
+  "strands": [
+    "Number",
+    "Algebra",
+    "Measurement",
+    "Space",
+    "Statistics",
+    "Probability"
+  ],
+  "total_content_descriptors": 101,
+  "total_elaborations": 402,
+  "schema": {
+    "year": "integer: 7, 8, 9, or 10",
+    "strand": "string: one of Number, Algebra, Measurement, Space, Statistics, Probability",
+    "code": "string: AC v9.0 content descriptor code, e.g. AC9M7N09",
+    "descriptor": "string: the content descriptor text (what students learn to do)",
+    "elaborations": "array of strings: each elaboration suggests how the descriptor may be taught (what students may do)"
+  },
+  "content_descriptors": [
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N01",
+      "descriptor": "describe the relationship between perfect square numbers and square roots, and use squares of numbers and square roots of perfect square numbers to solve problems",
+      "elaborations": [
+        "investigating squares of natural numbers from one to 20, and connecting them to visual representations such as dots arranged in a square pattern",
+        "using the square and square root notation, and the distributive property and area diagrams to calculate the squares of two-digit numbers; for example, 43²=(40+3)²=40²+2×40×3+3²=1600+240+9=1849",
+        "determining between which 2 consecutive natural numbers the square root of a given number lies; for example, 43 is between the square numbers 36 and 49 so √(43) is between √(36) and √(49) and therefore between 6 and 7",
+        "generating a list of perfect square numbers and describing any emerging patterns; for example, the last digit of perfect square numbers, or the difference between consecutive square numbers, and recognising the constant second difference",
+        "using the relationship between perfect square numbers and their square roots to determine the perimeter of a square tiled floor using square tiles; for example, an area of floor with 144 square tiles has a perimeter of 48 tile lengths"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N02",
+      "descriptor": "represent natural numbers as products of powers of prime numbers using exponent notation",
+      "elaborations": [
+        "applying knowledge of factors to strategies for expressing natural numbers as products of powers of prime factors, such as repeated division by prime factors or creating factor trees; for example, 48=6×8=2×3×2×2×2=3¹×2⁴=3×2⁴",
+        "developing familiarity with the sequence 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 and powers of 2; the sequence 1, 3, 9, 27, 81, 243, 729 and powers of 3; and the sequence 1, 5, 25, 125, 625 and powers of 5",
+        "solving problems involving lowest common multiples and greatest common divisors (highest common factors) for pairs of natural numbers by comparing their prime factorisation"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N03",
+      "descriptor": "represent natural numbers in expanded notation using place value and powers of 10",
+      "elaborations": [
+        "investigating exponent notation for powers of 10 such as “one hundred thousand” is 100 000=10×10×10×10×10=10⁵",
+        "relating the sequences 10, 100, 1000, 10 000 … and 101, 102, 103, 104 ...",
+        "applying and explaining the connections between place value and expanded notations; for example, 7000=7×10³ and 3750=3×10³+7×10²+5×10¹"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N04",
+      "descriptor": "find equivalent representations of rational numbers and represent rational numbers on a number line",
+      "elaborations": [
+        "investigating equivalence of fractions using common multiples and a fraction wall, diagrams or a number line to show that a fraction such as 2/3 is equivalent to 4/6 and 6/9 and therefore 2/3 < 5/6",
+        "expressing a fraction in simplest form using common divisors",
+        "applying and explaining the equivalence between fraction, decimal and percentage representations of rational numbers; for example, 16%, 0.16, 16/100 and 4/25, using manipulatives, number lines or diagrams",
+        "representing positive and negative fractions and mixed numerals on various intervals of the real number line, including intervals that are not symmetrical about zero"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N05",
+      "descriptor": "round decimals to a given accuracy appropriate to the context and use appropriate rounding and estimation to check the reasonableness of solutions",
+      "elaborations": [
+        "identifying the interval between a pair of consecutive integers that includes a given rational number",
+        "choosing and applying conventions for rounding correct to a specified number of decimal places based upon the context",
+        "checking that the accuracy of rounding is suitable for context and purpose, such as the amount of paint required and cost estimate for renovating a house; for example, purchasing 2 litres of paint to paint the bedroom even though 1.89 litres is the exact answer or estimating a renovation budget to the nearest $100"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N06",
+      "descriptor": "use the 4 operations with positive rational numbers including fractions, decimals and percentages to solve problems using efficient calculation strategies",
+      "elaborations": [
+        "solving addition and subtraction problems involving fractions and decimals; for example, using rectangular arrays with dimensions equal to the denominators, algebra tiles, digital tools or informal jottings",
+        "choosing an appropriate numerical representation for a problem so that efficient computations can be made, such as 12.5%, 1/8, 0.125 or 125/1000",
+        "developing efficient strategies with appropriate use of the commutative and associative properties, place value, patterning, and multiplication facts to solve multiplication and division problems involving fractions and decimals; for example, using the commutative property to calculate 2/3 of 1/2 giving 1/2 of 2/3=1/3",
+        "solving multiplicative problems involving fractions and decimals using fraction walls, rectangular arrays, algebra tiles, calculators or informal jottings",
+        "developing efficient strategies with appropriate use of the commutative and associative properties, regrouping or partitioning to solve additive problems involving fractions and decimals",
+        "carry out calculations to solve problems using the representation that makes computations efficient such as 12.5% of 96 is more efficiently calculated as 1/8 of 96, including contexts such as comparing land-use by calculating the total local municipal area set aside for parkland or manufacturing and retail, the amount of protein in daily food intake across several days, or increases/decreases in energy accounts each account cycle"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N07",
+      "descriptor": "compare, order and solve problems involving addition and subtraction of integers",
+      "elaborations": [
+        "using less-than and greater-than notation in expressions when comparing and ordering integers; for example, negative 5 is less than positive 2 and can be represented as (-5)<(+2); (-3)>(-6)",
+        "discussing language such as “addition”, “subtraction”, “magnitude”, “difference”, “sign” and synonyms of these terms",
+        "ordering, adding and subtracting integers using a number line"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N08",
+      "descriptor": "recognise, represent and solve problems involving ratios",
+      "elaborations": [
+        "using diagrams, physical or virtual materials to represent ratios, recognising that ratios express the quantitative relationship between 2 or more groups; for example, using counters or coloured beads to show the ratios 1:4 and 1:1:2",
+        "using fractions to solve ratio problems involving comparison of quantities and considering part-part and part-whole relations; for example, dividing a set into the ratio 1:2 by determining the number of parts as 3",
+        "sharing quantities in a given ratio; for example, sharing an amount of money in a given ratio, such as sharing $20 in the ratio 2:3",
+        "applying ratios to realistic and meaningful contexts; for example, mixing 500 millilitres of a liquid with a concentration of 1:4 means 1/5 concentrate and 4/5 water so, 0.2 of 500 millilitres is concentrate and 0.8 of 500 millilitres is water; interpreting results in context"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "code": "AC9M7N09",
+      "descriptor": "use mathematical modelling to solve practical problems involving rational numbers and percentages, including financial contexts; formulate problems, choosing representations and efficient calculation strategies, using digital tools as appropriate; interpret and communicate solutions in terms of the situation, justifying choices made about the representation",
+      "elaborations": [
+        "modelling additive situations involving positive and negative quantities; for example, a lift travelling up and down floors in a high-rise apartment where the ground floor is interpreted as zero; in geography when determining altitude above and below sea level",
+        "modelling contexts involving proportion, such as the proportion of students attending the school disco, proportion of bottle cost to recycling refund, proportion of school site that is green space, 55% of Year 7 students attended the end of term function or 23% of the school population voted yes to a change of school uniform; interpreting and communicating answers in terms of the context of the situation",
+        "modelling financial problems involving profit and loss, credits and debits, gains and losses; for example, holding a fundraising sausage sizzle and determining whether the event made a percentage profit or loss",
+        "using mathematical modelling to investigate the proportion of land mass/area of Australian First Nations Peoples’ traditional grain belt compared with Australia’s current grain belt"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "code": "AC9M7A01",
+      "descriptor": "recognise and use variables to represent everyday formulas algebraically and substitute values into formulas to determine an unknown",
+      "elaborations": [
+        "linking variables to attributes and measures being modelled when using formulas, such as the area of a rectangle is equal to the length x width as A=l×w; using p=6g+b to describe a total of points expressed as goals (worth 6 points) and behinds (worth one point)",
+        "interpreting and using formulas obtained from other sources; for example, maximum heart rates and target heart rates for moderate exercise",
+        "substituting numerical values for variables when using formulas and calculating the value of an unknown in practical situations; for example, calculating weekly wage W given base wage b and overtime hours h at 1.5 times rate r, W=b+1.5 ×h ×r, using values for mass m and volume v to determine density d of a substance where d=m/v",
+        "using everyday formulas and their application to contexts on Country/Place, investigating the relationships between variables"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "code": "AC9M7A02",
+      "descriptor": "formulate algebraic expressions using constants, variables, operations and brackets",
+      "elaborations": [
+        "generalising arithmetic expressions to algebraic expressions involving constants, variables, operations and brackets; for example, 7+7+7=3×7, x+x+x=3×x noting that 3x includes implied multiplication and recognising the difference between 3x+4 and 3(x+4)",
+        "formulating algebraic expressions that represent mathematical relationships; for example, translating from words to symbols, “think of a number” type of activities",
+        "recognising and applying the concept of variable as something that can change in value, investigating the relationships between variables, and the application to processes on Country/Place, including how cultural expressions of First Nations Australians, such as storytelling, communicate mathematical relationships that can be represented as mathematical expressions"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "code": "AC9M7A03",
+      "descriptor": "solve one-variable linear equations with natural number solutions; verify the solution by substitution",
+      "elaborations": [
+        "recognising that solving an equation is a process of determining a value that makes the equation true; using substitution to determine whether a given number is a solution to an equation or not",
+        "solving equations using concrete materials, the balance model, and backtracking, explaining the process",
+        "solving linear equations such as 3x+7=19 algebraically, and verifying the solution by substitution"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "code": "AC9M7A04",
+      "descriptor": "describe relationships between variables represented in graphs of functions from authentic data",
+      "elaborations": [
+        "using graphs to analyse a building’s electricity or gas usage over a period of time, the value of shares on a stock market, or the temperature during a day, interpreting and discussing the relationships they represent",
+        "using travel graphs to compare the distance travelled to and from school, interpreting and discussing features of travel graphs such as the slope of lines and the meaning of horizontal line segments",
+        "telling the story behind what is being represented in graphs of functions; for example, graphs representing pouring rates or distance versus time",
+        "using graphs of evaporation rates to explore and discuss First Nations Australians’ methods of water resource management"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "code": "AC9M7A05",
+      "descriptor": "generate tables of values from visually growing patterns or the rule of a function; describe and plot these relationships on the Cartesian plane",
+      "elaborations": [
+        "plotting points from a table of values generated using simple linear functions and recognising patterns, such as the points lie on a straight line",
+        "discussing and using variables to create a general rule and use the rule to determine the value of the dependent variable for any given value of the independent variable; for example, plotting the value of the circumference of a circle for varying values of radius",
+        "using function machines to generate a table of ordered pairs using input and output values, plotting the relationships on a Cartesian plane and describing the graph in terms of shape",
+        "using diagrams and manipulatives to form linear growth patterns, representing these patterns in tables and describing the relationship in terms of the way the pattern is growing and in the context of the situation"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "code": "AC9M7A06",
+      "descriptor": "manipulate formulas involving several variables using digital tools, and describe the effect of systematic variation in the values of the variables",
+      "elaborations": [
+        "experimenting with different sets of tables of values from formulas; for example, using volume of a rectangular prism = length × width × height, and specifying a fixed width and equal length and varying the height",
+        "using spreadsheets and the formula function to recognise the effect of changing parameters on the entries in cells",
+        "analysing distance travelled for different combinations of average speed and time of travel using a table of values and the distance formula"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "code": "AC9M7M01",
+      "descriptor": "solve problems involving the area of triangles and parallelograms using established formulas and appropriate units",
+      "elaborations": [
+        "using the formula for the area of a rectangle and the array structure to derive the formula for the area of a triangle and the area of a parallelogram, given their perpendicular heights; for example, establish that the area of a triangle is half the area of an appropriate rectangle by using the spatial relationship between rectangles and different types of triangles",
+        "using dynamic geometry software to demonstrate how the sliding of the vertex of a triangle at a fixed altitude opposite a side leaves the area of the triangle unchanged",
+        "using established formulas to solve practical problems involving the area of triangles, parallelograms and rectangles; for example, estimating the cost of materials needed to make shade sails based on a price per metre or determining different combinations of dimensions that lead to a given area"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "code": "AC9M7M02",
+      "descriptor": "solve problems involving the volume of right prisms including rectangular and triangular prisms, using established formulas and appropriate units",
+      "elaborations": [
+        "building a rectangular prism out of unit cubes and showing that the measure of volume is the same as would be found by multiplying the 3 edge lengths or by multiplying the area of the base by the height/length",
+        "developing the connection between the area of the parallel cross-section (base), the height and volume of a rectangular or triangular prism to other prisms",
+        "connecting the area of the floor space and the number of floors of a high-rise building to calculate the volume of a building",
+        "using dynamic geometry software, spatial reasoning and prediction to derive the formula for the volume of prisms"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "code": "AC9M7M03",
+      "descriptor": "describe the relationship between π and the features of circles including the circumference, radius and diameter",
+      "elaborations": [
+        "recognising the features of circles and their relationships to one another; for example, labelling the parts of a circle including centre, radius, diameter, circumference and using one of radius, diameter or circumference to determine the measure of the other 2; understanding that the diameter of a circle is twice the radius, or that the radius is the circumference divided by 2π",
+        "comparing the circumference of circles in relation to their radius and diameter with materials and measuring, to establish measurement formulas; for example, using a compass to draw several circles, then using string to approximate the circumference, comparing the length of string to the diameter of the circle",
+        "investigating π as the constant in the proportional relationship between the circumference of a circle and its diameter, and historical approximations from different civilisations, including Egypt, Babylon, Greece, India and China",
+        "investigating the applications and significance of circles in everyday life of First Nations Australians such as in basketry, symbols and architecture, recognising the relationships between the centre, radius, diameter and circumference"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "code": "AC9M7M04",
+      "descriptor": "identify corresponding, alternate and co-interior relationships between angles formed when parallel lines are crossed by a transversal; use them to solve problems and explain reasons",
+      "elaborations": [
+        "constructing a pair of parallel lines and a pair of perpendicular lines using their properties, a pair of compasses and a ruler, set squares or using dynamic geometry software",
+        "using dynamic geometry software to identify relationships between alternate, corresponding and co-interior angles for a pair of parallel lines cut by a transversal",
+        "using dynamic geometry software to demonstrate how angles and their properties are involved in the design and construction of scissor lifts, folding umbrellas, toolboxes and cherry pickers",
+        "using geometric reasoning of angle properties to generalise the angle relationships of parallel lines and transversals, and related properties such as the size of an exterior angle of a triangle is equal to the sum of the sizes of opposite and non-adjacent interior angles, and the sum of the sizes of interior angles in a triangle in the plane is equal to the size of 2 right angles or 180°"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "code": "AC9M7M05",
+      "descriptor": "demonstrate that the interior angle sum of a triangle in the plane is 180° and apply this to determine the interior angle sum of other shapes and the size of unknown angles",
+      "elaborations": [
+        "using concrete materials to demonstrate that the sum of the interior angles of a triangle is 180°; for example, using paper triangles and tearing to demonstrate that the interior angles when combined form 180°",
+        "using decomposition and the angle sum of a triangle to generalise the interior angle sum of an n-sided polygon, as 180(n-2)=180n-360"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "code": "AC9M7M06",
+      "descriptor": "use mathematical modelling to solve practical problems involving ratios; formulate problems, interpret and communicate solutions in terms of the situation, justifying choices made about the representation",
+      "elaborations": [
+        "using fractions to model and solve ratio problems involving comparison of quantities, and considering part-part and part-whole relations",
+        "modelling and solving practical problems involving ratios of length, capacity or mass, such as in construction, design, food or textile production; for example, mixing concrete, the golden ratio in design, mixing a salad dressing",
+        "modelling the situation using manipulatives, diagrams and/or mathematical discussion; for example, mixing primary colours in a variety of ratios to investigate how new colours are created and the strength of those colours",
+        "investigating commercialised substances founded on First Nations Australians’ knowledges of substances including pharmaceuticals and toxins, understanding how ratios are used in their development"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Space",
+      "code": "AC9M7SP01",
+      "descriptor": "represent objects in 2 dimensions; discuss and reason about the advantages and disadvantages of different representations",
+      "elaborations": [
+        "deconstructing packaging to identify shapes and nets",
+        "using different nets to construct prisms and determining which nets will make a cube, rectangular prism, triangular prism or pyramid",
+        "using aerial views of buildings and other three-dimensional structures to visualise the footprint made by the building or structure, identifying prisms that could approximate the structure",
+        "building objects by interpreting isometric and perspective drawings",
+        "using isometric and square grid paper to draw views of front, back, side, top and bottom of objects",
+        "exploring different two-dimensional representations of objects in First Nations Australians’ artworks or cultural maps of Country/Place"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Space",
+      "code": "AC9M7SP02",
+      "descriptor": "classify triangles, quadrilaterals and other polygons according to their side and angle properties; identify and reason about relationships",
+      "elaborations": [
+        "using strips of paper with parallel sides to make triangles and quadrilaterals, and contrasting the rigidity of triangles with the flexibility of quadrilaterals",
+        "constructing triangles with 3 given side lengths and discussing the question, “Can any 3 lengths be used to form the sides of a triangle?”",
+        "identifying and communicating about side and angle properties of scalene, isosceles, equilateral, right-angled, acute and obtuse triangles using geometric conventions",
+        "describing, comparing and contrasting squares, rectangles, rhombuses, parallelograms, kites and trapeziums, explaining the relationships between these shapes"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Space",
+      "code": "AC9M7SP03",
+      "descriptor": "describe transformations of a set of points using coordinates in the Cartesian plane, translations and reflections on an axis, and rotations about a given point",
+      "elaborations": [
+        "using digital tools to transform shapes in the Cartesian plane, describing and recording the transformations",
+        "describing patterns and investigating different ways to produce the same transformation, such as using 2 successive reflections to provide the same result as a translation",
+        "experimenting with, creating and re-creating patterns using combinations of translations, reflections and rotations, using digital tools"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Space",
+      "code": "AC9M7SP04",
+      "descriptor": "design and create algorithms involving a sequence of steps and decisions that will sort and classify sets of shapes according to their attributes, and describe how the algorithms work",
+      "elaborations": [
+        "creating a classification scheme for triangles based on sides and angles, using a flow chart using sequences and decisions",
+        "creating a flow chart or hierarchy for quadrilaterals that shows the relationships between trapeziums, parallelograms, rhombuses, rectangles, squares and kites",
+        "creating a classification scheme for regular, irregular, concave or convex polygons that are sorted according to the number of sides"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Statistics",
+      "code": "AC9M7ST01",
+      "descriptor": "acquire data sets for discrete and continuous numerical variables and calculate the range, median, mean and mode; make and justify decisions about which measures of central tendency provide useful insights into the nature of the distribution of data",
+      "elaborations": [
+        "understanding that summarising data by calculating measures of centre can help make sense of the data, commenting on skewness or symmetry of data and the use of mean and median as representative measures",
+        "comparing the mean, median, mode and range of displays of data from a given context, and explaining how outliers may affect summary statistics",
+        "recognising how different data sets can have the same measures of central tendency and experimenting with how varying data affects these measures",
+        "acquire continuous numerical data by taking measurement samples during a science experiment, observation or field study, comparing measures of central tendency and identifying any anomalies in the distribution of data"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Statistics",
+      "code": "AC9M7ST02",
+      "descriptor": "create different types of numerical data displays including stem-and-leaf plots using software where appropriate; describe and compare the distribution of data, commenting on the shape, centre and spread including outliers and determining the range, median, mean and mode",
+      "elaborations": [
+        "using ordered stem-and-leaf plots to record and display numerical data collected in a class investigation, such as constructing a class plot of height in centimetres on a shared stem-and-leaf plot for which the stems 12, 13, 14, 15, 16 and 17 have been produced",
+        "comparing variation in attributes by category using split stem-and-leaf plots or dot plots; interpreting the shape of the distribution using qualitative terms to describe symmetry or skewness, “average” in terms of the mean, median and mode, and the amount of variation based on qualitative descriptions of the spread of the data",
+        "connecting features of the data display; for example, highest frequency, clusters, gaps, symmetry or skewness, to the mode, range and median, and the question in context; describing the shape of distributions using terms such as “positive skew”, “negative skew”, “symmetric” and “bi-modal” and discussing the location of the median and mean on these distributions",
+        "using mean and median to compare data sets, identifying possible outliers and explaining how these may affect the comparison; recognising how different displays make specific information about data more evident, including proportions, and measures of mean, mode or median, spread and extreme values; understanding that the median and the mean will be the same or similar for symmetric distributions but different for distributions that are skewed",
+        "comparing the mean and median of data with and without extremes; for example, estimation of standard measures for length or mass, informally considering for a given set of data what might constitute an unexpected, unusual or extreme data value"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Statistics",
+      "code": "AC9M7ST03",
+      "descriptor": "plan and conduct statistical investigations involving data for discrete and continuous numerical variables; analyse and interpret distributions of data and report findings in terms of shape and summary statistics",
+      "elaborations": [
+        "conducting an investigation to draw conclusions about whether teenagers have faster reaction times than adults",
+        "conducting an investigation to support claims that a modification of a Science, Technology, Engineering and Mathematics (STEM) related design has improved performance",
+        "using secondary data from the Reconciliation Barometer to conduct and report on statistical investigations relating to First Nations Australians"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Probability",
+      "code": "AC9M7P01",
+      "descriptor": "identify the sample space for single-stage events; assign probabilities to the outcomes of these events and predict relative frequencies for related events",
+      "elaborations": [
+        "discussing the meaning of probability terminology; for example, “probability”, “sample space”, “favourable outcome”, “trial”, “experiment” and “event”",
+        "listing sample spaces for games involving throwing a coin or a die, spinners, or lucky dip",
+        "assigning the probability for throwing a 6 on a dice and using this to predict the number of times a 6 will occur when a dice is thrown multiple times"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Probability",
+      "code": "AC9M7P02",
+      "descriptor": "conduct repeated chance experiments and run simulations with a large number of trials using digital tools; compare predictions about outcomes with observed results, explaining the differences",
+      "elaborations": [
+        "developing an understanding of the law of large numbers through using experiments and simulations to conduct large numbers of trials for seemingly random events and discussing findings",
+        "conducting simulations using online simulation tools and comparing the combined results of a large number of trials to predicted results",
+        "exploring and observing First Nations Australian children’s instructive games; for example, Koara from the Jawi and Bardi Peoples of Sunday Island in Western Australia, to investigate probability, predicting outcomes for an event and comparing with increasingly larger numbers of trials, and between observed and expected results"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "code": "AC9M8N01",
+      "descriptor": "recognise irrational numbers in applied contexts, including square roots and π",
+      "elaborations": [
+        "recognising that the real number system includes irrational numbers which can be approximately located on the real number line; for example, the value of π lies somewhere between 3.141 and 3.142 that is, 3.141 < π < 3.142",
+        "using digital tools to systematically explore contexts or situations that use irrational numbers, such as finding the length of the hypotenuse in a right-angled triangle with the other 2 sides having lengths of one metre or 2 metres and one metre; or given the area of a square, finding the length of the side where the result is irrational; or finding ratios involved with the side lengths of paper sizes A0, A1, A2, A3 and A4",
+        "investigating the golden ratio in art and design, and historical approximations to π in different societies",
+        "connecting the ratio between the circumference and diameter of any circle to the irrational value of π using circular objects and string or dynamic drawing software"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "code": "AC9M8N02",
+      "descriptor": "establish and apply the exponent laws with positive integer exponents and the zero-exponent, using exponent notation with numbers",
+      "elaborations": [
+        "recognising the connection between exponent form and expanded form with the exponent laws of product of powers rule, quotient of powers rule, and power of a power rule; for example, 2³×2² can be represented as (2×2×2)×(2×2)=2⁵ and connecting the result to the addition of exponents",
+        "applying the exponent laws of the product of powers rule, quotient of powers rule, power of a power rule and zero exponent individually and in combination; for example, using exponents to determine the effect on the volume of a 2 centimetre cube when the cube is enlarged to a 6 centimetre cube, 6³/2³= 2³×3³/2³=3³ , so the volume is increased by a factor of 27",
+        "using digital tools to systematically explore the application of the exponent laws; observing that the bases need to be the same",
+        "using examples such as 3⁴/3⁴=1, and 3⁴⁻⁴=3⁰ to illustrate the necessity that for any non-zero natural number n, n⁰=1"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "code": "AC9M8N03",
+      "descriptor": "recognise terminating and recurring decimals, using digital tools as appropriate",
+      "elaborations": [
+        "identifying when a fraction has a terminating decimal expansion from the prime factorisation of its denominator; for example, 7/24=0.2916 does not have a terminating decimal expansion, while 7/25=0.28 does",
+        "identifying terminating, recurring and non-terminating decimals and choosing their appropriate representations such as 1/3 is represented as 0.3"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "code": "AC9M8N04",
+      "descriptor": "use the 4 operations with integers and with rational numbers, choosing and using efficient strategies and digital tools where appropriate",
+      "elaborations": [
+        "using patterns to assist in establishing the rules for the multiplication and division of integers",
+        "applying and explaining efficient strategies such as using the commutative or associative property for regrouping, partitioning, place value, patterning, multiplication or division facts to solve problems involving positive and negative integers, fractions and decimals",
+        "recognising the effect of sign in the multiplication of integers; for example, (-1)⁴=1 and (-1)⁵=-1"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "code": "AC9M8N05",
+      "descriptor": "use mathematical modelling to solve practical problems involving rational numbers and percentages, including financial contexts; formulate problems, choosing efficient calculation strategies and using digital tools where appropriate; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model",
+      "elaborations": [
+        "modelling situations involving weather and environmental contexts including temperature or sea depths by applying operations to positive and negative rational numbers; for example, involving average temperature increases and decreases",
+        "modelling situations that involve percentage increases or decreases and explaining why it is an increase or decrease, such as mark-ups, discounts, Goods and Services Tax, changes in populations or recycling rates",
+        "modelling situations involving personal income tax, interpreting tax tables to determine income tax at various levels of income, including overall percentage of income allocated to tax",
+        "modelling situations involving percentage increase or decrease such as market trends, effects on population, or effects on the environment over extended time periods"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Algebra",
+      "code": "AC9M8A01",
+      "descriptor": "create, expand, factorise, rearrange and simplify linear expressions, applying the associative, commutative, identity, distributive and inverse properties",
+      "elaborations": [
+        "rearranging and simplifying linear expressions involving variables with integer coefficients and constants; using manipulatives such as algebra tiles to support calculations; for example, using manipulatives to demonstrate that 2x+4=2(x+2) , 3(a-b)=3a-3b, or 5(m+2n)+3m-4n=5m+10n+3m-4n=8m+6n",
+        "demonstrating the relationship between factorising and expanding linear expressions using manipulatives, such as algebra tiles or area models, and describing with mathematical language",
+        "using the distributive, associative, commutative, identity and inverse properties to expand and factorise algebraic expressions using strategies such as the area model"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Algebra",
+      "code": "AC9M8A02",
+      "descriptor": "graph linear relations on the Cartesian plane using digital tools where appropriate; solve linear equations and one-variable inequalities using graphical and algebraic techniques; verify solutions by substitution",
+      "elaborations": [
+        "recognising that in a table of values, if the first difference between consecutive values of the dependent variable is constant, then it is a linear relation",
+        "graphing linear functions and relations of the form x=a , y=a , x ≤a , x>a , y ≤a , y>a on the Cartesian plane for known values of a",
+        "completing a table of values, plotting the resulting points on the Cartesian plane and determining whether the relationship is linear",
+        "graphing the linear relationship ax+b=c for given values of a, b and c and identifying from the graph where ax+b <c or where ax+b >c",
+        "solving linear equations of the form ax+b=c and one-variable inequalities of the form ax+b <c or ax+b >c where a > 0 using inverse operations and digital tools, and checking solutions by substitution",
+        "solving linear equations such as 3x+7=6x-9 , representing these graphically, and verifying solutions by substitution"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Algebra",
+      "code": "AC9M8A03",
+      "descriptor": "use mathematical modelling to solve applied problems involving linear relations , including financial contexts; formulate problems with linear functions, choosing a representation; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model",
+      "elaborations": [
+        "modelling situations involving linear functions, including practical contexts such as taxi fares involving flag fall fees, motion in a straight line at a constant speed, trade quotes involving call out fees, cooking that includes resting or cooling times, or water leakage from water tanks, interpreting the constant rate of change and initial value in context, and identifying when values of a model lie within a given range",
+        "modelling problems in practical situations and interpreting solutions within the context of the problem, including giving attention to all units of measure and whether results are suitable; for example, once a water tank is empty no more water can flow from it",
+        "modelling financial problems involving pay rates, using a table of values to represent the pay amounts and hours worked using an hourly rate of pay, and graphing the relationship to make inferences",
+        "modelling patterns on Country/Place and exploring their connections and meaning to linear equations, using the model as a predictive tool and critiquing results by connecting back to Country/Place"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Algebra",
+      "code": "AC9M8A04",
+      "descriptor": "experiment with linear functions and relations using digital tools, making and testing conjectures and generalising emerging patterns",
+      "elaborations": [
+        "using graphing software to investigate the effect of systematically varying parameters of linear functions on the corresponding graphs, making and testing conjectures; for example, making a conjecture that if the co-efficient of x is negative, then the line will slope down from left to right",
+        "using graphing software to systematically contrast the graphs of y=2x, -y=2x, y=-2x and -y=-2x with those of y<2x, -y<2x, y<-2x and -y<-2x and those of y>2x, -y>2x, y>-2x and -y>-2x, making and testing conjectures about sign and direction of the inequality",
+        "using digital tools to investigate integer solutions to equations such as 2x+3y=48"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "code": "AC9M8M01",
+      "descriptor": "solve problems involving the area and perimeter of irregular and composite shapes using appropriate units",
+      "elaborations": [
+        "determining the area of composite shapes by composing or decomposing shapes",
+        "using arrays and rectangles to approximate the area of irregular shapes in situations such as a council needing to work out how much mosquito spray to use for a swamp area or a farmer needing to work out how much seed, fertilizer and herbicide are required to cover a paddock",
+        "determining the perimeter and area of irregular shapes by sums of increasingly accurate covering measurements, such as line segments and grids; for example, using millimetres or square millimetres as opposed to centimetres or square centimetres"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "code": "AC9M8M02",
+      "descriptor": "solve problems involving the volume and capacity of right prisms using appropriate units",
+      "elaborations": [
+        "using models to demonstrate the number of cubic centimetres in a cubic metre and relating this to capacities of millilitres and litres, recognising that one millilitre is equivalent to one cm3",
+        "solving practical problems involving volume and capacity; for example, optimal packaging and production",
+        "choosing which measurements are useful to consider when solving practical problems in context; for example, when purchasing a new washing machine, the dimensions are useful when determining whether it will fit in the available space in the laundry and its capacity is useful when considering the maximum washing load it can carry",
+        "investigating, reasoning and finding solutions to measurement problems involving dimensions, rates, volume and capacity of objects; for example, given the dimensions of a pool and the rate of flow from a tap, determining how long it will take to fill the pool to its normal capacity"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "code": "AC9M8M03",
+      "descriptor": "solve problems involving the circumference and area of a circle using formulas and appropriate units",
+      "elaborations": [
+        "deducing that the area of a circle is between 2 radius squares and 4 radius squares, and using 3 × radius2 as a rough estimate for the area of a circle",
+        "investigating the area of circles using a square grid or by rearranging a circle divided into smaller and smaller sectors or slices to resemble a close approximation of a rectangle",
+        "applying the formulas for the area and circumference of a circle to solve practical problems, and using one of the measures of radius, diameter, circumference or area to deduce the value of the other measures; for example, determining the length of material needed to edge a round table, given its dimensions as the area of the tabletop",
+        "exploring traditional weaving designs by First Nations Australians and investigating the significance and use of circles"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "code": "AC9M8M04",
+      "descriptor": "solve problems involving duration, including using 12- and 24-hour time across multiple time zones",
+      "elaborations": [
+        "using digital tools to investigate time zones around the world and convert from one zone to another, such as time in Perth, Western Australia compared to Suva in Fiji or Toronto in Canada",
+        "recognising the challenges of planning regular virtual meeting times for a company that has both international staff and staff within different states and territories, and the impact daylight savings has due to multiple time zones, explaining the mathematical language used to communicate current time such as Coordinated Universal Time (UTC)+8, AEST, ACST and AWST",
+        "planning an international travel itinerary that covers destinations in different time zones across Asia"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "code": "AC9M8M05",
+      "descriptor": "recognise and use rates to solve problems involving the comparison of 2 related quantities of different units of measure",
+      "elaborations": [
+        "identifying examples of rates in the real world, including constant rates, rate of pay, cost per kilogram, recipes, simple interest and average rates",
+        "applying rates to solve problems involving the conversion between different units of measure; for example, using a conversion rate to convert distances from miles into kilometres; using currency exchange rates to determine the price of items",
+        "applying rates to calculate solutions to problems in different contexts; for example, required run rates in cricket, dilution of concentrated chemicals and comparing the petrol consumption rates of different vehicles",
+        "using taxation tables to calculate an individual's annual income tax",
+        "investigating the application of rates in First Nation Australians’ land management practices, including the rate of fire spread under different environmental conditions such as fuel types, wind speed, temperature and relative humidity; the conservation of water by First Nations Australians by estimating rates of water evaporation based on surface area and climatic conditions"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "code": "AC9M8M06",
+      "descriptor": "use Pythagoras’ theorem to solve problems involving the side lengths of right-angled triangles",
+      "elaborations": [
+        "discussing and comparing different applications, demonstrations and proofs of Pythagoras’ theorem, from Egypt and Mesopotamia, Greece, India and China with other historical and contemporary applications and proofs",
+        "using Pythagoras’ theorem to determine unknown lengths of sides in right-angled triangles and finding lengths of sides of right-angled triangles in practical applications",
+        "recognising the relationship between the squares of lengths of sides for different types of triangles: right-angled, acute or obtuse",
+        "identifying Pythagorean triples, such as (3,4,5), (5,12,13), (7, 24, 25) and (8,15, 17)"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "code": "AC9M8M07",
+      "descriptor": "use mathematical modelling to solve practical problems involving ratios and rates, including financial contexts; formulate problems; interpret and communicate solutions in terms of the situation, reviewing the appropriateness of the model",
+      "elaborations": [
+        "modelling and solving problems related to situations such as scales on maps and plans, the mixing of chemicals or ingredients, or calculating magnification factors applying relevant ratios and proportions",
+        "modelling problems involving converting money amounts using different exchange rates and applying them when planning and budgeting for overseas travel",
+        "modelling situations involving financial contexts; for example, income tax, using taxation rates on annual income, comparing different taxation brackets and rates of pay; comparing the benefits of different phone plans using different call rates and associated fees to determine the best plan",
+        "modelling situations involving the use of ratios in radiocarbon dating methods, including the ratio of carbon-14 to carbon-12 isotopes in organisms, to measure dates of First Peoples of Australia’s habitation on the Australian continent",
+        "modelling situations involving ratio and its application in the making of string and cordage by First Nations Australians, including the ratio of length to the mass of a rope, the strength of the ply in proportion to a rope’s pulling force, and the proportion of fibre for the length of string required"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "code": "AC9M8SP01",
+      "descriptor": "identify the conditions for congruence and similarity of triangles and explain the conditions for other sets of common shapes to be congruent or similar, including those formed by transformations",
+      "elaborations": [
+        "developing an understanding of what it means for shapes to be congruent or similar",
+        "using the enlargement transformation and digital tools to develop sets of similar shapes",
+        "investigating sufficient conditions to establish that 2 triangles are congruent",
+        "applying logical reasoning and tests for congruence and similarity, to problems and proofs involving plane shapes",
+        "comparing angle and side measurements of shapes under transformation to answer questions such as “What changes?” and “What stays the same?”",
+        "establishing that 2 shapes are congruent if one lies exactly on top of the other after one or more transformations including translations, reflections and rotations, and recognising that the matching sides and the matching angles are equal"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "code": "AC9M8SP02",
+      "descriptor": "establish properties of quadrilaterals using congruent triangles and angle properties, and solve related problems explaining reasoning",
+      "elaborations": [
+        "establishing the properties of squares, rectangles, parallelograms, rhombuses, trapeziums and kites using geometric properties and proof, such as the sum of the exterior angles of a polygon is equal to a complete turn or 360°",
+        "identifying properties of quadrilaterals related to side lengths, parallel sides, angles, diagonals and symmetry",
+        "applying the properties of triangles and quadrilaterals to construction designs such as car jacks, scissor lifts, folding umbrellas, toolboxes and cherry pickers"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "code": "AC9M8SP03",
+      "descriptor": "describe the position and location of objects in 3 dimensions in different ways, including using a three-dimensional coordinate system with the use of dynamic geometric software and other digital tools",
+      "elaborations": [
+        "locating aircraft/drones using latitude, longitude and altitude as a three-dimensional coordinate system",
+        "constructing three-dimensional objects using 3D printers or designing software that uses a three-dimensional coordinate system",
+        "comparing and contrasting two-dimensional and three-dimensional coordinate systems by highlighting what is the same and what is different, including virtual maps versus street views",
+        "using dynamic geometry software to construct shapes and objects within the first quadrant of a three-dimensional coordinate system",
+        "interpreting three-dimensional coordinate locations for objects in multi-storey car parks; playing games based on three-dimensional coordinate systems such as three-dimensional Noughts and Crosses (Tic-Tac-Toe)",
+        "exploring position and transformation through geospatial technologies used by First Nations Australians’ communities"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "code": "AC9M8SP04",
+      "descriptor": "design, create and test algorithms involving a sequence of steps and decisions that identify congruency or similarity of shapes, and describe how the algorithm works",
+      "elaborations": [
+        "listing the properties or criteria necessary to determine if shapes are similar or congruent",
+        "using the conditions for congruence of triangles and similarity of triangles to develop a sorting algorithm; for example, creating a flow chart",
+        "evaluating algorithms for accuracy in classifying and distinguishing between similar and congruent triangles"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Statistics",
+      "code": "AC9M8ST01",
+      "descriptor": "investigate techniques for data collection including census, sampling, experiment and observation, and explain the practicalities and implications of obtaining data through these techniques",
+      "elaborations": [
+        "identifying situations where data can be collected by census and those where a sample is appropriate",
+        "investigating the practicalities and implications of obtaining data through sampling, using a variety of investigative processes; for example, investigating situations when random sampling or non-random sampling is used to collect data and the implication of each sampling method",
+        "discussing how observations, experiments and sampling methods can be impacted by bias; for example, recognising that a sampling bias occurs when certain members of a population are more likely to be selected in a sample than others, such as a survey conducted at a shopping centre; recognising that environmental conditions may bias the results of scientific investigations if experiments are conducted at different times or under different conditions",
+        "using digital tools such as simulations and digital measuring devices to observe, measure and record qualitative and quantitative data, discussing precision and the implications of error"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Statistics",
+      "code": "AC9M8ST02",
+      "descriptor": "analyse and report on the distribution of data from primary and secondary sources using random and non-random sampling techniques to select and study samples",
+      "elaborations": [
+        "investigating different methods of sampling used to collect data, considering the source and size of samples",
+        "comparing the sampling methods of simple random, systematic, stratified, quota, clustered or convenience, or judgement, and discussing the reliability of conclusions about the context that could be drawn",
+        "defining and distinguishing between probabilistic terms such as random, sample space, sample and sample distribution",
+        "investigating primary and secondary data sources relating to reconciliation between First Nations Australians and non-Indigenous Australians, analysing and reporting on findings"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Statistics",
+      "code": "AC9M8ST03",
+      "descriptor": "compare variations in distributions and proportions obtained from random samples of the same size drawn from a population and recognise the effect of sample size on this variation",
+      "elaborations": [
+        "comparing the proportion of students in favour of a proposal for a change in school uniform between different random samples of 50 students from the school population",
+        "using digital tools to simulate repeated sampling of the same population, such as heights or arm spans of students, recording and comparing means, median and range of data between samples",
+        "using relative frequencies from historical data to predict proportions and the likely number of outcomes in situations such as weather forecasting or the countries of origin of visitors to tourist attractions",
+        "investigating the effect that adding or removing data from a data set has on measures of central tendency and spread",
+        "investigating First Nations Ranger Groups and other groups’ use of sampling techniques to track biodiversity of species"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Statistics",
+      "code": "AC9M8ST04",
+      "descriptor": "plan and conduct statistical investigations involving samples of a population; use ethical and fair methods to make inferences about the population and report findings, acknowledging uncertainty",
+      "elaborations": [
+        "using data such as electricity consumption to draw conclusions about the impacts of events, such as pandemics, on households or business",
+        "identifying situations where the collection of data from a sample is necessary due to efficiency, cost or restricted time for collection of data, and sufficiently reliable for making inferences about a population",
+        "exploring progress in reconciliation between First Nations Australians and non-Indigenous Australians, investigating and evaluating sampling techniques and methods to gather relevant data to measure progress"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Probability",
+      "code": "AC9M8P01",
+      "descriptor": "recognise that complementary events have a combined probability of one; use this relationship to calculate probabilities in applied contexts",
+      "elaborations": [
+        "understanding that knowing the probability of an event allows the probability of its complement to be found, including for those events that are not equally likely, such as getting a specific novelty toy in a supermarket promotion",
+        "using the relationship that for a single event A, Pr(A) + Pr(not A) = 1; for example, if the probability that it rains on a particular day is 80%, the probability that it does not rain on that day is 20%, or the probability of not getting a 6 on a single roll of a fair dice is 1-1/6=5/6",
+        "using the sum of probabilities to solve problems, such as the probability of starting a game by throwing a 5 or 6 on a dice is 1/3 and probability of not throwing a 5 or 6 is 2/3"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Probability",
+      "code": "AC9M8P02",
+      "descriptor": "determine all possible combinations for 2 events, using two-way tables, tree diagrams and Venn diagrams, and use these to determine probabilities of specific outcomes in practical situations",
+      "elaborations": [
+        "describing events using language of “at least”, exclusive “or” (A or B but not both), inclusive “or” (A or B or both) and “and”",
+        "using the relation Pr(A and B) + Pr(A and not B) + Pr(not A and B) + Pr(not A and not B) = 1 to calculate probabilities, including the special case of mutually exclusive events where Pr(A and B) = 0",
+        "using Venn diagrams or two-way tables to demonstrate the difference between events that are mutually exclusive, such as whether a coin toss will land on a head or a tail, or those that are not mutually exclusive, such as people who have blonde hair and people who have blue eyes",
+        "exploring First Nations Australian children’s instructive games; for example, Battendi from the Ngarrindjeri Peoples of Lake Murray and Lake Albert in southern Australia, applying possible combinations and relationships and calculating probabilities using two-way tables and Venn diagrams"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Probability",
+      "code": "AC9M8P03",
+      "descriptor": "conduct repeated chance experiments and simulations, using digital tools to determine probabilities for compound events, and describe results",
+      "elaborations": [
+        "using digital tools to conduct probability simulations involving compound events",
+        "using a random number generator and digital tools to simulate rolling 2 dice and calculating the difference between them, investigating what difference is likely to occur more often",
+        "using online simulation software to conduct probability simulations to determine in the long run if events are complementary"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Number",
+      "code": "AC9M9N01",
+      "descriptor": "recognise that the real number system includes the rational numbers and the irrational numbers, and solve problems involving real numbers using digital tools",
+      "elaborations": [
+        "investigating the real number system by representing the relationships between irrationals, rationals, integers and natural numbers and discussing the difference between exact representations and approximate decimal representations of irrational numbers",
+        "using a real number line to indicate the solution interval for inequalities of the form ax+b <c ; for example, 2x+7<0, or of the form ax+b>c ; for example, 1.2x-5.4>10.8",
+        "using positive and negative rational numbers to solve problems; for example, for financial planning such as budgeting",
+        "solving problems involving the substitution of real numbers into formulas, understanding that solutions can be represented in exact form or as a decimal approximation, such as calculating the area of a circle using the formula A=πr² and specifying the answer in terms of π as an exact real number; for example, the circumference of a circle with diameter 5 units is 5π units, and the exact area is π(5/2)²=25/4π square units which rounds to 19.63 square units, correct to 2 decimal places",
+        "investigating the position of rational and irrational numbers on the real number line, using geometric constructions to locate rational numbers and square roots on a number line; for example, √(2) is located at the intersection of an arc and the number line, where the radius of the arc is the length of the diagonal of a one-unit square"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "code": "AC9M9A01",
+      "descriptor": "apply the exponent laws to numerical expressions with integer exponents and extend to variables",
+      "elaborations": [
+        "representing decimals in exponential form; for example, 0.475 can be represented as 0.475=4/10+7/100+5/1000=4×10⁻¹+7×10⁻²+5×10⁻³ and 0.00023 as 23 x 10-5",
+        "simplifying and evaluating numerical expressions, involving both positive and negative integer exponents, explaining why; for example, 5⁻³=1/5³=(1/5)³=1/125 and connecting terms of the sequence 125, 25, 5, 1, 1/5, 1/25, 1/125… to terms of the sequence 5³, 5²,5¹, 5⁰, 5⁻¹, 5⁻², 5⁻³...",
+        "relating the computation of numerical expressions involving exponents to the exponent laws and the definition of an exponent; for example, 2³÷2⁵=2⁻²=1/2²=1/4 and (3×5)²=3²×5²=9×25=225",
+        "recognising exponents in algebraic expressions and applying the relevant exponent laws and conventions; for example, for any non-zero natural number a, a⁰=1, x¹=x, r²=r×r, h³=h×h×h, y⁴=y×y×y×y, and 1/w×1/w=1/w²=w⁻²",
+        "relating simplification of expressions from first principles and counting to the use of exponent laws; for example, (a²)³=(a×a)×(a×a)×(a×a)=a×a×a×a×a×a=a⁶; b²×b³=(b×b)×(b×b×b)=b×b×b×b×b=b⁵; y⁴/y²=y×y×y×y/y×y=y²/1=y² and (5a)²=(5×a)×(5×a)=5 ×5×a×a=25×a²=25a²",
+        "applying the exponent laws to simplifying expressions involving products, quotients, and powers of constants and variables; for example, (2xy)³/xy⁴=8x³y³/xy⁴=8x²y⁻¹",
+        "relating the prefixes for SI units from pico- (trillionth) to tera- (trillion) to the corresponding powers of 10; for example, one pico-gram = 10-12 gram and one terabyte = 1012 bytes"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "code": "AC9M9A02",
+      "descriptor": "simplify algebraic expressions, expand binomial products and factorise monic quadratic expressions",
+      "elaborations": [
+        "expanding combinations of binomials such as (x+7)(x+8), (x+7)(x-8), (x-7)(x+8), (x-7)(x-8) to identify expansion and factorisation patterns related to (x+a)(x+b)=x²+(a+b)x+ab, where a and b are integers",
+        "using manipulatives such as algebra tiles or area models to expand or factorise algebraic expressions with readily identifiable binomial factors; for example, (x+1)(x+3)=x²+4x+3, (x-5)²=x²-10x+25 or (x-3)²+4=x²-6x+9+4=x²-6x+13",
+        "recognising the relationship between expansion and factorisation, and using digital tools to systematically explore the factorisation of x²+mx+n where m and n are integers"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "code": "AC9M9A03",
+      "descriptor": "find the gradient of a line segment, the midpoint of the line interval and the distance between 2 distinct points on the Cartesian plane",
+      "elaborations": [
+        "recognising that the gradient of a line is calculated using the gradient of a line segment on that line and is independent of which 2 distinct points on the line are used for this calculation",
+        "using digital tools and transformations to illustrate that parallel lines in the Cartesian plane have the same gradient and that the relationship between the gradients of pairs of perpendicular lines is that their product is (-1)",
+        "using Pythagoras’ theorem to establish the distance between 2 points in the Cartesian plane and applying this using horizontal and vertical distances and coordinates",
+        "investigating graphical and algebraic techniques for finding the midpoint and gradient of the line segment between 2 points",
+        "using dynamic graphing software and superimposed images; for example, playground equipment, ramps and escalators, to investigate gradients in context and their relationship to rule of a linear function, and interpret gradient as a constant rate of change in linear modelling contexts"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "code": "AC9M9A04",
+      "descriptor": "identify and graph quadratic functions, solve quadratic equations graphically and numerically, and solve monic quadratic equations with integer roots algebraically, using graphing software and digital tools as appropriate",
+      "elaborations": [
+        "recognising that in a table of values, if the second difference between consecutive values of the dependent variable is constant, then it is a quadratic",
+        "graphing quadratic functions using digital tools and comparing what is the same and what is different between these different functions and their respective graphs; interpreting features of the graphs such as symmetry, turning point, maximum and minimum values, and determining when values of the quadratic function lie within a given range",
+        "solving quadratic equations algebraically and comparing these to graphical solutions",
+        "using graphs to determine the solutions of quadratic equations; recognising that the roots of a quadratic function correspond to the x-intercepts of its graph and that if the graph has no x-intercepts, then the corresponding equation has no real solutions",
+        "relating horizontal axis intercepts of the graph of a quadratic function to the factorised form of its rule using the null factor law; for example, the graph of the function y=x²-5x+6 can be represented as y=(x-2)(x-3) with x-axis intercepts where either (x-2)=0 or (x-3)=0",
+        "recognising that the equation x²=a, where a>0, has 2 solutions, x=√(a) and x=-√(a) ; for example, if x²=39 then x=√(39)=6.245 correct to 3 decimal places, or x=-√(39)=-6.245 correct to 3 decimal places, and representing these graphically",
+        "graphing percentages of illumination of moon phases in relation to First Nations Australians’ understandings that describe the different phases of the moon"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "code": "AC9M9A05",
+      "descriptor": "use mathematical modelling to solve applied problems involving change including financial contexts; formulate problems, choosing to use either linear or quadratic functions; interpret solutions in terms of the situation; evaluate the model and report methods and findings",
+      "elaborations": [
+        "modelling practical contexts using linear functions such as cooking times that include resting or cooling times, or water leakage from water tanks, using tables and graphs or digital tools and algebraically",
+        "modelling measurement situations and determining the perimeter and areas of rectangles where the length, l, of the rectangle is a linear function of its width, w; for example, l=w, l=w+5, l=3w, l=2w+7",
+        "modelling practical contexts using simple quadratic functions, tables and graphs (hand drawn or using digital tools) and algebraically, interpreting features of the graphs such as the turning point and intercepts in context; for example, area, paths of projectiles, parabolic mirrors, satellite dishes",
+        "modelling and solving problems involving financial contexts using linear functions; for example, combinations of purchases of different items when they have a set amount of money to spend, profit/loss situations and trade quotes involving call out fees",
+        "modelling situations involving change; for example, change in daily temperature during the ski season, fluctuation of speed above and below the speed limit, acceleration and deceleration of a car coming to and moving off from a set of traffic lights",
+        "modelling the hunting techniques of First Nations Australians using quadratic functions and exploring the effect of increasing the number of hunters to catch more prey"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "code": "AC9M9A06",
+      "descriptor": "experiment with the effects of the variation of parameters on graphs of related functions, using digital tools, making connections between graphical and algebraic representations, and generalising emerging patterns",
+      "elaborations": [
+        "investigating transformations of the graph of y=x to the graph of y=ax+b by systematic variation of a and b and interpreting the effects of these transformations using digital tools; for example, y=x→y=2x (vertical enlargement as a>1) →y=2x-1 (vertical translation) and y=x→y=1/2x (vertical compression as a<1) →y=-1/2x (reflection in the horizontal axis) →y=-1/2x+3 (vertical translation)",
+        "investigating transformations of the parabola y=x² in the Cartesian plane using digital tools to determine the relationship between graphical and algebraic representations of quadratic functions, including the completed square form; for example, y=x²→y=1/3x² (vertical compression as a<1) →y=1/3(x-5)² (horizontal translation) →y=1/3(x-5)²+7 (vertical translation) or y=x²→y=2x² (vertical enlargement as a>1) →y=-2x² (reflection in the horizontal axis) →y=-2(x+6)² (horizontal translation) →y=-2(x+6)²+10 (vertical translation)",
+        "experimenting with digital tools by applying transformations to the graphs of functions, such as reciprocal y=1/x, square root y=√(x), cube y=x³and exponential functions, y=2ˣ, y=(1/2)ˣ, identifying patterns"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "code": "AC9M9M01",
+      "descriptor": "solve problems involving the volume and surface area of right prisms and cylinders using appropriate units",
+      "elaborations": [
+        "analysing nets of objects to generate short cuts and establish formulas for surface area",
+        "determining the amount of material needed to make can-coolers for a class fundraising project and working out the most cost-efficient way to cut out the pieces",
+        "finding different prisms that have the same volume but different surface areas, making conjectures as to what type of prism would have the smallest or largest surface area",
+        "investigating objects and technologies of First Nations Australians, analysing and connecting surface area and volume, and exploring their relationship to their capacity"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "code": "AC9M9M02",
+      "descriptor": "solve problems involving very small and very large measurements, time scales and intervals expressed in scientific notation",
+      "elaborations": [
+        "representing very large and small real numbers in scientific notation, converting real numbers expressed in scientific notation into decimal form; for example, the approximate geological age of the earth is 4.6 × 109 years, the mass of a sugar molecule is 5.68 × 10-21 grams",
+        "using knowledge of place value and applying exponent laws to operate with numbers expressed in scientific notation in applied contexts; for example, performing calculations involving extremely small numbers in scientific and other contexts",
+        "examining the degree of accuracy that different measurement instruments provide in a science laboratory, such as a measuring cylinder compared with a pipette, and recording data values to the correct degree of accuracy using appropriate scientific notation"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "code": "AC9M9M03",
+      "descriptor": "solve spatial problems, applying angle properties, scale, similarity, Pythagoras’ theorem and trigonometry in right-angled triangles",
+      "elaborations": [
+        "investigating the applications of Pythagoras' theorem in authentic problems, including applying Pythagoras' theorem and trigonometry to problems in surveying and design",
+        "applying the formula for calculation of distances between points on the Cartesian plane from their coordinates, emphasising the connection to vertical and horizontal displacements between the points",
+        "understanding the relationship between the corresponding sides of similar right-angled triangles and establishing the relationship between areas of similar figures and the ratio of corresponding sides, the scale factor",
+        "using images of proportional relationships to estimate actual measurements; for example, taking a photograph of a person standing in front of a tree and using the image and scale to estimate the height of the tree, discussing the findings and ways to improve the estimates",
+        "investigating theorems and conjectures involving triangles; for example, the triangle inequality and generalising links between the Pythagorean rule for right-angled triangles, and related inequalities for acute and obtuse triangles; determining the minimal sets of information for a triangle from which other measures can all be determined",
+        "using knowledge of similar triangles, Pythagoras’ theorem, rates and algebra to design and construct a Biltmore stick used to measure the diameter and height of a tree, and calculating the density and dry mass to predict how much paper could be manufactured from the tree"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "code": "AC9M9M04",
+      "descriptor": "calculate and interpret absolute, relative and percentage errors in measurements, recognising that all measurements are estimates",
+      "elaborations": [
+        "investigating error as a percentage of the exact value; for example, comparing an estimation of the number of people expected to come to an event by subtracting the actual number that turned up to give an error, then converting this into a percentage error",
+        "using absolute value in a percentage error formula; considering when they would use the absolute value and when they would not, depending upon the context",
+        "calculating the percentage errors in expected budgets to actual expenditure",
+        "estimating the accuracy of measurements in practical contexts and giving suitable lower and upper bounds for measurement values"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "code": "AC9M9M05",
+      "descriptor": "use mathematical modelling to solve practical problems involving direct proportion, rates, ratio and scale, including financial contexts; formulate the problems and interpret solutions in terms of the situation; evaluate the model and report methods and findings",
+      "elaborations": [
+        "modelling situations involving direct proportion such as pro rata pay rates, exchange rates, multiple quotes for a job, conversion between scales or other appropriate science contexts; for example, Hooke’s law and other science contexts involving wave lengths and frequencies",
+        "modelling situations that impact on image editing used in social media and how proportion may not be maintained and can result in distorted images",
+        "modelling situations involving compliance with building and construction standards in design and construction, such as the rise and tread of staircases, and vertical and horizontal components of escalators",
+        "modelling situations involving the application of rates in practical contexts; for example, density, birth, flow or heartbeats",
+        "exploring fire techniques in land management practices used by First Nations Australians that use proportion relationships, including the rate of fire spread in different fuel types to wind speed, temperature and relative humidity"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Space",
+      "code": "AC9M9SP01",
+      "descriptor": "recognise the constancy of the sine, cosine and tangent ratios for a given angle in right-angled triangles using properties of similarity",
+      "elaborations": [
+        "understanding the terms “base”, “altitude”, “hypotenuse”, and “adjacent” and “opposite” sides to an angle, in a right-angled triangle, and identifying these for a given right-angled triangle",
+        "investigating patterns to reason about nested similar triangles that are aligned on a coordinate plane, connecting ideas of parallel sides and identifying the constancy of ratios of corresponding sides for a given angle",
+        "establishing an understanding that the sine of an angle can be considered as the length of the altitude of a right-angled triangle with a hypotenuse of length one unit and similarly the cosine as the length of the base of the same triangle, and relating this to enlargement and similar triangles",
+        "relating the tangent of an angle to the altitude and base of nested similar right-angled triangles, and connecting the tangent of the angle at which the graph of a straight line meets the positive direction of the horizontal coordinate axis to the gradient of the straight line"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Space",
+      "code": "AC9M9SP02",
+      "descriptor": "apply the enlargement transformation to shapes and objects using dynamic geometry software as appropriate; identify and explain aspects that remain the same and those that change",
+      "elaborations": [
+        "comparing the ratio of lengths of corresponding sides of similar triangles and angles",
+        "using the properties of similarity to solve problems involving enlargement",
+        "investigating and generalising patterns in length, angle, area and volume when side lengths of shapes and objects are enlarged or dilated by whole and rational numbers; for example, comparing an enlargement of a square and a cube of side length 2 units by a factor of 3 increases the area of the square, 2², to (3×2)²=9×2²=9 times the original area and the volume of the cube, 2³, to (3×2)³=27×2³=27 times the volume"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Space",
+      "code": "AC9M9SP03",
+      "descriptor": "design, test and refine algorithms involving a sequence of steps and decisions based on geometric constructions and theorems; discuss and evaluate refinements",
+      "elaborations": [
+        "creating an algorithm using pseudocode or flow charts to apply the triangle inequality, or an algorithm to generate Pythagorean triples",
+        "creating and testing algorithms designed to construct or bisect angles, using pseudocode or flow charts",
+        "developing an algorithm for an animation of a geometric construction, or a visual proof, evaluating the algorithm using test cases"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "code": "AC9M9ST01",
+      "descriptor": "analyse reports of surveys in digital media and elsewhere for information on how data was obtained to estimate population means and medians",
+      "elaborations": [
+        "investigating and evaluating statistical reports in the media and other places by linking claims to displays, statistics and representative data",
+        "investigating the use of statistics in reports regarding the growth of Australia's trade with other countries of the Asia region",
+        "investigating a range of data and its sources; for example, the age of residents in Australia, Cambodia and Tonga; the number of subjects studied at school in a year by 14-year-old students in Australia, Singapore, Japan, South Korea and Timor-Leste",
+        "analysing reports of public opinion surveys on environmental issues, such as land clearing, wind farms or single use plastics; discussing methods of data collection and the reasonableness of any inferences made"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "code": "AC9M9ST02",
+      "descriptor": "analyse how different sampling methods can affect the results of surveys and how choice of representation can be used to support a particular point of view",
+      "elaborations": [
+        "investigating and analysing different visualisations of data such as infographics found in the media and commenting on the strengths, weaknesses and possible biases of particular examples",
+        "discussing the impact of decreased landline usage or an increased aversion to answering calls from unknown numbers on survey data",
+        "exploring potential cultural bias relating to First Nations Australians by critically analysing sampling techniques in statistical reports"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "code": "AC9M9ST03",
+      "descriptor": "represent the distribution of multiple data sets for numerical variables using comparative representations; compare data distributions with consideration of centre, spread and shape, and the effect of outliers on these measures",
+      "elaborations": [
+        "describing the shape of the distribution of data using terms such as “positive skew”, “negative skew” and “symmetric” and “bi-modal”",
+        "using stem-and-leaf plots to compare 2 like sets of data such as the heights of girls and the heights of boys in a class",
+        "constructing grouped histograms that show trends in health issues such as lung cancer, leukemia, stroke and diabetes, and using the graph to justify, verify or invalidate claims",
+        "exploring comparative data presented in reports by National Indigenous Australians Agency in regard to “Closing the Gap”, discussing the comparative distributions within the context of the data; for example, comparative data presented in the “Closing the Gap – Prime Minister’s Report”"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "code": "AC9M9ST04",
+      "descriptor": "choose appropriate forms of display or visualisation for a given type of data; justify selections and interpret displays for a given context",
+      "elaborations": [
+        "comparing data displays using mean, median and range to describe and interpret numerical data sets in terms of centre and spread using histograms, dot plots, or stem-and-leaf plots",
+        "choosing the type of representations based on the data type: categorical (nominal or ordinal) or numerical (discrete or continuous)",
+        "using different visualisations of data, including non-standard representations such as infographics, and discussing their purpose, intended audience; evaluating how well they communicate responses to statistical questions of interest",
+        "comparing and interpreting stacked bar charts, area charts and line graphs, discussing how they represent larger categories that can be subdivided into smaller categories and how information that can be obtained from these displays can be used for comparison"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "code": "AC9M9ST05",
+      "descriptor": "plan and conduct statistical investigations involving the collection and analysis of different kinds of data; report findings and discuss the strength of evidence to support any conclusions",
+      "elaborations": [
+        "planning and conducting an investigation using questions together with analysis of secondary data set collected from online data bases such as the Australian Bureau of Statistics",
+        "planning and conducting an investigation relating to consumer spending habits; modelling market research on what teenagers are prepared to spend on technology compared to clothing, with consideration of sample techniques and potential sources of bias",
+        "investigating where would be the best location for a tropical fruit plantation by conducting a statistical investigation comparing different variables such as the annual rainfall in various parts of Australia, Indonesia, New Guinea and Malaysia, land prices and associated farming costs",
+        "posing statistical questions, collecting, representing and interpreting data from different sources in relation to reconciliation, considering the relationships between variables"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Probability",
+      "code": "AC9M9P01",
+      "descriptor": "list all outcomes for compound events both with and without replacement, using lists, tree diagrams, tables or arrays; assign probabilities to outcomes",
+      "elaborations": [
+        "discussing two-step chance experiments, such as the game of Heads and tails, describing the different outcomes and their related probabilities",
+        "using systematic methods such as lists or arrays to record outcomes and assign probabilities, such as drawing the names of students from a bag to appoint 2 team leaders",
+        "using a tree diagram to represent a three-stage event and assigning probabilities to these events; for example, selecting 3 cards from a deck, assigning the probability of drawing an ace, then a king, then a queen of the same suit, with and without replacing the cards after every draw",
+        "assigning probabilities to compound events involving the random selection of people from a given population; for example, selecting 2 names at random from all of the students at a high school and assigning the probability that they are both in Year 9"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Probability",
+      "code": "AC9M9P02",
+      "descriptor": "calculate relative frequencies from given or collected data to estimate probabilities of events involving “and”, inclusive “or” and exclusive “or”",
+      "elaborations": [
+        "understanding that relative frequencies from large data sets or long-run experiments can provide reliable measures of probability and can be used to make predictions of decisions",
+        "using Venn diagrams or two-way tables to estimate frequencies of events involving “and”, “or” questions"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Probability",
+      "code": "AC9M9P03",
+      "descriptor": "design and conduct repeated chance experiments and simulations, using digital tools to compare probabilities of simple events to related compound events, and describe results",
+      "elaborations": [
+        "using digital tools to conduct probability simulations that demonstrate the relationship between the probability of compound events and the individual probabilities",
+        "comparing experiments which differ only by being undertaken with replacement or without replacement",
+        "conducting two-step chance experiments using systematic methods to list outcomes of experiments and to list outcomes favourable to an event",
+        "using repeated trials of First Nations Australian children’s instructive games; for example, Gorri from all parts of Australia, to calculate the probabilities of winning and not winning"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Number",
+      "code": "AC9M10N01",
+      "descriptor": "recognise the effect of using approximations of real numbers in repeated calculations and compare the results when using exact representations",
+      "elaborations": [
+        "comparing and contrasting the effect of truncation or rounding on the final result of calculations when using approximations of real numbers rather than exact representations",
+        "investigating the impact of approximation on multiple calculations in contexts that involve the area of compound shapes involving circles, the surface area and volume of compound objects, and repeated calculations of simple interest where the solutions are not exact cents"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Algebra",
+      "code": "AC9M10A01",
+      "descriptor": "expand, factorise and simplify expressions and solve equations algebraically, applying exponent laws involving products, quotients and powers of variables, and the distributive property",
+      "elaborations": [
+        "explaining the relationship between factorisation and expansion, including the completed square form for quadratic expressions",
+        "applying knowledge of exponent laws to algebraic terms and using both positive and negative integral exponents to simplifying algebraic expressions and solve equations algebraically"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Algebra",
+      "code": "AC9M10A02",
+      "descriptor": "solve linear inequalities and simultaneous linear equations in 2 variables; interpret solutions graphically and communicate solutions in terms of the situation",
+      "elaborations": [
+        "investigating situations involving linear equations in context, such as multiple quotes for a job, or profit and loss; solving the equations graphically, giving solutions in everyday language, such as “break-even point” or “point to change providers” for the job",
+        "describing the solution of simultaneous equations within the context of the situation",
+        "graphing regions corresponding to inequalities in the Cartesian plane; for example, graphing 2x+3y<24 and verifying using a test point such as (0, 0)",
+        "identifying all the combinations of trips to the movies, each costing $12, and ice-skating sessions, each costing $21, as the integer solutions for an entertainment budget of up to $150 for the school holidays; expressing algebraically as 12m+21s≤150",
+        "testing when a circle of a specified radius has a corresponding area greater than a given value, or whether a point satisfies an inequality; for example, whether the point (3, 5) satisfies 2y<x²",
+        "investigating the strategies inherent in First Nations Australian children’s instructive games; for example, Weme from the Warlpiri Peoples of central Australia, and their connection to strategies to solve simultaneous linear equations in 2 variables"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Algebra",
+      "code": "AC9M10A03",
+      "descriptor": "recognise the connection between algebraic and graphical representations of exponential relations and solve related exponential equations, using digital tools where appropriate",
+      "elaborations": [
+        "recognising that in a table of values, if the ratio between consecutive values of the dependent variable is constant, then it is an exponential relation",
+        "investigating the links between algebraic and graphical representations of exponential functions using graphing software",
+        "using digital tools with symbolic manipulation functionality to systematically explore exponential relations",
+        "investigating First Nations Australian Ranger groups’ and other groups’ programs that attempt to eradicate feral animals for survival of native animals on Country/Place, exploring the competition between feral and native animals and their impact on natural resources by formulating exponential equations for population growth for each animal species"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Algebra",
+      "code": "AC9M10A04",
+      "descriptor": "use mathematical modelling to solve applied problems involving growth and decay, including financial contexts; formulate problems, choosing to apply linear, quadratic or exponential models; interpret solutions in terms of the situation; evaluate and modify models as necessary and report assumptions, methods and findings",
+      "elaborations": [
+        "modelling situations and choosing between linear, quadratic and exponential models by representing relationships in a table of values and recognising that linear functions have constant first differences, quadratic functions have constant second differences and exponential functions have a constant ratio between consecutive values of the dependent variable",
+        "modelling situations involving exponential growth and decay, and contrasting this with linear growth or decay; for example, situations involving constant percentage change and constant ratio; determining doubling time and half-life and approximate intervals for which the values of the model lie within a given range",
+        "modelling situations that involve working with authentic information, data and interest rates to calculate compound interest and solve related problems",
+        "modelling and investigating how exponential equations are used in carbon dating to estimate the age of First Nations Australians’ artefacts or material culture",
+        "modelling and formulating situations involving population growths of native animals on Country/Place with varying reproductive behaviour, using exponential equations and critiquing their applicability to real-world situations"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Algebra",
+      "code": "AC9M10A05",
+      "descriptor": "experiment with functions and relations using digital tools, making and testing conjectures and generalising emerging patterns",
+      "elaborations": [
+        "applying the graphing zoom functionality of digital tools and systematically refining intervals to identify approximate location of points of intersection of the graphs of 2 functions, such as x²=2ˣ",
+        "applying a bisection algorithm to determine the approximate location of the horizontal axis intercepts of the graph of a quadratic function such as f(x)=2x²-3x-7",
+        "applying transformations to the graph of x²+y²=1",
+        "identifying the coordinates of any points of intersection of the graph of a linear function with the graph of a quadratic function or a circle",
+        "identifying intervals on the real number line over which a given quadratic function is positive or negative",
+        "using a table of values to determine when an exponential growth or decay function exceeds or falls below a given value, such as monitoring the trend in value of a share price in a context of exponential growth or decay"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Measurement",
+      "code": "AC9M10M01",
+      "descriptor": "solve problems involving the surface area and volume of composite objects using appropriate units",
+      "elaborations": [
+        "determining the volumes and surface areas of composite solids, formed from a range of right prisms and cylinders, by considering the individual solids from which they are constructed",
+        "estimating the surface area and volume of composite objects in practical contexts",
+        "using mathematical modelling to provide solutions to problems involving surface area and volume; for example, ascertaining the rainfall that can be saved from a roof top and the optimal shape and dimensions for rainwater storage based on where it will be located on a property; determining whether to hire extra freezer space for the amount of ice cream required at a fundraising event for the school or community"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Measurement",
+      "code": "AC9M10M02",
+      "descriptor": "interpret and use logarithmic scales in applied contexts involving small and large quantities and change",
+      "elaborations": [
+        "understanding that the logarithmic scale is calibrated in terms of order of magnitude; for example, doubling or powers of 10",
+        "identifying and interpreting data representations (charts and graphs) that use logarithmic scales and discussing when it is appropriate to use this type of scale and when it is not appropriate; for example, graphs representing percentage change, a wide range of values or exponential growth",
+        "investigating and interpreting logarithmic scales used in real-world contexts; for example, Richter, decibel and sensitivity scales or growth in investments, timescales and the spread of micro-organisms and disease and describing reasons for choosing to use a logarithmic scale rather than a linear scale",
+        "investigating dating methods of geological sites to provide evidence of First Peoples of Australia’s human presence in Australia, including the Madjedbebe dig in the Northern Territory, that use logarithmic scales (scientific notation) and measurement accuracy in the dating"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Measurement",
+      "code": "AC9M10M03",
+      "descriptor": "solve practical problems applying Pythagoras’ theorem and trigonometry of right-angled triangles, including problems involving direction and angles of elevation and depression",
+      "elaborations": [
+        "applying right-angled trigonometry to solve navigation problems involving bearings; for example, determining the bearing and estimating the distance of the final leg of an orienteering course",
+        "applying Pythagoras' theorem and trigonometry to problems in surveying and design, where three-dimensional problems are decomposed into two-dimensional problems; for example, investigating the dimensions of the smallest box needed to package an object of a particular length",
+        "using a clinometer to measure angles of inclination, and applying trigonometry, and proportional reasoning to determine the height of buildings in practical contexts",
+        "applying Pythagoras' theorem and trigonometry, and using dynamic geometric software, to design three-dimensional models of practical situations involving angles of elevation and depression; for example, modelling a crime scene",
+        "exploring navigation, design of technologies or surveying by First Nations Australians, investigating geometric and spatial reasoning, and how these connect to trigonometry"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Measurement",
+      "code": "AC9M10M04",
+      "descriptor": "identify the impact of measurement errors on the accuracy of results in practical contexts",
+      "elaborations": [
+        "describing settings where measurement errors may impact research results and how measurement data impacted by error can result in biased findings",
+        "analysing instruments and methods for measuring in investigations and modelling activities",
+        "determining the impact that compounding errors have on financial calculations; for example, considering the effect of truncation on money amounts for large scale customer populations",
+        "investigating scientific measuring techniques, including dating methods and genetic sequencing, applied to First Peoples of Australia and their artefacts, and the social impact of measurement errors"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Measurement",
+      "code": "AC9M10M05",
+      "descriptor": "use mathematical modelling to solve practical problems involving proportion and scaling of objects; formulate problems and interpret solutions in terms of the situation; evaluate and modify models as necessary, and report assumptions, methods and findings",
+      "elaborations": [
+        "using plans and elevation drawings to investigate making changes to building designs, employing appropriate scales and converting to actual measurements within the context to make decisions about changes",
+        "analysing and applying scale and ratios in situations such as production prototypes and 3D printing; for example, using a 3D printer to produce scaled versions of actual objects",
+        "estimating the scale of an object, such as a toy car, by measuring a linear dimension and using a typical car dimension to work out the scale factor",
+        "investigating compliance with building codes and standards in design and construction, such as for escalators in shopping centres"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Space",
+      "code": "AC9M10SP01",
+      "descriptor": "apply deductive reasoning to proofs involving shapes in the plane and use theorems to solve spatial problems",
+      "elaborations": [
+        "distinguishing between a practical demonstration and a proof; for example, demonstrating that triangles are congruent by placing them on top of each other, as compared to using congruence tests to establish that triangles are congruent",
+        "developing proofs involving congruent triangles and angle properties, communicating the proof using a sequence of logically connected statements",
+        "applying an understanding of relationships to deduce properties of geometric figures; for example, the base angles of an isosceles triangle are equal",
+        "investigating proofs of geometric theorems and using them to solve spatial problems; for example, applying logical reasoning and similarity to proofs and numerical exercises involving plane shapes; using visual proofs to justify solutions",
+        "using dynamic geometric software to investigate the shortest path that touches 3 sides of a rectangle, starting and finishing at the same point and proving that the path forms a parallelogram"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Space",
+      "code": "AC9M10SP02",
+      "descriptor": "interpret networks and network diagrams used to represent relationships in practical situations and describe connectedness",
+      "elaborations": [
+        "investigating how networks and network diagrams can be used to model authentic situations, recognising what real world quantity is represented by the nodes (vertices), and what real world quantity is represented by the links between them (edges)",
+        "investigating the use of graphs to represent a network, analysing connectedness; for example, investigating the “The Seven Bridges of Königsberg” problem",
+        "investigating how polyhedra can be represented as a network using edges, vertices, interior and exterior faces; representing the number of edges, vertices and faces in a table and demonstrating how Euler’s formula F + V = E + 2 applies",
+        "investigating how a social network, intranet, local area network (LAN), electrical wiring or wireless network of a home can be represented as a network diagram to specify relationships; for example, using network diagrams to investigate practical problems involving connections, power overload or the need for routers",
+        "investigating the use of networks to represent authentic situations; for example, rail or air travel between or within London, Paris, Hong Kong; a food web representing a simple eco-system; metabolic networks and other chemical or biological structures",
+        "representing First Nations Australians’ kinship systems using network diagrams and exploring the significance of relationships to Country/Place"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Space",
+      "code": "AC9M10SP03",
+      "descriptor": "design, test and refine solutions to spatial problems using algorithms and digital tools; communicate and justify solutions",
+      "elaborations": [
+        "designing and making scale models of three-dimensional objects using digital tools; for example, making components of a puzzle using a three-dimensional printer, planning and designing the puzzle using principles of tessellations",
+        "applying a computational thinking approach to solving problems involving networks; for example, connectedness, coverage and weighted measures; taking different routes and choosing the most efficient route to take when travelling by car using virtual map software",
+        "defining and decomposing spatial problems, creating and applying algorithms to generate solutions, evaluating and communicating solutions in terms of the problem; for example, designing a floor plan for a department store that limits congestion at key areas such as checkouts, changing rooms and popular sale items",
+        "designing, creating and testing algorithms using pseudocode or flow charts for producing self-similar patterns; validating algorithms using a range of test cases to compare their output",
+        "exploring geospatial technologies used by First Nations Australians’ communities to consider spatial problems including position and transformation"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Statistics",
+      "code": "AC9M10ST01",
+      "descriptor": "analyse claims, inferences and conclusions of statistical reports in the media, including ethical considerations and identification of potential sources of bias",
+      "elaborations": [
+        "identifying potentially misleading data representations in the media such as graphs with broken axes and scales that do not start at zero or are nonlinear; recognising when data is not related to the claim, not representative of the population or is deliberately being used to mislead, or support a claim or biased point of view",
+        "investigating the source and size of the sample from which the data was collected and deciding whether the sample is appropriately representative of the population",
+        "investigating population rates and discussing potential ethical considerations when presenting statistical data involving infection rates, and the number of cases per head of population",
+        "using secondary data to predict the number of people likely to be infected with a strain of flu or experience side effects with a certain medication, discussing the ethical considerations of reporting of such data to the wider public, considering validity claims and samples sizes",
+        "using the concept of Indigenous data sovereignty to critique and evaluate the Australian Government’s “Closing the Gap” report"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Statistics",
+      "code": "AC9M10ST02",
+      "descriptor": "compare data distributions for continuous numerical variables using appropriate data displays including boxplots; discuss the shapes of these distributions in terms of centre, spread, shape and outliers in the context of the data",
+      "elaborations": [
+        "constructing and interpreting box plots and using them to compare data sets, understanding that box plots are an efficient and common way of representing and summarising data and can facilitate comparisons between data sets",
+        "comparing shapes of distributions using box plots, histograms, cumulative frequency graphs and dot plots, discussing symmetry, skew and modality",
+        "using digital tools to compare boxplots and histograms as displays of the same data in the light of the statistical questions being addressed and the effectiveness of the display in helping to answer the question",
+        "finding the five-number summary (minimum and maximum values, median, and upper and lower quartiles) and using its graphical representation, the box plot, as tools for both numerically and visually comparing the centre and spread of data sets",
+        "comparing the information that can be extracted and the stories that can be told about continuous and discrete numerical data sets that have been displayed in different ways, including histograms, dot plots, box plots and cumulative frequency graphs"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Statistics",
+      "code": "AC9M10ST03",
+      "descriptor": "construct scatterplots and comment on the association between the 2 numerical variables in terms of strength, direction and linearity",
+      "elaborations": [
+        "discussing the difference between association and cause and effect, and relating this to situations such as health, diversity of species and climate control",
+        "using statistical evidence to make, justify and critique claims about association between variables, such as in contexts of climate change, migration, online shopping and social media",
+        "informally using a line of good fit by eye to discuss reliability of any predictions",
+        "investigating the relationship between 2 variables of spear throwers used by Australian First Nations Peoples by using data to construct scatterplots, make comparisons and draw conclusions"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Statistics",
+      "code": "AC9M10ST04",
+      "descriptor": "construct two-way tables and discuss possible relationship between categorical variables",
+      "elaborations": [
+        "using two-way tables to investigate and comparing the survey responses to questions involving five-point Likert scale against 2 different categories of respondents; for example, junior compared to senior students’ responses to a survey question",
+        "recording data in two-way tables and using percentages and proportions to identify patterns and associations in the data",
+        "conducting a litter survey around the school, considering the relationship between different categorical variables such as the day of the week as canteen specials might lead to different types of litter or the weather due to hot days leading to more ice blocks and cold drinks being sold"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Statistics",
+      "code": "AC9M10ST05",
+      "descriptor": "plan and conduct statistical investigations of situations that involve bivariate data; evaluate and report findings with consideration of limitations of any inferences",
+      "elaborations": [
+        "designing statistical investigations that collect bivariate data over time through observation, experiment or measurement; graphing, interpreting and analysing data; and reporting within the context of the statistical investigation question",
+        "investigating anecdotal claims including those concerning climate, housing affordability and natural resources, with consideration of data validity and limitations of interpolation or extrapolation",
+        "using a statistical investigation to address the question, “Is there a relationship between vaccines and immunity from a virus”",
+        "investigating biodiversity changes in Australia before and after colonisation by comparing related bivariate numerical data, discussing and reporting on associations"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Probability",
+      "code": "AC9M10P01",
+      "descriptor": "use the language of “if ... then”, “given”, “of”, “knowing that” to describe and interpret situations involving conditional probability",
+      "elaborations": [
+        "using two-way tables and Venn diagrams to understand conditional statements using the language of “if ... then ...”, “given”, “of”, “knowing that” and identifying common mistakes in interpreting such language",
+        "using arrays and tree diagrams to represent, interpret and compare probabilities of dependent and independent events"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Probability",
+      "code": "AC9M10P02",
+      "descriptor": "design and conduct repeated chance experiments and simulations using digital tools to model conditional probability and interpret results",
+      "elaborations": [
+        "using samples of different sizes with and without replacement from a population to identify when the difference in methods becomes negligible",
+        "recognising that an event can be dependent on another event and that this will affect the way its probability is calculated",
+        "using simulations to gather data on frequencies for situations involving chance that appear to be counter-intuitive, such as the three-door problem or the birthday problem",
+        "identifying situations in real-life where probability simulations are used for decision-making, such as supply and demand of product, insurance risk and queueing",
+        "using simulation to predict the number of people likely to be infected with a strain of flu or virus"
+      ]
+    }
+  ]
+}

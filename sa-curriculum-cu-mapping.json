@@ -1,0 +1,1305 @@
+{
+  "source": "SA Curriculum Framework: Mathematics Reception to Year 10 (prototype 2)",
+  "source_document": "SA_CIMT_Curriculum_Mapping_v5.xlsx",
+  "extracted": "2026-05-18",
+  "schema": {
+    "year": "integer: SA Year level (Reception=0, then 1-10)",
+    "strand": "string: Number / Algebra / Measurement / Space / Statistics / Probability",
+    "conceptual_understanding": "string: the SA Conceptual Understanding statement, full text",
+    "ac9_descriptor_codes": "list[string]: AC9 v9 codes that sit under this CU at this SA Year level"
+  },
+  "total_cu_rows": 61,
+  "years_covered": [
+    7,
+    8,
+    9,
+    10
+  ],
+  "mappings": [
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "Rational numbers can be represented in many equivalent ways",
+      "ac9_descriptor_codes": [
+        "AC9M7N01",
+        "AC9M7N03",
+        "AC9M7N04"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "Rational numbers can be approximated to support judgements of magnitude and reasonableness",
+      "ac9_descriptor_codes": [
+        "AC9M7N05"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "Numbers with repeated factors can be expressed using exponential notation",
+      "ac9_descriptor_codes": [
+        "AC9M7N02"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "The inverse relationships between addition and subtraction and multiplication and division can be used to add, subtract, multiply or divide rational numbers",
+      "ac9_descriptor_codes": [
+        "AC9M7N06",
+        "AC9M7N07"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "Multiplying a positive number by a number greater than 0 and less than 1 results in a smaller number",
+      "ac9_descriptor_codes": [
+        "AC9M7N06"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "Dividing a positive number by a number greater than 0 and less than 1 results in a larger number",
+      "ac9_descriptor_codes": [
+        "AC9M7N06"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "Fractions, percentages, ratios and rates are different ways of representing a proportional relationship between quantities",
+      "ac9_descriptor_codes": [
+        "AC9M7N08"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Number",
+      "conceptual_understanding": "Mathematical modelling can be used to represent and analyse financial and other real-world situations and support informed decision-making",
+      "ac9_descriptor_codes": [
+        "AC9M7N09"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "conceptual_understanding": "Patterns and relationships between variables can be described algebraically and graphed to solve problems and support inferences",
+      "ac9_descriptor_codes": [
+        "AC9M7A01",
+        "AC9M7A03",
+        "AC9M7A04",
+        "AC9M7A05",
+        "AC9M7A06"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "conceptual_understanding": "Algebraic expressions can be represented in infinitely many different but equivalent ways",
+      "ac9_descriptor_codes": [
+        "AC9M7A02"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "conceptual_understanding": "The commutative and associative properties apply to addition and multiplication, but not to subtraction and division",
+      "ac9_descriptor_codes": [
+        "AC9M7A02"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Algebra",
+      "conceptual_understanding": "The distributive property of multiplication over addition and subtraction can be used to support efficient calculation",
+      "ac9_descriptor_codes": [
+        "AC9M7A02"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "conceptual_understanding": "Parallel and intersecting lines have properties that can be used to deduce relationships between the angles formed",
+      "ac9_descriptor_codes": [
+        "AC9M7M04",
+        "AC9M7M05"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "conceptual_understanding": "Measurable attributes of 2-dimensional shapes and 3-dimensional objects can be determined based on the known properties of the shape or solid",
+      "ac9_descriptor_codes": [
+        "AC9M7M01",
+        "AC9M7M02",
+        "AC9M7M06"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Measurement",
+      "conceptual_understanding": "In any circle, the ratio of the circumference to the diameter is always the same and is represented by the number pi (π)",
+      "ac9_descriptor_codes": [
+        "AC9M7M03"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Space",
+      "conceptual_understanding": "Objects can be represented in two-dimensions in different ways",
+      "ac9_descriptor_codes": [
+        "AC9M7SP01"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Space",
+      "conceptual_understanding": "Shapes can be classified and compared by their geometrical properties",
+      "ac9_descriptor_codes": [
+        "AC9M7SP02",
+        "AC9M7SP04"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Space",
+      "conceptual_understanding": "Geometrical transformations of points and 2-dimensional shapes can be represented on a Cartesian plane",
+      "ac9_descriptor_codes": [
+        "AC9M7SP03"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Statistics",
+      "conceptual_understanding": "Data can be organised and represented in different ways to inform, justify and persuade conclusions",
+      "ac9_descriptor_codes": [
+        "AC9M7ST02",
+        "AC9M7ST03"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Statistics",
+      "conceptual_understanding": "Variation in data can be measured and used to describe and compare data sets",
+      "ac9_descriptor_codes": [
+        "AC9M7ST01",
+        "AC9M7ST02"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Probability",
+      "conceptual_understanding": "Outcomes of events can be described and their likelihood can be measured",
+      "ac9_descriptor_codes": [
+        "AC9M7P01"
+      ]
+    },
+    {
+      "year": 7,
+      "strand": "Probability",
+      "conceptual_understanding": "Theoretical probabilities can predict relative frequencies of experimental data",
+      "ac9_descriptor_codes": [
+        "AC9M7P02"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "conceptual_understanding": "Rational and irrational numbers can be expressed and represented in different forms depending on context and purpose",
+      "ac9_descriptor_codes": [
+        "AC9M8N01",
+        "AC9M8N03",
+        "AC9M8N04"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "conceptual_understanding": "Exponential laws describe patterns in operations involving exponential notation enabling efficient calculations",
+      "ac9_descriptor_codes": [
+        "AC9M8N02"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Number",
+      "conceptual_understanding": "Mathematical modelling can be used to represent and solve practical problems, including in financial contexts, using rational numbers and percentages",
+      "ac9_descriptor_codes": [
+        "AC9M8N05"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Algebra",
+      "conceptual_understanding": "Equivalent algebraic expressions and solutions to equations can be determined by applying properties of mathematical operations and numbers",
+      "ac9_descriptor_codes": [
+        "AC9M8A01"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Algebra",
+      "conceptual_understanding": "Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures",
+      "ac9_descriptor_codes": [
+        "AC9M8A02",
+        "AC9M8A03",
+        "AC9M8A04"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "conceptual_understanding": "Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts",
+      "ac9_descriptor_codes": [
+        "AC9M8M01",
+        "AC9M8M02",
+        "AC9M8M03",
+        "AC9M8M05",
+        "AC9M8M06",
+        "AC9M8M07"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Measurement",
+      "conceptual_understanding": "Duration can be quantified using units of time, including 12- and 24-hour time, and compared across different time zones",
+      "ac9_descriptor_codes": [
+        "AC9M8M04"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "conceptual_understanding": "Congruency and similarity can be established and used for triangles and other shapes to describe position, location and properties",
+      "ac9_descriptor_codes": [
+        "AC9M8SP01",
+        "AC9M8SP04"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "conceptual_understanding": "Comparison of the measure of sides and angles between 2 triangles can establish a relationship of congruence or similarity from which unknown measures can be deduced",
+      "ac9_descriptor_codes": [
+        "AC9M8SP01"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "conceptual_understanding": "Relationships and properties of congruent and similar triangles can be used to deduce the properties of quadrilaterals",
+      "ac9_descriptor_codes": [
+        "AC9M8SP02"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Space",
+      "conceptual_understanding": "Position and location of objects in 3 dimensions can be represented using a coordinate system",
+      "ac9_descriptor_codes": [
+        "AC9M8SP03"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Statistics",
+      "conceptual_understanding": "Valid inferences about populations can be made by drawing conclusions from representative samples",
+      "ac9_descriptor_codes": [
+        "AC9M8ST01",
+        "AC9M8ST04"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Statistics",
+      "conceptual_understanding": "A representative sample depends on the nature of the population and the question being considered",
+      "ac9_descriptor_codes": [
+        "AC9M8ST02",
+        "AC9M8ST03"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Probability",
+      "conceptual_understanding": "Complementary events in an experiment are mutually exclusive and together cover all possible outcomes",
+      "ac9_descriptor_codes": [
+        "AC9M8P01"
+      ]
+    },
+    {
+      "year": 8,
+      "strand": "Probability",
+      "conceptual_understanding": "The sample space for 2 events can be presented diagrammatically in a variety of ways to determine the probabilities of specific outcomes, including compound events",
+      "ac9_descriptor_codes": [
+        "AC9M8P02",
+        "AC9M8P03"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Number",
+      "conceptual_understanding": "Rational and irrational numbers can be represented in many forms, including on a number line, and can be used to find exact and approximate values",
+      "ac9_descriptor_codes": [
+        "AC9M9N01"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "conceptual_understanding": "The parameters of quadratics and other functions determine the features of the related graph and can be adjusted depending on the purpose, context and application",
+      "ac9_descriptor_codes": [
+        "AC9M9A02",
+        "AC9M9A04",
+        "AC9M9A06"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "conceptual_understanding": "Expressions involving exponent notation with integer or variable bases can be simplified or represented differently using the law of exponents",
+      "ac9_descriptor_codes": [
+        "AC9M9A01"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "conceptual_understanding": "On a Cartesian plane, the coordinates of 2 distinct points can be used to determine a range of measures of their orientation in relation to each other",
+      "ac9_descriptor_codes": [
+        "AC9M9A03"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Algebra",
+      "conceptual_understanding": "Mathematical modelling can be used to represent and solve problems involving changes, including financial contexts",
+      "ac9_descriptor_codes": [
+        "AC9M9A05"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "conceptual_understanding": "Spatial relationships in 1, 2 and 3 dimensions can be quantified using appropriate units to solve problems in various contexts",
+      "ac9_descriptor_codes": [
+        "AC9M9M01",
+        "AC9M9M02",
+        "AC9M9M03"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "conceptual_understanding": "Calculations are affected by sources of error and should be interpreted in the context of the problem",
+      "ac9_descriptor_codes": [
+        "AC9M9M04"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Measurement",
+      "conceptual_understanding": "Mathematical modelling can be used to represent and solve problems involving proportion, rates, ratios and scale, including in financial contexts",
+      "ac9_descriptor_codes": [
+        "AC9M9M05"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Space",
+      "conceptual_understanding": "Trigonometric ratios are an application of the property of similarity for right-angled triangles",
+      "ac9_descriptor_codes": [
+        "AC9M9SP01",
+        "AC9M9SP02",
+        "AC9M9SP03"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "conceptual_understanding": "Sampling methods can affect and bias the results of data collection",
+      "ac9_descriptor_codes": [
+        "AC9M9ST01",
+        "AC9M9ST02"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "conceptual_understanding": "Different representations of data distributions can be used to compare features such as centre, shape and spread",
+      "ac9_descriptor_codes": [
+        "AC9M9ST03",
+        "AC9M9ST04"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Statistics",
+      "conceptual_understanding": "Statistical reports provide data and analysis to support conclusions and acknowledge the strength of the evidence",
+      "ac9_descriptor_codes": [
+        "AC9M9ST01",
+        "AC9M9ST05"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Probability",
+      "conceptual_understanding": "Theoretical probabilities are based on the characteristics of an experiment and can be used to predict relative frequencies of experimental data",
+      "ac9_descriptor_codes": [
+        "AC9M9P02",
+        "AC9M9P03"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Probability",
+      "conceptual_understanding": "The likelihood of an event occurring can be affected by another event that has already taken place",
+      "ac9_descriptor_codes": [
+        "AC9M9P01"
+      ]
+    },
+    {
+      "year": 9,
+      "strand": "Probability",
+      "conceptual_understanding": "The probability of compound events is related to the probability of the associated simple events and can be calculated in the context of the experiment",
+      "ac9_descriptor_codes": [
+        "AC9M9P03"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Number",
+      "conceptual_understanding": "Using approximations rather than exact values affects the accuracy of results in both single and multiple calculations",
+      "ac9_descriptor_codes": [
+        "AC9M10N01"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Algebra",
+      "conceptual_understanding": "Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones",
+      "ac9_descriptor_codes": [
+        "AC9M10A01",
+        "AC9M10A02",
+        "AC9M10A03",
+        "AC9M10A04",
+        "AC9M10A05"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Measurement",
+      "conceptual_understanding": "Attributes of 1-, 2- and 3-dimensional objects are described and measured in appropriate standardised units",
+      "ac9_descriptor_codes": [
+        "AC9M10M01",
+        "AC9M10M02",
+        "AC9M10M03",
+        "AC9M10M05"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Measurement",
+      "conceptual_understanding": "Measurement errors impact the accuracy of results",
+      "ac9_descriptor_codes": [
+        "AC9M10M04"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Space",
+      "conceptual_understanding": "Situations involving angles, distance and direction can be quantified using geometric properties and theorems",
+      "ac9_descriptor_codes": [
+        "AC9M10SP01",
+        "AC9M10SP02",
+        "AC9M10SP03"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Statistics",
+      "conceptual_understanding": "Data can be represented in different ways to establish relationships, while considering accuracy and bias",
+      "ac9_descriptor_codes": [
+        "AC9M10ST02",
+        "AC9M10ST03",
+        "AC9M10ST04",
+        "AC9M10ST05"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Statistics",
+      "conceptual_understanding": "Claims and inferences based on data should acknowledge ethical considerations and potential sources of bias",
+      "ac9_descriptor_codes": [
+        "AC9M10ST01"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Probability",
+      "conceptual_understanding": "Conditional probability can be described and interpreted for multiple events and applied in real-life contexts",
+      "ac9_descriptor_codes": [
+        "AC9M10P01"
+      ]
+    },
+    {
+      "year": 10,
+      "strand": "Probability",
+      "conceptual_understanding": "The likelihood of an event occurring can be affected by another event that has already taken place",
+      "ac9_descriptor_codes": [
+        "AC9M10P02"
+      ]
+    }
+  ],
+  "reverse_lookup_by_ac9_code": {
+    "AC9M7N01": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Rational numbers can be represented in many equivalent ways"
+      }
+    ],
+    "AC9M7N03": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Rational numbers can be represented in many equivalent ways"
+      }
+    ],
+    "AC9M7N04": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Rational numbers can be represented in many equivalent ways"
+      }
+    ],
+    "AC9M7N05": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Rational numbers can be approximated to support judgements of magnitude and reasonableness"
+      }
+    ],
+    "AC9M7N02": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Numbers with repeated factors can be expressed using exponential notation"
+      }
+    ],
+    "AC9M7N06": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "The inverse relationships between addition and subtraction and multiplication and division can be used to add, subtract, multiply or divide rational numbers"
+      },
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Multiplying a positive number by a number greater than 0 and less than 1 results in a smaller number"
+      },
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Dividing a positive number by a number greater than 0 and less than 1 results in a larger number"
+      }
+    ],
+    "AC9M7N07": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "The inverse relationships between addition and subtraction and multiplication and division can be used to add, subtract, multiply or divide rational numbers"
+      }
+    ],
+    "AC9M7N08": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Fractions, percentages, ratios and rates are different ways of representing a proportional relationship between quantities"
+      }
+    ],
+    "AC9M7N09": [
+      {
+        "year": 7,
+        "strand": "Number",
+        "conceptual_understanding": "Mathematical modelling can be used to represent and analyse financial and other real-world situations and support informed decision-making"
+      }
+    ],
+    "AC9M7A01": [
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "Patterns and relationships between variables can be described algebraically and graphed to solve problems and support inferences"
+      }
+    ],
+    "AC9M7A03": [
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "Patterns and relationships between variables can be described algebraically and graphed to solve problems and support inferences"
+      }
+    ],
+    "AC9M7A04": [
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "Patterns and relationships between variables can be described algebraically and graphed to solve problems and support inferences"
+      }
+    ],
+    "AC9M7A05": [
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "Patterns and relationships between variables can be described algebraically and graphed to solve problems and support inferences"
+      }
+    ],
+    "AC9M7A06": [
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "Patterns and relationships between variables can be described algebraically and graphed to solve problems and support inferences"
+      }
+    ],
+    "AC9M7A02": [
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "Algebraic expressions can be represented in infinitely many different but equivalent ways"
+      },
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "The commutative and associative properties apply to addition and multiplication, but not to subtraction and division"
+      },
+      {
+        "year": 7,
+        "strand": "Algebra",
+        "conceptual_understanding": "The distributive property of multiplication over addition and subtraction can be used to support efficient calculation"
+      }
+    ],
+    "AC9M7M04": [
+      {
+        "year": 7,
+        "strand": "Measurement",
+        "conceptual_understanding": "Parallel and intersecting lines have properties that can be used to deduce relationships between the angles formed"
+      }
+    ],
+    "AC9M7M05": [
+      {
+        "year": 7,
+        "strand": "Measurement",
+        "conceptual_understanding": "Parallel and intersecting lines have properties that can be used to deduce relationships between the angles formed"
+      }
+    ],
+    "AC9M7M01": [
+      {
+        "year": 7,
+        "strand": "Measurement",
+        "conceptual_understanding": "Measurable attributes of 2-dimensional shapes and 3-dimensional objects can be determined based on the known properties of the shape or solid"
+      }
+    ],
+    "AC9M7M02": [
+      {
+        "year": 7,
+        "strand": "Measurement",
+        "conceptual_understanding": "Measurable attributes of 2-dimensional shapes and 3-dimensional objects can be determined based on the known properties of the shape or solid"
+      }
+    ],
+    "AC9M7M06": [
+      {
+        "year": 7,
+        "strand": "Measurement",
+        "conceptual_understanding": "Measurable attributes of 2-dimensional shapes and 3-dimensional objects can be determined based on the known properties of the shape or solid"
+      }
+    ],
+    "AC9M7M03": [
+      {
+        "year": 7,
+        "strand": "Measurement",
+        "conceptual_understanding": "In any circle, the ratio of the circumference to the diameter is always the same and is represented by the number pi (π)"
+      }
+    ],
+    "AC9M7SP01": [
+      {
+        "year": 7,
+        "strand": "Space",
+        "conceptual_understanding": "Objects can be represented in two-dimensions in different ways"
+      }
+    ],
+    "AC9M7SP02": [
+      {
+        "year": 7,
+        "strand": "Space",
+        "conceptual_understanding": "Shapes can be classified and compared by their geometrical properties"
+      }
+    ],
+    "AC9M7SP04": [
+      {
+        "year": 7,
+        "strand": "Space",
+        "conceptual_understanding": "Shapes can be classified and compared by their geometrical properties"
+      }
+    ],
+    "AC9M7SP03": [
+      {
+        "year": 7,
+        "strand": "Space",
+        "conceptual_understanding": "Geometrical transformations of points and 2-dimensional shapes can be represented on a Cartesian plane"
+      }
+    ],
+    "AC9M7ST02": [
+      {
+        "year": 7,
+        "strand": "Statistics",
+        "conceptual_understanding": "Data can be organised and represented in different ways to inform, justify and persuade conclusions"
+      },
+      {
+        "year": 7,
+        "strand": "Statistics",
+        "conceptual_understanding": "Variation in data can be measured and used to describe and compare data sets"
+      }
+    ],
+    "AC9M7ST03": [
+      {
+        "year": 7,
+        "strand": "Statistics",
+        "conceptual_understanding": "Data can be organised and represented in different ways to inform, justify and persuade conclusions"
+      }
+    ],
+    "AC9M7ST01": [
+      {
+        "year": 7,
+        "strand": "Statistics",
+        "conceptual_understanding": "Variation in data can be measured and used to describe and compare data sets"
+      }
+    ],
+    "AC9M7P01": [
+      {
+        "year": 7,
+        "strand": "Probability",
+        "conceptual_understanding": "Outcomes of events can be described and their likelihood can be measured"
+      }
+    ],
+    "AC9M7P02": [
+      {
+        "year": 7,
+        "strand": "Probability",
+        "conceptual_understanding": "Theoretical probabilities can predict relative frequencies of experimental data"
+      }
+    ],
+    "AC9M8N01": [
+      {
+        "year": 8,
+        "strand": "Number",
+        "conceptual_understanding": "Rational and irrational numbers can be expressed and represented in different forms depending on context and purpose"
+      }
+    ],
+    "AC9M8N03": [
+      {
+        "year": 8,
+        "strand": "Number",
+        "conceptual_understanding": "Rational and irrational numbers can be expressed and represented in different forms depending on context and purpose"
+      }
+    ],
+    "AC9M8N04": [
+      {
+        "year": 8,
+        "strand": "Number",
+        "conceptual_understanding": "Rational and irrational numbers can be expressed and represented in different forms depending on context and purpose"
+      }
+    ],
+    "AC9M8N02": [
+      {
+        "year": 8,
+        "strand": "Number",
+        "conceptual_understanding": "Exponential laws describe patterns in operations involving exponential notation enabling efficient calculations"
+      }
+    ],
+    "AC9M8N05": [
+      {
+        "year": 8,
+        "strand": "Number",
+        "conceptual_understanding": "Mathematical modelling can be used to represent and solve practical problems, including in financial contexts, using rational numbers and percentages"
+      }
+    ],
+    "AC9M8A01": [
+      {
+        "year": 8,
+        "strand": "Algebra",
+        "conceptual_understanding": "Equivalent algebraic expressions and solutions to equations can be determined by applying properties of mathematical operations and numbers"
+      }
+    ],
+    "AC9M8A02": [
+      {
+        "year": 8,
+        "strand": "Algebra",
+        "conceptual_understanding": "Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures"
+      }
+    ],
+    "AC9M8A03": [
+      {
+        "year": 8,
+        "strand": "Algebra",
+        "conceptual_understanding": "Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures"
+      }
+    ],
+    "AC9M8A04": [
+      {
+        "year": 8,
+        "strand": "Algebra",
+        "conceptual_understanding": "Linear relations between two variables can be represented algebraically and graphically, leading to generalised patterns and conjectures"
+      }
+    ],
+    "AC9M8M01": [
+      {
+        "year": 8,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts"
+      }
+    ],
+    "AC9M8M02": [
+      {
+        "year": 8,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts"
+      }
+    ],
+    "AC9M8M03": [
+      {
+        "year": 8,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts"
+      }
+    ],
+    "AC9M8M05": [
+      {
+        "year": 8,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts"
+      }
+    ],
+    "AC9M8M06": [
+      {
+        "year": 8,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts"
+      }
+    ],
+    "AC9M8M07": [
+      {
+        "year": 8,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes such as length, area, volume, rates and angles of 1-, 2- and 3-dimensional objects including irregular and composite shapes can be quantified with appropriate units and used to solve problems in a range of contexts"
+      }
+    ],
+    "AC9M8M04": [
+      {
+        "year": 8,
+        "strand": "Measurement",
+        "conceptual_understanding": "Duration can be quantified using units of time, including 12- and 24-hour time, and compared across different time zones"
+      }
+    ],
+    "AC9M8SP01": [
+      {
+        "year": 8,
+        "strand": "Space",
+        "conceptual_understanding": "Congruency and similarity can be established and used for triangles and other shapes to describe position, location and properties"
+      },
+      {
+        "year": 8,
+        "strand": "Space",
+        "conceptual_understanding": "Comparison of the measure of sides and angles between 2 triangles can establish a relationship of congruence or similarity from which unknown measures can be deduced"
+      }
+    ],
+    "AC9M8SP04": [
+      {
+        "year": 8,
+        "strand": "Space",
+        "conceptual_understanding": "Congruency and similarity can be established and used for triangles and other shapes to describe position, location and properties"
+      }
+    ],
+    "AC9M8SP02": [
+      {
+        "year": 8,
+        "strand": "Space",
+        "conceptual_understanding": "Relationships and properties of congruent and similar triangles can be used to deduce the properties of quadrilaterals"
+      }
+    ],
+    "AC9M8SP03": [
+      {
+        "year": 8,
+        "strand": "Space",
+        "conceptual_understanding": "Position and location of objects in 3 dimensions can be represented using a coordinate system"
+      }
+    ],
+    "AC9M8ST01": [
+      {
+        "year": 8,
+        "strand": "Statistics",
+        "conceptual_understanding": "Valid inferences about populations can be made by drawing conclusions from representative samples"
+      }
+    ],
+    "AC9M8ST04": [
+      {
+        "year": 8,
+        "strand": "Statistics",
+        "conceptual_understanding": "Valid inferences about populations can be made by drawing conclusions from representative samples"
+      }
+    ],
+    "AC9M8ST02": [
+      {
+        "year": 8,
+        "strand": "Statistics",
+        "conceptual_understanding": "A representative sample depends on the nature of the population and the question being considered"
+      }
+    ],
+    "AC9M8ST03": [
+      {
+        "year": 8,
+        "strand": "Statistics",
+        "conceptual_understanding": "A representative sample depends on the nature of the population and the question being considered"
+      }
+    ],
+    "AC9M8P01": [
+      {
+        "year": 8,
+        "strand": "Probability",
+        "conceptual_understanding": "Complementary events in an experiment are mutually exclusive and together cover all possible outcomes"
+      }
+    ],
+    "AC9M8P02": [
+      {
+        "year": 8,
+        "strand": "Probability",
+        "conceptual_understanding": "The sample space for 2 events can be presented diagrammatically in a variety of ways to determine the probabilities of specific outcomes, including compound events"
+      }
+    ],
+    "AC9M8P03": [
+      {
+        "year": 8,
+        "strand": "Probability",
+        "conceptual_understanding": "The sample space for 2 events can be presented diagrammatically in a variety of ways to determine the probabilities of specific outcomes, including compound events"
+      }
+    ],
+    "AC9M9N01": [
+      {
+        "year": 9,
+        "strand": "Number",
+        "conceptual_understanding": "Rational and irrational numbers can be represented in many forms, including on a number line, and can be used to find exact and approximate values"
+      }
+    ],
+    "AC9M9A02": [
+      {
+        "year": 9,
+        "strand": "Algebra",
+        "conceptual_understanding": "The parameters of quadratics and other functions determine the features of the related graph and can be adjusted depending on the purpose, context and application"
+      }
+    ],
+    "AC9M9A04": [
+      {
+        "year": 9,
+        "strand": "Algebra",
+        "conceptual_understanding": "The parameters of quadratics and other functions determine the features of the related graph and can be adjusted depending on the purpose, context and application"
+      }
+    ],
+    "AC9M9A06": [
+      {
+        "year": 9,
+        "strand": "Algebra",
+        "conceptual_understanding": "The parameters of quadratics and other functions determine the features of the related graph and can be adjusted depending on the purpose, context and application"
+      }
+    ],
+    "AC9M9A01": [
+      {
+        "year": 9,
+        "strand": "Algebra",
+        "conceptual_understanding": "Expressions involving exponent notation with integer or variable bases can be simplified or represented differently using the law of exponents"
+      }
+    ],
+    "AC9M9A03": [
+      {
+        "year": 9,
+        "strand": "Algebra",
+        "conceptual_understanding": "On a Cartesian plane, the coordinates of 2 distinct points can be used to determine a range of measures of their orientation in relation to each other"
+      }
+    ],
+    "AC9M9A05": [
+      {
+        "year": 9,
+        "strand": "Algebra",
+        "conceptual_understanding": "Mathematical modelling can be used to represent and solve problems involving changes, including financial contexts"
+      }
+    ],
+    "AC9M9M01": [
+      {
+        "year": 9,
+        "strand": "Measurement",
+        "conceptual_understanding": "Spatial relationships in 1, 2 and 3 dimensions can be quantified using appropriate units to solve problems in various contexts"
+      }
+    ],
+    "AC9M9M02": [
+      {
+        "year": 9,
+        "strand": "Measurement",
+        "conceptual_understanding": "Spatial relationships in 1, 2 and 3 dimensions can be quantified using appropriate units to solve problems in various contexts"
+      }
+    ],
+    "AC9M9M03": [
+      {
+        "year": 9,
+        "strand": "Measurement",
+        "conceptual_understanding": "Spatial relationships in 1, 2 and 3 dimensions can be quantified using appropriate units to solve problems in various contexts"
+      }
+    ],
+    "AC9M9M04": [
+      {
+        "year": 9,
+        "strand": "Measurement",
+        "conceptual_understanding": "Calculations are affected by sources of error and should be interpreted in the context of the problem"
+      }
+    ],
+    "AC9M9M05": [
+      {
+        "year": 9,
+        "strand": "Measurement",
+        "conceptual_understanding": "Mathematical modelling can be used to represent and solve problems involving proportion, rates, ratios and scale, including in financial contexts"
+      }
+    ],
+    "AC9M9SP01": [
+      {
+        "year": 9,
+        "strand": "Space",
+        "conceptual_understanding": "Trigonometric ratios are an application of the property of similarity for right-angled triangles"
+      }
+    ],
+    "AC9M9SP02": [
+      {
+        "year": 9,
+        "strand": "Space",
+        "conceptual_understanding": "Trigonometric ratios are an application of the property of similarity for right-angled triangles"
+      }
+    ],
+    "AC9M9SP03": [
+      {
+        "year": 9,
+        "strand": "Space",
+        "conceptual_understanding": "Trigonometric ratios are an application of the property of similarity for right-angled triangles"
+      }
+    ],
+    "AC9M9ST01": [
+      {
+        "year": 9,
+        "strand": "Statistics",
+        "conceptual_understanding": "Sampling methods can affect and bias the results of data collection"
+      },
+      {
+        "year": 9,
+        "strand": "Statistics",
+        "conceptual_understanding": "Statistical reports provide data and analysis to support conclusions and acknowledge the strength of the evidence"
+      }
+    ],
+    "AC9M9ST02": [
+      {
+        "year": 9,
+        "strand": "Statistics",
+        "conceptual_understanding": "Sampling methods can affect and bias the results of data collection"
+      }
+    ],
+    "AC9M9ST03": [
+      {
+        "year": 9,
+        "strand": "Statistics",
+        "conceptual_understanding": "Different representations of data distributions can be used to compare features such as centre, shape and spread"
+      }
+    ],
+    "AC9M9ST04": [
+      {
+        "year": 9,
+        "strand": "Statistics",
+        "conceptual_understanding": "Different representations of data distributions can be used to compare features such as centre, shape and spread"
+      }
+    ],
+    "AC9M9ST05": [
+      {
+        "year": 9,
+        "strand": "Statistics",
+        "conceptual_understanding": "Statistical reports provide data and analysis to support conclusions and acknowledge the strength of the evidence"
+      }
+    ],
+    "AC9M9P02": [
+      {
+        "year": 9,
+        "strand": "Probability",
+        "conceptual_understanding": "Theoretical probabilities are based on the characteristics of an experiment and can be used to predict relative frequencies of experimental data"
+      }
+    ],
+    "AC9M9P03": [
+      {
+        "year": 9,
+        "strand": "Probability",
+        "conceptual_understanding": "Theoretical probabilities are based on the characteristics of an experiment and can be used to predict relative frequencies of experimental data"
+      },
+      {
+        "year": 9,
+        "strand": "Probability",
+        "conceptual_understanding": "The probability of compound events is related to the probability of the associated simple events and can be calculated in the context of the experiment"
+      }
+    ],
+    "AC9M9P01": [
+      {
+        "year": 9,
+        "strand": "Probability",
+        "conceptual_understanding": "The likelihood of an event occurring can be affected by another event that has already taken place"
+      }
+    ],
+    "AC9M10N01": [
+      {
+        "year": 10,
+        "strand": "Number",
+        "conceptual_understanding": "Using approximations rather than exact values affects the accuracy of results in both single and multiple calculations"
+      }
+    ],
+    "AC9M10A01": [
+      {
+        "year": 10,
+        "strand": "Algebra",
+        "conceptual_understanding": "Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones"
+      }
+    ],
+    "AC9M10A02": [
+      {
+        "year": 10,
+        "strand": "Algebra",
+        "conceptual_understanding": "Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones"
+      }
+    ],
+    "AC9M10A03": [
+      {
+        "year": 10,
+        "strand": "Algebra",
+        "conceptual_understanding": "Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones"
+      }
+    ],
+    "AC9M10A04": [
+      {
+        "year": 10,
+        "strand": "Algebra",
+        "conceptual_understanding": "Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones"
+      }
+    ],
+    "AC9M10A05": [
+      {
+        "year": 10,
+        "strand": "Algebra",
+        "conceptual_understanding": "Relationships between variables can be described and modelled by linear, quadratic and exponential functions applied in many contexts including financial ones"
+      }
+    ],
+    "AC9M10M01": [
+      {
+        "year": 10,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes of 1-, 2- and 3-dimensional objects are described and measured in appropriate standardised units"
+      }
+    ],
+    "AC9M10M02": [
+      {
+        "year": 10,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes of 1-, 2- and 3-dimensional objects are described and measured in appropriate standardised units"
+      }
+    ],
+    "AC9M10M03": [
+      {
+        "year": 10,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes of 1-, 2- and 3-dimensional objects are described and measured in appropriate standardised units"
+      }
+    ],
+    "AC9M10M05": [
+      {
+        "year": 10,
+        "strand": "Measurement",
+        "conceptual_understanding": "Attributes of 1-, 2- and 3-dimensional objects are described and measured in appropriate standardised units"
+      }
+    ],
+    "AC9M10M04": [
+      {
+        "year": 10,
+        "strand": "Measurement",
+        "conceptual_understanding": "Measurement errors impact the accuracy of results"
+      }
+    ],
+    "AC9M10SP01": [
+      {
+        "year": 10,
+        "strand": "Space",
+        "conceptual_understanding": "Situations involving angles, distance and direction can be quantified using geometric properties and theorems"
+      }
+    ],
+    "AC9M10SP02": [
+      {
+        "year": 10,
+        "strand": "Space",
+        "conceptual_understanding": "Situations involving angles, distance and direction can be quantified using geometric properties and theorems"
+      }
+    ],
+    "AC9M10SP03": [
+      {
+        "year": 10,
+        "strand": "Space",
+        "conceptual_understanding": "Situations involving angles, distance and direction can be quantified using geometric properties and theorems"
+      }
+    ],
+    "AC9M10ST02": [
+      {
+        "year": 10,
+        "strand": "Statistics",
+        "conceptual_understanding": "Data can be represented in different ways to establish relationships, while considering accuracy and bias"
+      }
+    ],
+    "AC9M10ST03": [
+      {
+        "year": 10,
+        "strand": "Statistics",
+        "conceptual_understanding": "Data can be represented in different ways to establish relationships, while considering accuracy and bias"
+      }
+    ],
+    "AC9M10ST04": [
+      {
+        "year": 10,
+        "strand": "Statistics",
+        "conceptual_understanding": "Data can be represented in different ways to establish relationships, while considering accuracy and bias"
+      }
+    ],
+    "AC9M10ST05": [
+      {
+        "year": 10,
+        "strand": "Statistics",
+        "conceptual_understanding": "Data can be represented in different ways to establish relationships, while considering accuracy and bias"
+      }
+    ],
+    "AC9M10ST01": [
+      {
+        "year": 10,
+        "strand": "Statistics",
+        "conceptual_understanding": "Claims and inferences based on data should acknowledge ethical considerations and potential sources of bias"
+      }
+    ],
+    "AC9M10P01": [
+      {
+        "year": 10,
+        "strand": "Probability",
+        "conceptual_understanding": "Conditional probability can be described and interpreted for multiple events and applied in real-life contexts"
+      }
+    ],
+    "AC9M10P02": [
+      {
+        "year": 10,
+        "strand": "Probability",
+        "conceptual_understanding": "The likelihood of an event occurring can be affected by another event that has already taken place"
+      }
+    ]
+  }
+}
