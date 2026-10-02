@@ -1,0 +1,261 @@
+{
+ "payload_version": 1,
+ "filename": "y9_mea_02_surface_area_and_volume_of_cylinders_v2.html",
+ "title": "Surface Area and Volume of Cylinders — Year 9",
+ "header": {
+  "title": "Surface Area and Volume of Cylinders",
+  "subtitle": "Unroll the can: from net to formula",
+  "badge": "Year 9 · Measurement"
+ },
+ "meta": {
+  "lesson-id": "y9_mea_02",
+  "lesson-focus": "Apply formulas V = πr²h and SA = 2πr² + 2πrh for a cylinder; derive the curved-surface area by unrolling the cylinder into a rectangle of dimensions 2πr by h; can-cooler material problems.",
+  "ac9-descriptor": "AC9M9M01",
+  "ac9-descriptor-text": "solve problems involving the volume and surface area of right prisms and cylinders using appropriate units",
+  "ac9-elaborations": "1,2",
+  "sa-year": "9",
+  "sa-strand": "Measurement",
+  "mapping-note": "Strict",
+  "sa-conceptual-understanding": "Spatial relationships in 1, 2 and 3 dimensions can be quantified using appropriate units to solve problems in various contexts"
+ },
+ "html": {
+  "section0_intro": "Last lesson you found the surface area of right prisms using nets. A cylinder is a prism-like solid with a circle as its cross-section. These three questions check the skills you need today.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's measurement.</p>\n<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>\n  <div>\n    <p>Your class is raising money by selling foam <strong>can-coolers</strong> at $4 each. Foam costs money, so every cm² wasted cuts into the profit.</p>\n    <p>A can-cooler is a foam sleeve that wraps round a can. To buy the right amount of foam you need to know how much <strong>surface</strong> the sleeve covers, and to know how much drink the can holds you need its <strong>volume</strong>.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    A can is a <strong>cylinder</strong>. Peel the label off and it lies flat as a rectangle. Today you work out why the curved surface is 2π<span class=\"var\">r</span><span class=\"var\">h</span>, and use it with the volume π<span class=\"var\">r</span><sup>2</sup><span class=\"var\">h</span> to cost the fundraiser.\n  </div>\n</div>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Cylinder<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A solid with <strong>two parallel circular ends</strong> and a curved side.<div class='vocab-example'>A can of beans.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Radius and height<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><span class=\"var\">r</span> = distance from the centre of the circle to its edge; <span class=\"var\">h</span> = distance between the two ends.<div class='vocab-example'>Diameter 10 cm means r = 5 cm.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Circumference<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The distance <strong>round</strong> a circle: 2π<span class=\"var\">r</span>.<div class='vocab-example'>r = 3 cm → about 18.8 cm.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Net<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A cylinder cut open and laid flat: <strong>one rectangle and two circles</strong>.<div class='vocab-example'>Peel the label off a tin.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Surface area<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The total area of the faces: 2π<span class=\"var\">r</span><sup>2</sup> + 2π<span class=\"var\">r</span><span class=\"var\">h</span>.<div class='vocab-example'>The foam needed to cover a can.</div></div>\n  </div>\n</div>",
+  "section3_heading": "Flat circle or curved surface?",
+  "section3_desc": "Drag each piece into <strong>⚪ Flat circular face</strong> or <strong>▭ Curved surface</strong>.",
+  "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Sort each piece of a cylinder</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='flat'>The circular <strong>top lid</strong></span>\n    <span class='term-chip variable' data-type='curved'>The paper <strong>label</strong> wrapped round a tin</span>\n    <span class='term-chip constant' data-type='flat'>π<span class=\"var\">r</span><sup>2</sup></span>\n    <span class='term-chip variable' data-type='curved'>2π<span class=\"var\">r</span><span class=\"var\">h</span></span>\n    <span class='term-chip constant' data-type='flat'>The <strong>base</strong> of a can</span>\n    <span class='term-chip variable' data-type='curved'>The <strong>side wall</strong> of a can</span>\n    <span class='term-chip variable' data-type='curved'>A rectangle 2π<span class=\"var\">r</span> long and <span class=\"var\">h</span> wide</span>\n    <span class='term-chip constant' data-type='flat'>A circle of radius <span class=\"var\">r</span></span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='flat'>\n      <h4 style='color:var(--navy)'>⚪ Flat circular face</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='curved'>\n      <h4 style='color:var(--coral)'>▭ Curved surface</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 A cylinder has <strong>two</strong> flat circles (area π<span class=\"var\">r</span><sup>2</sup> each) and <strong>one</strong> curved surface that unrolls into a rectangle.\n</div>",
+  "section4_heading": "Match each part to its formula",
+  "section6_heading": "We do: a tin of soup",
+  "worked_example": "<p class='sec-desc'>A tin of tomatoes has radius <strong>3 cm</strong> and height <strong>10 cm</strong>. Find its volume and its total surface area, as multiples of π.</p>\n<svg viewBox=\"0 -14 215 149\" width=\"190\" role=\"img\" aria-label=\"Cylinder with radius 3 cm and height 10 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 3 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 10 cm</text></svg>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Name the pieces</div>\n      <div class='step-desc'>Write down <span class=\"var\">r</span> and <span class=\"var\">h</span> (halve the diameter if you are given it).</div>\n      <div class='calc-box'><span class='blue'>r = 3 cm</span>, <span class='red'>h = 10 cm</span><br>Base area = π<span class=\"var\">r</span><sup>2</sup> = π × 3<sup>2</sup> = 9π cm²</div>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Volume = base area × height</div>\n      <div class='step-desc'>Same idea as a prism: the cross-section is a circle.</div>\n      <div class='calc-box'>V = π<span class='var'>r</span><sup>2</sup><span class='var'>h</span> = 9π × 10 = <span class='red'>90π cm³</span></div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Surface area = two ends + curved surface</div>\n      <div class='step-desc'>The curved surface is the rectangle 2π<span class=\"var\">r</span> by <span class=\"var\">h</span>.</div>\n      <div class='calc-box'>Two ends: 2 × 9π = 18π<br>Curved: 2π × 3 × 10 = 60π<br>Total = 18π + 60π</div>\n      <div class='summary-banner'>\n        <span class='label'>Answer</span>\n        V = 90π cm³ ≈ 283 cm³ &nbsp;·&nbsp; SA = 78π cm² ≈ 245 cm²\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+  "we_do_intro": "Now a tin together. Work through each prompt with a partner, leave π in your answers, then we check as a class.",
+  "footer_title": "Surface Area and Volume of Cylinders",
+  "strategy_section": "<style>\n  .proof-stage { background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:12px; margin-bottom:14px; }\n  .proof-stage svg { width:100%; height:auto; display:block; max-height:420px; }\n  .proof-layer { opacity:0; transition:opacity .6s ease-in-out; }\n  .proof-layer.visible { opacity:1; }\n  .proof-narration { background:var(--hint-bg); border-left:4px solid var(--navy); padding:14px 18px; border-radius:6px; margin-bottom:14px; min-height:60px; }\n  .proof-narration .step-label { font-size:.72rem; text-transform:uppercase; letter-spacing:1px; color:var(--muted); font-weight:700; }\n  .proof-narration .step-text { font-family:Georgia,serif; color:var(--navy); font-size:1.05rem; margin-top:4px; }\n  .proof-controls { display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; }\n  .proof-controls button { background:var(--coral); color:#fff; border:none; padding:9px 18px; border-radius:8px; font-size:.92rem; font-weight:600; cursor:pointer; }\n  .proof-controls button.secondary { background:#fff; color:var(--navy); border:1.5px solid var(--navy); }\n  .proof-controls button:disabled { opacity:.4; cursor:not-allowed; }\n  .proof-progress { font-size:.85rem; color:var(--muted); }\n</style>\n<section class=\"lesson\">\n  <h2><span class=\"sec-num\">★</span>Unroll the cylinder: why is the curved surface 2π<span class=\"var\">r</span><span class=\"var\">h</span>?</h2>\n  <p class=\"sec-desc\">Click <strong>Next</strong> to cut the can open, flatten it, and watch the formula appear.</p>\n  <div class=\"proof-narration\">\n    <div class=\"step-label\">Step <span id=\"proofStepNum\">1</span> of <span id=\"proofStepTotal\">5</span></div>\n    <div class=\"step-text\" id=\"proofStepText\"></div>\n  </div>\n  <div class=\"proof-stage\">\n    <svg viewBox=\"0 0 640 340\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"A cylinder is cut open and unrolled into a rectangle with two circles attached\">\n      <g class=\"proof-layer visible\" data-step=\"1\">\n        <path d=\"M60 110 L60 230 A60 18 0 0 0 180 230 L180 110\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2.5\"/>\n        <ellipse cx=\"120\" cy=\"110\" rx=\"60\" ry=\"18\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2.5\"/>\n        <line x1=\"120\" y1=\"110\" x2=\"180\" y2=\"110\" stroke=\"#BE5837\" stroke-width=\"2.5\"/>\n        <text x=\"152\" y=\"102\" font-size=\"17\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r</text>\n        <line x1=\"200\" y1=\"110\" x2=\"200\" y2=\"230\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n        <text x=\"210\" y=\"176\" font-size=\"17\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h</text>\n      </g>\n      <g class=\"proof-layer\" data-step=\"2\">\n        <line x1=\"180\" y1=\"110\" x2=\"180\" y2=\"230\" stroke=\"#BE5837\" stroke-width=\"3\" stroke-dasharray=\"6 4\"/>\n        <text x=\"120\" y=\"290\" font-size=\"14\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">cut along the seam</text>\n        <path d=\"M232 170 L276 170\" stroke=\"#1F4D54\" stroke-width=\"3\" fill=\"none\"/><polygon points=\"276,162 292,170 276,178\" fill=\"#1F4D54\"/>\n        <rect x=\"310\" y=\"110\" width=\"300\" height=\"120\" fill=\"#fbe9e1\" stroke=\"#BE5837\" stroke-width=\"2.5\"/>\n      </g>\n      <g class=\"proof-layer\" data-step=\"3\">\n        <line x1=\"310\" y1=\"250\" x2=\"610\" y2=\"250\" stroke=\"#BE5837\" stroke-width=\"2\"/><line x1=\"310\" y1=\"244\" x2=\"310\" y2=\"256\" stroke=\"#BE5837\" stroke-width=\"2\"/><line x1=\"610\" y1=\"244\" x2=\"610\" y2=\"256\" stroke=\"#BE5837\" stroke-width=\"2\"/>\n        <text x=\"460\" y=\"274\" font-size=\"20\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">length = 2π<tspan font-style=\"italic\">r</tspan> (once round the circle)</text>\n        <line x1=\"626\" y1=\"110\" x2=\"626\" y2=\"230\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n        <text x=\"622\" y=\"100\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"end\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h</text>\n      </g>\n      <g class=\"proof-layer\" data-step=\"4\">\n        <rect x=\"360\" y=\"148\" width=\"200\" height=\"44\" rx=\"8\" fill=\"#fff\" stroke=\"#BE5837\" stroke-width=\"2\"/>\n        <text x=\"460\" y=\"177\" font-size=\"20\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">Area = 2π<tspan font-style=\"italic\">r</tspan> × <tspan font-style=\"italic\">h</tspan> = 2π<tspan font-style=\"italic\">rh</tspan></text>\n      </g>\n      <g class=\"proof-layer\" data-step=\"5\">\n        <circle cx=\"530\" cy=\"62\" r=\"40\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n        <text x=\"530\" y=\"68\" font-size=\"16\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">π<tspan font-style=\"italic\">r</tspan>²</text>\n        <circle cx=\"390\" cy=\"62\" r=\"40\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n        <text x=\"390\" y=\"68\" font-size=\"16\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">π<tspan font-style=\"italic\">r</tspan>²</text>\n        <rect x=\"20\" y=\"300\" width=\"600\" height=\"34\" rx=\"8\" fill=\"#1F4D54\"/>\n        <text x=\"320\" y=\"323\" font-size=\"18\" fill=\"#fff\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">SA = 2π<tspan font-style=\"italic\">r</tspan>² + 2π<tspan font-style=\"italic\">rh</tspan>   (two circles + the rectangle)</text>\n      </g>\n    </svg>\n  </div>\n  <div class=\"proof-controls\">\n    <button class=\"secondary\" onclick=\"proofPrev()\" id=\"proofPrev\" disabled>← Back</button>\n    <span class=\"proof-progress\" id=\"proofProgress\">Step 1 / 5</span>\n    <button onclick=\"proofNext()\" id=\"proofNext\">Next →</button>\n    <button class=\"secondary\" onclick=\"proofRestart()\">↺ Restart</button>\n  </div>\n</section>",
+  "strategy_js": "const proofSteps = [\n  \"Here is a cylinder with radius r and height h. Imagine it is a can with a paper label.\",\n  \"Cut the label along the seam, straight down the side, and unroll it. The curved surface flattens into a rectangle.\",\n  \"The rectangle is h tall. Its length is the distance once round the circular end, which is the circumference, 2πr.\",\n  \"So the curved surface area is length × height = 2πr × h = 2πrh.\",\n  \"A closed cylinder also has two circular ends, each πr². Total surface area = 2πr² + 2πrh.\"\n];\nlet proofCurrentStep = 1;\nfunction proofShowStep(n) {\n  proofCurrentStep = Math.max(1, Math.min(5, n));\n  document.querySelectorAll('.proof-layer').forEach(g => {\n    g.classList.toggle('visible', parseInt(g.dataset.step, 10) <= proofCurrentStep);\n  });\n  document.getElementById('proofStepNum').textContent = proofCurrentStep;\n  document.getElementById('proofStepText').textContent = proofSteps[proofCurrentStep - 1];\n  document.getElementById('proofProgress').textContent = 'Step ' + proofCurrentStep + ' / 5';\n  document.getElementById('proofPrev').disabled = (proofCurrentStep === 1);\n  document.getElementById('proofNext').disabled = (proofCurrentStep === 5);\n}\nfunction proofNext() { proofShowStep(proofCurrentStep + 1); }\nfunction proofPrev() { proofShowStep(proofCurrentStep - 1); }\nfunction proofRestart() { proofShowStep(1); }\nproofShowStep(1);"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "A circle has radius 5 cm. Its area is A = π<span class=\"var\">r</span><sup>2</sup> = ___π cm². Type the number in front of π.",
+    "a": "25",
+    "hint": "Area of a circle is π × r × r, so the number in front of π is 5 × 5."
+   },
+   {
+    "q": "A rectangular prism has a base area of 12 cm² and a height of 5 cm. What is its volume in cm³?",
+    "a": "60",
+    "hint": "Volume of a prism = base area × height."
+   },
+   {
+    "q": "What is the total surface area of a cube with side length 3 cm, in cm²?",
+    "a": "54",
+    "hint": "A cube has 6 identical square faces."
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "Area of <strong>one circular end</strong>",
+    "group": 1
+   },
+   {
+    "html": "π<span class=\"var\">r</span><sup>2</sup>",
+    "group": 1
+   },
+   {
+    "html": "<strong>Length</strong> of the unrolled curved surface",
+    "group": 2
+   },
+   {
+    "html": "2π<span class=\"var\">r</span> (the circumference)",
+    "group": 2
+   },
+   {
+    "html": "<strong>Curved surface</strong> area",
+    "group": 3
+   },
+   {
+    "html": "2π<span class=\"var\">r</span><span class=\"var\">h</span>",
+    "group": 3
+   },
+   {
+    "html": "<strong>Volume</strong> of a cylinder",
+    "group": 4
+   },
+   {
+    "html": "π<span class=\"var\">r</span><sup>2</sup><span class=\"var\">h</span> (base area × height)",
+    "group": 4
+   },
+   {
+    "html": "<strong>Total surface area</strong>",
+    "group": 5
+   },
+   {
+    "html": "2π<span class=\"var\">r</span><sup>2</sup> + 2π<span class=\"var\">r</span><span class=\"var\">h</span>",
+    "group": 5
+   }
+  ],
+  "weDo": [
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 5 cm and height 12 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 5 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 12 cm</text></svg>A tin has radius 5 cm and height 12 cm. Area of <strong>one</strong> circular end: ___π cm². Give your answer as a multiple of π: type just the number in front of π.",
+    "a": "25",
+    "hint": "Area of the circular end = πr², with r = 5."
+   },
+   {
+    "q": "Volume of the same tin: ___π cm³ (base area × height).",
+    "a": "300",
+    "hint": "Volume = base area × height = 25π × 12."
+   },
+   {
+    "q": "Total surface area of the tin (two ends <strong>and</strong> the curved surface): ___π cm².",
+    "a": "170",
+    "hint": "Two ends: 2 × 25π = 50π. Curved surface: 2π × 5 × 12 = 120π. Add them."
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "Volume of a cylinder with r = 2 cm, h = 7 cm: ___π cm³.",
+    "a": "28",
+    "hint": "V = πr²h = π × 2² × 7 = π × 4 × 7.",
+    "fb": {
+     "14": "You have not squared the radius: πr² means π × r × r."
+    }
+   },
+   {
+    "q": "Curved surface area of a cylinder with r = 3 cm, h = 5 cm: ___π cm². (Curved surface only: no ends.)",
+    "a": "30",
+    "hint": "Curved surface = 2πrh = 2π × 3 × 5."
+   }
+  ],
+  "practice1": [
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 3 cm and height 4 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 3 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 4 cm</text></svg>Volume: ___π cm³. Give your answer as a multiple of π: type just the number in front of π.",
+    "a": "36",
+    "hint": "V = πr²h = π × 9 × 4.",
+    "fb": {
+     "12": "You multiplied r × h. Square the radius first: r² = 3 × 3 = 9."
+    }
+   },
+   {
+    "q": "A cylinder has r = 5 cm and h = 2 cm. Volume: ___π cm³.",
+    "a": "50",
+    "hint": "π × 5² × 2 = π × 25 × 2."
+   },
+   {
+    "q": "A cylinder has r = 1 cm and h = 9 cm. Volume: ___π cm³.",
+    "a": "9",
+    "hint": "r² = 1, so V = π × 1 × 9."
+   },
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 2 cm and height 6 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 2 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 6 cm</text></svg>Curved surface area: ___π cm². (No ends.)",
+    "a": "24",
+    "hint": "2πrh = 2π × 2 × 6."
+   },
+   {
+    "q": "Curved surface area of a cylinder with r = 4 cm, h = 5 cm: ___π cm².",
+    "a": "40",
+    "hint": "2π × 4 × 5."
+   },
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 1 cm and height 3 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 1 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 3 cm</text></svg>Total surface area (with both ends): ___π cm².",
+    "a": "8",
+    "hint": "Ends: 2 × π × 1² = 2π. Curved: 2π × 1 × 3 = 6π. Add.",
+    "fb": {
+     "6": "That is only the curved surface. Add the two circular ends (2πr²) as well."
+    }
+   },
+   {
+    "q": "Total surface area of a closed cylinder with r = 3 cm, h = 2 cm: ___π cm².",
+    "a": "30",
+    "hint": "Ends: 2π × 9 = 18π. Curved: 2π × 3 × 2 = 12π."
+   },
+   {
+    "q": "Volume of a cylinder with r = 10 cm and h = 3 cm: ___π cm³.",
+    "a": "300",
+    "hint": "π × 10² × 3 = π × 100 × 3."
+   },
+   {
+    "q": "A cylinder has <strong>diameter</strong> 8 cm and height 5 cm. Volume: ___π cm³.",
+    "a": "80",
+    "hint": "Diameter 8 means radius 4. Then π × 4² × 5.",
+    "fb": {
+     "320": "8 is the diameter. Halve it to get r = 4 before squaring."
+    }
+   },
+   {
+    "q": "Use π = 3.14. A cylinder has r = 10 cm and h = 5 cm. Volume in cm³ (type a number).",
+    "a": "1570",
+    "hint": "3.14 × 10 × 10 × 5."
+   }
+  ],
+  "practice2": [
+   {
+    "q": "A cylinder has diameter 12 cm and height 10 cm. Volume: ___π cm³.",
+    "a": "360",
+    "hint": "Radius is half of 12 = 6. V = π × 36 × 10."
+   },
+   {
+    "q": "A cylinder with radius 5 cm has volume 200π cm³. What is its height in cm?",
+    "a": "8",
+    "hint": "200π = π × 25 × h, so h = 200 ÷ 25."
+   },
+   {
+    "q": "A cylinder with height 3 cm has volume 48π cm³. What is its radius in cm?",
+    "a": "4",
+    "hint": "48π = π × r² × 3, so r² = 16."
+   },
+   {
+    "q": "A cylinder has radius 5 cm and curved surface area 60π cm². What is its height in cm?",
+    "a": "6",
+    "hint": "Curved surface = 2π × 5 × h = 10πh = 60π."
+   },
+   {
+    "q": "Use π = 22/7. A cylinder has r = 7 cm and h = 10 cm. Volume in cm³ (type a number).",
+    "a": "1540",
+    "hint": "22/7 × 49 × 10. The 7 cancels with 49."
+   },
+   {
+    "q": "Cylinder A has r = 2 cm, h = 9 cm. Cylinder B has r = 3 cm, h = 5 cm. Which has the greater volume? Type A or B.",
+    "a": "B",
+    "hint": "A: π × 4 × 9 = 36π. B: π × 9 × 5 = 45π."
+   }
+  ],
+  "practice3": [
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 4 cm and height 12 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 4 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 12 cm</text></svg><strong>Can-cooler.</strong> A foam sleeve wraps a can (r = 4 cm, h = 12 cm), open at both ends. Use π = 3.14. Area of foam in cm²?",
+    "a": "301.44",
+    "hint": "Open-ended sleeve: curved surface only. 2 × 3.14 × 4 × 12."
+   },
+   {
+    "q": "The class fundraiser makes 50 sleeves, each r = 5 cm and h = 10 cm. Foam costs $0.02 per cm². Use π = 3.14. Total foam cost in dollars (type a number)?",
+    "a": "314",
+    "hint": "One sleeve: 2 × 3.14 × 5 × 10 = 314 cm². Then × $0.02 × 50."
+   },
+   {
+    "q": "Unrolled, the curved surface of a cylinder is a rectangle 37.68 cm long. Use π = 3.14. What is the radius in cm?",
+    "a": "6",
+    "hint": "The curved surface unrolls into a rectangle of length 2πr. So 2 × 3.14 × r = 37.68."
+   },
+   {
+    "q": "A closed cylinder has r = 3 cm and total surface area 60π cm². What is its height in cm?",
+    "a": "7",
+    "hint": "18π + 6πh = 60π, so 6h = 42."
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "Total surface area of a closed cylinder with r = 2 cm, h = 5 cm: ___π cm².",
+    "a": "28",
+    "hint": "Ends: 2 × π × 4 = 8π. Curved: 2π × 2 × 5 = 20π."
+   },
+   {
+    "q": "True or false: the curved surface of a cylinder unrolls into a rectangle. Type true or false.",
+    "a": "true",
+    "hint": "Cut along the seam and flatten it."
+   },
+   {
+    "q": "In your own words: why is the length of the unrolled rectangle equal to 2π<span class=\"var\">r</span>?",
+    "a": "TEXT",
+    "hint": "Think about wrapping the rectangle round the circular end: how far round is it?"
+   }
+  ]
+ }
+}
