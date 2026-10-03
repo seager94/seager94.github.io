@@ -1,0 +1,345 @@
+{
+ "payload_version": 1,
+ "filename": "y9_mea_04_introducing_scientific_notation_v2.html",
+ "title": "Introducing Scientific Notation — Year 9",
+ "header": {
+  "title": "Introducing Scientific Notation",
+  "subtitle": "From the age of the Earth to a sugar molecule: a × 10ⁿ",
+  "badge": "Year 9 · Measurement"
+ },
+ "meta": {
+  "lesson-id": "y9_mea_04",
+  "lesson-focus": "Convert numbers between standard form and scientific notation a × 10ⁿ where 1 ≤ a < 10; represent very large quantities (4.6 × 10⁹ for the age of the Earth) and very small ones (5.68 × 10⁻²¹ for the mass of a sugar molecule); connect to SI prefixes from pico- to tera-.",
+  "ac9-descriptor": "AC9M9M02, AC9M9A01",
+  "ac9-descriptor-text": "solve problems involving very small and very large measurements, time scales and intervals expressed in scientific notation (AC9M9M02); apply the exponent laws to numerical expressions with integer exponents and extend to variables (AC9M9A01)",
+  "ac9-elaborations": "1 (M02); 7 (A01)",
+  "sa-year": "9",
+  "sa-strand": "Measurement",
+  "mapping-note": "Strict + cross-tag",
+  "sa-conceptual-understanding": "Spatial relationships in 1, 2 and 3 dimensions can be quantified using appropriate units to solve problems in various contexts"
+ },
+ "html": {
+  "section0_intro": "Last unit you used the index laws with powers of ten and met negative indices. These three questions check the skills you need today.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's maths.</p>\n<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>\n  <div>\n    <p>Geologists say the Earth is about <strong>4 600 000 000</strong> years old. Chemists say one sugar molecule has a mass of <strong>0.000 000 000 000 000 000 005 68</strong> grams.</p>\n    <p>Money gets huge too: the Australian Government spends roughly <strong>$700 000 000 000</strong> a year. Count those zeros wrong once and a budget is out by a factor of ten.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    <strong>Scientific notation</strong> writes every number as <span class=\"var\">a</span> × 10<sup><span class=\"var\">n</span></sup>, with 1 ≤ <span class=\"var\">a</span> &lt; 10. The age of the Earth becomes 4.6 × 10<sup>9</sup> and the sugar molecule becomes 5.68 × 10<sup>−21</sup>. The power of ten tells you the size at a glance.\n  </div>\n</div>\n<svg viewBox=\"0 0 640 160\" width=\"100%\" style=\"max-width:640px;display:block;margin:12px auto 0\" role=\"img\" aria-label=\"Powers of ten number line from ten to the minus 21 up to ten to the 12, with a sugar molecule mass at the left end and the age of the Earth and a government budget near the right end\"><line x1=\"30\" y1=\"86\" x2=\"610\" y2=\"86\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"30.0\" y1=\"80\" x2=\"30.0\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"30.0\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">−21</tspan></text><line x1=\"82.7\" y1=\"80\" x2=\"82.7\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"82.7\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">−18</tspan></text><line x1=\"135.5\" y1=\"80\" x2=\"135.5\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"135.5\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">−15</tspan></text><line x1=\"188.2\" y1=\"80\" x2=\"188.2\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"188.2\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">−12</tspan></text><line x1=\"240.9\" y1=\"80\" x2=\"240.9\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"240.9\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">−9</tspan></text><line x1=\"293.6\" y1=\"80\" x2=\"293.6\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"293.6\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">−6</tspan></text><line x1=\"346.4\" y1=\"80\" x2=\"346.4\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"346.4\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">−3</tspan></text><line x1=\"399.1\" y1=\"80\" x2=\"399.1\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"399.1\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">10<tspan dy=\"-6\" font-size=\"8\">0</tspan></text><line x1=\"451.8\" y1=\"80\" x2=\"451.8\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"451.8\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">3</tspan></text><line x1=\"504.5\" y1=\"80\" x2=\"504.5\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"504.5\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">6</tspan></text><line x1=\"557.3\" y1=\"80\" x2=\"557.3\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"557.3\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">9</tspan></text><line x1=\"610.0\" y1=\"80\" x2=\"610.0\" y2=\"92\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"610.0\" y=\"110\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"8\">12</tspan></text><circle cx=\"43.3\" cy=\"86\" r=\"5\" fill=\"#BE5837\"/><circle cx=\"568.9\" cy=\"86\" r=\"5\" fill=\"#BE5837\"/><circle cx=\"607.0\" cy=\"86\" r=\"5\" fill=\"#1F4D54\"/><line x1=\"43.3\" y1=\"80\" x2=\"43.3\" y2=\"44\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"37.3\" y=\"38\" font-size=\"12\" fill=\"#BE5837\" font-family=\"Georgia,serif\">Sugar molecule: 5.68 × 10<tspan dy=\"-6\" font-size=\"8\">−21</tspan><tspan dy=\"6\"> g</tspan></text><line x1=\"568.9\" y1=\"80\" x2=\"568.9\" y2=\"50\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"572.9\" y=\"44\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"end\" font-family=\"Georgia,serif\">Age of Earth: 4.6 × 10<tspan dy=\"-6\" font-size=\"8\">9</tspan><tspan dy=\"6\"> years</tspan></text><line x1=\"607.0\" y1=\"80\" x2=\"607.0\" y2=\"24\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"611.0\" y=\"18\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"end\" font-family=\"Georgia,serif\">Budget: about $7 × 10<tspan dy=\"-6\" font-size=\"8\">11</tspan></text><text x=\"320\" y=\"148\" font-size=\"12\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">Each step along the line multiplies by 1000</text></svg>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Scientific notation<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A number written as <span class=\"var\">a</span> × 10<sup><span class=\"var\">n</span></sup> where 1 ≤ <span class=\"var\">a</span> &lt; 10 and <span class=\"var\">n</span> is an integer.<div class='vocab-example'>4.6 × 10<sup>9</sup></div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Coefficient <span class=\"var\">a</span><div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The front number. It must be <strong>at least 1 and less than 10</strong>: exactly one non-zero digit before the point.<div class='vocab-example'>5.68 is fine; 56.8 and 0.568 are not.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Power of ten<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>10<sup><span class=\"var\">n</span></sup>. A <strong>positive</strong> <span class=\"var\">n</span> means a big number; a <strong>negative</strong> <span class=\"var\">n</span> means a number between 0 and 1.<div class='vocab-example'>10<sup>3</sup> = 1000; 10<sup>−3</sup> = 0.001</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Standard (decimal) form<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The ordinary way of writing a number, with all its digits and zeros shown.<div class='vocab-example'>52 000 is the decimal form of 5.2 × 10<sup>4</sup>.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>SI prefix<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A word in front of a unit that multiplies it by a power of ten, from pico (10<sup>−12</sup>) to tera (10<sup>12</sup>).<div class='vocab-example'>1 kilometre = 10<sup>3</sup> m; 1 nanometre = 10<sup>−9</sup> m</div></div>\n  </div>\n</div>",
+  "section3_heading": "Is it in scientific notation?",
+  "section3_desc": "Drag each number into <strong>✅ Scientific notation</strong> or <strong>❌ Not scientific notation</strong>.",
+  "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Check each number: is the front number between 1 and 10, times a power of ten?</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='yes'>4.6 × 10<sup>9</sup></span>\n    <span class='term-chip variable' data-type='no'>46 × 10<sup>8</sup></span>\n    <span class='term-chip constant' data-type='yes'>1 × 10<sup>−4</sup></span>\n    <span class='term-chip variable' data-type='no'>0.5 × 10<sup>3</sup></span>\n    <span class='term-chip constant' data-type='yes'>9.99 × 10<sup>12</sup></span>\n    <span class='term-chip variable' data-type='no'>10 × 10<sup>5</sup></span>\n    <span class='term-chip constant' data-type='yes'>5.68 × 10<sup>−21</sup></span>\n    <span class='term-chip variable' data-type='no'>7.1 × 2<sup>3</sup></span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='yes'>\n      <h4 style='color:var(--navy)'>✅ Scientific notation</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='no'>\n      <h4 style='color:var(--coral)'>❌ Not scientific notation</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 Two tests: the front number <span class=\"var\">a</span> must satisfy 1 ≤ <span class=\"var\">a</span> &lt; 10, and it must be multiplied by a power of <strong>ten</strong>. Note that 46 × 10<sup>8</sup> has the right value but the wrong form.\n</div>",
+  "section4_heading": "Match each SI prefix to its power of ten",
+  "section6_heading": "We do: the mass of a sugar molecule",
+  "we_do_intro": "A sugar molecule has a mass of <strong>0.000 000 000 000 000 000 005 68 g</strong>. Work through each prompt with a partner, then we check as a class.",
+  "footer_title": "Introducing Scientific Notation",
+  "worked_example": "<p class='sec-desc'>The Earth is about <strong>4 600 000 000</strong> years old. Write this in scientific notation.</p>\n<svg viewBox=\"0 0 440 160\" width=\"100%\" style=\"max-width:440px;display:block;margin:8px 0 14px\" role=\"img\" aria-label=\"The digits of 4 600 000 000 in boxes, with nine arrows showing the decimal point hopping from the end of the number to just after the 4\"><text x=\"210\" y=\"16\" font-size=\"13\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">The point hops 9 places left, so the power is 9</text><rect x=\"40\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f5d8cb\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"57.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">4</text><rect x=\"74\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"91.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">6</text><rect x=\"108\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"125.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><rect x=\"142\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"159.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><rect x=\"176\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"193.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><rect x=\"210\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"227.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><rect x=\"244\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"261.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><rect x=\"278\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"295.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><rect x=\"312\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"329.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><rect x=\"346\" y=\"72\" width=\"34\" height=\"38\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"363.0\" y=\"98\" font-size=\"18\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0</text><path d=\"M380 70 Q363.0 46 346 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"363.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">1</text><path d=\"M346 70 Q329.0 46 312 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"329.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">2</text><path d=\"M312 70 Q295.0 46 278 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"295.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">3</text><path d=\"M278 70 Q261.0 46 244 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"261.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">4</text><path d=\"M244 70 Q227.0 46 210 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"227.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">5</text><path d=\"M210 70 Q193.0 46 176 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"193.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">6</text><path d=\"M176 70 Q159.0 46 142 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"159.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">7</text><path d=\"M142 70 Q125.0 46 108 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"125.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">8</text><path d=\"M108 70 Q91.0 46 74 70\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.5\"/><text x=\"91.0\" y=\"54\" font-size=\"11\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\">9</text><circle cx=\"380\" cy=\"106\" r=\"3.5\" fill=\"#9aa3ad\"/><circle cx=\"74\" cy=\"106\" r=\"4.5\" fill=\"#BE5837\"/><text x=\"210\" y=\"146\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">4 600 000 000 = 4.6 × 10<tspan dy=\"-6\" font-size=\"10\">9</tspan></text></svg>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Find the coefficient <span class=\"var\">a</span></div>\n      <div class='step-desc'>Put the decimal point just after the first non-zero digit, so 1 ≤ <span class=\"var\">a</span> &lt; 10. Drop the trailing zeros.</div>\n      <div class='calc-box'>4 600 000 000 → <span class='blue'><span class=\"var\">a</span> = 4.6</span></div>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Count the places the point moves</div>\n      <div class='step-desc'>The point starts at the end of the whole number and hops left to sit after the 4. Count every hop, not just the zeros.</div>\n      <div class='calc-box'>9 hops left. The number is <strong>big</strong> (10 or more), so the power is <span class='red'>positive: <span class=\"var\">n</span> = 9</span></div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Write <span class=\"var\">a</span> × 10<sup><span class=\"var\">n</span></sup> and check</div>\n      <div class='step-desc'>Multiplying by 10<sup>9</sup> moves the point back 9 places right, so we return to the original number. Small numbers work the same way with a negative power: 0.000 72 = 7.2 × 10<sup>−4</sup> (4 hops right).</div>\n      <div class='calc-box'>4.6 × 10<sup>9</sup> = 4.6 × 1 000 000 000 = 4 600 000 000 ✓</div>\n      <div class='summary-banner'>\n        <span class='label'>Answer</span>\n        4 600 000 000 = 4.6 × 10<sup>9</sup> years\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+  "strategy_section": "<style>\n  section.lesson.hinge { background: #f7faff; border-left: 5px solid var(--navy); }\n  .hinge-tag { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; background: var(--navy); color: white; white-space: nowrap; }\n  .hinge-stem { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; font-family: Georgia, serif; font-size: 1.25rem; color: var(--navy); margin-bottom: 18px; box-shadow: var(--shadow); }\n  .hinge-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }\n  .hinge-opt { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 18px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; font-family: Georgia, serif; font-size: 1.1rem; text-align: left; }\n  .hinge-opt:hover { border-color: var(--navy); transform: translateY(-1px); }\n  .hinge-opt .opt-letter { background: var(--hint-bg); color: var(--navy); width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-weight: 700; flex-shrink: 0; }\n  .hinge-opt.selected.correct { background: var(--good-soft); border-color: var(--good); }\n  .hinge-opt.selected.correct .opt-letter { background: var(--good); color: white; }\n  .hinge-opt.selected.incorrect { background: var(--bad-soft); border-color: var(--bad); }\n  .hinge-opt.selected.incorrect .opt-letter { background: var(--bad); color: white; }\n  .hinge-opt.dimmed { opacity: 0.45; cursor: not-allowed; }\n  .hinge-feedback { margin-top: 18px; padding: 14px 18px; border-radius: 8px; font-size: 0.95rem; display: none; }\n  .hinge-feedback.visible { display: block; }\n  .hinge-feedback.correct { background: var(--good-soft); color: #1d4a30; border-left: 4px solid var(--good); }\n  .hinge-feedback.incorrect { background: var(--bad-soft); color: #6a2520; border-left: 4px solid var(--bad); }\n  .hinge-reset { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; margin-top: 12px; }\n  body.teacher-mode .hinge-opt.correct-answer { box-shadow: 0 0 0 3px var(--good); }\n</style>\n<section class=\"lesson hinge\">\n  <h2>\n    <span class=\"sec-num\">★</span>Hinge check\n    <span class=\"hinge-tag\">🎯 Pick one</span>\n  </h2>\n  <p class=\"sec-desc\">Before the exit ticket: one question, four answers. Each wrong answer comes from a different mistake.</p>\n  <div class=\"hinge-stem expr\">Which is 0.000 38 written in scientific notation?</div>\n  <div class=\"hinge-options\" id=\"hingeOpts\">\n    <button class=\"hinge-opt\" data-feedback-id=\"hfb-A\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">A</span><span>3.8 × 10<sup>4</sup></span></button>\n    <button class=\"hinge-opt correct-answer\" data-correct=\"true\" data-feedback-id=\"hfb-B\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">B</span><span>3.8 × 10<sup>−4</sup></span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"hfb-C\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">C</span><span>38 × 10<sup>−5</sup></span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"hfb-D\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">D</span><span>3.8 × 10<sup>−3</sup></span></button>\n  </div>\n  <div class=\"hinge-feedback incorrect\" id=\"hfb-A\"><strong>Check the sign of the power.</strong> 3.8 × 10<sup>4</sup> = 38 000, a big number. 0.000 38 is less than 1, so its power of ten must be negative.</div>\n  <div class=\"hinge-feedback correct\" id=\"hfb-B\"><strong>Correct.</strong> The point hops 4 places right to sit after the 3, giving <span class=\"var\">a</span> = 3.8. The number is less than 1, so the power is −4. Check: 3.8 ÷ 10 000 = 0.000 38.</div>\n  <div class=\"hinge-feedback incorrect\" id=\"hfb-C\"><strong>Right value, wrong form.</strong> 38 × 10<sup>−5</sup> does equal 0.000 38, but 38 is not between 1 and 10. Move one more place to get <span class=\"var\">a</span> = 3.8, and the power goes up by 1.</div>\n  <div class=\"hinge-feedback incorrect\" id=\"hfb-D\"><strong>You counted the zeros, not the hops.</strong> There are 3 zeros after the point, but the point must hop past the 3 as well, which makes 4 hops.</div>\n  <button class=\"hinge-reset\" onclick=\"resetHinge()\">↺ Try again</button>\n</section>",
+  "strategy_js": "function pickHingeOption(btn) {\n  if (btn.classList.contains('dimmed')) return;\n  const isCorrect = btn.dataset.correct === 'true';\n  btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');\n  document.querySelectorAll('.hinge-opt').forEach(o => { if (o !== btn) o.classList.add('dimmed'); });\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n  const fbId = btn.dataset.feedbackId;\n  if (fbId) document.getElementById(fbId).classList.add('visible');\n}\nfunction resetHinge() {\n  document.querySelectorAll('.hinge-opt').forEach(o => o.classList.remove('selected', 'correct', 'incorrect', 'dimmed'));\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n}"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "10<sup>3</sup> × 10<sup>4</sup> = 10<sup>?</sup>. Type the power.",
+    "a": "7",
+    "hint": "Same base, multiplying: add the indices.",
+    "fb": {
+     "12": "When you multiply powers of the same base, add the indices; do not multiply them."
+    }
+   },
+   {
+    "q": "10<sup>6</sup> ÷ 10<sup>2</sup> = 10<sup>?</sup>. Type the power.",
+    "a": "4",
+    "hint": "Same base, dividing: subtract the indices.",
+    "fb": {
+     "3": "When you divide powers of the same base, subtract the indices; do not divide them."
+    }
+   },
+   {
+    "q": "Write 10<sup>−2</sup> as a decimal.",
+    "a": "0.01",
+    "hint": "10⁻² means 1 ÷ 10² = 1 ÷ 100.",
+    "fb": {
+     "-100": "A negative index does not make the number negative; it means divide: 1 ÷ 10²."
+    }
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "<strong>tera (T)</strong>",
+    "group": 1
+   },
+   {
+    "html": "10<sup>12</sup>",
+    "group": 1
+   },
+   {
+    "html": "<strong>giga (G)</strong>",
+    "group": 2
+   },
+   {
+    "html": "10<sup>9</sup>",
+    "group": 2
+   },
+   {
+    "html": "<strong>mega (M)</strong>",
+    "group": 3
+   },
+   {
+    "html": "10<sup>6</sup>",
+    "group": 3
+   },
+   {
+    "html": "<strong>kilo (k)</strong>",
+    "group": 4
+   },
+   {
+    "html": "10<sup>3</sup>",
+    "group": 4
+   },
+   {
+    "html": "<strong>milli (m)</strong>",
+    "group": 5
+   },
+   {
+    "html": "10<sup>−3</sup>",
+    "group": 5
+   },
+   {
+    "html": "<strong>micro (μ)</strong>",
+    "group": 6
+   },
+   {
+    "html": "10<sup>−6</sup>",
+    "group": 6
+   },
+   {
+    "html": "<strong>nano (n)</strong>",
+    "group": 7
+   },
+   {
+    "html": "10<sup>−9</sup>",
+    "group": 7
+   },
+   {
+    "html": "<strong>pico (p)</strong>",
+    "group": 8
+   },
+   {
+    "html": "10<sup>−12</sup>",
+    "group": 8
+   }
+  ],
+  "weDo": [
+   {
+    "q": "Step 1: what is the coefficient <span class=\"var\">a</span>? (Put the point just after the first non-zero digit.)",
+    "a": "5.68",
+    "hint": "The first non-zero digit is the 5, so a = 5.68.",
+    "fb": {
+     "568": "a must be between 1 and 10: put a decimal point after the 5."
+    }
+   },
+   {
+    "q": "Step 2: how many places does the decimal point hop to the <strong>right</strong> to land just after the 5?",
+    "a": "21",
+    "hint": "There are 20 zeros after the point, then one more hop past the 5.",
+    "fb": {
+     "20": "You counted the zeros only. The point must also hop past the 5 itself."
+    }
+   },
+   {
+    "q": "Step 3: the number is less than 1. So 0.000 000 000 000 000 000 005 68 = 5.68 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "-21",
+    "hint": "Small numbers (less than 1) have a negative power of ten.",
+    "fb": {
+     "21": "The number is less than 1, so the power of ten must be negative."
+    }
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "52 000 = 5.2 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "4",
+    "hint": "Count the hops from the end of 52 000 back to between the 5 and the 2.",
+    "fb": {
+     "3": "You counted the zeros only. Count every place the point hops, including past the 2."
+    }
+   },
+   {
+    "q": "0.003 = 3 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "-3",
+    "hint": "The point hops 3 places right to sit after the 3. Small number, so negative power.",
+    "fb": {
+     "3": "The number is less than 1, so the power of ten must be negative."
+    }
+   }
+  ],
+  "practice1": [
+   {
+    "q": "Write 3.2 × 10<sup>4</sup> as an ordinary number.",
+    "a": "32000",
+    "hint": "Move the decimal point 4 places to the right.",
+    "fb": {
+     "320000": "Do not just write 4 zeros after 32. Move the point 4 places: 3.2 → 32 000."
+    }
+   },
+   {
+    "q": "Write 7 × 10<sup>6</sup> as an ordinary number.",
+    "a": "7000000",
+    "hint": "Move the point 6 places to the right: 7 followed by six zeros."
+   },
+   {
+    "q": "Write 5.1 × 10<sup>−3</sup> as a decimal.",
+    "a": "0.0051",
+    "hint": "Negative power: move the point 3 places to the left.",
+    "fb": {
+     "0.00051": "The point moves 3 places, so only 2 zeros sit between the point and the 5."
+    }
+   },
+   {
+    "q": "Write 8.04 × 10<sup>−2</sup> as a decimal.",
+    "a": "0.0804",
+    "hint": "Move the point 2 places to the left."
+   },
+   {
+    "q": "640 000 = 6.4 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "5",
+    "hint": "Count the hops from the end of 640 000 back to after the 6.",
+    "fb": {
+     "4": "You counted the zeros only. The point also hops past the 4."
+    }
+   },
+   {
+    "q": "0.0009 = 9 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "-4",
+    "hint": "The point hops 4 places right to sit after the 9. Small number, so negative power.",
+    "fb": {
+     "4": "The number is less than 1, so the power must be negative."
+    }
+   },
+   {
+    "q": "The Sun is about 150 000 000 km from Earth. In scientific notation this is <span class=\"var\">a</span> × 10<sup>8</sup> km. Type <span class=\"var\">a</span>.",
+    "a": "1.5",
+    "hint": "a must be between 1 and 10: 150 000 000 → 1.5.",
+    "fb": {
+     "15": "a must be at least 1 and less than 10. Put the point after the first digit."
+    }
+   },
+   {
+    "q": "0.000 027 = <span class=\"var\">a</span> × 10<sup><span class=\"var\">n</span></sup> in scientific notation. Type <span class=\"var\">n</span>.",
+    "a": "-5",
+    "hint": "a = 2.7. Count the hops right from the point to just after the 2.",
+    "fb": {
+     "-4": "You counted the zeros only. The point also hops past the 2."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 640 100\" width=\"100%\" style=\"max-width:640px;display:block;margin:6px 0\" role=\"img\" aria-label=\"SI prefixes from pico to tera with their powers of ten; the power for giga is hidden\"><rect x=\"10\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"42\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">pico</text><text x=\"42\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">p</text><text x=\"42\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">−12</tspan></text><rect x=\"80\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"112\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">nano</text><text x=\"112\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">n</text><text x=\"112\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">−9</tspan></text><rect x=\"150\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"182\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">micro</text><text x=\"182\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">μ</text><text x=\"182\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">−6</tspan></text><rect x=\"220\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"252\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">milli</text><text x=\"252\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">m</text><text x=\"252\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">−3</tspan></text><rect x=\"290\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"322\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">unit</text><text x=\"322\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">–</text><text x=\"322\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">0</tspan></text><rect x=\"360\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"392\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">kilo</text><text x=\"392\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">k</text><text x=\"392\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">3</tspan></text><rect x=\"430\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"462\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">mega</text><text x=\"462\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">M</text><text x=\"462\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">6</tspan></text><rect x=\"500\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f5d8cb\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"532\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">giga</text><text x=\"532\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">G</text><text x=\"532\" y=\"82\" font-size=\"19\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">?</tspan></text><rect x=\"570\" y=\"8\" width=\"64\" height=\"84\" rx=\"6\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"602\" y=\"30\" font-size=\"17\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">tera</text><text x=\"602\" y=\"54\" font-size=\"15\" fill=\"#6b7280\" text-anchor=\"middle\" font-family=\"sans-serif\">T</text><text x=\"602\" y=\"82\" font-size=\"19\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10<tspan dy=\"-6\" font-size=\"13\">12</tspan></text></svg>The SI prefixes go up in steps of 1000. Read the pattern: 1 <strong>giga</strong>byte = 10<sup><span class=\"var\">n</span></sup> bytes. Type <span class=\"var\">n</span>.",
+    "a": "9",
+    "hint": "Each step right adds 3 to the power: kilo 3, mega 6, giga …"
+   },
+   {
+    "q": "1 <strong>micro</strong>second = 10<sup><span class=\"var\">n</span></sup> seconds. Type <span class=\"var\">n</span>.",
+    "a": "-6",
+    "hint": "milli is 10⁻³; each step smaller takes 3 more off the power.",
+    "fb": {
+     "6": "Micro is smaller than the base unit, so the power is negative."
+    }
+   }
+  ],
+  "practice2": [
+   {
+    "q": "46 × 10<sup>8</sup> is not in scientific notation. Rewrite it as 4.6 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "9",
+    "hint": "46 = 4.6 × 10, so 46 × 10⁸ = 4.6 × 10 × 10⁸.",
+    "fb": {
+     "7": "Making a smaller (46 → 4.6) means the power of ten must go up by 1, not down."
+    }
+   },
+   {
+    "q": "0.52 × 10<sup>−3</sup> is not in scientific notation. Rewrite it as 5.2 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "-4",
+    "hint": "0.52 = 5.2 × 10⁻¹, so add −1 to the power.",
+    "fb": {
+     "-2": "Making a bigger (0.52 → 5.2) means the power of ten must go down by 1."
+    }
+   },
+   {
+    "q": "Write 2.5 × 10<sup>−4</sup> as a decimal.",
+    "a": "0.00025",
+    "hint": "Move the point 4 places to the left.",
+    "fb": {
+     "0.000025": "The point moves 4 places, so only 3 zeros sit between the point and the 2."
+    }
+   },
+   {
+    "q": "A nanometre is 10<sup>−9</sup> m. A virus is 120 nm wide, which is 120 × 10<sup>−9</sup> m. In scientific notation it is 1.2 × 10<sup><span class=\"var\">n</span></sup> m. Type <span class=\"var\">n</span>.",
+    "a": "-7",
+    "hint": "120 = 1.2 × 10², so the power becomes 2 + (−9).",
+    "fb": {
+     "-11": "120 = 1.2 × 10², so add 2 to the power: it goes up, not down."
+    }
+   },
+   {
+    "q": "Which is larger: 3.1 × 10<sup>5</sup> or 9.8 × 10<sup>4</sup>? Type the larger one as an ordinary number.",
+    "a": "310000",
+    "hint": "Compare the powers of ten first. 10⁵ is ten times 10⁴.",
+    "fb": {
+     "98000": "Compare the powers of ten first: 10⁵ beats 10⁴ whatever the front number is."
+    }
+   },
+   {
+    "q": "A government budget is $680 000 000 000. In scientific notation this is $<span class=\"var\">a</span> × 10<sup>11</sup>. Type <span class=\"var\">a</span>.",
+    "a": "6.8",
+    "hint": "a must be between 1 and 10: 680 000 000 000 → 6.8.",
+    "fb": {
+     "68": "a must be at least 1 and less than 10."
+    }
+   }
+  ],
+  "practice3": [
+   {
+    "q": "A 2-terabyte drive holds 2 × 10<sup>12</sup> bytes. A photo takes 4 × 10<sup>6</sup> bytes. How many photos fit on the drive? Type an ordinary number.",
+    "a": "500000",
+    "hint": "Divide: 2 ÷ 4 = 0.5 and 10¹² ÷ 10⁶ = 10⁶. Then 0.5 × 10⁶."
+   },
+   {
+    "q": "One sugar molecule has mass 5.68 × 10<sup>−21</sup> g. One million (10<sup>6</sup>) molecules have mass 5.68 × 10<sup><span class=\"var\">n</span></sup> g. Type <span class=\"var\">n</span>.",
+    "a": "-15",
+    "hint": "Multiply by 10⁶: add 6 to the power.",
+    "fb": {
+     "-27": "Multiplying by 10⁶ adds 6 to the index: −21 + 6."
+    }
+   },
+   {
+    "q": "Light travels 3 × 10<sup>8</sup> metres each second. In one minute (60 s) it travels 1.8 × 10<sup><span class=\"var\">n</span></sup> m. Type <span class=\"var\">n</span>.",
+    "a": "10",
+    "hint": "3 × 60 = 180 = 1.8 × 10², so the power is 8 + 2.",
+    "fb": {
+     "9": "180 = 1.8 × 10², not 1.8 × 10¹. Add 2 to the power."
+    }
+   },
+   {
+    "q": "The Earth is about 4.6 × 10<sup>9</sup> years old. Modern humans have existed for about 2 × 10<sup>5</sup> years. How many times older is the Earth? Type an ordinary number.",
+    "a": "23000",
+    "hint": "Divide: 4.6 ÷ 2 = 2.3 and 10⁹ ÷ 10⁵ = 10⁴. Then 2.3 × 10⁴."
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "0.000 064 = 6.4 × 10<sup><span class=\"var\">n</span></sup>. Type <span class=\"var\">n</span>.",
+    "a": "-5",
+    "hint": "Count the hops right from the point to just after the 6. Small number, so negative power.",
+    "fb": {
+     "-4": "You counted the zeros only. The point also hops past the 6."
+    }
+   },
+   {
+    "q": "Write 7.3 × 10<sup>5</sup> as an ordinary number.",
+    "a": "730000",
+    "hint": "Move the point 5 places to the right."
+   },
+   {
+    "q": "Explain why 46 × 10<sup>8</sup> is <strong>not</strong> in scientific notation, and rewrite it correctly.",
+    "a": "TEXT",
+    "hint": "Check the rule 1 ≤ a < 10. What happens to the power when a gets 10 times smaller?"
+   }
+  ]
+ }
+}
