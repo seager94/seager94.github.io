@@ -1,0 +1,282 @@
+{
+  "payload_version": 1,
+  "filename": "y9_mea_11_modelling_with_direct_proportion_v2.html",
+  "title": "Modelling with Direct Proportion — Year 9",
+  "header": {
+    "title": "Modelling with Direct Proportion",
+    "subtitle": "Find k, use the model, and spot when proportion breaks",
+    "badge": "Year 9 · Measurement"
+  },
+  "meta": {
+    "lesson-id": "y9_mea_11",
+    "lesson-focus": "Model direct-proportion situations — pro rata pay rates, currency exchange, multiple quotes for a job, Hooke's law from physics; investigate situations where proportion is not maintained (image editing/distortion); building and construction standards for staircases and escalators.",
+    "ac9-descriptor": "AC9M9M05",
+    "ac9-descriptor-text": "use mathematical modelling to solve practical problems involving direct proportion, rates, ratio and scale, including financial contexts; formulate the problems and interpret solutions in terms of the situation; evaluate the model and report methods and findings",
+    "ac9-elaborations": "1,2,3",
+    "sa-year": "9",
+    "sa-strand": "Measurement",
+    "mapping-note": "Strict",
+    "sa-conceptual-understanding": "Mathematical modelling can be used to represent and solve problems involving proportion, rates, ratios and scale, including in financial contexts"
+  },
+  "html": {
+    "section0_intro": "Today's lesson builds on rates, gradient and one-step equations. These three questions check you are ready.",
+    "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's maths.</p>\n<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>\n  <div>\n    <p>You post a photo to social media and the app squeezes it to fit. Sometimes faces look normal; sometimes they look <strong>stretched</strong>.</p>\n    <p>The same idea runs your first pay slip: work <strong>twice the hours</strong>, earn <strong>twice the pay</strong>. Swap A$500 for US dollars and A$1000 gets you twice as much.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    These are all <strong>direct proportion</strong>: one quantity is a fixed multiple of the other, <span class=\"var\">y</span> = <span class=\"var\">k</span><span class=\"var\">x</span>. Today you find <span class=\"var\">k</span>, use the model to predict, and spot when a situation <strong>breaks</strong> proportion, like a distorted photo.\n  </div>\n</div>\n<svg viewBox=\"0 0 480 160\" width=\"440\" role=\"img\" aria-label=\"An original photo, the same photo resized in proportion, and the photo stretched in width only so the round face becomes an oval\" style=\"display:block;margin:8px 0;max-width:100%\"><rect x=\"10\" y=\"20\" width=\"120\" height=\"80\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"60\" r=\"26\" fill=\"#f5d8cb\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"70\" y=\"124\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">Original 1200 × 800</text><rect x=\"175\" y=\"40\" width=\"90\" height=\"60\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><circle cx=\"220\" cy=\"70\" r=\"19.5\" fill=\"#f5d8cb\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"220\" y=\"124\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#2f9e6b\">In proportion 900 × 600</text><text x=\"220\" y=\"142\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#2f9e6b\">both × 0.75 ✓</text><rect x=\"315\" y=\"20\" width=\"150\" height=\"80\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"390\" cy=\"60\" rx=\"32.5\" ry=\"26\" fill=\"#f5d8cb\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"390\" y=\"124\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#d24a4a\">Width only 1500 × 800</text><text x=\"390\" y=\"142\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#d24a4a\">× 1.25 and × 1 ✗</text></svg>",
+    "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Rate<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A comparison of two quantities with <strong>different units</strong>.<div class='vocab-example'>$25 per hour; 1.5 cm per newton.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Pro rata<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>Latin for 'in proportion': pay or cost <strong>scaled to the share</strong> you work or use.<div class='vocab-example'>3 days of a 5-day job → 3/5 of the salary.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Direct proportion<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><span class=\"var\">y</span> = <span class=\"var\">k</span><span class=\"var\">x</span>: double one quantity and the other <strong>doubles</strong>.<div class='vocab-example'>The graph is a straight line through (0, 0).</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Constant of proportionality<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The fixed multiplier <span class=\"var\">k</span> = <span class=\"var\">y</span> ÷ <span class=\"var\">x</span>. It is the rate and the gradient.<div class='vocab-example'>US$330 for A$500 → k = 0.66.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Aspect ratio<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>Width : height of an image. Keep it the same and the image is <strong>not distorted</strong>.<div class='vocab-example'>1200 × 800 is 3 : 2.</div></div>\n  </div>\n</div>",
+    "section3_heading": "Proportional or not?",
+    "section3_desc": "Drag each situation into <strong>✓ Directly proportional</strong> or <strong>✗ Not proportional</strong>.",
+    "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Is it directly proportional?</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='prop'>Pay at <strong>$28 per hour</strong></span>\n    <span class='term-chip variable' data-type='notprop'>Taxi: <strong>$4 flag-fall</strong> + $2.20 per km</span>\n    <span class='term-chip constant' data-type='prop'>Swap AUD for USD at 0.66, <strong>no fee</strong></span>\n    <span class='term-chip variable' data-type='notprop'>Swap AUD for USD at 0.68 <strong>minus a $15 fee</strong></span>\n    <span class='term-chip constant' data-type='prop'>A spring's <strong>stretch</strong> vs the load (below its elastic limit)</span>\n    <span class='term-chip variable' data-type='notprop'>Photo resized to <strong>200% wide, 150% tall</strong></span>\n    <span class='term-chip constant' data-type='prop'>x: 2, 4, 6 &nbsp;→&nbsp; y: 5, 10, 15</span>\n    <span class='term-chip variable' data-type='notprop'>x: 1, 2, 3 &nbsp;→&nbsp; y: 4, 6, 8</span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='prop'>\n      <h4 style='color:var(--navy)'>✓ Directly proportional</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='notprop'>\n      <h4 style='color:var(--coral)'>✗ Not proportional</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 Test: is <span class=\"var\">y</span> ÷ <span class=\"var\">x</span> the same every time, and is zero matched with zero? A fixed fee or an uneven scale breaks proportion.\n</div>",
+    "section4_heading": "Match each situation to its model",
+    "section6_heading": "We do: swapping currency",
+    "worked_example": "<style>\n  .mr-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }\n  .mr-pane { background:white; border:1.5px solid var(--border); border-radius:10px; padding:16px; display:flex; flex-direction:column; }\n  .mr-pane h4 { margin:0 0 10px; font-family:Georgia,serif; color:var(--navy); font-size:.92rem; text-transform:uppercase; letter-spacing:1.5px; border-bottom:2px solid var(--hint-bg); padding-bottom:6px; }\n  .mr-pane.equation .mr-eqn { font-family:Georgia,serif; font-size:1.5rem; color:var(--navy); text-align:center; margin:12px 0; }\n  .mr-pane.equation .mr-sub { background:var(--bg); border-radius:8px; padding:12px 14px; font-family:Georgia,serif; font-size:1.05rem; text-align:center; transition:background .2s; min-height:70px; display:flex; align-items:center; justify-content:center; }\n  .mr-pane.equation .mr-sub.active { background:var(--coral-soft); color:var(--coral); font-weight:600; }\n  .mr-pane.table table { width:100%; border-collapse:collapse; font-family:Georgia,serif; font-size:1.05rem; }\n  .mr-pane.table th { background:var(--hint-bg); color:var(--navy); padding:8px; border:1px solid var(--border); font-style:italic; }\n  .mr-pane.table td { padding:8px; border:1px solid var(--border); text-align:center; cursor:pointer; transition:background .2s; }\n  .mr-pane.table tr[data-link-id] { cursor:pointer; }\n  .mr-pane.table tr[data-link-id]:hover td { background:var(--hint-bg); }\n  .mr-pane.table tr[data-link-id].active td { background:var(--coral-soft); color:var(--coral); font-weight:700; }\n  .mr-pane.graph svg { width:100%; height:auto; max-height:320px; }\n  .mr-pane.graph circle[data-link-id] { cursor:pointer; transition:r .15s, stroke-width .15s; }\n  .mr-pane.graph circle[data-link-id]:hover { stroke-width:3; }\n  .mr-pane.graph circle[data-link-id].active { fill:var(--coral); stroke:white; stroke-width:3; r:8; }\n  .mr-pane.context .mr-story { background:var(--bg); border-radius:8px; padding:12px 14px; font-family:Georgia,serif; font-size:.95rem; margin-bottom:10px; }\n  .mr-pane.context .mr-specific { background:var(--bg); border-radius:8px; padding:12px 14px; font-family:Georgia,serif; font-size:1.05rem; flex:1; transition:background .2s; min-height:60px; display:flex; align-items:center; }\n  .mr-pane.context .mr-specific.active { background:var(--coral-soft); color:var(--coral); font-weight:600; }\n  .mr-hint { grid-column:1 / -1; background:var(--hint-bg); border-left:4px solid var(--navy); padding:10px 14px; border-radius:6px; font-size:.92rem; color:var(--navy); font-style:italic; margin-top:4px; }\n  @media (max-width:800px) { .mr-grid { grid-template-columns:1fr; } }\n</style>\n<p class='sec-desc'><strong>Part A: four views of one model.</strong> Jai has a casual job paid <strong>$25 per hour</strong>, pro rata. Click any table row or any point on the graph and watch the other three views light up.</p>\n<div class='mr-grid'>\n  <div class='mr-pane equation'>\n    <h4>Equation</h4>\n    <div class='mr-eqn'><span class=\"var\">P</span> = 25<span class=\"var\">h</span></div>\n    <div class='mr-sub' id='mrSub'>Click a point or table row to see a specific case.</div>\n  </div>\n  <div class='mr-pane table'>\n    <h4>Table</h4>\n    <table>\n      <tr><th>h (hours)</th><th>P ($)</th></tr>\n      <tr data-link-id=\"p0\" onclick=\"linkSelect('p0')\"><td>0</td><td>0</td></tr><tr data-link-id=\"p1\" onclick=\"linkSelect('p1')\"><td>1</td><td>25</td></tr><tr data-link-id=\"p2\" onclick=\"linkSelect('p2')\"><td>2</td><td>50</td></tr><tr data-link-id=\"p3\" onclick=\"linkSelect('p3')\"><td>3</td><td>75</td></tr><tr data-link-id=\"p4\" onclick=\"linkSelect('p4')\"><td>4</td><td>100</td></tr><tr data-link-id=\"p5\" onclick=\"linkSelect('p5')\"><td>5</td><td>125</td></tr>\n    </table>\n  </div>\n  <div class='mr-pane graph'>\n    <h4>Graph</h4>\n    <svg viewBox=\"0 0 300 240\" width=\"300\" role=\"img\" aria-label=\"Graph of pay against hours worked for P = 25h with six clickable points\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"46\" y=\"28\" width=\"238\" height=\"168\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"93.6\" y1=\"28\" x2=\"93.6\" y2=\"196\"/><line x1=\"141.2\" y1=\"28\" x2=\"141.2\" y2=\"196\"/><line x1=\"188.8\" y1=\"28\" x2=\"188.8\" y2=\"196\"/><line x1=\"236.4\" y1=\"28\" x2=\"236.4\" y2=\"196\"/><line x1=\"284.0\" y1=\"28\" x2=\"284.0\" y2=\"196\"/><line x1=\"46\" y1=\"162.4\" x2=\"284\" y2=\"162.4\"/><line x1=\"46\" y1=\"128.8\" x2=\"284\" y2=\"128.8\"/><line x1=\"46\" y1=\"95.2\" x2=\"284\" y2=\"95.2\"/><line x1=\"46\" y1=\"61.6\" x2=\"284\" y2=\"61.6\"/><line x1=\"46\" y1=\"28.0\" x2=\"284\" y2=\"28.0\"/></g><line x1=\"46\" y1=\"196\" x2=\"284\" y2=\"196\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"196\" x2=\"46\" y2=\"28\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"46.0\" y=\"210\" text-anchor=\"middle\">0</text><text x=\"93.6\" y=\"210\" text-anchor=\"middle\">1</text><text x=\"141.2\" y=\"210\" text-anchor=\"middle\">2</text><text x=\"188.8\" y=\"210\" text-anchor=\"middle\">3</text><text x=\"236.4\" y=\"210\" text-anchor=\"middle\">4</text><text x=\"284.0\" y=\"210\" text-anchor=\"middle\">5</text><text x=\"40\" y=\"166.4\" text-anchor=\"end\">25</text><text x=\"40\" y=\"132.8\" text-anchor=\"end\">50</text><text x=\"40\" y=\"99.2\" text-anchor=\"end\">75</text><text x=\"40\" y=\"65.6\" text-anchor=\"end\">100</text><text x=\"40\" y=\"32.0\" text-anchor=\"end\">125</text></g><text x=\"165.0\" y=\"232\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Hours worked h</text><text x=\"6\" y=\"14\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Pay P ($)</text><line x1=\"46.0\" y1=\"196.0\" x2=\"284.0\" y2=\"28.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\"/><circle cx=\"46.0\" cy=\"196.0\" r=\"6\" fill=\"#1F4D54\" stroke=\"white\" stroke-width=\"2\" data-link-id=\"p0\" onclick=\"linkSelect('p0')\"/><circle cx=\"93.6\" cy=\"162.4\" r=\"6\" fill=\"#1F4D54\" stroke=\"white\" stroke-width=\"2\" data-link-id=\"p1\" onclick=\"linkSelect('p1')\"/><circle cx=\"141.2\" cy=\"128.8\" r=\"6\" fill=\"#1F4D54\" stroke=\"white\" stroke-width=\"2\" data-link-id=\"p2\" onclick=\"linkSelect('p2')\"/><circle cx=\"188.8\" cy=\"95.2\" r=\"6\" fill=\"#1F4D54\" stroke=\"white\" stroke-width=\"2\" data-link-id=\"p3\" onclick=\"linkSelect('p3')\"/><circle cx=\"236.4\" cy=\"61.6\" r=\"6\" fill=\"#1F4D54\" stroke=\"white\" stroke-width=\"2\" data-link-id=\"p4\" onclick=\"linkSelect('p4')\"/><circle cx=\"284.0\" cy=\"28.0\" r=\"6\" fill=\"#1F4D54\" stroke=\"white\" stroke-width=\"2\" data-link-id=\"p5\" onclick=\"linkSelect('p5')\"/></svg>\n  </div>\n  <div class='mr-pane context'>\n    <h4>In words</h4>\n    <div class='mr-story'>💼 Jai is paid $25 for every hour worked and nothing for zero hours. <span class=\"var\">P</span> is the pay in dollars; <span class=\"var\">h</span> is the number of hours.</div>\n    <div class='mr-specific' id='mrSpecific'>A specific case will appear here when you click.</div>\n  </div>\n  <div class='mr-hint'>💡 Notice: the constant of proportionality <strong>k = 25</strong> is the rate ($ per hour) and the gradient of the line. The line passes through <strong>(0, 0)</strong>, and P ÷ h = 25 in every row of the table. All four views say the same thing.</div>\n</div>\n<p class='sec-desc'><strong>Part B: build and test a model.</strong> A science class hangs weights on a spring. A load of <strong>4 N</strong> stretches the spring by <strong>6 cm</strong>. Hooke's law says the stretch is directly proportional to the load. Find the model, predict, then evaluate it.</p>\n<svg viewBox=\"0 0 300 240\" width=\"300\" role=\"img\" aria-label=\"Graph of stretch against load: a straight line through the origin passing through (4, 6) and (10, 15)\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"46\" y=\"28\" width=\"238\" height=\"168\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"85.7\" y1=\"28\" x2=\"85.7\" y2=\"196\"/><line x1=\"125.3\" y1=\"28\" x2=\"125.3\" y2=\"196\"/><line x1=\"165.0\" y1=\"28\" x2=\"165.0\" y2=\"196\"/><line x1=\"204.7\" y1=\"28\" x2=\"204.7\" y2=\"196\"/><line x1=\"244.3\" y1=\"28\" x2=\"244.3\" y2=\"196\"/><line x1=\"284.0\" y1=\"28\" x2=\"284.0\" y2=\"196\"/><line x1=\"46\" y1=\"168.0\" x2=\"284\" y2=\"168.0\"/><line x1=\"46\" y1=\"140.0\" x2=\"284\" y2=\"140.0\"/><line x1=\"46\" y1=\"112.0\" x2=\"284\" y2=\"112.0\"/><line x1=\"46\" y1=\"84.0\" x2=\"284\" y2=\"84.0\"/><line x1=\"46\" y1=\"56.0\" x2=\"284\" y2=\"56.0\"/><line x1=\"46\" y1=\"28.0\" x2=\"284\" y2=\"28.0\"/></g><line x1=\"46\" y1=\"196\" x2=\"284\" y2=\"196\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"196\" x2=\"46\" y2=\"28\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"46.0\" y=\"210\" text-anchor=\"middle\">0</text><text x=\"85.7\" y=\"210\" text-anchor=\"middle\">2</text><text x=\"125.3\" y=\"210\" text-anchor=\"middle\">4</text><text x=\"165.0\" y=\"210\" text-anchor=\"middle\">6</text><text x=\"204.7\" y=\"210\" text-anchor=\"middle\">8</text><text x=\"244.3\" y=\"210\" text-anchor=\"middle\">10</text><text x=\"284.0\" y=\"210\" text-anchor=\"middle\">12</text><text x=\"40\" y=\"172.0\" text-anchor=\"end\">3</text><text x=\"40\" y=\"144.0\" text-anchor=\"end\">6</text><text x=\"40\" y=\"116.0\" text-anchor=\"end\">9</text><text x=\"40\" y=\"88.0\" text-anchor=\"end\">12</text><text x=\"40\" y=\"60.0\" text-anchor=\"end\">15</text><text x=\"40\" y=\"32.0\" text-anchor=\"end\">18</text></g><text x=\"165.0\" y=\"232\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Load F (newtons)</text><text x=\"6\" y=\"14\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Stretch e (cm)</text><line x1=\"46.0\" y1=\"196.0\" x2=\"284.0\" y2=\"28.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\"/><circle cx=\"125.3\" cy=\"140.0\" r=\"4\" fill=\"#BE5837\"/><text x=\"133.3\" y=\"144.0\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(4, 6)</text><circle cx=\"244.3\" cy=\"56.0\" r=\"4\" fill=\"#BE5837\"/><text x=\"252.3\" y=\"60.0\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(10, 15)</text></svg>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Find k from one known pair</div>\n      <div class='step-desc'>Direct proportion means <span class=\"var\">e</span> = <span class=\"var\">k</span><span class=\"var\">F</span>, so <span class=\"var\">k</span> = <span class=\"var\">e</span> ÷ <span class=\"var\">F</span>.</div>\n      <div class='calc-box'><span class=\"var\">k</span> = 6 ÷ 4 = <span class='red'>1.5 cm per newton</span></div>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Write the model and use it</div>\n      <div class='step-desc'>Multiply to predict the stretch; divide to work backwards to the load.</div>\n      <div class='calc-box'><span class='blue'><span class=\"var\">e</span> = 1.5<span class=\"var\">F</span></span><br>Load 10 N: <span class=\"var\">e</span> = 1.5 × 10 = 15 cm<br>Stretch 12 cm: <span class=\"var\">F</span> = 12 ÷ 1.5 = 8 N</div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Interpret and evaluate the model</div>\n      <div class='step-desc'>The graph is a straight line through (0, 0): no load, no stretch. But a real spring has an <strong>elastic limit</strong>. Pull it too far and it bends out of shape, so the model only holds for moderate loads.</div>\n      <div class='calc-box'>Check: (10, 15) lies on the same line as (4, 6), because 15 ÷ 10 = 1.5 ✓</div>\n      <div class='summary-banner'>\n        <span class='label'>Model</span>\n        e = 1.5F &nbsp;·&nbsp; 10 N → 15 cm &nbsp;·&nbsp; valid up to the elastic limit\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+    "we_do_intro": "Planning a trip to the USA. Work through each prompt with a partner, then we check as a class.",
+    "footer_title": "Modelling with Direct Proportion",
+    "strategy_section": "<style>\n  section.lesson.hinge { background:#f7faff; border-left:5px solid var(--navy); }\n  .hinge-tag { display:inline-flex; align-items:center; gap:6px; margin-left:auto; padding:4px 12px; border-radius:999px; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; font-weight:700; background:var(--navy); color:white; white-space:nowrap; }\n  .hinge-stem { background:white; border:1px solid var(--border); border-radius:10px; padding:18px 20px; font-family:Georgia,serif; font-size:1.15rem; color:var(--navy); margin-bottom:18px; box-shadow:var(--shadow); }\n  .hinge-options { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; }\n  .hinge-opt { background:white; border:1.5px solid var(--border); border-radius:10px; padding:14px 18px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px; font-family:Georgia,serif; font-size:1rem; text-align:left; }\n  .hinge-opt:hover { border-color:var(--navy); transform:translateY(-1px); }\n  .hinge-opt .opt-letter { background:var(--hint-bg); color:var(--navy); width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:-apple-system,sans-serif; font-weight:700; flex-shrink:0; }\n  .hinge-opt.selected.correct { background:var(--good-soft); border-color:var(--good); }\n  .hinge-opt.selected.correct .opt-letter { background:var(--good); color:white; }\n  .hinge-opt.selected.incorrect { background:var(--bad-soft); border-color:var(--bad); }\n  .hinge-opt.selected.incorrect .opt-letter { background:var(--bad); color:white; }\n  .hinge-opt.dimmed { opacity:.45; cursor:not-allowed; }\n  .hinge-feedback { margin-top:18px; padding:14px 18px; border-radius:8px; font-size:.95rem; display:none; }\n  .hinge-feedback.visible { display:block; }\n  .hinge-feedback.correct { background:var(--good-soft); color:#1d4a30; border-left:4px solid var(--good); }\n  .hinge-feedback.incorrect { background:var(--bad-soft); color:#6a2520; border-left:4px solid var(--bad); }\n  .hinge-reset { background:white; color:var(--navy); border:1.5px solid var(--navy); padding:7px 14px; border-radius:8px; cursor:pointer; font-size:.85rem; font-weight:600; margin-top:12px; }\n  body.teacher-mode .hinge-opt.correct-answer { box-shadow:0 0 0 3px var(--good); }\n</style>\n<section class=\"lesson hinge\">\n  <h2>\n    <span class=\"sec-num\">★</span>Hinge check: which one is proportional?\n    <span class=\"hinge-tag\">🎯 Pick one</span>\n  </h2>\n  <p class=\"sec-desc\">Before the exit ticket: exactly one of these tables shows <span class=\"var\">y</span> <strong>directly proportional</strong> to <span class=\"var\">x</span>. Pick it.</p>\n  <div class=\"hinge-stem\">Which table fits <span class=\"var\">y</span> = <span class=\"var\">k</span><span class=\"var\">x</span> for a single value of <span class=\"var\">k</span>?</div>\n  <div class=\"hinge-options\" id=\"hingeOpts\">\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-A\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">A</span><span>x: 1, 2, 3 → y: 5, 7, 9</span></button>\n    <button class=\"hinge-opt correct-answer\" data-correct=\"true\" data-feedback-id=\"fb-B\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">B</span><span>x: 2, 4, 6 → y: 3, 6, 9</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-C\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">C</span><span>x: 1, 2, 3 → y: 2, 5, 10</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-D\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">D</span><span>x: 1, 2, 3 → y: 12, 6, 4</span></button>\n  </div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-A\"><strong>Not quite: a steady +2 is not enough.</strong> y goes up by 2 each time, so the graph is a straight line, but y ÷ x gives 5, 3.5, 3: not constant. At x = 0 this pattern gives y = 3, not 0. That is a fixed start, like a flag-fall.</div>\n  <div class=\"hinge-feedback correct\" id=\"fb-B\"><strong>Correct.</strong> y ÷ x = 1.5 every time, so y = 1.5x. Double x and y doubles, and x = 0 would give y = 0.</div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-C\"><strong>Both increasing is not the test.</strong> y ÷ x gives 2, 2.5, 3.33: the multiplier keeps changing. Proportional means the <em>ratio</em> stays fixed, not just that both go up.</div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-D\"><strong>This one goes the wrong way.</strong> As x doubles, y halves: x × y = 12 every time. That is <em>inverse</em> proportion, not direct proportion.</div>\n  <button class=\"hinge-reset\" onclick=\"resetHinge()\">↺ Try again</button>\n</section>",
+    "strategy_js": "// Multiple Representations kit (Section 5, Part A): P = 25h\nconst linkData = { p0:{x:0,y:0}, p1:{x:1,y:25}, p2:{x:2,y:50}, p3:{x:3,y:75}, p4:{x:4,y:100}, p5:{x:5,y:125} };\nfunction linkSelect(id) {\n  document.querySelectorAll('[data-link-id]').forEach(el => el.classList.remove('active'));\n  document.querySelectorAll(`[data-link-id=\"${id}\"]`).forEach(el => el.classList.add('active'));\n  const { x, y } = linkData[id];\n  const sub = document.getElementById('mrSub');\n  sub.innerHTML = `If <span class=\"var\">h</span> = ${x}: &nbsp; <span class=\"var\">P</span> = 25 × ${x} = ${y}`;\n  sub.classList.add('active');\n  const sp = document.getElementById('mrSpecific');\n  sp.textContent = x === 0 ? 'Work 0 hours and Jai earns $0: the line starts at the origin.'\n                           : `${x} hour${x === 1 ? '' : 's'} of work earns $${y}.`;\n  sp.classList.add('active');\n}\n\n// Hinge Question kit\nfunction pickHingeOption(btn) {\n  if (btn.classList.contains('dimmed')) return;\n  const isCorrect = btn.dataset.correct === 'true';\n  btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');\n  document.querySelectorAll('.hinge-opt').forEach(o => { if (o !== btn) o.classList.add('dimmed'); });\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n  const fbId = btn.dataset.feedbackId;\n  if (fbId) document.getElementById(fbId).classList.add('visible');\n}\nfunction resetHinge() {\n  document.querySelectorAll('.hinge-opt').forEach(o => o.classList.remove('selected', 'correct', 'incorrect', 'dimmed'));\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n}\n\n// Topic-specific instructions for the frame's fixed section text\n(function () {\n  const set = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };\n  set('#tier1-body .sec-desc', 'Type just the number in each box: no units or $ sign needed. Find <span class=\"var\">k</span> first, then multiply or divide.');\n  set('#tier2-body .sec-desc', 'Quotes, photos and stairs. Work out the rate or scale factor first, then apply it. Type just the number.');\n  set('#tier3-body .sec-desc', 'Building standards, escalators and fees: decide what is proportional before you calculate. Type just the number.');\n  const wd = document.getElementById('weDoGrid');\n  const tip = wd && wd.parentElement.querySelector('.parts-instructions');\n  if (tip) tip.innerHTML = '💡 <strong>Why we do it this way:</strong> finding <span class=\"var\">k</span> first turns every question into one multiplication (forwards) or one division (backwards). Use the same routine in the You do practice: find <span class=\"var\">k</span>, write the model, then check your answer makes sense.';\n  const m = document.getElementById('matchArea');\n  const md = m && m.parentElement.querySelector('.sec-desc');\n  if (md) md.textContent = 'Click a situation, then click the model that describes it. There are five matching pairs.';\n})();"
+  },
+  "arrays": {
+    "retrieval": [
+      {
+        "q": "Mia earns $132 for 6 hours of work. What is her hourly rate in dollars? (Type just the number.)",
+        "a": "22",
+        "hint": "Rate = total pay ÷ hours = 132 ÷ 6."
+      },
+      {
+        "q": "Find the gradient of the straight line through (0, 0) and (4, 10).",
+        "a": "2.5",
+        "hint": "Gradient = rise ÷ run = 10 ÷ 4.",
+        "fb": {
+          "0.4": "You divided run by rise. Gradient is rise ÷ run: the change in y over the change in x."
+        }
+      },
+      {
+        "q": "Solve 8<span class=\"var\">k</span> = 60.",
+        "a": "7.5",
+        "hint": "Divide both sides by 8."
+      }
+    ],
+    "matchTerms": [
+      {
+        "html": "Paid <strong>$28 per hour</strong>",
+        "group": 1
+      },
+      {
+        "html": "<span class=\"var\">P</span> = 28<span class=\"var\">h</span>",
+        "group": 1
+      },
+      {
+        "html": "A$1 buys <strong>US$0.66</strong>",
+        "group": 2
+      },
+      {
+        "html": "<span class=\"var\">U</span> = 0.66<span class=\"var\">A</span>",
+        "group": 2
+      },
+      {
+        "html": "Spring stretches <strong>3 cm per newton</strong>",
+        "group": 3
+      },
+      {
+        "html": "<span class=\"var\">e</span> = 3<span class=\"var\">F</span>",
+        "group": 3
+      },
+      {
+        "html": "Each stair riser is <strong>0.18 m</strong> high",
+        "group": 4
+      },
+      {
+        "html": "<span class=\"var\">H</span> = 0.18<span class=\"var\">n</span>",
+        "group": 4
+      },
+      {
+        "html": "1 litre of paint covers <strong>12 m²</strong>",
+        "group": 5
+      },
+      {
+        "html": "<span class=\"var\">A</span> = 12<span class=\"var\">L</span>",
+        "group": 5
+      }
+    ],
+    "weDo": [
+      {
+        "q": "<svg viewBox=\"0 0 300 240\" width=\"300\" role=\"img\" aria-label=\"Graph of US dollars against Australian dollars: a straight line through the origin passing through (500, 330)\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"46\" y=\"28\" width=\"238\" height=\"168\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"93.6\" y1=\"28\" x2=\"93.6\" y2=\"196\"/><line x1=\"141.2\" y1=\"28\" x2=\"141.2\" y2=\"196\"/><line x1=\"188.8\" y1=\"28\" x2=\"188.8\" y2=\"196\"/><line x1=\"236.4\" y1=\"28\" x2=\"236.4\" y2=\"196\"/><line x1=\"284.0\" y1=\"28\" x2=\"284.0\" y2=\"196\"/><line x1=\"46\" y1=\"162.4\" x2=\"284\" y2=\"162.4\"/><line x1=\"46\" y1=\"128.8\" x2=\"284\" y2=\"128.8\"/><line x1=\"46\" y1=\"95.2\" x2=\"284\" y2=\"95.2\"/><line x1=\"46\" y1=\"61.6\" x2=\"284\" y2=\"61.6\"/><line x1=\"46\" y1=\"28.0\" x2=\"284\" y2=\"28.0\"/></g><line x1=\"46\" y1=\"196\" x2=\"284\" y2=\"196\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"196\" x2=\"46\" y2=\"28\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"46.0\" y=\"210\" text-anchor=\"middle\">0</text><text x=\"93.6\" y=\"210\" text-anchor=\"middle\">300</text><text x=\"141.2\" y=\"210\" text-anchor=\"middle\">600</text><text x=\"188.8\" y=\"210\" text-anchor=\"middle\">900</text><text x=\"236.4\" y=\"210\" text-anchor=\"middle\">1200</text><text x=\"284.0\" y=\"210\" text-anchor=\"middle\">1500</text><text x=\"40\" y=\"166.4\" text-anchor=\"end\">200</text><text x=\"40\" y=\"132.8\" text-anchor=\"end\">400</text><text x=\"40\" y=\"99.2\" text-anchor=\"end\">600</text><text x=\"40\" y=\"65.6\" text-anchor=\"end\">800</text><text x=\"40\" y=\"32.0\" text-anchor=\"end\">1000</text></g><text x=\"165.0\" y=\"232\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Australian dollars A</text><text x=\"6\" y=\"14\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">US dollars U</text><line x1=\"46.0\" y1=\"196.0\" x2=\"284.0\" y2=\"29.7\" stroke=\"#1F4D54\" stroke-width=\"2.2\"/><circle cx=\"125.3\" cy=\"140.6\" r=\"4\" fill=\"#BE5837\"/><text x=\"133.3\" y=\"144.6\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(500, 330)</text></svg>A travel-money booth gives <strong>US$330 for A$500</strong>, with no fees. Find the constant of proportionality <span class=\"var\">k</span> in <span class=\"var\">U</span> = <span class=\"var\">k</span><span class=\"var\">A</span> (US dollars per Australian dollar).",
+        "a": "0.66",
+        "hint": "k = 330 ÷ 500."
+      },
+      {
+        "q": "Using the same rate, how many US dollars do you get for <strong>A$1200</strong>? (Type just the number.)",
+        "a": "792",
+        "hint": "U = 0.66 × 1200."
+      },
+      {
+        "q": "Working backwards: how many Australian dollars do you need to get <strong>US$990</strong>?",
+        "a": "1500",
+        "hint": "Divide by k: 990 ÷ 0.66.",
+        "fb": {
+          "653.4": "You multiplied by 0.66. To go from US dollars back to Australian dollars, divide by k."
+        }
+      }
+    ],
+    "checkpoint": [
+      {
+        "q": "A full-time job pays <strong>$78,000 per year</strong>. Pro rata, what is the annual pay for a <strong>0.6</strong> (60%) part-time position? (Type just the number.)",
+        "a": "46800",
+        "hint": "Pro rata pay = 0.6 × 78 000.",
+        "fb": {
+          "31200": "That is the 0.4 share you are not working. Multiply the full-time salary by 0.6."
+        }
+      },
+      {
+        "q": "In this table <span class=\"var\">y</span> is directly proportional to <span class=\"var\">x</span>. Find <span class=\"var\">k</span> in <span class=\"var\">y</span> = <span class=\"var\">k</span><span class=\"var\">x</span>.<table style=\"border-collapse:collapse;margin:6px 0;font-family:Georgia,serif\"><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">x</th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">2</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">5</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">8</td></tr><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">y</th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">7</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">17.5</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">28</td></tr></table>",
+        "a": "3.5",
+        "hint": "k = y ÷ x for any column, e.g. 7 ÷ 2."
+      }
+    ],
+    "practice1": [
+      {
+        "q": "A casual job pays <strong>$27.50 per hour</strong>. What is the pay for 8 hours? (Type just the number.)",
+        "a": "220",
+        "hint": "Pay = 27.50 × 8."
+      },
+      {
+        "q": "A spring stretches <strong>2.5 cm per newton</strong>. How far does it stretch under a 6 N load, in cm?",
+        "a": "15",
+        "hint": "e = 2.5 × 6."
+      },
+      {
+        "q": "<svg viewBox=\"0 0 300 240\" width=\"300\" role=\"img\" aria-label=\"Graph of cost against mass of coffee beans: a straight line through the origin passing through (5, 120)\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"46\" y=\"28\" width=\"238\" height=\"168\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"85.7\" y1=\"28\" x2=\"85.7\" y2=\"196\"/><line x1=\"125.3\" y1=\"28\" x2=\"125.3\" y2=\"196\"/><line x1=\"165.0\" y1=\"28\" x2=\"165.0\" y2=\"196\"/><line x1=\"204.7\" y1=\"28\" x2=\"204.7\" y2=\"196\"/><line x1=\"244.3\" y1=\"28\" x2=\"244.3\" y2=\"196\"/><line x1=\"284.0\" y1=\"28\" x2=\"284.0\" y2=\"196\"/><line x1=\"46\" y1=\"162.4\" x2=\"284\" y2=\"162.4\"/><line x1=\"46\" y1=\"128.8\" x2=\"284\" y2=\"128.8\"/><line x1=\"46\" y1=\"95.2\" x2=\"284\" y2=\"95.2\"/><line x1=\"46\" y1=\"61.6\" x2=\"284\" y2=\"61.6\"/><line x1=\"46\" y1=\"28.0\" x2=\"284\" y2=\"28.0\"/></g><line x1=\"46\" y1=\"196\" x2=\"284\" y2=\"196\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"196\" x2=\"46\" y2=\"28\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"46.0\" y=\"210\" text-anchor=\"middle\">0</text><text x=\"85.7\" y=\"210\" text-anchor=\"middle\">1</text><text x=\"125.3\" y=\"210\" text-anchor=\"middle\">2</text><text x=\"165.0\" y=\"210\" text-anchor=\"middle\">3</text><text x=\"204.7\" y=\"210\" text-anchor=\"middle\">4</text><text x=\"244.3\" y=\"210\" text-anchor=\"middle\">5</text><text x=\"284.0\" y=\"210\" text-anchor=\"middle\">6</text><text x=\"40\" y=\"166.4\" text-anchor=\"end\">30</text><text x=\"40\" y=\"132.8\" text-anchor=\"end\">60</text><text x=\"40\" y=\"99.2\" text-anchor=\"end\">90</text><text x=\"40\" y=\"65.6\" text-anchor=\"end\">120</text><text x=\"40\" y=\"32.0\" text-anchor=\"end\">150</text></g><text x=\"165.0\" y=\"232\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Mass m (kg)</text><text x=\"6\" y=\"14\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Cost C ($)</text><line x1=\"46.0\" y1=\"196.0\" x2=\"284.0\" y2=\"34.7\" stroke=\"#1F4D54\" stroke-width=\"2.2\"/><circle cx=\"244.3\" cy=\"61.6\" r=\"4\" fill=\"#BE5837\"/><text x=\"252.3\" y=\"65.6\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(5, 120)</text></svg>The graph shows the cost of coffee beans. Find the price per kilogram, <span class=\"var\">k</span>, in dollars.",
+        "a": "24",
+        "hint": "Read the marked point: k = 120 ÷ 5."
+      },
+      {
+        "q": "Using the same price per kilogram, how much do 3.5 kg of beans cost, in dollars?",
+        "a": "84",
+        "hint": "C = 24 × 3.5."
+      },
+      {
+        "q": "<span class=\"var\">y</span> is directly proportional to <span class=\"var\">x</span>, and <span class=\"var\">y</span> = 36 when <span class=\"var\">x</span> = 9. Find <span class=\"var\">k</span>.",
+        "a": "4",
+        "hint": "k = 36 ÷ 9."
+      },
+      {
+        "q": "With the same <span class=\"var\">k</span>, find <span class=\"var\">y</span> when <span class=\"var\">x</span> = 14.",
+        "a": "56",
+        "hint": "y = 4 × 14."
+      },
+      {
+        "q": "On one day A$1 buys <strong>€0.60</strong>. How many euros do you get for <strong>A$450</strong>?",
+        "a": "270",
+        "hint": "Euros = 0.60 × 450."
+      },
+      {
+        "q": "At the same rate (A$1 buys €0.60), how many Australian dollars do you need to get <strong>€180</strong>?",
+        "a": "300",
+        "hint": "Work backwards: divide by 0.60.",
+        "fb": {
+          "108": "You multiplied by 0.60. To go from euros back to Australian dollars, divide by 0.60."
+        }
+      },
+      {
+        "q": "In this table <span class=\"var\">y</span> is directly proportional to <span class=\"var\">x</span>. Find <span class=\"var\">k</span>.<table style=\"border-collapse:collapse;margin:6px 0;font-family:Georgia,serif\"><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">x</th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">4</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">6</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">10</td></tr><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">y</th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">10</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">15</td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">25</td></tr></table>",
+        "a": "2.5",
+        "hint": "k = y ÷ x, e.g. 10 ÷ 4."
+      },
+      {
+        "q": "A printer prints <strong>18 pages in 45 seconds</strong>. At this rate, how many pages does it print in 2 minutes?",
+        "a": "48",
+        "hint": "Rate = 18 ÷ 45 = 0.4 pages per second; 2 minutes = 120 seconds.",
+        "fb": {
+          "0.8": "Convert 2 minutes to seconds first: 2 minutes = 120 seconds."
+        }
+      }
+    ],
+    "practice2": [
+      {
+        "q": "<strong>Multiple quotes.</strong> Painter A quotes $1,560 to paint 120 m². Painter B quotes $1,386 to paint 105 m². What is the <strong>cheaper</strong> rate, in dollars per m²?",
+        "a": "13",
+        "hint": "A: 1560 ÷ 120. B: 1386 ÷ 105. Compare the two rates.",
+        "fb": {
+          "13.2": "That is Painter B's rate. Work out Painter A's rate as well and pick the smaller one."
+        }
+      },
+      {
+        "q": "At the cheaper painter's rate, how much would it cost to paint <strong>150 m²</strong>? (Type just the number.)",
+        "a": "1950",
+        "hint": "Cost = 13 × 150."
+      },
+      {
+        "q": "<svg viewBox=\"0 0 260 110\" width=\"260\" role=\"img\" aria-label=\"Photo 1200 by 800 pixels resized to a width of 900 pixels with unknown height\" style=\"display:block;margin:6px 0\"><rect x=\"10\" y=\"10\" width=\"120\" height=\"80\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"70\" y=\"104\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">1200 × 800</text><rect x=\"160\" y=\"30\" width=\"90\" height=\"60\" fill=\"#f3f7f8\" stroke=\"#BE5837\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><text x=\"205\" y=\"64\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#BE5837\">?</text><text x=\"205\" y=\"104\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#BE5837\">900 × ?</text></svg>A 1200 × 800 pixel photo is resized to a width of <strong>900 pixels</strong> without distortion. What is the new height in pixels?",
+        "a": "600",
+        "hint": "Scale factor = 900 ÷ 1200 = 0.75. Apply it to the height too.",
+        "fb": {
+          "500": "You subtracted 300 from the height. Resizing multiplies both sides by the same scale factor."
+        }
+      },
+      {
+        "q": "A 1200 × 800 photo is stretched to <strong>1500 pixels wide</strong> but the height is left at 800, so it looks distorted. To keep it in proportion, what height should it have had?",
+        "a": "1000",
+        "hint": "Width scale factor = 1500 ÷ 1200 = 1.25. Height must also be × 1.25."
+      },
+      {
+        "q": "<svg viewBox=\"0 0 280 170\" width=\"280\" role=\"img\" aria-label=\"Side view of a staircase with each riser R and each going G labelled\" style=\"display:block;margin:6px 0\"><path d=\"M20 150 L20 120 L80 120 L80 90 L140 90 L140 60 L200 60 L200 30 L260 30 L260 150 Z\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"72\" y1=\"120\" x2=\"72\" y2=\"90\" stroke=\"#BE5837\" stroke-width=\"2.5\"/><text x=\"60\" y=\"110\" text-anchor=\"end\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#BE5837\">R</text><line x1=\"80\" y1=\"82\" x2=\"140\" y2=\"82\" stroke=\"#1F4D54\" stroke-width=\"2.5\"/><text x=\"110\" y=\"76\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#1F4D54\">G</text><text x=\"200\" y=\"110\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">riser R, going G</text></svg>A staircase climbs a floor-to-floor height of <strong>2700 mm</strong> using 15 equal risers. What is the height of each riser in mm?",
+        "a": "180",
+        "hint": "Total rise = number of risers × riser height, so divide 2700 by 15."
+      },
+      {
+        "q": "A spring is <strong>20 cm long</strong> with no load and stretches <strong>3 cm per newton</strong>. Only the stretch is proportional to the load. What is the spring's <strong>total length</strong> in cm under a 5 N load?",
+        "a": "35",
+        "hint": "Stretch = 3 × 5 = 15 cm. Add the natural length.",
+        "fb": {
+          "15": "That is only the stretch. The total length adds the 20 cm the spring already had."
+        }
+      }
+    ],
+    "practice3": [
+      {
+        "q": "<svg viewBox=\"0 0 280 170\" width=\"280\" role=\"img\" aria-label=\"Side view of a staircase with each riser R and each going G labelled\" style=\"display:block;margin:6px 0\"><path d=\"M20 150 L20 120 L80 120 L80 90 L140 90 L140 60 L200 60 L200 30 L260 30 L260 150 Z\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"72\" y1=\"120\" x2=\"72\" y2=\"90\" stroke=\"#BE5837\" stroke-width=\"2.5\"/><text x=\"60\" y=\"110\" text-anchor=\"end\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#BE5837\">R</text><line x1=\"80\" y1=\"82\" x2=\"140\" y2=\"82\" stroke=\"#1F4D54\" stroke-width=\"2.5\"/><text x=\"110\" y=\"76\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#1F4D54\">G</text><text x=\"200\" y=\"110\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">riser R, going G</text></svg><strong>Building standard.</strong> In this lesson's stair rule, each riser R must be 115 to 190 mm, and 2R + G must be between 550 and 700 mm. A stair climbs 2850 mm with 15 equal risers and a going G of 270 mm. Calculate 2R + G in mm.",
+        "a": "650",
+        "hint": "R = 2850 ÷ 15 = 190 mm. Then 2 × 190 + 270.",
+        "fb": {
+          "460": "You added R + G. The rule uses 2R + G: double the riser first."
+        }
+      },
+      {
+        "q": "<svg viewBox=\"0 0 300 170\" width=\"300\" role=\"img\" aria-label=\"Escalator drawn as a right-angled triangle with vertical rise 4.9 m and unknown horizontal run\" style=\"display:block;margin:6px 0\"><path d=\"M30 140 L250 140 L250 30 Z\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"30\" y1=\"140\" x2=\"250\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"3\"/><rect x=\"240\" y=\"130\" width=\"10\" height=\"10\" fill=\"none\" stroke=\"#1F4D54\"/><text x=\"140\" y=\"160\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#1F4D54\">horizontal run = ? m</text><text x=\"258\" y=\"90\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#1F4D54\">4.9 m</text><text x=\"110\" y=\"76\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#BE5837\">escalator</text></svg><strong>Escalator.</strong> A shopping-centre escalator rises <strong>7 m vertically for every 12 m horizontally</strong>. The floors are 4.9 m apart. What horizontal run does the escalator need, in metres?",
+        "a": "8.4",
+        "hint": "Horizontal = vertical × 12 ÷ 7 = 4.9 × 12 ÷ 7."
+      },
+      {
+        "q": "<strong>Evaluate the model.</strong> Booth A swaps A$1 for US$0.66 with no fee. Booth B offers US$0.68 per A$1 but first takes a <strong>A$15 fee</strong>. How many US dollars does Booth B give for A$600?",
+        "a": "397.8",
+        "hint": "Take off the fee first: (600 − 15) × 0.68.",
+        "fb": {
+          "408": "You forgot the fee. Subtract A$15 before converting."
+        }
+      },
+      {
+        "q": "Loads of 2 N, 5 N and 8 N stretch a spring by 3.2 cm, 8.0 cm and 12.8 cm. Assuming the model holds, what load (in N) would stretch it by <strong>20 cm</strong>?",
+        "a": "12.5",
+        "hint": "k = 3.2 ÷ 2 = 1.6 cm per N. Load = 20 ÷ 1.6.",
+        "fb": {
+          "32": "You multiplied 20 by 1.6. To find the load from a stretch, divide by k."
+        }
+      }
+    ],
+    "exitProbs": [
+      {
+        "q": "<span class=\"var\">y</span> is directly proportional to <span class=\"var\">x</span>, and <span class=\"var\">y</span> = 45 when <span class=\"var\">x</span> = 6. Find <span class=\"var\">y</span> when <span class=\"var\">x</span> = 10.",
+        "a": "75",
+        "hint": "k = 45 ÷ 6 = 7.5, then y = 7.5 × 10."
+      },
+      {
+        "q": "A 1600 × 900 pixel photo is resized to a width of 800 pixels without distortion. What is the new height in pixels?",
+        "a": "450",
+        "hint": "Scale factor = 800 ÷ 1600 = 0.5."
+      },
+      {
+        "q": "A taxi charges a <strong>$4 flag-fall plus $2.20 per km</strong>. Explain why the total fare is <strong>not</strong> directly proportional to the distance, and how its graph would show this.",
+        "a": "TEXT",
+        "hint": "What does a 0 km trip cost? Does doubling the distance double the fare? Where does the line cross the vertical axis?"
+      }
+    ]
+  }
+}
