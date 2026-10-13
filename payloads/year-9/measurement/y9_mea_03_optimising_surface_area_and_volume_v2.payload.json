@@ -1,0 +1,258 @@
+{
+ "payload_version": 1,
+ "filename": "y9_mea_03_optimising_surface_area_and_volume_v2.html",
+ "title": "Optimising Surface Area and Volume — Year 9",
+ "header": {
+  "title": "Optimising Surface Area and Volume",
+  "subtitle": "Same volume, less material: which shape wins?",
+  "badge": "Year 9 · Measurement"
+ },
+ "meta": {
+  "lesson-id": "y9_mea_03",
+  "lesson-focus": "Investigate optimisation problems — prisms with the same volume but different surface areas; can-cooler material minimisation; conjecture and test which shapes give the smallest surface area for a given volume; First Nations objects/technologies as SA-volume contexts.",
+  "ac9-descriptor": "AC9M9M01",
+  "ac9-descriptor-text": "solve problems involving the volume and surface area of right prisms and cylinders using appropriate units",
+  "ac9-elaborations": "3,4",
+  "sa-year": "9",
+  "sa-strand": "Measurement",
+  "mapping-note": "Strict",
+  "sa-conceptual-understanding": "Spatial relationships in 1, 2 and 3 dimensions can be quantified using appropriate units to solve problems in various contexts"
+ },
+ "html": {
+  "section0_intro": "Last lesson you found the volume and surface area of cylinders; before that, right prisms. Today you put both together. These three questions check the skills you need.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's measurement.</p>\n<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>\n  <div>\n    <p>A cereal company needs a box that holds <strong>1000 cm³</strong>. One designer suggests a long, flat box 20 cm × 5 cm × 10 cm. Another suggests a 10 cm cube.</p>\n    <p>Both hold exactly the same cereal. But the flat box needs <strong>700 cm²</strong> of card and the cube only <strong>600 cm²</strong>. At $0.002 per cm², that is 20 cents saved per box, or <strong>$2000</strong> on a run of 10&nbsp;000 boxes.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    Same <strong>volume</strong>, different <strong>surface area</strong>. Today you investigate which shapes hold a fixed volume using the least material, make a conjecture, and test it on boxes, cans and can-coolers.\n  </div>\n</div>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Volume<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The amount of <strong>space</strong> inside a solid, in cubic units.<div class='vocab-example'>A 4 cm cube has volume 64 cm³.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Surface area<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The total area of all the <strong>faces</strong> of a solid, in square units.<div class='vocab-example'>The card needed to make a box.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Capacity<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>How much a container can <strong>hold</strong>, in mL or L.<div class='vocab-example'>1 cm³ = 1 mL; 1000 cm³ = 1 L.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Optimise<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>Find the <strong>best</strong> choice: here, the least material for a fixed volume.<div class='vocab-example'>Least card for a 1 L carton.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Conjecture<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A statement you <strong>think</strong> is true, based on evidence, that still needs testing.<div class='vocab-example'>“Cubes use the least card.”</div></div>\n  </div>\n</div>",
+  "section3_heading": "Same volume, different card",
+  "section3_desc": "Drag each 36 cm³ box into <strong>📦 Less than 100 cm²</strong> or <strong>📏 100 cm² or more</strong>.",
+  "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Every box holds 36 cm³. Work out each surface area, then sort.</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='small'>3 × 3 × 4 box</span>\n    <span class='term-chip variable' data-type='large'>1 × 3 × 12 box</span>\n    <span class='term-chip constant' data-type='small'>2 × 3 × 6 box</span>\n    <span class='term-chip variable' data-type='large'>1 × 1 × 36 box</span>\n    <span class='term-chip constant' data-type='small'>2 × 2 × 9 box</span>\n    <span class='term-chip variable' data-type='large'>1 × 2 × 18 box</span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='small'>\n      <h4 style='color:var(--navy)'>📦 Less than 100 cm² of card</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='large'>\n      <h4 style='color:var(--coral)'>📏 100 cm² of card or more</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 Same volume, different card. The boxes in the first bucket are all <strong>close to a cube</strong>; the long, thin ones need far more card to hold exactly the same amount.\n</div>",
+  "section4_heading": "Match each 8 cm³ box to its surface area, and each volume to its capacity",
+  "section6_heading": "We do: the 1 litre juice carton",
+  "worked_example": "<style>\n  .opt-layout { display:grid; grid-template-columns:1.4fr 1fr; gap:18px; margin-bottom:14px; }\n  .opt-figs { background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:12px; display:flex; flex-direction:column; gap:8px; }\n  .opt-figs svg { width:100%; height:auto; display:block; }\n  .opt-controls { background:var(--bg); border:1.5px solid var(--border); border-radius:10px; padding:18px; display:flex; flex-direction:column; gap:12px; }\n  .opt-readout { background:#fff; border-left:4px solid var(--navy); padding:10px 14px; border-radius:6px; font-family:Georgia,serif; color:var(--navy); font-size:1.02rem; line-height:1.7; }\n  .opt-readout .big { font-size:1.3rem; color:var(--coral); font-weight:bold; }\n  .opt-row label { display:flex; justify-content:space-between; align-items:baseline; font-family:Georgia,serif; color:var(--navy); font-weight:600; }\n  .opt-row .slider-value { font-family:monospace; font-size:1.05rem; background:var(--hint-bg); padding:2px 10px; border-radius:6px; }\n  .opt-row input[type=\"range\"] { width:100%; accent-color:var(--coral); }\n  .opt-challenge { background:var(--coral-soft); border-left:4px solid var(--coral); padding:12px 14px; border-radius:6px; }\n  .opt-challenge h4 { margin:0 0 4px; font-family:Georgia,serif; color:var(--coral); font-size:.95rem; }\n  .opt-challenge p { margin:0; font-size:.88rem; }\n  .opt-challenge button { margin-top:8px; background:var(--coral); color:#fff; border:none; padding:6px 14px; border-radius:6px; font-weight:600; cursor:pointer; }\n  .opt-status { margin-top:8px; font-size:.88rem; color:var(--muted); }\n  .opt-status.win { color:var(--good); font-weight:700; }\n  @media (max-width: 800px) { .opt-layout { grid-template-columns:1fr; } }\n</style>\n<p class='sec-desc'><strong>Explore first.</strong> Every box below holds exactly <strong>64 cm³</strong> and has a square base. Drag the slider to change the base side <span class=\"var\">x</span>; the height changes so the volume stays 64 cm³. Watch the surface area.</p>\n<div class=\"opt-layout\">\n  <div class=\"opt-figs\">\n    <svg id=\"optBoxSvg\" viewBox=\"0 0 320 200\" role=\"img\" aria-label=\"Square-based box holding 64 cubic centimetres; its shape changes with the slider\">\n      <polygon id=\"optFront\" points=\"0,0\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n      <polygon id=\"optTop\" points=\"0,0\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n      <polygon id=\"optSide\" points=\"0,0\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n      <text id=\"optLblX\" x=\"0\" y=\"0\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"13\" font-weight=\"bold\">x</text>\n      <text id=\"optLblH\" x=\"0\" y=\"0\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"13\" font-weight=\"bold\">h</text>\n    </svg>\n    <svg id=\"optGraph\" viewBox=\"0 0 320 190\" role=\"img\" aria-label=\"Graph of surface area against base side length for boxes of volume 64 cubic centimetres, lowest at base side 4 cm\">\n      <line x1=\"44\" y1=\"160\" x2=\"306\" y2=\"160\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/>\n      <line x1=\"44\" y1=\"160\" x2=\"44\" y2=\"14\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/>\n      <g id=\"optTicks\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"></g>\n      <text x=\"175\" y=\"186\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"11\" fill=\"#2a2a2a\">base side x (cm)</text>\n      <text x=\"12\" y=\"90\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"11\" fill=\"#2a2a2a\" transform=\"rotate(-90 12 90)\">SA (cm²)</text>\n      <path id=\"optCurve\" d=\"\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"2\"/>\n      <circle id=\"optDot\" cx=\"0\" cy=\"0\" r=\"6\" fill=\"#BE5837\" stroke=\"#fff\" stroke-width=\"2\"/>\n    </svg>\n  </div>\n  <div class=\"opt-controls\">\n    <div class=\"opt-row\">\n      <label>Base side <span class=\"var\">x</span> <span class=\"slider-value\" id=\"optXVal\">2</span></label>\n      <input type=\"range\" id=\"optX\" min=\"1\" max=\"8\" step=\"0.5\" value=\"2\" oninput=\"optUpdate()\" aria-label=\"Base side length in cm\">\n    </div>\n    <div class=\"opt-readout\">\n      Base: <span id=\"optBase\">2 × 2</span> cm<br>\n      Height <span class=\"var\">h</span> = 64 ÷ <span class=\"var\">x</span>² = <span id=\"optH\">16</span> cm<br>\n      Volume = <span id=\"optV\">64</span> cm³<br>\n      SA = 2<span class=\"var\">x</span>² + 4<span class=\"var\">x</span><span class=\"var\">h</span> = <span class=\"big\" id=\"optSA\">136</span> cm²\n    </div>\n    <div class=\"opt-challenge\">\n      <h4>🎯 Challenge</h4>\n      <p>Set the slider to the base side that uses the <strong>least card</strong>, then press Check.</p>\n      <button onclick=\"optCheck()\">Check</button>\n      <div class=\"opt-status\" id=\"optStatus\"></div>\n    </div>\n  </div>\n</div>\n<p class='sec-desc'><strong>Now prove it.</strong> Compare two boxes that each hold 64 cm³: a 4 cm cube and a 8 cm × 2 cm × 4 cm box.</p>\n<div style=\"display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end\"><svg viewBox=\"0 0 210 138\" width=\"180\" role=\"img\" aria-label=\"Rectangular prism 4 cm by 4 cm by 4 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,112.0 108.06451612903226,112.0 108.06451612903226,53.935483870967744 50,53.935483870967744\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,53.935483870967744 108.06451612903226,53.935483870967744 140.0,22.0 81.93548387096774,22.0\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"108.06451612903226,112.0 140.0,80.06451612903226 140.0,22.0 108.06451612903226,53.935483870967744\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"79.0\" y=\"129.0\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text><text x=\"44.0\" y=\"87.0\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text><text x=\"132.0\" y=\"106.0\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text></svg><svg viewBox=\"0 0 240 115\" width=\"220\" role=\"img\" aria-label=\"Rectangular prism 8 cm by 2 cm by 4 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,89.25274725274727 155.49450549450552,89.25274725274727 155.49450549450552,36.50549450549452 50,36.50549450549452\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,36.50549450549452 155.49450549450552,36.50549450549452 170.00000000000003,22.00000000000001 64.50549450549451,22.00000000000001\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"155.49450549450552,89.25274725274727 170.00000000000003,74.74725274725276 170.00000000000003,22.00000000000001 155.49450549450552,36.50549450549452\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"102.7\" y=\"106.3\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">8 cm</text><text x=\"44.0\" y=\"66.9\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text><text x=\"170.7\" y=\"92.0\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">2 cm</text></svg></div>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Check the volumes match</div>\n      <div class='step-desc'>We can only compare fairly if both boxes hold the same amount.</div>\n      <div class='calc-box'><span class='blue'>Cube: 4 × 4 × 4 = 64 cm³</span><br><span class='red'>Box: 8 × 2 × 4 = 64 cm³</span></div>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Find each surface area</div>\n      <div class='step-desc'>Three pairs of faces: SA = 2(<span class=\"var\">l</span><span class=\"var\">w</span> + <span class=\"var\">l</span><span class=\"var\">h</span> + <span class=\"var\">w</span><span class=\"var\">h</span>).</div>\n      <div class='calc-box'>Cube: 6 × 16 = <span class='blue'>96 cm²</span><br>Box: 2 × (16 + 32 + 8) = <span class='red'>112 cm²</span></div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Compare and conjecture</div>\n      <div class='step-desc'>The cube needs 16 cm² less card. The slider showed the same thing: the lowest point on the graph is at <span class=\"var\">x</span> = 4, the cube.</div>\n      <div class='summary-banner'>\n        <span class='label'>Conjecture</span>\n        For a fixed volume, the box closest to a cube has the smallest surface area.\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+  "we_do_intro": "Three cartons, each holding exactly 1 L. Work through each prompt with a partner, then we check as a class: which design should the juice company choose?",
+  "footer_title": "Optimising Surface Area and Volume",
+  "strategy_section": "<style>\n  section.lesson.hinge { background:#f7faff; border-left:5px solid var(--navy); }\n  .hinge-tag { display:inline-flex; align-items:center; gap:6px; margin-left:auto; padding:4px 12px; border-radius:999px; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; font-weight:700; background:var(--navy); color:#fff; white-space:nowrap; }\n  .hinge-stem { background:#fff; border:1px solid var(--border); border-radius:10px; padding:18px 20px; font-family:Georgia,serif; font-size:1.15rem; color:var(--navy); margin-bottom:18px; box-shadow:var(--shadow); }\n  .hinge-options { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; }\n  .hinge-opt { background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:14px 18px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px; font-family:Georgia,serif; font-size:1.1rem; text-align:left; }\n  .hinge-opt:hover { border-color:var(--navy); transform:translateY(-1px); }\n  .hinge-opt .opt-letter { background:var(--hint-bg); color:var(--navy); width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:-apple-system,sans-serif; font-weight:700; flex-shrink:0; }\n  .hinge-opt.selected.correct { background:var(--good-soft); border-color:var(--good); }\n  .hinge-opt.selected.correct .opt-letter { background:var(--good); color:#fff; }\n  .hinge-opt.selected.incorrect { background:var(--bad-soft); border-color:var(--bad); }\n  .hinge-opt.selected.incorrect .opt-letter { background:var(--bad); color:#fff; }\n  .hinge-opt.dimmed { opacity:.45; cursor:not-allowed; }\n  .hinge-feedback { margin-top:18px; padding:14px 18px; border-radius:8px; font-size:.95rem; display:none; }\n  .hinge-feedback.visible { display:block; }\n  .hinge-feedback.correct { background:var(--good-soft); color:#1d4a30; border-left:4px solid var(--good); }\n  .hinge-feedback.incorrect { background:var(--bad-soft); color:#6a2520; border-left:4px solid var(--bad); }\n  .hinge-reset { background:#fff; color:var(--navy); border:1.5px solid var(--navy); padding:7px 14px; border-radius:8px; cursor:pointer; font-size:.85rem; font-weight:600; margin-top:12px; }\n  body.teacher-mode .hinge-opt.correct-answer { box-shadow:0 0 0 3px var(--good); }\n</style>\n<section class=\"lesson hinge\">\n  <h2><span class=\"sec-num\">★</span>Hinge check<span class=\"hinge-tag\">🎯 Pick one</span></h2>\n  <p class=\"sec-desc\">Before the exit ticket: one question, four answers. Each wrong answer points to a different mistake.</p>\n  <div class=\"hinge-stem\"><svg viewBox=\"0 0 244 85\" width=\"244\" role=\"img\" aria-label=\"Rectangular prism 16 cm by 1 cm by 4 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,59.003021148036254 166.01208459214502,59.003021148036254 166.01208459214502,30.0 50,30.0\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,30.0 166.01208459214502,30.0 174.01208459214502,22.0 58,22.0\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"166.01208459214502,59.003021148036254 174.01208459214502,51.003021148036254 174.01208459214502,22.0 166.01208459214502,30.0\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"108.0\" y=\"76.0\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">16 cm</text><text x=\"44.0\" y=\"48.5\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text><text x=\"178.0\" y=\"65.0\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">1 cm</text></svg>A 4 cm cube (surface area 96 cm²) and a 16 cm × 1 cm × 4 cm box both hold 64 cm³. What is the surface area of the 16 cm × 1 cm × 4 cm box?</div>\n  <div class=\"hinge-options\" id=\"hingeOpts\">\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-A\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">A</span><span>64 cm²</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-B\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">B</span><span>96 cm²</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-C\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">C</span><span>84 cm²</span></button>\n    <button class=\"hinge-opt correct-answer\" data-correct=\"true\" data-feedback-id=\"fb-D\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">D</span><span>168 cm²</span></button>\n  </div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-A\"><strong>That is the volume, not the surface area.</strong> 16 × 1 × 4 = 64 cm³ measures the space inside. Surface area adds up the areas of the six faces, in cm².</div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-B\"><strong>Same volume does not mean same surface area.</strong> That is the cube's surface area. Work it out for this box: 2 × (16 + 64 + 4).</div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-C\"><strong>You found only half the faces.</strong> 16 + 64 + 4 = 84 counts one face from each pair. A box has two of each, so double it.</div>\n  <div class=\"hinge-feedback correct\" id=\"fb-D\"><strong>Correct.</strong> 2 × (16×1 + 16×4 + 1×4) = 2 × 84 = 168 cm², far more than the cube's 96 cm² for the same 64 cm³. Long, thin boxes waste card.</div>\n  <button class=\"hinge-reset\" onclick=\"resetHinge()\">↺ Try again</button>\n</section>",
+  "strategy_js": "// Fixed-volume optimisation slider: square-based box, V = 64 cm^3.\nconst OPT_V = 64;\nfunction optSA(x) { return 2 * x * x + 4 * OPT_V / x; }\nfunction optFmt(n) { return Math.round(n * 100) / 100; }\nconst OPT_G = { x0: 44, y0: 160, xs: 260 / 7, ys: 146 / 280 };\nfunction optGx(x) { return OPT_G.x0 + (x - 1) * OPT_G.xs; }\nfunction optGy(s) { return OPT_G.y0 - s * OPT_G.ys; }\n(function optBuildGraph() {\n  let d = '';\n  for (let x = 1; x <= 8.0001; x += 0.05) d += (d ? ' L' : 'M') + optGx(x).toFixed(1) + ' ' + optGy(optSA(x)).toFixed(1);\n  document.getElementById('optCurve').setAttribute('d', d);\n  let t = '';\n  for (let x = 1; x <= 8; x++) t += '<text x=\"' + optGx(x) + '\" y=\"173\" text-anchor=\"middle\">' + x + '</text>';\n  [0, 100, 200].forEach(function (s) { t += '<text x=\"39\" y=\"' + (optGy(s) + 3) + '\" text-anchor=\"end\">' + s + '</text>'; });\n  document.getElementById('optTicks').innerHTML = t;\n})();\nfunction optUpdate() {\n  const x = parseFloat(document.getElementById('optX').value);\n  const h = OPT_V / (x * x);\n  const sa = optSA(x);\n  // oblique drawing scaled to fit 320 x 200\n  const s = Math.min(150 / (x * 1.55), 150 / (h + 0.55 * x));\n  const L = Math.max(x * s, 8), H = Math.max(h * s, 6), D = Math.max(x * s * 0.55, 6);\n  const x0 = 60, y0 = 180, fx1 = x0 + L, fy0 = y0 - H;\n  document.getElementById('optFront').setAttribute('points', x0 + ',' + y0 + ' ' + fx1 + ',' + y0 + ' ' + fx1 + ',' + fy0 + ' ' + x0 + ',' + fy0);\n  document.getElementById('optTop').setAttribute('points', x0 + ',' + fy0 + ' ' + fx1 + ',' + fy0 + ' ' + (fx1 + D) + ',' + (fy0 - D) + ' ' + (x0 + D) + ',' + (fy0 - D));\n  document.getElementById('optSide').setAttribute('points', fx1 + ',' + y0 + ' ' + (fx1 + D) + ',' + (y0 - D) + ' ' + (fx1 + D) + ',' + (fy0 - D) + ' ' + fx1 + ',' + fy0);\n  const lx = document.getElementById('optLblX');\n  lx.setAttribute('x', x0 + L / 2); lx.setAttribute('y', Math.min(y0 + 15, 197)); lx.textContent = optFmt(x) + ' cm';\n  const lh = document.getElementById('optLblH');\n  lh.setAttribute('x', x0 - 6); lh.setAttribute('y', y0 - H / 2 + 4); lh.textContent = optFmt(h) + ' cm';\n  const dot = document.getElementById('optDot');\n  dot.setAttribute('cx', optGx(x)); dot.setAttribute('cy', optGy(sa));\n  document.getElementById('optXVal').textContent = optFmt(x);\n  document.getElementById('optBase').textContent = optFmt(x) + ' × ' + optFmt(x);\n  document.getElementById('optH').textContent = optFmt(h);\n  document.getElementById('optV').textContent = optFmt(x * x * h);\n  document.getElementById('optSA').textContent = optFmt(sa);\n  const st = document.getElementById('optStatus');\n  st.textContent = ''; st.classList.remove('win');\n}\nfunction optCheck() {\n  const x = parseFloat(document.getElementById('optX').value);\n  const st = document.getElementById('optStatus');\n  st.classList.remove('win');\n  if (x === 4) {\n    st.classList.add('win');\n    st.textContent = '✓ Yes! x = 4 cm, h = 4 cm: a cube, with SA = 96 cm², the lowest point on the graph.';\n  } else {\n    st.textContent = 'Not yet: SA here is ' + optFmt(optSA(x)) + ' cm². Look for the lowest point on the graph.';\n  }\n}\noptUpdate();\nfunction pickHingeOption(btn) {\n  if (btn.classList.contains('dimmed')) return;\n  const isCorrect = btn.dataset.correct === 'true';\n  btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');\n  document.querySelectorAll('.hinge-opt').forEach(o => { if (o !== btn) o.classList.add('dimmed'); });\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n  const fbId = btn.dataset.feedbackId;\n  if (fbId) document.getElementById(fbId).classList.add('visible');\n}\nfunction resetHinge() {\n  document.querySelectorAll('.hinge-opt').forEach(o => o.classList.remove('selected', 'correct', 'incorrect', 'dimmed'));\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n}\n"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "<svg viewBox=\"0 0 178 138\" width=\"178\" role=\"img\" aria-label=\"Rectangular prism 2 cm by 3 cm by 4 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,112.0 81.85840707964601,112.0 81.85840707964601,48.28318584070797 50,48.28318584070797\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,48.28318584070797 81.85840707964601,48.28318584070797 108.14159292035399,22.000000000000007 76.28318584070797,22.000000000000007\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"81.85840707964601,112.0 108.14159292035399,85.71681415929203 108.14159292035399,22.000000000000007 81.85840707964601,48.28318584070797\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"65.9\" y=\"129.0\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">2 cm</text><text x=\"44.0\" y=\"84.1\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text><text x=\"103.0\" y=\"108.9\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">3 cm</text></svg>A box measures 2 cm × 3 cm × 4 cm. What is its volume in cm³?",
+    "a": "24",
+    "hint": "Volume of a rectangular prism = length × width × height."
+   },
+   {
+    "q": "Surface area of the same 2 cm × 3 cm × 4 cm box, in cm²?",
+    "a": "52",
+    "hint": "Three pairs of faces: 2 × (2×3 + 2×4 + 3×4).",
+    "fb": {
+     "26": "That is only one of each pair of faces. A box has two of each face, so double it."
+    }
+   },
+   {
+    "q": "A cylinder has radius 2 cm and height 5 cm. Its curved surface area is ___π cm². Type just the number in front of π.",
+    "a": "20",
+    "hint": "Curved surface = 2πrh = 2π × 2 × 5."
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "Cube 2 × 2 × 2",
+    "group": 1
+   },
+   {
+    "html": "SA = 24 cm²",
+    "group": 1
+   },
+   {
+    "html": "Box 1 × 2 × 4",
+    "group": 2
+   },
+   {
+    "html": "SA = 28 cm²",
+    "group": 2
+   },
+   {
+    "html": "Box 1 × 1 × 8",
+    "group": 3
+   },
+   {
+    "html": "SA = 34 cm²",
+    "group": 3
+   },
+   {
+    "html": "1 cm³ of space",
+    "group": 4
+   },
+   {
+    "html": "1 mL of capacity",
+    "group": 4
+   },
+   {
+    "html": "1000 cm³ of space",
+    "group": 5
+   },
+   {
+    "html": "1 L of capacity",
+    "group": 5
+   }
+  ],
+  "weDo": [
+   {
+    "q": "<div style=\"display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end\"><svg viewBox=\"0 0 210 138\" width=\"170\" role=\"img\" aria-label=\"Rectangular prism 10 cm by 10 cm by 10 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,112.0 108.06451612903226,112.0 108.06451612903226,53.935483870967744 50,53.935483870967744\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,53.935483870967744 108.06451612903226,53.935483870967744 140.0,22.0 81.93548387096774,22.0\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"108.06451612903226,112.0 140.0,80.06451612903226 140.0,22.0 108.06451612903226,53.935483870967744\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"79.0\" y=\"129.0\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">10 cm</text><text x=\"44.0\" y=\"87.0\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">10 cm</text><text x=\"132.0\" y=\"106.0\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">10 cm</text></svg><svg viewBox=\"0 0 240 115\" width=\"200\" role=\"img\" aria-label=\"Rectangular prism 20 cm by 5 cm by 10 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,89.25274725274724 155.4945054945055,89.25274725274724 155.4945054945055,36.5054945054945 50,36.5054945054945\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,36.5054945054945 155.4945054945055,36.5054945054945 170.0,21.999999999999993 64.50549450549451,21.999999999999993\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"155.4945054945055,89.25274725274724 170.0,74.74725274725273 170.0,21.999999999999993 155.4945054945055,36.5054945054945\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"102.7\" y=\"106.3\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">20 cm</text><text x=\"44.0\" y=\"66.9\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">10 cm</text><text x=\"170.7\" y=\"92.0\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">5 cm</text></svg><svg viewBox=\"0 0 240 70\" width=\"230\" role=\"img\" aria-label=\"Rectangular prism 40 cm by 5 cm by 5 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,44.03508771929825 162.28070175438597,44.03508771929825 162.28070175438597,30.0 50,30.0\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,30.0 162.28070175438597,30.0 170.28070175438597,22.0 58,22.0\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"162.28070175438597,44.03508771929825 170.28070175438597,36.03508771929825 170.28070175438597,22.0 162.28070175438597,30.0\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"106.1\" y=\"61.0\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">40 cm</text><text x=\"44.0\" y=\"41.0\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">5 cm</text><text x=\"174.3\" y=\"50.0\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">5 cm</text></svg></div>Each juice carton holds 1000 cm³ (1 L). The cube 10 cm × 10 cm × 10 cm needs 600 cm² of card. Surface area of the 20 cm × 5 cm × 10 cm carton, in cm²?",
+    "a": "700",
+    "hint": "2 × (20×5 + 20×10 + 5×10)."
+   },
+   {
+    "q": "Surface area of the 40 cm × 5 cm × 5 cm carton, in cm²?",
+    "a": "850",
+    "hint": "2 × (40×5 + 40×5 + 5×5)."
+   },
+   {
+    "q": "How many cm² of card does the cube save compared with the longest carton?",
+    "a": "250",
+    "hint": "Subtract the smallest surface area from the largest."
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "<svg viewBox=\"0 0 241 94\" width=\"230\" role=\"img\" aria-label=\"Rectangular prism 9 cm by 1 cm by 3 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,67.69633507853402 163.0890052356021,67.69633507853402 163.0890052356021,29.999999999999993 50,29.999999999999993\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,29.999999999999993 163.0890052356021,29.999999999999993 171.0890052356021,21.999999999999993 58,21.999999999999993\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"163.0890052356021,67.69633507853402 171.0890052356021,59.69633507853402 171.0890052356021,21.999999999999993 163.0890052356021,29.999999999999993\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"106.5\" y=\"84.7\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">9 cm</text><text x=\"44.0\" y=\"52.8\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">3 cm</text><text x=\"175.1\" y=\"73.7\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">1 cm</text></svg>A 9 cm × 1 cm × 3 cm box and a 3 cm cube both hold 27 cm³. Surface area of the 9 cm × 1 cm × 3 cm box, in cm²?",
+    "a": "78",
+    "hint": "2 × (9×1 + 9×3 + 1×3).",
+    "fb": {
+     "27": "27 is the volume (cm³), not the surface area. Add up the areas of the six faces."
+    }
+   },
+   {
+    "q": "How many more cm² of card does that box need than the 3 cm cube (surface area 54 cm²)?",
+    "a": "24",
+    "hint": "Subtract 54 from the box's surface area."
+   }
+  ],
+  "practice1": [
+   {
+    "q": "<svg viewBox=\"0 0 240 102\" width=\"230\" role=\"img\" aria-label=\"Rectangular prism 8 cm by 2 cm by 3 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,76.06593406593407 155.49450549450552,76.06593406593407 155.49450549450552,36.50549450549451 50,36.50549450549451\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,36.50549450549451 155.49450549450552,36.50549450549451 170.00000000000003,22.000000000000004 64.50549450549451,22.000000000000004\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"155.49450549450552,76.06593406593407 170.00000000000003,61.56043956043956 170.00000000000003,22.000000000000004 155.49450549450552,36.50549450549451\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"102.7\" y=\"93.1\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">8 cm</text><text x=\"44.0\" y=\"60.3\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">3 cm</text><text x=\"170.7\" y=\"78.8\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">2 cm</text></svg>Volume of a 8 cm × 2 cm × 3 cm box, in cm³?",
+    "a": "48",
+    "hint": "8 × 2 × 3."
+   },
+   {
+    "q": "Surface area of the 8 cm × 2 cm × 3 cm box, in cm²?",
+    "a": "92",
+    "hint": "2 × (8×2 + 8×3 + 2×3)."
+   },
+   {
+    "q": "<svg viewBox=\"0 0 227 138\" width=\"227\" role=\"img\" aria-label=\"Rectangular prism 4 cm by 4 cm by 3 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,112.0 119.23076923076923,112.0 119.23076923076923,60.07692307692308 50,60.07692307692308\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,60.07692307692308 119.23076923076923,60.07692307692308 157.30769230769232,22.0 88.07692307692308,22.0\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"119.23076923076923,112.0 157.30769230769232,73.92307692307692 157.30769230769232,22.0 119.23076923076923,60.07692307692308\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"84.6\" y=\"129.0\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text><text x=\"44.0\" y=\"90.0\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">3 cm</text><text x=\"146.3\" y=\"103.0\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">4 cm</text></svg>Volume of a 4 cm × 4 cm × 3 cm box, in cm³?",
+    "a": "48",
+    "hint": "4 × 4 × 3."
+   },
+   {
+    "q": "Surface area of the 4 cm × 4 cm × 3 cm box, in cm²?",
+    "a": "80",
+    "hint": "2 × (4×4 + 4×3 + 4×3)."
+   },
+   {
+    "q": "Both boxes hold 48 cm³. How many cm² less card does the 4 cm × 4 cm × 3 cm box use than the 8 cm × 2 cm × 3 cm box?",
+    "a": "12",
+    "hint": "Subtract the two surface areas."
+   },
+   {
+    "q": "A cube holds 125 cm³. What is its side length in cm?",
+    "a": "5",
+    "hint": "Which number cubed is 125?"
+   },
+   {
+    "q": "Surface area of that 5 cm cube, in cm²?",
+    "a": "150",
+    "hint": "6 faces, each 5 × 5.",
+    "fb": {
+     "125": "125 is the volume. Surface area is 6 faces × 25 cm² each."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 245 79\" width=\"230\" role=\"img\" aria-label=\"Rectangular prism 25 cm by 1 cm by 5 cm\" style=\"display:block;margin:6px 0\"><polygon points=\"50,53.483365949119374 167.41682974559686,53.483365949119374 167.41682974559686,30.0 50,30.0\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"50,30.0 167.41682974559686,30.0 175.41682974559686,22.0 58,22.0\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><polygon points=\"167.41682974559686,53.483365949119374 175.41682974559686,45.483365949119374 175.41682974559686,22.0 167.41682974559686,30.0\" fill=\"#c9dadd\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"108.7\" y=\"70.5\" text-anchor=\"middle\" fill=\"#BE5837\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">25 cm</text><text x=\"44.0\" y=\"45.7\" text-anchor=\"end\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">5 cm</text><text x=\"179.4\" y=\"59.5\" text-anchor=\"start\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\">1 cm</text></svg>A 25 cm × 1 cm × 5 cm box also holds 125 cm³. Surface area, in cm²?",
+    "a": "310",
+    "hint": "2 × (25×1 + 25×5 + 1×5)."
+   },
+   {
+    "q": "A box has a square base 5 cm by 5 cm and holds 100 cm³. What is its height in cm?",
+    "a": "4",
+    "hint": "Volume = base area × height, so height = 100 ÷ 25."
+   },
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 2 cm and height 8 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 2 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 8 cm</text></svg>Volume of this cylinder: ___π cm³. Type just the number in front of π.",
+    "a": "32",
+    "hint": "V = πr²h = π × 4 × 8."
+   }
+  ],
+  "practice2": [
+   {
+    "q": "Of all whole-number boxes that hold 24 cm³, the 2 cm × 3 cm × 4 cm box uses the least card. What is its surface area in cm²?",
+    "a": "52",
+    "hint": "2 × (2×3 + 2×4 + 3×4)."
+   },
+   {
+    "q": "The 24 cm × 1 cm × 1 cm box also holds 24 cm³. Surface area, in cm²?",
+    "a": "98",
+    "hint": "2 × (24×1 + 24×1 + 1×1)."
+   },
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 2 cm and height 8 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 2 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 8 cm</text></svg>Three closed cans each hold 32π cm³. Can A has r = 2 cm, h = 8 cm. Its total surface area is ___π cm². Type just the number in front of π.",
+    "a": "40",
+    "hint": "SA = 2πr² + 2πrh = 2π×4 + 2π×2×8."
+   },
+   {
+    "q": "Can B has r = 4 cm, h = 2 cm (also 32π cm³). Total surface area: ___π cm².",
+    "a": "48",
+    "hint": "2π×16 + 2π×4×2."
+   },
+   {
+    "q": "Can C has r = 1 cm, h = 32 cm, so its surface area is 66π cm². Which radius gave the least metal: type 1, 2 or 4.",
+    "a": "2",
+    "hint": "Compare 40π, 48π and 66π."
+   },
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 3.5 cm and height 12 cm\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#f3f7f8\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 3.5 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 12 cm</text></svg><strong>Can-cooler fundraiser.</strong> A foam sleeve wraps a can of radius 3.5 cm and height 12 cm, open at both ends. Foam costs $0.01 per cm². Using π = 3.14, what does the foam for 40 sleeves cost, in dollars?",
+    "a": "105.50",
+    "hint": "One sleeve is the curved surface only: 2 × 3.14 × 3.5 × 12 = 263.76 cm². Then × 0.01 × 40."
+   }
+  ],
+  "practice3": [
+   {
+    "q": "A box has a base 2 cm by 8 cm and holds the same volume as a 4 cm cube (64 cm³). How many more cm² of card does it need than the cube?",
+    "a": "16",
+    "hint": "Height = 64 ÷ 16 = 4 cm. Then SA = 2 × (16 + 8 + 32); the cube is 96 cm²."
+   },
+   {
+    "q": "<svg viewBox=\"0 -14 215 149\" width=\"215\" role=\"img\" aria-label=\"Cylinder with radius 10 cm and height 30 cm, open at the top\" style=\"display:block;margin:6px 0\"><path d=\"M30 30 L30 100 A40 12 0 0 0 110 100 L110 30\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><ellipse cx=\"70\" cy=\"30\" rx=\"40\" ry=\"12\" fill=\"#ffffff\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"70\" y1=\"30\" x2=\"110\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"70\" cy=\"30\" r=\"2.5\" fill=\"#BE5837\"/><text x=\"90\" y=\"8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">r = 10 cm</text><line x1=\"124\" y1=\"30\" x2=\"124\" y2=\"100\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><line x1=\"119\" y1=\"30\" x2=\"129\" y2=\"30\" stroke=\"#1F4D54\"/><line x1=\"119\" y1=\"100\" x2=\"129\" y2=\"100\" stroke=\"#1F4D54\"/><text x=\"132\" y=\"68\" font-size=\"12\" fill=\"#1F4D54\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">h = 30 cm</text></svg>Ngarrindjeri weavers of the Coorong and Lower Murray coil sedge rushes into baskets. Model one basket as an open-top cylinder with radius 10 cm and height 30 cm. Using π = 3.14, what is its capacity in litres? (1000 cm³ = 1 L)",
+    "a": "9.42",
+    "hint": "V = 3.14 × 10² × 30 cm³, then divide by 1000."
+   },
+   {
+    "q": "An open-top box (no lid) has a square base and holds 32 cm³. Try base sides 2 cm, 4 cm and 8 cm (heights 8 cm, 2 cm and 0.5 cm). What is the least area of card needed, in cm²?",
+    "a": "48",
+    "hint": "No lid: card = base + four sides = x² + 4xh. Base 4: 16 + 4×4×2."
+   },
+   {
+    "q": "A gift shop folds 200 boxes that each hold 216 cm³. A 6 cm cube needs 216 cm² of card; a 12 cm × 3 cm × 6 cm box needs 252 cm². Card costs $0.005 per cm². How many dollars does choosing the cube save across all 200 boxes?",
+    "a": "36",
+    "hint": "Saving per box in cm², × 200 boxes, × $0.005."
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "Two boxes each hold 72 cm³: 2 cm × 6 cm × 6 cm and 3 cm × 4 cm × 6 cm. Type the surface area (cm²) of the one that uses less card.",
+    "a": "108",
+    "hint": "Find both: 2 × (12 + 12 + 36) and 2 × (12 + 18 + 24)."
+   },
+   {
+    "q": "Can A (r = 3 cm, h = 4 cm) and Can B (r = 2 cm, h = 9 cm) both hold 36π cm³. Type the smaller total surface area as a multiple of π (just the number).",
+    "a": "42",
+    "hint": "A: 18π + 24π. B: 8π + 36π."
+   },
+   {
+    "q": "Write your conjecture: for a fixed volume, what shape of box uses the least card, and why do long, thin boxes use more?",
+    "a": "TEXT",
+    "hint": "Think about the cube results, and about how many large faces a thin box has."
+   }
+  ]
+ }
+}
