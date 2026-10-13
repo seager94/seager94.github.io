@@ -1,0 +1,281 @@
+{
+ "payload_version": 1,
+ "filename": "y9_sta_01_analysing_statistical_reports_v2.html",
+ "title": "Analysing Statistical Reports — Year 9",
+ "header": {
+  "title": "Analysing Statistical Reports",
+  "subtitle": "Read the small print before you trust the headline",
+  "badge": "Year 9 · Statistics"
+ },
+ "meta": {
+  "lesson-id": "y9_sta_01",
+  "lesson-focus": "Analyse statistical reports from media and government sources — link claims to the displays and statistics that support them; investigate how data was obtained, sample size and representativeness; environmental and international examples including Australia–Asia trade statistics and public-opinion surveys.",
+  "ac9-descriptor": "AC9M9ST01",
+  "ac9-descriptor-text": "analyse reports of surveys in digital media and elsewhere for information on how data was obtained to estimate population means and medians",
+  "ac9-elaborations": "1,2,3,4",
+  "sa-year": "9",
+  "sa-strand": "Statistics",
+  "mapping-note": "Strict",
+  "sa-conceptual-understanding": "Statistical reports provide data and analysis to support conclusions and acknowledge the strength of the evidence"
+ },
+ "html": {
+  "section0_intro": "In Year 8 you met <strong>populations</strong>, <strong>samples</strong> and <strong>bias</strong>, and you have calculated the mean and median for years. Today every report we read will lean on those ideas, so warm them up first.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's statistics.</p><div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; align-items: center;'><div><p>Two news reports land on the same day, about the same question: <em>“Should South Australia build more wind farms?”</em></p><svg viewBox='0 0 520 215' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Two bar charts: Report A shows 64% support for wind farms, Report B shows 20% support' style='width:100%;max-width:520px;height:auto;display:block;margin:0 auto;background:#fff;border:1px solid #d8dde6;border-radius:8px'><text x='130' y='20' font-size='13' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='Georgia,serif'>Report A</text><text x='130' y='38' font-size='11' fill='#6b7280' text-anchor='middle' font-family='sans-serif'>phone + online, 1,000 random adults</text><line x1='20' y1='180' x2='240' y2='180' stroke='#1F4D54' stroke-width='1.5'/><rect x='35' y='103.2' width='50' height='76.8' fill='#1F4D54'/><text x='60' y='97.2' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>64%</text><text x='60' y='198' font-size='11' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>Support</text><rect x='105' y='153.6' width='50' height='26.4' fill='#1F4D54'/><text x='130' y='147.6' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>22%</text><text x='130' y='198' font-size='11' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>Oppose</text><rect x='175' y='163.2' width='50' height='16.8' fill='#1F4D54'/><text x='200' y='157.2' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>14%</text><text x='200' y='198' font-size='11' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>Unsure</text><line x1='260' y1='10' x2='260' y2='205' stroke='#d8dde6' stroke-width='1'/><text x='390' y='20' font-size='13' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='Georgia,serif'>Report B</text><text x='390' y='38' font-size='11' fill='#6b7280' text-anchor='middle' font-family='sans-serif'>online vote on a protest page, 4,000 votes</text><line x1='280' y1='180' x2='500' y2='180' stroke='#1F4D54' stroke-width='1.5'/><rect x='295' y='156.0' width='50' height='24.0' fill='#BE5837'/><text x='320' y='150.0' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>20%</text><text x='320' y='198' font-size='11' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>Support</text><rect x='365' y='90.0' width='50' height='90.0' fill='#BE5837'/><text x='390' y='84.0' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>75%</text><text x='390' y='198' font-size='11' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>Oppose</text><rect x='435' y='174.0' width='50' height='6.0' fill='#BE5837'/><text x='460' y='168.0' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>5%</text><text x='460' y='198' font-size='11' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>Unsure</text></svg><p style='font-size:.9rem;color:var(--muted);margin-top:8px'>Illustrative reports made for this lesson.</p></div><div class='parts-instructions' style='margin: 0;'>Report A says <strong>64% support</strong>. Report B says <strong>only 20% support</strong>. They can't both describe South Australians. The numbers alone won't settle it: you have to read the <strong>small print</strong>. Who was asked? How many? How were they chosen? Report B has four times as many votes, but every voter chose to click on a protest page. Governments, businesses and investors spend billions of dollars on decisions backed by reports like these, so today you learn to <strong>link each claim to its evidence</strong> and to judge <strong>how the data was obtained</strong> before you trust it.</div></div>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\"><div class='vocab-inner'><div class='vocab-front'>Statistical report<div class='hint-flip'>Tap to flip</div></div><div class='vocab-back'>A summary of data and analysis that uses <strong>displays and statistics</strong> to support a conclusion.<div class='vocab-example'>A news article on a wind-farm poll, or a government trade summary.</div></div></div></div><div class='vocab' onclick=\"this.classList.toggle('flipped')\"><div class='vocab-inner'><div class='vocab-front'>Claim<div class='hint-flip'>Tap to flip</div></div><div class='vocab-back'>The <strong>conclusion</strong> a report wants you to accept, often in the headline.<div class='vocab-example'>“Most South Australians back wind farms.”</div></div></div></div><div class='vocab' onclick=\"this.classList.toggle('flipped')\"><div class='vocab-inner'><div class='vocab-front'>Sample size<div class='hint-flip'>Tap to flip</div></div><div class='vocab-back'>The <strong>number of people or items</strong> the data came from, often written <em>n</em>.<div class='vocab-example'><em>n</em> = 1,000 adults</div></div></div></div><div class='vocab' onclick=\"this.classList.toggle('flipped')\"><div class='vocab-inner'><div class='vocab-front'>Representative sample<div class='hint-flip'>Tap to flip</div></div><div class='vocab-back'>A sample whose make-up <strong>mirrors the population</strong>, usually chosen at random, so its results can stand in for the whole.<div class='vocab-example'>1,000 adults picked at random from every region</div></div></div></div><div class='vocab' onclick=\"this.classList.toggle('flipped')\"><div class='vocab-inner'><div class='vocab-front'>Population estimate<div class='hint-flip'>Tap to flip</div></div><div class='vocab-back'>A value for the <strong>whole population</strong> inferred from a sample statistic, such as a sample mean, median or percentage.<div class='vocab-example'>Sample median 3.5 h → about 3.5 h for all Year 9s</div></div></div></div>",
+  "section3_heading": "Strong or weak evidence: sort each report detail",
+  "section3_desc": "Drag each detail from a report's small print into <strong>💪 Strengthens the evidence</strong> or <strong>⚠️ Weakens the evidence</strong>.",
+  "sort_activity": "<div class='parts-expr'><div class='label'>Sort each report detail</div><div id='partsTerms' class='terms-source'><span class='term-chip constant' data-type='strong'>1,000 adults chosen at random from every region</span><span class='term-chip variable' data-type='weak'>Online vote anyone could click, as often as they liked</span><span class='term-chip constant' data-type='strong'>Run by an independent research company</span><span class='term-chip variable' data-type='weak'>Only 30 people asked, all at one gym</span><span class='term-chip constant' data-type='strong'>Method, dates and sample size are all stated</span><span class='term-chip variable' data-type='weak'>Paid for by a group that wants one answer, with no method given</span></div><div class='parts-buckets'><div class='bucket' data-bucket='strong'><h4 style='color:var(--navy)'>💪 Strengthens the evidence</h4><div class='bucket-contents'></div></div><div class='bucket' data-bucket='weak'><h4 style='color:var(--coral)'>⚠️ Weakens the evidence</h4><div class='bucket-contents'></div></div></div><div class='parts-actions'><button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button><button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button></div></div><div class='parts-instructions'>💡 Strong evidence tells you <em>who</em> was asked, <em>how many</em>, and <em>how they were chosen</em>, and the choice was fair. Weak evidence hides the method, lets people pick themselves, or asks too few people from one place.</div>",
+  "section4_heading": "Match each report detail to the question it answers",
+  "worked_example": "<p class='sec-desc'>Report A from the hook, in full: <em>“<strong>Most South Australians back wind farms.</strong> An independent research company surveyed 1,000 randomly selected SA adults by phone and online in March. 64% support new wind farms, 22% oppose and 14% are unsure.”</em> Can we trust the headline?</p><svg viewBox='0 0 480 185' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Horizontal bar chart: 64% support, 22% oppose, 14% unsure' style='width:100%;max-width:480px;height:auto;display:block;margin:0 auto 14px;background:#fff;border:1px solid #d8dde6;border-radius:8px'><text x='240' y='24' font-size='14' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='Georgia,serif'>Do you support new wind farms in SA?</text><text x='70' y='63' font-size='13' fill='#2a2a2a' text-anchor='end' font-family='sans-serif'>Support</text><rect x='80' y='45' width='224.0' height='26' fill='#1F4D54'/><text x='312.0' y='63' font-size='13' font-weight='bold' fill='#1F4D54' font-family='sans-serif'>64%</text><text x='70' y='103' font-size='13' fill='#2a2a2a' text-anchor='end' font-family='sans-serif'>Oppose</text><rect x='80' y='85' width='77.0' height='26' fill='#1F4D54'/><text x='165.0' y='103' font-size='13' font-weight='bold' fill='#1F4D54' font-family='sans-serif'>22%</text><text x='70' y='143' font-size='13' fill='#2a2a2a' text-anchor='end' font-family='sans-serif'>Unsure</text><rect x='80' y='125' width='49.0' height='26' fill='#1F4D54'/><text x='137.0' y='143' font-size='13' font-weight='bold' fill='#1F4D54' font-family='sans-serif'>14%</text><line x1='80' y1='38' x2='80' y2='158' stroke='#1F4D54' stroke-width='1.5'/><text x='240' y='176' font-size='11' fill='#6b7280' text-anchor='middle' font-family='sans-serif'>n = 1,000 SA adults · random sample · phone and online · March</text></svg><div class='worked'><div class='step visible' id='step1'><div class='step-num'>1</div><div class='step-body'><div class='step-title'>Link the claim to the display and statistic</div><div class='step-desc'>Find the headline claim, then find the number in the display that is meant to support it.</div><div class='calc-box'><span class='blue'>Claim</span>: “most” South Australians support wind farms.<br><span class='red'>Evidence</span>: the Support bar shows 64%.<br>64% &gt; 50%, so “most” <strong>matches the display</strong> for the people surveyed.</div></div></div><div class='step' id='step2'><div class='step-num'>2</div><div class='step-body'><div class='step-title'>Investigate how the data was obtained</div><div class='step-desc'>Ask the four small-print questions: who, how many, how chosen, who ran it.</div><div class='calc-box'><span class='blue'>Who</span>: SA adults, which is the population the headline is about.<br><span class='blue'>How many</span>: <em>n</em> = 1,000.<br><span class='blue'>How chosen</span>: at random, by phone and online, so nobody chose themselves.<br><span class='blue'>Who ran it</span>: an independent company.<br><strong>Watch for:</strong> people who never answer phones or go online could be missed, but the sample is <span class='red'>reasonably representative</span>.</div></div></div><div class='step' id='step3'><div class='step-num'>3</div><div class='step-body'><div class='step-title'>Judge the inference and estimate the population</div><div class='step-desc'>If the sample is representative, the sample statistic is a fair estimate for the whole population.</div><div class='calc-box'>About 64% of all SA adults support wind farms. With roughly 1,400,000 adults in SA:<br>0.64 × 1,400,000 ≈ <span class='red'>896,000 supporters</span>, an <em>estimate</em>, not an exact count.</div><div class='summary-banner'><span class='label'>Verdict</span>Claim matches the display, the method is sound, so the headline is reasonable. Report B's 20% is not: its voters chose themselves.</div></div></div><button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button></div>",
+  "section6_heading": "We do: read a government trade report",
+  "we_do_intro": "A news story says: <em>“<strong>Australia's trade with Asia up 50% in a decade.</strong> Figures from government trade records.”</em> Read the chart with the person next to you, then we'll fill in each box as a class.</p><svg viewBox='0 0 420 248' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Bar chart: two-way trade with Asian partners rose from 400 billion dollars to 600 billion dollars' style='width:100%;max-width:420px;height:auto;display:block;margin:0 auto 14px;background:#fff;border:1px solid #d8dde6;border-radius:8px'><text x='220' y='20' font-size='13' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='Georgia,serif'>Two-way trade with Asian partners ($ billion)</text><line x1='60' y1='205.0' x2='380' y2='205.0' stroke='#e5e7eb' stroke-width='1'/><text x='52' y='209.0' font-size='11' fill='#6b7280' text-anchor='end' font-family='sans-serif'>0</text><line x1='60' y1='155.0' x2='380' y2='155.0' stroke='#e5e7eb' stroke-width='1'/><text x='52' y='159.0' font-size='11' fill='#6b7280' text-anchor='end' font-family='sans-serif'>200</text><line x1='60' y1='105.0' x2='380' y2='105.0' stroke='#e5e7eb' stroke-width='1'/><text x='52' y='109.0' font-size='11' fill='#6b7280' text-anchor='end' font-family='sans-serif'>400</text><line x1='60' y1='55.0' x2='380' y2='55.0' stroke='#e5e7eb' stroke-width='1'/><text x='52' y='59.0' font-size='11' fill='#6b7280' text-anchor='end' font-family='sans-serif'>600</text><rect x='120' y='105.0' width='80' height='100.0' fill='#1F4D54'/><text x='160' y='99.0' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>$400b</text><text x='160' y='222' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>10 years ago</text><rect x='250' y='55.0' width='80' height='150.0' fill='#1F4D54'/><text x='290' y='49.0' font-size='12' font-weight='bold' fill='#1F4D54' text-anchor='middle' font-family='sans-serif'>$600b</text><text x='290' y='222' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>Now</text><line x1='60' y1='205' x2='380' y2='205' stroke='#1F4D54' stroke-width='1.5'/><text x='220' y='241' font-size='10' fill='#6b7280' text-anchor='middle' font-family='sans-serif'>Source: government trade records (rounded, illustrative figures)</text></svg><p class='sec-desc' style='margin-top:0'>Values are in $ billion, so 600 means $600 billion.",
+  "footer_title": "Analysing Statistical Reports",
+  "strategy_section": "<style>\n  .err-problem-stem { background:var(--hint-bg); border-left:4px solid var(--navy); padding:12px 16px; border-radius:6px; font-family:Georgia,serif; font-size:1.05rem; color:var(--navy); margin-bottom:16px; }\n  .err-solution { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:18px; margin-bottom:14px; }\n  .err-line { display:grid; grid-template-columns:36px 1fr 24px; align-items:center; gap:14px; padding:10px 14px; margin-bottom:6px; background:white; border:1.5px solid var(--border); border-radius:8px; cursor:pointer; font-family:Georgia,serif; font-size:1rem; transition:all .2s; }\n  .err-line:last-child { margin-bottom:0; }\n  .err-line:hover { border-color:var(--navy); }\n  .err-line .err-line-num { background:var(--hint-bg); color:var(--navy); width:30px; height:30px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:-apple-system,sans-serif; font-size:.9rem; font-weight:700; }\n  .err-line .err-line-mark { font-size:1.1rem; opacity:0; transition:opacity .2s; }\n  .err-line.flagged-correct { background:var(--good-soft); border-color:var(--good); }\n  .err-line.flagged-correct .err-line-mark::before { content:'✓'; color:var(--good); }\n  .err-line.flagged-correct .err-line-mark { opacity:1; }\n  .err-line.flagged-wrong { animation:err-shake .45s; background:var(--bad-soft); border-color:var(--bad); }\n  @keyframes err-shake { 0%,100% { transform:translateX(0); } 25%,75% { transform:translateX(-5px); } 50% { transform:translateX(5px); } }\n  .err-line.dimmed { opacity:.45; cursor:not-allowed; }\n  .err-feedback { background:white; border:1.5px solid var(--good); border-radius:10px; padding:16px 18px; margin-top:14px; display:none; }\n  .err-feedback.visible { display:block; }\n  .err-feedback h4 { font-family:Georgia,serif; color:var(--navy); margin:0 0 8px; font-size:1.05rem; }\n  .err-feedback .err-explain { background:var(--hint-bg); border-radius:6px; padding:10px 14px; margin:8px 0 12px; font-size:.92rem; color:var(--navy); }\n  .err-options { margin:0 0 10px; padding-left:0; list-style:none; font-size:.95rem; }\n  .err-options li { margin-bottom:6px; }\n  .err-correction-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }\n  .err-correction-row input { flex:1; min-width:160px; padding:9px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:Georgia,serif; font-size:1.05rem; }\n  .err-correction-row input.correct { background:var(--good-soft); border-color:var(--good); }\n  .err-correction-row input.incorrect { background:var(--bad-soft); border-color:var(--bad); }\n  .err-correction-row button { background:var(--coral); color:white; border:none; padding:9px 16px; border-radius:8px; font-size:.92rem; font-weight:600; cursor:pointer; }\n  .err-status-msg { margin-top:10px; font-size:.9rem; color:var(--muted); font-style:italic; }\n  body.teacher-mode .err-line[data-is-error=\"true\"] { box-shadow:0 0 0 3px var(--coral); }\n\n  section.lesson.hinge { background:#f7faff; border-left:5px solid var(--navy); }\n  .hinge-tag { display:inline-flex; align-items:center; gap:6px; margin-left:auto; padding:4px 12px; border-radius:999px; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; font-weight:700; background:var(--navy); color:white; white-space:nowrap; }\n  .hinge-stem { background:white; border:1px solid var(--border); border-radius:10px; padding:18px 20px; font-family:Georgia,serif; font-size:1.1rem; color:var(--navy); margin-bottom:18px; box-shadow:var(--shadow); }\n  .hinge-options { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; }\n  .hinge-opt { background:white; border:1.5px solid var(--border); border-radius:10px; padding:14px 18px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px; font-family:Georgia,serif; font-size:1rem; text-align:left; }\n  .hinge-opt:hover { border-color:var(--navy); transform:translateY(-1px); }\n  .hinge-opt .opt-letter { background:var(--hint-bg); color:var(--navy); width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:-apple-system,sans-serif; font-weight:700; flex-shrink:0; }\n  .hinge-opt.selected.correct { background:var(--good-soft); border-color:var(--good); }\n  .hinge-opt.selected.correct .opt-letter { background:var(--good); color:white; }\n  .hinge-opt.selected.incorrect { background:var(--bad-soft); border-color:var(--bad); }\n  .hinge-opt.selected.incorrect .opt-letter { background:var(--bad); color:white; }\n  .hinge-opt.dimmed { opacity:.45; cursor:not-allowed; }\n  .hinge-feedback { margin-top:18px; padding:14px 18px; border-radius:8px; font-size:.95rem; display:none; }\n  .hinge-feedback.visible { display:block; }\n  .hinge-feedback.correct { background:var(--good-soft); color:#1d4a30; border-left:4px solid var(--good); }\n  .hinge-feedback.incorrect { background:var(--bad-soft); color:#6a2520; border-left:4px solid var(--bad); }\n  .hinge-reset { background:white; color:var(--navy); border:1.5px solid var(--navy); padding:7px 14px; border-radius:8px; cursor:pointer; font-size:.85rem; font-weight:600; margin-top:12px; }\n  body.teacher-mode .hinge-opt.correct-answer { box-shadow:0 0 0 3px var(--good); }\n</style><section class=\"lesson\" id=\"errSection\"><h2><span class=\"sec-num\">6b</span>Spot the flawed analysis</h2><p class=\"sec-desc\">A student has analysed a report, but one line of their reasoning is wrong. Read each line and click the line where the mistake <em>first</em> appears.</p><div class=\"err-problem-stem\">Report: <em>“<strong>Australians walk 9,200 steps a day.</strong> A survey of 3,000 people who use a fitness app found a median of 9,200 steps per day.”</em></div><div class=\"err-solution\" id=\"errSolution\"><div class=\"err-line\" data-line=\"1\" onclick=\"pickErrLine(this)\"><span class=\"err-line-num\">1</span><span>The claim is that a typical Australian walks about 9,200 steps a day.</span><span class=\"err-line-mark\"></span></div><div class=\"err-line\" data-line=\"2\" onclick=\"pickErrLine(this)\"><span class=\"err-line-num\">2</span><span>The statistic used is the median of the 3,000 responses, which suits a claim about a “typical” person.</span><span class=\"err-line-mark\"></span></div><div class=\"err-line\" data-line=\"3\" data-is-error=\"true\" data-correct-line=\"B\" onclick=\"pickErrLine(this)\"><span class=\"err-line-num\">3</span><span>Because 3,000 is a large sample, it represents all Australians.</span><span class=\"err-line-mark\"></span></div><div class=\"err-line\" data-line=\"4\" onclick=\"pickErrLine(this)\"><span class=\"err-line-num\">4</span><span>So the median for all Australians is about 9,200 steps a day.</span><span class=\"err-line-mark\"></span></div></div><div class=\"err-feedback\" id=\"errFeedback\"><h4>✓ Right: line 3 is where the reasoning breaks.</h4><div class=\"err-explain\"><strong>Why:</strong> a large sample does not fix <em>who</em> was asked. Everyone surveyed uses a fitness app, so they are likely to be more active than the average Australian. Size never makes up for an unrepresentative sample.</div><p style=\"margin:0 0 8px;font-size:.95rem\"><strong>Which is the best rewrite of line 3?</strong></p><ul class=\"err-options\"><li><strong>A</strong>: Because 3,000 is a large sample, the result is exact.</li><li><strong>B</strong>: The sample is only fitness-app users, who are likely to be more active, so it does not represent all Australians.</li><li><strong>C</strong>: 3,000 people is too few to say anything about Australia.</li></ul><div class=\"err-correction-row\"><input id=\"errCorrection\" placeholder=\"Type A, B or C\"><button onclick=\"checkErrCorrection()\">Check</button></div><div class=\"err-status-msg\" id=\"errStatusMsg\"></div></div></section><section class=\"lesson hinge\"><h2><span class=\"sec-num\">★</span>Hinge check: what can this report tell us?<span class=\"hinge-tag\">🎯 Pick one</span></h2><p class=\"sec-desc\">Before the exit ticket: pick the <strong>best</strong> conclusion. Each wrong option hides a common mistake.</p><div class=\"hinge-stem\">A news site reports: <em>“10,000 readers voted: 85% want single-use plastics banned.”</em> Readers voted through a link on the site's environment page. What is the best conclusion?</div><div class=\"hinge-options\" id=\"hingeOpts\"><button class=\"hinge-opt\" data-feedback-id=\"fb-A\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">A</span><span>85% of Australians want a ban, because 10,000 is a huge sample.</span></button><button class=\"hinge-opt correct-answer\" data-correct=\"true\" data-feedback-id=\"fb-B\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">B</span><span>We can't apply 85% to all Australians: the voters chose themselves from an environment page.</span></button><button class=\"hinge-opt\" data-feedback-id=\"fb-C\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">C</span><span>The poll is useless because 10,000 is too small for Australia's population.</span></button><button class=\"hinge-opt\" data-feedback-id=\"fb-D\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">D</span><span>The claim is false: fewer than 85% of Australians want a ban.</span></button></div><div class=\"hinge-feedback incorrect\" id=\"fb-A\"><strong>Size doesn't fix bias.</strong> 10,000 votes is a lot, but they all came from people who chose to click on an environment page. A bigger biased sample is still biased.</div><div class=\"hinge-feedback correct\" id=\"fb-B\"><strong>Correct.</strong> The sample is self-selected and comes from readers who care about the environment, so it is not representative. The 85% describes those voters, not the population.</div><div class=\"hinge-feedback incorrect\" id=\"fb-C\"><strong>Sample size isn't about a share of the population.</strong> A random sample of about 1,000 can estimate a whole country well. The problem here is <em>how</em> the voters were chosen, not how many.</div><div class=\"hinge-feedback incorrect\" id=\"fb-D\"><strong>A biased sample doesn't prove the opposite.</strong> We know the 85% can't be trusted for all Australians, but we don't know the true value: it might be lower, or not. We need a representative sample to find out.</div><button class=\"hinge-reset\" onclick=\"resetHinge()\">↺ Try again</button></section>",
+  "strategy_js": "\n// Error Analysis kit (moved into the We Do phase, after Section 6)\n(function () {\n  const err = document.getElementById('errSection');\n  const wd = document.getElementById('weDoGrid');\n  if (err && wd) wd.closest('section').after(err);\n})();\nlet errFound = false;\nfunction pickErrLine(el) {\n  if (errFound || el.classList.contains('dimmed')) return;\n  if (el.dataset.isError === 'true') {\n    el.classList.add('flagged-correct');\n    errFound = true;\n    document.querySelectorAll('.err-line').forEach(o => { if (o !== el) o.classList.add('dimmed'); });\n    document.getElementById('errFeedback').classList.add('visible');\n  } else {\n    el.classList.add('flagged-wrong');\n    setTimeout(() => el.classList.remove('flagged-wrong'), 600);\n  }\n}\nfunction checkErrCorrection() {\n  const input = document.getElementById('errCorrection');\n  const expected = document.querySelector('.err-line[data-is-error=\"true\"]').dataset.correctLine;\n  const norm = s => (s || '').toLowerCase().replace(/\\s+/g, '');\n  const msg = document.getElementById('errStatusMsg');\n  input.classList.remove('correct', 'incorrect');\n  if (norm(input.value) === norm(expected)) {\n    input.classList.add('correct');\n    msg.textContent = '✓ Correct. Line 4 should now say: 9,200 describes app users and is probably an overestimate for all Australians.';\n  } else {\n    input.classList.add('incorrect');\n    msg.textContent = '✗ Not quite. Ask: is the problem how MANY people were surveyed, or WHO was surveyed?';\n  }\n}\n\n// Hinge Question kit\nfunction pickHingeOption(btn) {\n  if (btn.classList.contains('dimmed')) return;\n  const isCorrect = btn.dataset.correct === 'true';\n  btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');\n  document.querySelectorAll('.hinge-opt').forEach(o => { if (o !== btn) o.classList.add('dimmed'); });\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n  const fbId = btn.dataset.feedbackId;\n  if (fbId) document.getElementById(fbId).classList.add('visible');\n}\nfunction resetHinge() {\n  document.querySelectorAll('.hinge-opt').forEach(o => o.classList.remove('selected', 'correct', 'incorrect', 'dimmed'));\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n}\n\n// Topic-specific instructions for the frame's fixed section text\n(function () {\n  const set = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };\n  set('#tier1-body .sec-desc', 'Read each report detail carefully. Type a letter (A, B or C), a single word, or just the number: no % sign, units or $ needed.');\n  set('#tier2-body .sec-desc', 'International data, environmental surveys and household spending. Decide what the data can and cannot tell you, then calculate. Type a letter, word or number.');\n  set('#tier3-body .sec-desc', 'Trade growth, pooled polls and mismatched populations. Check who was sampled before you trust any number. Type a word or number.');\n  const wd = document.getElementById('weDoGrid');\n  const tip = wd && wd.parentElement.querySelector('.parts-instructions');\n  if (tip) tip.innerHTML = '💡 <strong>Why we do it this way:</strong> government trade figures come from official records of (almost) every shipment, not a small sample, which is why they are strong evidence. But a display can only support claims about what it actually shows. Use the same routine in the You do practice: <strong>claim → evidence → how obtained → judge</strong>.';\n  const m = document.getElementById('matchArea');\n  const md = m && m.parentElement.querySelector('.sec-desc');\n  if (md) md.textContent = 'Click a report detail, then click the question it answers. There are five matching pairs.';\n})();\n"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "Find the <strong>median</strong> of 4, 7, 7, 9, 13.",
+    "a": "7",
+    "hint": "The values are already in order. The median is the middle one."
+   },
+   {
+    "q": "Find the <strong>mean</strong> of 4, 7, 7, 9, 13.",
+    "a": "8",
+    "hint": "Add all five values, then divide by 5.",
+    "fb": {
+     "7": "That's the median. The mean is the total divided by how many values."
+    }
+   },
+   {
+    "q": "An online poll lets anyone vote as often as they like. Is its sample likely to be <strong>representative</strong> or <strong>biased</strong>? Type one word.",
+    "a": "biased",
+    "hint": "Who decides whether they are in the sample?"
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "<em>n</em> = 1,500",
+    "group": 1
+   },
+   {
+    "html": "How many were asked?",
+    "group": 1
+   },
+   {
+    "html": "Chosen at random from the electoral roll",
+    "group": 2
+   },
+   {
+    "html": "How was the sample selected?",
+    "group": 2
+   },
+   {
+    "html": "Bar chart: 64% support",
+    "group": 3
+   },
+   {
+    "html": "Which display backs the claim?",
+    "group": 3
+   },
+   {
+    "html": "Collected 3–10 May by phone",
+    "group": 4
+   },
+   {
+    "html": "When and how was data collected?",
+    "group": 4
+   },
+   {
+    "html": "Funded by a wind-energy company",
+    "group": 5
+   },
+   {
+    "html": "Who paid: is there a conflict of interest?",
+    "group": 5
+   }
+  ],
+  "weDo": [
+   {
+    "q": "Trade rose from $400 billion to $600 billion. By what <strong>percentage</strong> did it increase? Type just the number.",
+    "a": "50",
+    "hint": "Increase ÷ starting value × 100. The increase is $200 billion.",
+    "fb": {
+     "200": "That's the increase in $ billion. Divide it by the starting value, then × 100.",
+     "33.3": "You divided by the new value. Percentage increase uses the starting value, $400 billion."
+    }
+   },
+   {
+    "q": "Where does this data come from? (A) an online poll of 500 readers (B) official government records of trade (C) a phone survey of 50 exporters. Type A, B or C.",
+    "a": "B",
+    "hint": "Look at the source line under the chart."
+   },
+   {
+    "q": "The story also says <em>“every Australian state gained equally.”</em> Can this chart support that claim? (A) yes, trade went up (B) no, the chart only shows national totals. Type A or B.",
+    "a": "B",
+    "hint": "A display can only support claims about what it actually shows. Is there anything about states in the chart?"
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "A report claims <em>“Teens sleep only 6 hours a night,”</em> using 40 students from one school's 7 am study club. The biggest problem? (A) the sample isn't representative (B) the median should have been used (C) 6 hours is too low to be true. Type A, B or C.",
+    "a": "A",
+    "hint": "Students at a 7 am club are likely to get up earlier than most teens."
+   },
+   {
+    "q": "A random sample of 200 Year 9 students has a median screen time of 3.5 hours a day. What is the best estimate of the median for <strong>all</strong> Year 9 students in the state? Type just the number.",
+    "a": "3.5",
+    "hint": "A representative sample's statistic is our estimate for the population."
+   }
+  ],
+  "practice1": [
+   {
+    "q": "A report says: <em>“We surveyed 2,400 adults across Australia.”</em> What is the sample size? Type just the number.",
+    "a": "2400",
+    "hint": "The sample size is how many people the data came from."
+   },
+   {
+    "q": "A survey found 38% prefer Plan A, 35% Plan B and 27% Plan C. The headline says <em>“A majority prefer Plan A.”</em> Is that supported? (A) yes, 38% is the largest (B) no, a majority means more than 50%. Type A or B.",
+    "a": "B",
+    "hint": "“Majority” has a precise meaning: more than half.",
+    "fb": {
+     "A": "38% is the most popular, but a majority needs more than 50%."
+    }
+   },
+   {
+    "q": "This dot plot shows a random sample of club members. Estimate the <strong>median</strong> age of all club members. Type just the number.<svg viewBox='0 0 400 112' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='Dot plot of 9 ages from 12 to 17' style='width:100%;max-width:400px;height:auto;display:block;margin:8px auto;background:#fff;border:1px solid #d8dde6;border-radius:8px'><line x1='30' y1='80' x2='370' y2='80' stroke='#1F4D54' stroke-width='1.5'/><line x1='50' y1='76' x2='50' y2='84' stroke='#1F4D54' stroke-width='1.5'/><text x='50' y='99' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>12</text><line x1='110' y1='76' x2='110' y2='84' stroke='#1F4D54' stroke-width='1.5'/><text x='110' y='99' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>13</text><line x1='170' y1='76' x2='170' y2='84' stroke='#1F4D54' stroke-width='1.5'/><text x='170' y='99' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>14</text><line x1='230' y1='76' x2='230' y2='84' stroke='#1F4D54' stroke-width='1.5'/><text x='230' y='99' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>15</text><line x1='290' y1='76' x2='290' y2='84' stroke='#1F4D54' stroke-width='1.5'/><text x='290' y='99' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>16</text><line x1='350' y1='76' x2='350' y2='84' stroke='#1F4D54' stroke-width='1.5'/><text x='350' y='99' font-size='12' fill='#2a2a2a' text-anchor='middle' font-family='sans-serif'>17</text><circle cx='50' cy='68' r='7' fill='#BE5837'/><circle cx='110' cy='68' r='7' fill='#BE5837'/><circle cx='110' cy='52' r='7' fill='#BE5837'/><circle cx='170' cy='68' r='7' fill='#BE5837'/><circle cx='170' cy='52' r='7' fill='#BE5837'/><circle cx='170' cy='36' r='7' fill='#BE5837'/><circle cx='230' cy='68' r='7' fill='#BE5837'/><circle cx='290' cy='68' r='7' fill='#BE5837'/><circle cx='350' cy='68' r='7' fill='#BE5837'/><text x='200' y='18' font-size='11' fill='#6b7280' text-anchor='middle' font-family='sans-serif'>Age (years) of 9 randomly sampled club members</text></svg>",
+    "a": "14",
+    "hint": "There are 9 dots. The median is the 5th value when they are in order."
+   },
+   {
+    "q": "A random sample of 5 households reports 4, 6, 6, 8 and 11 hours of TV a week. Estimate the <strong>mean</strong> for all households. Type just the number.",
+    "a": "7",
+    "hint": "Add the values and divide by 5. The sample mean estimates the population mean.",
+    "fb": {
+     "6": "That's the median (and mode). The question asks for the mean."
+    }
+   },
+   {
+    "q": "A sports club posts an online poll on its own website. Is the result representative of <strong>all</strong> residents of the town? Type yes or no.",
+    "a": "no",
+    "hint": "Who visits a sports club's website?"
+   },
+   {
+    "q": "Which question checks <strong>how the data was obtained</strong>? (A) What colour is the graph? (B) How were the people selected? (C) Who wrote the headline? Type A, B or C.",
+    "a": "B",
+    "hint": "Data is obtained by selecting people and collecting their answers."
+   },
+   {
+    "q": "Out of 1,200 people surveyed, 300 said yes. What <strong>percentage</strong> said yes? Type just the number.",
+    "a": "25",
+    "hint": "300 ÷ 1,200 × 100."
+   },
+   {
+    "q": "In a random sample, 64% of adults support a new park. The town has 20,000 adults. Estimate how many adults in the town support the park. Type just the number.",
+    "a": "12800",
+    "hint": "Find 64% of 20,000: 0.64 × 20,000."
+   },
+   {
+    "q": "Exports to a trading partner grew from $20 billion to $25 billion. What is the percentage increase? Type just the number.",
+    "a": "25",
+    "hint": "Increase ÷ starting value × 100 = 5 ÷ 20 × 100.",
+    "fb": {
+     "5": "That's the increase in $ billion. Divide by the starting value, then × 100.",
+     "20": "You divided by the new value ($25 billion). Use the starting value."
+    }
+   },
+   {
+    "q": "Which gives the more reliable estimate of town opinion? (A) 500 residents chosen at random (B) 5,000 people who chose to vote online. Type A or B.",
+    "a": "A",
+    "hint": "How the sample is chosen matters more than how big it is.",
+    "fb": {
+     "B": "5,000 is bigger, but those voters chose themselves. Size can't fix bias."
+    }
+   }
+  ],
+  "practice2": [
+   {
+    "q": "A report on international data gives these rounded median ages: Australia 38, Cambodia 27, Tonga 23 (illustrative figures). How many years higher is Australia's median age than Tonga's? Type just the number.",
+    "a": "15",
+    "hint": "Subtract: 38 − 23."
+   },
+   {
+    "q": "Australia's median age comes from the national <strong>census</strong>, which tries to count every person. Does a census give a population value or a sample estimate? Type one word: population or sample.",
+    "a": "population",
+    "hint": "A census collects data from the whole population, not a sample."
+   },
+   {
+    "q": "800 shoppers at one organic supermarket were surveyed and 90% supported a plastic-bag ban. The article says <em>“90% of Australians support the ban.”</em> Best judgement? (A) fully supported (B) overstated: one organic supermarket isn't representative (C) understated: the true figure must be higher. Type A, B or C.",
+    "a": "B",
+    "hint": "Would shoppers at an organic supermarket think like all Australians?"
+   },
+   {
+    "q": "A random sample of 50 households in a suburb has a mean weekly grocery spend of $180. The suburb has 2,000 households. Estimate the suburb's <strong>total</strong> weekly grocery spend in dollars. Type just the number.",
+    "a": "360000",
+    "hint": "Use the sample mean for every household: 180 × 2,000.",
+    "fb": {
+     "9000": "That's 180 × 50, the total for the sample only. Scale up to all 2,000 households."
+    }
+   },
+   {
+    "q": "Two random surveys ask the same question. Survey X: <em>n</em> = 100, 58% yes. Survey Y: <em>n</em> = 1,000, 52% yes. Which estimate is likely to be closer to the population value? Type X or Y.",
+    "a": "Y",
+    "hint": "When both samples are random, the larger one varies less from the true value."
+   },
+   {
+    "q": "A report gives a suburb's <em>mean</em> household income as $95,000 and its <em>median</em> as $78,000. A few households earn millions. Which better describes a typical household? Type mean or median.",
+    "a": "median",
+    "hint": "Which measure is pulled up by a few very large values?"
+   }
+  ],
+  "practice3": [
+   {
+    "q": "A land-clearing survey reports <em>“72% of 600 farmers oppose new clearing limits.”</em> A blog then claims <em>“Most Australians oppose clearing limits.”</em> Which group was actually sampled? Type one word.",
+    "a": "farmers",
+    "hint": "Read who was surveyed, not who the blog talks about."
+   },
+   {
+    "q": "A sample of 12 Year 9 students in another country reported how many subjects they study: 8, 8, 9, 9, 9, 10, 10, 10, 10, 11, 12, 12. Estimate the <strong>median</strong> number of subjects for that country's Year 9 students. Type just the number.",
+    "a": "10",
+    "hint": "With 12 values, the median is halfway between the 6th and 7th values."
+   },
+   {
+    "q": "A trade report shows imports from a partner rising from $48 billion to $60 billion, while exports rose from $40 billion to $46 billion. By how many <strong>percentage points</strong> was import growth higher than export growth? Type just the number.",
+    "a": "10",
+    "hint": "Imports: 12 ÷ 48 × 100. Exports: 6 ÷ 40 × 100. Then subtract.",
+    "fb": {
+     "6": "That's the difference in $ billion (12 − 6). Find each percentage increase first."
+    }
+   },
+   {
+    "q": "Report A (random, <em>n</em> = 1,000) found 64% support. Report B (self-selected protest-page vote, <em>n</em> = 4,000) found 20% support. If someone wrongly pooled all 5,000 responses, what percentage support would they report? Type just the number.",
+    "a": "28.8",
+    "hint": "Supporters: 640 + 800 = 1,440 out of 5,000. Notice how the biased poll drags the result down.",
+    "fb": {
+     "42": "That's the average of 64 and 20. Pooling weights each poll by its size: count the supporters."
+    }
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "A report claims <em>“The average Year 9 student does 5 hours of homework a week,”</em> using 30 volunteers from a homework club. The most important problem? (A) the sample is too large (B) homework-club volunteers aren't representative (C) the mean was used. Type A, B or C.",
+    "a": "B",
+    "hint": "Who is likely to join a homework club?"
+   },
+   {
+    "q": "In a random sample of 400 adults, 30% always use reusable shopping bags. A city has 50,000 adults. Estimate how many always use reusable bags. Type just the number.",
+    "a": "15000",
+    "hint": "0.30 × 50,000.",
+    "fb": {
+     "120": "That's 30% of the sample. Apply 30% to the whole city."
+    }
+   },
+   {
+    "q": "Pick one report from today. Write the claim, the display or statistic that supports it, and two questions you would ask about how the data was obtained before trusting it.",
+    "a": "TEXT",
+    "hint": "Think: who was asked, how many, how they were chosen, who ran the survey."
+   }
+  ]
+ }
+}
