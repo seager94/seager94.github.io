@@ -1,9 +1,9 @@
 {
- "latest_generated_date": "2026-10-02",
+ "latest_generated_date": "2026-10-11",
  "source": "lessonmap.xlsx",
  "tallies": {
-  "Published": 138,
-  "Planned": 83
+  "Published": 148,
+  "Planned": 73
  },
  "coverage": [
   {
@@ -148,13 +148,13 @@
    "year": "9",
    "strand": "Measurement",
    "status": "Planned",
-   "count": 10
+   "count": 6
   },
   {
    "year": "9",
    "strand": "Measurement",
    "status": "Published",
-   "count": 2
+   "count": 6
   },
   {
    "year": "9",
@@ -166,19 +166,37 @@
    "year": "9",
    "strand": "Probability",
    "status": "Planned",
-   "count": 4
+   "count": 3
+  },
+  {
+   "year": "9",
+   "strand": "Probability",
+   "status": "Published",
+   "count": 1
   },
   {
    "year": "9",
    "strand": "Space",
    "status": "Planned",
-   "count": 7
+   "count": 4
+  },
+  {
+   "year": "9",
+   "strand": "Space",
+   "status": "Published",
+   "count": 3
   },
   {
    "year": "9",
    "strand": "Statistics",
    "status": "Planned",
-   "count": 6
+   "count": 4
+  },
+  {
+   "year": "9",
+   "strand": "Statistics",
+   "status": "Published",
+   "count": 2
   }
  ],
  "lessons": [
@@ -3188,9 +3206,9 @@
     "y9_mea_01",
     "y9_mea_02"
    ],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-02",
+   "url": "https://seager94.github.io/year-9/measurement/y9_mea_03_optimising_surface_area_and_volume_v2.html"
   },
   {
    "id": "y9_mea_04",
@@ -3211,9 +3229,9 @@
    "prerequisites": [
     "y9_alg_01"
    ],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-03",
+   "url": "https://seager94.github.io/year-9/measurement/y9_mea_04_introducing_scientific_notation_v2.html"
   },
   {
    "id": "y9_mea_05",
@@ -3320,9 +3338,9 @@
    "lesson_focus": "Calculate absolute error |measured − exact|, relative error (absolute error ÷ exact value), and percentage error; use absolute value notation in the error formula; recognise that all measurements are estimates with associated uncertainty.",
    "practice_style": "auto-marked",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-04",
+   "url": "https://seager94.github.io/year-9/measurement/y9_mea_09_absolute_relative_and_percentage_error_v2.html"
   },
   {
    "id": "y9_mea_10",
@@ -3362,9 +3380,9 @@
    "lesson_focus": "Model direct-proportion situations — pro rata pay rates, currency exchange, multiple quotes for a job, Hooke's law from physics; investigate situations where proportion is not maintained (image editing/distortion); building and construction standards for staircases and escalators.",
    "practice_style": "auto-marked + open-ended",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-05",
+   "url": "https://seager94.github.io/year-9/measurement/y9_mea_11_modelling_with_direct_proportion_v2.html"
   },
   {
    "id": "y9_mea_12",
@@ -3404,9 +3422,9 @@
    "lesson_focus": "Identify and label the hypotenuse, the side opposite a given angle, and the side adjacent to a given angle in any right-angled triangle; recognise that 'opposite' and 'adjacent' depend on the chosen reference angle; the hypotenuse is always opposite the right angle.",
    "practice_style": "auto-marked",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-06",
+   "url": "https://seager94.github.io/year-9/space/y9_spa_01_naming_sides_in_right_angled_triangles_v2.html"
   },
   {
    "id": "y9_spa_02",
@@ -3468,9 +3486,9 @@
    "lesson_focus": "Apply the enlargement transformation to shapes using a centre of enlargement and a scale factor; recognise that corresponding angles are equal and corresponding sides are in a fixed ratio; solve enlargement problems using similarity.",
    "practice_style": "auto-marked",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-07",
+   "url": "https://seager94.github.io/year-9/space/y9_spa_04_enlargement_transformation_v2.html"
   },
   {
    "id": "y9_spa_05",
@@ -3510,9 +3528,9 @@
    "lesson_focus": "Design an algorithm (flow chart or pseudocode) that applies the triangle inequality to determine whether three given lengths can form a triangle; design an alternative algorithm to generate Pythagorean triples systematically.",
    "practice_style": "strategy-MCQ",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-08",
+   "url": "https://seager94.github.io/year-9/space/y9_spa_06_algorithms_for_triangle_properties_v2.html"
   },
   {
    "id": "y9_spa_07",
@@ -3552,9 +3570,9 @@
    "lesson_focus": "Analyse statistical reports from media and government sources — link claims to the displays and statistics that support them; investigate how data was obtained, sample size and representativeness; environmental and international examples including Australia–Asia trade statistics and public-opinion surveys.",
    "practice_style": "strategy-MCQ",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-09",
+   "url": "https://seager94.github.io/year-9/statistics/y9_sta_01_analysing_statistical_reports_v2.html"
   },
   {
    "id": "y9_sta_02",
@@ -3594,9 +3612,9 @@
    "lesson_focus": "Compare two data sets using parallel dot plots and back-to-back stem-and-leaf plots; describe similarities and differences in centre, spread and shape using terms like positive skew, negative skew, symmetric, bi-modal.",
    "practice_style": "auto-marked",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-10",
+   "url": "https://seager94.github.io/year-9/statistics/y9_sta_03_comparing_distributions_visually_v2.html"
   },
   {
    "id": "y9_sta_04",
@@ -3680,9 +3698,9 @@
    "lesson_focus": "Use lists and arrays to record outcomes of two-step compound experiments — the Heads and Tails game, drawing two team leaders from a class; calculate probabilities by counting favourable outcomes over total outcomes.",
    "practice_style": "auto-marked",
    "prerequisites": [],
-   "status": "Planned",
-   "generated_date": "",
-   "url": ""
+   "status": "Published",
+   "generated_date": "2026-10-11",
+   "url": "https://seager94.github.io/year-9/probability/y9_pro_01_two_step_compound_events_v2.html"
   },
   {
    "id": "y9_pro_02",
