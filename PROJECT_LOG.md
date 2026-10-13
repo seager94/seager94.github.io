@@ -267,3 +267,22 @@ Nine-step run order executed after the payload pilot. All closed.
 **In-sandbox drag-sort FAIL was environment-only.** The routine's own check reported a FAIL on the mouse drag-sort, but the cause was the sandbox, not the lesson: its Chromium build needed Playwright 1.56.0. The `Lesson checks` workflow on the PR passed.
 
 **Map:** row 141 (y9_mea_02) flipped to Published, dated 2026-10-02, URL written, formats copied from the y9_mea_01 row. Edited on main (the map's single editing home) after the lesson merged. A cell-by-cell diff against the pre-edit copy showed only N141/O141/P141 changed; reopen-after-save confirmation passed. Published count 137 -> 138 (Planned 83).
+
+## 2026-10-13 - Ten Y9 lessons published (nightly routine builds) + routine moved off gh
+
+**The lessons:** built one per night by the cloud routine via `/next-lesson-auto`, 2026-10-02 to 2026-10-11, all in payload mode with payloads kept under `payloads/year-9/<strand>/`:
+- Measurement: y9_mea_03 Optimising surface area and volume (PR #14), y9_mea_04 Introducing scientific notation (#15), y9_mea_09 Absolute, relative and percentage error (#16), y9_mea_11 Modelling with direct proportion (#17).
+- Space: y9_spa_01 Naming sides in right-angled triangles (#18), y9_spa_04 Enlargement transformation (#19), y9_spa_06 Algorithms for triangle properties (#20).
+- Statistics: y9_sta_01 Analysing statistical reports (#21), y9_sta_03 Comparing distributions visually (#22).
+- Probability: y9_pro_01 Two-step compound events (#23).
+Browser spot-checked, then merged to lesson-gen together on 2026-10-13 (each PR adds only its own lesson and payload, so there were no conflicts), then merged to main via PR #26 and published.
+
+**Backlog stall.** The 2026-10-13 nightly run found nothing eligible: every Planned Y9 row was either already on an open PR or behind an unpublished prerequisite. Unreviewed PRs block the routine, so review them roughly in the order the routine builds them.
+
+**PR #24 - routine off the gh CLI.** `gh` is not authenticated in the cloud routine (`GH_TOKEN` rejected), so the routine had been silently skipping the open-PR check and the Lesson checks result. `next-lesson-auto.md` now uses the session's GitHub MCP tools for PR listing, PR creation, reading the Lesson checks run and its artifact, and job logs. `next-lesson.md` (interactive) unchanged.
+
+**Map (PR #25):** rows 142, 143, 148, 150, 152, 155, 157, 159, 161, 165 flipped to Published. Generated date = each lesson's build-commit date; URLs from the year-9/<strand>/<filename> pattern; formats copied from the y9_mea_02 row. Edited on lesson-gen rather than main this time (main was strictly behind lesson-gen, so no divergence). A cell-by-cell diff of every sheet against the pre-edit copy showed only N/O/P on those 10 rows changed; `export_lessonmap_json.py --check` passed. Published count 138 -> 148 (Planned 73).
+
+**main/lesson-gen sync.** PR #26 left a merge commit on main that lesson-gen lacked (same content); this log entry's PR brings it back into lesson-gen so the branches line up again.
+
+**Now eligible for the routine:** y9_mea_05, y9_mea_10, y9_mea_12, y9_spa_02, y9_spa_05, y9_spa_07, y9_sta_02, y9_sta_04, y9_pro_02. Next build: y9_mea_05.
