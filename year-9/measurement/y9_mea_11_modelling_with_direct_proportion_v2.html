@@ -1,0 +1,2243 @@
+﻿<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON — FRAME (payload mode)  ·  SLOT MANIFEST
+  ============================================================================
+  Built by tokenising assets/lesson_template.html per references/payload-spec.md
+  §3. The assembler (assemble_lesson.py) reads THIS comment as the authoritative
+  slot list and substitutes every {{SLOT:…}} token from a payload_version 1
+  JSON. Every slot below MUST be supplied by the payload — the assembler
+  hard-fails on any gap. CSS, framework JS, function bodies and section order are
+  unchanged from the template.
+
+  ── SCALAR / TEXT SLOTS (plain string, no markup expected) ──────────────────
+    title                              <title> text
+    meta_lesson_id                     content of <meta name="lesson-id">
+    meta_ac9_descriptor                content of <meta name="ac9-descriptor">
+    meta_ac9_descriptor_text           AC9 descriptor sentence shown after the code
+                                       in the Curriculum-link panel
+    meta_ac9_elaborations              content of <meta name="ac9-elaborations">
+    meta_sa_year                       content of <meta name="sa-year">
+    meta_sa_strand                     content of <meta name="sa-strand">
+    meta_sa_conceptual_understanding   content of <meta name="sa-conceptual-understanding">
+    meta_lesson_focus                  content of <meta name="lesson-focus">
+    meta_mapping_note                  content of <meta name="mapping-note">
+    footer_title                       lesson title shown in the page footer line
+    header_title                       header <h1> text
+    header_subtitle                    header .subtitle text
+    header_badge                       header .badge text
+    count_practice2                    Stretch accordion count badge (e.g. "6 questions")
+    count_practice3                    Mastery accordion count badge (e.g. "4 questions")
+    assembly_stamp                     assembler-injected <meta> stamp (version/date/source)
+
+    NOTE ON SLOT NAMING: the template ships a <meta name="lesson-focus"> tag (not
+    the "ac9-descriptor-text" tag named in the spec's §3 slot list). Per the
+    change-nothing-else constraint the tag was not renamed, so its content slot
+    is meta_lesson_focus. Payload meta key: "lesson-focus".
+
+  ── HTML-FRAGMENT SLOTS (raw HTML; maths-typography rules apply: stacked .frac,
+     .var spans, U+2212 minus, <sup> powers) ─────────────────────────────────
+    section0_intro      inner HTML of the Section 0 retrieval intro <p>
+    section_warmup      Section 1 "Why this matters" body (everything after the <h2>)
+    vocab_cards         the .vocab card elements inside .vocab-grid (Section 2)
+    section3_heading    Section 3 <h2> heading text (after the .sec-num span)
+    section3_desc       inner HTML of the Section 3 .sec-desc line
+    sort_activity       Section 3 sort chips-and-buckets (the .parts-expr block
+                        incl. #partsTerms, .bucket[data-bucket], .term-chip[data-type],
+                        plus the trailing .parts-instructions note)
+    section4_heading    Section 4 <h2> heading text (after the .sec-num span)
+    section6_heading    Section 6 We-Do <h2> heading (after the .sec-num span;
+                        may include the trailing .expr span)
+    worked_example      Section 5 worked-example body after the <h2> (the .worked
+                        block incl. #step1/#step2/#step3 and #revealBtn)
+    we_do_intro         inner HTML of the Section 6 We-Do intro <p>
+    strategy_section    optional strategy-enrichment <section> before the exit ticket
+                        (payload html.strategy_section; "" when unused)
+    strategy_js         optional strategy-enrichment <script> body at end of script
+                        (payload html.strategy_js; "" when unused)
+
+  ── JS-ARRAY SLOT ───────────────────────────────────────────────────────────
+    js_arrays           Replaces the ENTIRE block of const problem-array
+                        declarations. The INITIALISE calls below it are unchanged.
+                        The payload's html.js_arrays (or assembler-serialised
+                        arrays.*) MUST declare ALL of the following consts, using
+                        these exact names and object shapes. Strings are HTML
+                        fragments/answers; the assembler escapes "</" so nothing
+                        can terminate the <script> block.
+
+      const matchTerms = [ { html: <HTML>, group: <int 1..N> }, … ]
+          // Section 4 "Spot the like terms". Even count; each `group` id must
+          // appear on exactly two chips (the two like terms that match).
+          // (Relocated here from the Matching section per spec §3.)
+
+      const retrieval  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 0 warm-up. noCount (excluded from progress). a: 'TEXT' allowed.
+
+      const practice1  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 8 Building tier (counts toward progress).
+
+      const practice2  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 9 Stretch tier. Length should match count_practice2.
+
+      const practice3  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 10 Mastery tier. Length should match count_practice3.
+
+      const checkpoint = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 7 quick check (counts toward progress).
+
+      const weDo       = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 6 We-Do sub-prompts. noCount.
+
+      const exitProbs  = [ { q: <HTML>, a: <string>, hint: <string> }, … ]
+          // Section 11 exit ticket. a: 'TEXT' for open-response (not auto-marked).
+
+      // Shared q/a/hint shape: q = HTML question fragment; a = plain keyboard-form
+      // answer string (hyphen minus, "/" fractions, "^" powers) or 'TEXT' for
+      // open response — never empty; hint = plain string.
+  ============================================================================
+-->
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTERACTIVE HTML MATHS LESSON — TEMPLATE
+  ============================================================================
+  This file is the canonical structure for interactive HTML maths lessons.
+  The example content shown here is Year 10 Collecting Like Terms; treat that
+  as a worked reference for the patterns, not as the lesson to ship.
+
+  HOW TO ADAPT:
+  -----------------------------------------------------------------------------
+  Keep ALL of the following intact:
+    • The <style> block (palette, layout, all component CSS)
+    • The <script> block's framework code (buildPractice, drag-and-drop,
+      teacher mode, progress tracking, answer normalisation, toggleTier)
+    • The section ordering (Retrieval → Hook → AS A CLASS → I DO → WE DO →
+      YOU DO → Exit ticket) and phase banner placement
+    • The numbering convention (sections 0–11 sequential)
+    • The accordion structure for the three practice tiers (Sections 8–10):
+      Building expanded by default, Stretch and Mastery collapsed with
+      question-count badges
+    • The matching visual treatment of Retrieval (Section 0) and Exit ticket
+      (Section 11) as bookends
+
+  Replace the following with topic-specific content:
+    • Curriculum metadata (<meta> tags in <head> AND the "Curriculum link"
+      <details> block before the footer — must match each other)
+    • Page <title>, header h1, header subtitle, badge text
+    • Footer line: "Mathematics · Year [N] · [Topic]" — no school branding,
+      no "Built with Claude" tagline; keep it factual and short
+    • Section 0 retrieval warm-up problems (retrieval array)
+    • Section 1 "Why this matters" hook (real-world scenario)
+    • Section 2 vocab cards (5 terms, ordered concrete → abstract)
+    • Section 3 drag-sort items (data-type values + chip contents)
+    • Section 4 match pairs (matchTerms array in JS)
+    • Section 5 worked-example problem and the 3 steps
+    • Section 6 we-do sub-prompts (weDo array)
+    • Section 7 quick check problems (checkpoint array)
+    • Section 8/9/10 practice problems (practice1/practice2/practice3 arrays)
+    • Section 11 exit ticket questions (exitProbs array)
+
+  MATHS TYPOGRAPHY RULES (non-negotiable):
+    • Fractions: <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+      — NEVER inline like "3/4"
+    • Variables: <span class="var">x</span> — italic via CSS
+    • Minus sign: − (U+2212) — NOT a hyphen -
+    • Powers: <sup>2</sup>
+
+  For full guidance see SKILL.md and the references/ folder.
+  ============================================================================
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelling with Direct Proportion — Year 9</title>
+
+<!--
+  ============================================================================
+  CURRICULUM METADATA — populate these on every lesson.
+  These tags are scrapable for coverage audits and feed the visible
+  "Curriculum link" panel in the footer. Source: lesson-map.xlsx row.
+  ============================================================================
+-->
+<meta name="lesson-id"             content="y9_mea_11">
+<meta name="ac9-descriptor"        content="AC9M9M05">
+<meta name="ac9-elaborations"      content="1,2,3">
+<meta name="sa-year"               content="9">
+<meta name="sa-strand"             content="Measurement">
+<meta name="sa-conceptual-understanding" content="Mathematical modelling can be used to represent and solve problems involving proportion, rates, ratios and scale, including in financial contexts">
+<meta name="lesson-focus"          content="Model direct-proportion situations — pro rata pay rates, currency exchange, multiple quotes for a job, Hooke's law from physics; investigate situations where proportion is not maintained (image editing/distortion); building and construction standards for staircases and escalators.">
+<meta name="mapping-note"          content="Strict"><!-- one of: Strict | Implied | Strict + cross-tag | Adapted (SA) | Created (SA) -->
+<meta name="template-version" content="2026-07-12.1">
+<meta name="assembled" content="assemble_lesson.py v1.0 2026-10-05 from ../../payloads/year-9/measurement/y9_mea_11_modelling_with_direct_proportion_v2.payload.json">
+
+<style>
+  :root {
+    --navy: #1F4D54;
+    --navy-dark: #143438;
+    --coral: #BE5837;
+    --coral-soft: #f5d8cb;
+    --bg: #F3F5F8;
+    --hint-bg: #DDE5F5;
+    --card: #ffffff;
+    --border: #d8dde6;
+    --text: #2a2a2a;
+    --muted: #6b7280;
+    --good: #2f9e6b;
+    --good-soft: #dff5e8;
+    --bad: #d24a4a;
+    --bad-soft: #fde2e2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    scroll-behavior: smooth;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+
+  /* HEADER */
+  header.top {
+    background: var(--navy);
+    color: white;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    border-radius: 0 0 14px 14px;
+    box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    margin: 0;
+    font-size: 1.65rem;
+  }
+  header.top .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .badge {
+    background: var(--coral);
+    color: white;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 11px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    padding: 10px 24px 12px;
+    margin: -28px -24px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-row {
+    max-width: 1052px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; font-size: 0.85rem; color: var(--muted);
+  }
+  .progress-bar {
+    height: 8px; background: #e3e6ec; border-radius: 999px; overflow: hidden;
+    flex: 1; max-width: 360px;
+  }
+  .progress-fill {
+    height: 100%; background: var(--coral);
+    width: 0%; transition: width 0.4s ease;
+  }
+  .teacher-toggle {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.82rem; color: var(--muted);
+    background: white; padding: 6px 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .teacher-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* DIFFICULTY SECTIONS (You do) */
+  section.lesson.difficulty-1 { background: #ecf5ed; border-left: 5px solid #6ba87c; }
+  section.lesson.difficulty-2 { background: #fdf3dc; border-left: 5px solid #c89638; }
+  section.lesson.difficulty-3 { background: #fde4d6; border-left: 5px solid #d57350; }
+  .difficulty-1 .problem,
+  .difficulty-2 .problem,
+  .difficulty-3 .problem {
+    background: white;
+    border-color: rgba(0,0,0,0.07);
+  }
+  .difficulty-1 .problem-input,
+  .difficulty-2 .problem-input,
+  .difficulty-3 .problem-input { background: white; }
+
+  /* Chilli stickers — top-left of each You Do section */
+  section.lesson.difficulty-1::before,
+  section.lesson.difficulty-2::before,
+  section.lesson.difficulty-3::before {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+    z-index: 5;
+    letter-spacing: 1px;
+  }
+  section.lesson.difficulty-1::before { content: '🌶'; }
+  section.lesson.difficulty-2::before { content: '🌶🌶'; }
+  section.lesson.difficulty-3::before { content: '🌶🌶🌶'; }
+
+  /* CHECKPOINT — short "you do" before independent practice */
+  section.lesson.checkpoint {
+    background: #f7faff;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.checkpoint .problem { background: white; }
+  .checkpoint-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+  .stop-banner {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    color: var(--navy);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .diff-badge {
+    display: inline-flex; gap: 8px; align-items: center;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .diff-badge .dots {
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+  .diff-badge.d1 { background: #2f9e6b; }
+  .diff-badge.d2 { background: #c89714; }
+  .diff-badge.d3 { background: #d65a3a; }
+
+  @media (max-width: 600px) {
+    .diff-badge { font-size: 0.62rem; padding: 3px 9px; gap: 6px; }
+    .diff-badge .dots { font-size: 0.72rem; }
+  }
+
+  /* PHASE BANNERS */
+  .phase-banner {
+    display: flex; align-items: center; gap: 18px;
+    background: white;
+    border-left: 6px solid var(--coral);
+    padding: 14px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 38px 0 14px;
+    box-shadow: var(--shadow);
+  }
+  .phase-banner .phase-mono {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--coral);
+    letter-spacing: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-right: 14px;
+    border-right: 1.5px solid var(--border);
+  }
+  .phase-banner .phase-text { color: var(--navy); }
+  .phase-banner .phase-label {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+  }
+  .phase-banner .phase-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 1px;
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    .phase-banner .phase-mono { font-size: 1.15rem; padding-right: 10px; }
+    .phase-banner { gap: 12px; padding: 12px 14px; }
+  }
+
+  /* SECTION CARDS */
+  section.lesson {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  section.lesson h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section.lesson h2 .sec-num {
+    background: var(--coral);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: -apple-system, sans-serif;
+    font-size: 1rem;
+  }
+  section.lesson .sec-desc {
+    color: var(--muted); margin: 0 0 22px;
+    font-size: 0.95rem;
+  }
+
+  /* MATH STYLING */
+  .expr { font-family: Georgia, "Cambria", serif; font-size: 1.2rem; letter-spacing: 0.5px; }
+  .var { font-style: italic; }
+  .frac {
+    display: inline-flex; flex-direction: column;
+    vertical-align: middle; text-align: center;
+    line-height: 1.1; margin: 0 3px; font-style: italic;
+    font-size: 0.92em;
+  }
+  .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px 1px; }
+  .frac .den { padding: 1px 4px 0; }
+
+  /* VOCABULARY FLIP CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+  }
+  .vocab-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.55s; transform-style: preserve-3d;
+  }
+  .vocab.flipped .vocab-inner { transform: rotateY(180deg); }
+  .vocab-front, .vocab-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .vocab-front {
+    background: var(--navy); color: white;
+    font-family: Georgia, serif; font-weight: bold;
+    font-size: 1.2rem;
+  }
+  .vocab-front .hint-flip {
+    font-family: -apple-system, sans-serif;
+    font-weight: normal;
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .vocab-back {
+    background: white; color: var(--text);
+    transform: rotateY(180deg);
+    font-size: 0.95rem; line-height: 1.4;
+    text-wrap: balance;
+  }
+  .vocab-back strong { color: var(--coral); }
+  .vocab-example {
+    display: block;
+    margin-top: 10px;
+    padding: 7px 11px 8px;
+    background: var(--hint-bg);
+    border-radius: 6px;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--navy);
+    font-style: italic;
+    text-wrap: balance;
+  }
+  .vocab-example::before {
+    content: 'EXAMPLE — ';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-right: 2px;
+  }
+  .vocab-example strong { color: var(--coral); font-style: normal; }
+
+  /* PARTS-OF-EXPRESSION INTERACTIVE */
+  .parts-expr {
+    text-align: center;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .parts-expr .label {
+    font-size: 0.8rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px;
+    margin-bottom: 12px;
+  }
+  .term-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+    transition: all 0.2s;
+  }
+  .term-chip:hover { border-color: var(--navy); }
+  .term-chip.variable { background: var(--coral-soft); border-color: var(--coral); color: var(--coral); font-weight: 600; }
+  .term-chip.constant { background: var(--hint-bg); border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+  .parts-instructions {
+    background: var(--hint-bg);
+    border-left: 4px solid var(--navy);
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .parts-buckets {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 12px;
+  }
+  .bucket {
+    background: var(--bg); border-radius: 10px; padding: 14px;
+    border: 1.5px dashed var(--border); min-height: 80px;
+  }
+  .bucket h4 { margin: 0 0 8px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .bucket .vt { color: var(--coral); font-weight: 600; }
+  .bucket .ct { color: var(--navy); }
+  .bucket-contents { min-height: 50px; display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .terms-source { min-height: 60px; padding: 10px; background: var(--bg); border-radius: 8px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; border: 1px dashed var(--border); }
+  .terms-source:empty::before { content: 'All sorted! ✓'; color: var(--muted); font-style: italic; }
+  .term-chip { touch-action: none; user-select: none; }
+  .term-chip.dragging { opacity: 0.3; }
+  .term-chip-ghost {
+    position: fixed; z-index: 1000; pointer-events: none; opacity: 0.92;
+    transform: scale(1.06);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    background: white;
+    padding: 6px 12px;
+    border: 1.5px solid var(--navy);
+    border-radius: 8px;
+    font-family: Georgia, serif;
+    font-size: 1.15rem;
+  }
+  .bucket.drop-target {
+    background: var(--coral-soft);
+    border-color: var(--coral);
+    border-style: solid;
+    box-shadow: 0 0 0 3px rgba(190,88,55,0.18);
+  }
+  .term-chip.wrong-drop {
+    animation: shake 0.45s;
+    background: var(--bad-soft) !important;
+    border-color: var(--bad) !important;
+    color: var(--bad) !important;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+  .parts-actions { display: flex; gap: 10px; justify-content: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .parts-actions .btn-sm { padding: 7px 14px; font-size: 0.85rem; }
+  .btn-secondary {
+    background: white; color: var(--navy);
+    border: 1.5px solid var(--navy);
+    padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .btn-secondary:hover { background: var(--hint-bg); }
+
+  /* WORKED EXAMPLE */
+  .worked {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 22px;
+    border: 1px solid var(--border);
+  }
+  .step {
+    display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; margin-bottom: 16px;
+    opacity: 0.35;
+    transition: opacity 0.3s;
+  }
+  .step.visible { opacity: 1; }
+  .step-num {
+    background: var(--coral); color: white;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+    font-family: -apple-system, sans-serif;
+  }
+  .step-body { padding-top: 4px; }
+  .step-title { font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .step-desc { color: var(--muted); font-size: 0.93rem; margin-bottom: 8px; }
+  .calc-box {
+    background: white; border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; box-shadow: var(--shadow);
+    font-family: Georgia, serif; font-size: 1.15rem;
+    overflow-x: auto;
+  }
+  .calc-box .red { color: var(--coral); font-weight: 600; }
+  .calc-box .blue { color: var(--navy); font-weight: 600; }
+  .summary-banner {
+    background: var(--coral); color: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  .summary-banner .label {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.8px;
+    font-size: 0.72rem; opacity: 0.9; margin-bottom: 4px; display: block;
+  }
+  .reveal-btn {
+    background: var(--navy); color: white;
+    border: none; padding: 10px 18px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600;
+    margin-top: 10px;
+  }
+  .reveal-btn:hover { background: var(--navy-dark); }
+  .reveal-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* MATCHING LIKE TERMS */
+  .match-area {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 10px; margin: 14px 0;
+  }
+  .match-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 12px 6px;
+    text-align: center; font-family: Georgia, serif; font-size: 1.05rem;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .match-chip:hover { border-color: var(--navy); }
+  .match-chip.selected { border-color: var(--coral); background: var(--coral-soft); box-shadow: 0 0 0 2px var(--coral); }
+  .match-chip.matched-1 { background: #ffe9d6; border-color: #d97c2a; color: #8c4a0e; }
+  .match-chip.matched-2 { background: #d9efff; border-color: #2d6fa8; color: #15446b; }
+  .match-chip.matched-3 { background: #e5dcf7; border-color: #6f4ab8; color: #3d2773; }
+  .match-chip.matched-4 { background: #fcd9d9; border-color: #b8534a; color: #6a2520; }
+  .match-chip.matched-5 { background: #d6f0e0; border-color: #3a8f5f; color: #1d4a30; }
+  .match-feedback {
+    margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic;
+    min-height: 22px;
+  }
+
+  /* PRACTICE PROBLEMS */
+  .practice-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 14px;
+  }
+  .problem {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .problem-q {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .problem-num {
+    font-weight: bold; color: var(--coral);
+    font-family: -apple-system, sans-serif;
+    font-size: 0.92rem;
+    background: white; border: 1px solid var(--border);
+    width: 28px; height: 28px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .problem-expr { font-family: Georgia, serif; font-size: 1.1rem; flex: 1; padding-top: 2px; }
+  .problem-input-row {
+    display: flex; gap: 8px; align-items: center; margin-top: 10px;
+  }
+  .problem-input-row .eq { font-family: Georgia, serif; font-size: 1.1rem; color: var(--muted); }
+  .problem-input {
+    flex: 1; padding: 8px 12px;
+    border: 1.5px solid var(--border); border-radius: 7px;
+    font-family: Georgia, serif; font-size: 1rem;
+    background: white;
+  }
+  .problem-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(31,77,84,0.12); }
+  .problem-input.correct { border-color: var(--good); background: var(--good-soft); }
+  .problem-input.incorrect { border-color: var(--bad); background: var(--bad-soft); }
+  .check-btn {
+    background: var(--coral); color: white;
+    border: none; padding: 8px 14px;
+    border-radius: 7px; cursor: pointer;
+    font-size: 0.88rem; font-weight: 600;
+  }
+  .check-btn:hover { background: #a04829; }
+  .problem-tools {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 8px;
+    font-size: 0.82rem;
+  }
+  .hint-link, .answer-link {
+    color: var(--navy); cursor: pointer; text-decoration: underline;
+    background: none; border: none; padding: 0; font: inherit;
+  }
+  .hint-link:hover, .answer-link:hover { color: var(--coral); }
+  .hint-box {
+    background: var(--hint-bg);
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.85rem; font-style: italic;
+    margin-top: 8px; color: var(--navy);
+    display: none;
+  }
+  .hint-box.visible { display: block; }
+  .answer-box {
+    background: var(--good-soft); color: #1d4a30;
+    padding: 8px 12px; border-radius: 6px;
+    font-size: 0.9rem; margin-top: 8px;
+    font-family: Georgia, serif;
+    display: none;
+  }
+  .answer-box.visible { display: block; }
+  body.teacher-mode .answer-box { display: block !important; }
+  body.teacher-mode .hint-box { display: block !important; }
+  body.teacher-mode .step { opacity: 1 !important; }
+  body.teacher-mode #revealBtn { display: none; }
+
+  .format-hint { margin: 4px 0 0 26px; font-size: 0.78rem; color: var(--muted); }
+
+/* RESET BUTTON */
+.reset-btn { background: none; border: 1.5px solid #c9d4d6; border-radius: 8px; padding: 6px 12px; font: inherit; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+.reset-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+.misconception-box { display: none; margin: 6px 0 0 26px; padding: 8px 12px; background: var(--coral-soft); border-left: 3px solid var(--coral); border-radius: 6px; font-size: 0.85rem; color: var(--text); }
+.misconception-box.show { display: block; }
+
+/* FOCUS VISIBILITY (patch 6) */
+.check-btn:focus-visible, .hint-link:focus-visible, .answer-link:focus-visible,
+.reset-btn:focus-visible, .results-copy-btn:focus-visible, .reveal-btn:focus-visible {
+  outline: 3px solid var(--coral); outline-offset: 2px;
+}
+
+/* RESULTS COPY BAR */
+.results-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+.results-name { flex: 1 1 160px; max-width: 240px; padding: 8px 10px; border: 1.5px solid #c9d4d6; border-radius: 8px; font: inherit; background: white; }
+.results-copy-btn { background: var(--navy); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+.results-copy-btn:hover { background: var(--coral); }
+.results-copied { display: none; color: var(--navy); font-weight: 600; font-size: 0.9em; }
+.results-copied.show { display: inline; }
+
+/* EXIT TICKET */
+  .exit-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  /* FOOTER */
+  footer.bottom {
+    margin-top: 28px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  /* CURRICULUM LINK panel — collapsible metadata footer.
+     Reference info for teachers/auditors, not for students. */
+  details.curriculum-link {
+    margin: 18px 0 4px;
+    padding: 0;
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+    border-radius: 4px;
+    font-size: 0.86rem;
+    text-align: left;
+  }
+  details.curriculum-link summary {
+    cursor: pointer;
+    padding: 10px 16px;
+    font-weight: 600;
+    color: var(--navy);
+    list-style: none;
+    user-select: none;
+  }
+  details.curriculum-link summary::-webkit-details-marker { display: none; }
+  details.curriculum-link summary::before {
+    content: "▸ ";
+    display: inline-block;
+    margin-right: 4px;
+    transition: transform 0.15s ease;
+  }
+  details.curriculum-link[open] summary::before { content: "▾ "; }
+  details.curriculum-link .cl-body {
+    padding: 4px 16px 14px;
+    color: var(--text);
+  }
+  details.curriculum-link .cl-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 6px 12px;
+    margin-bottom: 4px;
+  }
+  details.curriculum-link .cl-row .cl-label {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  details.curriculum-link .cl-row .cl-value {
+    color: var(--text);
+  }
+  details.curriculum-link .cl-note {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #c7d3d5;
+    color: var(--muted);
+    font-style: italic;
+  }
+  @media (max-width: 600px) {
+    details.curriculum-link .cl-row { grid-template-columns: 1fr; gap: 2px; }
+    details.curriculum-link .cl-row .cl-label { font-size: 0.78rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .progress-wrap, .teacher-toggle, .reveal-btn, .check-btn, .hint-link, .answer-link { display: none !important; }
+    .accordion-body { display: block !important; }
+    .accordion-chevron, .accordion-count { display: none !important; }
+    .results-bar, .reset-btn, .format-hint { display: none !important; }
+    .tier-accordion .accordion-head { cursor: default; }
+    .problem-input { min-height: 26px; }
+    .step { opacity: 1 !important; }
+    section.lesson { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    body { background: white; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .page { padding: 0 14px 80px; }
+    section.lesson { padding: 18px; }
+    section.lesson h2 { font-size: 1.2rem; }
+    header.top h1 { font-size: 1.35rem; }
+    .parts-buckets { grid-template-columns: 1fr; }
+  }
+
+  /* BOOKEND SECTIONS — Retrieval (Section 0) + Exit ticket (Section 11) share visual treatment */
+  section.lesson.retrieval,
+  section.lesson.exit-ticket {
+    background: #eaf0f1;
+    border-left: 5px solid var(--navy);
+  }
+  section.lesson.retrieval .problem,
+  section.lesson.exit-ticket .problem { background: white; }
+  .retrieval-tag,
+  .exit-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    background: var(--navy);
+    color: white;
+    white-space: nowrap;
+  }
+
+  /* ACCORDION PRACTICE TIERS — Sections 8, 9, 10 */
+  section.lesson.tier-accordion {
+    padding-top: 28px; /* preserve chilli-sticker breathing room */
+  }
+  .tier-accordion .accordion-head {
+    cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    user-select: none;
+  }
+  .tier-accordion .accordion-head:focus {
+    outline: 3px solid var(--coral);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .tier-accordion h2 {
+    margin: 0;
+    flex: 1;
+  }
+  .accordion-chevron {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: white;
+    border: 1.5px solid var(--border);
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    color: var(--navy);
+    transition: transform 0.25s ease;
+  }
+  .accordion-count {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .accordion-body {
+    margin-top: 16px;
+    display: none; /* default collapsed */
+  }
+  .tier-accordion.open .accordion-body { display: block; }
+  .tier-accordion.open .accordion-chevron { transform: rotate(90deg); }
+  .tier-accordion .sec-desc { display: none; }
+  .tier-accordion.open .sec-desc { display: block; margin: 14px 0 18px; }
+
+  /* constant-area triangle component */
+  .cat{display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+  .cat-stage{ flex:1 1 340px; min-width:300px; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:10px; }
+  .cat svg{display:block; width:100%; height:auto; touch-action:none;}
+  .cat-apex{cursor:grab; touch-action:none;}
+  .cat-apex:active{cursor:grabbing;}
+  .cat-apex:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+  .cat-panel{ flex:1 1 240px; min-width:230px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+  .cat-panel h3{font-family:Georgia,serif; color:var(--navy); margin:0 0 10px; font-size:1.05rem;}
+  .cat-row{ display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px dashed var(--border); font-size:.95rem; }
+  .cat-row:last-of-type{border-bottom:none;}
+  .cat-row .lab{color:var(--muted);}
+  .cat-row .val{font-family:Georgia,Cambria,serif; color:var(--navy); font-weight:bold;}
+  .cat-area-line{ margin-top:12px; padding:12px; border-radius:9px; background:var(--coral-soft); text-align:center; font-family:Georgia,Cambria,serif; color:var(--navy); font-size:1.05rem; }
+  .cat-area-line .big{color:var(--coral); font-weight:bold; font-size:1.3rem;}
+  .cat-status{ margin-top:12px; font-size:.85rem; color:var(--muted); background:var(--hint-bg); border-radius:8px; padding:9px 11px; }
+  .cat-status.done{color:var(--good); font-weight:600;}
+  .cat-q{ margin-top:16px; font-style:italic; color:var(--navy); border-left:3px solid var(--coral); padding-left:12px; font-size:.92rem; }
+  .cat-baseext{stroke:var(--border); stroke-width:2; stroke-dasharray:4 5;}
+  .cat-guide{stroke:var(--coral); stroke-width:2; stroke-dasharray:6 5; opacity:.65;}
+  .cat-guide-label{font-family:Georgia,serif; font-size:13px; fill:var(--coral); opacity:.8;}
+  .cat-fill{fill:var(--coral); fill-opacity:.12;}
+  .cat-base{stroke:var(--navy); stroke-width:3.5;}
+  .cat-slant{stroke:var(--navy); stroke-width:3;}
+  .cat-perp{stroke:var(--coral); stroke-width:2; stroke-dasharray:5 4;}
+  .cat-ra{fill:none; stroke:var(--coral); stroke-width:2;}
+  .cat-vlabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-hlabel{font-family:Georgia,serif; font-size:14px; fill:var(--coral);}
+  .cat-baselabel{font-family:Georgia,serif; font-size:15px; fill:var(--navy);}
+  .cat-vdot{fill:var(--navy);}
+  .cat-ring{fill:none; stroke:var(--navy); stroke-width:2; transition:opacity .15s;}
+  .cat-handle{fill:var(--coral); stroke:#ffffff; stroke-width:3;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Modelling with Direct Proportion</h1>
+    <div class="subtitle">Find k, use the model, and spot when proportion breaks</div>
+  </div>
+  <div class="badge">Year 9 · Measurement</div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>Progress: <strong id="progressLabel">0 / 21</strong></span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="reset-btn" id="resetProgressBtn" type="button" title="Clear saved answers on this device">Reset</button>
+    <div class="teacher-toggle" id="teacherToggle" onclick="toggleTeacher()">
+      <span>👁</span><span>Teacher mode</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- SECTION 0: RETRIEVAL WARM-UP -->
+<!-- 2–3 quick recall questions on prerequisite skills for today's lesson.
+     Replace the retrieval array in JS to swap content. These do NOT count
+     toward the student's progress score (they're noCount). -->
+<section class="lesson retrieval">
+  <h2>
+    <span class="sec-num">0</span>Warm-up — quick recall
+    <span class="retrieval-tag">🧠 30-second recall</span>
+  </h2>
+  <p class="sec-desc">Today's lesson builds on rates, gradient and one-step equations. These three questions check you are ready.</p>
+  <div class="practice-grid" id="retrievalGrid"></div>
+</section>
+
+<!-- SECTION 1: WHY THIS MATTERS (HOOK) -->
+<!-- A real-world scenario that's secretly today's maths. Two-column layout —
+     left side tells the story, right side connects it to the algebra.
+     Should read in ~30 seconds. Finance contexts work especially well. -->
+<section class="lesson">
+  <h2><span class="sec-num">1</span>Why this matters</h2>
+  <p class='sec-desc'>A real situation that is secretly today's maths.</p>
+<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>
+  <div>
+    <p>You post a photo to social media and the app squeezes it to fit. Sometimes faces look normal; sometimes they look <strong>stretched</strong>.</p>
+    <p>The same idea runs your first pay slip: work <strong>twice the hours</strong>, earn <strong>twice the pay</strong>. Swap A$500 for US dollars and A$1000 gets you twice as much.</p>
+  </div>
+  <div class='parts-instructions' style='margin: 0;'>
+    These are all <strong>direct proportion</strong>: one quantity is a fixed multiple of the other, <span class="var">y</span> = <span class="var">k</span><span class="var">x</span>. Today you find <span class="var">k</span>, use the model to predict, and spot when a situation <strong>breaks</strong> proportion, like a distorted photo.
+  </div>
+</div>
+<svg viewBox="0 0 480 160" width="440" role="img" aria-label="An original photo, the same photo resized in proportion, and the photo stretched in width only so the round face becomes an oval" style="display:block;margin:8px 0;max-width:100%"><rect x="10" y="20" width="120" height="80" fill="#dde8ea" stroke="#1F4D54" stroke-width="2"/><circle cx="70" cy="60" r="26" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/><text x="70" y="124" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1F4D54">Original 1200 × 800</text><rect x="175" y="40" width="90" height="60" fill="#dde8ea" stroke="#1F4D54" stroke-width="2"/><circle cx="220" cy="70" r="19.5" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/><text x="220" y="124" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2f9e6b">In proportion 900 × 600</text><text x="220" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2f9e6b">both × 0.75 ✓</text><rect x="315" y="20" width="150" height="80" fill="#dde8ea" stroke="#1F4D54" stroke-width="2"/><ellipse cx="390" cy="60" rx="32.5" ry="26" fill="#f5d8cb" stroke="#BE5837" stroke-width="2"/><text x="390" y="124" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#d24a4a">Width only 1500 × 800</text><text x="390" y="142" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#d24a4a">× 1.25 and × 1 ✗</text></svg>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">AS A&nbsp;CLASS</div>
+  <div class="phase-text">
+    <div class="phase-label">Build the foundation together</div>
+    <div class="phase-sub">Vocabulary and concept exploration — we'll do this as a whole class.</div>
+  </div>
+</div>
+
+<!-- SECTION 2: VOCABULARY -->
+<section class="lesson">
+  <h2><span class="sec-num">2</span>Key vocabulary</h2>
+  <p class="sec-desc">Tap each card to flip and reveal the definition. You'll use these five words constantly today.</p>
+  <div class="vocab-grid">
+    <div class='vocab' onclick="this.classList.toggle('flipped')">
+  <div class='vocab-inner'>
+    <div class='vocab-front'>Rate<div class='hint-flip'>Tap to flip</div></div>
+    <div class='vocab-back'>A comparison of two quantities with <strong>different units</strong>.<div class='vocab-example'>$25 per hour; 1.5 cm per newton.</div></div>
+  </div>
+</div>
+<div class='vocab' onclick="this.classList.toggle('flipped')">
+  <div class='vocab-inner'>
+    <div class='vocab-front'>Pro rata<div class='hint-flip'>Tap to flip</div></div>
+    <div class='vocab-back'>Latin for 'in proportion': pay or cost <strong>scaled to the share</strong> you work or use.<div class='vocab-example'>3 days of a 5-day job → 3/5 of the salary.</div></div>
+  </div>
+</div>
+<div class='vocab' onclick="this.classList.toggle('flipped')">
+  <div class='vocab-inner'>
+    <div class='vocab-front'>Direct proportion<div class='hint-flip'>Tap to flip</div></div>
+    <div class='vocab-back'><span class="var">y</span> = <span class="var">k</span><span class="var">x</span>: double one quantity and the other <strong>doubles</strong>.<div class='vocab-example'>The graph is a straight line through (0, 0).</div></div>
+  </div>
+</div>
+<div class='vocab' onclick="this.classList.toggle('flipped')">
+  <div class='vocab-inner'>
+    <div class='vocab-front'>Constant of proportionality<div class='hint-flip'>Tap to flip</div></div>
+    <div class='vocab-back'>The fixed multiplier <span class="var">k</span> = <span class="var">y</span> ÷ <span class="var">x</span>. It is the rate and the gradient.<div class='vocab-example'>US$330 for A$500 → k = 0.66.</div></div>
+  </div>
+</div>
+<div class='vocab' onclick="this.classList.toggle('flipped')">
+  <div class='vocab-inner'>
+    <div class='vocab-front'>Aspect ratio<div class='hint-flip'>Tap to flip</div></div>
+    <div class='vocab-back'>Width : height of an image. Keep it the same and the image is <strong>not distorted</strong>.<div class='vocab-example'>1200 × 800 is 3 : 2.</div></div>
+  </div>
+</div>
+  </div>
+</section>
+
+<!-- SECTION 3: PARTS OF AN EXPRESSION -->
+<section class="lesson">
+  <h2><span class="sec-num">3</span>Proportional or not?</h2>
+  <p class="sec-desc">Drag each situation into <strong>✓ Directly proportional</strong> or <strong>✗ Not proportional</strong>.</p>
+
+  <div class='parts-expr'>
+  <div class='label'>Is it directly proportional?</div>
+  <div id='partsTerms' class='terms-source'>
+    <span class='term-chip constant' data-type='prop'>Pay at <strong>$28 per hour</strong></span>
+    <span class='term-chip variable' data-type='notprop'>Taxi: <strong>$4 flag-fall</strong> + $2.20 per km</span>
+    <span class='term-chip constant' data-type='prop'>Swap AUD for USD at 0.66, <strong>no fee</strong></span>
+    <span class='term-chip variable' data-type='notprop'>Swap AUD for USD at 0.68 <strong>minus a $15 fee</strong></span>
+    <span class='term-chip constant' data-type='prop'>A spring's <strong>stretch</strong> vs the load (below its elastic limit)</span>
+    <span class='term-chip variable' data-type='notprop'>Photo resized to <strong>200% wide, 150% tall</strong></span>
+    <span class='term-chip constant' data-type='prop'>x: 2, 4, 6 &nbsp;→&nbsp; y: 5, 10, 15</span>
+    <span class='term-chip variable' data-type='notprop'>x: 1, 2, 3 &nbsp;→&nbsp; y: 4, 6, 8</span>
+  </div>
+  <div class='parts-buckets'>
+    <div class='bucket' data-bucket='prop'>
+      <h4 style='color:var(--navy)'>✓ Directly proportional</h4>
+      <div class='bucket-contents'></div>
+    </div>
+    <div class='bucket' data-bucket='notprop'>
+      <h4 style='color:var(--coral)'>✗ Not proportional</h4>
+      <div class='bucket-contents'></div>
+    </div>
+  </div>
+  <div class='parts-actions'>
+    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>
+    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>
+  </div>
+</div>
+<div class='parts-instructions'>
+  💡 Test: is <span class="var">y</span> ÷ <span class="var">x</span> the same every time, and is zero matched with zero? A fixed fee or an uneven scale breaks proportion.
+</div>
+</section>
+
+<!-- SECTION 4: MATCHING LIKE TERMS -->
+<section class="lesson">
+  <h2><span class="sec-num">4</span>Match each situation to its model</h2>
+  <p class="sec-desc">Click two terms that are alike to match them. There are five matching pairs in the grid below.</p>
+
+  <div class="match-area" id="matchArea">
+    <!-- populated by JS -->
+  </div>
+  <div class="match-feedback" id="matchFeedback">Pick a term to start matching.</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">I DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Watch and listen</div>
+    <div class="phase-sub">I'll work through one example out loud, showing every step.</div>
+  </div>
+</div>
+
+<!-- SECTION 5: WORKED EXAMPLE (I DO) -->
+<section class="lesson">
+  <h2><span class="sec-num">5</span>Worked example — the 3-step method</h2>
+  <style>
+  .mr-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px; }
+  .mr-pane { background:white; border:1.5px solid var(--border); border-radius:10px; padding:16px; display:flex; flex-direction:column; }
+  .mr-pane h4 { margin:0 0 10px; font-family:Georgia,serif; color:var(--navy); font-size:.92rem; text-transform:uppercase; letter-spacing:1.5px; border-bottom:2px solid var(--hint-bg); padding-bottom:6px; }
+  .mr-pane.equation .mr-eqn { font-family:Georgia,serif; font-size:1.5rem; color:var(--navy); text-align:center; margin:12px 0; }
+  .mr-pane.equation .mr-sub { background:var(--bg); border-radius:8px; padding:12px 14px; font-family:Georgia,serif; font-size:1.05rem; text-align:center; transition:background .2s; min-height:70px; display:flex; align-items:center; justify-content:center; }
+  .mr-pane.equation .mr-sub.active { background:var(--coral-soft); color:var(--coral); font-weight:600; }
+  .mr-pane.table table { width:100%; border-collapse:collapse; font-family:Georgia,serif; font-size:1.05rem; }
+  .mr-pane.table th { background:var(--hint-bg); color:var(--navy); padding:8px; border:1px solid var(--border); font-style:italic; }
+  .mr-pane.table td { padding:8px; border:1px solid var(--border); text-align:center; cursor:pointer; transition:background .2s; }
+  .mr-pane.table tr[data-link-id] { cursor:pointer; }
+  .mr-pane.table tr[data-link-id]:hover td { background:var(--hint-bg); }
+  .mr-pane.table tr[data-link-id].active td { background:var(--coral-soft); color:var(--coral); font-weight:700; }
+  .mr-pane.graph svg { width:100%; height:auto; max-height:320px; }
+  .mr-pane.graph circle[data-link-id] { cursor:pointer; transition:r .15s, stroke-width .15s; }
+  .mr-pane.graph circle[data-link-id]:hover { stroke-width:3; }
+  .mr-pane.graph circle[data-link-id].active { fill:var(--coral); stroke:white; stroke-width:3; r:8; }
+  .mr-pane.context .mr-story { background:var(--bg); border-radius:8px; padding:12px 14px; font-family:Georgia,serif; font-size:.95rem; margin-bottom:10px; }
+  .mr-pane.context .mr-specific { background:var(--bg); border-radius:8px; padding:12px 14px; font-family:Georgia,serif; font-size:1.05rem; flex:1; transition:background .2s; min-height:60px; display:flex; align-items:center; }
+  .mr-pane.context .mr-specific.active { background:var(--coral-soft); color:var(--coral); font-weight:600; }
+  .mr-hint { grid-column:1 / -1; background:var(--hint-bg); border-left:4px solid var(--navy); padding:10px 14px; border-radius:6px; font-size:.92rem; color:var(--navy); font-style:italic; margin-top:4px; }
+  @media (max-width:800px) { .mr-grid { grid-template-columns:1fr; } }
+</style>
+<p class='sec-desc'><strong>Part A: four views of one model.</strong> Jai has a casual job paid <strong>$25 per hour</strong>, pro rata. Click any table row or any point on the graph and watch the other three views light up.</p>
+<div class='mr-grid'>
+  <div class='mr-pane equation'>
+    <h4>Equation</h4>
+    <div class='mr-eqn'><span class="var">P</span> = 25<span class="var">h</span></div>
+    <div class='mr-sub' id='mrSub'>Click a point or table row to see a specific case.</div>
+  </div>
+  <div class='mr-pane table'>
+    <h4>Table</h4>
+    <table>
+      <tr><th>h (hours)</th><th>P ($)</th></tr>
+      <tr data-link-id="p0" onclick="linkSelect('p0')"><td>0</td><td>0</td></tr><tr data-link-id="p1" onclick="linkSelect('p1')"><td>1</td><td>25</td></tr><tr data-link-id="p2" onclick="linkSelect('p2')"><td>2</td><td>50</td></tr><tr data-link-id="p3" onclick="linkSelect('p3')"><td>3</td><td>75</td></tr><tr data-link-id="p4" onclick="linkSelect('p4')"><td>4</td><td>100</td></tr><tr data-link-id="p5" onclick="linkSelect('p5')"><td>5</td><td>125</td></tr>
+    </table>
+  </div>
+  <div class='mr-pane graph'>
+    <h4>Graph</h4>
+    <svg viewBox="0 0 300 240" width="300" role="img" aria-label="Graph of pay against hours worked for P = 25h with six clickable points" style="display:block;margin:6px 0;max-width:100%"><rect x="46" y="28" width="238" height="168" fill="#ffffff"/><g stroke="#e5e7eb" stroke-width="1"><line x1="93.6" y1="28" x2="93.6" y2="196"/><line x1="141.2" y1="28" x2="141.2" y2="196"/><line x1="188.8" y1="28" x2="188.8" y2="196"/><line x1="236.4" y1="28" x2="236.4" y2="196"/><line x1="284.0" y1="28" x2="284.0" y2="196"/><line x1="46" y1="162.4" x2="284" y2="162.4"/><line x1="46" y1="128.8" x2="284" y2="128.8"/><line x1="46" y1="95.2" x2="284" y2="95.2"/><line x1="46" y1="61.6" x2="284" y2="61.6"/><line x1="46" y1="28.0" x2="284" y2="28.0"/></g><line x1="46" y1="196" x2="284" y2="196" stroke="#2a2a2a" stroke-width="1.5"/><line x1="46" y1="196" x2="46" y2="28" stroke="#2a2a2a" stroke-width="1.5"/><g font-family="sans-serif" font-size="10" fill="#6b7280"><text x="46.0" y="210" text-anchor="middle">0</text><text x="93.6" y="210" text-anchor="middle">1</text><text x="141.2" y="210" text-anchor="middle">2</text><text x="188.8" y="210" text-anchor="middle">3</text><text x="236.4" y="210" text-anchor="middle">4</text><text x="284.0" y="210" text-anchor="middle">5</text><text x="40" y="166.4" text-anchor="end">25</text><text x="40" y="132.8" text-anchor="end">50</text><text x="40" y="99.2" text-anchor="end">75</text><text x="40" y="65.6" text-anchor="end">100</text><text x="40" y="32.0" text-anchor="end">125</text></g><text x="165.0" y="232" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#2a2a2a">Hours worked h</text><text x="6" y="14" font-family="Georgia,serif" font-size="12" fill="#2a2a2a">Pay P ($)</text><line x1="46.0" y1="196.0" x2="284.0" y2="28.0" stroke="#1F4D54" stroke-width="2.2"/><circle cx="46.0" cy="196.0" r="6" fill="#1F4D54" stroke="white" stroke-width="2" data-link-id="p0" onclick="linkSelect('p0')"/><circle cx="93.6" cy="162.4" r="6" fill="#1F4D54" stroke="white" stroke-width="2" data-link-id="p1" onclick="linkSelect('p1')"/><circle cx="141.2" cy="128.8" r="6" fill="#1F4D54" stroke="white" stroke-width="2" data-link-id="p2" onclick="linkSelect('p2')"/><circle cx="188.8" cy="95.2" r="6" fill="#1F4D54" stroke="white" stroke-width="2" data-link-id="p3" onclick="linkSelect('p3')"/><circle cx="236.4" cy="61.6" r="6" fill="#1F4D54" stroke="white" stroke-width="2" data-link-id="p4" onclick="linkSelect('p4')"/><circle cx="284.0" cy="28.0" r="6" fill="#1F4D54" stroke="white" stroke-width="2" data-link-id="p5" onclick="linkSelect('p5')"/></svg>
+  </div>
+  <div class='mr-pane context'>
+    <h4>In words</h4>
+    <div class='mr-story'>💼 Jai is paid $25 for every hour worked and nothing for zero hours. <span class="var">P</span> is the pay in dollars; <span class="var">h</span> is the number of hours.</div>
+    <div class='mr-specific' id='mrSpecific'>A specific case will appear here when you click.</div>
+  </div>
+  <div class='mr-hint'>💡 Notice: the constant of proportionality <strong>k = 25</strong> is the rate ($ per hour) and the gradient of the line. The line passes through <strong>(0, 0)</strong>, and P ÷ h = 25 in every row of the table. All four views say the same thing.</div>
+</div>
+<p class='sec-desc'><strong>Part B: build and test a model.</strong> A science class hangs weights on a spring. A load of <strong>4 N</strong> stretches the spring by <strong>6 cm</strong>. Hooke's law says the stretch is directly proportional to the load. Find the model, predict, then evaluate it.</p>
+<svg viewBox="0 0 300 240" width="300" role="img" aria-label="Graph of stretch against load: a straight line through the origin passing through (4, 6) and (10, 15)" style="display:block;margin:6px 0;max-width:100%"><rect x="46" y="28" width="238" height="168" fill="#ffffff"/><g stroke="#e5e7eb" stroke-width="1"><line x1="85.7" y1="28" x2="85.7" y2="196"/><line x1="125.3" y1="28" x2="125.3" y2="196"/><line x1="165.0" y1="28" x2="165.0" y2="196"/><line x1="204.7" y1="28" x2="204.7" y2="196"/><line x1="244.3" y1="28" x2="244.3" y2="196"/><line x1="284.0" y1="28" x2="284.0" y2="196"/><line x1="46" y1="168.0" x2="284" y2="168.0"/><line x1="46" y1="140.0" x2="284" y2="140.0"/><line x1="46" y1="112.0" x2="284" y2="112.0"/><line x1="46" y1="84.0" x2="284" y2="84.0"/><line x1="46" y1="56.0" x2="284" y2="56.0"/><line x1="46" y1="28.0" x2="284" y2="28.0"/></g><line x1="46" y1="196" x2="284" y2="196" stroke="#2a2a2a" stroke-width="1.5"/><line x1="46" y1="196" x2="46" y2="28" stroke="#2a2a2a" stroke-width="1.5"/><g font-family="sans-serif" font-size="10" fill="#6b7280"><text x="46.0" y="210" text-anchor="middle">0</text><text x="85.7" y="210" text-anchor="middle">2</text><text x="125.3" y="210" text-anchor="middle">4</text><text x="165.0" y="210" text-anchor="middle">6</text><text x="204.7" y="210" text-anchor="middle">8</text><text x="244.3" y="210" text-anchor="middle">10</text><text x="284.0" y="210" text-anchor="middle">12</text><text x="40" y="172.0" text-anchor="end">3</text><text x="40" y="144.0" text-anchor="end">6</text><text x="40" y="116.0" text-anchor="end">9</text><text x="40" y="88.0" text-anchor="end">12</text><text x="40" y="60.0" text-anchor="end">15</text><text x="40" y="32.0" text-anchor="end">18</text></g><text x="165.0" y="232" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#2a2a2a">Load F (newtons)</text><text x="6" y="14" font-family="Georgia,serif" font-size="12" fill="#2a2a2a">Stretch e (cm)</text><line x1="46.0" y1="196.0" x2="284.0" y2="28.0" stroke="#1F4D54" stroke-width="2.2"/><circle cx="125.3" cy="140.0" r="4" fill="#BE5837"/><text x="133.3" y="144.0" font-family="Georgia,serif" font-size="11" font-weight="bold" fill="#BE5837">(4, 6)</text><circle cx="244.3" cy="56.0" r="4" fill="#BE5837"/><text x="252.3" y="60.0" font-family="Georgia,serif" font-size="11" font-weight="bold" fill="#BE5837">(10, 15)</text></svg>
+<div class='worked'>
+  <div class='step visible' id='step1'>
+    <div class='step-num'>1</div>
+    <div class='step-body'>
+      <div class='step-title'>Find k from one known pair</div>
+      <div class='step-desc'>Direct proportion means <span class="var">e</span> = <span class="var">k</span><span class="var">F</span>, so <span class="var">k</span> = <span class="var">e</span> ÷ <span class="var">F</span>.</div>
+      <div class='calc-box'><span class="var">k</span> = 6 ÷ 4 = <span class='red'>1.5 cm per newton</span></div>
+    </div>
+  </div>
+  <div class='step' id='step2'>
+    <div class='step-num'>2</div>
+    <div class='step-body'>
+      <div class='step-title'>Write the model and use it</div>
+      <div class='step-desc'>Multiply to predict the stretch; divide to work backwards to the load.</div>
+      <div class='calc-box'><span class='blue'><span class="var">e</span> = 1.5<span class="var">F</span></span><br>Load 10 N: <span class="var">e</span> = 1.5 × 10 = 15 cm<br>Stretch 12 cm: <span class="var">F</span> = 12 ÷ 1.5 = 8 N</div>
+    </div>
+  </div>
+  <div class='step' id='step3'>
+    <div class='step-num'>3</div>
+    <div class='step-body'>
+      <div class='step-title'>Interpret and evaluate the model</div>
+      <div class='step-desc'>The graph is a straight line through (0, 0): no load, no stretch. But a real spring has an <strong>elastic limit</strong>. Pull it too far and it bends out of shape, so the model only holds for moderate loads.</div>
+      <div class='calc-box'>Check: (10, 15) lies on the same line as (4, 6), because 15 ÷ 10 = 1.5 ✓</div>
+      <div class='summary-banner'>
+        <span class='label'>Model</span>
+        e = 1.5F &nbsp;·&nbsp; 10 N → 15 cm &nbsp;·&nbsp; valid up to the elastic limit
+      </div>
+    </div>
+  </div>
+
+  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>
+</div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">WE DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Let's work one out together</div>
+    <div class="phase-sub">Discuss each step with your neighbour. We'll fill in the answers as a class.</div>
+  </div>
+</div>
+
+<!-- SECTION 6: WE DO -->
+<section class="lesson">
+  <h2><span class="sec-num">6</span>We do: swapping currency</h2>
+  <p class="sec-desc">Planning a trip to the USA. Work through each prompt with a partner, then we check as a class.</p>
+  <div class="practice-grid" id="weDoGrid"></div>
+  <div class="parts-instructions" style="margin-top: 18px;">
+    💡 <strong>Why we do it this way:</strong> tackling one group of like terms at a time keeps the work tidy and reduces sign errors. When you tackle the "You do" practice next, follow the same routine — variable terms first, then constants, then write the answer.
+  </div>
+</section>
+
+<div class="phase-banner">
+  <div class="phase-mono">YOU DO</div>
+  <div class="phase-text">
+    <div class="phase-label">Your turn — work independently</div>
+    <div class="phase-sub">A quick check first — then pick your tier: Building, Stretch, or Mastery. Tap a tier to open it.</div>
+  </div>
+</div>
+
+<!-- SECTION 7: QUICK CHECK (you do — checkpoint) -->
+<section class="lesson checkpoint">
+  <h2>
+    <span class="sec-num">7</span>Quick check — try these on your own
+    <span class="checkpoint-tag">✋ Stop &amp; check</span>
+  </h2>
+  <p class="sec-desc">Two questions to confirm you've got the method. Try them on your own first — <strong>then we'll check together as a class</strong> before you pick your tier.</p>
+  <div class="practice-grid" id="checkpointGrid"></div>
+  <div class="stop-banner">
+    ✋ <strong>Stop here</strong> when you're done. Don't open a chilli tier yet — wait for the class check.
+  </div>
+</section>
+
+<!-- SECTION 8: PRACTICE — BUILDING (accordion, open by default) -->
+<!-- Building is the entry tier. .open class shows it expanded.
+     Update the count badge text to match the actual number of problems. -->
+<section class="lesson difficulty-1 tier-accordion open" id="tier1">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="true" aria-controls="tier1-body" onclick="toggleTier('tier1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier1');}">
+    <h2><span class="sec-num">8</span>Practice — Building <span class="diff-badge d1"><span class="dots">●○○</span>Building</span></h2>
+    <span class="accordion-count" id="count-tier1">10 questions</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier1-body">
+    <p class="sec-desc">Type your simplified answer in each box. Use <code>x</code>, <code>y</code>, etc. for variables. Examples: <code>3x+5</code>, <code>-2y+7</code>, <code>4a-6b</code>.</p>
+    <div class="practice-grid" id="practiceGrid1"></div>
+  </div>
+</section>
+
+<!-- SECTION 9: PRACTICE — STRETCH (accordion, collapsed) -->
+<section class="lesson difficulty-2 tier-accordion" id="tier2">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier2-body" onclick="toggleTier('tier2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier2');}">
+    <h2><span class="sec-num">9</span>Practice — Stretch <span class="diff-badge d2"><span class="dots">●●○</span>Stretch</span></h2>
+    <span class="accordion-count" id="count-tier2">6</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier2-body">
+    <p class="sec-desc">Now the expressions contain two different variables. Group each variable separately.</p>
+    <div class="practice-grid" id="practiceGrid2"></div>
+  </div>
+</section>
+
+<!-- SECTION 10: PRACTICE — MASTERY (accordion, collapsed) -->
+<section class="lesson difficulty-3 tier-accordion" id="tier3">
+  <div class="accordion-head" role="button" tabindex="0" aria-expanded="false" aria-controls="tier3-body" onclick="toggleTier('tier3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleTier('tier3');}">
+    <h2><span class="sec-num">10</span>Practice — Mastery <span class="diff-badge d3"><span class="dots">●●●</span>Mastery</span></h2>
+    <span class="accordion-count" id="count-tier3">4</span>
+    <span class="accordion-chevron" aria-hidden="true">▶</span>
+  </div>
+  <div class="accordion-body" id="tier3-body">
+    <p class="sec-desc">Same rules — but the coefficients are fractions. Common denominators may help. Type fractions like <code>3/4x</code> or <code>5/12y</code>.</p>
+    <div class="practice-grid" id="practiceGrid3"></div>
+  </div>
+</section>
+
+<style>
+  section.lesson.hinge { background:#f7faff; border-left:5px solid var(--navy); }
+  .hinge-tag { display:inline-flex; align-items:center; gap:6px; margin-left:auto; padding:4px 12px; border-radius:999px; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; font-weight:700; background:var(--navy); color:white; white-space:nowrap; }
+  .hinge-stem { background:white; border:1px solid var(--border); border-radius:10px; padding:18px 20px; font-family:Georgia,serif; font-size:1.15rem; color:var(--navy); margin-bottom:18px; box-shadow:var(--shadow); }
+  .hinge-options { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; }
+  .hinge-opt { background:white; border:1.5px solid var(--border); border-radius:10px; padding:14px 18px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:12px; font-family:Georgia,serif; font-size:1rem; text-align:left; }
+  .hinge-opt:hover { border-color:var(--navy); transform:translateY(-1px); }
+  .hinge-opt .opt-letter { background:var(--hint-bg); color:var(--navy); width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:-apple-system,sans-serif; font-weight:700; flex-shrink:0; }
+  .hinge-opt.selected.correct { background:var(--good-soft); border-color:var(--good); }
+  .hinge-opt.selected.correct .opt-letter { background:var(--good); color:white; }
+  .hinge-opt.selected.incorrect { background:var(--bad-soft); border-color:var(--bad); }
+  .hinge-opt.selected.incorrect .opt-letter { background:var(--bad); color:white; }
+  .hinge-opt.dimmed { opacity:.45; cursor:not-allowed; }
+  .hinge-feedback { margin-top:18px; padding:14px 18px; border-radius:8px; font-size:.95rem; display:none; }
+  .hinge-feedback.visible { display:block; }
+  .hinge-feedback.correct { background:var(--good-soft); color:#1d4a30; border-left:4px solid var(--good); }
+  .hinge-feedback.incorrect { background:var(--bad-soft); color:#6a2520; border-left:4px solid var(--bad); }
+  .hinge-reset { background:white; color:var(--navy); border:1.5px solid var(--navy); padding:7px 14px; border-radius:8px; cursor:pointer; font-size:.85rem; font-weight:600; margin-top:12px; }
+  body.teacher-mode .hinge-opt.correct-answer { box-shadow:0 0 0 3px var(--good); }
+</style>
+<section class="lesson hinge">
+  <h2>
+    <span class="sec-num">★</span>Hinge check: which one is proportional?
+    <span class="hinge-tag">🎯 Pick one</span>
+  </h2>
+  <p class="sec-desc">Before the exit ticket: exactly one of these tables shows <span class="var">y</span> <strong>directly proportional</strong> to <span class="var">x</span>. Pick it.</p>
+  <div class="hinge-stem">Which table fits <span class="var">y</span> = <span class="var">k</span><span class="var">x</span> for a single value of <span class="var">k</span>?</div>
+  <div class="hinge-options" id="hingeOpts">
+    <button class="hinge-opt" data-feedback-id="fb-A" onclick="pickHingeOption(this)"><span class="opt-letter">A</span><span>x: 1, 2, 3 → y: 5, 7, 9</span></button>
+    <button class="hinge-opt correct-answer" data-correct="true" data-feedback-id="fb-B" onclick="pickHingeOption(this)"><span class="opt-letter">B</span><span>x: 2, 4, 6 → y: 3, 6, 9</span></button>
+    <button class="hinge-opt" data-feedback-id="fb-C" onclick="pickHingeOption(this)"><span class="opt-letter">C</span><span>x: 1, 2, 3 → y: 2, 5, 10</span></button>
+    <button class="hinge-opt" data-feedback-id="fb-D" onclick="pickHingeOption(this)"><span class="opt-letter">D</span><span>x: 1, 2, 3 → y: 12, 6, 4</span></button>
+  </div>
+  <div class="hinge-feedback incorrect" id="fb-A"><strong>Not quite: a steady +2 is not enough.</strong> y goes up by 2 each time, so the graph is a straight line, but y ÷ x gives 5, 3.5, 3: not constant. At x = 0 this pattern gives y = 3, not 0. That is a fixed start, like a flag-fall.</div>
+  <div class="hinge-feedback correct" id="fb-B"><strong>Correct.</strong> y ÷ x = 1.5 every time, so y = 1.5x. Double x and y doubles, and x = 0 would give y = 0.</div>
+  <div class="hinge-feedback incorrect" id="fb-C"><strong>Both increasing is not the test.</strong> y ÷ x gives 2, 2.5, 3.33: the multiplier keeps changing. Proportional means the <em>ratio</em> stays fixed, not just that both go up.</div>
+  <div class="hinge-feedback incorrect" id="fb-D"><strong>This one goes the wrong way.</strong> As x doubles, y halves: x × y = 12 every time. That is <em>inverse</em> proportion, not direct proportion.</div>
+  <button class="hinge-reset" onclick="resetHinge()">↺ Try again</button>
+</section>
+
+<!-- SECTION 11: EXIT TICKET (bookend with retrieval) -->
+<!-- Visual treatment mirrors Section 0 retrieval — same teal-tint, same accent.
+     They are bookends framing the lesson. -->
+<section class="lesson exit-ticket">
+  <h2>
+    <span class="sec-num">11</span>Exit ticket
+    <span class="exit-tag">🎯 Before you leave</span>
+  </h2>
+  <p class="sec-desc">Answer these three before leaving today. They check the big ideas of the lesson.</p>
+  <div class="exit-grid" id="exitGrid"></div>
+  <div class="results-bar">
+    <input class="results-name" id="studentName" placeholder="Your name" autocomplete="off">
+    <button class="results-copy-btn" id="copyResultsBtn" type="button">Copy my results</button>
+    <span class="results-copied" id="copyFeedback">Copied &mdash; paste into Daymap</span>
+  </div>
+</section>
+
+<!-- CURRICULUM LINK — reference info for teachers and curriculum audits.
+     Mirror values from the <meta> tags in <head>. Collapsed by default;
+     teachers click to expand. Students never need to open this. -->
+<details class="curriculum-link">
+  <summary>Curriculum link</summary>
+  <div class="cl-body">
+    <div class="cl-row">
+      <span class="cl-label">SA Year &amp; Strand</span>
+      <span class="cl-value">Year 9 &middot; Measurement</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Conceptual understanding</span>
+      <span class="cl-value">Mathematical modelling can be used to represent and solve problems involving proportion, rates, ratios and scale, including in financial contexts</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">AC9 descriptor</span>
+      <span class="cl-value"><strong>AC9M9M05</strong> — use mathematical modelling to solve practical problems involving direct proportion, rates, ratio and scale, including financial contexts; formulate the problems and interpret solutions in terms of the situation; evaluate the model and report methods and findings</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Elaborations covered</span>
+      <span class="cl-value">1,2,3</span>
+    </div>
+    <div class="cl-row">
+      <span class="cl-label">Lesson focus</span>
+      <span class="cl-value">Model direct-proportion situations — pro rata pay rates, currency exchange, multiple quotes for a job, Hooke's law from physics; investigate situations where proportion is not maintained (image editing/distortion); building and construction standards for staircases and escalators.</span>
+    </div>
+    <div class="cl-note">Mapping: Strict. Lesson ID y9_mea_11. Source: lesson-map.xlsx.</div>
+  </div>
+</details>
+
+<footer class="bottom">
+  Measurement · Year 9 · Modelling with Direct Proportion
+</footer>
+
+</div>
+
+<script>
+  // ============ STATE ============
+  let totalProblems = 0;
+  let correctCount = 0;
+  let currentStep = 1;
+  const answerKey = {};        // idx -> expected answer (single source for Check buttons)
+  const noCountSet = new Set(); // idx values excluded from the progress score
+
+  // ============ TEACHER MODE ============
+  function toggleTeacher() {
+    document.body.classList.toggle('teacher-mode');
+    document.getElementById('teacherToggle').classList.toggle('active');
+  }
+
+  // ============ PARTS OF EXPRESSION (drag & drop) ============
+  let dragState = null;
+
+  function initDragSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.addEventListener('pointerdown', startDrag);
+    });
+  }
+
+  function startDrag(e) {
+    e.preventDefault();
+    const chip = e.currentTarget;
+    const rect = chip.getBoundingClientRect();
+
+    const ghost = document.createElement('span');
+    ghost.className = 'term-chip-ghost';
+    ghost.innerHTML = chip.innerHTML;
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    chip.classList.add('dragging');
+
+    dragState = {
+      chip, ghost,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+
+    chip.setPointerCapture(e.pointerId);
+    chip.addEventListener('pointermove', moveDrag);
+    chip.addEventListener('pointerup', endDrag);
+    chip.addEventListener('pointercancel', endDrag);
+  }
+
+  function moveDrag(e) {
+    if (!dragState) return;
+    dragState.ghost.style.left = (e.clientX - dragState.offsetX) + 'px';
+    dragState.ghost.style.top  = (e.clientY - dragState.offsetY) + 'px';
+
+    // hide ghost momentarily to find element underneath
+    dragState.ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    dragState.ghost.style.display = '';
+
+    const bucket = under?.closest('.bucket');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.toggle('drop-target', b === bucket));
+  }
+
+  function endDrag(e) {
+    if (!dragState) return;
+    const { chip, ghost } = dragState;
+
+    ghost.style.display = 'none';
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.remove();
+    chip.classList.remove('dragging');
+    document.querySelectorAll('.bucket').forEach(b => b.classList.remove('drop-target'));
+
+    const bucket = under?.closest('.bucket');
+    if (bucket) {
+      const dest = bucket.dataset.bucket;
+      const correct = chip.dataset.type;
+      bucket.querySelector('.bucket-contents').appendChild(chip);
+
+      if (dest !== correct) {
+        chip.classList.add('wrong-drop');
+        setTimeout(() => {
+          chip.classList.remove('wrong-drop');
+          // pop it back to source after the shake
+          document.getElementById('partsTerms').appendChild(chip);
+        }, 600);
+      }
+    }
+
+    chip.removeEventListener('pointermove', moveDrag);
+    chip.removeEventListener('pointerup', endDrag);
+    chip.removeEventListener('pointercancel', endDrag);
+    dragState = null;
+  }
+
+  function resetSort() {
+    const source = document.getElementById('partsTerms');
+    document.querySelectorAll('.bucket-contents .term-chip').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      source.appendChild(chip);
+    });
+  }
+
+  function solveSort() {
+    document.querySelectorAll('.term-chip[data-type]').forEach(chip => {
+      chip.classList.remove('wrong-drop');
+      const correct = chip.dataset.type;
+      const bucket = document.querySelector('.bucket[data-bucket="' + correct + '"] .bucket-contents');
+      bucket.appendChild(chip);
+    });
+  }
+
+  // ============ MATCHING LIKE TERMS ============
+  let matchSelected = null;
+  let matchedGroups = new Set();
+
+  function buildMatchArea() {
+    const shuffled = [...matchTerms].sort(() => Math.random() - 0.5);
+    const area = document.getElementById('matchArea');
+    area.innerHTML = '';
+    shuffled.forEach((t, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'match-chip expr';
+      chip.innerHTML = t.html;
+      chip.dataset.group = t.group;
+      chip.dataset.idx = i;
+      chip.onclick = () => handleMatchClick(chip);
+      area.appendChild(chip);
+    });
+  }
+  function handleMatchClick(chip) {
+    if (chip.className.includes('matched-')) return;
+    if (matchSelected === chip) {
+      chip.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+    if (!matchSelected) {
+      matchSelected = chip;
+      chip.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = 'Now pick its partner.';
+      return;
+    }
+    // we have two selected
+    if (matchSelected.dataset.group === chip.dataset.group) {
+      const g = chip.dataset.group;
+      matchSelected.classList.remove('selected');
+      matchSelected.classList.add('matched-' + g);
+      chip.classList.add('matched-' + g);
+      matchedGroups.add(g);
+      document.getElementById('matchFeedback').textContent =
+        matchedGroups.size === 5
+          ? '🎉 All five pairs matched!'
+          : `Matched! (${matchedGroups.size}/5)`;
+      matchSelected = null;
+    } else {
+      const wrong1 = matchSelected;
+      const wrong2 = chip;
+      wrong1.classList.add('selected');
+      wrong2.classList.add('selected');
+      document.getElementById('matchFeedback').textContent = '✗ Not alike — check the variable and its power.';
+      setTimeout(() => {
+        wrong1.classList.remove('selected');
+        wrong2.classList.remove('selected');
+      }, 700);
+      matchSelected = null;
+    }
+  }
+
+  // ============ WORKED EXAMPLE STEP REVEAL ============
+  function revealNextStep() {
+    currentStep++;
+    const step = document.getElementById('step' + currentStep);
+    if (step) step.classList.add('visible');
+    if (currentStep >= 3) {
+      document.getElementById('revealBtn').disabled = true;
+      document.getElementById('revealBtn').textContent = '✓ All steps shown';
+    }
+  }
+
+  // ============ PRACTICE PROBLEMS ============
+  // Answers normalised: strip spaces, lowercase. Accept reordered terms.
+
+const retrieval = [
+  {
+    "q": "Mia earns $132 for 6 hours of work. What is her hourly rate in dollars? (Type just the number.)",
+    "a": "22",
+    "hint": "Rate = total pay ÷ hours = 132 ÷ 6."
+  },
+  {
+    "q": "Find the gradient of the straight line through (0, 0) and (4, 10).",
+    "a": "2.5",
+    "hint": "Gradient = rise ÷ run = 10 ÷ 4.",
+    "fb": {
+      "0.4": "You divided run by rise. Gradient is rise ÷ run: the change in y over the change in x."
+    }
+  },
+  {
+    "q": "Solve 8<span class=\"var\">k<\/span> = 60.",
+    "a": "7.5",
+    "hint": "Divide both sides by 8."
+  }
+];
+
+  const matchTerms = [
+  {
+    "html": "Paid <strong>$28 per hour<\/strong>",
+    "group": 1
+  },
+  {
+    "html": "<span class=\"var\">P<\/span> = 28<span class=\"var\">h<\/span>",
+    "group": 1
+  },
+  {
+    "html": "A$1 buys <strong>US$0.66<\/strong>",
+    "group": 2
+  },
+  {
+    "html": "<span class=\"var\">U<\/span> = 0.66<span class=\"var\">A<\/span>",
+    "group": 2
+  },
+  {
+    "html": "Spring stretches <strong>3 cm per newton<\/strong>",
+    "group": 3
+  },
+  {
+    "html": "<span class=\"var\">e<\/span> = 3<span class=\"var\">F<\/span>",
+    "group": 3
+  },
+  {
+    "html": "Each stair riser is <strong>0.18 m<\/strong> high",
+    "group": 4
+  },
+  {
+    "html": "<span class=\"var\">H<\/span> = 0.18<span class=\"var\">n<\/span>",
+    "group": 4
+  },
+  {
+    "html": "1 litre of paint covers <strong>12 m²<\/strong>",
+    "group": 5
+  },
+  {
+    "html": "<span class=\"var\">A<\/span> = 12<span class=\"var\">L<\/span>",
+    "group": 5
+  }
+];
+
+  const weDo = [
+  {
+    "q": "<svg viewBox=\"0 0 300 240\" width=\"300\" role=\"img\" aria-label=\"Graph of US dollars against Australian dollars: a straight line through the origin passing through (500, 330)\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"46\" y=\"28\" width=\"238\" height=\"168\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"93.6\" y1=\"28\" x2=\"93.6\" y2=\"196\"/><line x1=\"141.2\" y1=\"28\" x2=\"141.2\" y2=\"196\"/><line x1=\"188.8\" y1=\"28\" x2=\"188.8\" y2=\"196\"/><line x1=\"236.4\" y1=\"28\" x2=\"236.4\" y2=\"196\"/><line x1=\"284.0\" y1=\"28\" x2=\"284.0\" y2=\"196\"/><line x1=\"46\" y1=\"162.4\" x2=\"284\" y2=\"162.4\"/><line x1=\"46\" y1=\"128.8\" x2=\"284\" y2=\"128.8\"/><line x1=\"46\" y1=\"95.2\" x2=\"284\" y2=\"95.2\"/><line x1=\"46\" y1=\"61.6\" x2=\"284\" y2=\"61.6\"/><line x1=\"46\" y1=\"28.0\" x2=\"284\" y2=\"28.0\"/><\/g><line x1=\"46\" y1=\"196\" x2=\"284\" y2=\"196\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"196\" x2=\"46\" y2=\"28\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"46.0\" y=\"210\" text-anchor=\"middle\">0<\/text><text x=\"93.6\" y=\"210\" text-anchor=\"middle\">300<\/text><text x=\"141.2\" y=\"210\" text-anchor=\"middle\">600<\/text><text x=\"188.8\" y=\"210\" text-anchor=\"middle\">900<\/text><text x=\"236.4\" y=\"210\" text-anchor=\"middle\">1200<\/text><text x=\"284.0\" y=\"210\" text-anchor=\"middle\">1500<\/text><text x=\"40\" y=\"166.4\" text-anchor=\"end\">200<\/text><text x=\"40\" y=\"132.8\" text-anchor=\"end\">400<\/text><text x=\"40\" y=\"99.2\" text-anchor=\"end\">600<\/text><text x=\"40\" y=\"65.6\" text-anchor=\"end\">800<\/text><text x=\"40\" y=\"32.0\" text-anchor=\"end\">1000<\/text><\/g><text x=\"165.0\" y=\"232\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Australian dollars A<\/text><text x=\"6\" y=\"14\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">US dollars U<\/text><line x1=\"46.0\" y1=\"196.0\" x2=\"284.0\" y2=\"29.7\" stroke=\"#1F4D54\" stroke-width=\"2.2\"/><circle cx=\"125.3\" cy=\"140.6\" r=\"4\" fill=\"#BE5837\"/><text x=\"133.3\" y=\"144.6\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(500, 330)<\/text><\/svg>A travel-money booth gives <strong>US$330 for A$500<\/strong>, with no fees. Find the constant of proportionality <span class=\"var\">k<\/span> in <span class=\"var\">U<\/span> = <span class=\"var\">k<\/span><span class=\"var\">A<\/span> (US dollars per Australian dollar).",
+    "a": "0.66",
+    "hint": "k = 330 ÷ 500."
+  },
+  {
+    "q": "Using the same rate, how many US dollars do you get for <strong>A$1200<\/strong>? (Type just the number.)",
+    "a": "792",
+    "hint": "U = 0.66 × 1200."
+  },
+  {
+    "q": "Working backwards: how many Australian dollars do you need to get <strong>US$990<\/strong>?",
+    "a": "1500",
+    "hint": "Divide by k: 990 ÷ 0.66.",
+    "fb": {
+      "653.4": "You multiplied by 0.66. To go from US dollars back to Australian dollars, divide by k."
+    }
+  }
+];
+
+  const checkpoint = [
+  {
+    "q": "A full-time job pays <strong>$78,000 per year<\/strong>. Pro rata, what is the annual pay for a <strong>0.6<\/strong> (60%) part-time position? (Type just the number.)",
+    "a": "46800",
+    "hint": "Pro rata pay = 0.6 × 78 000.",
+    "fb": {
+      "31200": "That is the 0.4 share you are not working. Multiply the full-time salary by 0.6."
+    }
+  },
+  {
+    "q": "In this table <span class=\"var\">y<\/span> is directly proportional to <span class=\"var\">x<\/span>. Find <span class=\"var\">k<\/span> in <span class=\"var\">y<\/span> = <span class=\"var\">k<\/span><span class=\"var\">x<\/span>.<table style=\"border-collapse:collapse;margin:6px 0;font-family:Georgia,serif\"><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">x<\/th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">2<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">5<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">8<\/td><\/tr><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">y<\/th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">7<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">17.5<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">28<\/td><\/tr><\/table>",
+    "a": "3.5",
+    "hint": "k = y ÷ x for any column, e.g. 7 ÷ 2."
+  }
+];
+
+  const practice1 = [
+  {
+    "q": "A casual job pays <strong>$27.50 per hour<\/strong>. What is the pay for 8 hours? (Type just the number.)",
+    "a": "220",
+    "hint": "Pay = 27.50 × 8."
+  },
+  {
+    "q": "A spring stretches <strong>2.5 cm per newton<\/strong>. How far does it stretch under a 6 N load, in cm?",
+    "a": "15",
+    "hint": "e = 2.5 × 6."
+  },
+  {
+    "q": "<svg viewBox=\"0 0 300 240\" width=\"300\" role=\"img\" aria-label=\"Graph of cost against mass of coffee beans: a straight line through the origin passing through (5, 120)\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"46\" y=\"28\" width=\"238\" height=\"168\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"85.7\" y1=\"28\" x2=\"85.7\" y2=\"196\"/><line x1=\"125.3\" y1=\"28\" x2=\"125.3\" y2=\"196\"/><line x1=\"165.0\" y1=\"28\" x2=\"165.0\" y2=\"196\"/><line x1=\"204.7\" y1=\"28\" x2=\"204.7\" y2=\"196\"/><line x1=\"244.3\" y1=\"28\" x2=\"244.3\" y2=\"196\"/><line x1=\"284.0\" y1=\"28\" x2=\"284.0\" y2=\"196\"/><line x1=\"46\" y1=\"162.4\" x2=\"284\" y2=\"162.4\"/><line x1=\"46\" y1=\"128.8\" x2=\"284\" y2=\"128.8\"/><line x1=\"46\" y1=\"95.2\" x2=\"284\" y2=\"95.2\"/><line x1=\"46\" y1=\"61.6\" x2=\"284\" y2=\"61.6\"/><line x1=\"46\" y1=\"28.0\" x2=\"284\" y2=\"28.0\"/><\/g><line x1=\"46\" y1=\"196\" x2=\"284\" y2=\"196\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"46\" y1=\"196\" x2=\"46\" y2=\"28\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"46.0\" y=\"210\" text-anchor=\"middle\">0<\/text><text x=\"85.7\" y=\"210\" text-anchor=\"middle\">1<\/text><text x=\"125.3\" y=\"210\" text-anchor=\"middle\">2<\/text><text x=\"165.0\" y=\"210\" text-anchor=\"middle\">3<\/text><text x=\"204.7\" y=\"210\" text-anchor=\"middle\">4<\/text><text x=\"244.3\" y=\"210\" text-anchor=\"middle\">5<\/text><text x=\"284.0\" y=\"210\" text-anchor=\"middle\">6<\/text><text x=\"40\" y=\"166.4\" text-anchor=\"end\">30<\/text><text x=\"40\" y=\"132.8\" text-anchor=\"end\">60<\/text><text x=\"40\" y=\"99.2\" text-anchor=\"end\">90<\/text><text x=\"40\" y=\"65.6\" text-anchor=\"end\">120<\/text><text x=\"40\" y=\"32.0\" text-anchor=\"end\">150<\/text><\/g><text x=\"165.0\" y=\"232\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Mass m (kg)<\/text><text x=\"6\" y=\"14\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">Cost C ($)<\/text><line x1=\"46.0\" y1=\"196.0\" x2=\"284.0\" y2=\"34.7\" stroke=\"#1F4D54\" stroke-width=\"2.2\"/><circle cx=\"244.3\" cy=\"61.6\" r=\"4\" fill=\"#BE5837\"/><text x=\"252.3\" y=\"65.6\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(5, 120)<\/text><\/svg>The graph shows the cost of coffee beans. Find the price per kilogram, <span class=\"var\">k<\/span>, in dollars.",
+    "a": "24",
+    "hint": "Read the marked point: k = 120 ÷ 5."
+  },
+  {
+    "q": "Using the same price per kilogram, how much do 3.5 kg of beans cost, in dollars?",
+    "a": "84",
+    "hint": "C = 24 × 3.5."
+  },
+  {
+    "q": "<span class=\"var\">y<\/span> is directly proportional to <span class=\"var\">x<\/span>, and <span class=\"var\">y<\/span> = 36 when <span class=\"var\">x<\/span> = 9. Find <span class=\"var\">k<\/span>.",
+    "a": "4",
+    "hint": "k = 36 ÷ 9."
+  },
+  {
+    "q": "With the same <span class=\"var\">k<\/span>, find <span class=\"var\">y<\/span> when <span class=\"var\">x<\/span> = 14.",
+    "a": "56",
+    "hint": "y = 4 × 14."
+  },
+  {
+    "q": "On one day A$1 buys <strong>€0.60<\/strong>. How many euros do you get for <strong>A$450<\/strong>?",
+    "a": "270",
+    "hint": "Euros = 0.60 × 450."
+  },
+  {
+    "q": "At the same rate (A$1 buys €0.60), how many Australian dollars do you need to get <strong>€180<\/strong>?",
+    "a": "300",
+    "hint": "Work backwards: divide by 0.60.",
+    "fb": {
+      "108": "You multiplied by 0.60. To go from euros back to Australian dollars, divide by 0.60."
+    }
+  },
+  {
+    "q": "In this table <span class=\"var\">y<\/span> is directly proportional to <span class=\"var\">x<\/span>. Find <span class=\"var\">k<\/span>.<table style=\"border-collapse:collapse;margin:6px 0;font-family:Georgia,serif\"><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">x<\/th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">4<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">6<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">10<\/td><\/tr><tr><th style=\"padding:4px 10px;border:1px solid #d8dde6;background:#DDE5F5\">y<\/th><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">10<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">15<\/td><td style=\"padding:4px 10px;border:1px solid #d8dde6;text-align:center\">25<\/td><\/tr><\/table>",
+    "a": "2.5",
+    "hint": "k = y ÷ x, e.g. 10 ÷ 4."
+  },
+  {
+    "q": "A printer prints <strong>18 pages in 45 seconds<\/strong>. At this rate, how many pages does it print in 2 minutes?",
+    "a": "48",
+    "hint": "Rate = 18 ÷ 45 = 0.4 pages per second; 2 minutes = 120 seconds.",
+    "fb": {
+      "0.8": "Convert 2 minutes to seconds first: 2 minutes = 120 seconds."
+    }
+  }
+];
+
+  const practice2 = [
+  {
+    "q": "<strong>Multiple quotes.<\/strong> Painter A quotes $1,560 to paint 120 m². Painter B quotes $1,386 to paint 105 m². What is the <strong>cheaper<\/strong> rate, in dollars per m²?",
+    "a": "13",
+    "hint": "A: 1560 ÷ 120. B: 1386 ÷ 105. Compare the two rates.",
+    "fb": {
+      "13.2": "That is Painter B's rate. Work out Painter A's rate as well and pick the smaller one."
+    }
+  },
+  {
+    "q": "At the cheaper painter's rate, how much would it cost to paint <strong>150 m²<\/strong>? (Type just the number.)",
+    "a": "1950",
+    "hint": "Cost = 13 × 150."
+  },
+  {
+    "q": "<svg viewBox=\"0 0 260 110\" width=\"260\" role=\"img\" aria-label=\"Photo 1200 by 800 pixels resized to a width of 900 pixels with unknown height\" style=\"display:block;margin:6px 0\"><rect x=\"10\" y=\"10\" width=\"120\" height=\"80\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><text x=\"70\" y=\"104\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">1200 × 800<\/text><rect x=\"160\" y=\"30\" width=\"90\" height=\"60\" fill=\"#f3f7f8\" stroke=\"#BE5837\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><text x=\"205\" y=\"64\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#BE5837\">?<\/text><text x=\"205\" y=\"104\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#BE5837\">900 × ?<\/text><\/svg>A 1200 × 800 pixel photo is resized to a width of <strong>900 pixels<\/strong> without distortion. What is the new height in pixels?",
+    "a": "600",
+    "hint": "Scale factor = 900 ÷ 1200 = 0.75. Apply it to the height too.",
+    "fb": {
+      "500": "You subtracted 300 from the height. Resizing multiplies both sides by the same scale factor."
+    }
+  },
+  {
+    "q": "A 1200 × 800 photo is stretched to <strong>1500 pixels wide<\/strong> but the height is left at 800, so it looks distorted. To keep it in proportion, what height should it have had?",
+    "a": "1000",
+    "hint": "Width scale factor = 1500 ÷ 1200 = 1.25. Height must also be × 1.25."
+  },
+  {
+    "q": "<svg viewBox=\"0 0 280 170\" width=\"280\" role=\"img\" aria-label=\"Side view of a staircase with each riser R and each going G labelled\" style=\"display:block;margin:6px 0\"><path d=\"M20 150 L20 120 L80 120 L80 90 L140 90 L140 60 L200 60 L200 30 L260 30 L260 150 Z\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"72\" y1=\"120\" x2=\"72\" y2=\"90\" stroke=\"#BE5837\" stroke-width=\"2.5\"/><text x=\"60\" y=\"110\" text-anchor=\"end\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#BE5837\">R<\/text><line x1=\"80\" y1=\"82\" x2=\"140\" y2=\"82\" stroke=\"#1F4D54\" stroke-width=\"2.5\"/><text x=\"110\" y=\"76\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#1F4D54\">G<\/text><text x=\"200\" y=\"110\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">riser R, going G<\/text><\/svg>A staircase climbs a floor-to-floor height of <strong>2700 mm<\/strong> using 15 equal risers. What is the height of each riser in mm?",
+    "a": "180",
+    "hint": "Total rise = number of risers × riser height, so divide 2700 by 15."
+  },
+  {
+    "q": "A spring is <strong>20 cm long<\/strong> with no load and stretches <strong>3 cm per newton<\/strong>. Only the stretch is proportional to the load. What is the spring's <strong>total length<\/strong> in cm under a 5 N load?",
+    "a": "35",
+    "hint": "Stretch = 3 × 5 = 15 cm. Add the natural length.",
+    "fb": {
+      "15": "That is only the stretch. The total length adds the 20 cm the spring already had."
+    }
+  }
+];
+
+  const practice3 = [
+  {
+    "q": "<svg viewBox=\"0 0 280 170\" width=\"280\" role=\"img\" aria-label=\"Side view of a staircase with each riser R and each going G labelled\" style=\"display:block;margin:6px 0\"><path d=\"M20 150 L20 120 L80 120 L80 90 L140 90 L140 60 L200 60 L200 30 L260 30 L260 150 Z\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"72\" y1=\"120\" x2=\"72\" y2=\"90\" stroke=\"#BE5837\" stroke-width=\"2.5\"/><text x=\"60\" y=\"110\" text-anchor=\"end\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#BE5837\">R<\/text><line x1=\"80\" y1=\"82\" x2=\"140\" y2=\"82\" stroke=\"#1F4D54\" stroke-width=\"2.5\"/><text x=\"110\" y=\"76\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"13\" font-style=\"italic\" font-weight=\"bold\" fill=\"#1F4D54\">G<\/text><text x=\"200\" y=\"110\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">riser R, going G<\/text><\/svg><strong>Building standard.<\/strong> In this lesson's stair rule, each riser R must be 115 to 190 mm, and 2R + G must be between 550 and 700 mm. A stair climbs 2850 mm with 15 equal risers and a going G of 270 mm. Calculate 2R + G in mm.",
+    "a": "650",
+    "hint": "R = 2850 ÷ 15 = 190 mm. Then 2 × 190 + 270.",
+    "fb": {
+      "460": "You added R + G. The rule uses 2R + G: double the riser first."
+    }
+  },
+  {
+    "q": "<svg viewBox=\"0 0 300 170\" width=\"300\" role=\"img\" aria-label=\"Escalator drawn as a right-angled triangle with vertical rise 4.9 m and unknown horizontal run\" style=\"display:block;margin:6px 0\"><path d=\"M30 140 L250 140 L250 30 Z\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"30\" y1=\"140\" x2=\"250\" y2=\"30\" stroke=\"#BE5837\" stroke-width=\"3\"/><rect x=\"240\" y=\"130\" width=\"10\" height=\"10\" fill=\"none\" stroke=\"#1F4D54\"/><text x=\"140\" y=\"160\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#1F4D54\">horizontal run = ? m<\/text><text x=\"258\" y=\"90\" font-family=\"sans-serif\" font-size=\"12\" fill=\"#1F4D54\">4.9 m<\/text><text x=\"110\" y=\"76\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#BE5837\">escalator<\/text><\/svg><strong>Escalator.<\/strong> A shopping-centre escalator rises <strong>7 m vertically for every 12 m horizontally<\/strong>. The floors are 4.9 m apart. What horizontal run does the escalator need, in metres?",
+    "a": "8.4",
+    "hint": "Horizontal = vertical × 12 ÷ 7 = 4.9 × 12 ÷ 7."
+  },
+  {
+    "q": "<strong>Evaluate the model.<\/strong> Booth A swaps A$1 for US$0.66 with no fee. Booth B offers US$0.68 per A$1 but first takes a <strong>A$15 fee<\/strong>. How many US dollars does Booth B give for A$600?",
+    "a": "397.8",
+    "hint": "Take off the fee first: (600 − 15) × 0.68.",
+    "fb": {
+      "408": "You forgot the fee. Subtract A$15 before converting."
+    }
+  },
+  {
+    "q": "Loads of 2 N, 5 N and 8 N stretch a spring by 3.2 cm, 8.0 cm and 12.8 cm. Assuming the model holds, what load (in N) would stretch it by <strong>20 cm<\/strong>?",
+    "a": "12.5",
+    "hint": "k = 3.2 ÷ 2 = 1.6 cm per N. Load = 20 ÷ 1.6.",
+    "fb": {
+      "32": "You multiplied 20 by 1.6. To find the load from a stretch, divide by k."
+    }
+  }
+];
+
+  const exitProbs = [
+  {
+    "q": "<span class=\"var\">y<\/span> is directly proportional to <span class=\"var\">x<\/span>, and <span class=\"var\">y<\/span> = 45 when <span class=\"var\">x<\/span> = 6. Find <span class=\"var\">y<\/span> when <span class=\"var\">x<\/span> = 10.",
+    "a": "75",
+    "hint": "k = 45 ÷ 6 = 7.5, then y = 7.5 × 10."
+  },
+  {
+    "q": "A 1600 × 900 pixel photo is resized to a width of 800 pixels without distortion. What is the new height in pixels?",
+    "a": "450",
+    "hint": "Scale factor = 800 ÷ 1600 = 0.5."
+  },
+  {
+    "q": "A taxi charges a <strong>$4 flag-fall plus $2.20 per km<\/strong>. Explain why the total fare is <strong>not<\/strong> directly proportional to the distance, and how its graph would show this.",
+    "a": "TEXT",
+    "hint": "What does a 0 km trip cost? Does doubling the distance double the fare? Where does the line cross the vertical axis?"
+  }
+];
+
+  function normaliseAnswer(s) {
+    return (s || '')
+      .toLowerCase()
+      .replace(/[\u2212\u2013\u2014]/g, '-')
+      .replace(/\s+/g, '')
+      .replace(/\*/g, '')
+      .replace(/^\+/, '');  // strip leading +
+  }
+  // accept reordered terms: 3x+5 == 5+3x
+  function answerMatches(input, expected) {
+    if (expected === 'TEXT') return null; // open-ended, don't auto-mark
+    const norm = normaliseAnswer(input);
+    const exp = normaliseAnswer(expected);
+    if (norm === exp) return true;
+    // numeric equivalence (additive 2026-07-12): decimals and fractions interchangeable;
+    // leading $ and thousands-commas stripped for the numeric compare only.
+    const toNum = s => {
+      s = s.replace(/^\$/, '').replace(/,(?=\d{3}(\D|$))/g, '');
+      if (/^-?\d+(\.\d+)?$/.test(s)) return parseFloat(s);
+      const fm = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+      if (fm && parseFloat(fm[2]) !== 0) return parseFloat(fm[1]) / parseFloat(fm[2]);
+      return null;
+    };
+    const nIn = toNum(norm), nExp = toNum(exp);
+    if (nIn !== null && nExp !== null) return Math.abs(nIn - nExp) < 1e-9 * Math.max(1, Math.abs(nExp));
+    // try sorting terms
+    const splitTerms = s => s.replace(/-/g, '+-').split('+').filter(Boolean).sort();
+    return JSON.stringify(splitTerms(norm)) === JSON.stringify(splitTerms(exp));
+  }
+
+function buildPractice(containerId, problems, prefix, options) {
+  options = options || {};
+  const grid = document.getElementById(containerId);
+  const noCount = !!options.noCount;
+
+  problems.forEach((p, i) => {
+    const idx = prefix + (i + 1);
+    answerKey[idx] = p.a;
+    if (options.noCount) noCountSet.add(idx);
+    const div = document.createElement('div');
+    div.className = 'problem';
+
+    const checkBtnHtml = p.a !== 'TEXT'
+      ? `<button class="check-btn">Check</button>`
+      : '';
+
+    div.innerHTML = `
+      <div class="problem-q">
+        <div class="problem-num">${idx}</div>
+        <div class="problem-expr">${p.q}</div>
+      </div>
+      <div class="problem-input-row">
+        <span class="eq">=</span>
+        <input class="problem-input" id="inp-${idx}" placeholder="${p.a === 'TEXT' ? 'Type your explanation' : 'Type answer'}">
+        ${checkBtnHtml}
+      </div>
+      <div class="problem-tools">
+        <button class="hint-link">Show hint</button>
+        <button class="answer-link">Show answer</button>
+      </div>
+      <div class="hint-box" id="hint-${idx}">${p.hint}</div>
+      <div class="answer-box" id="ans-${idx}"><strong>Answer:</strong> <span class="expr">${formatAnswerDisplay(p.a)}</span></div>
+    `;
+
+    // Wire handlers via addEventListener — captures p.a safely in a closure,
+    // no string-escaping into HTML required.
+    const cb = div.querySelector('.check-btn');
+    if (cb) cb.addEventListener('click', () => checkAnswer(idx, p.a, noCount));
+    div.querySelector('.hint-link').addEventListener('click', () => toggleHint(idx));
+    div.querySelector('.answer-link').addEventListener('click', () => toggleAnswer(idx));
+
+    grid.appendChild(div);
+    if (p.a !== 'TEXT' && !noCount) totalProblems++;
+  });
+}
+
+  function formatAnswerDisplay(a) {
+    if (a === 'TEXT') return 'Open response — no single right answer. Compare your explanation with the hint.';
+    // Step 1: wrap bare letters in var spans (do this FIRST, while string is plain text).
+    let r = a.replace(/([a-z])/g, '<span class="var">$1</span>');
+    // Step 2: stack any fractions (the optional letter is now a span, not a bare char — so just match digits/digits).
+    r = r.replace(/(\^)?(-?\d+)\/(\d+)/g, (m, caret, n, d) => {
+      if (caret) return m;  // exponent like a^6/4 — do not stack, handled below
+      const neg = n.startsWith('-');
+      const num = neg ? n.slice(1) : n;
+      return (neg ? '− ' : '') + `<span class="frac"><span class="num">${num}</span><span class="den">${d}</span></span>`;
+    });
+    // Step 2.5: remaining carets become superscripts (a^6/4 -> a<sup>6</sup>/4, x^2 -> x<sup>2</sup>)
+    r = r.replace(/\^(-?\d+)/g, '<sup>$1</sup>');
+    // Step 3: tidy operators — typographic minus, space around +/−.
+    r = r.replace(/-/g, ' − ').replace(/\+/g, ' + ').replace(/\s+/g, ' ').trim();
+    return r;
+  }
+
+  function toggleHint(idx) { document.getElementById('hint-' + idx).classList.toggle('visible'); }
+  function toggleAnswer(idx) { document.getElementById('ans-' + idx).classList.toggle('visible'); }
+
+  function checkAnswer(idx, expected, noCount) {
+    if (expected === undefined || expected === null) expected = answerKey[idx];
+    if (noCount === undefined || noCount === null) noCount = noCountSet.has(idx);
+    const input = document.getElementById('inp-' + idx);
+    const result = answerMatches(input.value, expected);
+    input.classList.remove('correct', 'incorrect');
+    if (result === true) {
+      input.classList.add('correct');
+      if (!noCount && !input.dataset.scored) { correctCount++; input.dataset.scored = '1'; }
+    } else if (result === false) {
+      input.classList.add('incorrect');
+      if (!noCount && input.dataset.scored) { correctCount--; delete input.dataset.scored; }
+    }
+    if (!noCount) updateProgress();
+  }
+
+  function updateProgress() {
+    document.getElementById('progressLabel').textContent = correctCount + ' / ' + totalProblems;
+    const pct = totalProblems > 0 ? (correctCount / totalProblems * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // ============ ACCORDION TIERS ============
+  function toggleTier(id) {
+    const sec = document.getElementById(id);
+    const open = sec.classList.toggle('open');
+    sec.querySelector('.accordion-head').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      // smooth-scroll the opened section to the top of the viewport
+      setTimeout(() => sec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // ============ INITIALISE ============
+  initDragSort();
+  buildMatchArea();
+  buildPractice('retrievalGrid', retrieval, 'R', { noCount: true });
+  buildPractice('weDoGrid', weDo, 'W', { noCount: true });
+  buildPractice('checkpointGrid', checkpoint, 'Q');
+  buildPractice('practiceGrid1', practice1, 'P');
+  buildPractice('practiceGrid2', practice2, 'S');
+  buildPractice('practiceGrid3', practice3, 'C');
+  buildPractice('exitGrid', exitProbs, 'E');
+  updateProgress();
+
+  // ============ RESULTS COPY (display-layer only; reads marked state from the DOM) ============
+  function tierScore(prefix) {
+    const inputs = document.querySelectorAll('input[id^="inp-' + prefix + '"]');
+    let right = 0;
+    inputs.forEach(el => { if (el.classList.contains('correct')) right++; });
+    return right + '/' + inputs.length;
+  }
+  function buildResultsLine() {
+    const nameEl = document.getElementById('studentName');
+    const name = (nameEl && nameEl.value.trim()) ? nameEl.value.trim() : '(no name)';
+    const exits = [];
+    document.querySelectorAll('input[id^="inp-E"]').forEach(el => {
+      const idx = el.id.slice(4);
+      let mark = '';
+      if (el.classList.contains('correct')) mark = ' \u2713';
+      else if (el.classList.contains('incorrect')) mark = ' \u2717';
+      exits.push(idx + ' "' + (el.value.trim() || 'blank') + '"' + mark);
+    });
+    return name + ' | ' + document.title +
+      ' | Building ' + tierScore('P') + ' \u00B7 Stretch ' + tierScore('S') + ' \u00B7 Mastery ' + tierScore('C') +
+      ' | Exit: ' + exits.join('; ');
+  }
+  function copyResults() {
+    const line = buildResultsLine();
+    const fb = document.getElementById('copyFeedback');
+    const show = function () { fb.classList.add('show'); setTimeout(function () { fb.classList.remove('show'); }, 2500); };
+    const fallback = function () {
+      const ta = document.createElement('textarea');
+      ta.value = line; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); show();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(line).then(show, fallback);
+    } else { fallback(); }
+  }
+  const crb = document.getElementById('copyResultsBtn');
+  if (crb) crb.addEventListener('click', copyResults);
+
+  // ============ PROGRESS PERSISTENCE (display-layer; restore re-marks via checkAnswer's front door) ============
+  const LS_KEY = 'aphs-lesson:' + (location.pathname.split('/').pop() || 'lesson');
+  let saveTimer = null;
+  function saveProgress() {
+    try {
+      const state = { name: '', inputs: {} };
+      const nm = document.getElementById('studentName');
+      if (nm) state.name = nm.value;
+      document.querySelectorAll('input.problem-input').forEach(el => {
+        const idx = el.id.slice(4);
+        const c = el.classList.contains('correct') ? 'y' : (el.classList.contains('incorrect') ? 'n' : '');
+        if (el.value || c) state.inputs[idx] = { v: el.value, c: c };
+      });
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+  function queueSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveProgress, 400); }
+  function restoreProgress() {
+    let state = null;
+    try { state = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+    if (!state) return;
+    const nm = document.getElementById('studentName');
+    if (nm && state.name) nm.value = state.name;
+    Object.keys(state.inputs || {}).forEach(idx => {
+      const el = document.getElementById('inp-' + idx);
+      if (!el) return;
+      el.value = state.inputs[idx].v;
+      if (state.inputs[idx].c) checkAnswer(idx);
+    });
+  }
+  function resetProgress() {
+    if (!confirm('Clear saved progress for this lesson on this device?')) return;
+    try { localStorage.removeItem(LS_KEY); } catch (e) {}
+    location.reload();
+  }
+  document.addEventListener('input', e => { if (e.target && (e.target.classList.contains('problem-input') || e.target.id === 'studentName')) queueSave(); });
+  document.addEventListener('click', e => { if (e.target && (e.target.classList.contains('check-btn') || e.target.id === 'copyResultsBtn')) setTimeout(saveProgress, 60); });
+  const rpb = document.getElementById('resetProgressBtn');
+  if (rpb) rpb.addEventListener('click', resetProgress);
+  restoreProgress();
+
+  // ============ MISCONCEPTION FEEDBACK (patch 8, display-layer) ============
+  // Optional per-question key: fb: { 'wrong answer': 'targeted feedback', ... }
+  const fbKey = {};
+  [['R', typeof retrieval !== 'undefined' ? retrieval : []],
+   ['W', typeof weDo !== 'undefined' ? weDo : []],
+   ['Q', typeof checkpoint !== 'undefined' ? checkpoint : []],
+   ['P', typeof practice1 !== 'undefined' ? practice1 : []],
+   ['S', typeof practice2 !== 'undefined' ? practice2 : []],
+   ['C', typeof practice3 !== 'undefined' ? practice3 : []],
+   ['E', typeof exitProbs !== 'undefined' ? exitProbs : []]
+  ].forEach(([pre, arr]) => arr.forEach((p, i) => { if (p && p.fb) fbKey[pre + (i + 1)] = p.fb; }));
+  document.addEventListener('click', e => {
+    if (!e.target || !e.target.classList.contains('check-btn')) return;
+    const inp = e.target.closest('.problem-input-row') && e.target.closest('.problem-input-row').querySelector('.problem-input');
+    if (!inp) return;
+    const idx = inp.id.slice(4);
+    let box = document.getElementById('fb-' + idx);
+    if (inp.classList.contains('incorrect') && fbKey[idx]) {
+      let msg = '';
+      Object.keys(fbKey[idx]).forEach(k => { if (!msg && answerMatches(inp.value, k) === true) msg = fbKey[idx][k]; });
+      if (msg) {
+        if (!box) {
+          box = document.createElement('div');
+          box.className = 'misconception-box';
+          box.id = 'fb-' + idx;
+          inp.closest('.problem-input-row').insertAdjacentElement('afterend', box);
+        }
+        box.textContent = msg;
+        box.classList.add('show');
+        return;
+      }
+    }
+    if (box) box.classList.remove('show');
+  });
+
+  // ============ INPUT ERGONOMICS (display-layer) ============
+  Object.keys(answerKey).forEach(idx => {
+    const a = answerKey[idx];
+    const el = document.getElementById('inp-' + idx);
+    if (!el || a === 'TEXT') return;
+    if (/^[\d.,$\s]+$/.test(a)) el.setAttribute('inputmode', 'decimal');
+    let fmt = '';
+    if (/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(a.replace(/\s+/g, ''))) fmt = 'Fraction or decimal both fine \u2014 e.g. 3/4 or 0.75';
+    else if (a.indexOf('^') !== -1) fmt = 'Use ^ for powers \u2014 e.g. x^2';
+    if (fmt) {
+      const d = document.createElement('div');
+      d.className = 'format-hint';
+      d.textContent = fmt;
+      const row = el.closest('.problem-input-row');
+      if (row) row.insertAdjacentElement('afterend', d);
+    }
+  });
+
+  // Enter key checks answer
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.classList.contains('problem-input')) {
+      const btn = e.target.parentElement.querySelector('.check-btn');
+      if (btn) btn.click();
+    }
+  });
+
+  function initConstantAreaTriangle(cfg){
+  const svg   = document.getElementById(cfg.svgId);
+  if(!svg) return;
+  const apex  = svg.querySelector('#'+cfg.ids.apex);
+  const ring  = svg.querySelector('#'+cfg.ids.focusRing);
+  const fill  = svg.querySelector('#'+cfg.ids.fill);
+  const slA   = svg.querySelector('#'+cfg.ids.slantA);
+  const slB   = svg.querySelector('#'+cfg.ids.slantB);
+  const perp  = svg.querySelector('#'+cfg.ids.perp);
+  const ra    = svg.querySelector('#'+cfg.ids.rightAngle);
+  const cLab  = svg.querySelector('#'+cfg.ids.cLabel);
+  const hLab  = svg.querySelector('#'+cfg.ids.hLabel);
+  const elArea= document.getElementById(cfg.ids.area);
+  const elType= document.getElementById(cfg.ids.type);
+  const elStat= document.getElementById(cfg.ids.status);
+  const btnRst= document.getElementById(cfg.ids.reset);
+
+  const Ax=cfg.Ax, Bx=cfg.Bx, baseY=cfg.baseY, guideY=cfg.guideY;
+  const minX=cfg.minX, maxX=cfg.maxX;
+  const areaValue = 0.5 * cfg.baseCm * cfg.heightCm;
+  const typesSeen = {};
+  let apexX = cfg.startX;
+
+  function svgX(clientX){
+    const pt = svg.createSVGPoint();
+    pt.x = clientX; pt.y = 0;
+    return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+  }
+  function clamp(v){ return Math.max(minX, Math.min(maxX, v)); }
+  function classify(x){
+    if(Math.abs(x-Ax)<2 || Math.abs(x-Bx)<2) return 'right-angled';
+    if(x>Ax && x<Bx) return 'acute';
+    return 'obtuse';
+  }
+  function redraw(){
+    apexX = clamp(apexX);
+    fill.setAttribute('points', Ax+','+baseY+' '+Bx+','+baseY+' '+apexX+','+guideY);
+    slA.setAttribute('x2', apexX); slA.setAttribute('y2', guideY);
+    slB.setAttribute('x2', apexX); slB.setAttribute('y2', guideY);
+    perp.setAttribute('x1', apexX); perp.setAttribute('x2', apexX);
+    ra.setAttribute('points', apexX+','+(baseY-12)+' '+(apexX+12)+','+(baseY-12)+' '+(apexX+12)+','+baseY);
+    cLab.setAttribute('x', apexX);
+    hLab.setAttribute('x', apexX+12);
+    hLab.setAttribute('y', (guideY+baseY)/2);
+    apex.setAttribute('cx', apexX);
+    ring.setAttribute('cx', apexX);
+    elArea.textContent = Number.isInteger(areaValue) ? areaValue : areaValue.toFixed(1);
+    const t = classify(apexX);
+    elType.textContent = t;
+    typesSeen[t] = true;
+    apex.setAttribute('aria-valuenow', Math.round((apexX-minX)/(maxX-minX)*100));
+    if(typesSeen['right-angled'] && typesSeen['acute'] && typesSeen['obtuse']){
+      elStat.textContent = "You've made all three triangle types — and the area stayed "+elArea.textContent+" cm² every time.";
+      elStat.classList.add('done');
+    }
+  }
+
+  let dragging=false;
+  apex.addEventListener('pointerdown', function(e){ dragging=true; apex.setPointerCapture(e.pointerId); e.preventDefault(); });
+  apex.addEventListener('pointermove', function(e){ if(dragging){ apexX=clamp(svgX(e.clientX)); redraw(); } });
+  apex.addEventListener('pointerup',   function(){ dragging=false; });
+  apex.addEventListener('pointercancel', function(){ dragging=false; });
+  apex.addEventListener('keydown', function(e){
+    const step = e.shiftKey ? 30 : 10;
+    if(e.key==='ArrowLeft' || e.key==='ArrowDown'){ apexX-=step; redraw(); e.preventDefault(); }
+    if(e.key==='ArrowRight'|| e.key==='ArrowUp'){   apexX+=step; redraw(); e.preventDefault(); }
+  });
+  apex.addEventListener('focus', function(){ ring.setAttribute('opacity','1'); });
+  apex.addEventListener('blur',  function(){ ring.setAttribute('opacity','0'); });
+  btnRst.addEventListener('click', function(){
+    apexX = cfg.startX;
+    elStat.classList.remove('done');
+    elStat.textContent = 'Drag C to a few positions. Notice the area readout.';
+    for(const k in typesSeen) delete typesSeen[k];
+    redraw();
+  });
+
+  redraw();
+}
+
+// Multiple Representations kit (Section 5, Part A): P = 25h
+const linkData = { p0:{x:0,y:0}, p1:{x:1,y:25}, p2:{x:2,y:50}, p3:{x:3,y:75}, p4:{x:4,y:100}, p5:{x:5,y:125} };
+function linkSelect(id) {
+  document.querySelectorAll('[data-link-id]').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll(`[data-link-id="${id}"]`).forEach(el => el.classList.add('active'));
+  const { x, y } = linkData[id];
+  const sub = document.getElementById('mrSub');
+  sub.innerHTML = `If <span class="var">h</span> = ${x}: &nbsp; <span class="var">P</span> = 25 × ${x} = ${y}`;
+  sub.classList.add('active');
+  const sp = document.getElementById('mrSpecific');
+  sp.textContent = x === 0 ? 'Work 0 hours and Jai earns $0: the line starts at the origin.'
+                           : `${x} hour${x === 1 ? '' : 's'} of work earns $${y}.`;
+  sp.classList.add('active');
+}
+
+// Hinge Question kit
+function pickHingeOption(btn) {
+  if (btn.classList.contains('dimmed')) return;
+  const isCorrect = btn.dataset.correct === 'true';
+  btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');
+  document.querySelectorAll('.hinge-opt').forEach(o => { if (o !== btn) o.classList.add('dimmed'); });
+  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));
+  const fbId = btn.dataset.feedbackId;
+  if (fbId) document.getElementById(fbId).classList.add('visible');
+}
+function resetHinge() {
+  document.querySelectorAll('.hinge-opt').forEach(o => o.classList.remove('selected', 'correct', 'incorrect', 'dimmed'));
+  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));
+}
+
+// Topic-specific instructions for the frame's fixed section text
+(function () {
+  const set = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };
+  set('#tier1-body .sec-desc', 'Type just the number in each box: no units or $ sign needed. Find <span class="var">k</span> first, then multiply or divide.');
+  set('#tier2-body .sec-desc', 'Quotes, photos and stairs. Work out the rate or scale factor first, then apply it. Type just the number.');
+  set('#tier3-body .sec-desc', 'Building standards, escalators and fees: decide what is proportional before you calculate. Type just the number.');
+  const wd = document.getElementById('weDoGrid');
+  const tip = wd && wd.parentElement.querySelector('.parts-instructions');
+  if (tip) tip.innerHTML = '💡 <strong>Why we do it this way:</strong> finding <span class="var">k</span> first turns every question into one multiplication (forwards) or one division (backwards). Use the same routine in the You do practice: find <span class="var">k</span>, write the model, then check your answer makes sense.';
+  const m = document.getElementById('matchArea');
+  const md = m && m.parentElement.querySelector('.sec-desc');
+  if (md) md.textContent = 'Click a situation, then click the model that describes it. There are five matching pairs.';
+})();
+</script>
+
+</body>
+</html>
