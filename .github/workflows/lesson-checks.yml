@@ -37,7 +37,8 @@ jobs:
       - name: Install Playwright + Chromium
         if: steps.changed.outputs.count != '0'
         run: |
-          pip install playwright
+          # Pinned: keep in step with .claude/commands/next-lesson-auto.md (nightly routine) and next-lesson.md.
+          pip install playwright==1.56.0
           python -m playwright install --with-deps chromium
       - name: Run check_lesson.py on each changed lesson
         id: check

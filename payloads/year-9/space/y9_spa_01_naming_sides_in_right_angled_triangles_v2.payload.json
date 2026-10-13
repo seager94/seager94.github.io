@@ -1,0 +1,328 @@
+{
+ "payload_version": 1,
+ "filename": "y9_spa_01_naming_sides_in_right_angled_triangles_v2.html",
+ "title": "Naming Sides in Right-Angled Triangles — Year 9",
+ "header": {
+  "title": "Naming Sides in Right-Angled Triangles",
+  "subtitle": "Hypotenuse, opposite and adjacent: it all depends on θ",
+  "badge": "Year 9 · Space"
+ },
+ "meta": {
+  "lesson-id": "y9_spa_01",
+  "lesson-focus": "Identify and label the hypotenuse, the side opposite a given angle, and the side adjacent to a given angle in any right-angled triangle; recognise that 'opposite' and 'adjacent' depend on the chosen reference angle; the hypotenuse is always opposite the right angle.",
+  "ac9-descriptor": "AC9M9SP01",
+  "ac9-descriptor-text": "recognise the constancy of the sine, cosine and tangent ratios for a given angle in right-angled triangles using properties of similarity",
+  "ac9-elaborations": "1",
+  "sa-year": "9",
+  "sa-strand": "Space",
+  "mapping-note": "Strict",
+  "sa-conceptual-understanding": "Trigonometric ratios are an application of the property of similarity for right-angled triangles"
+ },
+ "html": {
+  "section0_intro": "Today starts the trigonometry unit. These three questions check the right-angled triangle facts you already know from Year 8 and from enlargement.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's mathematics.</p>\n<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; align-items: center;'>\n  <div>\n    <p>A café owner needs a <strong>wheelchair ramp</strong> up one step. The builder quotes the <strong>handrail</strong> by the metre along the sloping ramp. The council charges rent for every metre of <strong>footpath</strong> the ramp covers. The building code limits how high the ramp may <strong>rise</strong> for its length.</p>\n    <p>Three different prices, three different sides of the same right-angled triangle. Mix them up and the quote is wrong.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    <svg viewBox=\"0 0 294 164\" width=\"294\" role=\"img\" aria-label=\"Ramp as a right-angled triangle: run along the ground, vertical rise, sloping ramp surface, ramp angle theta at A\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"252.0,42.0 42.0,42.0 252.0,122.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M240.0 42.0 L240.0 54.0 L252.0 54.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 42.0 A24 24 0 0 1 64.4 50.5\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"101.8\" y=\"58.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"268.8\" y=\"40.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><text x=\"24.3\" y=\"43.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"266.3\" y=\"137.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">C</text><text x=\"147.0\" y=\"28.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">run (footpath)</text><text x=\"270.0\" y=\"86.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">rise</text><text x=\"140.6\" y=\"102.8\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">ramp surface</text></svg>\n    Measured from the ramp angle <span class=\"var\">θ</span>: the ramp surface is the <strong>hypotenuse</strong>, the rise is <strong>opposite</strong> <span class=\"var\">θ</span>, and the footpath run is <strong>adjacent</strong> to <span class=\"var\">θ</span>. Today you learn to name these three sides in <em>any</em> right-angled triangle.\n  </div>\n</div>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Right angle<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>An angle of exactly <strong>90°</strong>, marked with a small square in the corner.<div class='vocab-example'>Every triangle today has one.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Hypotenuse<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The side <strong>across from the right angle</strong>. It is always the longest side.<div class='vocab-example'>It never touches the square marker.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Reference angle <span class=\"var\">θ</span><div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The acute angle we choose to name the other two sides from. Marked with an arc.<div class='vocab-example'>θ is the Greek letter theta.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Opposite side<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The side <strong>across from <span class=\"var\">θ</span></strong>. It does not touch <span class=\"var\">θ</span> at all.<div class='vocab-example'>Rise of a ramp, measured from the ramp angle.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Adjacent side<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The side that <strong>touches <span class=\"var\">θ</span></strong> and is <strong>not</strong> the hypotenuse.<div class='vocab-example'>Adjacent means 'next to'.</div></div>\n  </div>\n</div>",
+  "section3_heading": "Hypotenuse, opposite or adjacent?",
+  "section3_desc": "Use triangle ABC: right angle at C, <span class=\"var\">θ</span> at A. Drag each card into <strong>Hypotenuse</strong>, <strong>Opposite</strong> or <strong>Adjacent</strong>.",
+  "sort_activity": "<style>\n  .parts-buckets.three { grid-template-columns: repeat(3, 1fr); }\n  @media (max-width: 600px) { .parts-buckets.three { grid-template-columns: 1fr; } }\n</style>\n<svg viewBox=\"0 0 244 184\" width=\"240\" role=\"img\" aria-label=\"Right-angled triangle ABC with the right angle at C and angle theta at A\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"202.0,42.0 42.0,42.0 202.0,142.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M190.0 42.0 L190.0 54.0 L202.0 54.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 42.0 A24 24 0 0 1 62.4 54.7\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"80.4\" y=\"58.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"217.3\" y=\"37.5\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">C</text><text x=\"24.8\" y=\"41.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"213.2\" y=\"161.1\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text></svg>\n<div class='parts-expr'>\n  <div class='label'>Sort each card for triangle ABC (<span class=\"var\">θ</span> at A)</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip variable' data-type='hyp'>Side <strong>AB</strong></span>\n    <span class='term-chip variable' data-type='opp'>Across from <span class=\"var\">θ</span></span>\n    <span class='term-chip constant' data-type='adj'>The ramp's run along the ground</span>\n    <span class='term-chip variable' data-type='hyp'>Across from the right angle</span>\n    <span class='term-chip variable' data-type='opp'>Side <strong>BC</strong></span>\n    <span class='term-chip variable' data-type='opp'>Does not touch <span class=\"var\">θ</span> at all</span>\n    <span class='term-chip constant' data-type='adj'>Touches <span class=\"var\">θ</span> and the right angle</span>\n    <span class='term-chip constant' data-type='adj'>Side <strong>AC</strong></span>\n    <span class='term-chip variable' data-type='hyp'>The longest side</span>\n  </div>\n  <div class='parts-buckets three'>\n    <div class='bucket' data-bucket='hyp'>\n      <h4 style='color:var(--coral)'>Hypotenuse</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='opp'>\n      <h4 style='color:var(--navy)'>Opposite <span class=\"var\">θ</span></h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='adj'>\n      <h4 style='color:#8a6508'>Adjacent to <span class=\"var\">θ</span></h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 Name the hypotenuse <strong>first</strong> (from the right angle). Then use <span class=\"var\">θ</span>: the side that does not touch <span class=\"var\">θ</span> is opposite; the one left over is adjacent.\n</div>",
+  "section4_heading": "Name the side from the letters",
+  "worked_example": "<p class='sec-desc'>Name the hypotenuse, the opposite side and the adjacent side of triangle KLM for the reference angle <span class=\"var\">θ</span> at K.</p>\n<svg viewBox=\"0 0 252 154\" width=\"252\" role=\"img\" aria-label=\"Triangle KLM, right angle at L, theta at K, KL 12 cm, LM 5 cm, KM 13 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"210.0,112.0 42.0,112.0 210.0,42.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M198.0 112.0 L198.0 100.0 L210.0 100.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 112.0 A24 24 0 0 0 64.2 102.8\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"97.0\" y=\"106.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"226.6\" y=\"123.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">L</text><text x=\"24.4\" y=\"120.7\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">K</text><text x=\"223.8\" y=\"35.5\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">M</text><text x=\"126.0\" y=\"134.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">12 cm</text><text x=\"228.0\" y=\"81.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">5 cm</text><text x=\"119.1\" y=\"64.4\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">13 cm</text></svg>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Find the right angle, name the hypotenuse</div>\n      <div class='step-desc'>The square marker is at L. The hypotenuse is the side that does not touch L.</div>\n      <div class='calc-box'>Right angle at L &nbsp;→&nbsp; hypotenuse = <span class='red'>KM = 13 cm</span> (the longest side ✓)</div>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Find <span class=\"var\">θ</span>, name the opposite side</div>\n      <div class='step-desc'><span class=\"var\">θ</span> is at K. The opposite side is the one that does not touch K.</div>\n      <div class='calc-box'><span class=\"var\">θ</span> at K &nbsp;→&nbsp; opposite = <span class='blue'>LM = 5 cm</span></div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>The side left over is adjacent</div>\n      <div class='step-desc'>KL touches <span class=\"var\">θ</span> at K and is not the hypotenuse, so it is adjacent. Check: it joins <span class=\"var\">θ</span> to the right angle.</div>\n      <svg viewBox=\"0 0 252 154\" width=\"252\" role=\"img\" aria-label=\"Triangle KLM colour-coded: hypotenuse KM, opposite LM, adjacent KL\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"210.0,112.0 42.0,112.0 210.0,42.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><line x1=\"42.0\" y1=\"112.0\" x2=\"210.0\" y2=\"42.0\" stroke=\"#BE5837\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"210.0\" y1=\"112.0\" x2=\"210.0\" y2=\"42.0\" stroke=\"#1F4D54\" stroke-width=\"5\" stroke-linecap=\"round\"/><line x1=\"42.0\" y1=\"112.0\" x2=\"210.0\" y2=\"112.0\" stroke=\"#B8860B\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M198.0 112.0 L198.0 100.0 L210.0 100.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 112.0 A24 24 0 0 0 64.2 102.8\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"97.0\" y=\"106.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"226.6\" y=\"123.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">L</text><text x=\"24.4\" y=\"120.7\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">K</text><text x=\"223.8\" y=\"35.5\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">M</text><text x=\"126.0\" y=\"134.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">12 cm</text><text x=\"228.0\" y=\"81.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">5 cm</text><text x=\"119.1\" y=\"64.4\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">13 cm</text></svg>\n      <div class='calc-box'><span class='red'>Hypotenuse KM = 13 cm</span><br><span class='blue'>Opposite LM = 5 cm</span><br>Adjacent KL = 12 cm</div>\n      <div class='summary-banner'>\n        <span class='label'>Answer</span>\n        Hyp = KM &nbsp;·&nbsp; Opp = LM &nbsp;·&nbsp; Adj = KL. If <span class=\"var\">θ</span> moved to M, opposite and adjacent would swap; KM stays the hypotenuse.\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+  "section6_heading": "We do: triangle RST, turned on its side",
+  "we_do_intro": "This triangle is turned so the hypotenuse is not at the bottom. Work through each prompt with a partner, then we check as a class. Answer side names in alphabetical order.",
+  "footer_title": "Naming Sides in Right-Angled Triangles",
+  "strategy_section": "<style>\n  .err-problem-stem { background: var(--hint-bg); border-left: 4px solid var(--navy); padding: 12px 16px; border-radius: 6px; font-family: Georgia, serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 16px; }\n  .err-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }\n  .err-line { display: grid; grid-template-columns: 36px 1fr 24px; align-items: center; gap: 14px; padding: 10px 14px; margin-bottom: 6px; background: white; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-family: Georgia, serif; font-size: 1.05rem; transition: all 0.2s; }\n  .err-line:last-child { margin-bottom: 0; }\n  .err-line:hover { border-color: var(--navy); }\n  .err-line .err-line-num { background: var(--hint-bg); color: var(--navy); width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 0.9rem; font-weight: 700; }\n  .err-line .err-line-mark { font-size: 1.1rem; opacity: 0; transition: opacity 0.2s; }\n  .err-line.flagged-correct { background: var(--good-soft); border-color: var(--good); }\n  .err-line.flagged-correct .err-line-mark::before { content: '✓'; color: var(--good); }\n  .err-line.flagged-correct .err-line-mark { opacity: 1; }\n  .err-line.flagged-wrong { animation: err-shake 0.45s; background: var(--bad-soft); border-color: var(--bad); }\n  @keyframes err-shake { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }\n  .err-line.dimmed { opacity: 0.45; cursor: not-allowed; }\n  .err-feedback { background: white; border: 1.5px solid var(--good); border-radius: 10px; padding: 16px 18px; margin-top: 14px; display: none; }\n  .err-feedback.visible { display: block; }\n  .err-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.05rem; }\n  .err-feedback .err-explain { background: var(--hint-bg); border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; font-size: 0.92rem; color: var(--navy); }\n  .err-correction-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }\n  .err-correction-row input { flex: 1; min-width: 160px; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: Georgia, serif; font-size: 1.05rem; }\n  .err-correction-row input.correct { background: var(--good-soft); border-color: var(--good); }\n  .err-correction-row input.incorrect { background: var(--bad-soft); border-color: var(--bad); }\n  .err-correction-row button { background: var(--coral); color: white; border: none; padding: 9px 16px; border-radius: 8px; font-size: 0.92rem; font-weight: 600; cursor: pointer; }\n  .err-status-msg { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; }\n  body.teacher-mode .err-line[data-is-error=\"true\"] { box-shadow: 0 0 0 3px var(--coral); }\n\n  section.lesson.hinge { background: #f7faff; border-left: 5px solid var(--navy); }\n  .hinge-tag { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; background: var(--navy); color: white; white-space: nowrap; }\n  .hinge-stem { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; font-family: Georgia, serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 18px; box-shadow: var(--shadow); }\n  .hinge-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }\n  .hinge-opt { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 18px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; font-family: Georgia, serif; font-size: 1.05rem; text-align: left; }\n  .hinge-opt:hover { border-color: var(--navy); transform: translateY(-1px); }\n  .hinge-opt .opt-letter { background: var(--hint-bg); color: var(--navy); width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-weight: 700; flex-shrink: 0; }\n  .hinge-opt.selected.correct { background: var(--good-soft); border-color: var(--good); }\n  .hinge-opt.selected.correct .opt-letter { background: var(--good); color: white; }\n  .hinge-opt.selected.incorrect { background: var(--bad-soft); border-color: var(--bad); }\n  .hinge-opt.selected.incorrect .opt-letter { background: var(--bad); color: white; }\n  .hinge-opt.dimmed { opacity: 0.45; cursor: not-allowed; }\n  .hinge-feedback { margin-top: 18px; padding: 14px 18px; border-radius: 8px; font-size: 0.95rem; display: none; }\n  .hinge-feedback.visible { display: block; }\n  .hinge-feedback.correct { background: var(--good-soft); color: #1d4a30; border-left: 4px solid var(--good); }\n  .hinge-feedback.incorrect { background: var(--bad-soft); color: #6a2520; border-left: 4px solid var(--bad); }\n  .hinge-reset { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; margin-top: 12px; }\n  body.teacher-mode .hinge-opt.correct-answer { box-shadow: 0 0 0 3px var(--good); }\n</style>\n<section class=\"lesson\">\n  <h2><span class=\"sec-num\">★</span>Spot the mistake</h2>\n  <p class=\"sec-desc\">Jordan labelled triangle PQR for <span class=\"var\">θ</span> at R. Click the line where the mistake <em>first</em> appears.</p>\n  <svg viewBox=\"0 0 234 194\" width=\"230\" role=\"img\" aria-label=\"Triangle PQR, right angle at Q, theta at R, PQ 9 cm, QR 12 cm, PR 15 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"42.0,152.0 42.0,42.0 192.0,152.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M42.0 140.0 L54.0 140.0 L54.0 152.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M168.0 152.0 A24 24 0 0 1 172.6 137.8\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"155.9\" y=\"145.2\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"27.5\" y=\"167.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">Q</text><text x=\"31.9\" y=\"32.1\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text><text x=\"208.9\" y=\"163.2\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">R</text><text x=\"24.0\" y=\"101.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">9 cm</text><text x=\"117.0\" y=\"174.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">12 cm</text><text x=\"127.6\" y=\"86.5\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">15 cm</text></svg>\n  <div class=\"err-problem-stem\">Right angle at Q, <span class=\"var\">θ</span> at R. Name the hypotenuse, adjacent and opposite sides.</div>\n  <div class=\"err-solution\" id=\"errSolution\">\n    <div class=\"err-line\" data-line=\"1\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">1</span>\n      <span>The right angle is at Q, so the hypotenuse is PR = 15 cm.</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line\" data-line=\"2\" data-is-error=\"true\" data-correct-line=\"12\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">2</span>\n      <span><span class=\"var\">θ</span> is at R. PR touches R, so the adjacent side is PR = 15 cm.</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line\" data-line=\"3\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">3</span>\n      <span>The opposite side is the one left over: QR = 12 cm.</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n  </div>\n  <div class=\"err-feedback\" id=\"errFeedback\">\n    <h4>✓ Right: that's where the mistake first appears.</h4>\n    <div class=\"err-explain\">\n      <strong>Why:</strong> PR does touch <span class=\"var\">θ</span>, but it was already named the hypotenuse in line 1. The hypotenuse is never called adjacent. The adjacent side touches <span class=\"var\">θ</span> <em>and</em> the right angle: QR. That leaves PQ as the opposite side.\n    </div>\n    <p style=\"margin: 0 0 8px; font-size: 0.95rem;\"><strong>Now fix line 2:</strong> how long is the adjacent side, in cm?</p>\n    <div class=\"err-correction-row\">\n      <input id=\"errCorrection\" placeholder=\"Type a number\">\n      <button onclick=\"checkErrCorrection()\">Check</button>\n    </div>\n    <div class=\"err-status-msg\" id=\"errStatusMsg\"></div>\n  </div>\n</section>\n\n<section class=\"lesson hinge\">\n  <h2>\n    <span class=\"sec-num\">★</span>Hinge check\n    <span class=\"hinge-tag\">🎯 Pick one</span>\n  </h2>\n  <p class=\"sec-desc\">The triangle is tilted. The right angle is at B and <span class=\"var\">θ</span> is at C. Which side is <strong>adjacent</strong> to <span class=\"var\">θ</span>?</p>\n  <div class=\"hinge-stem\"><svg viewBox=\"0 0 246 214\" width=\"220\" role=\"img\" aria-label=\"Tilted triangle ABC, right angle at B, theta at C\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"128.6,171.9 203.6,42.0 42.0,121.9\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M134.6 161.5 L124.2 155.5 L118.2 165.9\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M62.8 133.9 A24 24 0 0 0 63.5 111.3\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"80.0\" y=\"128.1\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"129.8\" y=\"194.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><text x=\"217.1\" y=\"35.1\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"24.1\" y=\"129.1\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">C</text></svg></div>\n  <div class=\"hinge-options\" id=\"hingeOpts\">\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-A\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">A</span><span>AC</span></button>\n    <button class=\"hinge-opt correct-answer\" data-correct=\"true\" data-feedback-id=\"fb-B\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">B</span><span>BC</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-C\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">C</span><span>AB</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-D\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">D</span><span>It depends which side is drawn at the bottom</span></button>\n  </div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-A\"><strong>Not quite: AC is the hypotenuse.</strong> It touches <span class=\"var\">θ</span>, but it is across from the right angle at B, so it keeps the name hypotenuse. Adjacent is the <em>other</em> side touching <span class=\"var\">θ</span>.</div>\n  <div class=\"hinge-feedback correct\" id=\"fb-B\"><strong>Correct.</strong> BC touches <span class=\"var\">θ</span> at C and also touches the right angle at B. AC is the hypotenuse and AB is opposite <span class=\"var\">θ</span>.</div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-C\"><strong>That's the opposite side.</strong> AB does not touch C at all, so it is across from <span class=\"var\">θ</span>. Adjacent means it touches <span class=\"var\">θ</span>.</div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-D\"><strong>Turning the triangle changes nothing.</strong> The names come from where the right angle and <span class=\"var\">θ</span> are, not from which side is at the bottom. BC is adjacent however the triangle is drawn.</div>\n  <button class=\"hinge-reset\" onclick=\"resetHinge()\">↺ Try again</button>\n</section>",
+  "strategy_js": "// Error Analysis kit\nlet errFound = false;\nfunction pickErrLine(el) {\n  if (errFound || el.classList.contains('dimmed')) return;\n  if (el.dataset.isError === 'true') {\n    el.classList.add('flagged-correct');\n    errFound = true;\n    document.querySelectorAll('.err-line').forEach(o => { if (o !== el) o.classList.add('dimmed'); });\n    document.getElementById('errFeedback').classList.add('visible');\n  } else {\n    el.classList.add('flagged-wrong');\n    setTimeout(() => el.classList.remove('flagged-wrong'), 600);\n  }\n}\nfunction checkErrCorrection() {\n  const input = document.getElementById('errCorrection');\n  const expected = document.querySelector('.err-line[data-is-error=\"true\"]').dataset.correctLine;\n  const norm = s => (s || '').toLowerCase().replace(/\\s+/g, '').replace(/cm$/, '');\n  const msg = document.getElementById('errStatusMsg');\n  input.classList.remove('correct', 'incorrect');\n  if (norm(input.value) === norm(expected)) {\n    input.classList.add('correct');\n    msg.textContent = '✓ Correct. The adjacent side is QR = 12 cm, so line 3 should read: opposite = PQ = 9 cm.';\n  } else {\n    input.classList.add('incorrect');\n    msg.textContent = '✗ Not quite. Find the side that touches θ at R and also touches the right angle at Q.';\n  }\n}\n\n// Hinge Question kit\nfunction pickHingeOption(btn) {\n  if (btn.classList.contains('dimmed')) return;\n  const isCorrect = btn.dataset.correct === 'true';\n  btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');\n  document.querySelectorAll('.hinge-opt').forEach(o => { if (o !== btn) o.classList.add('dimmed'); });\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n  const fbId = btn.dataset.feedbackId;\n  if (fbId) document.getElementById(fbId).classList.add('visible');\n}\nfunction resetHinge() {\n  document.querySelectorAll('.hinge-opt').forEach(o => o.classList.remove('selected', 'correct', 'incorrect', 'dimmed'));\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n}\n\n// Topic-specific instructions for the frame's fixed section text\n(function () {\n  const set = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };\n  set('#tier1-body .sec-desc', 'Type side names as two letters in alphabetical order (e.g. <code>AC</code>), lengths as just the number, and side types as a word: <code>hypotenuse</code>, <code>opposite</code> or <code>adjacent</code>.');\n  set('#tier2-body .sec-desc', 'Turned triangles, switched reference angles and triangles with no diagram. Name the hypotenuse first, then use θ.');\n  set('#tier3-body .sec-desc', 'Ramp costs and a first look at side ratios. Pick the right side before you calculate. Type just the number (no $ or units).');\n  const wd = document.getElementById('weDoGrid');\n  const tip = wd && wd.parentElement.querySelector('.parts-instructions');\n  if (tip) tip.innerHTML = '💡 <strong>Why we do it this way:</strong> the hypotenuse is named from the right angle, so it never changes. Opposite and adjacent are named from θ, so they swap whenever θ moves. Always name the hypotenuse first, then the side that does not touch θ (opposite); the side left over is adjacent.';\n  const m = document.getElementById('matchArea');\n  const md = m && m.parentElement.querySelector('.sec-desc');\n  if (md) md.innerHTML = 'No diagrams: use the letters. Opposite θ is the side <em>without</em> θ\\'s letter; adjacent uses θ\\'s letter and the right-angle letter; the hypotenuse is the side without the right-angle letter. Click a question, then its side. There are five matching pairs.';\n})();"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "A right-angled triangle has one angle of 35°. What is the size of the third angle, in degrees?",
+    "a": "55",
+    "hint": "Angles in a triangle add to 180°, and one of them is 90°: 180 − 90 − 35.",
+    "fb": {
+     "145": "You only took 35 away from 180. The right angle uses up another 90°."
+    }
+   },
+   {
+    "q": "A right-angled triangle has shorter sides 6 cm and 8 cm. How long is the longest side, in cm? (Pythagoras)",
+    "a": "10",
+    "hint": "6² + 8² = 36 + 64 = 100, then square-root.",
+    "fb": {
+     "14": "You added the sides. Pythagoras adds the squares: 6² + 8², then square-root.",
+     "100": "100 is the square of the longest side. Take the square root."
+    }
+   },
+   {
+    "q": "A triangle with sides 3 cm, 4 cm and 5 cm is enlarged by scale factor 3. How long is the image of the 4 cm side, in cm?",
+    "a": "12",
+    "hint": "Every length is multiplied by the scale factor.",
+    "fb": {
+     "7": "An enlargement multiplies lengths by the scale factor; it does not add to them."
+    }
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "△ABC, right angle at C.<br><strong>Hypotenuse?</strong>",
+    "group": 1
+   },
+   {
+    "html": "<span class='expr'>AB</span>",
+    "group": 1
+   },
+   {
+    "html": "△PQR, right angle at Q, <span class=\"var\">θ</span> at P.<br><strong>Opposite <span class=\"var\">θ</span>?</strong>",
+    "group": 2
+   },
+   {
+    "html": "<span class='expr'>QR</span>",
+    "group": 2
+   },
+   {
+    "html": "△XYZ, right angle at X, <span class=\"var\">θ</span> at Z.<br><strong>Adjacent to <span class=\"var\">θ</span>?</strong>",
+    "group": 3
+   },
+   {
+    "html": "<span class='expr'>XZ</span>",
+    "group": 3
+   },
+   {
+    "html": "△LMN, right angle at N, <span class=\"var\">θ</span> at L.<br><strong>Opposite <span class=\"var\">θ</span>?</strong>",
+    "group": 4
+   },
+   {
+    "html": "<span class='expr'>MN</span>",
+    "group": 4
+   },
+   {
+    "html": "△DEF, right angle at E, <span class=\"var\">θ</span> at F.<br><strong>Adjacent to <span class=\"var\">θ</span>?</strong>",
+    "group": 5
+   },
+   {
+    "html": "<span class='expr'>EF</span>",
+    "group": 5
+   }
+  ],
+  "weDo": [
+   {
+    "q": "<svg viewBox=\"0 0 234 164\" width=\"230\" role=\"img\" aria-label=\"Triangle RST, right angle at S, theta at T, RS 8 cm, ST 15 cm, RT 17 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"42.0,122.0 42.0,42.0 192.0,122.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M42.0 110.0 L54.0 110.0 L54.0 122.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M168.0 122.0 A24 24 0 0 1 170.8 110.7\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"148.0\" y=\"116.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"26.1\" y=\"135.5\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">S</text><text x=\"29.7\" y=\"33.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">R</text><text x=\"209.4\" y=\"131.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">T</text><text x=\"24.0\" y=\"86.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">8 cm</text><text x=\"117.0\" y=\"144.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">15 cm</text><text x=\"125.5\" y=\"70.1\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">17 cm</text></svg>Which side is the <strong>hypotenuse</strong>? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "RT",
+    "hint": "Find the right-angle marker at S. The hypotenuse is the side that does not touch S.",
+    "fb": {
+     "RS": "RS touches the right angle at S. The hypotenuse is across from the right angle."
+    }
+   },
+   {
+    "q": "Same triangle, <span class=\"var\">θ</span> at T. How long is the side <strong>opposite</strong> <span class=\"var\">θ</span>, in cm?",
+    "a": "8",
+    "hint": "The opposite side is the one that does not touch T at all.",
+    "fb": {
+     "15": "ST touches T, so it is the adjacent side, not the opposite side.",
+     "17": "RT is the hypotenuse. It touches T but it is never called adjacent or opposite."
+    }
+   },
+   {
+    "q": "Now make the angle at <strong>R</strong> the reference angle instead. How long is the side <strong>opposite R</strong>, in cm?",
+    "a": "15",
+    "hint": "Which side does not touch R at all?",
+    "fb": {
+     "8": "8 cm was opposite T. When the reference angle moves to R, opposite and adjacent swap."
+    }
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "<svg viewBox=\"0 0 234 164\" width=\"230\" role=\"img\" aria-label=\"Triangle PQR, right angle at Q, theta at R, PQ 15 cm, QR 8 cm, PR 17 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"42.0,122.0 192.0,122.0 42.0,42.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M54.0 122.0 L54.0 110.0 L42.0 110.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M42.0 66.0 A24 24 0 0 0 63.2 53.3\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"61.6\" y=\"79.6\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"26.1\" y=\"135.5\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">Q</text><text x=\"209.4\" y=\"131.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text><text x=\"29.7\" y=\"33.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">R</text><text x=\"117.0\" y=\"144.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">15 cm</text><text x=\"24.0\" y=\"86.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">8 cm</text><text x=\"125.5\" y=\"70.1\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">17 cm</text></svg>How long is the <strong>hypotenuse</strong>, in cm?",
+    "a": "17",
+    "hint": "The hypotenuse is across from the right angle at Q, and it is the longest side."
+   },
+   {
+    "q": "Same triangle, <span class=\"var\">θ</span> at R. How long is the side <strong>adjacent</strong> to <span class=\"var\">θ</span>, in cm?",
+    "a": "8",
+    "hint": "Adjacent touches R but is not the hypotenuse.",
+    "fb": {
+     "17": "PR touches R, but it is the hypotenuse. Adjacent is the other side that touches θ.",
+     "15": "PQ does not touch R, so it is the opposite side."
+    }
+   }
+  ],
+  "practice1": [
+   {
+    "q": "<svg viewBox=\"0 0 234 174\" width=\"230\" role=\"img\" aria-label=\"Triangle ABC with the right angle at B\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"192.0,132.0 42.0,132.0 192.0,42.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M180.0 132.0 L180.0 120.0 L192.0 120.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><text x=\"207.4\" y=\"146.3\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><text x=\"24.8\" y=\"142.2\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"203.5\" y=\"33.2\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">C</text></svg>Which side is the hypotenuse? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "AC",
+    "hint": "Find the small square. The hypotenuse does not touch that corner."
+   },
+   {
+    "q": "<svg viewBox=\"0 0 234 174\" width=\"230\" role=\"img\" aria-label=\"Triangle DEF with the right angle at E\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"192.0,132.0 192.0,42.0 42.0,132.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M192.0 120.0 L180.0 120.0 L180.0 132.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><text x=\"207.4\" y=\"146.3\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">E</text><text x=\"203.5\" y=\"33.2\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">D</text><text x=\"24.8\" y=\"142.2\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">F</text></svg>Which side is the hypotenuse? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "DF",
+    "hint": "The right angle is at E, so look for the side without E.",
+    "fb": {
+     "DE": "DE touches the right angle at E. The hypotenuse is across from it."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 234 184\" width=\"230\" role=\"img\" aria-label=\"Triangle GHJ, right angle at H, theta at G\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"42.0,42.0 192.0,42.0 42.0,142.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M54.0 42.0 L54.0 54.0 L42.0 54.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M168.0 42.0 A24 24 0 0 0 172.0 55.3\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"155.6\" y=\"58.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"27.0\" y=\"37.0\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">H</text><text x=\"209.1\" y=\"41.3\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">G</text><text x=\"31.2\" y=\"161.4\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">J</text></svg>Which side is opposite <span class=\"var\">θ</span>? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "HJ",
+    "hint": "θ is at G. The opposite side is the one that does not touch G.",
+    "fb": {
+     "GH": "GH touches θ, so it is the adjacent side."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 234 184\" width=\"230\" role=\"img\" aria-label=\"Triangle GHJ, right angle at H, theta at G\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"42.0,42.0 192.0,42.0 42.0,142.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M54.0 42.0 L54.0 54.0 L42.0 54.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M168.0 42.0 A24 24 0 0 0 172.0 55.3\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"155.6\" y=\"58.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"27.0\" y=\"37.0\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">H</text><text x=\"209.1\" y=\"41.3\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">G</text><text x=\"31.2\" y=\"161.4\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">J</text></svg>Which side is adjacent to <span class=\"var\">θ</span>? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "GH",
+    "hint": "Adjacent touches θ (at G) and is not the hypotenuse.",
+    "fb": {
+     "GJ": "GJ touches θ, but it is the hypotenuse, so it is not called adjacent."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 234 184\" width=\"230\" role=\"img\" aria-label=\"Triangle MNP, right angle at N, theta at P, MN 6 cm, NP 8 cm, MP 10 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"192.0,42.0 192.0,142.0 42.0,42.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M192.0 54.0 L180.0 54.0 L180.0 42.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 42.0 A24 24 0 0 1 62.0 55.3\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"78.4\" y=\"58.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"207.0\" y=\"37.0\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">N</text><text x=\"202.8\" y=\"161.4\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">M</text><text x=\"24.9\" y=\"41.3\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text><text x=\"210.0\" y=\"96.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">6 cm</text><text x=\"117.0\" y=\"28.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">8 cm</text><text x=\"107.0\" y=\"111.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10 cm</text></svg>Side MN is ___ <span class=\"var\">θ</span>. Type <strong>hypotenuse</strong>, <strong>opposite</strong> or <strong>adjacent</strong>.",
+    "a": "opposite",
+    "hint": "Does MN touch P, where θ is?",
+    "fb": {
+     "adjacent": "MN does not touch P at all, so it cannot be adjacent to θ."
+    }
+   },
+   {
+    "q": "Same triangle MNP. Side NP is the ___ side. Type <strong>hypotenuse</strong>, <strong>opposite</strong> or <strong>adjacent</strong>.",
+    "a": "adjacent",
+    "hint": "NP touches θ at P and also touches the right angle at N."
+   },
+   {
+    "q": "Same triangle MNP. How long is the hypotenuse, in cm?",
+    "a": "10",
+    "hint": "Across from the right angle at N: side MP."
+   },
+   {
+    "q": "<svg viewBox=\"0 0 234 205\" width=\"230\" role=\"img\" aria-label=\"Triangle STU, right angle at T, theta at U, ST 24 cm, TU 7 cm, SU 25 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"192.4,96.7 42.0,42.0 168.4,162.5\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M181.1 92.6 L177.0 103.9 L188.2 108.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M176.6 139.9 A24 24 0 0 0 151.0 145.9\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"159.7\" y=\"130.5\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"210.3\" y=\"100.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">T</text><text x=\"26.8\" y=\"37.4\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">S</text><text x=\"177.1\" y=\"183.3\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">U</text><text x=\"123.3\" y=\"56.4\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">24 cm</text><text x=\"197.3\" y=\"139.8\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">7 cm</text><text x=\"92.8\" y=\"119.3\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">25 cm</text></svg>How long is the side opposite <span class=\"var\">θ</span>, in cm?",
+    "a": "24",
+    "hint": "θ is at U. Which side does not touch U?",
+    "fb": {
+     "7": "TU touches θ at U, so it is the adjacent side.",
+     "25": "SU is across from the right angle, so it is the hypotenuse."
+    }
+   },
+   {
+    "q": "Same triangle STU. How long is the side adjacent to <span class=\"var\">θ</span>, in cm?",
+    "a": "7",
+    "hint": "Adjacent touches U and is not the hypotenuse."
+   },
+   {
+    "q": "In any right-angled triangle, the hypotenuse is always the ___ side. Type <strong>longest</strong> or <strong>shortest</strong>.",
+    "a": "longest",
+    "hint": "It sits across from the biggest angle, the 90° angle."
+   }
+  ],
+  "practice2": [
+   {
+    "q": "<svg viewBox=\"0 0 282 197\" width=\"270\" role=\"img\" aria-label=\"Triangle VWX, right angle at W, theta at V, VW 9 cm, WX 12 cm, VX 15 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"126.9,155.1 42.0,70.3 240.0,42.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M118.4 146.7 L126.9 138.2 L135.3 146.7\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M59.0 87.3 A24 24 0 0 0 65.8 66.9\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"78.0\" y=\"87.3\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"124.3\" y=\"178.0\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">W</text><text x=\"24.3\" y=\"71.8\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">V</text><text x=\"256.4\" y=\"39.6\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">X</text><text x=\"71.7\" y=\"129.4\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">9 cm</text><text x=\"196.1\" y=\"115.3\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">12 cm</text><text x=\"138.4\" y=\"42.3\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">15 cm</text></svg>The triangle is turned so the hypotenuse is not at the bottom. How long is the side opposite <span class=\"var\">θ</span>, in cm?",
+    "a": "12",
+    "hint": "Ignore which way the triangle is turned. θ is at V; find the side that does not touch V.",
+    "fb": {
+     "9": "VW touches θ at V, so it is adjacent."
+    }
+   },
+   {
+    "q": "Same triangle VWX. Now use the angle at <strong>X</strong> as the reference angle. How long is the side adjacent to X, in cm?",
+    "a": "12",
+    "hint": "Adjacent to X touches X and is not the hypotenuse.",
+    "fb": {
+     "15": "VX is still the hypotenuse; it never changes name.",
+     "9": "VW does not touch X, so it is opposite X."
+    }
+   },
+   {
+    "q": "No diagram: △PQR has its right angle at R and <span class=\"var\">θ</span> at Q. Which side is opposite <span class=\"var\">θ</span>? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "PR",
+    "hint": "Opposite θ means the side that does not contain the letter Q.",
+    "fb": {
+     "PQ": "PQ is across from the right angle at R, so it is the hypotenuse."
+    }
+   },
+   {
+    "q": "No diagram: △JKL has its right angle at K and <span class=\"var\">θ</span> at L. Which side is adjacent to <span class=\"var\">θ</span>? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "KL",
+    "hint": "Adjacent contains both letters: the θ vertex (L) and the right-angle vertex (K).",
+    "fb": {
+     "JL": "JL is across from the right angle at K, so it is the hypotenuse."
+    }
+   },
+   {
+    "q": "In △ABC the angles are A = 90°, B = 30° and C = 60°. The reference angle is the 30° angle. Which side is opposite it? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "AC",
+    "hint": "The 30° angle is at B. Which side does not touch B?",
+    "fb": {
+     "BC": "BC is across from the 90° angle at A, so it is the hypotenuse.",
+     "AB": "AB touches B, so it is adjacent."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 169 254\" width=\"169\" role=\"img\" aria-label=\"Isosceles right triangle XYZ, right angle at Z, theta at X, two legs 5 m, XY 7.07 m\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"42.0,126.9 126.9,42.0 126.9,211.7\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M50.5 118.4 L59.0 126.9 L50.5 135.3\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M109.9 194.7 A24 24 0 0 1 126.9 187.7\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"112.3\" y=\"181.6\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"24.0\" y=\"131.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">Z</text><text x=\"132.5\" y=\"29.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">Y</text><text x=\"132.5\" y=\"233.8\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">X</text><text x=\"71.7\" y=\"186.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">5 m</text><text x=\"71.7\" y=\"75.7\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">5 m</text><text x=\"144.9\" y=\"130.9\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">7.07 m</text></svg>Both shorter sides are 5 m. With <span class=\"var\">θ</span> at X, which side is opposite <span class=\"var\">θ</span>? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "YZ",
+    "hint": "Equal lengths do not decide the name; position does. Which side does not touch X?",
+    "fb": {
+     "XZ": "XZ touches θ at X, so it is adjacent, even though it is also 5 m."
+    }
+   }
+  ],
+  "practice3": [
+   {
+    "q": "<svg viewBox=\"0 0 314 159\" width=\"300\" role=\"img\" aria-label=\"Wheelchair ramp triangle ABC, right angle at B, ramp angle theta at A, run AB 6.00 m, rise BC 0.50 m, ramp surface AC 6.02 m\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"272.0,42.0 42.0,42.0 272.0,117.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M260.0 42.0 L260.0 54.0 L272.0 54.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 42.0 A24 24 0 0 1 64.8 49.4\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"111.2\" y=\"58.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"289.1\" y=\"41.4\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><text x=\"24.2\" y=\"44.1\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"287.1\" y=\"131.8\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">C</text><text x=\"157.0\" y=\"28.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">6.00 m</text><text x=\"290.0\" y=\"83.5\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0.50 m</text><text x=\"151.4\" y=\"100.6\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">6.02 m</text></svg><strong>Café ramp.</strong> A café is quoted <strong>$90 per metre</strong> for a handrail that runs along the sloping ramp surface (the hypotenuse). What does the handrail cost, in dollars?",
+    "a": "541.80",
+    "hint": "Pick the hypotenuse (across from the right angle), then multiply its length by 90.",
+    "fb": {
+     "540": "6.00 m is the run along the ground (adjacent). The handrail follows the ramp surface, the hypotenuse.",
+     "45": "0.50 m is the rise (opposite θ). The handrail follows the hypotenuse."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 314 159\" width=\"300\" role=\"img\" aria-label=\"Same ramp triangle ABC\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"272.0,42.0 42.0,42.0 272.0,117.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M260.0 42.0 L260.0 54.0 L272.0 54.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 42.0 A24 24 0 0 1 64.8 49.4\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"111.2\" y=\"58.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"289.1\" y=\"41.4\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><text x=\"24.2\" y=\"44.1\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"287.1\" y=\"131.8\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">C</text><text x=\"157.0\" y=\"28.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">6.00 m</text><text x=\"290.0\" y=\"83.5\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">0.50 m</text><text x=\"151.4\" y=\"100.6\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">6.02 m</text></svg>Same ramp. Council charges <strong>$120 per metre</strong> of footpath used, measured along the ground: the side adjacent to the ramp angle <span class=\"var\">θ</span>. What is the council charge, in dollars?",
+    "a": "720",
+    "hint": "The adjacent side touches θ (at A) and is not the hypotenuse: AB.",
+    "fb": {
+     "722.4": "6.02 m is the hypotenuse, the sloping ramp. The footpath is measured along the ground (adjacent)."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 244 204\" width=\"230\" role=\"img\" aria-label=\"Triangle PQR, right angle at R, theta at P, PR 8 cm, QR 6 cm, PQ 10 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"202.0,42.0 42.0,42.0 202.0,162.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M190.0 42.0 L190.0 54.0 L202.0 54.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 42.0 A24 24 0 0 1 61.2 56.4\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"78.0\" y=\"59.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"216.4\" y=\"36.2\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">R</text><text x=\"25.1\" y=\"40.7\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text><text x=\"212.0\" y=\"182.0\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">Q</text><text x=\"122.0\" y=\"28.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">8 cm</text><text x=\"220.0\" y=\"106.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">6 cm</text><text x=\"111.2\" y=\"120.4\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">10 cm</text></svg>Work out <span class='frac'><span class='num'>opposite</span><span class='den'>hypotenuse</span></span> for <span class=\"var\">θ</span>. Type a decimal.",
+    "a": "0.6",
+    "hint": "Opposite θ is QR = 6 cm (it does not touch P). Hypotenuse is 10 cm. 6 ÷ 10.",
+    "fb": {
+     "0.8": "8 cm is PR, which touches θ: that is the adjacent side, not the opposite.",
+     "0.75": "You used the adjacent side (8 cm) on the bottom. The hypotenuse goes on the bottom."
+    }
+   },
+   {
+    "q": "The triangle in the last question is enlarged by scale factor 2.5, so its sides become 20 cm, 15 cm and 25 cm. <span class=\"var\">θ</span> does not change. Work out <span class='frac'><span class='num'>opposite</span><span class='den'>hypotenuse</span></span> for <span class=\"var\">θ</span> in the enlarged triangle. Type a decimal.",
+    "a": "0.6",
+    "hint": "Opposite is now 6 × 2.5 = 15 cm, hypotenuse 10 × 2.5 = 25 cm. 15 ÷ 25.",
+    "fb": {
+     "0.75": "20 cm is adjacent to θ. The hypotenuse (25 cm) goes on the bottom.",
+     "0.8": "20 cm is the image of the 8 cm side, which is adjacent to θ, not opposite."
+    }
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "<svg viewBox=\"0 0 244 174\" width=\"230\" role=\"img\" aria-label=\"Triangle EFG, right angle at F, theta at G, EF 5 cm, FG 12 cm, EG 13 cm\" style=\"display:block;margin:6px 0;max-width:100%;height:auto\"><polygon points=\"202.0,132.0 202.0,42.0 42.0,132.0\" fill=\"#eef4f5\" stroke=\"#1F4D54\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M202.0 120.0 L190.0 120.0 L190.0 132.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.6\"/><path d=\"M66.0 132.0 A24 24 0 0 0 62.9 120.2\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"2\"/><text x=\"84.0\" y=\"126.0\" font-size=\"15\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-style=\"italic\" font-weight=\"bold\">θ</text><text x=\"217.7\" y=\"145.8\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">F</text><text x=\"214.0\" y=\"33.5\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">E</text><text x=\"24.7\" y=\"141.9\" font-size=\"15\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">G</text><text x=\"220.0\" y=\"91.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">5 cm</text><text x=\"122.0\" y=\"154.0\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">12 cm</text><text x=\"113.2\" y=\"75.3\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\">13 cm</text></svg>Which side is the hypotenuse? Type the two letters in alphabetical order (e.g. AB, not BA).",
+    "a": "EG",
+    "hint": "The right angle is at F; the hypotenuse does not touch F."
+   },
+   {
+    "q": "Same triangle EFG, <span class=\"var\">θ</span> at G. How long is the side adjacent to <span class=\"var\">θ</span>, in cm?",
+    "a": "12",
+    "hint": "Adjacent touches G and is not the hypotenuse.",
+    "fb": {
+     "13": "EG touches θ, but it is the hypotenuse, not the adjacent side.",
+     "5": "EF does not touch G, so it is opposite θ."
+    }
+   },
+   {
+    "q": "Explain why the opposite and adjacent sides swap names when the reference angle moves to the other acute angle, but the hypotenuse keeps its name.",
+    "a": "TEXT",
+    "hint": "Opposite and adjacent are named from θ; the hypotenuse is named from the right angle."
+   }
+  ]
+ }
+}
