@@ -1,0 +1,327 @@
+{
+ "payload_version": 1,
+ "filename": "y9_mea_10_applying_error_to_real_contexts_v2.html",
+ "title": "Applying Error to Real Contexts — Year 9",
+ "header": {
+  "title": "Applying Error to Real Contexts",
+  "subtitle": "Budgets, crowds and tape measures: how far off, and how sure?",
+  "badge": "Year 9 · Measurement"
+ },
+ "meta": {
+  "lesson-id": "y9_mea_10",
+  "lesson-focus": "Apply error analysis to real contexts — percentage error in predicted vs actual event attendance; budgeted vs actual expenditure; give suitable lower and upper bounds for measurement values in practical contexts.",
+  "ac9-descriptor": "AC9M9M04",
+  "ac9-descriptor-text": "calculate and interpret absolute, relative and percentage errors in measurements, recognising that all measurements are estimates",
+  "ac9-elaborations": "3,4",
+  "sa-year": "9",
+  "sa-strand": "Measurement",
+  "mapping-note": "Strict",
+  "sa-conceptual-understanding": "Calculations are affected by sources of error and should be interpreted in the context of the problem"
+ },
+ "html": {
+  "section0_intro": "Today we use error in budgets, crowds and measurements. These three questions check the absolute-value, percentage-error and halving skills you need.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's maths.</p>\n<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; align-items: center;'>\n  <div>\n    <p>The SRC <strong>budgeted $4000</strong> for the school fete. The final bill came to <strong>$5000</strong>. At the same time, the hall was measured as <strong>18 m long, to the nearest metre</strong>, to order bunting.</p>\n    <svg viewBox=\"0 0 440 120\" width=\"440\" role=\"img\" aria-label=\"Bar chart: fete budget 4000 dollars, actual spending 5000 dollars, absolute error 1000 dollars\" style=\"display:block;max-width:100%;height:auto;margin:6px 0\"><text x=\"112\" y=\"36\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">Budget</text><rect x=\"120\" y=\"22\" width=\"200.0\" height=\"20\" fill=\"#BE5837\" rx=\"3\"/><text x=\"314.0\" y=\"36\" font-size=\"12\" fill=\"white\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">$4,000</text><text x=\"112\" y=\"70\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">Actual</text><rect x=\"120\" y=\"56\" width=\"250.0\" height=\"20\" fill=\"#1F4D54\" rx=\"3\"/><text x=\"364.0\" y=\"70\" font-size=\"12\" fill=\"white\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">$5,000</text><path d=\"M320.0 86 L320.0 92 L370.0 92 L370.0 86\" fill=\"none\" stroke=\"#555\" stroke-width=\"1.5\"/><text x=\"345.0\" y=\"110\" font-size=\"12\" fill=\"#555\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">absolute error = $1,000</text></svg>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    The budget was out by $1000. Compared with what was really spent, that is <span class=\"frac\"><span class=\"num\">1000</span><span class=\"den\">5000</span></span> × 100% = <strong>20%</strong>: a big miss for a treasurer. And \"18 m to the nearest metre\" means the hall could really be anywhere from <strong>17.5 m</strong> up to <strong>18.5 m</strong>. Today you will judge errors in real money and crowd predictions, and give <strong>lower and upper bounds</strong> for any measurement.\n  </div>\n</div>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Actual vs budget<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The <strong>actual</strong> amount (what was really spent or who really came) is the <strong>exact</strong> value. The budget or prediction is the estimate.<div class='vocab-example'>Budget $4000; actual $5000. Divide by 5000.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Overspend / underspend<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><strong>Overspend</strong>: actual is more than the budget. <strong>Underspend</strong>: actual is less than the budget.<div class='vocab-example'>Budget $4000, spent $5000: overspend $1000.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Precision<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>The smallest unit a measurement is rounded to, e.g. the nearest metre, 0.1 kg or 10 people.<div class='vocab-example'>18 m to the nearest metre: precision 1 m.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Maximum error<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><strong>Half the precision</strong>. The measured value can be out by at most this much.<div class='vocab-example'>Nearest metre: maximum error 0.5 m.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Lower and upper bounds<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><strong>Lower bound</strong> = measured − maximum error. <strong>Upper bound</strong> = measured + maximum error. The true value lies between them.<div class='vocab-example'>18 m → 17.5 m to 18.5 m.</div></div>\n  </div>\n</div>",
+  "section3_heading": "Estimate too high or too low?",
+  "section3_desc": "Drag each situation into <strong>⬆️ Estimate too high</strong> or <strong>⬇️ Estimate too low</strong>.",
+  "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Compare each estimate (or budget) with what actually happened.</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='high'>Predicted 500 at the swimming carnival; <strong>450</strong> came</span>\n    <span class='term-chip variable' data-type='low'>Budgeted $300 for a camp bus; it cost <strong>$340</strong></span>\n    <span class='term-chip variable' data-type='low'>Forecast 28 °C; the actual maximum was <strong>31 °C</strong></span>\n    <span class='term-chip constant' data-type='high'>Budgeted $1200 for books; spent <strong>$1050</strong> (underspend)</span>\n    <span class='term-chip constant' data-type='high'>Ordered 80 pizzas for the formal; <strong>65</strong> were eaten</span>\n    <span class='term-chip variable' data-type='low'>Expected 2000 at the footy; <strong>2600</strong> turned up</span>\n    <span class='term-chip variable' data-type='low'>A quote of $8000 for a deck; the final bill was <strong>$9200</strong> (overspend)</span>\n    <span class='term-chip constant' data-type='high'>Guessed a jar holds 900 jellybeans; it held <strong>760</strong></span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='high'>\n      <h4 style='color:var(--navy)'>⬆️ Estimate too high</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='low'>\n      <h4 style='color:var(--coral)'>⬇️ Estimate too low</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 A budget that is <strong>too low</strong> leads to an <strong>overspend</strong>. Whichever way the estimate misses, the percentage error always divides by the <strong>actual</strong> value, because that is what really happened.\n</div>",
+  "section4_heading": "Match each measurement to its bounds",
+  "worked_example": "<p class='sec-desc'>A rug is measured as <strong>3.6 m</strong> long, correct to the <strong>nearest 0.1 m</strong>. Give the lower and upper bounds for its true length, and decide whether it will definitely fit along a 3.7 m wall.</p>\n<svg viewBox=\"0 0 440 124\" width=\"440\" role=\"img\" aria-label=\"Number line from 3.5 to 3.7 metres: measured value 3.6 m, lower bound 3.55 m, upper bound 3.65 m shaded\" style=\"display:block;max-width:100%;height:auto;margin:6px 0\"><line x1=\"22\" y1=\"64\" x2=\"418\" y2=\"64\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"30.0\" y1=\"59\" x2=\"30.0\" y2=\"69\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"30.0\" y=\"84\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">3.5</text><line x1=\"125.0\" y1=\"59\" x2=\"125.0\" y2=\"69\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"125.0\" y=\"84\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">3.55</text><line x1=\"220.0\" y1=\"59\" x2=\"220.0\" y2=\"69\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"220.0\" y=\"84\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">3.6</text><line x1=\"315.0\" y1=\"59\" x2=\"315.0\" y2=\"69\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"315.0\" y=\"84\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">3.65</text><line x1=\"410.0\" y1=\"59\" x2=\"410.0\" y2=\"69\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"410.0\" y=\"84\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">3.7</text><rect x=\"125.0\" y=\"57\" width=\"190.0\" height=\"14\" fill=\"#BE5837\" fill-opacity=\"0.18\"/><path d=\"M125.0 40 L125.0 34 L315.0 34 L315.0 40\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.8\"/><text x=\"220.0\" y=\"24\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">true value lies in here</text><circle cx=\"125.0\" cy=\"64\" r=\"5\" fill=\"white\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"315.0\" cy=\"64\" r=\"5\" fill=\"white\" stroke=\"#BE5837\" stroke-width=\"2\"/><circle cx=\"220.0\" cy=\"64\" r=\"6\" fill=\"#1F4D54\"/><text x=\"125.0\" y=\"104\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">LB 3.55 m</text><text x=\"315.0\" y=\"104\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">UB 3.65 m</text><text x=\"220.0\" y=\"120\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">● Measured 3.6 m</text></svg>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Find the precision, then halve it</div>\n      <div class='step-desc'>\"Nearest 0.1 m\" means the precision is 0.1 m. Any length that rounds to 3.6 m can be at most half of that away.</div>\n      <div class='calc-box'>Maximum error = 0.1 ÷ 2 = <strong>0.05 m</strong></div>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Subtract and add the maximum error</div>\n      <div class='step-desc'>Go down by 0.05 m for the lower bound and up by 0.05 m for the upper bound.</div>\n      <div class='calc-box'>Lower bound = 3.6 − 0.05 = <span class='blue'>3.55 m</span><br>Upper bound = 3.6 + 0.05 = <span class='red'>3.65 m</span></div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Interpret in context</div>\n      <div class='step-desc'>Use the bound that matters. To be sure it fits, check the <em>largest</em> possible length.</div>\n      <div class='calc-box'>3.55 m ≤ true length &lt; 3.65 m. Even the upper bound, 3.65 m, is less than 3.7 m.<br><span style='font-size:.9em'>Trap: using the whole precision (3.5 m to 3.7 m) doubles the error.</span></div>\n      <div class='summary-banner'>\n        <span class='label'>Answer</span>\n        Bounds 3.55 m and 3.65 m &nbsp;·&nbsp; the rug will definitely fit\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+  "section6_heading": "We do: the Year 9 formal",
+  "we_do_intro": "The formal committee <strong>predicted 180 guests</strong> and budgeted catering at <strong>$35 per head</strong> for that number. On the night, <strong>225 guests</strong> came and every one was fed at $35. Work through each prompt with a partner, then we check as a class.",
+  "footer_title": "Applying Error to Real Contexts",
+  "strategy_section": "<style>\n  .faded-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }\n  .faded-ex { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; position: relative; }\n  .faded-ex.read-only { background: #f7faff; border-left: 4px solid var(--navy); }\n  .faded-ex.completion { background: #f9f3df; border-left: 4px solid #c89638; }\n  .faded-ex.independent { background: #fde4d6; border-left: 4px solid #d57350; }\n  .faded-ex .faded-label { font-family: -apple-system, sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--muted); margin-bottom: 4px; }\n  .faded-ex .faded-stem { font-family: Georgia, serif; font-size: 1.05rem; color: var(--navy); font-weight: 600; margin-bottom: 12px; }\n  .faded-ex .faded-work { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: Georgia, serif; font-size: 1.08rem; line-height: 1.85; overflow-x: auto; }\n  .faded-ex .faded-work .read { color: var(--navy); }\n  .faded-blank { display: inline-block; width: 60px; padding: 2px 6px; border: 1.5px solid var(--coral); border-radius: 6px; background: white; text-align: center; font-family: Georgia, serif; font-size: 1rem; color: var(--text); }\n  .faded-blank.correct { background: var(--good-soft); border-color: var(--good); }\n  .faded-blank.incorrect { background: var(--bad-soft); border-color: var(--bad); }\n  .faded-ex-actions { display: flex; gap: 10px; align-items: center; margin-top: 10px; flex-wrap: wrap; }\n  .faded-ex-actions .faded-check { background: var(--coral); color: white; border: none; padding: 7px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }\n  .faded-ex-actions .faded-reveal { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 7px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }\n  .faded-ex-actions .faded-status { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-left: auto; }\n  body.teacher-mode .faded-blank { background: var(--good-soft); border-color: var(--good); }\n\n  section.lesson.hinge { background: #f7faff; border-left: 5px solid var(--navy); }\n  .hinge-tag { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; padding: 4px 12px; border-radius: 999px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; background: var(--navy); color: white; white-space: nowrap; }\n  .hinge-stem { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; font-family: Georgia, serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 18px; box-shadow: var(--shadow); }\n  .hinge-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }\n  .hinge-opt { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 18px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px; font-family: Georgia, serif; font-size: 1.1rem; text-align: left; }\n  .hinge-opt:hover { border-color: var(--navy); transform: translateY(-1px); }\n  .hinge-opt .opt-letter { background: var(--hint-bg); color: var(--navy); width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-weight: 700; flex-shrink: 0; }\n  .hinge-opt.selected.correct { background: var(--good-soft); border-color: var(--good); }\n  .hinge-opt.selected.correct .opt-letter { background: var(--good); color: white; }\n  .hinge-opt.selected.incorrect { background: var(--bad-soft); border-color: var(--bad); }\n  .hinge-opt.selected.incorrect .opt-letter { background: var(--bad); color: white; }\n  .hinge-opt.dimmed { opacity: 0.45; cursor: not-allowed; }\n  .hinge-feedback { margin-top: 18px; padding: 14px 18px; border-radius: 8px; font-size: 0.95rem; display: none; }\n  .hinge-feedback.visible { display: block; }\n  .hinge-feedback.correct { background: var(--good-soft); color: #1d4a30; border-left: 4px solid var(--good); }\n  .hinge-feedback.incorrect { background: var(--bad-soft); color: #6a2520; border-left: 4px solid var(--bad); }\n  .hinge-feedback strong { font-weight: 700; }\n  .hinge-reset { background: white; color: var(--navy); border: 1.5px solid var(--navy); padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; margin-top: 12px; }\n  body.teacher-mode .hinge-opt.correct-answer { box-shadow: 0 0 0 3px var(--good); }\n</style>\n<section class=\"lesson\" id=\"fadedSection\">\n  <h2><span class=\"sec-num\">★</span>Faded examples: the bounds routine</h2>\n  <p class=\"sec-desc\">Four examples of the same routine: <strong>precision → halve it → subtract and add</strong>. The first is fully worked: read it. Each one after has less written down. Fill the coral blanks, then press Check.</p>\n  <div class=\"faded-grid\">\n\n    <div class=\"faded-ex read-only\">\n      <div class=\"faded-label\">Example 1: fully worked</div>\n      <div class=\"faded-stem\">A hall is 18 m long, to the nearest metre.</div>\n      <div class=\"faded-work expr read\">\n        Precision = 1 m<br>\n        Maximum error = 1 ÷ 2 = 0.5 m<br>\n        Lower bound = 18 − 0.5 = <strong>17.5 m</strong><br>\n        Upper bound = 18 + 0.5 = <strong>18.5 m</strong>\n      </div>\n    </div>\n\n    <div class=\"faded-ex completion\" data-faded-id=\"fx2\">\n      <div class=\"faded-label\">Example 2: fill the bounds</div>\n      <div class=\"faded-stem\">A suitcase weighs 23.4 kg, to the nearest 0.1 kg.</div>\n      <div class=\"faded-work expr\">\n        Precision = 0.1 kg<br>\n        Maximum error = 0.1 ÷ 2 = 0.05 kg<br>\n        Lower bound = 23.4 − 0.05 = <input class=\"faded-blank\" data-expected=\"23.35\" style=\"width:70px;\" autocomplete=\"off\"> kg<br>\n        Upper bound = 23.4 + 0.05 = <input class=\"faded-blank\" data-expected=\"23.45\" style=\"width:70px;\" autocomplete=\"off\"> kg\n      </div>\n      <div class=\"faded-ex-actions\">\n        <button class=\"faded-check\" onclick=\"checkFaded('fx2')\">Check</button>\n        <button class=\"faded-reveal\" onclick=\"revealFaded('fx2')\">Show answer</button>\n        <span class=\"faded-status\" id=\"status-fx2\"></span>\n      </div>\n    </div>\n\n    <div class=\"faded-ex completion\" data-faded-id=\"fx3\">\n      <div class=\"faded-label\">Example 3: fill more of the work</div>\n      <div class=\"faded-stem\">A crowd is reported as 1800 people, to the nearest 100.</div>\n      <div class=\"faded-work expr\">\n        Precision = 100 people<br>\n        Maximum error = <input class=\"faded-blank\" data-expected=\"50\" style=\"width:70px;\" autocomplete=\"off\"> people<br>\n        Lower bound = <input class=\"faded-blank\" data-expected=\"1750\" style=\"width:70px;\" autocomplete=\"off\"> people<br>\n        Upper bound = <input class=\"faded-blank\" data-expected=\"1850\" style=\"width:70px;\" autocomplete=\"off\"> people\n      </div>\n      <div class=\"faded-ex-actions\">\n        <button class=\"faded-check\" onclick=\"checkFaded('fx3')\">Check</button>\n        <button class=\"faded-reveal\" onclick=\"revealFaded('fx3')\">Show answer</button>\n        <span class=\"faded-status\" id=\"status-fx3\"></span>\n      </div>\n    </div>\n\n    <div class=\"faded-ex independent\" data-faded-id=\"fx4\">\n      <div class=\"faded-label\">Example 4: fully independent</div>\n      <div class=\"faded-stem\">A shelf is 2.36 m long, to the nearest centimetre (0.01 m).</div>\n      <div class=\"faded-work expr\">\n        Lower bound = <input class=\"faded-blank\" data-expected=\"2.355\" style=\"width:80px;\" autocomplete=\"off\"> m<br>\n        Upper bound = <input class=\"faded-blank\" data-expected=\"2.365\" style=\"width:80px;\" autocomplete=\"off\"> m\n      </div>\n      <div class=\"faded-ex-actions\">\n        <button class=\"faded-check\" onclick=\"checkFaded('fx4')\">Check</button>\n        <button class=\"faded-reveal\" onclick=\"revealFaded('fx4')\">Show answer</button>\n        <span class=\"faded-status\" id=\"status-fx4\"></span>\n      </div>\n    </div>\n\n  </div>\n</section>\n<section class=\"lesson hinge\" id=\"hingeSection\">\n  <h2>\n    <span class=\"sec-num\">★</span>Hinge check\n    <span class=\"hinge-tag\">🎯 Pick one</span>\n  </h2>\n  <p class=\"sec-desc\">A running track is measured as <strong>25 m</strong> long, correct to the <strong>nearest metre</strong>. Which statement about its true length is correct?</p>\n  <svg viewBox=\"0 0 440 104\" width=\"440\" role=\"img\" aria-label=\"Number line from 24 to 26 metres with the measured value 25 m marked\" style=\"display:block;max-width:100%;height:auto;margin:6px 0\"><line x1=\"22\" y1=\"44\" x2=\"418\" y2=\"44\" stroke=\"#1F4D54\" stroke-width=\"2\"/><line x1=\"30.0\" y1=\"39\" x2=\"30.0\" y2=\"49\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"30.0\" y=\"64\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">24</text><line x1=\"125.0\" y1=\"39\" x2=\"125.0\" y2=\"49\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"125.0\" y=\"64\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">24.5</text><line x1=\"220.0\" y1=\"39\" x2=\"220.0\" y2=\"49\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"220.0\" y=\"64\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">25</text><line x1=\"315.0\" y1=\"39\" x2=\"315.0\" y2=\"49\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"315.0\" y=\"64\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">25.5</text><line x1=\"410.0\" y1=\"39\" x2=\"410.0\" y2=\"49\" stroke=\"#1F4D54\" stroke-width=\"1.5\"/><text x=\"410.0\" y=\"64\" font-size=\"11\" fill=\"#555\" text-anchor=\"middle\" font-family=\"sans-serif\">26</text><circle cx=\"220.0\" cy=\"44\" r=\"6\" fill=\"#1F4D54\"/><text x=\"220.0\" y=\"92\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"sans-serif\" font-weight=\"bold\">● Measured: 25 m (nearest metre)</text><text x=\"220.0\" y=\"24\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">where could the true length be?</text></svg>\n  <div class=\"hinge-options\" id=\"hingeOpts\">\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-A\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">A</span><span>between 24 m and 26 m</span></button>\n    <button class=\"hinge-opt correct-answer\" data-correct=\"true\" data-feedback-id=\"fb-B\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">B</span><span>between 24.5 m and 25.5 m</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-C\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">C</span><span>between 24.95 m and 25.05 m</span></button>\n    <button class=\"hinge-opt\" data-feedback-id=\"fb-D\" onclick=\"pickHingeOption(this)\"><span class=\"opt-letter\">D</span><span>between 25 m and 26 m</span></button>\n  </div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-A\">\n    <strong>You used the whole precision.</strong> A length of 24.3 m would round to 24 m, not 25 m. The maximum error is <em>half</em> of 1 m, so go 0.5 m each way.\n  </div>\n  <div class=\"hinge-feedback correct\" id=\"fb-B\">\n    <strong>Correct.</strong> Precision 1 m, so the maximum error is 0.5 m. Lower bound 25 − 0.5 = 24.5 m; upper bound 25 + 0.5 = 25.5 m.\n  </div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-C\">\n    <strong>That is the nearest 0.1 m.</strong> These bounds would suit a reading of 25.0 m to the nearest tenth. Here the precision is 1 m, so halve 1, not 0.1.\n  </div>\n  <div class=\"hinge-feedback incorrect\" id=\"fb-D\">\n    <strong>Rounding works both ways.</strong> 24.7 m also rounds to 25 m, so the true length can be below 25 m too. Go half a metre down <em>and</em> half a metre up.\n  </div>\n  <button class=\"hinge-reset\" onclick=\"resetHinge()\">↺ Try again</button>\n</section>",
+  "strategy_js": "// ---- Place the two strategy sections in their teaching positions ----\n(function placeStrategySections() {\n  const workedSec = document.getElementById('revealBtn').closest('section');\n  const weDoSec = document.getElementById('weDoGrid').closest('section');\n  const checkSec = document.getElementById('checkpointGrid').closest('section');\n  const faded = document.getElementById('fadedSection');\n  const hinge = document.getElementById('hingeSection');\n  workedSec.parentNode.insertBefore(faded, workedSec.nextSibling); // Faded examples follow the I Do\n  checkSec.parentNode.insertBefore(hinge, checkSec);                // Hinge question opens the You Do\n  // Topic-specific wording for the frame's generic notes\n  const tip = weDoSec.querySelector('.parts-instructions');\n  if (tip) tip.innerHTML = '💡 <strong>Why we do it this way:</strong> name the <strong>actual</strong> value first, because it is the exact value you divide by. Notice the attendance error and the catering-budget error came out the same: when cost per head is fixed, the money error grows in proportion to the crowd error.';\n  const matchDesc = document.getElementById('matchArea').closest('section').querySelector('.sec-desc');\n  if (matchDesc) matchDesc.textContent = 'Click a measurement or question, then click its partner. There are five matching pairs in the grid below.';\n  const d1 = document.querySelector('#tier1-body .sec-desc');\n  if (d1) d1.innerHTML = 'Bounds and percentage errors. Type numbers only: no units, $ or % sign, e.g. <code>7.5</code> or <code>20</code>.';\n  const d2 = document.querySelector('#tier2-body .sec-desc');\n  if (d2) d2.innerHTML = 'Finer precisions, rounding to one decimal place, and bounds that combine. Type numbers only.';\n  const d3 = document.querySelector('#tier3-body .sec-desc');\n  if (d3) d3.innerHTML = 'Multi-step problems with money, crowds and building jobs. Type numbers only: no units, $ or % sign.';\n})();\n\n// ---- Faded Worked Examples kit (blanks marked with the frame's answerMatches) ----\nfunction checkFaded(exId) {\n  const card = document.querySelector('[data-faded-id=\"' + exId + '\"]');\n  const blanks = card.querySelectorAll('.faded-blank');\n  let allCorrect = true, attempted = 0;\n  blanks.forEach(b => {\n    b.classList.remove('correct', 'incorrect');\n    if (b.value.trim() === '') return;\n    attempted++;\n    if (answerMatches(b.value, b.dataset.expected)) {\n      b.classList.add('correct');\n    } else {\n      b.classList.add('incorrect');\n      allCorrect = false;\n    }\n  });\n  const status = document.getElementById('status-' + exId);\n  if (attempted === 0) {\n    status.textContent = 'Fill in the blanks first.';\n  } else if (attempted < blanks.length) {\n    status.textContent = attempted + '/' + blanks.length + ' attempted: keep going.';\n  } else if (allCorrect) {\n    status.textContent = '✓ All correct.';\n  } else {\n    status.textContent = '✗ Some incorrect: halve the precision, then subtract and add.';\n  }\n}\nfunction revealFaded(exId) {\n  const card = document.querySelector('[data-faded-id=\"' + exId + '\"]');\n  card.querySelectorAll('.faded-blank').forEach(b => {\n    b.value = b.dataset.expected;\n    b.classList.add('correct');\n  });\n  document.getElementById('status-' + exId).textContent = 'Answer shown.';\n}\n\n// ---- Hinge Question kit ----\nfunction pickHingeOption(btn) {\n  if (btn.classList.contains('dimmed')) return;\n  const isCorrect = btn.dataset.correct === 'true';\n  btn.classList.add('selected', isCorrect ? 'correct' : 'incorrect');\n  document.querySelectorAll('.hinge-opt').forEach(o => { if (o !== btn) o.classList.add('dimmed'); });\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n  const fbId = btn.dataset.feedbackId;\n  if (fbId) document.getElementById(fbId).classList.add('visible');\n}\nfunction resetHinge() {\n  document.querySelectorAll('.hinge-opt').forEach(o => o.classList.remove('selected', 'correct', 'incorrect', 'dimmed'));\n  document.querySelectorAll('.hinge-feedback').forEach(f => f.classList.remove('visible'));\n}"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "Evaluate |48 − 60|.",
+    "a": "12",
+    "hint": "48 − 60 = −12, and the absolute value of −12 is 12."
+   },
+   {
+    "q": "An exact value is 80. A measurement gives 76. What is the percentage error? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "5",
+    "hint": "Absolute error |76 − 80| = 4. Then <span class=\"frac\"><span class=\"num\">4</span><span class=\"den\">80</span></span> × 100%.",
+    "fb": {
+     "5.26": "You divided by the measurement (76). Divide by the exact value, 80."
+    }
+   },
+   {
+    "q": "What is half of 0.1?",
+    "a": "0.05",
+    "hint": "0.1 ÷ 2 = 0.05."
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "12 m to the nearest metre",
+    "group": 1
+   },
+   {
+    "html": "11.5 m to 12.5 m",
+    "group": 1
+   },
+   {
+    "html": "3.2 L to the nearest 0.1 L",
+    "group": 2
+   },
+   {
+    "html": "3.15 L to 3.25 L",
+    "group": 2
+   },
+   {
+    "html": "350 people to the nearest 10",
+    "group": 3
+   },
+   {
+    "html": "345 to 355 people",
+    "group": 3
+   },
+   {
+    "html": "Maximum error when measuring to the nearest 10 mL",
+    "group": 4
+   },
+   {
+    "html": "5 mL",
+    "group": 4
+   },
+   {
+    "html": "Budget $800, actual $1000: percentage error",
+    "group": 5
+   },
+   {
+    "html": "20%",
+    "group": 5
+   }
+  ],
+  "weDo": [
+   {
+    "q": "<svg viewBox=\"0 0 440 120\" width=\"440\" role=\"img\" aria-label=\"Bar chart: predicted 180 guests, actual 225 guests, absolute error 45 guests\" style=\"display:block;max-width:100%;height:auto;margin:6px 0\"><text x=\"112\" y=\"36\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">Predicted</text><rect x=\"120\" y=\"22\" width=\"201.6\" height=\"20\" fill=\"#BE5837\" rx=\"3\"/><text x=\"315.6\" y=\"36\" font-size=\"12\" fill=\"white\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">180</text><text x=\"112\" y=\"70\" font-size=\"12\" fill=\"#1F4D54\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">Actual</text><rect x=\"120\" y=\"56\" width=\"252.0\" height=\"20\" fill=\"#1F4D54\" rx=\"3\"/><text x=\"366.0\" y=\"70\" font-size=\"12\" fill=\"white\" text-anchor=\"end\" font-family=\"sans-serif\" font-weight=\"bold\">225</text><path d=\"M321.6 86 L321.6 92 L372.0 92 L372.0 86\" fill=\"none\" stroke=\"#555\" stroke-width=\"1.5\"/><text x=\"346.8\" y=\"110\" font-size=\"12\" fill=\"#555\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">absolute error = 45</text></svg>(a) What is the absolute error of the prediction, in guests? <em>(Type the number only: no units.)</em>",
+    "a": "45",
+    "hint": "|180 − 225| = 45 guests."
+   },
+   {
+    "q": "(b) What is the percentage error of the prediction? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "20",
+    "hint": "Divide by the actual number, 225: <span class=\"frac\"><span class=\"num\">45</span><span class=\"den\">225</span></span> = 0.2.",
+    "fb": {
+     "25": "You divided by the prediction (180). Divide by the number who actually came, 225."
+    }
+   },
+   {
+    "q": "(c) Catering was budgeted for 180 guests at $35 each. The actual bill was for 225 guests. How much was the overspend, in dollars? <em>(Type the number only: no units.)</em>",
+    "a": "1575",
+    "hint": "Budget 180 × 35 = $6300. Actual 225 × 35 = $7875. 7875 − 6300.",
+    "fb": {
+     "45": "45 is the number of extra guests. Multiply by $35 per head."
+    }
+   },
+   {
+    "q": "(d) What is the percentage error of the catering budget? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "20",
+    "hint": "<span class=\"frac\"><span class=\"num\">1575</span><span class=\"den\">7875</span></span> = 0.2. Compare with part (b)!",
+    "fb": {
+     "25": "You divided by the budget ($6300). Divide by the actual cost, $7875."
+    }
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "A parcel weighs 2.3 kg, correct to the nearest 0.1 kg. What is the lower bound of its mass, in kg? <em>(Type the number only: no units.)</em>",
+    "a": "2.25",
+    "hint": "Maximum error = 0.1 ÷ 2 = 0.05 kg. 2.3 − 0.05.",
+    "fb": {
+     "2.2": "You subtracted the whole precision (0.1). Subtract half of it.",
+     "2.35": "That is the upper bound. The lower bound subtracts the maximum error."
+    }
+   },
+   {
+    "q": "A club budgeted <strong>$1500</strong> for new uniforms but only spent <strong>$1200</strong>. What is the percentage error of the budget? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "25",
+    "hint": "Absolute error = $300. Divide by the actual spend: <span class=\"frac\"><span class=\"num\">300</span><span class=\"den\">1200</span></span>.",
+    "fb": {
+     "20": "You divided by the budget. Divide by the actual amount spent, $1200."
+    }
+   }
+  ],
+  "practice1": [
+   {
+    "q": "A rope is 8 m long, to the nearest metre. Lower bound, in m? <em>(Type the number only: no units.)</em>",
+    "a": "7.5",
+    "hint": "Maximum error = 0.5 m. 8 − 0.5.",
+    "fb": {
+     "7": "You subtracted the whole metre. Subtract half the precision."
+    }
+   },
+   {
+    "q": "The same rope (8 m, nearest metre). Upper bound, in m? <em>(Type the number only: no units.)</em>",
+    "a": "8.5",
+    "hint": "8 + 0.5."
+   },
+   {
+    "q": "A student's mass is 64 kg, to the nearest kilogram. What is the maximum error, in kg? <em>(Type the number only: no units.)</em>",
+    "a": "0.5",
+    "hint": "Half of the precision: 1 ÷ 2.",
+    "fb": {
+     "1": "Maximum error is half the precision, not the whole precision."
+    }
+   },
+   {
+    "q": "A sprint is timed at 12.4 s, to the nearest 0.1 s. Lower bound, in s? <em>(Type the number only: no units.)</em>",
+    "a": "12.35",
+    "hint": "Maximum error = 0.05 s. 12.4 − 0.05.",
+    "fb": {
+     "12.3": "You subtracted 0.1. Halve the precision first: 0.05."
+    }
+   },
+   {
+    "q": "A crowd is reported as 2000, to the nearest 100. Upper bound? <em>(Type the number only: no units.)</em>",
+    "a": "2050",
+    "hint": "Maximum error = 50 people. 2000 + 50.",
+    "fb": {
+     "2100": "You added the whole 100. The maximum error is half of it."
+    }
+   },
+   {
+    "q": "A measuring jug reads 250 mL, to the nearest 10 mL. Lower bound, in mL? <em>(Type the number only: no units.)</em>",
+    "a": "245",
+    "hint": "Maximum error = 5 mL. 250 − 5."
+   },
+   {
+    "q": "A school predicted <strong>300</strong> people at its open night. <strong>250</strong> came. Percentage error of the prediction? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "20",
+    "hint": "|300 − 250| = 50. <span class=\"frac\"><span class=\"num\">50</span><span class=\"den\">250</span></span> × 100%.",
+    "fb": {
+     "16.67": "You divided by the prediction. Divide by the number who actually came, 250."
+    }
+   },
+   {
+    "q": "A family budgeted <strong>$500</strong> for groceries in a month and spent <strong>$400</strong>. Percentage error of the budget? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "25",
+    "hint": "Absolute error $100. <span class=\"frac\"><span class=\"num\">100</span><span class=\"den\">400</span></span> × 100%.",
+    "fb": {
+     "20": "You divided by the budget. Divide by the actual spend, $400."
+    }
+   },
+   {
+    "q": "A phone plan was budgeted at <strong>$200</strong> for the term; the actual cost was <strong>$250</strong>. Percentage error of the budget? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "20",
+    "hint": "Absolute error $50. <span class=\"frac\"><span class=\"num\">50</span><span class=\"den\">250</span></span> × 100%.",
+    "fb": {
+     "25": "You divided by the budget. Divide by the actual cost, $250."
+    }
+   },
+   {
+    "q": "A camp was budgeted at <strong>$650</strong> and actually cost <strong>$720</strong>. What was the overspend, in dollars? <em>(Type the number only: no units.)</em>",
+    "a": "70",
+    "hint": "Overspend = actual − budget = 720 − 650."
+   }
+  ],
+  "practice2": [
+   {
+    "q": "A ruler marked in millimetres measures a pencil as 147 mm, to the nearest millimetre. Upper bound, in mm? <em>(Type the number only: no units.)</em>",
+    "a": "147.5",
+    "hint": "Maximum error = 0.5 mm. 147 + 0.5."
+   },
+   {
+    "q": "A thermometer reads 23.6 °C, to the nearest 0.1 °C. Lower bound, in °C? <em>(Type the number only: no units.)</em>",
+    "a": "23.55",
+    "hint": "Maximum error 0.05 °C. 23.6 − 0.05.",
+    "fb": {
+     "23.5": "You subtracted 0.1. Halve the precision first."
+    }
+   },
+   {
+    "q": "Organisers predicted <strong>4800</strong> people at a concert. <strong>6000</strong> came. Percentage error of the prediction? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "20",
+    "hint": "|4800 − 6000| = 1200. <span class=\"frac\"><span class=\"num\">1200</span><span class=\"den\">6000</span></span>.",
+    "fb": {
+     "25": "You divided by the prediction. Divide by the actual crowd, 6000."
+    }
+   },
+   {
+    "q": "The canteen budgeted <strong>$1200</strong> for a term and spent <strong>$1350</strong>. Percentage error of the budget, correct to one decimal place? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "11.1",
+    "hint": "Absolute error $150. <span class=\"frac\"><span class=\"num\">150</span><span class=\"den\">1350</span></span> = 0.1111…, so 11.1%.",
+    "fb": {
+     "12.5": "You divided by the budget. Divide by the actual spend, $1350."
+    }
+   },
+   {
+    "q": "A rectangular garden bed is 5 m by 3 m, each side to the nearest metre. What is the <strong>smallest</strong> its perimeter could be, in m? <em>(Type the number only: no units.)</em>",
+    "a": "14",
+    "hint": "Use both lower bounds: 4.5 m and 2.5 m. Perimeter = 2 × (4.5 + 2.5).",
+    "fb": {
+     "16": "That uses the measured lengths. Use the lower bounds, 4.5 m and 2.5 m."
+    }
+   },
+   {
+    "q": "The same garden bed (5 m by 3 m, nearest metre). What is the <strong>largest</strong> its area could be, in m<sup>2</sup>? <em>(Type the number only: no units.)</em>",
+    "a": "19.25",
+    "hint": "Use both upper bounds: 5.5 × 3.5.",
+    "fb": {
+     "15": "That uses the measured lengths. Use the upper bounds, 5.5 m and 3.5 m."
+    }
+   }
+  ],
+  "practice3": [
+   {
+    "q": "A plank measured as 2.4 m, to the nearest 0.1 m, is cut into 4 equal pieces. What is the lower bound for the length of each piece, in m? <em>(Type the number only: no units.)</em>",
+    "a": "0.5875",
+    "hint": "Lower bound of the plank = 2.35 m. Divide by 4.",
+    "fb": {
+     "0.6": "That uses the measured length. Start with the lower bound, 2.35 m."
+    }
+   },
+   {
+    "q": "A fundraiser expected to sell <strong>400</strong> tickets at $15 each. It sold <strong>320</strong>. What is the percentage error of the predicted ticket <em>income</em>? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "25",
+    "hint": "Predicted income $6000, actual $4800. <span class=\"frac\"><span class=\"num\">1200</span><span class=\"den\">4800</span></span>.",
+    "fb": {
+     "20": "You divided by the predicted income. Divide by the actual income, $4800."
+    }
+   },
+   {
+    "q": "A builder's quote was too low. The final cost was <strong>$20 000</strong>, and the quote had a percentage error of 10%. What was the quote, in dollars? <em>(Type the number only: no units.)</em>",
+    "a": "18000",
+    "hint": "Absolute error = 10% of the actual $20 000 = $2000. The quote was $2000 lower.",
+    "fb": {
+     "22000": "The quote was too low, so subtract the error from the final cost."
+    }
+   },
+   {
+    "q": "A square deck has sides of 6 m, each to the nearest metre. Edging costs $40 per metre. What is the most the edging could cost, in dollars? <em>(Type the number only: no units.)</em>",
+    "a": "1040",
+    "hint": "Upper bound of each side 6.5 m. Perimeter 4 × 6.5 = 26 m. 26 × $40.",
+    "fb": {
+     "960": "That uses the measured 6 m. For the most it could cost, use the upper bound, 6.5 m."
+    }
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "A hall is 25 m long, to the nearest metre. What is the lower bound, in m? <em>(Type the number only: no units.)</em>",
+    "a": "24.5",
+    "hint": "Maximum error 0.5 m. 25 − 0.5.",
+    "fb": {
+     "24": "Subtract half the precision, not the whole metre."
+    }
+   },
+   {
+    "q": "An excursion was budgeted at <strong>$2000</strong>; it actually cost <strong>$2500</strong>. Percentage error of the budget? <em>(Type the number only: no units, no % sign.)</em>",
+    "a": "20",
+    "hint": "Absolute error $500. <span class=\"frac\"><span class=\"num\">500</span><span class=\"den\">2500</span></span>.",
+    "fb": {
+     "25": "You divided by the budget. Divide by the actual cost, $2500."
+    }
+   },
+   {
+    "q": "A council predicted 10 000 people at a festival and 9000 came. A school predicted 100 at a play and 90 came. Explain why the absolute errors are very different but the percentage errors are the same, and which error matters more when ordering food.",
+    "a": "TEXT",
+    "hint": "Find both absolute errors and both percentage errors. What does dividing by the actual value do?"
+   }
+  ]
+ }
+}
