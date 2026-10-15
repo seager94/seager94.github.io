@@ -1,0 +1,304 @@
+{
+ "payload_version": 1,
+ "filename": "y9_mea_12_applied_rate_modelling_v2.html",
+ "title": "Applied Rate Modelling — Year 9",
+ "header": {
+  "title": "Applied Rate Modelling",
+  "subtitle": "Density, flow, heartbeats, acceleration and the rate a fire spreads",
+  "badge": "Year 9 · Measurement"
+ },
+ "meta": {
+  "lesson-id": "y9_mea_12",
+  "lesson-focus": "Model applied rate contexts — density, birth rate, flow rate, heart rate; vehicle acceleration and deceleration; explore fire-spread rate techniques in First Nations Australians' land management under varying fuel types, wind, temperature and humidity.",
+  "ac9-descriptor": "AC9M9M05",
+  "ac9-descriptor-text": "use mathematical modelling to solve practical problems involving direct proportion, rates, ratio and scale, including financial contexts; formulate the problems and interpret solutions in terms of the situation; evaluate the model and report methods and findings",
+  "ac9-elaborations": "4,5",
+  "sa-year": "9",
+  "sa-strand": "Measurement",
+  "mapping-note": "Strict",
+  "sa-conceptual-understanding": "Mathematical modelling can be used to represent and solve problems involving proportion, rates, ratios and scale, including in financial contexts"
+ },
+ "html": {
+  "section0_intro": "Today's lesson builds on rates, unit conversion and direct proportion. These three questions check you are ready.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's maths. <strong>Estimate first</strong>: commit a gut answer before anyone calculates.</p>\n<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center;'>\n  <div>\n    <p>A smartwatch reports your <strong>resting heart rate</strong>: about <strong>70 beats per minute</strong>. A car ad says <strong>0 to 100 km/h in 8 seconds</strong>. A bushfire report gives the fire front's <strong>rate of spread in metres per minute</strong>.</p>\n    <p>Every one of these is a <strong>rate</strong>: one quantity per unit of another. Know the rate and you can predict: how many beats in a day, how fast after 3 seconds, how long until the fire reaches the track.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    Today you <strong>formulate</strong> a rate from data, use it to <strong>predict</strong>, and <strong>evaluate</strong> whether the model is sensible. Units do the heavy lifting: a rate in km/h is not a rate in m/s until you convert it.\n  </div>\n</div>\n<div id=\"estSection\" data-actual=\"100800\" data-units=\"beats\" data-tolerance=\"0.30\">\n  <div class=\"est-scenario\">❤️ Your heart beats at a steady <strong>70 beats per minute</strong>, all day and all night. Roughly how many times does it beat in <strong>one day</strong>? Pick a rung, then type your estimate. No calculator yet!</div>\n  <div class=\"est-ladder\">\n    <div class=\"est-ladder-row\">\n      <button class=\"est-rung\" onclick=\"pickRung(this)\" data-rung=\"low\"><span class=\"rung-label\">Low</span><span class=\"rung-value\">under 20 000</span></button>\n      <button class=\"est-rung\" onclick=\"pickRung(this)\" data-rung=\"mid\"><span class=\"rung-label\">Middle</span><span class=\"rung-value\">20 000 to 500 000</span></button>\n      <button class=\"est-rung\" onclick=\"pickRung(this)\" data-rung=\"high\"><span class=\"rung-label\">High</span><span class=\"rung-value\">over 500 000</span></button>\n    </div>\n    <div class=\"est-input-row\" data-actual=\"100800 beats\">\n      <label for=\"estInput\">Your estimate:</label>\n      <input id=\"estInput\" placeholder=\"number of beats\" inputmode=\"decimal\">\n      <button onclick=\"commitEstimate()\">Commit</button>\n    </div>\n  </div>\n  <div class=\"est-feedback\" id=\"estFeedback\"><h4 id=\"estFbHeader\"></h4><p id=\"estFbBody\"></p></div>\n</div>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Rate<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>Compares two quantities with <strong>different units</strong>: an amount <em>per</em> one unit of something else.<div class='vocab-example'>72 beats/min; 12 L/min; 30 m/min.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Density<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><strong>Mass per unit volume</strong>: density = mass ÷ volume.<div class='vocab-example'>Aluminium: 2.7 g/cm³, so 1 cm³ has a mass of 2.7 g.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Flow rate<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><strong>Volume per unit time</strong>: flow rate = volume ÷ time.<div class='vocab-example'>A hose filling 60 L in 2.5 min flows at 24 L/min.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Birth rate<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>Births per year for every <strong>1000 people</strong> in the population.<div class='vocab-example'>300 births in a town of 25 000 → 12 per 1000 per year.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Acceleration<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'><strong>Change in velocity per second</strong>: a = (v − u) ÷ t, in m/s². Negative means slowing down (deceleration).<div class='vocab-example'>0 to 24 m/s in 8 s → 3 m/s².</div></div>\n  </div>\n</div>",
+  "section3_heading": "Rate or not a rate?",
+  "section3_desc": "Drag each quantity into <strong>✓ A rate</strong> or <strong>✗ Not a rate</strong>.",
+  "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Is it a rate?</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='rate'>Density of gold: <strong>19.3 g/cm³</strong></span>\n    <span class='term-chip variable' data-type='notrate'>Map scale <strong>1 : 50 000</strong></span>\n    <span class='term-chip constant' data-type='rate'>Tap flow: <strong>12 L/min</strong></span>\n    <span class='term-chip variable' data-type='notrate'>Concrete mix <strong>3 : 1</strong> sand to cement</span>\n    <span class='term-chip constant' data-type='rate'>Heart: <strong>72 beats per minute</strong></span>\n    <span class='term-chip variable' data-type='notrate'>Relative humidity <strong>40%</strong></span>\n    <span class='term-chip constant' data-type='rate'>Car speeds up by <strong>3 m/s every second</strong></span>\n    <span class='term-chip variable' data-type='notrate'>Temperature <strong>25 °C</strong></span>\n    <span class='term-chip constant' data-type='rate'>Fire front moves <strong>30 m/min</strong></span>\n    <span class='term-chip variable' data-type='notrate'>Room <strong>4 m</strong> long and <strong>3 m</strong> wide</span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='rate'>\n      <h4 style='color:var(--navy)'>✓ A rate (different units)</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='notrate'>\n      <h4 style='color:var(--coral)'>✗ Not a rate</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 Test: does it say <strong>per</strong> (or /) with <strong>two different units</strong>? A ratio of the same units (1 : 50 000, 3 : 1), a percentage or a single measurement is not a rate. Humidity and temperature still <em>affect</em> a fire's rate of spread, but they are not rates themselves.\n</div>",
+  "section4_heading": "Match each situation to its rate",
+  "section6_heading": "We do: filling a rainwater tank",
+  "worked_example": "<p class='sec-desc'><strong>The model:</strong> acceleration is a rate, the change in velocity per second: <span class=\"var\">a</span> = (<span class=\"var\">v</span> − <span class=\"var\">u</span>) ÷ <span class=\"var\">t</span>, where <span class=\"var\">u</span> is the starting velocity and <span class=\"var\">v</span> the final velocity, both in <strong>m/s</strong>. A family car goes from rest to <strong>90 km/h in 10 seconds</strong>. Find its acceleration, then use it to predict its speed after 6 seconds.</p>\n<svg viewBox=\"0 0 320 245\" width=\"320\" role=\"img\" aria-label=\"Velocity-time graph: a straight line from (0, 0) to (10, 25), with the point (6, 15) marked\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"50\" y=\"30\" width=\"240\" height=\"170\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"98.0\" y1=\"30\" x2=\"98.0\" y2=\"200\"/><line x1=\"146.0\" y1=\"30\" x2=\"146.0\" y2=\"200\"/><line x1=\"194.0\" y1=\"30\" x2=\"194.0\" y2=\"200\"/><line x1=\"242.0\" y1=\"30\" x2=\"242.0\" y2=\"200\"/><line x1=\"290.0\" y1=\"30\" x2=\"290.0\" y2=\"200\"/><line x1=\"50\" y1=\"171.7\" x2=\"290\" y2=\"171.7\"/><line x1=\"50\" y1=\"143.3\" x2=\"290\" y2=\"143.3\"/><line x1=\"50\" y1=\"115.0\" x2=\"290\" y2=\"115.0\"/><line x1=\"50\" y1=\"86.7\" x2=\"290\" y2=\"86.7\"/><line x1=\"50\" y1=\"58.3\" x2=\"290\" y2=\"58.3\"/><line x1=\"50\" y1=\"30.0\" x2=\"290\" y2=\"30.0\"/></g><line x1=\"50\" y1=\"200\" x2=\"290\" y2=\"200\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"50\" y1=\"200\" x2=\"50\" y2=\"30\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"50.0\" y=\"214\" text-anchor=\"middle\">0</text><text x=\"98.0\" y=\"214\" text-anchor=\"middle\">2</text><text x=\"146.0\" y=\"214\" text-anchor=\"middle\">4</text><text x=\"194.0\" y=\"214\" text-anchor=\"middle\">6</text><text x=\"242.0\" y=\"214\" text-anchor=\"middle\">8</text><text x=\"290.0\" y=\"214\" text-anchor=\"middle\">10</text><text x=\"44\" y=\"175.7\" text-anchor=\"end\">5</text><text x=\"44\" y=\"147.3\" text-anchor=\"end\">10</text><text x=\"44\" y=\"119.0\" text-anchor=\"end\">15</text><text x=\"44\" y=\"90.7\" text-anchor=\"end\">20</text><text x=\"44\" y=\"62.3\" text-anchor=\"end\">25</text><text x=\"44\" y=\"34.0\" text-anchor=\"end\">30</text></g><text x=\"170\" y=\"236\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">time t (s)</text><text x=\"6\" y=\"18\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">velocity v (m/s)</text><path d=\"M50.0 200.0 L290.0 58.3\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"2.4\"/><circle cx=\"194.0\" cy=\"115.0\" r=\"4\" fill=\"#BE5837\"/><text x=\"202.0\" y=\"131.0\" text-anchor=\"start\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(6, 15)</text><circle cx=\"290.0\" cy=\"58.3\" r=\"4\" fill=\"#BE5837\"/><text x=\"282.0\" y=\"52.3\" text-anchor=\"end\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(10, 25)</text></svg>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Formulate: get the units to match</div>\n      <div class='step-desc'>Time is in seconds, so velocity must be in metres per second. 1 km/h = 1000 m ÷ 3600 s, so <strong>divide km/h by 3.6</strong>.</div>\n      <div class='calc-box'><span class=\"var\">u</span> = 0 m/s (from rest)<br><span class=\"var\">v</span> = 90 ÷ 3.6 = <span class='red'>25 m/s</span></div>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Solve: apply the rate</div>\n      <div class='step-desc'>Change in velocity divided by time taken.</div>\n      <div class='calc-box'><span class=\"var\">a</span> = (25 − 0) ÷ 10 = <span class='blue'>2.5 m/s²</span><br>The car gains 2.5 m/s every second.<br>After 6 s: <span class=\"var\">v</span> = 0 + 2.5 × 6 = 15 m/s</div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Interpret and evaluate</div>\n      <div class='step-desc'>On the velocity–time graph the acceleration is the <strong>gradient</strong>: rise 25 over run 10. 15 m/s × 3.6 = 54 km/h after 6 s, which is believable. The model assumes a <strong>constant</strong> acceleration; a real car accelerates harder in low gears, so this is an average.</div>\n      <div class='calc-box'>Check: the point (6, 15) lies on the line, because 15 ÷ 6 = 2.5 ✓</div>\n      <div class='summary-banner'>\n        <span class='label'>Model</span>\n        a = 2.5 m/s² &nbsp;·&nbsp; v = 2.5t &nbsp;·&nbsp; after 6 s → 15 m/s (54 km/h)\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+  "we_do_intro": "A family is filling a new rainwater tank with a garden hose. Work through each prompt with a partner, then we check as a class.",
+  "footer_title": "Applied Rate Modelling",
+  "strategy_section": "<style>\n  .est-scenario { background:var(--hint-bg); border-left:4px solid var(--navy); padding:16px 18px; border-radius:6px; margin-bottom:18px; font-family:Georgia,serif; font-size:1.08rem; color:var(--navy); }\n  .est-ladder { background:white; border:1.5px solid var(--border); border-radius:10px; padding:18px; margin-bottom:14px; }\n  .est-ladder-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:16px; }\n  .est-rung { background:var(--bg); border:1.5px solid var(--border); border-radius:8px; padding:12px; text-align:center; cursor:pointer; transition:all .2s; font-family:Georgia,serif; }\n  .est-rung:hover { border-color:var(--navy); transform:translateY(-1px); }\n  .est-rung.picked { background:var(--coral-soft); border-color:var(--coral); }\n  .est-rung .rung-label { display:block; font-size:.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:4px; }\n  .est-rung .rung-value { font-size:1.05rem; color:var(--navy); font-weight:700; }\n  .est-input-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }\n  .est-input-row label { font-family:Georgia,serif; color:var(--navy); font-weight:600; }\n  .est-input-row input { flex:1; min-width:140px; padding:9px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:Georgia,serif; font-size:1.05rem; }\n  .est-input-row button { background:var(--coral); color:white; border:none; padding:9px 16px; border-radius:8px; font-size:.92rem; font-weight:600; cursor:pointer; }\n  .est-feedback { margin-top:14px; padding:14px 16px; border-radius:8px; display:none; }\n  .est-feedback.visible { display:block; }\n  .est-feedback.close { background:var(--good-soft); border-left:4px solid var(--good); }\n  .est-feedback.far { background:var(--coral-soft); border-left:4px solid var(--coral); }\n  .est-feedback h4 { font-family:Georgia,serif; color:var(--navy); margin:0 0 6px; font-size:1rem; }\n  .est-feedback p { margin:0; font-size:.92rem; }\n  body.teacher-mode .est-input-row::after { content:'Actual: ' attr(data-actual); font-size:.75rem; color:var(--muted); }\n  @media (max-width:600px) { .est-ladder-row { grid-template-columns:1fr; } }\n\n  .err-problem-stem { background:var(--hint-bg); border-left:4px solid var(--navy); padding:12px 16px; border-radius:6px; font-family:Georgia,serif; font-size:1.15rem; color:var(--navy); margin-bottom:16px; }\n  .err-solution { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:18px; margin-bottom:14px; }\n  .err-line { display:grid; grid-template-columns:36px 1fr 24px; align-items:center; gap:14px; padding:10px 14px; margin-bottom:6px; background:white; border:1.5px solid var(--border); border-radius:8px; cursor:pointer; font-family:Georgia,serif; font-size:1.1rem; transition:all .2s; }\n  .err-line:last-child { margin-bottom:0; }\n  .err-line:hover { border-color:var(--navy); }\n  .err-line .err-line-num { background:var(--hint-bg); color:var(--navy); width:30px; height:30px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-family:-apple-system,sans-serif; font-size:.9rem; font-weight:700; }\n  .err-line .err-line-mark { font-size:1.1rem; opacity:0; transition:opacity .2s; }\n  .err-line.flagged-correct { background:var(--good-soft); border-color:var(--good); }\n  .err-line.flagged-correct .err-line-mark::before { content:'✓'; color:var(--good); }\n  .err-line.flagged-correct .err-line-mark { opacity:1; }\n  .err-line.flagged-wrong { animation:err-shake .45s; background:var(--bad-soft); border-color:var(--bad); }\n  @keyframes err-shake { 0%,100% { transform:translateX(0); } 25%,75% { transform:translateX(-5px); } 50% { transform:translateX(5px); } }\n  .err-line.dimmed { opacity:.45; cursor:not-allowed; }\n  .err-feedback { background:white; border:1.5px solid var(--good); border-radius:10px; padding:16px 18px; margin-top:14px; display:none; }\n  .err-feedback.visible { display:block; }\n  .err-feedback h4 { font-family:Georgia,serif; color:var(--navy); margin:0 0 8px; font-size:1.05rem; }\n  .err-feedback .err-explain { background:var(--hint-bg); border-radius:6px; padding:10px 14px; margin:8px 0 12px; font-size:.92rem; color:var(--navy); }\n  .err-correction-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }\n  .err-correction-row input { flex:1; min-width:200px; padding:9px 12px; border:1.5px solid var(--border); border-radius:8px; font-family:Georgia,serif; font-size:1.05rem; }\n  .err-correction-row input.correct { background:var(--good-soft); border-color:var(--good); }\n  .err-correction-row input.incorrect { background:var(--bad-soft); border-color:var(--bad); }\n  .err-correction-row button { background:var(--coral); color:white; border:none; padding:9px 16px; border-radius:8px; font-size:.92rem; font-weight:600; cursor:pointer; }\n  .err-status-msg { margin-top:10px; font-size:.9rem; color:var(--muted); font-style:italic; }\n  body.teacher-mode .err-line[data-is-error=\"true\"] { box-shadow:0 0 0 3px var(--coral); }\n</style>\n<section class=\"lesson\">\n  <h2><span class=\"sec-num\">★</span>Spot the mistake: acceleration</h2>\n  <p class=\"sec-desc\">Before the exit ticket: a student has tried this question and made one mistake. Click the line where the mistake <em>first</em> appears.</p>\n  <div class=\"err-problem-stem\">A car speeds up from <strong>36 km/h to 90 km/h in 6 seconds</strong>. Find its acceleration in m/s².</div>\n  <div class=\"err-solution\" id=\"errSolution\">\n    <div class=\"err-line expr\" data-line=\"1\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">1</span>\n      <span><span class=\"var\">a</span> = (<span class=\"var\">v</span> − <span class=\"var\">u</span>) ÷ <span class=\"var\">t</span></span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line expr\" data-line=\"2\" data-is-error=\"true\" data-correct-line=\"2.5\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">2</span>\n      <span><span class=\"var\">a</span> = (90 − 36) ÷ 6</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line expr\" data-line=\"3\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">3</span>\n      <span><span class=\"var\">a</span> = 54 ÷ 6</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line expr\" data-line=\"4\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">4</span>\n      <span><span class=\"var\">a</span> = 9 m/s²</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n  </div>\n  <div class=\"err-feedback\" id=\"errFeedback\">\n    <h4>✓ Right: that is where the mistake first appears.</h4>\n    <div class=\"err-explain\">\n      <strong>Why:</strong> the speeds are still in <strong>km/h</strong> but the time is in <strong>seconds</strong>, so the units do not match. Convert first: 36 ÷ 3.6 = 10 m/s and 90 ÷ 3.6 = 25 m/s. An acceleration of 9 m/s² would be faster than a Formula One car off the line, which is a sign the model has gone wrong.\n    </div>\n    <p style=\"margin: 0 0 8px; font-size: 0.95rem;\"><strong>Now find the correct acceleration</strong> in m/s² (type just the number):</p>\n    <div class=\"err-correction-row\">\n      <input id=\"errCorrection\" placeholder=\"number in m/s²\" inputmode=\"decimal\">\n      <button onclick=\"checkErrCorrection()\">Check</button>\n    </div>\n    <div class=\"err-status-msg\" id=\"errStatusMsg\"></div>\n  </div>\n</section>",
+  "strategy_js": "// Estimation Ladder kit (Section 1)\nfunction pickRung(btn) {\n  document.querySelectorAll('.est-rung').forEach(r => r.classList.remove('picked'));\n  btn.classList.add('picked');\n}\nfunction commitEstimate() {\n  const sec = document.getElementById('estSection');\n  const actual = parseFloat(sec.dataset.actual);\n  const units = sec.dataset.units || '';\n  const tol = parseFloat(sec.dataset.tolerance) || 0.2;\n  const input = document.getElementById('estInput');\n  const guess = parseFloat((input.value || '').replace(/[\\s,]/g, ''));\n  const fb = document.getElementById('estFeedback');\n  const hdr = document.getElementById('estFbHeader');\n  const body = document.getElementById('estFbBody');\n  fb.classList.remove('close', 'far');\n  if (isNaN(guess)) {\n    fb.classList.add('far', 'visible');\n    hdr.textContent = 'Type a number first.';\n    body.textContent = 'Take a guess: even a rough one is fine. There are no wrong answers at this stage.';\n    return;\n  }\n  const error = Math.abs(guess - actual) / actual;\n  const shown = actual.toLocaleString('en-AU');\n  fb.classList.add('visible');\n  if (error <= tol) {\n    fb.classList.add('close');\n    hdr.textContent = `✓ Close: the model gives ${shown} ${units}`;\n    body.textContent = `You guessed ${guess.toLocaleString('en-AU')}, off by about ${Math.round(error * 100)}%. The rate does the work: 70 beats/min × 60 min/h × 24 h/day = ${shown} beats per day.`;\n  } else {\n    fb.classList.add('far');\n    const direction = guess > actual ? 'higher than' : 'lower than';\n    hdr.textContent = `The model gives ${shown} ${units}`;\n    body.textContent = `You guessed ${guess.toLocaleString('en-AU')}, which is ${direction} the model. Chain the rates: 70 beats per minute × 60 minutes per hour × 24 hours per day = ${shown} beats per day, about one hundred thousand.`;\n  }\n}\n\n// Error Analysis kit (strategy section): numeric correction check\nlet errFound = false;\nfunction pickErrLine(el) {\n  if (errFound || el.classList.contains('dimmed')) return;\n  if (el.dataset.isError === 'true') {\n    el.classList.add('flagged-correct');\n    errFound = true;\n    document.querySelectorAll('.err-line').forEach(o => { if (o !== el) o.classList.add('dimmed'); });\n    document.getElementById('errFeedback').classList.add('visible');\n  } else {\n    el.classList.add('flagged-wrong');\n    setTimeout(() => el.classList.remove('flagged-wrong'), 600);\n  }\n}\nfunction checkErrCorrection() {\n  const input = document.getElementById('errCorrection');\n  const expected = parseFloat(document.querySelector('.err-line[data-is-error=\"true\"]').dataset.correctLine);\n  const typed = parseFloat((input.value || '').replace(/\\s+/g, ''));\n  const msg = document.getElementById('errStatusMsg');\n  input.classList.remove('correct', 'incorrect');\n  if (!isNaN(typed) && Math.abs(typed - expected) < 1e-9) {\n    input.classList.add('correct');\n    msg.textContent = '✓ Correct. (25 − 10) ÷ 6 = 2.5 m/s²: the car gains 2.5 m/s every second.';\n  } else if (!isNaN(typed) && Math.abs(typed - 9) < 1e-9) {\n    input.classList.add('incorrect');\n    msg.textContent = '✗ That is the student\\'s answer. Convert both speeds to m/s first (divide by 3.6).';\n  } else {\n    input.classList.add('incorrect');\n    msg.textContent = '✗ Not quite. Convert 36 km/h and 90 km/h to m/s, subtract, then divide by 6.';\n  }\n}\n\n// Topic-specific instructions for the frame's fixed section text\n(function () {\n  const set = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };\n  set('#tier1-body .sec-desc', 'Type just the number in each box: no units needed. Write the rate as a division first, then multiply or divide to use it.');\n  set('#tier2-body .sec-desc', 'Convert units before you use a rate (km/h ÷ 3.6 = m/s; 1000 L = 1 kL; 60 min = 1 h). Type just the number.');\n  set('#tier3-body .sec-desc', 'Cultural burning and rate of spread: use the chart and the model rules in Question 1 for every question. Type just the number.');\n  const wd = document.getElementById('weDoGrid');\n  const tip = wd && wd.parentElement.querySelector('.parts-instructions');\n  if (tip) tip.innerHTML = '💡 <strong>Why we do it this way:</strong> find the rate once (amount ÷ time), then every question is one multiplication (forwards) or one division (backwards). Check the units match before you calculate, and ask whether the answer is believable.';\n  const m = document.getElementById('matchArea');\n  const md = m && m.parentElement.querySelector('.sec-desc');\n  if (md) md.textContent = 'Click a situation, then click the rate it produces. There are five matching pairs.';\n})();"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "Convert <strong>72 km/h</strong> to metres per second. (Type just the number.)",
+    "a": "20",
+    "hint": "Divide km/h by 3.6: 72 ÷ 3.6."
+   },
+   {
+    "q": "A bus travels <strong>150 km in 2.5 hours</strong>. What is its average speed in km/h?",
+    "a": "60",
+    "hint": "Speed = distance ÷ time = 150 ÷ 2.5."
+   },
+   {
+    "q": "<span class=\"var\">y</span> is directly proportional to <span class=\"var\">x</span>, and <span class=\"var\">y</span> = 18 when <span class=\"var\">x</span> = 4. Find the constant of proportionality <span class=\"var\">k</span>.",
+    "a": "4.5",
+    "hint": "k = y ÷ x = 18 ÷ 4."
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "540 g of metal with volume 200 cm³",
+    "group": 1
+   },
+   {
+    "html": "<strong>2.7 g/cm³</strong>",
+    "group": 1
+   },
+   {
+    "html": "360 L flows into a tank in 30 min",
+    "group": 2
+   },
+   {
+    "html": "<strong>12 L/min</strong>",
+    "group": 2
+   },
+   {
+    "html": "18 heartbeats counted in 15 s",
+    "group": 3
+   },
+   {
+    "html": "<strong>72 beats/min</strong>",
+    "group": 3
+   },
+   {
+    "html": "Car goes from 0 to 24 m/s in 8 s",
+    "group": 4
+   },
+   {
+    "html": "<strong>3 m/s²</strong>",
+    "group": 4
+   },
+   {
+    "html": "300 births in a year, town of 25 000",
+    "group": 5
+   },
+   {
+    "html": "<strong>12 births per 1000 per year</strong>",
+    "group": 5
+   }
+  ],
+  "weDo": [
+   {
+    "q": "<svg viewBox=\"0 0 420 170\" width=\"400\" role=\"img\" aria-label=\"A hose fills a 60 litre bucket in 2.5 minutes; the same hose will fill a 4500 litre rainwater tank\" style=\"display:block;margin:6px 0;max-width:100%\"><path d=\"M10 30 C60 30 70 60 95 60\" fill=\"none\" stroke=\"#2f9e6b\" stroke-width=\"6\" stroke-linecap=\"round\"/><path d=\"M98 64 L104 78 M102 62 L112 74\" stroke=\"#4a90c2\" stroke-width=\"2\"/><path d=\"M80 80 L130 80 L124 140 L86 140 Z\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><rect x=\"88\" y=\"108\" width=\"34\" height=\"30\" fill=\"#9cc7e3\"/><text x=\"105\" y=\"158\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#1F4D54\">60 L in 2.5 min</text><rect x=\"230\" y=\"30\" width=\"150\" height=\"110\" rx=\"10\" fill=\"#dde8ea\" stroke=\"#1F4D54\" stroke-width=\"2\"/><rect x=\"232\" y=\"96\" width=\"146\" height=\"42\" rx=\"8\" fill=\"#9cc7e3\"/><g stroke=\"#1F4D54\" stroke-width=\"1\" opacity=\"0.5\"><line x1=\"230\" y1=\"52\" x2=\"380\" y2=\"52\"/><line x1=\"230\" y1=\"74\" x2=\"380\" y2=\"74\"/><line x1=\"230\" y1=\"96\" x2=\"380\" y2=\"96\"/><line x1=\"230\" y1=\"118\" x2=\"380\" y2=\"118\"/></g><text x=\"305\" y=\"22\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#1F4D54\">Rainwater tank: 4500 L</text><text x=\"305\" y=\"158\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#BE5837\">same hose, same flow rate</text><path d=\"M150 100 L210 100\" stroke=\"#BE5837\" stroke-width=\"2\" marker-end=\"url(#arrT)\"/><defs><marker id=\"arrT\" markerUnits=\"userSpaceOnUse\" markerWidth=\"8\" markerHeight=\"8\" refX=\"7\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 Z\" fill=\"#BE5837\"/></marker></defs></svg>The hose fills a <strong>60 L bucket in 2.5 minutes</strong>. What is its flow rate in litres per minute?",
+    "a": "24",
+    "hint": "Flow rate = volume ÷ time = 60 ÷ 2.5.",
+    "fb": {
+     "150": "That is 60 × 2.5. A flow rate is volume ÷ time."
+    }
+   },
+   {
+    "q": "At the same flow rate, how many <strong>minutes</strong> will it take to fill the <strong>4500 L</strong> tank?",
+    "a": "187.5",
+    "hint": "Time = volume ÷ flow rate = 4500 ÷ 24.",
+    "fb": {
+     "108000": "You multiplied. Working backwards from a volume to a time means dividing by the flow rate."
+    }
+   },
+   {
+    "q": "Mains water costs <strong>$3.30 per kilolitre</strong> (1 kL = 1000 L). How much does it cost, in dollars, to fill the 4500 L tank from the mains? (Type just the number.)",
+    "a": "14.85",
+    "hint": "4500 L = 4.5 kL. Cost = 4.5 × 3.30.",
+    "fb": {
+     "14850": "The price is per kilolitre: convert 4500 L to kL first."
+    }
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "A block of aluminium has a mass of <strong>81 g</strong> and a volume of <strong>30 cm³</strong>. What is its density in g/cm³?",
+    "a": "2.7",
+    "hint": "Density = mass ÷ volume = 81 ÷ 30.",
+    "fb": {
+     "2430": "Density is mass ÷ volume, not mass × volume."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 320 245\" width=\"280\" role=\"img\" aria-label=\"Velocity-time graph: a straight line falling from (0, 12) to (4, 0), then flat at 0\" style=\"display:block;margin:6px 0;max-width:100%\"><rect x=\"50\" y=\"30\" width=\"240\" height=\"170\" fill=\"#ffffff\"/><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"98.0\" y1=\"30\" x2=\"98.0\" y2=\"200\"/><line x1=\"146.0\" y1=\"30\" x2=\"146.0\" y2=\"200\"/><line x1=\"194.0\" y1=\"30\" x2=\"194.0\" y2=\"200\"/><line x1=\"242.0\" y1=\"30\" x2=\"242.0\" y2=\"200\"/><line x1=\"290.0\" y1=\"30\" x2=\"290.0\" y2=\"200\"/><line x1=\"50\" y1=\"166.0\" x2=\"290\" y2=\"166.0\"/><line x1=\"50\" y1=\"132.0\" x2=\"290\" y2=\"132.0\"/><line x1=\"50\" y1=\"98.0\" x2=\"290\" y2=\"98.0\"/><line x1=\"50\" y1=\"64.0\" x2=\"290\" y2=\"64.0\"/><line x1=\"50\" y1=\"30.0\" x2=\"290\" y2=\"30.0\"/></g><line x1=\"50\" y1=\"200\" x2=\"290\" y2=\"200\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"50\" y1=\"200\" x2=\"50\" y2=\"30\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"50.0\" y=\"214\" text-anchor=\"middle\">0</text><text x=\"98.0\" y=\"214\" text-anchor=\"middle\">1</text><text x=\"146.0\" y=\"214\" text-anchor=\"middle\">2</text><text x=\"194.0\" y=\"214\" text-anchor=\"middle\">3</text><text x=\"242.0\" y=\"214\" text-anchor=\"middle\">4</text><text x=\"290.0\" y=\"214\" text-anchor=\"middle\">5</text><text x=\"44\" y=\"170.0\" text-anchor=\"end\">3</text><text x=\"44\" y=\"136.0\" text-anchor=\"end\">6</text><text x=\"44\" y=\"102.0\" text-anchor=\"end\">9</text><text x=\"44\" y=\"68.0\" text-anchor=\"end\">12</text><text x=\"44\" y=\"34.0\" text-anchor=\"end\">15</text></g><text x=\"170\" y=\"236\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">time t (s)</text><text x=\"6\" y=\"18\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">velocity v (m/s)</text><path d=\"M50.0 64.0 L242.0 200.0 L290.0 200.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"2.4\"/><circle cx=\"50.0\" cy=\"64.0\" r=\"4\" fill=\"#BE5837\"/><text x=\"58.0\" y=\"58.0\" text-anchor=\"start\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(0, 12)</text><circle cx=\"242.0\" cy=\"200.0\" r=\"4\" fill=\"#BE5837\"/><text x=\"248.0\" y=\"192.0\" text-anchor=\"start\" font-family=\"Georgia,serif\" font-size=\"11\" font-weight=\"bold\" fill=\"#BE5837\">(4, 0)</text></svg>A cyclist brakes from <strong>12 m/s to a stop in 4 seconds</strong>, as shown on the graph. What is the acceleration in m/s²? (Slowing down gives a negative acceleration.)",
+    "a": "-3",
+    "hint": "a = (v − u) ÷ t = (0 − 12) ÷ 4.",
+    "fb": {
+     "3": "Right size, wrong sign: the cyclist is slowing down, so the acceleration is negative."
+    }
+   }
+  ],
+  "practice1": [
+   {
+    "q": "A nurse counts <strong>21 heartbeats in 15 seconds</strong>. What is the heart rate in beats per minute?",
+    "a": "84",
+    "hint": "15 s is a quarter of a minute, so multiply by 4.",
+    "fb": {
+     "1.4": "That is beats per second. Scale up to 60 seconds."
+    }
+   },
+   {
+    "q": "A block of wood has a mass of <strong>500 g</strong> and a volume of <strong>400 cm³</strong>. What is its density in g/cm³?",
+    "a": "1.25",
+    "hint": "Density = mass ÷ volume = 500 ÷ 400.",
+    "fb": {
+     "0.8": "That is volume ÷ mass. Density is mass ÷ volume."
+    }
+   },
+   {
+    "q": "A tap flows at <strong>9 L/min</strong>. How many litres flow out in <strong>12 minutes</strong>?",
+    "a": "108",
+    "hint": "Volume = flow rate × time = 9 × 12."
+   },
+   {
+    "q": "A trough holds <strong>270 L</strong> and fills at <strong>15 L/min</strong>. How many minutes does it take to fill?",
+    "a": "18",
+    "hint": "Time = volume ÷ flow rate = 270 ÷ 15."
+   },
+   {
+    "q": "Convert <strong>54 km/h</strong> to metres per second.",
+    "a": "15",
+    "hint": "Divide by 3.6: 54 ÷ 3.6.",
+    "fb": {
+     "194.4": "You multiplied by 3.6. To go from km/h to m/s, divide by 3.6."
+    }
+   },
+   {
+    "q": "A car speeds up from rest to <strong>20 m/s in 5 seconds</strong>. What is its acceleration in m/s²?",
+    "a": "4",
+    "hint": "a = (20 − 0) ÷ 5."
+   },
+   {
+    "q": "A bus slows from <strong>30 m/s to a stop in 6 seconds</strong>. What is its acceleration in m/s²? (Slowing down is negative.)",
+    "a": "-5",
+    "hint": "a = (0 − 30) ÷ 6.",
+    "fb": {
+     "5": "The bus is slowing down, so the acceleration is negative."
+    }
+   },
+   {
+    "q": "A town of <strong>30 000 people</strong> had <strong>450 births</strong> last year. What is the birth rate per 1000 people per year?",
+    "a": "15",
+    "hint": "Births per person = 450 ÷ 30 000. Multiply by 1000.",
+    "fb": {
+     "0.015": "That is births per person. Multiply by 1000 to get births per 1000 people."
+    }
+   },
+   {
+    "q": "Gold has a density of <strong>19.3 g/cm³</strong>. What is the mass in grams of a <strong>2 cm³</strong> gold nugget?",
+    "a": "38.6",
+    "hint": "Mass = density × volume = 19.3 × 2."
+   },
+   {
+    "q": "In a grass fire, the fire front moves <strong>360 m in 12 minutes</strong>. What is its rate of spread in metres per minute?",
+    "a": "30",
+    "hint": "Rate = distance ÷ time = 360 ÷ 12."
+   }
+  ],
+  "practice2": [
+   {
+    "q": "A sports car accelerates from rest to <strong>108 km/h in 12 seconds</strong>. What is its acceleration in m/s²?",
+    "a": "2.5",
+    "hint": "108 ÷ 3.6 = 30 m/s. Then a = 30 ÷ 12.",
+    "fb": {
+     "9": "You used km/h with seconds. Convert 108 km/h to m/s first."
+    }
+   },
+   {
+    "q": "A train travelling at <strong>25 m/s</strong> brakes with a deceleration of <strong>0.5 m/s²</strong> (it loses 0.5 m/s every second). How many seconds does it take to stop?",
+    "a": "50",
+    "hint": "Time = change in velocity ÷ rate of change = 25 ÷ 0.5.",
+    "fb": {
+     "12.5": "That is 25 × 0.5. Find how many 0.5s fit into 25: divide."
+    }
+   },
+   {
+    "q": "Olive oil has a density of <strong>0.92 g/cm³</strong>. What volume, in cm³, does <strong>460 g</strong> of oil take up?",
+    "a": "500",
+    "hint": "Volume = mass ÷ density = 460 ÷ 0.92.",
+    "fb": {
+     "423.2": "You multiplied. To find volume from mass, divide by the density."
+    }
+   },
+   {
+    "q": "A backyard pool holds <strong>54 000 L</strong>. A hose delivers <strong>18 L/min</strong>. How many <strong>hours</strong> will it take to fill the pool?",
+    "a": "50",
+    "hint": "54 000 ÷ 18 = 3000 minutes. Divide by 60 to get hours.",
+    "fb": {
+     "3000": "That is the time in minutes. Convert to hours."
+    }
+   },
+   {
+    "q": "A regional city has <strong>48 000 people</strong> and a birth rate of <strong>12.5 per 1000 people per year</strong>. How many births are expected in a year?",
+    "a": "600",
+    "hint": "Number of thousands = 48. Births = 48 × 12.5."
+   },
+   {
+    "q": "Water costs <strong>$2.95 per kL</strong>. A shower uses <strong>9 L/min</strong>, and Ava has an <strong>8-minute</strong> shower every day for <strong>365 days</strong>. What is the yearly cost of her shower water, in dollars, to the nearest cent?",
+    "a": "77.53",
+    "hint": "Litres: 9 × 8 × 365 = 26 280 L = 26.28 kL. Cost = 26.28 × 2.95.",
+    "fb": {
+     "77526": "The price is per kilolitre: convert litres to kL before multiplying."
+    }
+   }
+  ],
+  "practice3": [
+   {
+    "q": "<svg viewBox=\"0 0 440 240\" width=\"420\" role=\"img\" aria-label=\"Bar chart of rate of fire spread at a wind speed of 10 km/h: cured grass 15 m/min, spinifex 9 m/min, leaf litter 3 m/min\" style=\"display:block;margin:6px 0;max-width:100%\"><g stroke=\"#e5e7eb\" stroke-width=\"1\"><line x1=\"60\" y1=\"163.3\" x2=\"300\" y2=\"163.3\"/><line x1=\"60\" y1=\"136.7\" x2=\"300\" y2=\"136.7\"/><line x1=\"60\" y1=\"110.0\" x2=\"300\" y2=\"110.0\"/><line x1=\"60\" y1=\"83.3\" x2=\"300\" y2=\"83.3\"/><line x1=\"60\" y1=\"56.7\" x2=\"300\" y2=\"56.7\"/><line x1=\"60\" y1=\"30.0\" x2=\"300\" y2=\"30.0\"/></g><line x1=\"60\" y1=\"190\" x2=\"300\" y2=\"190\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><line x1=\"60\" y1=\"190\" x2=\"60\" y2=\"30\" stroke=\"#2a2a2a\" stroke-width=\"1.5\"/><g font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\"><text x=\"54\" y=\"194.0\" text-anchor=\"end\">0</text><text x=\"54\" y=\"167.3\" text-anchor=\"end\">3</text><text x=\"54\" y=\"140.7\" text-anchor=\"end\">6</text><text x=\"54\" y=\"114.0\" text-anchor=\"end\">9</text><text x=\"54\" y=\"87.3\" text-anchor=\"end\">12</text><text x=\"54\" y=\"60.7\" text-anchor=\"end\">15</text><text x=\"54\" y=\"34.0\" text-anchor=\"end\">18</text></g><rect x=\"75\" y=\"56.7\" width=\"56\" height=\"133.3\" fill=\"#BE5837\"/><text x=\"103\" y=\"51.7\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2a2a2a\">15</text><text x=\"103\" y=\"205\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#2a2a2a\">Cured grass</text><rect x=\"153\" y=\"110.0\" width=\"56\" height=\"80.0\" fill=\"#d9925f\"/><text x=\"181\" y=\"105.0\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2a2a2a\">9</text><text x=\"181\" y=\"205\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#2a2a2a\">Spinifex</text><rect x=\"231\" y=\"163.3\" width=\"56\" height=\"26.7\" fill=\"#1F4D54\"/><text x=\"259\" y=\"158.3\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" font-weight=\"bold\" fill=\"#2a2a2a\">3</text><text x=\"259\" y=\"205\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#2a2a2a\">Leaf litter</text><text x=\"8\" y=\"18\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">rate of spread (m/min)</text><text x=\"180\" y=\"230\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-size=\"12\" fill=\"#2a2a2a\">fuel type (wind 10 km/h, normal humidity)</text><defs><marker id=\"arrW\" markerUnits=\"userSpaceOnUse\" markerWidth=\"12\" markerHeight=\"12\" refX=\"11\" refY=\"6\" orient=\"auto\"><path d=\"M0 0 L12 6 L0 12 Z\" fill=\"#4a90c2\"/></marker></defs><path d=\"M330 80 L420 80\" stroke=\"#4a90c2\" stroke-width=\"4\" marker-end=\"url(#arrW)\"/><text x=\"375\" y=\"66\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\" fill=\"#4a90c2\">wind 10 km/h</text><text x=\"375\" y=\"110\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\">Model: rate ∝ wind speed</text><text x=\"375\" y=\"125\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\">(0–20 km/h)</text><text x=\"375\" y=\"145\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\">Humidity above 60%:</text><text x=\"375\" y=\"160\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"10\" fill=\"#6b7280\">rates are halved</text></svg><div class=\"parts-instructions\" style=\"margin:6px 0\">🔥 <strong>Simplified classroom model.</strong> First Nations rangers plan cool, slow cultural burns using deep knowledge of fuel, wind, temperature and humidity. In this model the rate of spread is <strong>directly proportional to wind speed</strong> (0–20 km/h) for each fuel, and is <strong>halved</strong> when relative humidity is above 60%.</div>Rangers light a cool burn in <strong>leaf litter</strong> with a wind of <strong>10 km/h</strong> and normal humidity. How many minutes will the fire front take to travel <strong>75 m</strong>?",
+    "a": "25",
+    "hint": "Read the leaf-litter rate from the chart (3 m/min). Time = 75 ÷ 3."
+   },
+   {
+    "q": "Using the same model: the wind rises to <strong>14 km/h</strong> over <strong>cured grass</strong> (normal humidity). What is the rate of spread in m/min?",
+    "a": "21",
+    "hint": "Grass spreads at 15 m/min for 10 km/h, so 1.5 m/min per km/h. Rate = 1.5 × 14.",
+    "fb": {
+     "19": "Adding 4 to the rate is not proportional. Find the rate per km/h of wind first (15 ÷ 10)."
+    }
+   },
+   {
+    "q": "Early on a cool morning the relative humidity is <strong>75%</strong>. A burn in <strong>spinifex</strong> has a wind of <strong>10 km/h</strong>. How far, in metres, does the fire front travel in <strong>40 minutes</strong>?",
+    "a": "180",
+    "hint": "Humidity above 60% halves the rate: 9 ÷ 2 = 4.5 m/min. Distance = 4.5 × 40.",
+    "fb": {
+     "360": "Humidity is above 60%, so the rate is halved."
+    }
+   },
+   {
+    "q": "Rangers want a <strong>cured-grass</strong> burn (normal humidity) to take <strong>at least 30 minutes</strong> to reach a track <strong>360 m</strong> away. According to the model, what is the <strong>highest wind speed</strong> in km/h they should burn in?",
+    "a": "8",
+    "hint": "The rate must be at most 360 ÷ 30 = 12 m/min. Grass: 1.5 m/min per km/h, so wind ≤ 12 ÷ 1.5."
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "A drip irrigation line releases <strong>2.4 L in 15 seconds</strong>. What is the flow rate in litres per <strong>minute</strong>?",
+    "a": "9.6",
+    "hint": "15 s is a quarter of a minute: 2.4 × 4."
+   },
+   {
+    "q": "A car brakes from <strong>72 km/h to a stop in 5 seconds</strong>. What is its acceleration in m/s²?",
+    "a": "-4",
+    "hint": "72 ÷ 3.6 = 20 m/s. a = (0 − 20) ÷ 5.",
+    "fb": {
+     "-14.4": "Convert 72 km/h to m/s before dividing by the time.",
+     "4": "The car is slowing down, so the acceleration is negative."
+    }
+   },
+   {
+    "q": "First Nations rangers often burn on cool, humid mornings with light wind. Using the idea of <strong>rate of spread</strong>, explain why these conditions make a burn easier to control. Then name one way this lesson's model is <strong>too simple</strong>.",
+    "a": "TEXT",
+    "hint": "Think about what happens to the rate when wind is low and humidity is high, and what else real fires depend on (slope, fuel moisture, fuel load)."
+   }
+  ]
+ }
+}
