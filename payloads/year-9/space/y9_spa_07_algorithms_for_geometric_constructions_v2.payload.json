@@ -1,0 +1,296 @@
+{
+ "payload_version": 1,
+ "filename": "y9_spa_07_algorithms_for_geometric_constructions_v2.html",
+ "title": "Algorithms for Geometric Constructions — Year 9",
+ "header": {
+  "title": "Algorithms for Geometric Constructions",
+  "subtitle": "Program a compass and straightedge to bisect and build exact angles",
+  "badge": "Year 9 · Space"
+ },
+ "meta": {
+  "lesson-id": "y9_spa_07",
+  "lesson-focus": "Design an algorithm using pseudocode or a flow chart to construct or bisect an angle with compass and straightedge; describe each step precisely; test for correctness on multiple cases; extend to algorithms for animated geometric constructions or visual proofs.",
+  "ac9-descriptor": "AC9M9SP03",
+  "ac9-descriptor-text": "design, test and refine algorithms involving a sequence of steps and decisions based on geometric constructions and theorems; discuss and evaluate refinements",
+  "ac9-elaborations": "2,3",
+  "sa-year": "9",
+  "sa-strand": "Space",
+  "mapping-note": "Strict",
+  "sa-conceptual-understanding": "Trigonometric ratios are an application of the property of similarity for right-angled triangles"
+ },
+ "html": {
+  "section0_intro": "Today you write step-by-step instructions that a machine could follow to construct exact angles. These three questions check the angle and flow-chart skills you will need.",
+  "section_warmup": "<p class='sec-desc'>A real situation that is secretly today's maths.</p>\n<div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; align-items: center;'>\n  <div>\n    <p>A sign shop owns a <strong>laser engraver</strong>. It cannot use a protractor. It only knows two moves: <strong>draw an arc</strong> (like a compass) and <strong>draw a straight line</strong> through two points (like a ruler with no markings).</p>\n    <p>The shop is charged <strong>$2.50 for every instruction</strong> the engraver runs. A vague instruction such as “draw a line about halfway” wastes an acrylic sheet. A missing step wastes money too.</p>\n  </div>\n  <div class='parts-instructions' style='margin: 0;'>\n    To cut an exact angle, the shop needs an <strong>algorithm</strong>: precise steps, in order, with decisions where needed. Today you design compass-and-straightedge algorithms that <strong>bisect</strong> an angle and <strong>construct</strong> 60°, 30° and 15°, then <strong>test</strong> and <strong>refine</strong> them so they work every time and cost less.\n    <svg viewBox=\"0 0 272 259\" width=\"272\" role=\"img\" aria-label=\"An angle of 70 degrees at vertex O; an arc centred on O crosses the arms at A and B; an arc centred on A is drawn inside the angle; an arc centred on B with the same radius crosses it at P; ray OP splits the angle into two angles of 35 degrees\" style=\"display:block;margin:8px 0;max-width:100%;height:auto\"><line x1=\"26.0\" y1=\"233.0\" x2=\"246.3\" y2=\"233.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><line x1=\"26.0\" y1=\"233.0\" x2=\"101.3\" y2=\"26.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><circle cx=\"26.0\" cy=\"233.0\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"14.0\" y=\"239.0\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">O</text><path d=\"M60.0 233.0 A34.0 34.0 0 0 0 37.6 201.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.3\"/><path d=\"M145.3 245.5 A120.0 120.0 0 0 0 55.0 116.5\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"146.0\" cy=\"233.0\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"67.0\" cy=\"120.2\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"150.0\" y=\"253.0\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"50.0\" y=\"113.3\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><path d=\"M196.4 142.8 A103.2 103.2 0 0 0 140.9 129.8\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M162.2 160.2 A103.2 103.2 0 0 0 169.0 103.7\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"169.6\" cy=\"132.4\" r=\"3.6\" fill=\"#BE5837\"/><text x=\"194.1\" y=\"120.2\" font-size=\"14\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text><line x1=\"26.0\" y1=\"233.0\" x2=\"181.0\" y2=\"124.4\" stroke=\"#BE5837\" stroke-width=\"2.6\" stroke-linecap=\"round\"/><text x=\"81.3\" y=\"220.5\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">35°</text><text x=\"61.3\" y=\"192.0\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">35°</text></svg>\n  </div>\n</div>",
+  "vocab_cards": "<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Algorithm<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A finite list of <strong>exact steps and decisions</strong> that always solves a problem.<div class='vocab-example'>The steps an engraver follows to cut a 30° angle.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Compass<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A tool that draws an <strong>arc</strong>: every point on it is the <strong>same distance</strong> from the centre.<div class='vocab-example'>Point on O, width 5 cm, draw an arc.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Straightedge<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A ruler with <strong>no markings</strong>. It only draws a line through two points.<div class='vocab-example'>Draw the ray from O through P.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Bisect<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>Cut into <strong>two equal parts</strong>. An <strong>angle bisector</strong> splits an angle into two equal angles.<div class='vocab-example'>Bisect 80° → two angles of 40°.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Test case<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>An input chosen to <strong>check</strong> the algorithm. Use easy, extreme and edge cases.<div class='vocab-example'>Try an acute, a right and an obtuse angle.</div></div>\n  </div>\n</div>\n<div class='vocab' onclick=\"this.classList.toggle('flipped')\">\n  <div class='vocab-inner'>\n    <div class='vocab-front'>Loop<div class='hint-flip'>Tap to flip</div></div>\n    <div class='vocab-back'>A part of an algorithm that <strong>repeats</strong> until a condition is met.<div class='vocab-example'>REPEAT 2 times: bisect the angle.</div></div>\n  </div>\n</div>",
+  "section3_heading": "Precise or vague?",
+  "section3_desc": "Drag each instruction into <strong>✓ Precise enough for the engraver</strong> or <strong>✕ Too vague</strong>. A precise step says exactly <em>where</em> the compass goes and <em>what</em> to draw.",
+  "sort_activity": "<div class='parts-expr'>\n  <div class='label'>Could a machine follow this instruction exactly?</div>\n  <div id='partsTerms' class='terms-source'>\n    <span class='term-chip constant' data-type='yes'>Place the compass point on O.</span>\n    <span class='term-chip variable' data-type='no'>Draw an arc somewhere near the angle.</span>\n    <span class='term-chip constant' data-type='yes'>Keep the compass width the same as the last arc.</span>\n    <span class='term-chip variable' data-type='no'>Draw the line roughly in the middle.</span>\n    <span class='term-chip constant' data-type='yes'>Mark A where the arc crosses arm OX.</span>\n    <span class='term-chip variable' data-type='no'>Set the compass to a sensible size.</span>\n    <span class='term-chip constant' data-type='yes'>Draw a ray from O through P.</span>\n    <span class='term-chip variable' data-type='no'>Fix the angle if it looks wrong.</span>\n  </div>\n  <div class='parts-buckets'>\n    <div class='bucket' data-bucket='yes'>\n      <h4 style='color:var(--navy)'>✓ Precise enough for the engraver</h4>\n      <div class='bucket-contents'></div>\n    </div>\n    <div class='bucket' data-bucket='no'>\n      <h4 style='color:var(--coral)'>✕ Too vague</h4>\n      <div class='bucket-contents'></div>\n    </div>\n  </div>\n  <div class='parts-actions'>\n    <button class='btn-secondary btn-sm' onclick='resetSort()'>↺ Reset</button>\n    <button class='btn-secondary btn-sm' onclick='solveSort()'>Show solution</button>\n  </div>\n</div>\n<div class='parts-instructions'>\n  💡 Words like <strong>somewhere</strong>, <strong>roughly</strong>, <strong>sensible</strong> and <strong>looks wrong</strong> need human judgement. An algorithm names the exact point, the exact width and the exact line, so two people (or two machines) running it get the <strong>same</strong> result.\n</div>",
+  "section4_heading": "Match each construction to its angle",
+  "worked_example": "<p class='sec-desc'>Design an algorithm that <strong>bisects</strong> any angle ∠AOB using only a compass and a straightedge, then <strong>test</strong> it on three angles: 80°, 150° and 30°.</p>\n<div class='worked'>\n  <div class='step visible' id='step1'>\n    <div class='step-num'>1</div>\n    <div class='step-body'>\n      <div class='step-title'>Design the steps</div>\n      <div class='step-desc'>Every step names the compass centre, the width and what to mark. The arcs from A and B use the <strong>same width</strong>, so P is the same distance from A as from B.</div>\n      <svg viewBox=\"0 0 275 272\" width=\"275\" role=\"img\" aria-label=\"An angle of 80 degrees at vertex O; an arc centred on O crosses the arms at A and B; an arc centred on A is drawn inside the angle; an arc centred on B with the same radius crosses it at P; ray OP splits the angle into two angles of 40 degrees\" style=\"display:block;margin:8px 0;max-width:100%;height:auto\"><line x1=\"26.0\" y1=\"245.8\" x2=\"249.2\" y2=\"245.8\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><line x1=\"26.0\" y1=\"245.8\" x2=\"64.8\" y2=\"26.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><circle cx=\"26.0\" cy=\"245.8\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"14.0\" y=\"251.8\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">O</text><path d=\"M60.0 245.8 A34.0 34.0 0 0 0 31.9 212.3\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.3\"/><path d=\"M145.3 258.3 A120.0 120.0 0 0 0 34.4 126.1\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"146.0\" cy=\"245.8\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"46.8\" cy=\"127.6\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"150.0\" y=\"265.8\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"28.2\" y=\"123.8\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><path d=\"M193.4 140.2 A115.7 115.7 0 0 0 130.3 131.1\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M157.0 163.0 A115.7 115.7 0 0 0 159.0 99.2\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"162.5\" cy=\"131.3\" r=\"3.6\" fill=\"#BE5837\"/><text x=\"185.5\" y=\"117.0\" font-size=\"14\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text><line x1=\"26.0\" y1=\"245.8\" x2=\"173.2\" y2=\"122.3\" stroke=\"#BE5837\" stroke-width=\"2.6\" stroke-linecap=\"round\"/><text x=\"80.5\" y=\"230.9\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">40°</text><text x=\"55.0\" y=\"200.5\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">40°</text></svg>\n    </div>\n  </div>\n  <div class='step' id='step2'>\n    <div class='step-num'>2</div>\n    <div class='step-body'>\n      <div class='step-title'>Write it as pseudocode, with a decision</div>\n      <div class='step-desc'>If the width is too small, the arcs from A and B miss each other. The algorithm needs a <strong>decision</strong> to handle that.</div>\n      <div style='font-family:Consolas,Menlo,monospace;background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;line-height:1.6;font-size:.95rem;color:var(--navy);margin:8px 0'>1 PLACE compass on O; DRAW an arc crossing both arms<br>2 MARK A and B where the arc crosses the arms<br>3 SET width w greater than half of AB<br>4 DRAW an arc centre A, width w, inside the angle<br>5 DRAW an arc centre B, same width w<br>6 IF the arcs do not cross THEN increase w; GO TO 4<br>7 MARK P where the arcs cross<br>8 DRAW the ray OP; OUTPUT “OP bisects ∠AOB”</div>\n    </div>\n  </div>\n  <div class='step' id='step3'>\n    <div class='step-num'>3</div>\n    <div class='step-body'>\n      <div class='step-title'>Test with three cases</div>\n      <div class='step-desc'>Run the algorithm on an ordinary angle, a large (obtuse) angle and a small angle, then measure both halves.</div>\n      <div class='calc-box'>80° → ∠AOP = <span class='blue'>40°</span>, ∠POB = <span class='blue'>40°</span> ✓<br>150° → ∠AOP = <span class='blue'>75°</span>, ∠POB = <span class='blue'>75°</span> ✓<br>30° → ∠AOP = <span class='blue'>15°</span>, ∠POB = <span class='blue'>15°</span> ✓</div>\n      <div class='summary-banner'>\n        <span class='label'>Why it works</span>\n        OA = OB (same arc) and AP = BP (same width), and OP is shared. So triangles OAP and OBP are <strong>congruent (SSS)</strong>, and ∠AOP = ∠POB every time.\n      </div>\n    </div>\n  </div>\n\n  <button class='reveal-btn' id='revealBtn' onclick='revealNextStep()'>Reveal next step ↓</button>\n</div>",
+  "section6_heading": "We do: construct 60°, then 30°",
+  "we_do_intro": "Construct a <strong>60°</strong> angle with no protractor, then turn it into <strong>30°</strong>. An animator will also show the construction <strong>one frame per instruction</strong>. Work through it together.",
+  "footer_title": "Algorithms for Geometric Constructions",
+  "strategy_section": "<style>\n  .order-problem-stem { background: var(--hint-bg); border-left: 4px solid var(--navy); padding: 12px 16px; border-radius: 6px; font-family: Georgia, serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 16px; }\n  .order-list { list-style: none; padding: 0; margin: 0 0 14px; counter-reset: stepCounter; }\n  .order-card { counter-increment: stepCounter; background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 14px; transition: background 0.25s, border-color 0.25s, transform 0.18s; }\n  .order-card::before { content: counter(stepCounter); background: var(--coral); color: white; width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 0.92rem; font-weight: 700; }\n  .order-card.correct { background: var(--good-soft); border-color: var(--good); }\n  .order-card.incorrect { background: var(--bad-soft); border-color: var(--bad); }\n  .order-card.locked { opacity: 0.7; }\n  .order-card.locked .order-buttons button { display: none; }\n  .order-content { font-family: Consolas, Menlo, monospace; font-size: 0.95rem; color: var(--navy); }\n  .order-buttons { display: flex; flex-direction: column; gap: 4px; }\n  .order-buttons button { background: var(--hint-bg); color: var(--navy); border: 1px solid var(--border); width: 32px; height: 26px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; line-height: 1; transition: background 0.15s; }\n  .order-buttons button:hover { background: var(--navy); color: white; }\n  .order-buttons button:disabled { opacity: 0.3; cursor: not-allowed; background: var(--hint-bg); color: var(--navy); }\n  .order-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }\n  .order-actions button { border: none; padding: 9px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; }\n  .order-actions .order-check { background: var(--coral); color: white; }\n  .order-actions .order-shuffle, .order-actions .order-show { background: white; color: var(--navy); border: 1.5px solid var(--navy); }\n  .order-status { font-size: 0.9rem; color: var(--muted); font-style: italic; margin-left: auto; }\n  body.teacher-mode .order-card::after { content: '(correct pos: ' attr(data-correct-pos) ')'; font-size: 0.7rem; color: var(--muted); margin-left: 8px; grid-column: 2 / 3; }\n  .err-problem-stem { background: var(--hint-bg); border-left: 4px solid var(--navy); padding: 12px 16px; border-radius: 6px; font-family: Georgia, serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 16px; }\n  .err-solution { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 14px; }\n  .err-line { display: grid; grid-template-columns: 36px 1fr 24px; align-items: center; gap: 14px; padding: 10px 14px; margin-bottom: 6px; background: white; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-family: Georgia, serif; font-size: 1.05rem; transition: all 0.2s; }\n  .err-line:last-child { margin-bottom: 0; }\n  .err-line:hover { border-color: var(--navy); }\n  .err-line .err-line-num { background: var(--hint-bg); color: var(--navy); width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-family: -apple-system, sans-serif; font-size: 0.9rem; font-weight: 700; }\n  .err-line .err-line-mark { font-size: 1.1rem; opacity: 0; transition: opacity 0.2s; }\n  .err-line.flagged-correct { background: var(--good-soft); border-color: var(--good); }\n  .err-line.flagged-correct .err-line-mark::before { content: '✓'; color: var(--good); }\n  .err-line.flagged-correct .err-line-mark { opacity: 1; }\n  .err-line.flagged-wrong { animation: err-shake 0.45s; background: var(--bad-soft); border-color: var(--bad); }\n  @keyframes err-shake { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }\n  .err-line.dimmed { opacity: 0.45; cursor: not-allowed; }\n  .err-feedback { background: white; border: 1.5px solid var(--good); border-radius: 10px; padding: 16px 18px; margin-top: 14px; display: none; }\n  .err-feedback.visible { display: block; }\n  .err-feedback h4 { font-family: Georgia, serif; color: var(--navy); margin: 0 0 8px; font-size: 1.05rem; }\n  .err-feedback .err-explain { background: var(--hint-bg); border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; font-size: 0.92rem; color: var(--navy); }\n  .err-correction-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }\n  .err-correction-row input { flex: 1; min-width: 160px; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-family: Georgia, serif; font-size: 1.05rem; }\n  .err-correction-row input.correct { background: var(--good-soft); border-color: var(--good); }\n  .err-correction-row input.incorrect { background: var(--bad-soft); border-color: var(--bad); }\n  .err-correction-row button { background: var(--coral); color: white; border: none; padding: 9px 16px; border-radius: 8px; font-size: 0.92rem; font-weight: 600; cursor: pointer; }\n  .err-status-msg { margin-top: 10px; font-size: 0.9rem; color: var(--muted); font-style: italic; }\n  body.teacher-mode .err-line[data-is-error=\"true\"] { box-shadow: 0 0 0 3px var(--coral); }\n</style>\n<section class=\"lesson\" id=\"orderSection\">\n  <h2><span class=\"sec-num\">★</span>Order the algorithm: a 30° angle</h2>\n  <p class=\"sec-desc\">This algorithm combines the 60° construction with the bisector, but the steps are jumbled. Use ▲ and ▼ to put them in an order a machine could follow, then click <strong>Check order</strong>. Ask: does this step use a point that has not been marked yet?</p>\n  <div class=\"order-problem-stem\">Goal: construct ∠AOP = 30° using only a compass and a straightedge.</div>\n  <ul class=\"order-list\" id=\"orderList\">\n    <li class=\"order-card\" data-correct-pos=\"4\">\n      <div class=\"order-content\">DRAW ray OB (∠AOB = 60°).</div>\n      <div class=\"order-buttons\">\n        <button onclick=\"moveOrder(this, -1)\" aria-label=\"Move up\">▲</button>\n        <button onclick=\"moveOrder(this, 1)\" aria-label=\"Move down\">▼</button>\n      </div>\n    </li>\n    <li class=\"order-card\" data-correct-pos=\"1\">\n      <div class=\"order-content\">DRAW a ray from O; MARK A on it.</div>\n      <div class=\"order-buttons\">\n        <button onclick=\"moveOrder(this, -1)\" aria-label=\"Move up\">▲</button>\n        <button onclick=\"moveOrder(this, 1)\" aria-label=\"Move down\">▼</button>\n      </div>\n    </li>\n    <li class=\"order-card\" data-correct-pos=\"6\">\n      <div class=\"order-content\">DRAW ray OP; OUTPUT ∠AOP = 30°.</div>\n      <div class=\"order-buttons\">\n        <button onclick=\"moveOrder(this, -1)\" aria-label=\"Move up\">▲</button>\n        <button onclick=\"moveOrder(this, 1)\" aria-label=\"Move down\">▼</button>\n      </div>\n    </li>\n    <li class=\"order-card\" data-correct-pos=\"3\">\n      <div class=\"order-content\">PLACE compass on A, same width; MARK B where it crosses the first arc.</div>\n      <div class=\"order-buttons\">\n        <button onclick=\"moveOrder(this, -1)\" aria-label=\"Move up\">▲</button>\n        <button onclick=\"moveOrder(this, 1)\" aria-label=\"Move down\">▼</button>\n      </div>\n    </li>\n    <li class=\"order-card\" data-correct-pos=\"5\">\n      <div class=\"order-content\">DRAW equal-width arcs centred on A and on B; MARK P where they cross.</div>\n      <div class=\"order-buttons\">\n        <button onclick=\"moveOrder(this, -1)\" aria-label=\"Move up\">▲</button>\n        <button onclick=\"moveOrder(this, 1)\" aria-label=\"Move down\">▼</button>\n      </div>\n    </li>\n    <li class=\"order-card\" data-correct-pos=\"2\">\n      <div class=\"order-content\">PLACE compass on O, width OA; DRAW a long arc through A.</div>\n      <div class=\"order-buttons\">\n        <button onclick=\"moveOrder(this, -1)\" aria-label=\"Move up\">▲</button>\n        <button onclick=\"moveOrder(this, 1)\" aria-label=\"Move down\">▼</button>\n      </div>\n    </li>\n  </ul>\n  <div class=\"order-actions\">\n    <button class=\"order-check\" onclick=\"checkOrder()\">Check order</button>\n    <button class=\"order-shuffle\" onclick=\"shuffleOrder()\">↻ Shuffle</button>\n    <button class=\"order-show\" onclick=\"showOrderAnswer()\">Show answer</button>\n    <span class=\"order-status\" id=\"orderStatus\"></span>\n  </div>\n</section>\n\n<section class=\"lesson\" id=\"errSection\">\n  <h2><span class=\"sec-num\">★</span>Test and refine: spot the bug</h2>\n  <p class=\"sec-desc\">Jordan wrote a bisector algorithm and tested it on a 70° angle. The test <strong>failed</strong>: the two angles came out as 19° and 51°. Click the line where Jordan's algorithm <em>first</em> goes wrong.</p>\n  <svg viewBox=\"0 0 297 282\" width=\"300\" role=\"img\" aria-label=\"Faulty bisector of a 70 degree angle: arc from A has width 3 cm, arc from B has width 5 cm, so ray OP makes 19 degrees with OA and 51 degrees with OB\" style=\"display:block;margin:8px 0;max-width:100%;height:auto\"><line x1=\"26.0\" y1=\"256.2\" x2=\"271.0\" y2=\"256.2\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><line x1=\"26.0\" y1=\"256.2\" x2=\"109.8\" y2=\"26.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M145.3 268.8 A120.0 120.0 0 0 0 55.0 139.8\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M224.3 211.8 A90.0 90.0 0 0 0 188.8 177.1\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M193.0 224.8 A150.0 150.0 0 0 0 216.5 156.2\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><line x1=\"26.0\" y1=\"256.2\" x2=\"257.2\" y2=\"175.0\" stroke=\"#BE5837\" stroke-width=\"2.6\" stroke-linecap=\"round\"/><circle cx=\"26.0\" cy=\"256.2\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"146.0\" cy=\"256.2\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"67.0\" cy=\"143.5\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"209.0\" cy=\"191.9\" r=\"3.6\" fill=\"#BE5837\"/><text x=\"14.0\" y=\"262.2\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">O</text><text x=\"150.0\" y=\"276.2\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"50.0\" y=\"136.5\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><text x=\"227.5\" y=\"209.7\" font-size=\"14\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text><text x=\"91.1\" y=\"250.8\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">19°</text><text x=\"70.1\" y=\"217.6\" font-size=\"12\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">51°</text></svg>\n  <div class=\"err-problem-stem\">Test case: bisect ∠AOB = 70°. Expected output: two angles of 35°.</div>\n  <div class=\"err-solution\" id=\"errSolution\">\n    <div class=\"err-line\" data-line=\"1\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">1</span>\n      <span>Compass on O, width 4 cm: draw an arc crossing both arms at A and B.</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line\" data-line=\"2\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">2</span>\n      <span>Compass on A, width 3 cm: draw an arc inside the angle.</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line\" data-line=\"3\" data-is-error=\"true\" data-correct-line=\"3\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">3</span>\n      <span>Compass on B, width 5 cm: draw an arc crossing the first at P.</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n    <div class=\"err-line\" data-line=\"4\" onclick=\"pickErrLine(this)\">\n      <span class=\"err-line-num\">4</span>\n      <span>Draw the ray OP and output “OP bisects ∠AOB”.</span>\n      <span class=\"err-line-mark\"></span>\n    </div>\n  </div>\n  <div class=\"err-feedback\" id=\"errFeedback\">\n    <h4>✓ Right: that's the bug.</h4>\n    <div class=\"err-explain\">\n      <strong>Why:</strong> P must be the <em>same distance</em> from A and from B. With widths of 3 cm and 5 cm, AP ≠ BP, so triangles OAP and OBP are not congruent and OP leans towards A. <strong>Refinement:</strong> write “keep the <strong>same width</strong>” into line 3, and test again on more than one angle.\n    </div>\n    <p style=\"margin: 0 0 8px; font-size: 0.95rem;\"><strong>Now fix line 3:</strong> what width, in cm, should the arc centred on B use?</p>\n    <div class=\"err-correction-row\">\n      <input id=\"errCorrection\" placeholder=\"Type a number\">\n      <button onclick=\"checkErrCorrection()\">Check</button>\n    </div>\n    <div class=\"err-status-msg\" id=\"errStatusMsg\"></div>\n  </div>\n</section>",
+  "strategy_js": "// Order the Steps kit\nfunction moveOrder(btn, direction) {\n  const card = btn.closest('.order-card');\n  if (card.classList.contains('locked')) return;\n  const sibling = direction === -1 ? card.previousElementSibling : card.nextElementSibling;\n  if (!sibling) return;\n  const list = card.parentElement;\n  if (direction === -1) list.insertBefore(card, sibling);\n  else list.insertBefore(sibling, card);\n  updateOrderButtons();\n  clearOrderState();\n}\nfunction updateOrderButtons() {\n  const cards = document.querySelectorAll('#orderList .order-card');\n  cards.forEach((c, i) => {\n    const [up, down] = c.querySelectorAll('.order-buttons button');\n    up.disabled = (i === 0);\n    down.disabled = (i === cards.length - 1);\n  });\n}\nfunction clearOrderState() {\n  document.querySelectorAll('.order-card').forEach(c => c.classList.remove('correct', 'incorrect'));\n  document.getElementById('orderStatus').textContent = '';\n}\nfunction checkOrder() {\n  const cards = document.querySelectorAll('#orderList .order-card');\n  let allCorrect = true;\n  cards.forEach((c, i) => {\n    const expected = parseInt(c.dataset.correctPos, 10);\n    c.classList.remove('correct', 'incorrect');\n    if (expected === i + 1) c.classList.add('correct');\n    else { c.classList.add('incorrect'); allCorrect = false; }\n  });\n  const status = document.getElementById('orderStatus');\n  if (allCorrect) {\n    status.textContent = '✓ Perfect order: every step only uses points that already exist.';\n    cards.forEach(c => c.classList.add('locked'));\n  } else {\n    const numCorrect = document.querySelectorAll('.order-card.correct').length;\n    status.textContent = `${numCorrect}/${cards.length} in the right place. Which point does each step need?`;\n  }\n}\nfunction shuffleOrder() {\n  const list = document.getElementById('orderList');\n  const cards = Array.from(list.children);\n  for (let i = cards.length - 1; i > 0; i--) {\n    const j = Math.floor(Math.random() * (i + 1));\n    [cards[i], cards[j]] = [cards[j], cards[i]];\n  }\n  cards.forEach(c => { c.classList.remove('locked'); list.appendChild(c); });\n  updateOrderButtons();\n  clearOrderState();\n}\nfunction showOrderAnswer() {\n  const list = document.getElementById('orderList');\n  const cards = Array.from(list.children);\n  cards.sort((a, b) => parseInt(a.dataset.correctPos, 10) - parseInt(b.dataset.correctPos, 10));\n  cards.forEach(c => { list.appendChild(c); c.classList.add('correct'); c.classList.add('locked'); });\n  updateOrderButtons();\n  document.getElementById('orderStatus').textContent = 'Answer shown.';\n}\nupdateOrderButtons();\n\n// Error Analysis kit\nlet errFound = false;\nfunction pickErrLine(el) {\n  if (errFound || el.classList.contains('dimmed')) return;\n  if (el.dataset.isError === 'true') {\n    el.classList.add('flagged-correct');\n    errFound = true;\n    document.querySelectorAll('.err-line').forEach(o => { if (o !== el) o.classList.add('dimmed'); });\n    document.getElementById('errFeedback').classList.add('visible');\n  } else {\n    el.classList.add('flagged-wrong');\n    setTimeout(() => el.classList.remove('flagged-wrong'), 600);\n  }\n}\nfunction checkErrCorrection() {\n  const input = document.getElementById('errCorrection');\n  const expected = document.querySelector('.err-line[data-is-error=\"true\"]').dataset.correctLine;\n  const norm = s => (s || '').toLowerCase().replace(/\\s+/g, '').replace(/(cm)$/, '');\n  const msg = document.getElementById('errStatusMsg');\n  input.classList.remove('correct', 'incorrect');\n  if (norm(input.value) === norm(expected)) {\n    input.classList.add('correct');\n    msg.textContent = '✓ Correct. Line 3 should read: compass on B, width 3 cm (the same width as the arc from A). Now AP = BP and both angles are 35°.';\n  } else {\n    input.classList.add('incorrect');\n    msg.textContent = '✗ Not quite. The arc from B must match the width of the arc from A in line 2.';\n  }\n}\n\n// Place the strategies in their teaching positions: Order the Steps straight after\n// the We Do (combine the two algorithms), Error Analysis straight after the Quick Check.\n(function () {\n  const ord = document.getElementById('orderSection');\n  const wd = document.getElementById('weDoGrid');\n  const wdSec = wd && wd.closest('section');\n  if (ord && wdSec) wdSec.after(ord);\n  const err = document.getElementById('errSection');\n  const cp = document.getElementById('checkpointGrid');\n  const cpSec = cp && cp.closest('section');\n  if (err && cpSec) cpSec.after(err);\n})();\n\n// Topic-specific instructions for the frame's fixed section text\n(function () {\n  const set = (sel, html) => { const el = document.querySelector(sel); if (el) el.innerHTML = html; };\n  set('#tier1-body .sec-desc', 'Run the construction algorithms by hand. Type just the number for angles and lengths, or a single letter where you are asked to choose.');\n  set('#tier2-body .sec-desc', 'Loops, decisions and combined constructions. Trace each algorithm line by line. Type a number, <code>yes</code>/<code>no</code>, or a single letter.');\n  set('#tier3-body .sec-desc', 'The sign shop\\'s engraver: count the instructions, then cost the job and the refinement. Type just the number (no $).');\n  const wd = document.getElementById('weDoGrid');\n  const tip = wd && wd.parentElement.querySelector('.parts-instructions');\n  if (tip) tip.innerHTML = '💡 <strong>Why we do it this way:</strong> the arcs from O and A have the <strong>same width</strong>, so OA = OB = AB and triangle OAB is equilateral. That is a theorem doing the measuring for us, so no protractor is needed. Counting instructions tells the animator how many frames to draw.';\n  const m = document.getElementById('matchArea');\n  const md = m && m.parentElement.querySelector('.sec-desc');\n  if (md) md.innerHTML = 'Click a construction, then click the angle it produces. There are five matching pairs.';\n})();\n"
+ },
+ "arrays": {
+  "retrieval": [
+   {
+    "q": "An angle of 84° is split into two equal parts. How many degrees is each part?",
+    "a": "42",
+    "hint": "84 ÷ 2."
+   },
+   {
+    "q": "Each angle in an equilateral triangle is how many degrees?",
+    "a": "60",
+    "hint": "180° shared equally between 3 angles."
+   },
+   {
+    "q": "In a flow chart, which shape holds a yes/no decision? Type the shape's name.",
+    "a": "diamond",
+    "hint": "It is the shape with four equal sides standing on a corner.",
+    "fb": {
+     "rectangle": "A rectangle holds a process step. Decisions branch two ways from a different shape."
+    }
+   }
+  ],
+  "matchTerms": [
+   {
+    "html": "Arcs from O and A, <strong>same width</strong>",
+    "group": 1
+   },
+   {
+    "html": "<strong>60°</strong>",
+    "group": 1
+   },
+   {
+    "html": "Construct 60°, then <strong>bisect once</strong>",
+    "group": 2
+   },
+   {
+    "html": "<strong>30°</strong>",
+    "group": 2
+   },
+   {
+    "html": "Construct 60°, then <strong>bisect twice</strong>",
+    "group": 3
+   },
+   {
+    "html": "<strong>15°</strong>",
+    "group": 3
+   },
+   {
+    "html": "Bisect a <strong>right angle</strong>",
+    "group": 4
+   },
+   {
+    "html": "<strong>45°</strong>",
+    "group": 4
+   },
+   {
+    "html": "Construct 60° <strong>twice</strong>, side by side",
+    "group": 5
+   },
+   {
+    "html": "<strong>120°</strong>",
+    "group": 5
+   }
+  ],
+  "weDo": [
+   {
+    "q": "<svg viewBox=\"0 0 305 284\" width=\"305\" role=\"img\" aria-label=\"Construction of 60 degrees: ray OA, an arc centred on O through A, an arc centred on A with the same width crossing it at B, ray OB; dashed segment AB completes triangle OAB\" style=\"display:block;margin:8px 0;max-width:100%;height:auto\"><line x1=\"26.0\" y1=\"245.0\" x2=\"278.8\" y2=\"245.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><line x1=\"26.0\" y1=\"245.0\" x2=\"152.4\" y2=\"26.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><circle cx=\"26.0\" cy=\"245.0\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"14.0\" y=\"251.0\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">O</text><path d=\"M60.0 245.0 A34.0 34.0 0 0 0 43.0 215.5\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.3\"/><text x=\"72.8\" y=\"223.0\" font-size=\"13\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">60°</text><path d=\"M145.3 257.5 A120.0 120.0 0 0 0 57.1 129.1\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"146.0\" cy=\"245.0\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"150.0\" y=\"265.0\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><path d=\"M125.2 126.8 A120.0 120.0 0 0 0 54.1 167.8\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"86.0\" cy=\"141.0\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"84.0\" y=\"127.2\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><line x1=\"146.0\" y1=\"245.0\" x2=\"86.0\" y2=\"141.0\" stroke=\"#8a96a3\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-dasharray=\"4 3\"/></svg><div style='font-family:Consolas,Menlo,monospace;background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;line-height:1.6;font-size:.95rem;color:var(--navy);margin:8px 0'>1 DRAW ray from O; MARK A on it<br>2 DRAW arc centre O through A (width OA)<br>3 DRAW arc centre A, same width; MARK B where the arcs cross<br>4 DRAW ray OB; OUTPUT ∠AOB</div>The width is 5 cm, so OA = 5 cm. How long is AB, in cm?",
+    "a": "5",
+    "hint": "B is on the arc centred at A, drawn with the same 5 cm width.",
+    "fb": {
+     "10": "AB is one compass width, not two. B sits on the arc centred at A, so AB = 5 cm."
+    }
+   },
+   {
+    "q": "OB is also 5 cm (B is on the arc centred at O). Triangle OAB is equilateral. What is ∠AOB, in degrees?",
+    "a": "60",
+    "hint": "Every angle of an equilateral triangle is 180° ÷ 3.",
+    "fb": {
+     "180": "180° is the angle sum. An equilateral triangle shares it equally between three angles."
+    }
+   },
+   {
+    "q": "Now run the bisector algorithm on ∠AOB. What size is each new angle, in degrees?",
+    "a": "30",
+    "hint": "Bisecting halves the angle: 60 ÷ 2."
+   },
+   {
+    "q": "<strong>Animation.</strong> The 60° construction has 4 instructions and the bisector algorithm adds 4 more (3 arcs and 1 ray). How many frames does the full 30° animation need?",
+    "a": "8",
+    "hint": "One frame per instruction: 4 + 4."
+   }
+  ],
+  "checkpoint": [
+   {
+    "q": "<svg viewBox=\"0 0 405 247\" width=\"300\" role=\"img\" aria-label=\"An angle of 128 degrees at vertex O; an arc centred on O crosses the arms at A and B; an arc centred on A is drawn inside the angle; an arc centred on B with the same radius crosses it at P\" style=\"display:block;margin:8px 0;max-width:100%;height:auto\"><line x1=\"160.3\" y1=\"220.6\" x2=\"378.5\" y2=\"220.6\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><line x1=\"160.3\" y1=\"220.6\" x2=\"26.0\" y2=\"48.6\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><circle cx=\"160.3\" cy=\"220.6\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"148.3\" y=\"226.6\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">O</text><path d=\"M194.3 220.6 A34.0 34.0 0 0 0 139.4 193.8\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.3\"/><text x=\"184.0\" y=\"177.1\" font-size=\"13\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">128°</text><path d=\"M279.7 233.1 A120.0 120.0 0 0 0 77.0 134.3\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"280.3\" cy=\"220.6\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"86.5\" cy=\"126.0\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"284.3\" y=\"240.6\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"68.2\" y=\"138.7\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><path d=\"M280.9 58.8 A161.8 161.8 0 0 0 195.1 83.1\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M247.3 108.6 A161.8 161.8 0 0 0 213.6 26.0\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"236.3\" cy=\"64.9\" r=\"3.6\" fill=\"#BE5837\"/><text x=\"249.4\" y=\"43.0\" font-size=\"14\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text></svg>The bisector algorithm is run on an angle of 128°. What size is ∠AOP, in degrees?",
+    "a": "64",
+    "hint": "OP splits 128° into two equal angles.",
+    "fb": {
+     "128": "That is the whole angle. The bisector splits it into two equal parts."
+    }
+   },
+   {
+    "q": "The 60° algorithm is run with a compass width of 7 cm. How long is AB, in cm?",
+    "a": "7",
+    "hint": "Both arcs use the same width, and triangle OAB is equilateral."
+   }
+  ],
+  "practice1": [
+   {
+    "q": "<svg viewBox=\"0 0 262 213\" width=\"262\" role=\"img\" aria-label=\"An angle of 50 degrees at vertex O; an arc centred on O crosses the arms at A and B; an arc centred on A is drawn inside the angle; an arc centred on B with the same radius crosses it at P\" style=\"display:block;margin:8px 0;max-width:100%;height:auto\"><line x1=\"26.0\" y1=\"187.2\" x2=\"236.5\" y2=\"187.2\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><line x1=\"26.0\" y1=\"187.2\" x2=\"161.3\" y2=\"26.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><circle cx=\"26.0\" cy=\"187.2\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"14.0\" y=\"193.2\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">O</text><path d=\"M60.0 187.2 A34.0 34.0 0 0 0 47.9 161.2\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.3\"/><text x=\"74.9\" y=\"169.4\" font-size=\"13\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">50°</text><path d=\"M145.3 199.8 A120.0 120.0 0 0 0 93.1 87.7\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"146.0\" cy=\"187.2\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"103.1\" cy=\"95.3\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"150.0\" y=\"207.2\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"90.9\" y=\"83.2\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text><path d=\"M194.1 128.3 A76.1 76.1 0 0 0 155.5 111.7\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M167.1 136.5 A76.1 76.1 0 0 0 179.2 96.4\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"176.0\" cy=\"117.3\" r=\"3.6\" fill=\"#BE5837\"/><text x=\"203.1\" y=\"109.6\" font-size=\"14\" fill=\"#BE5837\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">P</text></svg>The bisector algorithm is run on a 50° angle. What size is ∠AOP, in degrees?",
+    "a": "25",
+    "hint": "50 ÷ 2."
+   },
+   {
+    "q": "The bisector algorithm is run on a 110° angle. What size is each new angle, in degrees?",
+    "a": "55",
+    "hint": "110 ÷ 2."
+   },
+   {
+    "q": "The bisector algorithm is run on a right angle. What size is each new angle, in degrees?",
+    "a": "45",
+    "hint": "A right angle is 90°."
+   },
+   {
+    "q": "Construct 60°, then bisect it <strong>twice</strong>. What angle is produced, in degrees?",
+    "a": "15",
+    "hint": "60 → 30 → 15.",
+    "fb": {
+     "30": "That is one bisection. Halve it again."
+    }
+   },
+   {
+    "q": "<svg viewBox=\"0 0 272 259\" width=\"260\" role=\"img\" aria-label=\"An angle of 70 degrees at vertex O; an arc centred on O crosses the arms at A and B\" style=\"display:block;margin:8px 0;max-width:100%;height:auto\"><line x1=\"26.0\" y1=\"233.0\" x2=\"246.3\" y2=\"233.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><line x1=\"26.0\" y1=\"233.0\" x2=\"101.3\" y2=\"26.0\" stroke=\"#1F4D54\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><circle cx=\"26.0\" cy=\"233.0\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"14.0\" y=\"239.0\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">O</text><path d=\"M60.0 233.0 A34.0 34.0 0 0 0 37.6 201.0\" fill=\"none\" stroke=\"#1F4D54\" stroke-width=\"1.3\"/><text x=\"70.2\" y=\"207.0\" font-size=\"13\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">70°</text><path d=\"M145.3 245.5 A120.0 120.0 0 0 0 55.0 116.5\" fill=\"none\" stroke=\"#BE5837\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><circle cx=\"146.0\" cy=\"233.0\" r=\"3.6\" fill=\"#1F4D54\"/><circle cx=\"67.0\" cy=\"120.2\" r=\"3.6\" fill=\"#1F4D54\"/><text x=\"150.0\" y=\"253.0\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">A</text><text x=\"50.0\" y=\"113.3\" font-size=\"14\" fill=\"#1F4D54\" text-anchor=\"middle\" font-family=\"Georgia,serif\" font-weight=\"bold\">B</text></svg>The first arc is centred on O with width 6 cm. It crosses the arms at A and B. How long is OB, in cm?",
+    "a": "6",
+    "hint": "Every point on that arc is the same distance from O."
+   },
+   {
+    "q": "Which instruction must come <strong>first</strong> in the bisector algorithm?<br>A) Draw the ray OP<br>B) Draw an arc centred on O crossing both arms<br>C) Draw an arc centred on A<br>Type A, B or C.",
+    "a": "B",
+    "hint": "A and B have to exist before you can put the compass on them.",
+    "fb": {
+     "c": "The compass cannot go on A until A has been marked. Which arc marks A?"
+    }
+   },
+   {
+    "q": "How many <strong>arcs</strong> does the bisector algorithm draw?",
+    "a": "3",
+    "hint": "One from O, one from A, one from B."
+   },
+   {
+    "q": "<strong>Test case.</strong> The bisector is drawn on a 140° angle. The student measures ∠AOP = 70°. What should ∠POB measure, in degrees, if the algorithm worked?",
+    "a": "70",
+    "hint": "A bisector makes the two angles equal."
+   },
+   {
+    "q": "The 60° algorithm is run, then run <strong>again</strong> starting from ray OB to make ray OC. What size is ∠AOC, in degrees?",
+    "a": "120",
+    "hint": "Two 60° angles side by side."
+   },
+   {
+    "q": "The arcs from A and B use the same width, 4 cm. P is where they cross. How long is BP, in cm?",
+    "a": "4",
+    "hint": "P is on the arc centred at B."
+   }
+  ],
+  "practice2": [
+   {
+    "q": "<div style='font-family:Consolas,Menlo,monospace;background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;line-height:1.6;font-size:.95rem;color:var(--navy);margin:8px 0'>1 SET angle = 60<br>2 REPEAT 3 times:<br>3 &nbsp;&nbsp;BISECT the angle; SET angle = angle ÷ 2<br>4 OUTPUT angle</div>What does this algorithm output, in degrees?",
+    "a": "7.5",
+    "hint": "60 → 30 → 15 → ?",
+    "fb": {
+     "20": "Bisecting divides by 2 each time; it does not divide 60 by 3."
+    }
+   },
+   {
+    "q": "<div style='font-family:Consolas,Menlo,monospace;background:#fff;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;line-height:1.6;font-size:.95rem;color:var(--navy);margin:8px 0'>1 SET angle = 90; SET count = 0<br>2 WHILE angle &gt; 10:<br>3 &nbsp;&nbsp;BISECT; SET angle = angle ÷ 2; SET count = count + 1<br>4 OUTPUT count</div>What does this algorithm output?",
+    "a": "4",
+    "hint": "90 → 45 → 22.5 → 11.25 → 5.625. Count the bisections until the angle is no longer above 10.",
+    "fb": {
+     "3": "After 3 bisections the angle is 11.25°, still greater than 10, so the loop runs once more."
+    }
+   },
+   {
+    "q": "In the bisector algorithm AB = 7 cm. The width for the arcs from A and B must be <strong>greater than</strong> half of AB. What is the smallest whole number of cm that works?",
+    "a": "4",
+    "hint": "Half of 7 is 3.5. The width must be more than that.",
+    "fb": {
+     "3.5": "At exactly 3.5 cm the arcs only touch on AB itself. The width must be greater than half of AB."
+    }
+   },
+   {
+    "q": "AB = 7 cm and a student uses a width of 3 cm for the arcs from A and B. Will the arcs cross? Type <code>yes</code> or <code>no</code>.",
+    "a": "no",
+    "hint": "3 + 3 = 6, which is less than the 7 cm gap between A and B."
+   },
+   {
+    "q": "Which algorithm produces a 15° angle?<br>A) Construct 60°, bisect once<br>B) Construct 60°, bisect twice<br>C) Bisect a right angle twice<br>D) Construct 60°, bisect four times<br>Type A, B, C or D.",
+    "a": "B",
+    "hint": "Halve 60 until you reach 15.",
+    "fb": {
+     "c": "90 → 45 → 22.5, which is not 15."
+    }
+   },
+   {
+    "q": "Rays OB (at 60°) and OC (at 90°) are both measured from arm OA. The angle ∠BOC is bisected by ray OD. What size is ∠AOD, in degrees?",
+    "a": "75",
+    "hint": "∠BOC = 30°. Half of it is 15°, added on to 60°.",
+    "fb": {
+     "15": "15° is ∠BOD. The question asks for the angle from OA, so add ∠AOB = 60°."
+    }
+   }
+  ],
+  "practice3": [
+   {
+    "q": "The engraver charges $2.50 per instruction (each arc or line is one instruction). The bisector algorithm draws 3 arcs and 1 ray. What does one bisection cost, in dollars?",
+    "a": "10",
+    "hint": "4 instructions × $2.50."
+   },
+   {
+    "q": "A 30° cut runs the 60° construction (2 lines and 2 arcs) and then the full bisector algorithm (3 arcs and 1 line). At $2.50 per instruction, what does the 30° cut cost, in dollars?",
+    "a": "20",
+    "hint": "4 + 4 = 8 instructions.",
+    "fb": {
+     "10": "That only counts one of the two algorithms. Add the 60° construction too."
+    }
+   },
+   {
+    "q": "<strong>Refinement.</strong> The arc from O in the 60° construction already crosses both rays, so it marks A and B for the bisector. The refined algorithm skips the bisector's arc from O. What does the 30° cut cost now, in dollars?",
+    "a": "17.50",
+    "hint": "One fewer instruction: 7 × $2.50.",
+    "fb": {
+     "20": "That is the unrefined cost. The refinement removes one arc."
+    }
+   },
+   {
+    "q": "The shop takes an order for 40 signs, each with one 30° cut. How much does the refinement save on the whole order, in dollars?",
+    "a": "100",
+    "hint": "Each sign saves one instruction, $2.50.",
+    "fb": {
+     "2.5": "That is the saving on one sign. There are 40 signs."
+    }
+   }
+  ],
+  "exitProbs": [
+   {
+    "q": "The bisector algorithm is run on a 96° angle. What size is ∠AOP, in degrees?",
+    "a": "48",
+    "hint": "96 ÷ 2."
+   },
+   {
+    "q": "An algorithm starts with a right angle and bisects it 3 times. What angle does it output, in degrees?",
+    "a": "11.25",
+    "hint": "90 → 45 → 22.5 → ?"
+   },
+   {
+    "q": "Jordan's bisector algorithm says “draw an arc from A, then draw an arc from B” but does not say the widths must match. Explain why the arcs from A and B must use the same width.",
+    "a": "TEXT",
+    "hint": "Think about what P must be the same distance from."
+   }
+  ]
+ }
+}
