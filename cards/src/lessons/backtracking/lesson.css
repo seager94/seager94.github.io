@@ -15,3 +15,31 @@
 .tiles .tile:disabled{opacity:.3;cursor:default}
 .recap li{grid-template-columns:5.6rem 1fr}
 .recap .art .tile.op{box-shadow:inset 0 0 0 1.5px var(--line)}
+/* still machine (Why? panels and bridges) */
+.sf{display:block;width:100%;height:auto}
+.sf-wrap{width:100%;display:flex;justify-content:center;padding-top:.4rem}
+.sf-box{fill:#fff;stroke:var(--line);stroke-width:1.5;stroke-dasharray:4 3}
+.sf-box.good{fill:var(--go-soft);stroke:var(--go);stroke-width:2}
+.sf-box.bad{fill:var(--no-soft);stroke:var(--no);stroke-width:2}
+.sf-t{fill:var(--num)} .sf-td{fill:var(--num-deep)}
+.sf-q{fill:var(--var)} .sf-qd{fill:var(--var-deep)}
+.sf-n{font:400 19px var(--maths);fill:var(--ink);text-anchor:middle;font-variant-numeric:lining-nums}
+.sf-n.q{fill:#fff;font-style:italic}
+.sf-n.sm{font-size:17px}
+.sf-s{fill:var(--ink)}
+.sf-u{fill:#fff;stroke:var(--line);stroke-width:2}
+.sf-st,.sf-ut{font:400 18px var(--maths);text-anchor:middle;font-variant-numeric:lining-nums}
+.sf-st{fill:#fff} .sf-ut{fill:var(--ink)}
+.sf-a{stroke:var(--ink);stroke-width:3.5;fill:none} .sf-ah{fill:var(--ink)}
+.sf-c{font:400 12.5px var(--body);fill:var(--ink-2);text-anchor:middle}
+.sf-c .sf-x{font:italic 400 15px var(--maths);fill:var(--var)}
+.why-body .wy-fig{display:flex;justify-content:center;margin:.1rem 0 .6rem}
+.why-body .wy-ln{margin:.3rem 0 0}
+/* card 15 part 2: four-step machines and a single row of four choices */
+.flow.tight .f-val{min-width:3.2rem}
+.flow.tight .f-step{min-width:3.9rem}
+.flow.tight .f-arr{flex-basis:.9rem}
+@media (min-width:44rem){.flow.tight{flex-wrap:nowrap}}
+.choices.row4{grid-template-columns:repeat(4,1fr)}
+.choices.row4 .choice{text-align:center}
+@media (max-width:34rem){.choices.row4{grid-template-columns:1fr 1fr}}

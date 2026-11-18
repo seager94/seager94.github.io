@@ -20,3 +20,32 @@
 .m-body.sm{width:5.4rem;height:4.8rem}
 .mop{color:#fff;font:400 1.6rem var(--maths)}
 .recap .art svg.sm{height:1.1rem}
+/* still diagrams: Why? panels and bridges */
+.why-body .why-fig{display:flex;justify-content:center;margin:.1rem 0 .5rem}
+.why-body .why-ln{margin:.25rem 0 0}
+.fig{display:block;width:100%;height:auto}
+.still-scale{width:min(100%,21rem)}
+.still-scale .scale-wrap{width:100%}
+.still-scale .eqbar{font-size:1.05rem}
+.stage .still-scale{width:min(100%,24rem,calc(30vh * 2.42))}
+.stage > .fig{margin:.6rem 0}
+.fig-n{font:400 17px var(--maths);fill:var(--ink)}
+.fig-eq{font:400 26px var(--maths);fill:var(--ink-2)}
+.fig-num{fill:var(--num);stroke:var(--num-deep);stroke-width:1.5}
+.fig-nt{font:400 20px var(--maths);fill:var(--ink)}
+.fig-var{fill:var(--var);stroke:var(--var-deep);stroke-width:1.5}
+.fig-vt{font:400 20px var(--maths);fill:#fff}
+.fig-v{font-style:italic;fill:var(--var)}
+.fig-lab{font:400 19px var(--maths);fill:var(--ink)}
+.fig-cap{font:400 14px var(--body);fill:var(--ink-2)}
+.fig-br{fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linejoin:round}
+.fig-op{fill:var(--ink)}
+.fig-ot{font:400 19px var(--maths);fill:#fff}
+.fig-arr{fill:none;stroke:var(--ink-2);stroke-width:2.5;stroke-linecap:round}
+.fig-ah{fill:var(--ink-2)}
+.wl{display:grid;grid-template-columns:auto auto auto;justify-content:center;column-gap:.6rem;row-gap:.2rem;align-items:baseline;font:400 1.35rem/1.3 var(--maths)}
+.wl .l{text-align:right}
+.wl .r{text-align:left}
+.wl .m{font-size:1em}
+.wl .fin{color:var(--go-deep);font-weight:700}
+.sc-n{font:400 21px var(--maths);fill:var(--ink)}

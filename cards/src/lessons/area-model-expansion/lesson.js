@@ -397,13 +397,37 @@ function checkLine(lab, calc, area, vals, x, minus) {
 }
 const SIGN = 'The minus is already in front of the box. Type the strip’s area with no sign.';
 
+// Why? panels: the card's rectangle, small and still, beside one or two lines of working.
+// o: { maxLen, maxA, h } as for makeArea (h in rem). Returns HTML.
+function stillArea(o, spec) {
+  const d = document.createElement('div');
+  makeArea(d, o).draw(spec);
+  const w = Math.min(20, 4.6 + o.maxLen * o.h / o.maxA);
+  return '<div class="wy-am" style="width:' + w.toFixed(2) + 'rem">' + d.innerHTML + '</div>';
+}
+function whyBox(pic, lines) {
+  return '<div class="wy"><div class="wy-pic">' + pic + '</div><div class="wy-txt">' + lines.map(l => '<p>' + l + '</p>').join('') + '</div></div>';
+}
+// A still rectangle with one line of maths under it, for bridge screens.
+function bridgeArea(stage, o, spec, line) {
+  const am = makeArea(stage, o);
+  am.draw(spec); am.lock();
+  stage.append(h('<div class="live">' + line + '</div>'));
+}
+
 /* ---------- cards ---------- */
 
 const cards = [
 
 /* 1 */ {
   prompt: 'Find the area of this 3 by 14 rectangle.',
-  sub: 'Drag the split line to cut it into two parts that are easier to multiply.',
+  sub: 'Three $14 tickets cost 3 × 14 dollars, and splitting the 14 makes that easy. Drag the split line to cut the rectangle into two parts that are easier to multiply.',
+  why: () => whyBox(stillArea({ maxLen: 14, maxA: 3, h: 4.2 }, lay(3, '3', [
+      { len: 5, kind: 'num', lab: '5', area: mx('3 × 5') + '<small>= 15</small>' },
+      { len: 9, kind: 'num', lab: '9', area: mx('3 × 9') + '<small>= 27</small>' }])), [
+    'A cut does not add or remove any squares, so every split gives the same total. Split at 5: ' + mx('15 + 27 = 42') + '.',
+    'Splitting at 10 is the handy one, because 3 × 10 is easy: ' + mx('30 + 12 = 42') + '.'
+  ]),
   build(stage, ctl, ctx) {
     let p = 7;
     const am = makeArea(stage, { maxLen: 14, maxA: 3, drag: { p: [2, 12] }, onDrag(k, v) { p = v; draw(); } });
@@ -435,6 +459,11 @@ const cards = [
 
 /* 2 */ {
   prompt: 'The rectangle is 3 by ' + mx('(10 + 4)') + '. Which calculation gives its area?',
+  why: () => whyBox(stillArea({ maxLen: 14, maxA: 3, h: 4.2 }, lay(3, '3', [
+      { len: 10, kind: 'num', lab: '10', area: mx('3 × 10') }, { len: 4, kind: 'num', lab: '4', area: mx('3 × 4') }])), [
+    'Count by rows: 3 rows, each with 10 + 4 squares. That is ' + mx('3 × (10 + 4)') + '.',
+    'Count by parts: ' + mx('3 × 10 + 3 × 4') + '. They are the same squares, so both counts are 42.'
+  ]),
   build(stage, ctl, ctx) {
     const am = makeArea(stage, { maxLen: 14, maxA: 3 });
     const draw = shown => am.draw(lay(3, '3', [{ len: 10, kind: 'num', lab: '10', area: shown ? '30' : '' }, { len: 4, kind: 'num', lab: '4', area: shown ? '12' : '' }]));
@@ -456,8 +485,51 @@ const cards = [
 },
 
 /* 3 */ {
+  bridge: true,
+  prompt: 'You cut the rectangle into two parts, multiplied each part by 3, then added. Multiplying every part of a sum like this is called the <b>distributive law</b>.',
+  show(stage) {
+    bridgeArea(stage, { maxLen: 14, maxA: 3, h: 5 }, lay(3, '3', [{ len: 10, kind: 'num', lab: '10', area: '30' }, { len: 4, kind: 'num', lab: '4', area: '12' }]),
+      mx('3 × (10 + 4) = 3 × 10 + 3 × 4'));
+  }
+},
+
+/* 4 */ {
   prompt: 'This rectangle is 3 by ' + mx('(x + 4)') + '. Write its area without brackets.',
   sub: 'Drag the slider to change ' + mx('x') + '. The area of each part is written inside it.',
+  why: () => whyBox(stillArea({ maxLen: 9, maxA: 3, h: 4.2 }, lay(3, '3', [
+      { len: 5, kind: 'var', lab: mx('x'), area: mx('3x') }, { len: 4, kind: 'num', lab: '4', area: '12' }])), [
+    'Blue part: 3 rows, each ' + mx('x') + ' long. ' + mx('x + x + x = 3x') + '.',
+    'Yellow part: 3 rows of 4. ' + mx('4 + 4 + 4 = 12') + '.'
+  ]),
+  then: {
+    prompt: 'The slider stops at 10. Use ' + mx('3x + 12') + ' to find the area when ' + mx('x = 20') + '.',
+    reset: false,
+    why: () => whyBox(stillArea({ maxLen: 24, maxA: 3, h: 2.4 }, lay(3, '3', [
+        { len: 20, kind: 'var', lab: mx('x = 20'), area: '60' }, { len: 4, kind: 'num', lab: '4', area: '12' }], { grid: false })), [
+      '3 rows of 20 is 60, and 3 rows of 4 is 12: ' + mx('60 + 12 = 72') + '.',
+      'The bracket form agrees: ' + mx('3 × (20 + 4) = 3 × 24 = 72') + '.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      const ans = makeAnswer(ctl, 'Area when ' + mx('x = 20'), ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 72) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 332) return mx('3x') + ' means 3 × ' + mx('x') + ', not a 3 written in front of the 20. 3 × 20 = 60, then add 12.';
+          if (v === 60) return 'That is the blue part, 3 × 20. Add the yellow part, which is still 12.';
+          if (v === 32) return '20 + 12 counts one row of the blue part. It has 3 rows: 3 × 20.';
+          if (v === 64) return 'You added 4, the yellow length. The yellow area is 3 × 4 = 12.';
+          if (v === 35) return '3 + 20 + 12 adds the 3. ' + mx('3x') + ' means 3 × ' + mx('x') + ', so multiply: 3 × 20.';
+          return 'Swap the ' + mx('x') + ' for 20: work out 3 × 20, then add 12.';
+        },
+        win: () => mx('3 × 20 + 12 = 72') + '. The expansion gives the area for any ' + mx('x') + ', even one too long for the slider.',
+        won() { ans.mark('good'); ans.lock(); p1.live.innerHTML = '<span class="lab">Whole area</span>' + mx('3 × (20 + 4) = 72'); },
+        solve() { ans.set(72); }
+      };
+    }
+  },
   build(stage, ctl, ctx) {
     let x = 5, solved = false;
     const am = makeArea(stage, { maxLen: 14, maxA: 3 });
@@ -484,13 +556,20 @@ const cards = [
       },
       win: () => mx('3(x + 4) = 3x + 12') + '. Check it: when ' + mx('x = ' + x) + ', 3 × ' + x + ' + 12 = ' + (3 * x + 12) + ', the same as the whole rectangle. The 3 multiplies both the ' + mx('x') + ' and the 4.',
       won() { solved = true; draw(); bl.mark('good'); bl.lock(); },
-      solve() { bl.set([3, 12]); }
+      solve() { bl.set([3, 12]); },
+      recap: () => mx('3(x + 4) = 3x + 12'),
+      live
     };
   }
 },
 
-/* 4 */ {
+/* 5 */ {
   prompt: 'Kai says ' + mx('3(x + 4) = 3x + 4') + '. Drag the slider. For which values of ' + mx('x') + ' is Kai right?',
+  why: () => whyBox(stillArea({ maxLen: 9, maxA: 3, h: 4.2 }, lay(3, '3', [
+      { len: 5, kind: 'var', lab: mx('x'), area: mx('3x') }, { len: 4, kind: 'num', lab: '4', area: '12', hl: 1, hlLab: 'Kai’s 4' }])), [
+    'Kai counted one yellow row, 4. The other two rows hold 4 + 4 = 8 more squares.',
+    'Those 8 squares are there for every ' + mx('x') + '. When ' + mx('x = 1') + ' it is 15 against 7, and when ' + mx('x = 10') + ' it is 42 against 34.'
+  ]),
   build(stage, ctl, ctx) {
     let x = 5;
     const am = makeArea(stage, { maxLen: 14, maxA: 3, h: 4.5 });
@@ -519,8 +598,13 @@ const cards = [
   }
 },
 
-/* 5 */ {
+/* 6 */ {
   prompt: 'Build a rectangle for ' + mx('2(x + 5)') + '.',
+  why: () => whyBox(stillArea({ maxLen: 9, maxA: 2, h: 3 }, lay(2, '2', [
+      { len: 4, kind: 'var', lab: mx('x'), area: mx('2x') }, { len: 5, kind: 'num', lab: '5', area: '10' }], { grid: false })), [
+    'A rectangle’s area is height × length. In ' + mx('2(x + 5)') + ' the 2 is the height and ' + mx('x + 5') + ' is the length.',
+    'Swapping them gives ' + mx('5(x + 2) = 5x + 10') + ', a different rectangle: its blue part is ' + mx('5x') + ', not ' + mx('2x') + '.'
+  ]),
   sub: 'The blue length is ' + mx('x') + '. Drag the bottom edge to set the height, and the right edge to set the yellow length.',
   build(stage, ctl, ctx) {
     const X = 4;
@@ -548,8 +632,22 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 7 */ {
+  bridge: true,
+  prompt: 'You wrote the area of ' + mx('3(x + 4)') + ' as ' + mx('3x + 12') + ', with no brackets. Removing the brackets like this is called <b>expanding</b>.',
+  show(stage) {
+    bridgeArea(stage, { maxLen: 9, maxA: 3, h: 5 }, lay(3, '3', [{ len: 5, kind: 'var', lab: mx('x'), area: mx('3x') }, { len: 4, kind: 'num', lab: '4', area: '12' }]),
+      mx('3(x + 4) = 3x + 12'));
+  }
+},
+
+/* 8 */ {
   prompt: 'Expand ' + mx('5(2x + 1)') + '.',
+  why: () => whyBox(stillArea({ maxLen: 7, maxA: 5, h: 6 }, lay(5, '5', [
+      { len: 3, kind: 'var', lab: mx('x'), area: mx('5x') }, { len: 3, kind: 'var', lab: mx('x'), area: mx('5x') }, { len: 1, kind: 'num', lab: '1', area: '5' }])), [
+    'The blue length ' + mx('2x') + ' is two lengths of ' + mx('x') + '. Each blue strip is 5 tall, so each holds ' + mx('5x') + '.',
+    mx('5x + 5x = 10x') + ', and the yellow part is 5 × 1 = 5.'
+  ]),
   sub: 'The blue length is ' + mx('2x') + ', two lengths of ' + mx('x') + '. Use the slider to test your answer.',
   build(stage, ctl, ctx) {
     let x = 3, solved = false;
@@ -582,8 +680,13 @@ const cards = [
   }
 },
 
-/* 7 */ {
+/* 9 */ {
   prompt: 'Tap every expansion that is correct.',
+  why: () => whyBox(stillArea({ maxLen: 6, maxA: 5, h: 5.5 }, lay(5, '5', [
+      { len: 3, kind: 'var', lab: mx('x'), area: mx('5x') }, { len: 3, kind: 'num', lab: '3', area: '15' }])), [
+    'The yellow part of ' + mx('5(x + 3)') + ' is 5 by 3, so it holds 15 squares. 8 is only 5 + 3.',
+    'Test with ' + mx('x = 3') + ': ' + mx('5 × (3 + 3) = 30') + '. ' + mx('5 × 3 + 15 = 30') + ' matches, but ' + mx('5 × 3 + 8 = 23') + ' does not.'
+  ]),
   sub: 'Picture each one as a rectangle.',
   build(stage, ctl, ctx) {
     stage.hidden = true;
@@ -608,8 +711,47 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 10 */ {
   prompt: 'Expand ' + mx('4(x − 2)') + '.',
+  why: () => whyBox(stillArea({ maxLen: 7, maxA: 4, h: 4.4 }, layCut(4, '4', 7, 2, { lab: mx('x'), keepLab: mx('x − 2'), cutLab: '2', keep: mx('4x − 8'), cut: '8' })), [
+    'Before the cut, the rectangle is 4 by ' + mx('x') + ', so it holds ' + mx('4x') + '.',
+    'The strip is 4 rows of 2, so 8 comes off: ' + mx('4x − 8') + '. The 4 multiplies the 2 because the strip is 4 rows tall.'
+  ]),
+  then: {
+    prompt: 'Now the strip cut off is 3 long. Expand ' + mx('4(x − 3)') + '.',
+    reset: false,
+    why: () => whyBox(stillArea({ maxLen: 8, maxA: 4, h: 4.4 }, layCut(4, '4', 8, 3, { lab: mx('x'), keepLab: mx('x − 3'), cutLab: '3', keep: mx('4x − 12'), cut: '12' })), [
+      'The whole rectangle is still 4 by ' + mx('x') + ', so it holds ' + mx('4x') + '. The strip is now 4 rows of 3, which is 12.',
+      'Check with ' + mx('x = 8') + ': ' + mx('4 × (8 − 3) = 20') + ' and ' + mx('4 × 8 − 12 = 20') + '.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      const X = 8;
+      let solved = false;
+      const bl = makeBlanks(ctl, mx('4(x − 3) = 4x − {}'), ctx);
+      function draw() {
+        p1.am.draw(layCut(4, '4', X, 3, { lab: mx('x'), keepLab: mx('x − 3'), cutLab: '3', keep: solved ? mx('4x − 12') : mx('4(x − 3)'), cut: solved ? '12' : '?' }));
+        p1.live.innerHTML = '<span class="lab">Blue part when ' + mx('x = ' + X) + '</span>' + mx('4 × (' + X + ' − 3) = ' + 4 * (X - 3));
+      }
+      draw();
+      return {
+        check() {
+          const k = bl.vals()[0];
+          if (isNaN(k)) { bl.mark('bad'); return 'Type a whole number in the box.'; }
+          if (k === 12) return true;
+          bl.mark('bad');
+          if (k < 0) return SIGN;
+          if (k === 3) return 'You multiplied the ' + mx('x') + ' by 4 but not the 3. The strip is 4 rows tall and 3 long, so its area is 4 × 3, not 3.';
+          if (k === 8) return '8 was the old strip, 4 × 2. This strip is 3 long, so its area is 4 × 3.';
+          if (k === 7) return '7 is 4 + 3. The strip is 4 by 3, so multiply.';
+          if (k === 1) return '1 is 4 − 3. The strip is 4 by 3: multiply to get its area.';
+          return 'Only the strip changed. It is 4 tall and 3 long. What is its area?';
+        },
+        win: () => mx('4(x − 3) = 4x − 12') + '. A longer strip takes more away: 12 this time, not 8.',
+        won() { solved = true; bl.mark('good'); bl.lock(); draw(); },
+        solve() { bl.set([12]); }
+      };
+    }
+  },
   sub: 'A 4 by 2 strip is cut off the end of a 4 by ' + mx('x') + ' rectangle. Use the slider to test your answer.',
   build(stage, ctl, ctx) {
     let x = 7, solved = false;
@@ -637,13 +779,19 @@ const cards = [
       },
       win: () => mx('4(x − 2) = 4x − 8') + ': the whole ' + mx('4x') + ' minus the 4 by 2 strip. When ' + mx('x = ' + x) + ': 4 × ' + (x - 2) + ' = ' + 4 * (x - 2) + ' and ' + 4 * x + ' − 8 = ' + (4 * x - 8) + '.',
       won() { solved = true; bl.mark('good'); bl.lock(); draw(); },
-      solve() { bl.set([4, 8]); }
+      solve() { bl.set([4, 8]); },
+      recap: () => mx('4(x − 2) = 4x − 8'),
+      am, live
     };
   }
 },
 
-/* 9 */ {
+/* 11 */ {
   prompt: 'Expand ' + mx('2(3x − 4)') + '.',
+  why: () => whyBox(stillArea({ maxLen: 9, maxA: 2, h: 3 }, layCut(2, '2', 9, 4, { lab: mx('3x'), keepLab: mx('3x − 4'), cutLab: '4', keep: mx('6x − 8'), cut: '8', ticks: [3, 6] })), [
+    'The whole length ' + mx('3x') + ' is three lengths of ' + mx('x') + ', each 2 tall: ' + mx('2x + 2x + 2x = 6x') + '.',
+    'The strip is 2 rows of 4, so 8 comes off: ' + mx('6x − 8') + '.'
+  ]),
   sub: 'The blue length is ' + mx('3x') + ' with 4 cut off. Use the slider to test your answer.',
   build(stage, ctl, ctx) {
     let x = 3, solved = false;
@@ -677,8 +825,13 @@ const cards = [
   }
 },
 
-/* 10 */ {
+/* 12 */ {
   prompt: 'Now go backwards. Build a rectangle with area ' + mx('2x + 4') + '.',
+  why: () => whyBox(stillArea({ maxLen: 6, maxA: 2, h: 3 }, lay(2, '2', [
+      { len: 4, kind: 'var', lab: mx('x'), area: mx('2x') }, { len: 2, kind: 'num', lab: '2', area: '4' }], { grid: false })), [
+    'Both parts share one height. ' + mx('2x') + ' is 2 × ' + mx('x') + ' and 4 is 2 × 2, so a height of 2 fits both.',
+    'That leaves lengths ' + mx('x') + ' and 2. Expand to check: ' + mx('2(x + 2) = 2x + 4') + '.'
+  ]),
   sub: 'The blue length is ' + mx('x') + '. Drag the bottom edge and the right edge until the areas inside match.',
   build(stage, ctl, ctx) {
     const X = 4;
@@ -706,8 +859,47 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 13 */ {
   prompt: 'This rectangle has area ' + mx('6x + 9') + '. Drag its height to factorise it.',
+  why: () => whyBox(stillArea({ maxLen: 7, maxA: 3, h: 4.2 }, lay(3, '3', [
+      { len: 4, kind: 'var', lab: mx('2x'), area: mx('6x') }, { len: 3, kind: 'num', lab: '3', area: '9' }], { grid: false })), [
+    'Factors of 6: 1, 2, 3, 6. Factors of 9: 1, 3, 9. The biggest number in both lists is 3.',
+    'Divide each area by the height to get its length: ' + mx('6x ÷ 3 = 2x') + ' and ' + mx('9 ÷ 3 = 3') + '.'
+  ]),
+  then: {
+    prompt: 'Check it. When ' + mx('x = 2') + ', what is the area of the whole rectangle?',
+    sub: 'Use ' + mx('6x + 9') + ' or ' + mx('3(2x + 3)') + '. They should agree.',
+    reset: false,
+    why: () => whyBox(stillArea({ maxLen: 7, maxA: 3, h: 4.2 }, lay(3, '3', [
+        { len: 4, kind: 'var', lab: mx('2x = 4'), area: '12' }, { len: 3, kind: 'num', lab: '3', area: '9' }])), [
+      'When ' + mx('x = 2') + ', the blue length ' + mx('2x') + ' is 4. The rectangle is 3 by 7, which is 21 squares.',
+      'Counting the two parts finds the same squares: ' + mx('6 × 2 + 9 = 12 + 9 = 21') + '.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      const ans = makeAnswer(ctl, 'Area when ' + mx('x = 2'), ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 21) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 71) return mx('6x') + ' means 6 × ' + mx('x') + ', not a 6 with a 2 written after it. 6 × 2 = 12, then add 9.';
+          if (v === 12) return 'That is the blue part, 6 × 2. Add the yellow part, 9.';
+          if (v === 17) return '6 + 2 + 9 adds the 6 and the 2. ' + mx('6x') + ' means 6 × ' + mx('x') + ', so the blue part is 6 × 2 = 12.';
+          if (v === 7) return '7 is the length, 2 × 2 + 3. The rectangle is 3 tall, so multiply the length by 3.';
+          if (v === 15) return 'Check each number. The blue length ' + mx('2x') + ' is 2 × 2 = 4, not 2, and the yellow area is 9, not 3.';
+          return 'Swap each ' + mx('x') + ' for 2: 6 × 2 + 9. Or use the rectangle: 3 tall and 2 × 2 + 3 long.';
+        },
+        win: () => 'Both forms give 21: ' + mx('6 × 2 + 9 = 21') + ' and ' + mx('3 × (2 × 2 + 3) = 3 × 7 = 21') + '. Factorising changes how the expression is written, not its value.',
+        won() {
+          ans.mark('good'); ans.lock();
+          p1.am.draw(lay(3, '3', [{ len: 4, kind: 'var', lab: mx('2 × 2 = 4'), area: '12' }, { len: 3, kind: 'num', lab: '3', area: '9' }], { grid: false }));
+          p1.live.innerHTML = '<span class="lab">When ' + mx('x = 2') + '</span>' + mx('12 + 9 = 21') + ' &nbsp; ' + mx('3 × 7 = 21');
+        },
+        solve() { ans.set(21); }
+      };
+    }
+  },
   sub: 'The areas stay the same, so the lengths change. Find the biggest height that gives no decimals in the lengths.',
   build(stage, ctl, ctx) {
     const X = 2;
@@ -732,13 +924,30 @@ const cards = [
       check() { return a === 3 ? true : why[a]; },
       win: () => 'Height 3 gives lengths ' + mx('2x') + ' and 3, so ' + mx('6x + 9 = 3(2x + 3)') + '. 3 is the highest common factor of 6 and 9: the biggest number that divides both.',
       won() { am.lock(); },
-      solve() { a = 3; draw(); }
+      solve() { a = 3; draw(); },
+      recap: () => mx('6x + 9 = 3(2x + 3)'),
+      am, live
     };
   }
 },
 
-/* 12 */ {
+/* 14 */ {
+  bridge: true,
+  prompt: 'You started with the areas, ' + mx('6x + 9') + ', and found the height and length, ' + mx('3(2x + 3)') + '. Putting the brackets back like this is called <b>factorising</b>. It is expanding in reverse.',
+  show(stage) {
+    bridgeArea(stage, { maxLen: 7, maxA: 3, h: 5 }, lay(3, '3', [{ len: 4, kind: 'var', lab: mx('2x'), area: mx('6x') }, { len: 3, kind: 'num', lab: '3', area: '9' }], { grid: false }),
+      mx('6x + 9 = 3(2x + 3)'));
+  }
+},
+
+/* 15 */ {
   prompt: 'Tap every expression that equals ' + mx('4x + 8') + '.',
+  why: () => whyBox(
+    stillArea({ maxLen: 4, maxA: 4, h: 4.2 }, lay(4, '4', [{ len: 2, kind: 'var', lab: mx('x'), area: mx('4x') }, { len: 2, kind: 'num', lab: '2', area: '8' }], { grid: false })) +
+    stillArea({ maxLen: 8, maxA: 2, h: 2.1 }, lay(2, '2', [{ len: 4, kind: 'var', lab: mx('2x'), area: mx('4x') }, { len: 4, kind: 'num', lab: '4', area: '8' }], { grid: false })), [
+    'Both rectangles hold ' + mx('4x') + ' and 8, so ' + mx('4(x + 2)') + ' and ' + mx('2(2x + 4)') + ' both equal ' + mx('4x + 8') + '.',
+    mx('4(x + 8)') + ' would hold ' + mx('4 × 8 = 32') + ' in its yellow part, and ' + mx('8(x + 1)') + ' would hold ' + mx('8x') + ' in its blue part.'
+  ]),
   sub: 'Expand each one to check.',
   build(stage, ctl, ctx) {
     stage.hidden = true;
@@ -763,8 +972,13 @@ const cards = [
   }
 },
 
-/* 13 */ {
+/* 16 */ {
   prompt: 'Three students expand ' + mx('4(2x + 5)') + '. Who is right?',
+  why: () => whyBox(stillArea({ maxLen: 9, maxA: 4, h: 4.8 }, lay(4, '4', [
+      { len: 4, kind: 'var', lab: mx('2x'), area: mx('8x') }, { len: 5, kind: 'num', lab: '5', area: '20', hl: 1, hlLab: 'Mia’s 5' }], { grid: false })), [
+    'Mia’s 5 is one row of the yellow part. It has 4 rows: ' + mx('4 × 5 = 20') + '.',
+    'Lena can’t join the two parts into ' + mx('28x') + ': the blue area changes with ' + mx('x') + ', but the yellow area is always 20.'
+  ]),
   sub: 'Choose Agree or Disagree for each one.',
   build(stage, ctl, ctx) {
     stage.hidden = true;
@@ -809,7 +1023,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Numbers'], [2, 'Letters'], [7, 'Subtraction'], [9, 'Factorising'], [12, 'Wrap-up']];
+const SECTIONS = [[0, 'Numbers'], [2, 'Letters'], [6, 'Expanding'], [9, 'Subtraction'], [11, 'Factorising'], [13, 'Two forms'], [15, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

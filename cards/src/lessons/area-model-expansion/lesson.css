@@ -50,3 +50,14 @@
 .am.locked .track{cursor:default}
 .blanks .m{font-size:1.5rem}
 .answer.blanks input{width:3.4rem;margin:0 .2rem;padding:.15rem .3rem;font-size:1.4rem;vertical-align:middle}
+/* Why? panels: the card's rectangle, small and still, beside one or two lines of working */
+.why-body .wy{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.6rem}
+.why-body .wy-pic{flex:0 1 auto;min-width:0;max-width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:.4rem 1.2rem}
+.why-body .wy-am{container-type:inline-size;min-width:0;max-width:100%}
+.why-body .wy-txt{flex:1 1 15rem;min-width:0}
+.why-body p{margin:0 0 .45rem}
+.why-body p:last-child{margin-bottom:0}
+.why-body .am{margin:0 auto;width:max-content;max-width:100%}
+.why-body .am-lab{padding:.1rem .2rem}
+/* the last card's notes need a little room once the Why? button narrows the feedback */
+.claim{padding-top:.5rem;padding-bottom:.5rem}

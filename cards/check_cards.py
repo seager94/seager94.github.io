@@ -46,7 +46,7 @@ CARD_PROBE = """async (k) => {
   // Open the Why? panel if the card has one: it should fit without scrolling and not spill sideways.
   const whyProbe = async () => {
     const btn = document.getElementById('whyBtn');
-    if (btn.hidden) return null;
+    if (!btn || btn.hidden) return null;
     btn.click(); await wait(320);
     const p = document.querySelector('.why-panel'), de = document.documentElement;
     const r = { over: p.scrollHeight - p.clientHeight, side: Math.max(p.scrollWidth - p.clientWidth, de.scrollWidth - de.clientWidth), empty: !document.getElementById('whyBody').textContent.trim() && !document.querySelector('#whyBody svg') };

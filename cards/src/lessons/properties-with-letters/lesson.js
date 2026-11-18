@@ -339,12 +339,17 @@ function makeJumps(host, lo, hi) {
   host.append(svg);
   return {
     set(jumps, label) {
-      let at = 0, out = axis;
+      let at = 0, out = axis, px = null, pw = 0;
       jumps.forEach((j, k) => {
         const x1 = X(at), x2 = X(at + j.len), xm = (x1 + x2) / 2, ht = Math.min(k ? 27 : 36, 10 + Math.abs(x2 - x1) * 0.4), c = j.cls || '';
+        // Two labels over the same stretch (a jump forwards, then back) would sit on top of each other: slide the later one sideways.
+        const lw = String(j.lab).replace(/<[^>]*>/g, '').length * 4.5 + 5;
+        let lx = xm;
+        if (px != null && Math.abs(lx - px) < lw + pw) lx = px + (lx < px ? -1 : 1) * (lw + pw);
+        px = lx; pw = lw;
         out += '<path class="jl-arc ' + c + '" d="M' + x1 + ' ' + (Y - 3) + ' Q' + xm + ' ' + (Y - 3 - 2 * ht) + ' ' + x2 + ' ' + (Y - 3) + '"/>' +
           '<path class="jl-head ' + c + '" d="M' + (x2 - 5) + ' ' + (Y - 14) + ' L' + (x2 + 5) + ' ' + (Y - 14) + ' L' + x2 + ' ' + (Y - 3) + ' Z"/>' +
-          '<text class="jl-lab ' + c + '" x="' + xm + '" y="' + (Y - ht - 9) + '" text-anchor="middle">' + j.lab + '</text>';
+          '<text class="jl-lab ' + c + '" x="' + lx + '" y="' + (Y - ht - 9) + '" text-anchor="middle">' + j.lab + '</text>';
         at += j.len;
       });
       if (jumps.length) out += '<circle class="jl-dot" cx="' + X(at) + '" cy="' + Y + '" r="5.5"/>';
@@ -387,13 +392,74 @@ function makeClaims(ctl, claims, ctx) {
   };
 }
 
+/* ---------- still pictures for Why? panels and bridges ---------- */
+// The picture, then one or two lines of working.
+const whyBox = (pic, lines) => '<div class="wy">' + (pic ? '<div class="wy-pic">' + pic + '</div>' : '') + '<div class="wy-txt">' + lines.map(l => '<p>' + l + '</p>').join('') + '</div></div>';
+// "a = 2" for an SVG label: the letter in its colour, beside its value.
+const lv = (l, v) => '<tspan class="wv' + (VC[l] ? ' ' + VC[l] : '') + '">' + l + '</tspan> = ' + v;
+// The same, for a jump label (already in the letter's colour).
+const jv = (l, v) => l + '<tspan class="jn"> = ' + v + '</tspan>';
+const J = (len, lab, cls) => ({ len, lab, cls });
+
+function arrStill(x, y, R, C, r, c) {
+  const S = 22;
+  let g = '';
+  for (let i = 0; i < R; i++) for (let j = 0; j < C; j++) g += marbleG(x + j * S + S / 2, y + i * S + S / 2, 9);
+  return g + '<rect class="arr-bar ' + r.k + '" x="' + (x - 10) + '" y="' + (y + 2) + '" width="5" height="' + (R * S - 4) + '" rx="2.5"/>' +
+    '<text class="wl" x="' + (x - 16) + '" y="' + (y + R * S / 2 + 6) + '" text-anchor="end">' + r.l + '</text>' +
+    '<rect class="arr-bar ' + c.k + '" x="' + (x + 2) + '" y="' + (y - 10) + '" width="' + (C * S - 4) + '" height="5" rx="2.5"/>' +
+    '<text class="wl" x="' + (x + C * S / 2) + '" y="' + (y - 17) + '" text-anchor="middle">' + c.l + '</text>';
+}
+// An R x C array, and the same array after a quarter turn. r and c: { k: bar colour class, l: label }.
+function arrPair(R, C, r, c) {
+  const S = 22, m = Math.max(R, C) * S, LW = 66, TH = 32, W = LW + m, H = TH + m + 2, GAP = 40;
+  const at = (rows, cols) => [LW + (m - cols * S) / 2, TH + (m - rows * S) / 2];
+  const [x1, y1] = at(R, C), [x2, y2] = at(C, R), ay = TH + m / 2;
+  const ax = (x1 + C * S + W + GAP + x2 - 16 - String(c.l).replace(/<[^>]*>/g, '').length * 8) / 2;   // midway between the first array and the second one's label
+  return '<svg class="wy-svg" style="max-width:' + (2 * W + GAP) + 'px" viewBox="0 0 ' + (2 * W + GAP) + ' ' + H + '" role="img" aria-label="' + R + ' rows of ' + C + ' marbles, then the same marbles turned: ' + C + ' rows of ' + R + '">' +
+    arrStill(x1, y1, R, C, r, c) +
+    '<text class="wl-s" x="' + ax + '" y="' + (ay - 7) + '" text-anchor="middle">turn</text><path class="wy-arrow" d="M' + (ax - 15) + ' ' + (ay + 4) + ' h30 m-7 -6 l7 6 l-7 6"/>' +
+    '<g transform="translate(' + (W + GAP) + ',0)">' + arrStill(x2, y2, C, R, c, r) + '</g></svg>';
+}
+// One or more still jump paths. paths: [[jumps, aria label], ...]
+function jumpsStill(lo, hi, paths) {
+  const d = document.createElement('div');
+  paths.forEach(p => makeJumps(d, lo, hi).set(p[0], p[1]));
+  return '<div class="wy-jl">' + d.innerHTML + '</div>';
+}
+// Tom's and Sal's bags, see-through, with each letter's value under its bag.
+function grpStill(who, a, b, c) {
+  const tom = who === 'Tom', xs = tom ? [8, 78, 164] : [8, 94, 164];
+  const cap = (x, l, n) => '<text class="wl" x="' + (x + 31) + '" y="94" text-anchor="middle">' + lv(l, n) + '</text>';
+  return '<div><span class="who-l">' + who + '</span><svg class="wy-svg" style="max-width:15rem" viewBox="-4 -16 242 116" role="img" aria-label="' +
+    (tom ? 'Bags a and b grouped, then bag c' : 'Bag a, then bags b and c grouped') + ': ' + a + ', ' + b + ' and ' + c + ' marbles">' +
+    '<rect class="grp-box" x="' + (tom ? 0 : 86) + '" y="-13" width="148" height="88" rx="14"/>' +
+    [['a', a], ['b', b], ['c', c]].map(([l, n], k) => bagG(xs[k], 0, { inside: n, cls: VC[l] }) + cap(xs[k], l, n)).join('') + '</svg></div>';
+}
+const bagsStill = (a, b, c) => '<div class="two wy-two">' + grpStill('Tom', a, b, c) + grpStill('Sal', a, b, c) + '</div>';
+// A small table: head and rows are arrays of cell HTML. A row may end with true/false for a tick or cross.
+function wyTable(head, rows) {
+  const mark = v => v === true ? '<td class="ok">✓</td>' : v === false ? '<td class="no">✗</td>' : '<td>' + v + '</td>';
+  return '<table class="wy-t"><tr>' + head.map(c => '<th>' + c + '</th>').join('') + '</tr>' + rows.map(r => '<tr>' + r.map(mark).join('') + '</tr>').join('') + '</table>';
+}
+// Three number tiles with the first two grouped: (x op y) op z.
+const groupTiles = (x, y, z, op, makes) => '<div class="wy-sum"><span class="wy-grp"><span class="tile num still">' + x + '</span><span class="tile op still">' + op + '</span><span class="tile num still">' + y + '</span>' +
+  '<small>makes ' + makes + '</small></span><span class="tile op still">' + op + '</span><span class="tile num still">' + z + '</span></div>';
+const worked = cols => '<div class="wy-work">' + cols.map(c => '<div>' + c.map((l, k) => mx((k ? '= ' : '') + l)).join('<br>') + '</div>').join('') + '</div>';
+
 /* ---------- cards ---------- */
+
+let CE6 = [7, 3];   // the counterexample the student found on the subtraction card, for its recap and Why? panel
 
 const cards = [
 
 /* 1 */ {
   prompt: 'This array shows ' + mx('3 × 4 = 12') + ': 3 rows of 4. Turn it a quarter turn. What is ' + mx('4 × 3') + '?',
-  sub: 'Tap the button and watch the marbles.',
+  sub: 'Do 3 packs of 4 pens and 4 packs of 3 give you the same number of pens? Tap the button and watch the marbles.',
+  why: () => whyBox(arrPair(3, 4, { k: 'n', l: '3' }, { k: 'n', l: '4' }), [
+    '3 rows of 4 is ' + mx('4 + 4 + 4 = 12') + '. Turned, it is 4 rows of 3: ' + mx('3 + 3 + 3 + 3 = 12') + '.',
+    'Both sums count the same 12 marbles, so ' + mx('4 × 3 = 3 × 4') + '.'
+  ]),
   build(stage, ctl, ctx) {
     let turnedOnce = false;
     const live = h('<div class="live"></div>');
@@ -425,6 +491,10 @@ const cards = [
 
 /* 2 */ {
   prompt: mx('a') + ' rows of ' + mx('b') + ' marbles. Is ' + mx('a × b') + ' always the same as ' + mx('b × a') + '?',
+  why: () => whyBox(arrPair(2, 5, { k: '', l: lv('a', 2) }, { k: 'v2', l: lv('b', 5) }), [
+    mx('a × b = 2 × 5 = 10') + ' and ' + mx('b × a = 5 × 2 = 10') + '.',
+    'A turn only swaps rows and columns. That works for an array of any size, so no pair of numbers can break the rule.'
+  ]),
   build(stage, ctl, ctx) {
     let a = 2, b = 5;
     const live = h('<div class="live"></div>');
@@ -456,6 +526,10 @@ const cards = [
 
 /* 3 */ {
   prompt: 'Which statement says that rule for every pair of numbers at once?',
+  why: () => whyBox(wyTable([mx('a'), mx('b'), mx('a × b'), mx('b × a')], [['3', '4', '12', '12'], ['8', '7', '56', '56'], ['20', '6', '120', '120']]), [
+    'Each number statement is one row of this table.',
+    mx('a × b = b × a') + ' is every row at once, including the rows nobody has written yet.'
+  ]),
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const ch = makeChoices(ctl, [mx('3 × 4 = 4 × 3'), mx('8 × 7 = 7 × 8'), mx('a × b = b × a'), mx('a × b = 12')], ctx);
@@ -475,7 +549,17 @@ const cards = [
 },
 
 /* 4 */ {
+  bridge: true,
+  prompt: 'You turned an array and the total never changed. The rule you found, ' + mx('a × b = b × a') + ', is called the <b>commutative property</b> of multiplication: you can multiply in either order.',
+  show(stage) { stage.append(h('<div class="br-pic">' + arrPair(2, 5, { k: '', l: lv('a', 2) }, { k: 'v2', l: lv('b', 5) }) + '</div>')); }
+},
+
+/* 5 */ {
   prompt: 'Jump 7, then 5, and you land on 12. Where do you land if you jump 5 first, then 7?',
+  why: () => whyBox(jumpsStill(0, 20, [[[J(7, '7', 'kn'), J(5, '5', 'kn')], 'Jump 7, then 5, landing on 12'], [[J(5, '5', 'kn'), J(7, '7', 'kn')], 'Jump 5, then 7, landing on 12']]), [
+    'Each path is a 7 jump and a 5 jump joined end to end, so each path is 12 long.',
+    'Changing which jump goes first does not change the length: ' + mx('5 + 7 = 7 + 5 = 12') + '.'
+  ]),
   build(stage, ctl, ctx) {
     let shown = false;
     const top = makeJumps(stage, 0, 20);
@@ -506,8 +590,12 @@ const cards = [
   }
 },
 
-/* 5 */ {
+/* 6 */ {
   prompt: 'The top path is ' + mx('a + b') + '. Use tiles to write the bottom path.',
+  why: () => whyBox(jumpsStill(0, 20, [[[J(3, jv('a', 3)), J(6, jv('b', 6), 'v2')], 'Jump 3, then 6, landing on 9'], [[J(6, jv('b', 6), 'v2'), J(3, jv('a', 3))], 'Jump 6, then 3, landing on 9']]), [
+    'The bottom path makes the ' + mx('b') + ' jump first, then the ' + mx('a') + ' jump, so it is written ' + mx('b + a') + '.',
+    'With ' + mx('a = 3') + ' and ' + mx('b = 6') + ': ' + mx('a + b = 3 + 6 = 9') + ' and ' + mx('b + a = 6 + 3 = 9') + '.'
+  ]),
   build(stage, ctl, ctx) {
     let a = 3, b = 6;
     const top = makeJumps(stage, 0, 20), topR = h('<div class="live"></div>');
@@ -543,7 +631,11 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 7 */ {
+  why: () => { const [a, b] = CE6; return whyBox(jumpsStill(-10, 10, [[[J(a, jv('a', a)), J(-b, jv('b', b), 'v2')], 'Forwards ' + a + ', back ' + b + ', landing on ' + fmtN(a - b)], [[J(b, jv('b', b), 'v2'), J(-a, jv('a', a))], 'Forwards ' + b + ', back ' + a + ', landing on ' + fmtN(b - a)]]), [
+    'Top: forwards ' + a + ', back ' + b + ' lands on ' + fmtN(a - b) + '. Bottom: forwards ' + b + ', back ' + a + ' lands on ' + fmtN(b - a) + '.',
+    'Swapping changes which number is taken away. Taking the larger from the smaller lands below 0, so the two sides can’t match.'
+  ]); },
   prompt: 'Ari says: “Adding works in either order, so subtracting must too: ' + mx('a − b = b − a') + '.” Find values that prove Ari wrong.',
   sub: 'Each path jumps forwards, then back. Move the sliders until the two paths land in different places.',
   build(stage, ctl, ctx) {
@@ -565,12 +657,46 @@ const cards = [
     return {
       check: () => a !== b ? true : 'When ' + mx('a') + ' and ' + mx('b') + ' are equal, both sides are 0, so this pair works. Ari’s rule must work for every pair. Find one where the paths land apart.',
       win: () => mx(a + ' − ' + b + ' = ' + fmtN(a - b)) + ', but ' + mx(b + ' − ' + a + ' = ' + fmtN(b - a)) + '. A pair like this is called a counterexample. It proves ' + mx('a − b = b − a') + ' is not true for all numbers. Subtraction is not commutative.',
-      solve() { sa.set(7); sb.set(3); }
+      won() { CE6 = [a, b]; },
+      solve() { sa.set(7); sb.set(3); },
+      recap: () => mx(CE6[0] + ' − ' + CE6[1] + ' = ' + fmtN(CE6[0] - CE6[1])) + ', but ' + mx(CE6[1] + ' − ' + CE6[0] + ' = ' + fmtN(CE6[1] - CE6[0])) + ': a counterexample to ' + mx('a − b = b − a') + '.',
+      vals: () => [a, b],
+      show(x, y) { a = x; b = y; draw(); }
     };
+  },
+  then: {
+    prompt: 'Is Ari’s statement ever true? Find a pair where both paths land in the same place.',
+    reset: false,
+    why: () => whyBox(jumpsStill(-10, 10, [[[J(5, jv('a', 5)), J(-5, jv('b', 5), 'v2')], 'Forwards 5, back 5, landing on 0'], [[J(5, jv('b', 5), 'v2'), J(-5, jv('a', 5))], 'Forwards 5, back 5, landing on 0']]), [
+      'When ' + mx('a') + ' and ' + mx('b') + ' are equal, each path goes forwards and back the same distance, so both land on 0: ' + mx('5 − 5 = 0') + '.',
+      'For any other pair, one path lands above 0 and the other below. True for some pairs is not true for all numbers.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      let [a, b] = p1.vals();
+      const g = sliderRow(ctl, 'sl2');
+      const sa = makeSlider(g, 'a', 1, 10, a, v => { a = v; p1.show(a, b); ctx.touch(true); });
+      const sb = makeSlider(g, 'b', 1, 10, b, v => { b = v; p1.show(a, b); ctx.touch(true); });
+      return {
+        check() {
+          if (a === b) return true;
+          const hi = Math.abs(a - b);
+          if (hi === 1) return 'Close. The paths land on 1 and −1, one step either side of 0. They can only meet at 0. What makes ' + mx('a − b = 0') + '?';
+          return 'With ' + mx('a = ' + a) + ' and ' + mx('b = ' + b) + ', the paths land on ' + fmtN(a - b) + ' and ' + fmtN(b - a) + ', the same distance either side of 0. They can only meet at 0. What makes ' + mx('a − b = 0') + '?';
+        },
+        win: () => mx(a + ' − ' + b + ' = 0') + ' both ways. The statement is true when ' + mx('a') + ' and ' + mx('b') + ' are equal, and false for every other pair. A property has to be true for all numbers, so this still isn’t one.',
+        won() { g.querySelectorAll('input').forEach(i => { i.disabled = true; }); },
+        solve() { sa.set(5); sb.set(5); }
+      };
+    }
   }
 },
 
-/* 7 */ {
+/* 8 */ {
+  why: () => whyBox('<div class="cmp wy-shr"><div><small>$12 shared by 3 people</small><span class="shr-r">' + '<span class="shr-c">$4</span>'.repeat(3) + '</span><small>' + mx('a ÷ b = 12 ÷ 3 = 4') + '</small></div>' +
+    '<span class="rel">≠</span><div><small>$3 shared by 12 people</small><span class="shr-r">' + '<span class="shr-c">25c</span>'.repeat(12) + '</span><small>' + mx('b ÷ a = 3 ÷ 12 = 0.25') + '</small></div></div>', [
+    'Take ' + mx('a = 12') + ' and ' + mx('b = 3') + '. Swapping them changes what is shared and how many share it.',
+    'More money for fewer people gives $4 each. Less money for more people gives 25c each.'
+  ]),
   prompt: 'Ari tries again: “Then dividing works in either order: ' + mx('a ÷ b = b ÷ a') + '.” Prove Ari wrong.',
   sub: 'Share ' + mx('a') + ' dollars among ' + mx('b') + ' people. Then share ' + mx('b') + ' dollars among ' + mx('a') + ' people.',
   build(stage, ctl, ctx) {
@@ -596,7 +722,11 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 9 */ {
+  why: () => whyBox(wyTable([mx('a'), mx('b'), mx('a − b'), mx('b − a'), 'Equal?'], [['5', '5', '0', '0', true], ['7', '3', '4', '−4', false]]), [
+    'A statement with letters claims every row of this table.',
+    'Rows like 5 and 5 work, but the row for 7 and 3 fails, and no other pair can change that row.'
+  ]),
   prompt: 'Take ' + mx('7 − 3 = 4') + ', but ' + mx('3 − 7 = −4') + '. What does one pair like that show?',
   build(stage, ctl, ctx) {
     stage.hidden = true;
@@ -621,7 +751,17 @@ const cards = [
   }
 },
 
-/* 9 */ {
+/* 10 */ {
+  bridge: true,
+  prompt: 'Each time, you found one pair of numbers that broke Ari’s statement. A pair like that is called a <b>counterexample</b>. One counterexample is enough to show a statement is not true for all numbers.',
+  show(stage) { stage.append(h('<div class="br-pic">' + jumpsStill(-10, 10, [[[J(7, jv('a', 7)), J(-3, jv('b', 3), 'v2')], 'Forwards 7, back 3, landing on 4'], [[J(3, jv('b', 3), 'v2'), J(-7, jv('a', 7))], 'Forwards 3, back 7, landing on −4']]) + '</div>')); }
+},
+
+/* 11 */ {
+  why: () => whyBox(bagsStill(3, 4, 5), [
+    'Tom: ' + mx('(3 + 4) + 5 = 7 + 5 = 12') + '. Sal: ' + mx('3 + (4 + 5) = 3 + 9 = 12') + '.',
+    'The dashed box only changes which two bags are added first. All 12 marbles are still counted once.'
+  ]),
   prompt: 'Tom adds bags ' + mx('a') + ' and ' + mx('b') + ' first. Sal adds ' + mx('b') + ' and ' + mx('c') + ' first. Who counts more marbles?',
   sub: 'Each letter is the number of marbles in that bag.',
   build(stage, ctl, ctx) {
@@ -659,7 +799,11 @@ const cards = [
   }
 },
 
-/* 10 */ {
+/* 12 */ {
+  why: () => whyBox(worked([['(10 − 4) − 3', '6 − 3', '3'], ['10 − (4 − 3)', '10 − 1', '9']]), [
+    'On the left you take away 4, then 3 more: 7 gone altogether.',
+    'On the right the brackets shrink what is taken away to ' + mx('4 − 3 = 1') + ', so only 1 is gone. Moving the brackets changed how much is subtracted.'
+  ]),
   prompt: 'Does grouping work like that for subtraction too? Work out both sides.',
   sub: 'Work out the brackets first.',
   build(stage, ctl, ctx) {
@@ -680,7 +824,19 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 13 */ {
+  bridge: true,
+  prompt: 'Tom and Sal grouped the bags differently and still counted the same marbles. That rule, ' + mx('(a + b) + c = a + (b + c)') + ', is called the <b>associative property</b> of addition: you can group additions any way.',
+  show(stage) { stage.append(h('<div class="br-pic">' + bagsStill(3, 4, 5) + '</div>')); }
+},
+
+/* 14 */ {
+  why: () => whyBox('<small class="wy-cap">Test each one with ' + mx('a = 6') + ', ' + mx('b = 3') + ', ' + mx('c = 1') + '</small>' + wyTable(['Statement', 'Left', 'Right', ''], [
+    [mx('a + b = b + a'), '9', '9', true], [mx('a − b = b − a'), '3', '−3', false], [mx('a × b = b × a'), '18', '18', true], [mx('a ÷ b = b ÷ a'), '2', '0.5', false],
+    [mx('(a + b) + c = a + (b + c)'), '10', '10', true], [mx('(a − b) − c = a − (b − c)'), '2', '4', false]]), [
+    'A test that fails is a counterexample: that statement is not always true.',
+    'A test that passes is not a proof. The three true statements also have a reason that works for any numbers: jumps, arrays and bags.'
+  ]),
   prompt: 'Which statements are true for all numbers?',
   sub: 'Drag each card into a box. Or tap a card, then tap a box. Test with numbers if you are unsure.',
   build(stage, ctl, ctx) {
@@ -733,7 +889,11 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 15 */ {
+  why: () => whyBox(groupTiles('$25', '$75', '$17', '+', '$100'), [
+    'Swapping $17 and $75 is allowed because addition is commutative. Adding $25 and $75 first is allowed because it is associative.',
+    mx('(25 + 75) + 17 = 100 + 17 = 117') + '. In the first order you would need ' + mx('25 + 17 = 42') + ', then ' + mx('42 + 75') + '.'
+  ]),
   prompt: 'You buy things costing $25, $17 and $75. Swap the prices to make the adding easy, then find the total.',
   sub: 'Tap one price, then another, to swap them. Or drag one price onto another.',
   build(stage, ctl, ctx) {
@@ -773,7 +933,11 @@ const cards = [
   }
 },
 
-/* 13 */ {
+/* 16 */ {
+  why: () => whyBox(groupTiles('4', '25', '13', '×', '100'), [
+    '4 tickets at $25 cost $100, so pair 4 with 25: ' + mx('4 × 13 × 25 = (4 × 25) × 13') + '.',
+    'Then 13 lots of $100: ' + mx('100 × 13 = 1300') + '. The same three numbers are multiplied, so the total is the same.'
+  ]),
   prompt: 'Tickets cost $25 each, and 4 classes of 13 students go. Find the total cost quickly.',
   sub: 'Multiplication works in any order too. Which two numbers make an easy start?',
   build(stage, ctl, ctx) {
@@ -794,12 +958,47 @@ const cards = [
       },
       win: () => '$1300. Reordering to ' + mx('(4 × 25) × 13 = 100 × 13 = 1300') + ' gives the same answer as ' + mx('(4 × 13) × 25 = 52 × 25') + ', and it is much easier.',
       won() { ans.mark('good'); ans.lock(); },
-      solve() { ans.set(1300); }
+      solve() { ans.set(1300); },
+      recap: () => mx('4 × 13 × 25 = (4 × 25) × 13 = 100 × 13') + ' = $1300'
     };
+  },
+  then: {
+    prompt: 'Next year tickets cost $50, and 2 classes of 17 students go. Find the total cost quickly.',
+    reset: false,
+    why: () => whyBox(groupTiles('2', '50', '17', '×', '100'), [
+      '2 tickets at $50 cost $100, so pair 2 with 50: ' + mx('2 × 17 × 50 = (2 × 50) × 17') + '.',
+      'Then 17 lots of $100: ' + mx('100 × 17 = 1700') + '. Look for the pair that makes 10 or 100 first.'
+    ]),
+    build(stage, ctl, ctx) {
+      $('.cmp', stage).innerHTML = '<span class="big">' + mx('2 × 17 × 50') + '<small>2 classes × 17 students × $50 a ticket</small></span>';
+      const ans = makeAnswer(ctl, 'Total: $', ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 1700) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 34) return '34 is 2 × 17, the number of students. Each ticket costs $50.';
+          if (v === 850) return '850 is 17 × 50, the cost for one class. There are 2 classes.';
+          if (v === 100) return '100 is 2 × 50, a great start. Now multiply by 17.';
+          if (v === 170) return '170 is 10 × 17, but 2 × 50 is 100, not 10. Check the zeros.';
+          if (v === 69) return '69 is 2 + 17 + 50. The numbers are multiplied, not added.';
+          if (v === 1300) return '$1300 was this year’s total. Use the new numbers: 2 classes, 17 students, $50.';
+          return 'Multiply 2 × 50 first. That makes 100. Then multiply by 17.';
+        },
+        win: () => '$1700. Reordering to ' + mx('(2 × 50) × 17 = 100 × 17 = 1700') + ' is much easier than ' + mx('(2 × 17) × 50 = 34 × 50') + ', and gives the same total.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(1700); }
+      };
+    }
   }
 },
 
-/* 14 */ {
+/* 17 */ {
+  why: () => whyBox(jumpsStill(0, 20, [[[J(4, jv('a', 4)), J(9, jv('b', 9), 'v2')], 'Jump 4, then 9, landing on 13'], [[J(9, jv('b', 9), 'v2'), J(4, jv('a', 4))], 'Jump 9, then 4, landing on 13']]), [
+    'Lena checked one pair. There is no end to the pairs, so checking them one at a time can never finish.',
+    'Tariq’s reason never says which numbers. Change ' + mx('a = 4') + ' and ' + mx('b = 9') + ' to anything: the same two jumps still join to the same length.'
+  ]),
   prompt: 'Three students explain why ' + mx('a + b = b + a') + '. Who gives a good reason?',
   sub: 'Choose Agree or Disagree for each one.',
   build(stage, ctl, ctx) {
@@ -819,7 +1018,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Arrays'], [3, 'Jumps'], [5, 'Counterexamples'], [8, 'Grouping'], [10, 'Use it'], [13, 'Wrap-up']];
+const SECTIONS = [[0, 'Arrays'], [3, 'Jumps'], [6, 'Counterexamples'], [9, 'Grouping'], [12, 'Use it'], [16, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

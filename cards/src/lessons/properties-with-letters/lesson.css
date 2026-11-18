@@ -41,3 +41,40 @@
 .choices.c4{grid-template-columns:repeat(4,1fr)}
 .choices.c4 .choice{text-align:center;padding:.5rem .6rem}
 @media (max-width:34rem){.choices,.choices.c4{grid-template-columns:1fr}.sl2,.sl3,.two{grid-template-columns:1fr}}
+/* Why? panels and bridges: the card's diagram, small and still, with one or two lines of working */
+.why-body .wy{display:flex;flex-direction:column;align-items:center;gap:.55rem}
+.why-body .wy-pic{width:100%;display:flex;flex-direction:column;align-items:center}
+.why-body .wy-txt{max-width:62ch;text-align:center}
+.why-body p{margin:0 0 .35rem}
+.why-body p:last-child{margin-bottom:0}
+.wy-svg{display:block;width:100%;height:auto;overflow:visible}
+.wl{font:400 16px var(--maths);fill:var(--ink);font-variant-numeric:lining-nums}
+.wl .wv{font-style:italic;fill:var(--var)}
+.wl-s{font:12px var(--body);fill:var(--ink-2)}
+.wy-arrow{fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.jl-lab .jn{font-style:normal}
+.wy-jl{width:100%;max-width:34rem}
+.br-pic{width:100%;display:flex;justify-content:center;margin-top:.6rem}
+.wy-two{max-width:32rem}
+.wy-t{border-collapse:collapse;font-variant-numeric:lining-nums;line-height:1.3}
+.wy-t th{font-weight:400;color:var(--ink-2);font-size:.92rem;padding:.12rem .8rem;border-bottom:1px solid var(--line)}
+.wy-t td{font:400 1.08rem var(--maths);text-align:center;padding:.12rem .8rem}
+.wy-t td:first-child:has(.m){text-align:left}
+.wy-t td .m{font-size:1em}
+.wy-t td.ok{color:var(--go);font-family:var(--body);font-weight:700}
+.wy-t td.no{color:var(--no);font-family:var(--body);font-weight:700}
+.wy-cap{color:var(--ink-2);font-size:.92rem;margin-bottom:.25rem}
+.wy-sum{display:flex;align-items:flex-start;justify-content:center;gap:.5rem}
+.wy-sum > .tile{margin-top:.4rem}
+.wy-grp{display:grid;grid-template-columns:auto auto auto;gap:.1rem .5rem;justify-items:center;border:2px dashed var(--ink-2);border-radius:1rem;padding:.3rem .5rem .2rem}
+.wy-grp small{grid-column:1 / -1;color:var(--ink-2);font-size:.9rem}
+.wy-work{display:flex;justify-content:center;gap:3rem;font-size:1.15rem;line-height:1.45;text-align:left}
+.wy-shr{max-width:36rem}
+.wy-shr .shr-r{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem;margin:.25rem auto;max-width:17rem}
+.shr-c{background:var(--num);border-radius:.45rem;padding:.1rem .45rem;font:400 1rem var(--maths);font-variant-numeric:lining-nums}
+@media (max-width:34rem){.wy-work{gap:1.2rem;font-size:1rem}.wy-t th,.wy-t td{padding:.1rem .35rem}.wy-t td{font-size:.95rem}.wy-two{grid-template-columns:1fr 1fr}}
+.wy-jl .jl + .jl{margin-top:.55rem}
+/* final card: tighter rows, so the answered card with its Why? button still fits a laptop screen */
+.claims{gap:.4rem}
+.claim{padding:.4rem .9rem;gap:.25rem .9rem}
+.claim p{line-height:1.32}

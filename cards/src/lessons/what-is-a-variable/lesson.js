@@ -260,6 +260,8 @@ function makeMachine(host, rule, onFeed) {
   const put = (slot, html) => { const old = $('.tile', slot); if (old) old.remove(); if (html) slot.append(h(html)); };
   return {
     fed,
+    // Still picture: a number (or nothing) in each slot, with no run.
+    show(a, b) { put(inS, a == null ? null : numTile(a)); put(outS, b == null ? null : numTile(b)); },
     feed(n) {
       if (busy) return;
       busy = true;
@@ -277,6 +279,55 @@ function makeMachine(host, rule, onFeed) {
   };
 }
 
+/* ---------- Why? panels and bridge pictures: the card's diagram, small and still ---------- */
+// A picture (w rem wide at most) beside one or two lines of working.
+const whyBox = (pic, w, lines) => '<div class="wy"><div class="wy-pic" style="flex-basis:' + w + 'rem">' + pic + '</div><div class="wy-txt">' +
+  lines.map(l => '<p>' + l + '</p>').join('') + '</div></div>';
+// SVG text: single lower-case letters become variables.
+const sT = s => String(s).split(' ').map(t => /^[a-z]$/.test(t) ? '<tspan class="sv">' + t + '</tspan>' : t).join(' ');
+// A row of bags and loose marbles, each with a caption under it. plus = true writes + between the captions.
+function objRow(items, label, plus) {
+  let x = 0, out = '';
+  items.forEach((it, k) => {
+    if (k) { if (plus) out += '<text class="st" x="' + (x + 11) + '" y="97" text-anchor="middle">+</text>'; x += 22; }
+    const w = it.bag ? 66 : Math.max(it.n * 24, 30);
+    if (it.bag) out += bagG(x + 2, 4, it.bag);
+    else for (let j = 0; j < it.n; j++) out += marbleG(x + 12 + j * 24, 61, 10.5);
+    out += '<text class="st" x="' + (x + w / 2) + '" y="97" text-anchor="middle">' + sT(it.cap) + '</text>';
+    x += w;
+  });
+  return '<svg class="wy-svg" viewBox="-4 -8 ' + (x + 8) + ' 114" role="img" aria-label="' + label + '">' + out + '</svg>';
+}
+const objW = (bags, loose) => ((bags * 66 + (loose ? Math.max(loose * 24, 30) + 22 : 0) + (bags - 1) * 22 + 8) * 0.068).toFixed(1);
+// A balanced scale with its two sides labelled.
+function stillScale(L, R, l, r) {
+  const d = document.createElement('div');
+  const sc = makeScale(d);
+  sc.update(L, R); sc.bar(l, '=', r, true);
+  return d.innerHTML;
+}
+// The tile row: n blue tiles between two yellow end tiles. big = true draws a long row with a gap in it.
+function patSvg(n, big) {
+  const S = 26, G = 4;
+  let x = 0, out = '';
+  const sq = c => { out += '<rect class="ps-' + c + '" x="' + x + '" y="0" width="' + S + '" height="' + S + '" rx="5"/>'; x += S + G; };
+  sq('e');
+  const x0 = x;
+  if (big) { sq('n'); sq('n'); sq('n'); out += '<text class="st" x="' + (x + 13) + '" y="19" text-anchor="middle">…</text>'; x += 30; sq('n'); sq('n'); sq('n'); }
+  else for (let k = 0; k < n; k++) sq('n');
+  const x1 = x - G, xe = x;
+  sq('e');
+  out += '<path class="ps-br" d="M' + x0 + ' 32 v4 q0 4 4 4 H' + (x1 - 4) + ' q4 0 4 -4 v-4"/>' +
+    '<text class="st" x="13" y="60" text-anchor="middle">1</text><text class="st" x="' + (xe + 13) + '" y="60" text-anchor="middle">1</text>' +
+    '<text class="st" x="' + (x0 + x1) / 2 + '" y="60" text-anchor="middle">' + sT('n = ' + n) + '</text>';
+  return '<svg class="wy-svg" viewBox="-3 -3 ' + (x - G + 6) + ' 70" role="img" aria-label="' + plural(n, 'blue tile') + ' between two yellow end tiles">' + out + '</svg>';
+}
+// The machine with one number going in and one coming out. capA and capB are optional notes under the slots.
+function stillMach(a, b, capA, capB) {
+  const slot = (w, v, c) => '<div class="m-slot"><span class="cap">' + w + '</span><span class="tile num still">' + v + '</span>' + (c ? '<span class="cap under">' + c + '</span>' : '') + '</div>';
+  return '<div class="mach' + (capA || capB ? ' capped' : '') + '" role="img" aria-label="' + a + ' goes in, ' + b + ' comes out">' + slot('in', a, capA) + '<div class="m-pipe"></div><div class="m-body">' + GEAR + '</div><div class="m-pipe"></div>' + slot('out', b, capB) + '</div>';
+}
+
 /* ---------- cards ---------- */
 // A balance where one slider sets every bag (cards 2 and 4).
 function sliderScale(cfg) {
@@ -292,7 +343,7 @@ function sliderScale(cfg) {
     }
     const sl = makeSlider(ctl, 'b', 0, 10, b, v => { b = v; draw(); ctx.touch(true); });
     draw();
-    return { check: () => b === cfg.ans ? true : cfg.wrong(b, sum(b)), win: cfg.win, solve: () => sl.set(cfg.ans) };
+    return { check: () => b === cfg.ans ? true : cfg.wrong(b, sum(b)), win: cfg.win, solve: () => sl.set(cfg.ans), recap: cfg.recap };
   };
 }
 
@@ -300,7 +351,11 @@ const cards = [
 
 /* 1 */ {
   prompt: 'A bag of marbles is on the scale. How many marbles are inside?',
-  sub: 'Add marbles to the other side until the scale balances. Every marble weighs the same, and the bag itself weighs nothing.',
+  sub: 'Like coins in a sealed money box, the number in this bag can be found without opening it. Add marbles to the other side until the scale balances. Every marble weighs the same, and the bag itself weighs nothing.',
+  why: () => whyBox(stillScale({ bags: [{ inside: 6 }], weight: 6 }, { loose: 6, weight: 6 }, '1 bag<small>6 marbles inside</small>', mx('6') + '<small>marbles</small>'), 17, [
+    'A level scale means both sides hold the same amount.',
+    'The right side has 6 marbles, so the bag has 6 marbles too.'
+  ]),
   build(stage, ctl, ctx) {
     const BAG = 6, MAX = 12;
     let n = 0, open = false;
@@ -336,6 +391,10 @@ const cards = [
 /* 2 */ {
   prompt: 'This bag holds a number of marbles we don’t know yet. Call that number ' + mx('b') + '.',
   sub: 'Drag the slider to try different values of ' + mx('b') + '. Which value makes the scale balance?',
+  why: () => whyBox(stillScale({ bags: [{ inside: 5 }], loose: 2, weight: 7 }, { loose: 7, weight: 7 }, mx('b + 2') + '<small>5 + 2 = 7</small>', mx('7') + '<small>marbles</small>'), 17, [
+    'Cover the 2 loose marbles on the left. The bag has to match what is left of the 7: ' + mx('7 − 2 = 5') + '.',
+    'So ' + mx('b = 5') + '. With 4 or 6 in the bag, the scale tips.'
+  ]),
   build: sliderScale({
     nb: 1, loose: 2, right: 7, start: 1, ans: 5,
     wrong: (b, s) => 'If ' + mx('b') + ' is ' + b + ', the left side holds ' + b + ' + 2 = ' + s + ' marbles. The right side holds 7, so the left is too ' + (s > 7 ? 'heavy' : 'light') + '.',
@@ -345,6 +404,10 @@ const cards = [
 
 /* 3 */ {
   prompt: 'In that problem, what did ' + mx('b') + ' stand for?',
+  why: () => whyBox(objRow([{ bag: { inside: 5 }, cap: 'b = 5' }], 'A see-through bag holding 5 marbles, b = 5'), 6.5, [
+    'The bag is a thing. ' + mx('b') + ' is how many marbles are in it: here, 5.',
+    'You can add 2 to a number: ' + mx('5 + 2 = 7') + '. You can’t add 2 to a bag or to a word.'
+  ]),
   build(stage, ctl, ctx) {
     stage.append(h('<svg class="pic" viewBox="-8 -12 82 88" role="img" aria-label="A bag with a tag that says b">' + bagG(0, 0, { tag: 'b', body: '?' }) + '</svg>'));
     const ch = makeChoices(ctl, ['The bag', 'The number of marbles in the bag', 'The word “bag”, shortened', 'The weight of one marble'], ctx);
@@ -366,16 +429,54 @@ const cards = [
 /* 4 */ {
   prompt: 'Both bags are labelled ' + mx('b') + ', so they hold the same number. Find ' + mx('b') + '.',
   sub: 'One slider changes both bags at once.',
+  why: () => whyBox(stillScale({ bags: [{ inside: 4 }, { inside: 4 }], weight: 8 }, { loose: 8, weight: 8 }, mx('b + b') + '<small>4 + 4 = 8</small>', mx('8') + '<small>marbles</small>'), 17, [
+    'The two bags hold the same number, so share the 8 marbles equally: 4 in each.',
+    mx('b = 4') + '. No other value works: ' + mx('3 + 3 = 6') + ' and ' + mx('5 + 5 = 10') + '.'
+  ]),
   build: sliderScale({
     nb: 2, loose: 0, right: 8, start: 1, ans: 4,
     wrong: (b, s) => 'If ' + mx('b') + ' is ' + b + ', the two bags hold ' + b + ' + ' + b + ' = ' + s + ' marbles. You need 8.',
-    win: () => mx('b = 4') + ', because 4 + 4 = 8. Inside one problem, the same letter always means the same number, so the two bags could not hold different amounts.'
-  })
+    win: () => mx('b = 4') + ', because 4 + 4 = 8. Inside one problem, the same letter always means the same number, so the two bags could not hold different amounts.',
+    recap: () => 'Both bags are labelled ' + mx('b') + ', and ' + mx('b = 4') + ' balances the scale.'
+  }),
+  then: {
+    prompt: 'Kai says one bag could hold 3 and the other 5, because 3 + 5 = 8. Is Kai right?',
+    reset: false,
+    why: () => whyBox(objRow([{ bag: { inside: 4 }, cap: 'b = 4' }, { bag: { inside: 4 }, cap: 'b = 4' }], 'Two see-through bags, each holding 4 marbles, b = 4 for both'), 10.5, [
+      '3 and 5 do add to 8. But then ' + mx('b') + ' would be 3 for one bag and 5 for the other.',
+      'One letter means one number inside a problem, so both bags hold 4.'
+    ]),
+    build(stage, ctl, ctx) {
+      const ch = makeChoices(ctl, ['Yes, 3 + 5 = 8', 'No, both bags are ' + mx('b'), 'No, 3 + 5 isn’t 8'], ctx);
+      ctl.firstElementChild.classList.add('three');
+      const fbk = [
+        '3 + 5 does make 8, so that scale would balance. But look at the labels. Can ' + mx('b') + ' be 3 and 5 in the same problem?',
+        '',
+        '3 + 5 is 8, so the total is fine. The trouble is the labels: both bags are ' + mx('b') + '.'
+      ];
+      return {
+        check() { const s = ch.sel()[0]; if (s === 1) return true; ch.mark(s, 'bad'); return fbk[s]; },
+        win: () => 'Both bags are ' + mx('b') + ', so they hold the same number: 4 and 4. Bags that might hold different amounts need different letters.',
+        won() { ch.mark(1, 'good'); ch.lock(); },
+        solve() { ch.set([1]); }
+      };
+    }
+  }
 },
 
 /* 5 */ {
+  bridge: true,
+  prompt: 'Each time, ' + mx('b') + ' stood for a number you couldn’t see, and the scale told you what it was. A letter standing for a number you have to find is called an <b>unknown</b>.',
+  show(stage) { stage.append(h('<div class="br-pic" style="max-width:6.5rem">' + objRow([{ bag: { inside: 5 }, cap: 'b = 5' }], 'A see-through bag holding 5 marbles, b = 5') + '</div>')); }
+},
+
+/* 6 */ {
   prompt: 'Each bag holds ' + mx('b') + ' marbles. Put bags and marbles on the mat to show ' + mx('b + b + 3') + '.',
   sub: 'Drag them onto the mat, or tap them. Tap something on the mat to take it off.',
+  why: () => whyBox(objRow([{ bag: { body: '?' }, cap: 'b' }, { bag: { body: '?' }, cap: 'b' }, { n: 3, cap: '3' }], 'Two bags and 3 loose marbles, with b + b + 3 written underneath', true), objW(2, 3), [
+    'Read the expression one piece at a time. Each ' + mx('b') + ' is the number in one bag, so ' + mx('b + b') + ' is two bags.',
+    'The 3 is a number you know, so it is 3 marbles you can see.'
+  ]),
   build(stage, ctl, ctx) {
     const MAXB = 5, MAXL = 9;
     let bags = 0, loose = 0;
@@ -426,9 +527,13 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 7 */ {
   prompt: 'This mat has 3 bags and 2 loose marbles. Build an expression for the total number of marbles.',
   sub: 'Each bag holds ' + mx('b') + ' marbles. Drag tiles into the box, or tap them. Tap a tile in the box to remove it.',
+  why: () => whyBox(objRow([{ bag: { body: '?' }, cap: 'b' }, { bag: { body: '?' }, cap: 'b' }, { bag: { body: '?' }, cap: 'b' }, { n: 2, cap: '2' }], 'Three bags and 2 loose marbles, with b + b + b + 2 written underneath', true), objW(3, 2), [
+    'Go along the mat: one ' + mx('b') + ' for each bag, then 2 for the loose marbles.',
+    'Check with ' + mx('b = 5') + ': ' + mx('5 + 5 + 5 + 2 = 17') + ' and ' + mx('3 × 5 + 2 = 17') + '.'
+  ]),
   build(stage, ctl, ctx) {
     const mat = h('<div class="mat"></div>');
     for (let i = 0; i < 3; i++) mat.append(h('<div class="it bagit">' + svgBag({ tag: 'b' }) + '</div>'));
@@ -454,9 +559,13 @@ const cards = [
   }
 },
 
-/* 7 */ {
+/* 8 */ {
   prompt: 'Now let ' + mx('b') + ' change. Set ' + mx('b') + ' so the mat holds 17 marbles.',
   sub: 'The bags are see-through this time. Watch the total as you drag.',
+  why: () => whyBox(objRow([{ bag: { inside: 7 }, cap: 'b = 7' }, { bag: { inside: 7 }, cap: 'b = 7' }, { n: 3, cap: '3' }], 'Two see-through bags holding 7 marbles each, and 3 loose marbles'), objW(2, 3), [
+    'Take off the 3 loose marbles: ' + mx('17 − 3 = 14') + ' marbles are in the bags.',
+    'Two equal bags share 14, so each holds 7. Check: ' + mx('7 + 7 + 3 = 17') + '.'
+  ]),
   build(stage, ctl, ctx) {
     let b = 2;
     const mat = h('<div class="mat"></div>'), live = h('<div class="live"></div>');
@@ -479,8 +588,12 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 9 */ {
   prompt: 'The slider stopped at 10. If ' + mx('b = 20') + ', how many marbles is ' + mx('b + b + 3') + '?',
+  why: () => whyBox(objRow([{ bag: { body: '20' }, cap: 'b = 20' }, { bag: { body: '20' }, cap: 'b = 20' }, { n: 3, cap: '3' }], 'Two bags holding 20 marbles each, and 3 loose marbles'), objW(2, 3), [
+    'Put 20 where each ' + mx('b') + ' is: ' + mx('b + b + 3') + ' becomes ' + mx('20 + 20 + 3') + '.',
+    mx('20 + 20 = 40') + ', then ' + mx('40 + 3 = 43') + '.'
+  ]),
   build(stage, ctl, ctx) {
     const mat = h('<div class="mat"></div>');
     mat.innerHTML = ('<div class="it bagit">' + svgBag({ tag: 'b' }) + '</div>').repeat(2) + '<div class="mbs">' + ('<div class="it mbit">' + SVG_MARBLE + '</div>').repeat(3) + '</div>';
@@ -503,7 +616,46 @@ const cards = [
   }
 },
 
-/* 9 */ {
+/* 10 */ {
+  bridge: true,
+  prompt: 'You moved ' + mx('b') + ' from 1 to 10, then to 20, and ' + mx('b + b + 3') + ' gave a new total each time. A letter whose value can change like this is called a <b>variable</b>.',
+  show(stage) {
+    stage.append(h('<table class="wy-tab"><tr><th>' + mx('b') + '</th><td>2</td><td>7</td><td>20</td></tr><tr><th>' + mx('b + b + 3') + '</th><td>7</td><td>17</td><td>43</td></tr></table>'));
+  }
+},
+
+/* 11 */ {
+  why: () => whyBox(patSvg(50, true), 17, [
+    'Small rows first: ' + mx('n = 1') + ' has 3 tiles, ' + mx('n = 2') + ' has 4, ' + mx('n = 3') + ' has 5. Always 2 more than ' + mx('n') + '.',
+    'So ' + mx('n = 50') + ' has ' + mx('50 + 2 = 52') + ' tiles.'
+  ]),
+  then: {
+    prompt: 'Another row like this has 30 tiles altogether. What is ' + mx('n') + '?',
+    reset: false,
+    why: () => whyBox(patSvg(28, true), 17, [
+      'Of the 30 tiles, 2 are the yellow ends. The rest are blue: ' + mx('30 − 2 = 28') + '.',
+      'Check: ' + mx('28 + 2 = 30') + '.'
+    ]),
+    build(stage, ctl, ctx) {
+      const ans = makeAnswer(ctl, 'Blue tiles, ' + mx('n') + ' =', ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 28) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 32) return '32 is 30 + 2. The 30 already counts the two yellow tiles, so take them off instead.';
+          if (v === 30) return '30 is all the tiles. ' + mx('n') + ' counts only the blue ones, so leave out the two yellow ends.';
+          if (v === 29) return 'There is a yellow tile on each end, so take off 2, not 1.';
+          if (v === 15) return 'The row isn’t half blue and half yellow. Only 2 of the 30 tiles are yellow.';
+          return 'The total is always ' + mx('n + 2') + '. Which number is 2 less than 30?';
+        },
+        win: () => mx('n = 28') + ', because 28 + 2 = 30. The same rule works backwards: take the 2 end tiles off the total.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(28); }
+      };
+    }
+  },
   prompt: 'Drag the slider to change ' + mx('n') + ', the number of blue tiles. How many tiles would there be altogether when ' + mx('n = 50') + '?',
   build(stage, ctl, ctx) {
     const pat = makePattern(stage, 3);
@@ -521,15 +673,20 @@ const cards = [
                            : 'The total is always 2 more than ' + mx('n') + ', because of the two end tiles. What is 2 more than 50?';
       },
       win: () => '52. Whatever ' + mx('n') + ' is, the pattern has ' + mx('n') + ' blue tiles and 2 yellow end tiles.',
+      recap: () => 'When ' + mx('n = 50') + ', the row has 52 tiles altogether.',
       won() { ans.mark('good'); ans.lock(); },
       solve() { ans.set(52); }
     };
   }
 },
 
-/* 10 */ {
+/* 12 */ {
   prompt: 'Which expression gives the total number of tiles for any ' + mx('n') + '?',
   sub: 'Use the slider to test each one.',
+  why: () => whyBox(patSvg(4), 11, [
+    'Blue tiles: ' + mx('n') + '. Yellow tiles: always 2. Altogether: ' + mx('n + 2') + '.',
+    'Check with ' + mx('n = 4') + ': ' + mx('4 + 2 = 6') + ', and the row has 6 tiles.'
+  ]),
   build(stage, ctl, ctx) {
     const pat = makePattern(stage, 3);
     makeSlider(ctl, 'n', 1, 12, 3, v => pat.set(v));
@@ -549,9 +706,15 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 13 */ {
   prompt: 'For each card, does only one value of the letter fit, or do many values work?',
   sub: 'Drag each card into a box. Or tap a card, then tap a box.',
+  why: () => '<table class="wy-tab left">' +
+    '<tr><th>' + mx('b + 2 = 7') + '</th><td>only ' + mx('b = 5') + ' balances</td></tr>' +
+    '<tr><th>' + mx('b + b = 8') + '</th><td>only ' + mx('b = 4') + ' balances</td></tr>' +
+    '<tr><th>' + mx('n + 2') + '</th><td>' + mx('n = 3') + ' gives 5, ' + mx('n = 50') + ' gives 52, and so on</td></tr>' +
+    '<tr><th>' + mx('b + b + 3') + '</th><td>' + mx('b = 7') + ' gives 17, ' + mx('b = 20') + ' gives 43, and so on</td></tr></table>' +
+    '<p>The first two say what the total must be, so only one value fits. The last two only describe a total, so any value can go in.</p>',
   build(stage, ctl, ctx) {
     const items = [
       { e: 'b + 2 = 7', cap: 'a bag and 2 marbles balance 7', bin: 'one' },
@@ -598,8 +761,49 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 14 */ {
+  bridge: true,
+  prompt: 'The cards where only one value fits, like ' + mx('b + 2 = 7') + ', are <b>equations</b>: each has an equals sign. The cards where many values work, like ' + mx('n + 2') + ', are <b>expressions</b>.',
+  show(stage) {
+    stage.append(h('<div class="br-duo"><div>' + mx('b + 2 = 7') + '<small>equation: only ' + mx('b = 5') + ' fits</small></div>' +
+      '<div>' + mx('n + 2') + '<small>expression: any ' + mx('n') + ' works</small></div></div>'));
+  }
+},
+
+/* 15 */ {
   prompt: 'This machine changes every number you feed it. What comes out when 20 goes in?',
+  why: () => whyBox(stillMach(20, 60), 21, [
+    'Inputs 1, 2, 3 give outputs 3, 6, 9. That is the 3 times table.',
+    'Adding 3 would turn 1 into 4, not 3. So the rule is × 3, and ' + mx('3 × 20 = 60') + '.'
+  ]),
+  then: {
+    prompt: 'Later, 27 comes out of the same machine. What number went in?',
+    reset: false,
+    why: () => whyBox(stillMach(9, 27), 21, [
+      'The machine multiplies by 3, so ask: 3 times what makes 27?',
+      mx('3 × 9 = 27') + ', so 9 went in. Dividing undoes the machine: ' + mx('27 ÷ 3 = 9') + '.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      p1.mc.show(null, 27);
+      const ans = makeAnswer(ctl, 'The number that went in', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 9) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 81) return '81 is 3 × 27. That is what comes out when 27 goes in. Here 27 is the number that came out.';
+          if (v === 24) return 'Taking 3 off would undo a machine that adds 3. This one multiplies by 3.';
+          if (v === 30) return 'This machine multiplies by 3. It doesn’t add 3, and the number going in is smaller than 27.';
+          return attempt < 2 ? 'The machine multiplies by 3. Which number times 3 makes 27?'
+                             : 'Go up the 3 times table: 3 × 7 = 21, 3 × 8 = 24. What comes next?';
+        },
+        win: () => '9 went in, because 3 × 9 = 27. The rule is the same. This time you used it backwards.',
+        won() { ans.mark('good'); ans.lock(); p1.mc.show(9, 27); },
+        solve() { ans.set(9); }
+      };
+    }
+  },
   sub: 'Drag numbers into the machine, or tap them, and look for the rule.',
   build(stage, ctl, ctx) {
     const mc = makeMachine(stage, n => 3 * n);
@@ -624,15 +828,21 @@ const cards = [
                            : 'Every output is 3 times its input: 1 → 3, 2 → 6, 5 → 15. Work out 3 × 20.';
       },
       win: () => '60. The machine multiplies every number by 3, so 20 becomes 3 × 20 = 60.',
+      recap: () => 'The machine turns 20 into 60.',
+      mc,
       won() { ans.mark('good'); ans.lock(); },
       solve() { ans.set(60); }
     };
   }
 },
 
-/* 13 */ {
+/* 16 */ {
   prompt: 'Call the number going in ' + mx('x') + '. Build an expression for the number that comes out.',
   sub: 'It is the same machine: 1 → 3, 2 → 6, 5 → 15.',
+  why: () => whyBox(stillMach(5, 15, mx('x = 5'), mx('3 × x = 15')), 21, [
+    'The rule is “3 times the number going in”. Call that number ' + mx('x') + ' and the output is ' + mx('3 × x') + '.',
+    'Check with ' + mx('x = 5') + ': ' + mx('3 × 5 = 15') + ', and the machine gives 15.'
+  ]),
   build(stage, ctl, ctx) {
     const node = h('<div class="mach wide"><div class="m-slot"><span class="cap">in</span><span class="tile var still">x</span></div><div class="m-pipe"></div>' +
       '<div class="m-body">' + GEAR + '</div><div class="m-pipe p2"></div><div class="m-wide"><span class="cap">out</span></div></div>');
@@ -656,8 +866,12 @@ const cards = [
   }
 },
 
-/* 14 */ {
+/* 17 */ {
   prompt: 'A different machine adds 5 to every number. Tap every expression that describes it.',
+  why: () => whyBox(stillMach(2, 7), 21, [
+    'Put 2 in for the letter. ' + mx('x + 5') + ', ' + mx('n + 5') + ' and ' + mx('5 + t') + ' all give 7, the same as the machine.',
+    mx('x × 5') + ' gives ' + mx('2 × 5 = 10') + ', so it is a different rule.'
+  ]),
   build(stage, ctl, ctx) {
     stage.append(h('<div class="mach"><div class="m-slot"><span class="cap">in</span><span class="tile num still">2</span></div><div class="m-pipe"></div>' +
       '<div class="m-body">' + GEAR + '</div><div class="m-pipe"></div><div class="m-slot"><span class="cap">out</span><span class="tile num still">7</span></div></div>'));
@@ -678,9 +892,13 @@ const cards = [
   }
 },
 
-/* 15 */ {
+/* 18 */ {
   prompt: 'Three students explain what a variable is. Who is right?',
   sub: 'Choose Agree or Disagree for each one.',
+  why: () => whyBox(objRow([{ bag: { inside: 5 }, cap: 'b = 5' }, { bag: { inside: 4 }, cap: 'b = 4' }, { bag: { inside: 7 }, cap: 'b = 7' }], 'Three see-through bags from three problems, holding 5, 4 and 7 marbles'), objW(3, 0), [
+    'Three problems, three values of ' + mx('b') + '. Each one is a number of marbles, so “a label for the bag” doesn’t fit.',
+    'The value changed from problem to problem, so “5 from now on” doesn’t fit either.'
+  ]),
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const claims = [
@@ -724,7 +942,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Mystery bags'], [4, 'Build it'], [8, 'Patterns'], [11, 'Machines'], [14, 'Wrap-up']];
+const SECTIONS = [[0, 'Mystery bags'], [4, 'Build it'], [9, 'Patterns'], [13, 'Machines'], [17, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

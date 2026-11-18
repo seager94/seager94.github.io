@@ -8,7 +8,7 @@
 <meta name="description" content="Year 7 card lesson on writing equations from everyday money stories: name the unknown as a number, write the equation, solve it, then check the answer in the story.">
 <meta name="lesson-id" content="equations-from-stories">
 <meta name="lesson-format" content="card">
-<meta name="lesson-version" content="1">
+<meta name="lesson-version" content="2">
 <meta name="ac9-descriptor" content="AC9M7A03">
 <meta name="sa-year" content="7">
 <meta name="sa-strand" content="Algebra">
@@ -204,14 +204,14 @@ button.it{cursor:pointer}
 .answer input:focus{outline:3px solid var(--var);outline-offset:2px;border-color:var(--var)}
 .answer input.bad{border-color:var(--no);background:var(--no-soft)}
 .answer input.good{border-color:var(--go);background:var(--go-soft)}
-.claims{display:grid;gap:.6rem}
-.claim{background:var(--paper);border:2px solid var(--line);border-radius:1rem;padding:.65rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.5rem .9rem;align-items:center}
+.claims{display:grid;gap:.45rem}
+.claim{background:var(--paper);border:2px solid var(--line);border-radius:1rem;padding:.5rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.5rem .9rem;align-items:center}
 .av{width:2.2rem;height:2.2rem;border-radius:50%;background:#DCE1EE;display:grid;place-items:center;font:700 1.05rem var(--display)}
 .claim p{margin:0;line-height:1.4}
 .claim .who{font-weight:600}
 .claim.bad{border-color:var(--no);background:var(--no-soft)}
 .claim.good{border-color:var(--go);background:var(--go-soft)}
-.claim .why{grid-column:2 / -1;font-size:.93rem}
+.claim .why{grid-column:2 / -1;font-size:.93rem;line-height:1.35}
 .yn{display:inline-flex;border-radius:.8rem;box-shadow:inset 0 0 0 2px var(--line);background:var(--paper);overflow:hidden}
 .yn button{border:0;background:none;padding:.5rem .85rem;cursor:pointer;font-size:.93rem}
 .yn button[aria-pressed=true]{background:var(--ink);color:#fff}
@@ -325,6 +325,17 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
   .dock.good .acts,.dock.bad .acts,.dock.info .acts{width:auto;flex:none}
   .dock.good .acts .primary,.dock.bad .acts .primary,.dock.info .acts .primary{flex:none;min-width:11rem}
 }
+/* Why? sits beside the verdict ("Correct!  Why?"), so the sheet's text keeps the full width. */
+.why-chip{margin-left:.6rem;font:600 .85rem/1 var(--body);padding:.34rem .8rem;border:0;border-radius:999px;background:rgba(0,0,0,.08);color:var(--ink);cursor:pointer;vertical-align:.12rem}
+.why-chip:hover{background:rgba(0,0,0,.14)}
+.why-chip:focus-visible{outline:3px solid var(--var);outline-offset:2px}
+
+/* Phones: Start over, Show me and Try again must fit side by side in 390px. */
+@media (max-width:34rem){
+  .acts{gap:.45rem}
+  .acts .btn{padding-left:1rem;padding-right:1rem}
+  .acts .again-btn{padding-left:.25rem;padding-right:.45rem}
+}
 /* Short laptop screens: keep the answered sheet to two lines where possible, so nothing scrolls. */
 @media (min-width:34.01rem) and (max-height:760px){
   .dock.good .wrap,.dock.bad .wrap,.dock.info .wrap{gap:1rem;padding-top:.55rem;padding-bottom:.7rem}
@@ -334,7 +345,8 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 .ghost:hover{background:rgba(0,0,0,.1)}
 
 /* Why? panel */
-.why{position:fixed;inset:0;z-index:70;background:rgba(28,30,33,.35);display:flex;align-items:flex-end}
+/* the overlay is .whysheet, not .why: lesson claim cards use <p class="why"> for their notes */
+.whysheet{position:fixed;inset:0;z-index:70;background:rgba(28,30,33,.35);display:flex;align-items:flex-end}
 .why-panel{width:100%;max-height:85%;overflow:auto;background:#fff;border-radius:1.3rem 1.3rem 0 0;padding:1.1rem 0 1.2rem;animation:sheet .25s ease-out}
 .why-panel h2{margin:0 0 .6rem;font:700 1.2rem/1.3 var(--body)}
 .why-body{line-height:1.5}
@@ -357,6 +369,7 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 /* bridge cards: text only */
 .card.bridge .prompt{font-size:1.3rem;font-weight:600;margin-top:12vh}
 .card.bridge.shows .prompt{margin-top:1.5rem}
+.card.bridge .prompt b,.card.bridge .prompt strong{font-weight:800}
 
 @keyframes sheet{from{transform:translateY(1rem);opacity:0}}
 @media (max-width:34rem){.prompt{font-size:1.25rem}}
@@ -376,6 +389,21 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 .bm-line{position:absolute;top:0;bottom:1.4rem;margin-left:-1px;border-left:2px dashed var(--ink-2)}
 .bm.ok .bm-line{border-color:var(--go)}
 .bm.ok .bm-tot{border-color:var(--go);background:var(--go-soft)}
+/* still pictures: Why? panels and bridges */
+.bm.still .bm-caps{line-height:1.2}
+.why-body .why-fig{container-type:inline-size;width:100%;max-width:36rem;margin:.1rem 0 .5rem}
+.why-body .why-ln{margin:.3rem 0 0}
+.why-body .wt{border-collapse:collapse;margin:.5rem 0 .2rem;font:400 1.05rem var(--maths);font-variant-numeric:lining-nums}
+.why-body .wt th,.why-body .wt td{border:1px solid var(--line);padding:.2rem .8rem;text-align:center;white-space:nowrap}
+.why-body .wt th{font-weight:400;background:var(--desk)}
+.why-body .wt.rows{margin-top:0;font-size:1rem}
+.why-body .wt.rows th{font-family:var(--body);text-align:left}
+.why-body .wt .ok{background:var(--go-soft);color:var(--go-deep);font-weight:700}
+.why-body .wt .no{background:var(--no-soft);color:var(--no-ink)}
+.why-body .wt.rows .ok,.why-body .wt.rows .no{font-family:var(--body);font-weight:600;font-size:.92rem}
+@media (max-width:34rem){.why-body .wt.rows th,.why-body .wt.rows td{padding:.2rem .4rem;font-size:.86rem}.why-body .wt.rows th{white-space:normal}}
+
+.why-body .nb{white-space:nowrap}
 
 </style>
 </head>
@@ -405,14 +433,14 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
     <div class="fb" id="fb" role="status" aria-live="polite"></div>
     <div class="acts">
       <button type="button" class="btn ghost again-btn" id="startOver"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10a5.5 5.5 0 1 0 1.7-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M5.4 2.6v3.8h3.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Start over</span></button>
-      <button type="button" class="btn ghost" id="whyBtn" hidden>Why?</button>
+      <button type="button" class="why-chip" id="whyBtn" hidden>Why?</button>
       <button type="button" class="btn ghost" id="showMe" hidden>Show me</button>
       <button type="button" class="btn ghost" id="skip" hidden>Next</button>
       <button type="button" class="btn ghost" id="again" hidden>Start again</button>
       <button type="button" class="btn primary" id="primary" disabled>Check</button>
     </div>
   </div></footer>
-  <div class="why" id="why" hidden role="dialog" aria-modal="true" aria-labelledby="whyTitle">
+  <div class="whysheet" id="why" hidden role="dialog" aria-modal="true" aria-labelledby="whyTitle">
     <div class="why-panel"><div class="wrap">
       <h2 id="whyTitle">Why</h2>
       <div class="why-body" id="whyBody"></div>
@@ -426,7 +454,7 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 'use strict';
 
 /* ---------- lesson settings (written by build_cards.py) ---------- */
-const LESSON = {"slug": "equations-from-stories", "title": "Equations from stories", "version": 1, "map": "index.html", "next": {"title": "Growing patterns", "href": "growing-patterns.html"}};
+const LESSON = {"slug": "equations-from-stories", "title": "Equations from stories", "version": 2, "map": "index.html", "next": {"title": "Level Check: Equations", "href": "check-equations.html"}};
 
 /* ===================== this lesson: helpers, components, cards ===================== */
 /* ---------- helpers ---------- */
@@ -732,9 +760,39 @@ function makeBar(host, o) {
 }
 const story = (stage, html) => stage.append(h('<div class="story">' + html + '</div>'));
 
+/* ---------- still pictures: Why? panels and bridges ---------- */
+// A bar model that doesn't move. o: { max, total, totalCap, cells: [[class, width, html]], caps: [[width, html]], ok, label }
+function stillBar(o) {
+  const pc = x => (x / o.max * 100) + '%';
+  const cell = (cls, w, html) => '<span class="' + cls + '" style="width:' + pc(w) + '">' + html + '</span>';
+  return '<div class="bm still' + (o.ok ? ' ok' : '') + '" role="img" aria-label="' + o.label + '"><div class="bm-row"><div class="bm-tot" style="width:' + pc(o.total) + '">' + o.totalCap + '</div></div>' +
+    '<div class="bm-row bm-built">' + o.cells.map(c => cell('bm-b ' + c[0], c[1], c[2])).join('') + '</div>' +
+    '<div class="bm-caps">' + o.caps.map(c => cell('', c[0], c[1])).join('') + '</div><span class="bm-line" style="left:' + pc(o.total) + '"></span></div>';
+}
+// The bill from a story (same settings as makeBar). n = null leaves the blue part unknown; n draws n blocks.
+// x overrides settings; x.ncap replaces the "letter = n" caption under the blocks.
+function stillBill(cfg, n, x) {
+  const o = Object.assign({}, cfg, x), rest = o.total - o.fixed;
+  const cells = [['f', o.fixed, '$' + o.fixed]];
+  if (n == null) cells.push(['q', rest, o.q || '?']);
+  else for (let k = 0; k < n; k++) cells.push(['u', o.unit, '$' + o.unit]);
+  return stillBar({
+    max: o.max || Math.max(o.total, o.fixed + o.unit * (n || 0)), total: o.total, totalCap: o.totalCap, cells,
+    caps: [[o.fixed, o.fixedCap], [n == null ? rest : o.unit * n, n == null ? o.cap : o.ncap || mx(o.letter + ' = ' + n)]],
+    ok: n != null && o.fixed + o.unit * n === o.total,
+    label: '$' + o.fixed + ' ' + cfg.fixedCap + (n == null ? ' plus an unknown amount' : ' plus ' + plural(n, 'block') + ' of $' + o.unit) + ', compared with ' + o.totalCap + '.'
+  });
+}
+const nb = s => '<span class="nb">' + s + '</span>';
+const whyBox = (fig, lines) => '<div class="why-fig">' + fig + '</div>' + lines.map(l => '<p class="why-ln">' + l + '</p>').join('');
+
 /* ---------- cards ---------- */
 const PHONE = { unit: 15, fixed: 20, total: 95, max: 95, letter: 'm', fixedCap: 'setup fee', totalCap: '$95 paid altogether', cap: '$15 for each month' };
 const GYM = { unit: 6, fixed: 10, total: 64, letter: 'v', fixedCap: 'joining fee', totalCap: '$64 paid', cap: '$6 for each visit' };
+// Stories without a bar on their card: drawn only in Why? panels.
+const TAXI = { unit: 3, fixed: 4, total: 31, letter: 'k', fixedCap: 'start', totalCap: '$31 for the trip', cap: '$3 for each kilometre' };
+const SAVE = { unit: 8, fixed: 25, total: 81, letter: 'w', fixedCap: 'had at the start', totalCap: '$81 now', cap: '$8 for each week' };
+const PLUMB = { unit: 25, fixed: 40, total: 140, letter: 'h', fixedCap: 'call-out fee', totalCap: '$140 bill', cap: '$25 for each hour' };
 
 // The student writes the story as an equation a × v + b = c with tiles.
 // Marked by evaluating both sides at several values, so any equivalent equation is accepted.
@@ -785,7 +843,10 @@ const cards = [
 
 /* 1 */ {
   prompt: 'Sam’s phone plan costs $15 a month, plus a $20 setup fee. Sam has paid $95 so far. What should the letter ' + mx('m') + ' stand for?',
-  sub: 'We want to find out how long Sam has had the plan.',
+  sub: 'A bill shows the total you paid, not how many months it covers. We want to find out how long Sam has had the plan.',
+  why: () => whyBox(stillBill(PHONE, null), [
+    'The story gives the $20, the $15 and the $95. The only number it doesn’t give is how many months Sam has paid for.',
+    'So ' + mx('m') + ' stands for the number of months. Because it is a number, it can be multiplied: ' + mx('m') + ' months cost ' + mx('15 × m') + ' dollars.']),
   build(stage, ctl, ctx) {
     makeBar(stage, Object.assign({ q: '?' }, PHONE)).set(null);
     const ch = makeChoices(ctl, ['Months', 'The number of months Sam has had the plan', 'The cost of one month', 'The total Sam has paid'], ctx);
@@ -807,6 +868,9 @@ const cards = [
 /* 2 */ {
   prompt: 'Let ' + mx('m') + ' be the number of months. Build an equation that says what the story says.',
   sub: 'Drag tiles into the box, or tap them. Tap a tile in the box to remove it.',
+  why: () => whyBox(stillBill(PHONE, null, { fixedCap: '+ 20', cap: mx('15 × m') }), [
+    'The blue part and the yellow part together are as long as the $95 bar: ' + mx('15 × m + 20 = 95') + '.',
+    'The $15 is paid ' + mx('m') + ' times, so it is multiplied by ' + mx('m') + '. The $20 is paid once, so it is added once.']),
   build: eqCard({
     v: 'm', a: 15, b: 20, c: 95,
     tiles: ['m', '15', '20', '95', '+', '×', '='],
@@ -828,6 +892,9 @@ const cards = [
 /* 3 */ {
   prompt: 'Solve ' + mx('15m + 20 = 95') + '. How many months has Sam had the plan?',
   sub: 'The bar shows the same story. The blue part is what the months cost.',
+  why: () => whyBox(stillBill(PHONE, 5), [
+    'The $20 was added last, so undo it first: 95 − 20 = 75. That is the blue part.',
+    'The blue part is 15 × ' + mx('m') + ', so undo the × 15: 75 ÷ 15 = 5 blocks. These are the inverse operations you used in backtracking.']),
   build(stage, ctl, ctx) {
     const bar = makeBar(stage, Object.assign({ q: mx('15m') }, PHONE));
     bar.set(null);
@@ -852,7 +919,17 @@ const cards = [
 },
 
 /* 4 */ {
+  bridge: true,
+  prompt: 'You started by saying which number ' + mx('m') + ' stands for: the number of months. That is called <b>defining the variable</b>.',
+  sub: 'Write it as “Let ' + mx('m') + ' be the number of months.” Then the equation ' + mx('15m + 20 = 95') + ' has a clear meaning, and so does its solution, ' + mx('m = 5') + '.',
+  show(stage) { stage.append(h(stillBill(PHONE, null, { cap: mx('m') + ' = the number of months' }))); }
+},
+
+/* 5 */ {
   prompt: 'Which equation matches this story?',
+  why: () => whyBox(stillBill(TAXI, 9), [
+    'The $4 is one block, paid once. Each kilometre adds one $3 block, so ' + mx('k') + ' kilometres cost ' + mx('3k') + ' dollars.',
+    'It takes 9 of the $3 blocks to reach the $31 line: 3 × 9 + 4 = 27 + 4 = 31.']),
   build(stage, ctl, ctx) {
     story(stage, 'A taxi charges $4 to start, plus $3 for every kilometre. Mei’s trip cost $31. Let ' + mx('k') + ' be the number of kilometres.');
     const ch = makeChoices(ctl, [mx('4k + 3 = 31'), mx('3k = 31 + 4'), mx('3k + 4 = 31'), mx('k + 3 + 4 = 31')], ctx);
@@ -871,8 +948,11 @@ const cards = [
   }
 },
 
-/* 5 */ {
+/* 6 */ {
   prompt: 'Jo starts with “' + mx('v') + ' = visits”. What should Jo write instead?',
+  why: () => whyBox(stillBill(GYM, 3), [
+    'Try a number. If Jo had made 3 visits, then ' + mx('v = 3') + ' and ' + mx('6v') + ' is 6 × 3 = 18 dollars: three $6 blocks.',
+    'So ' + mx('6v') + ' is money. Writing “' + mx('v') + ' = visits” would make it read as “6 visits”, which is not what the blocks show.']),
   build(stage, ctl, ctx) {
     story(stage, 'A gym pass has a $10 joining fee, then costs $6 for each visit. Jo has paid $64 so far.');
     const ch = makeChoices(ctl, ['Let ' + mx('v') + ' be the number of visits Jo has made', 'Let ' + mx('v') + ' be the gym', 'Let ' + mx('v') + ' be the cost of one visit', '“' + mx('v') + ' = visits” is fine as it is'], ctx);
@@ -891,9 +971,12 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 7 */ {
   prompt: 'Jo’s equation is ' + mx('6v + 10 = 64') + '. Drag ' + mx('v') + ' until the bill matches $64.',
   sub: 'Each blue block is one visit at $6.',
+  why: () => whyBox(stillBill(GYM, 9) +
+    '<table class="wt"><tr><th>' + mx('v') + '</th><td>8</td><td class="ok">9</td><td>10</td></tr><tr><th>' + mx('6v + 10') + '</th><td>58</td><td class="ok">64</td><td>70</td></tr></table>', [
+    'Each extra visit adds $6 to the bill, so it equals $64 for only one value: ' + mx('v = 9') + '. That makes 9 the solution.']),
   build(stage, ctl, ctx) {
     let v = 3;
     const bar = makeBar(stage, Object.assign({ max: 82 }, GYM)), live = h('<div class="live"></div>');
@@ -911,13 +994,50 @@ const cards = [
       },
       win: () => '6 × 9 + 10 = 54 + 10 = 64, so ' + mx('v = 9') + ' fits the equation.',
       won() { $('input', ctl).disabled = true; },
-      solve() { sl.set(9); }
+      solve() { sl.set(9); },
+      recap: () => mx('6v + 10 = 64') + ' is true when ' + mx('v = 9') + ': Jo had made 9 visits.'
     };
+  },
+  then: {
+    prompt: 'Later, Jo has paid $82 altogether. Now ' + mx('6v + 10 = 82') + '. How many visits has Jo made?',
+    sub: 'No slider this time. The pass is the same: $10 to join, then $6 for each visit.',
+    why: () => whyBox(stillBill(GYM, 12, { total: 82, totalCap: '$82 paid' }), [
+      'From $64 to $82 is $18 more. At $6 a visit, that is 18 ÷ 6 = 3 more visits: 9 + 3 = 12.',
+      'Check by substitution: 6 × 12 + 10 = 72 + 10 = 82.']),
+    build(stage, ctl, ctx) {
+      stage.replaceChildren();
+      const bar = makeBar(stage, Object.assign({ max: 82, q: '?' }, GYM, { total: 82, totalCap: '$82 paid' }));
+      bar.set(null);
+      const live = h('<div class="live">' + mx('6v + 10 = 82') + '</div>');
+      stage.append(live);
+      const ans = makeAnswer(ctl, mx('v') + ' =', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 12) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 72) return '72 is what the visits cost: 82 − 10 = 72. But ' + mx('v') + ' is the number of visits. How many 6s make 72?';
+          if (v === 82) return '82 is the total Jo has paid. ' + mx('v') + ' is the number of visits.';
+          if (v === 3) return '3 is how many more visits Jo has made: 82 − 64 = 18, and 18 ÷ 6 = 3. Add them to the 9 visits Jo had already made.';
+          if (v === 18) return '18 is how many more dollars Jo has paid: 82 − 64 = 18. ' + mx('v') + ' is the number of visits altogether.';
+          const p = 6 * v + 10;
+          return 'Check it in the story: ' + plural(v, 'visit') + ' would cost 6 × ' + v + ' + 10 = $' + p + ', not $82. ' +
+            (attempt < 2 ? 'So Jo has made ' + (p > 82 ? 'fewer' : 'more') + ' visits.' : 'Backtrack: take off the $10 joining fee, then work out how many 6s make what is left.');
+        },
+        win: () => mx('v = 12') + '. Backtrack from 82: 82 − 10 = 72, then 72 ÷ 6 = 12. A new total gives a new equation, and a new solution: Jo has made 12 visits.',
+        won() { bar.set(12); live.innerHTML = mx('6v + 10') + '<small>6 × 12 + 10 = <b>82</b> dollars</small>'; ans.mark('good'); ans.lock(); },
+        solve() { ans.set(12); }
+      };
+    }
   }
 },
 
-/* 7 */ {
+/* 8 */ {
   prompt: 'Jo’s equation gives ' + mx('v = 9') + '. What does that tell you?',
+  why: () => whyBox(stillBill(GYM, 9), [
+    'Count the blue blocks. There are 9, one for each visit, so ' + mx('v = 9') + ' is a number of visits.',
+    'The money is written on the blocks: $6 each, $64 altogether. Nothing in the story is $9, or 9 weeks.']),
   build(stage, ctl, ctx) {
     makeBar(stage, Object.assign({ max: 64 }, GYM)).set(9);
     const ch = makeChoices(ctl, ['Jo has been to the gym 9 times.', 'Jo has paid $9.', 'Each visit costs $9.', 'Jo has been a member for 9 weeks.'], ctx);
@@ -931,14 +1051,47 @@ const cards = [
       check() { const s = ch.sel()[0]; if (s === 0) return true; ch.mark(s, 'bad'); return why[s]; },
       win: () => mx('v') + ' is the number of visits, so Jo has been to the gym 9 times. An answer means something only once you say it back in the story. That is why you write down what the letter stands for.',
       won() { ch.mark(0, 'good'); ch.lock(); },
-      solve() { ch.set([0]); }
+      solve() { ch.set([0]); },
+      recap: () => mx('v = 9') + ' means Jo has been to the gym 9 times.'
     };
+  },
+  then: {
+    prompt: 'Now look at the blue part of the bar. What does ' + mx('6v') + ' stand for when ' + mx('v = 9') + '?',
+    reset: false,
+    why: () => whyBox(stillBill(GYM, 9, { ncap: mx('6v') + ' = 6 × 9 = 54' }), [
+      'There are 9 blue blocks and each one is $6, so the blue part is 6 × 9 = $54.',
+      mx('v') + ' counts the blocks. ' + mx('6v') + ' is the money in them.']),
+    build(stage, ctl, ctx) {
+      const ch = makeChoices(ctl, ['6 visits', 'The $54 Jo paid for visits', 'The number 69', 'The $64 Jo paid altogether'], ctx);
+      const why = [
+        mx('6v') + ' means 6 × ' + mx('v') + '. The 6 is the dollars for one visit, so ' + mx('6v') + ' is an amount of money, not a number of visits.',
+        '',
+        'Substituting 9 doesn’t put the 9 next to the 6. ' + mx('6v') + ' means 6 × ' + mx('v') + ', so work out 6 × 9.',
+        '$64 is the whole bill, with the $10 joining fee included. ' + mx('6v') + ' is only the blue part of the bar.'
+      ];
+      return {
+        check() { const s = ch.sel()[0]; if (s === 1) return true; ch.mark(s, 'bad'); return why[s]; },
+        win: () => mx('6v') + ' is 6 × 9 = 54: the dollars Jo paid for 9 visits. Add the $10 joining fee and you get the $64.',
+        won() { ch.mark(1, 'good'); ch.lock(); },
+        solve() { ch.set([1]); }
+      };
+    }
   }
 },
 
-/* 8 */ {
+/* 9 */ {
+  bridge: true,
+  prompt: 'You turned ' + mx('v = 9') + ' back into words: Jo has been to the gym 9 times. Saying what a solution means in the story is called <b>interpreting</b> it.',
+  sub: 'Look back at how you defined the variable. It tells you what the solution counts.',
+  show(stage) { stage.append(h(stillBill(GYM, 9, { ncap: mx('v = 9') + ': 9 visits' }))); }
+},
+
+/* 10 */ {
   prompt: 'Let ' + mx('w') + ' be the number of weeks Tia has been saving. Write an equation for the story.',
   sub: 'Use the tiles. Tap a tile in the box to remove it.',
+  why: () => whyBox(stillBill(SAVE, null, { fixedCap: '+ 25', cap: mx('8 × w') }), [
+    'Tia’s $81 is made of two parts: the $25 she had, and $8 for each of the ' + mx('w') + ' weeks.',
+    'The weekly $8 is multiplied by ' + mx('w') + '. The $25 is there once, so it is added once: ' + mx('8 × w + 25 = 81') + '.']),
   build: eqCard({
     v: 'w', a: 8, b: 25, c: 81,
     tiles: ['w', '8', '25', '81', '+', '×', '='],
@@ -957,8 +1110,11 @@ const cards = [
   })
 },
 
-/* 9 */ {
+/* 11 */ {
   prompt: 'Solve ' + mx('8w + 25 = 81') + '. How many weeks has Tia been saving?',
+  why: () => whyBox(stillBill(SAVE, 7), [
+    'The $25 was added last, so undo it first: 81 − 25 = 56. That is the blue part.',
+    'The blue part is 8 × ' + mx('w') + ', so undo the × 8: 56 ÷ 8 = 7 blocks, one for each week.']),
   build(stage, ctl, ctx) {
     story(stage, 'Tia had $25. Since then she has saved $8 every week. Now she has $81.');
     const ans = makeAnswer(ctl, mx('w') + ' =', ctx);
@@ -976,13 +1132,47 @@ const cards = [
       },
       win: () => mx('w = 7') + '. Take off the $25 she started with: 81 − 25 = 56. Then 56 ÷ 8 = 7. Check: 7 weeks at $8 is $56, plus $25 makes $81. Tia has been saving for 7 weeks.',
       won() { ans.mark('good'); ans.lock(); },
-      solve() { ans.set(7); }
+      solve() { ans.set(7); },
+      recap: () => mx('8w + 25 = 81') + ' gives ' + mx('w = 7') + ': Tia has been saving for 7 weeks.'
     };
+  },
+  then: {
+    prompt: 'Tia keeps saving. How much will she have when ' + mx('w = 10') + '?',
+    sub: 'The left side of her equation, ' + mx('8w + 25') + ', is what she has after ' + mx('w') + ' weeks.',
+    why: () => whyBox(stillBill(SAVE, 10, { total: 105, totalCap: '$105 after 10 weeks' }), [
+      'Ten weeks is 3 more than 7, so Tia has 3 × 8 = $24 more than $81: 81 + 24 = 105.',
+      'Substitution gives the same amount: 8 × 10 + 25 = 80 + 25 = 105.']),
+    build(stage, ctl, ctx) {
+      const ans = makeAnswer(ctl, 'After 10 weeks Tia has $', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 105) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 80) return '$80 is only what she saves in 10 weeks: 8 × 10 = 80. Add the $25 she started with.';
+          if (v === 835) return 'With ' + mx('w = 10') + ', ' + mx('8w') + ' means 8 × 10 = 80, not 810. Then add the 25.';
+          if (v === 43) return '10 + 8 + 25 adds the 10. Ten weeks at $8 a week is 8 × 10.';
+          if (v === 258) return '25 × 10 + 8 saves $25 every week. Tia saves $8 every week and had the $25 once.';
+          if (v === 161) return 'That is 10 more weeks on top of the $81. ' + mx('w = 10') + ' means 10 weeks since she started, so work out 8 × 10 + 25.';
+          if (v === 81) return '$81 is what Tia has after 7 weeks. Work it out for ' + mx('w = 10') + '.';
+          if (v === 10) return '10 is the number of weeks. The question asks for the dollars Tia has then.';
+          return attempt < 2 ? 'Substitute 10 for ' + mx('w') + ' in ' + mx('8w + 25') + '.' : 'Work out 8 × 10 first, what she saves in 10 weeks. Then add the $25 she started with.';
+        },
+        win: () => '$105. Substituting ' + mx('w = 10') + ' gives 8 × 10 + 25 = 80 + 25 = 105. The expression ' + mx('8w + 25') + ' gives Tia’s savings for any number of weeks.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(105); }
+      };
+    }
   }
 },
 
-/* 10 */ {
+/* 12 */ {
   prompt: 'Let ' + mx('p') + ' be the price of one pizza, in dollars. Write an equation for the story.',
+  why: () => whyBox(stillBar({ max: 54, total: 54, totalCap: '$54 for the order', label: '$6 delivery plus 4 equal blocks of unknown size, compared with $54 for the order.',
+    cells: [['f', 6, '$6'], ['q', 12, '?'], ['q', 12, '?'], ['q', 12, '?'], ['q', 12, '?']], caps: [[6, '+ 6'], [48, '4 pizzas at ' + mx('p') + ' dollars each: ' + mx('4 × p')]] }), [
+    'Four equal pizza blocks and one $6 delivery block make $54: ' + mx('4 × p + 6 = 54') + '.',
+    'This time you know how many blocks there are. The letter is the dollars in each block.']),
   build: eqCard({
     v: 'p', a: 4, b: 6, c: 54,
     tiles: ['p', '4', '6', '54', '+', '×', '='],
@@ -1001,8 +1191,12 @@ const cards = [
   })
 },
 
-/* 11 */ {
+/* 13 */ {
   prompt: 'Leo solved ' + mx('4p + 6 = 54') + ' and got ' + mx('p = 15') + '. Check Leo’s answer in the story.',
+  why: () => whyBox(stillBar({ max: 66, total: 54, totalCap: '$54 for the order', label: '$6 delivery plus 4 blocks of $15 make $66, which is longer than the $54 bar.',
+    cells: [['f', 6, '$6'], ['u', 15, '$15'], ['u', 15, '$15'], ['u', 15, '$15'], ['u', 15, '$15']], caps: [[6, '+ 6'], [60, '4 × 15 = 60']] }), [
+    'With $15 pizzas the order runs $12 past the $54 line: 4 × 15 + 6 = 66.',
+    '15 is what you get by adding the $6 instead of undoing it: ' + nb('(54 + 6) ÷ 4 = 15.') + ' The inverse of ' + nb('+ 6') + ' is ' + nb('− 6') + ': ' + nb('(54 − 6) ÷ 4 = 12.')]),
   build(stage, ctl, ctx) {
     story(stage, 'Ravi orders 4 pizzas that all cost the same. Delivery is $6. The whole order costs $54.');
     const ans = makeAnswer(ctl, 'Four $15 pizzas plus $6 delivery cost $', ctx);
@@ -1025,9 +1219,16 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 14 */ {
   prompt: 'Four students solved stories from this lesson. Tap every answer that checks out.',
   sub: 'Put each answer back into its equation.',
+  why: () => '<table class="wt rows">' +
+    '<tr><th>Phone plan, ' + mx('m = 5') + '</th><td>15 × 5 + 20 = 95</td><td class="ok">equals 95</td></tr>' +
+    '<tr><th>Gym, ' + mx('v = 10') + '</th><td>6 × 10 + 10 = 70</td><td class="no">not 64</td></tr>' +
+    '<tr><th>Taxi, ' + mx('k = 9') + '</th><td>3 × 9 + 4 = 31</td><td class="ok">equals 31</td></tr>' +
+    '<tr><th>Savings, ' + mx('w = 8') + '</th><td>8 × 8 + 25 = 89</td><td class="no">not 81</td></tr></table>' +
+    '<p class="why-ln">Substitution tests any answer: put the number where the letter is and work out the left side. It is the solution only if you get the right side.</p>' +
+    '<p class="why-ln">The gym solution is ' + mx('v = 9') + ' and the savings solution is ' + mx('w = 7') + '.</p>',
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const ch = makeChoices(ctl, [
@@ -1051,9 +1252,12 @@ const cards = [
   }
 },
 
-/* 13 */ {
+/* 15 */ {
   prompt: 'A plumber charges a $40 call-out fee plus $25 for each hour. The bill was $140. Who is right?',
   sub: 'Three students write an equation. Choose Agree or Disagree for each one.',
+  why: () => whyBox(stillBill(PLUMB, 4), [
+    'One $40 block, paid once, and a $25 block for each hour. Four of them reach $140: ' + nb('40 + 25 × 4 = 140') + ', so ' + mx('h = 4') + '.',
+    mx('25h') + ' is the blue part: 25 × 4 = $100. It is money, not “25 hours”, and the $40 is never multiplied by ' + mx('h') + '.']),
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const claims = [
@@ -1095,7 +1299,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Phone plan'], [3, 'Match it'], [4, 'Gym pass'], [7, 'Write it'], [10, 'Check it'], [12, 'Wrap-up']];
+const SECTIONS = [[0, 'Phone plan'], [3, 'Match it'], [5, 'Gym pass'], [8, 'Write it'], [12, 'Check it'], [14, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {
@@ -1216,6 +1420,7 @@ function finishCard(kind, first, verdict) {
   primary.disabled = false;
   showMe.hidden = true; skip.hidden = true; tools.hidden = true;
   whyBtn.hidden = !cardWhy();
+  if (!whyBtn.hidden) { const v = fb.querySelector('.verdict'); if (v) v.append(whyBtn); }
   drawProgress(); save();
   focusPrimary();
 }

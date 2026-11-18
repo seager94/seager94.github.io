@@ -297,6 +297,13 @@ function makeHop(host, hop, target) {
     '<circle class="nl-t" cx="' + X(target) + '" cy="94" r="9"/><g class="nl-move"></g></svg>');
   host.append(svg);
   return {
+    // Move the yellow target and clear the jump (part 2 asks for the start without the slider).
+    retarget(t) {
+      target = t;
+      $('.nl-t', svg).setAttribute('cx', X(t));
+      $('.nl-move', svg).innerHTML = '';
+      svg.setAttribute('aria-label', 'Number line. A jump of ' + hop + ' to the left lands on the target, ' + t + '.');
+    },
     set(x) {
       const a = X(x), b = X(x - hop), m = (a + b) / 2;
       $('.nl-move', svg).innerHTML = '<path class="nl-arc" d="M' + a + ' 80 Q' + m + ' 20 ' + b + ' 82" marker-end="url(#nl-ah)"/>' +
@@ -341,10 +348,70 @@ function makeStep(stage, ctl, lhs, rhs, ctx) {
   };
 }
 
+/* ---------- still diagrams for Why? panels and bridges ---------- */
+const whyBox = (fig, lines) => '<div class="why-fig">' + fig + '</div>' + lines.map(l => '<p class="why-ln">' + l + '</p>').join('');
+// A still balance. l, m and r are written under the left pan, the pivot and the right pan.
+function stillScale(L, R, l, m, r, ok) {
+  const d = document.createElement('div'), sc = makeScale(d);
+  sc.update(L, R); sc.bar(l, m, r, ok);
+  return '<div class="still-scale">' + d.innerHTML + '</div>';
+}
+const xbag = (inside, loose) => ({ bags: [{ inside }], loose: loose || 0, weight: inside + (loose || 0) });
+// k see-through bags of n marbles with a number under each, then "= total".
+function stillBags(k, n, labels, total) {
+  const W = k * 68 + 78;
+  let g = '';
+  for (let i = 0; i < k; i++) g += bagG(i * 68, 0, { inside: n }) + '<text class="fig-n" x="' + (i * 68 + 31) + '" y="93" text-anchor="middle">' + labels[i] + '</text>';
+  g += '<text class="fig-eq" x="' + (k * 68 + 8) + '" y="50" text-anchor="middle">=</text>' +
+    '<rect class="fig-num" x="' + (k * 68 + 24) + '" y="24" width="48" height="38" rx="9"/><text class="fig-nt" x="' + (k * 68 + 48) + '" y="50" text-anchor="middle">' + total + '</text>';
+  return '<svg class="fig" style="max-width:' + W * 1.1 + 'px" viewBox="-3 0 ' + (W + 3) + ' 100" role="img" aria-label="' + k + ' bags of ' + n + ' marbles make ' + total + '">' + g + '</svg>';
+}
+// Number line 0 to max: the jump back of `hop` from x lands on target, and the jump forward undoes it.
+function stillHop(x, hop, target, max, v) {
+  const X = n => 30 + n * 500 / max, a = X(x), b = X(target), m = (a + b) / 2;
+  let ticks = '';
+  for (let n = 0; n <= max; n++) ticks += '<line class="nl-tick" x1="' + X(n) + '" y1="88" x2="' + X(n) + '" y2="100"/><text class="nl-num" x="' + X(n) + '" y="124" text-anchor="middle">' + n + '</text>';
+  return '<svg class="fig hop" style="max-width:31rem" viewBox="0 0 590 184" role="img" aria-label="Number line. A jump of ' + hop + ' to the left from ' + x + ' lands on ' + target + '. A jump of ' + hop + ' to the right from ' + target + ' goes back to ' + x + '.">' +
+    '<defs><marker id="nl-ahw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2B2D2F"/></marker></defs>' +
+    '<line class="nl-axis" x1="18" y1="94" x2="542" y2="94"/>' + ticks +
+    '<path class="nl-arc" d="M' + a + ' 80 Q' + m + ' 20 ' + b + ' 82" marker-end="url(#nl-ahw)"/><text class="nl-lab" x="' + m + '" y="42" text-anchor="middle">− ' + hop + '</text>' +
+    '<path class="nl-arc back" d="M' + b + ' 132 Q' + m + ' 180 ' + a + ' 134" marker-end="url(#nl-ahw)"/><text class="nl-lab" x="' + m + '" y="180" text-anchor="middle">+ ' + hop + '</text>' +
+    '<circle class="nl-t" cx="' + b + '" cy="94" r="9"/><circle class="nl-x" cx="' + a + '" cy="94" r="10"/>' +
+    '<text class="nl-lab" x="' + (a + 10) + '" y="70"><tspan class="fig-v">' + v + '</tspan> = ' + x + '</text></svg>';
+}
+// 2 equal groups of n marbles side by side.
+function stillHalves(n, v) {
+  const row = x0 => { let g = ''; for (let i = 0; i < n; i++) g += marbleG(x0 + 12 + i * 25, 54, 10.5); return g; };
+  const w = n * 25, W = 2 * w + 40;
+  return '<svg class="fig" style="max-width:' + W * 1.15 + 'px" viewBox="0 0 ' + W + ' 96" role="img" aria-label="2 equal groups of ' + n + ' marbles make ' + 2 * n + '">' +
+    '<path class="fig-br" d="M6 30 V20 H' + (W - 6) + ' V30"/><text class="nl-lab" x="' + W / 2 + '" y="14" text-anchor="middle"><tspan class="fig-v">' + v + '</tspan> = ' + 2 * n + '</text>' +
+    row(0) + '<line class="fig-cut" x1="' + W / 2 + '" y1="34" x2="' + W / 2 + '" y2="74"/>' + row(w + 40 - 1) +
+    '<text class="fig-n" x="' + w / 2 + '" y="92" text-anchor="middle">' + n + '</text><text class="fig-n" x="' + (W - w / 2) + '" y="92" text-anchor="middle">' + n + '</text></svg>';
+}
+// Bar of k equal parts worth val each (the letter's value is written on each part), with the total underneath.
+function stillBar(k, val, total, v, unit) {
+  unit = unit || '';
+  const w = 58, W = k * w, tw = unit ? 66 : 52;
+  let g = '';
+  for (let i = 0; i < k; i++) g += '<rect class="fig-var" x="' + (i * w + 2) + '" y="2" width="' + (w - 4) + '" height="40" rx="8"/><text class="fig-vt" x="' + (i * w + w / 2) + '" y="29" text-anchor="middle">' + unit + val + '</text>';
+  return '<svg class="fig" style="max-width:' + (W + 100) * 1.1 + 'px" viewBox="0 0 ' + (W + 100) + ' 98" role="img" aria-label="' + k + ' equal parts of ' + unit + val + ' make ' + unit + total + '">' + g +
+    '<path class="fig-br" d="M4 48 V58 H' + (W - 4) + ' V48"/>' +
+    '<rect class="fig-num" x="' + (W / 2 - tw / 2) + '" y="60" width="' + tw + '" height="36" rx="9"/><text class="fig-nt" x="' + W / 2 + '" y="85" text-anchor="middle">' + unit + total + '</text>' +
+    '<text class="nl-lab" x="' + (W + 12) + '" y="29"><tspan class="fig-v">' + v + '</tspan> = ' + val + '</text></svg>';
+}
+const workLines = rows => '<div class="work">' + rows.map(r => '<span class="l' + (r[2] ? ' fin' : '') + '">' + r[0] + '</span><span' + (r[2] ? ' class="fin"' : '') + '>=</span><span class="r' + (r[2] ? ' fin' : '') + '">' + r[1] + '</span>').join('') + '</div>';
+const flowHTML = (n, op) => '<span class="fcap">Forwards</span><span class="tile var still">n</span><span class="farr">→</span><span class="fop">÷ 2</span><span class="farr">→</span><span class="tile num still">7</span>' +
+  '<span class="fcap">Backwards</span>' + (n ? '<span class="tile num still pop">' + n + '</span>' : '<span class="fq">?</span>') + '<span class="farr">←</span>' +
+  (op ? '<span class="fop pop">' + op + '</span>' : '<span class="fop fq">?</span>') + '<span class="farr">←</span><span class="tile num still">7</span>';
+
 const cards = [
 
 /* 1 */ {
   prompt: 'Take the 4 loose marbles off the left only. Then what is true?',
+  sub: 'A pie plus a $4 drink costs $11, and this scale holds the same puzzle.',
+  why: () => whyBox(stillScale(bagSide(4, 7, false, false), { loose: 11, weight: 11 }, 'bag + 4', '=', '<span class="m">11</span>', true), [
+    'At the start the bag needed 4 extra marbles to balance 11. So the bag on its own is lighter than 11 marbles.',
+    'Take those 4 away from the left only and the left is 4 short, so the right pan sinks.']),
   build(stage, ctl, ctx) {
     const BAG = 7, R = 11;
     let L = 4, ch = null;
@@ -378,6 +445,9 @@ const cards = [
 },
 
 /* 2 */ {
+  why: () => whyBox(stillScale(xbag(7, 4), { loose: 11, weight: 11 }, '<span class="m">7 + 4</span>', '=', '<span class="m">11</span>', true), [
+    'The pans start equal: 7 + 4 on the left and 11 on the right.',
+    'Take the same 4 from two equal amounts and what is left is still equal: ' + mx('b + 4 − 4 = 11 − 4') + ', so ' + mx('b = 7') + '.']),
   prompt: 'Same scale, ' + mx('b + 4 = 11') + '. Get the bag on its own and keep the scale level.',
   sub: 'Tap marbles on either side to take them off, or use the buttons.',
   build(stage, ctl, ctx) {
@@ -418,6 +488,9 @@ const cards = [
 },
 
 /* 3 */ {
+  why: () => whyBox(stillBags(3, 4, [4, 4, 4], 12), [
+    '3 bags that hold the same number make 12 altogether: 4 + 4 + 4 = 12.',
+    'So one bag is one of 3 equal shares: ' + mx('b = 12 ÷ 3 = 4') + '.']),
   prompt: 'Three bags balance 12 marbles: ' + mx('3b = 12') + '. How many marbles are in one bag?',
   sub: mx('3b') + ' means 3 × ' + mx('b') + '. Share both sides into 3 equal groups.',
   build(stage, ctl, ctx) {
@@ -459,6 +532,16 @@ const cards = [
 },
 
 /* 4 */ {
+  bridge: true,
+  prompt: 'You found the number hidden in the bag. The number that makes an equation true is called its <b>solution</b>.',
+  sub: 'The solution of ' + mx('b + 4 = 11') + ' is 7, because 7 + 4 = 11.',
+  show(stage) { stage.append(h(stillScale(xbag(7, 4), { loose: 11, weight: 11 }, '<span class="m">7 + 4</span>', '=', '<span class="m">11</span>', true))); }
+},
+
+/* 5 */ {
+  why: () => whyBox(stillScale(xbag(6, 4), { loose: 11, weight: 11 }, '<span class="m">6 + 4 = 10</span>', '≠', '<span class="m">11</span>'), [
+    'With 6 in the bag, the left pan holds 6 + 4 = 10. That is 1 short of 11, so the scale tips.',
+    'A solution has to make it level. Only 7 does: 7 + 4 = 11.']),
   prompt: 'Is 6 a solution of ' + mx('b + 4 = 11') + '?',
   sub: 'A solution is a number that makes the equation true. Test 6 by putting it in place of ' + mx('b') + '.',
   build(stage, ctl, ctx) {
@@ -480,7 +563,10 @@ const cards = [
   }
 },
 
-/* 5 */ {
+/* 6 */ {
+  why: () => whyBox(stillBags(5, 7, [7, 14, 21, 28, 35], 35), [
+    'Count up in 7s, one bag at a time: 7, 14, 21, 28, 35. Five bags of 7 make exactly 35.',
+    mx('5 × 7 = 35') + ', so ' + mx('b = 7') + ' makes the equation true.']),
   prompt: 'Which value of ' + mx('b') + ' is a solution of ' + mx('5b = 35') + '?',
   sub: mx('5b') + ' means 5 × ' + mx('b') + '. Substitute each value and see whether you get 35.',
   build(stage, ctl, ctx) {
@@ -501,7 +587,16 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 7 */ {
+  bridge: true,
+  prompt: 'You tested a number by putting it in place of the letter. That is called <b>substitution</b>, and it checks any answer.',
+  show(stage) { stage.append(h(workLines([[mx('5b'), '35'], ['5 × 7', '35', true]]))); }
+},
+
+/* 8 */ {
+  why: () => whyBox(stillHop(8, 3, 5, 14, 'x'), [
+    'The jump back of 3 takes ' + mx('x') + ' to 5. Jump forward 3 from 5 and you are back at ' + mx('x') + '.',
+    mx('x = 5 + 3 = 8')]),
   prompt: mx('x − 3 = 5') + '. Slide ' + mx('x') + ' until a jump back of 3 lands on the yellow 5.',
   sub: 'Start at ' + mx('x') + ' and jump 3 to the left.',
   build(stage, ctl, ctx) {
@@ -523,21 +618,51 @@ const cards = [
       },
       win: () => mx('x = 8') + '. To get from 5 back to ' + mx('x') + ', jump the other way: 5 + 3 = 8. Adding 3 undoes subtracting 3. Check: 8 − 3 = 5.',
       won() { $('input', ctl).disabled = true; },
-      solve() { sl.set(8); }
+      solve() { sl.set(8); },
+      recap: () => mx('x − 3 = 5') + ', so ' + mx('x = 8') + ', because 5 + 3 = 8.',
+      nl, live
     };
+  },
+  then: {
+    prompt: 'Now ' + mx('x − 3 = 9') + '. No slider this time: work backwards from the yellow 9 to find ' + mx('x') + '.',
+    why: () => whyBox(stillHop(12, 3, 9, 14, 'x'), [
+      'The jump back of 3 lands on 9 this time, so the jump forward of 3 starts at 9.',
+      mx('x = 9 + 3 = 12') + '. Check: 12 − 3 = 9.']),
+    build(stage, ctl, ctx, p1) {
+      p1.nl.retarget(9);
+      p1.live.innerHTML = mx('x − 3 = 9') + '<small>A jump back of 3 lands on 9</small>';
+      const ans = makeAnswer(ctl, mx('x') + ' =', ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 12) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 6) return '6 is 9 − 3, which jumps back again. Check: 6 − 3 = 3, not 9. From 9, go the other way.';
+          if (v === 9) return '9 is where the jump lands. ' + mx('x') + ' is where it starts, 3 to the right of 9.';
+          if (v === 8) return '8 was the start when the jump landed on 5. Check: 8 − 3 = 5, not 9. Work back from 9 this time.';
+          if (v === 27) return '27 is 9 × 3. Check: 27 − 3 = 24, not 9. The jump subtracts 3, so adding 3 undoes it.';
+          if (v === 3) return '3 is 9 ÷ 3. Check: 3 − 3 = 0, not 9. The jump subtracts 3, so adding 3 undoes it.';
+          if (v < 9) return 'Taking 3 away from ' + mx('x') + ' leaves 9, so ' + mx('x') + ' must be bigger than 9.';
+          return 'Check: ' + v + ' − 3 = ' + (v - 3) + ', not 9. Start at 9 and jump 3 to the right.';
+        },
+        win: () => mx('x = 12') + '. Adding 3 undoes subtracting 3, whatever number the jump lands on: 9 + 3 = 12. Check: 12 − 3 = 9.',
+        won() { p1.nl.set(12); p1.live.innerHTML = mx('x − 3') + '<small>12 − 3 = 9</small>'; ans.mark('good'); ans.lock(); },
+        solve() { ans.set(12); }
+      };
+    }
   }
 },
 
-/* 7 */ {
+/* 9 */ {
+  why: () => whyBox(stillHalves(7, 'n'), [
+    'Dividing ' + mx('n') + ' by 2 splits it into 2 equal groups, and each group has 7.',
+    'Put the 2 groups back together: ' + mx('n = 7 × 2 = 14') + '.']),
   prompt: mx('n ÷ 2 = 7') + '. Work backwards from 7 to find ' + mx('n') + '.',
   sub: 'The top row shows what happens to ' + mx('n') + '. Undo it, starting from 7.',
   build(stage, ctl, ctx) {
     const flow = h('<div class="flow" role="img" aria-label="Forwards: n, divide by 2, gives 7. Backwards: start at 7 and undo the step."></div>');
-    const draw = (n, op) => {
-      flow.innerHTML = '<span class="fcap">Forwards</span><span class="tile var still">n</span><span class="farr">→</span><span class="fop">÷ 2</span><span class="farr">→</span><span class="tile num still">7</span>' +
-        '<span class="fcap">Backwards</span>' + (n ? '<span class="tile num still pop">' + n + '</span>' : '<span class="fq">?</span>') + '<span class="farr">←</span>' +
-        (op ? '<span class="fop pop">' + op + '</span>' : '<span class="fop fq">?</span>') + '<span class="farr">←</span><span class="tile num still">7</span>';
-    };
+    const draw = (n, op) => { flow.innerHTML = flowHTML(n, op); };
     draw();
     stage.append(flow);
     const ans = makeAnswer(ctl, mx('n') + ' =', ctx);
@@ -560,7 +685,16 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 10 */ {
+  bridge: true,
+  prompt: 'You went backwards by doing the opposite: add to undo subtracting, multiply to undo dividing. Pairs like these are called <b>inverse operations</b>.',
+  show(stage) { stage.append(h('<div class="flow" role="img" aria-label="Forwards: n, divide by 2, gives 7. Backwards: 7, multiply by 2, gives 14.">' + flowHTML(14, '× 2') + '</div>')); }
+},
+
+/* 11 */ {
+  why: () => whyBox(stillScale(xbag(7), { loose: 7, weight: 7 }, mx('b + 4 − 4'), '=', mx('11 − 4'), true), [
+    'Each side of the equation is one pan. 4 marbles came off both pans, so “− 4” is written on both sides.',
+    'Left pan: just the bag. Right pan: 11 − 4 = 7. So ' + mx('b = 7') + '.']),
   prompt: 'You took 4 marbles off both sides of this scale. Which line of working records that move?',
   build(stage, ctl, ctx) {
     const sc = makeScale(stage);
@@ -586,7 +720,10 @@ const cards = [
   }
 },
 
-/* 9 */ {
+/* 12 */ {
+  why: () => whyBox(stillBar(6, 7, 42, 'x'), [
+    mx('6x') + ' is 6 equal parts, and together they make 42.',
+    'Dividing by 6 picks out one part: ' + mx('x = 42 ÷ 6 = 7') + '.']),
   prompt: 'Solve ' + mx('6x = 42') + '. What can you do to both sides to leave ' + mx('x') + ' on its own?',
   sub: mx('6x') + ' means 6 × ' + mx('x') + '. Choose an operation and type a number.',
   build(stage, ctl, ctx) {
@@ -607,7 +744,10 @@ const cards = [
   }
 },
 
-/* 10 */ {
+/* 13 */ {
+  why: () => whyBox(stillBar(5, 6, 30, 'x'), [
+    mx('5x') + ' is 5 equal parts that make 30. Taking 5 away (30 − 5 = 25) doesn’t give one part.',
+    'Splitting 30 into 5 equal parts does: ' + mx('x = 30 ÷ 5 = 6') + '.']),
   prompt: 'Kai solved ' + mx('5x = 30') + ' like this. What went wrong?',
   build(stage, ctl, ctx) {
     stage.append(h('<div class="work"><span class="l">' + mx('5x') + '</span><span>=</span><span class="r">' + mx('30') + '</span>' +
@@ -634,7 +774,10 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 14 */ {
+  why: () => whyBox(stillHop(15, 6, 9, 16, 'x'), [
+    'Taking 6 from ' + mx('x') + ' lands on 9. Adding 6 to 9 goes back to ' + mx('x') + '.',
+    mx('x = 9 + 6 = 15')]),
   prompt: 'Solve ' + mx('x − 6 = 9') + '. What can you do to both sides to leave ' + mx('x') + ' on its own?',
   sub: 'Choose an operation and type a number.',
   build(stage, ctl, ctx) {
@@ -649,12 +792,37 @@ const cards = [
       },
       win: () => mx('x − 6 + 6 = 9 + 6') + ', so ' + mx('x = 15') + '. Check: 15 − 6 = 9.',
       won() { st.finish('x', '15'); st.lock(); },
-      solve() { st.set('+', 6); }
+      solve() { st.set('+', 6); },
+      recap: () => mx('x − 6 = 9') + ': add 6 to both sides, so ' + mx('x = 15') + '.'
     };
+  },
+  then: {
+    prompt: 'Check ' + mx('x = 15') + '. Which line shows that 15 is the solution of ' + mx('x − 6 = 9') + '?',
+    reset: false,
+    why: () => whyBox(workLines([[mx('x − 6'), '9'], ['15 − 6', '9'], ['9', '9', true]]), [
+      'A solution makes the two sides equal. With 15 in place of ' + mx('x') + ', both sides come to 9.']),
+    build(stage, ctl, ctx) {
+      const ch = makeChoices(ctl, [mx('15 + 6 = 21'), mx('15 − 6 = 9'), mx('9 − 6 = 3'), 'No check is needed after the working.'], ctx);
+      const why = [
+        'That adds 6, but the equation takes 6 away from ' + mx('x') + '. Put 15 in place of ' + mx('x') + ' in ' + mx('x − 6') + '.',
+        '',
+        'That puts 9 in place of ' + mx('x') + '. 9 is the right-hand side. The number to test is 15.',
+        'A check catches slips in the working. Put 15 in place of ' + mx('x') + ' and see whether both sides match.'
+      ];
+      return {
+        check() { const s = ch.sel()[0]; if (s === 1) return true; ch.mark(s, 'bad'); return why[s]; },
+        win: () => 'Substituting 15 for ' + mx('x') + ' gives 15 − 6 = 9, and the right side is 9. Both sides match, so 15 is the solution.',
+        won() { ch.mark(1, 'good'); ch.lock(); },
+        solve() { ch.set([1]); }
+      };
+    }
   }
 },
 
-/* 12 */ {
+/* 15 */ {
+  why: () => whyBox(stillBar(4, 12, 48, 't', '$'), [
+    '4 tickets at the same price make $48 altogether.',
+    'One ticket is one of 4 equal parts: ' + mx('t = 48 ÷ 4 = 12') + ', so $12.']),
   prompt: '4 movie tickets cost $48 altogether. Each ticket costs ' + mx('t') + ' dollars, so ' + mx('4t = 48') + '. What does one ticket cost?',
   build(stage, ctl, ctx) {
     stage.append(h('<div class="tiles" role="img" aria-label="4 tickets of t dollars each equal 48 dollars">' + '<span class="tile var still">t</span>'.repeat(4) + '<span class="eqs">=</span><span class="tile num still">48</span></div>'),
@@ -679,7 +847,10 @@ const cards = [
   }
 },
 
-/* 13 */ {
+/* 16 */ {
+  why: () => whyBox(stillBar(4, 5, 20, 'x'), [
+    mx('4x') + ' is 4 equal parts that make 20, so one part is 20 ÷ 4 = 5. Omar and Tess both get 5.',
+    'Lena’s 16 fails the check: 4 × 16 = 64, not 20.']),
   prompt: 'Three students solve ' + mx('4x = 20') + ' in different ways. Who is right?',
   sub: 'Choose Agree or Disagree for each one.',
   build(stage, ctl, ctx) {
@@ -723,7 +894,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Balance'], [3, 'Check it'], [5, 'Undo it'], [7, 'Write it'], [12, 'Wrap-up']];
+const SECTIONS = [[0, 'Balance'], [3, 'Check it'], [6, 'Undo it'], [9, 'Write it'], [15, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

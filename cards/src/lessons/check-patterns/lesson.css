@@ -1,0 +1,85 @@
+:root{--yv:var(--var2);--yv-deep:var(--var2-deep)}
+i.v.y{color:var(--yv)}
+
+/* matchsticks */
+.stk-box{display:flex;justify-content:center;width:100%}
+.sticks{display:block;max-width:100%;height:auto;overflow:visible}
+.sticks.fit,.tower.fit,.grid.fit{height:auto;margin:0 auto}
+.stk .st-o{stroke:var(--ink);stroke-width:8;stroke-linecap:round}
+.stk .st-i{stroke:#4B5378;stroke-width:4;stroke-linecap:round}
+.stk.k .st-o{stroke:var(--num-deep)}
+.stk.k .st-i{stroke:var(--num)}
+.stk.v .st-o{stroke:var(--var-deep)}
+.stk.v .st-i{stroke:var(--var)}
+.stk.grow{animation:fadein .4s ease-out}
+.st-lab{font:400 17px var(--maths);text-anchor:middle}
+.st-lab.k{fill:var(--num-deep)}
+.st-lab.v{fill:var(--var)}
+.steps3{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;gap:.2rem 1.6rem;width:100%}
+.steps3 figure{margin:0;display:flex;flex-direction:column;align-items:center}
+.steps3 figcaption{font-size:.85rem;color:var(--ink-2);line-height:1.2}
+
+/* tile towers */
+.tower{--th:min(10rem,22vh);display:block;flex:none;height:var(--th);width:calc(var(--th) * var(--ar))}
+.tower.fit{width:100%}
+.tw-row{display:flex;align-items:center;justify-content:center;gap:1.4rem;width:100%}
+.tw-row .readout{text-align:left;line-height:1.35}
+.pc{stroke-width:1.5}
+.pc.k{fill:var(--num);stroke:var(--num-deep)}
+.pc.v{fill:var(--var);stroke:var(--var-deep)}
+.grp{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-dasharray:4 3}
+.tlab{font:400 17px var(--maths);fill:var(--ink)}
+.tlab.v{fill:var(--var)}
+.tlab.k{fill:var(--num-deep)}
+
+/* tables of values */
+.duo{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.6rem;width:100%}
+.tov{--rh:1.75rem;border-collapse:collapse;font:400 1.15rem/1 var(--maths);font-variant-numeric:lining-nums tabular-nums}
+.tov th,.tov td{height:var(--rh);min-width:3.6rem;padding:0 .6rem;text-align:center;border:1px solid var(--line);background:var(--paper)}
+.tov th{font:600 .85rem/1.1 var(--body);background:var(--desk);white-space:nowrap}
+.tov th .m{font-size:1.3rem;font-weight:400}
+.tov td.ask{color:var(--ink-2);outline:2px dashed var(--ink-2);outline-offset:-4px}
+.tov td.hi,.tov td:has(> .hi){background:var(--go-soft);color:var(--go-deep);font-weight:700}
+.tov .step{border:0;background:none;min-width:2.6rem;padding:0 0 0 .35rem;text-align:left}
+.tov .step span{position:relative;top:calc(var(--rh) / -2);font:600 .85rem var(--body);color:var(--ink-2)}
+.tov.across th,.tov.across td{min-width:2rem;padding:0 .3rem;font-size:1.05rem}
+.tov.across th .m{font-size:1.2rem}
+.tov.sm{--rh:1.5rem;font-size:1.05rem}
+
+/* grid */
+.gwrap{display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.grid{display:block;height:min(17rem,40vh);width:auto;max-width:100%;touch-action:none;cursor:crosshair}
+.grid.locked,.grid.still{cursor:default}
+.g-bg{fill:#fff}
+.g-l{stroke:#DCE1EE;stroke-width:1}
+.g-ax{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.g-n{font:12px var(--body);fill:var(--ink-2)}
+.g-v{font:italic 17px var(--maths)}
+.gx{fill:var(--var)}
+.gy{fill:var(--yv)}
+.g-p{fill:var(--ink);stroke:#fff;stroke-width:2}
+.g-p.fx{fill:var(--ink-2)}
+.g-p.ok{fill:var(--go)}
+.g-step{fill:none;stroke:var(--go-deep);stroke-width:2;stroke-dasharray:4 3}
+.g-sl{font:600 12px var(--body);fill:var(--go-deep)}
+.g-lab{font:400 13px var(--maths);fill:var(--go-deep)}
+
+/* Why? panels */
+.whyfig{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem 1.6rem;margin-bottom:.5rem}
+.whyfig > svg{flex:1 1 100%}
+.whyline{margin:.25rem 0 0;line-height:1.4}
+.why-mach{display:flex;align-items:center;gap:.5rem}
+.why-mach .tile{margin:0;min-width:2.6rem;height:2.5rem;font-size:1.25rem}
+.mbox{background:var(--charcoal);color:#fff;border-radius:.8rem;padding:.5rem .9rem;font:400 1.1rem var(--maths);white-space:nowrap}
+
+@keyframes fadein{from{opacity:0}}
+@media (max-width:34rem){
+  .tw-row{gap:.8rem}
+  .why-mach .tile{min-width:2.2rem}
+  .mbox{padding:.45rem .6rem;font-size:1rem}
+}
+.claim .claim-note{grid-column:2 / -1;font-size:.93rem;margin:0}
+.grid.still .g-lab{font-size:16px}
+.grid.still .g-sl{font-size:14px}
+.claims.tight{gap:.4rem}
+.claims.tight .claim{padding:.4rem .9rem;gap:.15rem .9rem}
