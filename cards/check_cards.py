@@ -62,6 +62,9 @@ CARD_PROBE = """async (k) => {
     await wait(150);
   }
   out.winOver = m.scrollHeight - m.clientHeight;
+  // Nothing should cover the card once it is answered: no fixed-position element inside the card
+  // (e.g. a lesson class that collides with a frame overlay class).
+  out.covered = [...document.getElementById('card').querySelectorAll('*')].some(e => getComputedStyle(e).position === 'fixed');
   out.why = await whyProbe();
   out.sideways = document.documentElement.scrollWidth - document.documentElement.clientWidth;
   if (!out.bridge && T.cards[k].then) {
@@ -106,6 +109,8 @@ def check_lesson(browser, slug):
                     problems.append('%s: needs %dpx of scrolling at 1366 x 650' % (tag, r['startOver']))
                 if r['winOver'] > SLACK:
                     problems.append('%s: needs %dpx of scrolling after answering at 1366 x 650' % (tag, r['winOver']))
+                if r.get('covered'):
+                    problems.append(tag + ': something covers the card after answering')
                 for wtag, w in ((tag, r.get('why')), (tag + ' part 2', (r.get('p2') or {}).get('why'))):
                     if w and w['over'] > SLACK:
                         problems.append('%s: the Why? panel needs %dpx of scrolling at 1366 x 650' % (wtag, w['over']))

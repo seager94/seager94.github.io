@@ -47,7 +47,8 @@ A card is `{ prompt, sub, build(stage, ctl, ctx) }`, and `build` returns `{ chec
 
 - `why`: HTML (or a function returning HTML) for the Why? panel after a correct answer.
 - `reset: false`: hide Start over on that card.
-- `bridge: true`: a text-only screen between groups of cards (no check, not scored).
+- `bridge: true`: a screen between groups of cards that names the idea just met (no check, not scored). Optional
+  `show(stage)` draws a still diagram under the text.
 - `then: { prompt, sub, why, reset, build(stage, ctl, ctx, part1) }`: a two-part card. Once part 1 is right,
   Continue opens part 2 on the same card: part 1's prompt shrinks to a ticked recap line, the stage (diagram)
   stays, and part 2's controls replace part 1's. `build` gets part 1's controller, so part 2 can read or extend
