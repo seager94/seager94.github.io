@@ -356,6 +356,7 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 
 /* bridge cards: text only */
 .card.bridge .prompt{font-size:1.3rem;font-weight:600;margin-top:12vh}
+.card.bridge.shows .prompt{margin-top:1.5rem}
 
 @keyframes sheet{from{transform:translateY(1rem);opacity:0}}
 @media (max-width:34rem){.prompt{font-size:1.25rem}}
@@ -1117,7 +1118,8 @@ function drawFinish() {
 /* ===================== shared card engine ===================== */
 // A card is { prompt, sub, build(stage, ctl, ctx) } and build returns { check(attempt), win(), won(), solve() }.
 // Optional on a card: why (string or function: the Why? panel), reset: false (hide Start over),
-// bridge: true (a text-only screen between groups of cards; no check, not scored),
+// bridge: true (a screen between groups of cards that names the idea just met; no check, not scored; optional
+// show(stage) draws a still diagram under the text),
 // then: { prompt, sub, why, reset, build(stage, ctl, ctx, part1) } (a second question on the same card, shown once
 // part 1 is right: part 1's prompt shrinks to a recap line, the stage stays, and build gets part 1's controller;
 // part 1's controller may add recap() returning HTML for that line), from: '<lesson slug>' (Level Checks: the lesson
@@ -1194,7 +1196,9 @@ function render() {
   showMe.hidden = true; whyBtn.hidden = true; againBtn.hidden = true;
   skip.hidden = !(S.done[S.i] || S.unlocked);
   if (c.bridge) {
-    ctrl = null; mode = 'done'; stage.hidden = true; tools.hidden = true;
+    ctrl = null; mode = 'done'; tools.hidden = true;
+    stage.hidden = !c.show; if (c.show) c.show(stage);
+    cardEl.classList.toggle('shows', !!c.show);
     S.done[S.i] = true; S.first[S.i] = true;
     primary.textContent = S.i === cards.length - 1 ? 'Finish' : 'Continue'; primary.disabled = false; skip.hidden = true;
   } else {

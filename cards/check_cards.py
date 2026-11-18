@@ -12,6 +12,7 @@ For every card it checks that:
   - nothing needs scrolling at 1366 x 650, before or after answering
   - nothing spills sideways at 390 wide (phone)
   - on a two-part card, Continue after part 1 opens part 2, and part 2 passes the same checks
+  - a Why? panel is not empty, fits at 1366 x 650 without scrolling and doesn't spill sideways on a phone
 It also checks a wrong-then-right flow on the first typed-answer card it finds (on a Level
 Check: that a second wrong answer shows the answer), the finish screen, the course map,
 and that no page logs an error.
@@ -42,6 +43,16 @@ def launch(p):
 CARD_PROBE = """async (k) => {
   const T = window.__T, m = document.getElementById('main');
   const wait = ms => new Promise(r => setTimeout(r, ms));
+  // Open the Why? panel if the card has one: it should fit without scrolling and not spill sideways.
+  const whyProbe = async () => {
+    const btn = document.getElementById('whyBtn');
+    if (btn.hidden) return null;
+    btn.click(); await wait(320);
+    const p = document.querySelector('.why-panel'), de = document.documentElement;
+    const r = { over: p.scrollHeight - p.clientHeight, side: Math.max(p.scrollWidth - p.clientWidth, de.scrollWidth - de.clientWidth), empty: !document.getElementById('whyBody').textContent.trim() && !document.querySelector('#whyBody svg') };
+    document.getElementById('whyOk').click(); await wait(60);
+    return r;
+  };
   T.go(k); await wait(80);
   const out = { startOff: document.getElementById('primary').disabled, bridge: !!T.cards[k].bridge };
   out.startOver = m.scrollHeight - m.clientHeight;
@@ -51,6 +62,7 @@ CARD_PROBE = """async (k) => {
     await wait(150);
   }
   out.winOver = m.scrollHeight - m.clientHeight;
+  out.why = await whyProbe();
   out.sideways = document.documentElement.scrollWidth - document.documentElement.clientWidth;
   if (!out.bridge && T.cards[k].then) {
     const primary = document.getElementById('primary');
@@ -61,6 +73,7 @@ CARD_PROBE = """async (k) => {
       try { T.finishCard('good', true); } catch (e) { out.p2.err = out.p2.err || String(e); }
       await wait(150);
       out.p2.winOver = m.scrollHeight - m.clientHeight;
+      out.p2.why = await whyProbe();
       out.p2.label = primary.textContent;
     }
     out.sideways = Math.max(out.sideways, document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -93,6 +106,11 @@ def check_lesson(browser, slug):
                     problems.append('%s: needs %dpx of scrolling at 1366 x 650' % (tag, r['startOver']))
                 if r['winOver'] > SLACK:
                     problems.append('%s: needs %dpx of scrolling after answering at 1366 x 650' % (tag, r['winOver']))
+                for wtag, w in ((tag, r.get('why')), (tag + ' part 2', (r.get('p2') or {}).get('why'))):
+                    if w and w['over'] > SLACK:
+                        problems.append('%s: the Why? panel needs %dpx of scrolling at 1366 x 650' % (wtag, w['over']))
+                    if w and w['empty']:
+                        problems.append('%s: the Why? panel is empty' % wtag)
                 p2 = r.get('p2')
                 if p2 is not None:
                     t2 = tag + ' part 2'
@@ -107,8 +125,12 @@ def check_lesson(browser, slug):
                             problems.append('%s: needs %dpx of scrolling at 1366 x 650' % (t2, p2['startOver']))
                         if p2.get('winOver', 0) > SLACK:
                             problems.append('%s: needs %dpx of scrolling after answering at 1366 x 650' % (t2, p2['winOver']))
-            elif r['sideways'] > SLACK:
-                problems.append('%s: %dpx wider than a 390px phone' % (tag, r['sideways']))
+            else:
+                if r['sideways'] > SLACK:
+                    problems.append('%s: %dpx wider than a 390px phone' % (tag, r['sideways']))
+                for wtag, w in ((tag, r.get('why')), (tag + ' part 2', (r.get('p2') or {}).get('why'))):
+                    if w and w['side'] > SLACK:
+                        problems.append('%s: the Why? panel is %dpx wider than a 390px phone' % (wtag, w['side']))
         page.evaluate('window.__T.go(window.__T.cards.length)')
         page.wait_for_timeout(150)
         if vp is LAPTOP:
