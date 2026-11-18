@@ -1,0 +1,36 @@
+i.v.y{color:var(--var2)}
+.bag.y .bag-body,.bag.y .bag-neck{fill:var(--var2);stroke:var(--var2-deep)}
+.bag.y .bag-tie{fill:var(--var2-deep)}
+.bag.y.xray .bag-body{fill:var(--var2-soft)}
+.bag.y .bag-tag rect,.bag.y .bag-tag line{stroke:var(--var2-deep)}
+.bag.y .bag-tag text{fill:var(--var2)}
+.slider.y{--sl:var(--var2)}
+input[type=range]::-webkit-slider-runnable-track{height:.55rem;border-radius:.3rem;background:linear-gradient(90deg,var(--sl,var(--var)) var(--fill,0%),#D2D8E7 var(--fill,0%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--sl,var(--var));border:.22rem solid #fff;box-shadow:0 2px 6px rgba(28,35,64,.4);margin-top:-.63rem}
+input[type=range]::-moz-range-progress{height:.55rem;border-radius:.3rem;background:var(--sl,var(--var))}
+input[type=range]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--sl,var(--var));border:.22rem solid #fff;box-shadow:0 2px 6px rgba(28,35,64,.4)}
+.mat.low{min-height:4.2rem}
+.sbag svg{width:3.4rem;height:3.7rem;display:block}
+.smb svg{width:1.9rem;height:1.9rem;display:block}
+.it.sel{outline:3px solid var(--var);outline-offset:2px;border-radius:.6rem}
+.it.bad{outline:3px solid var(--no);outline-offset:2px;border-radius:.6rem;animation:shake .4s}
+.grp3{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;width:100%}
+.grp3 .bin{min-height:6.4rem;gap:.3rem}
+.grp3 .bin-c{flex:1;align-items:flex-end}
+.glab{text-align:center;font-size:1.15rem;min-height:1.6rem}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;width:100%}
+.duo > div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:.3rem}
+.duo .mat{padding:.2rem;gap:.3rem}
+.big{font-size:1.9rem}
+.live small.in{display:inline;margin-left:.3rem}
+.sl2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.sl2 .slider{padding:.3rem .7rem;gap:.5rem}
+.sl2 .slider label{min-width:3.6rem;font-size:1.2rem}
+.choices.four{grid-template-columns:repeat(4,1fr)}
+.live b.ok{color:var(--go)}
+.live b.no{color:var(--no)}
+.tile.var.y{background:var(--var2);box-shadow:0 .22rem 0 var(--var2-deep)}
+.bins.four .bin{min-height:5.4rem;gap:.2rem}
+.choice small{display:block;color:var(--ink-2);font-size:.85rem}
+.answer input.wide{width:14rem}
+@media (max-width:34rem){.choices.four,.sl2{grid-template-columns:1fr 1fr}}

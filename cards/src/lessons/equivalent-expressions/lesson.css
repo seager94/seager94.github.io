@@ -1,0 +1,19 @@
+.twin{display:grid;grid-template-columns:minmax(0,1fr) 4.2rem minmax(0,1fr);justify-items:center;align-items:center;width:100%}
+.tw-body{max-width:100%;min-height:3.3rem;padding:.35rem .5rem .35rem .45rem;border-radius:1.2rem;background:var(--ink);display:flex;align-items:center;gap:.45rem}
+.tw-body svg{width:1.7rem;height:1.7rem;flex:none}
+.tw-lab{background:var(--paper);border-radius:.7rem;padding:.1rem .7rem;min-width:2.6rem;text-align:center;font-size:1.15rem}
+.tw-in{background:var(--var-soft);border-radius:2rem;padding:.05rem .6rem;font-size:.95rem}
+.tw-pipe{width:.6rem;height:.8rem;background:var(--ink)}
+.tw-out{width:4.3rem;height:3.6rem;border-radius:1rem;border:2px dashed var(--line);display:grid;place-items:center;background:rgba(255,255,255,.85)}
+.tw-out .tile{margin-bottom:0}
+.tw-sign{font:400 2rem/1 var(--maths)}
+.tw-sign.same{color:var(--go)}
+.tw-sign.diff{color:var(--no)}
+.tw-calc{min-height:1.5rem;margin-top:.25rem;color:var(--ink-2);text-align:center}
+.tw-calc .m{font-size:1rem}
+.choices.c3{grid-template-columns:repeat(3,1fr)}
+.bins.b3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bins.b3 .bin{min-height:7rem}
+.chip.pc{display:inline-flex;align-items:baseline;gap:.35rem}
+.chip.pc .m{display:inline;font-size:1.15rem}
+@media (max-width:34rem){.choices,.choices.c3,.bins.b3{grid-template-columns:1fr}}

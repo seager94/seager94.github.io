@@ -286,3 +286,25 @@ Browser spot-checked, then merged to lesson-gen together on 2026-10-13 (each PR 
 **main/lesson-gen sync.** PR #26 left a merge commit on main that lesson-gen lacked (same content); this log entry's PR brings it back into lesson-gen so the branches line up again.
 
 **Now eligible for the routine:** y9_mea_05, y9_mea_10, y9_mea_12, y9_spa_02, y9_spa_05, y9_spa_07, y9_sta_02, y9_sta_04, y9_pro_02. Next build: y9_mea_05.
+
+## 2026-11-18 - Card lessons: shared frame, 13 lessons and the course map
+
+**What:** a new lesson format in `cards/` alongside the standard library. Thirteen Brilliant-style card lessons (Y7 algebra and two Y8), built on one shared frame, with a course map at `cards/index.html`. Prototype and decisions: claude.ai project docs `claude/card-lesson-prototype-notes.md`, `claude/brilliant-feature-notes.md`, `claude/card-rules.md`.
+
+**How they were made:** the prototype "What is a variable?" (16 Nov), then 12 lessons built overnight on 17 Nov with `claude -p` on Console API credits (Max plan monthly credit), then a test-and-fix pass on each (89 fixes; reports kept locally in `overnight-lessons\2026-11-17-cards\qa\`). Today each lesson was split into its own cards and components (`cards/src/lessons/<slug>/`) and rebuilt on the shared frame.
+
+**Shared frame (`cards/src/card_frame.html`):** the style Sam approved on 17 Nov (white page, sans-serif text, maths font for maths only, full-width Check in a bottom bar, feedback that slides up: green right, amber not yet) plus Start over, a Why? panel (`why` on a card), text-only bridge cards (`bridge: true`), "Next lesson" and "Back to the course map" on the finish screen, and a completion key for the map. One purple for a second variable across all lessons.
+
+**Course map:** four units in teaching order, all lessons open, the first unfinished lesson highlighted, a tick for lessons finished on that device. Level Check nodes are shown as "Coming soon". Lesson addresses (`cards/<slug>.html`) carry no version, so updating a lesson never changes the map.
+
+**Checks:** `cards/check_cards.py` (Playwright) on every card: Check off at start, Show me state accepted, no scroll at 1366 x 650 before or after answering, nothing wider than a 390 px phone, wrong-then-right flow, finish screen, map links. All 13 lessons and the map pass. The `Lesson checks` workflow now sends `cards/` to this checker (and confirms the built files match the source) instead of `check_lesson.py`.
+
+**Decided with Sam (18 Nov):** keep the six QA-pass items as built: targeted hints on two-option cards, strong partial hints, 2n + 6 accepted for 2(n + 3) in Y7, story form required in equations from stories, negatives in properties with letters, the step-8 slider in growing patterns.
+
+**Still open / next:**
+- Not in `lessonmap.xlsx` yet: whether card lessons get their own rows or sit beside the standard Y7 algebra lessons.
+- Content to write per lesson: `why` explanations, a hook line on card 1, bridge cards between sections, two-part questions, and the four Level Checks.
+- Like terms card 2 can still grow taller than the screen if a student puts every item in one box.
+- "See answer" after two wrong tries (kept) or after one (Brilliant).
+- Class progress (needs a small server; planned with the colleague request tool).
+- No card-lesson mode in the `interactive-html-maths-lesson` skill yet; `cards/README.md` is the guide for now.
