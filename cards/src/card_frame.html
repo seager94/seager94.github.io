@@ -319,6 +319,12 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
   .dock.good .acts,.dock.bad .acts,.dock.info .acts{width:auto;flex:none}
   .dock.good .acts .primary,.dock.bad .acts .primary,.dock.info .acts .primary{flex:none;min-width:11rem}
 }
+/* Short laptop screens: keep the answered sheet to two lines where possible, so nothing scrolls. */
+@media (min-width:34.01rem) and (max-height:760px){
+  .dock.good .wrap,.dock.bad .wrap,.dock.info .wrap{gap:1rem;padding-top:.55rem;padding-bottom:.7rem}
+  .dock.good .acts .primary,.dock.bad .acts .primary,.dock.info .acts .primary{min-width:9rem}
+  .fb{font-size:.93rem;line-height:1.36}
+}
 .ghost:hover{background:rgba(0,0,0,.1)}
 
 /* Why? panel */
