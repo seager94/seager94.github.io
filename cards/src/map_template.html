@@ -37,6 +37,9 @@ h1{font-size:1.7rem;line-height:1.2;margin:0 0 .3rem}
 .node.done .dot{background:var(--go);box-shadow:inset 0 -.35rem 0 var(--go-deep);color:#fff}
 .node.next .dot{background:var(--var);box-shadow:inset 0 -.35rem 0 #1F55C8,0 0 0 .4rem var(--var-soft);color:#fff}
 .go{display:inline-block;margin-top:.35rem;background:var(--charcoal);color:#fff;border-radius:999px;padding:.35rem 1rem;font-weight:600;font-size:.9rem;box-shadow:0 .2rem 0 var(--charcoal-deep)}
+.node.lc .dot{background:#fff;border:2px solid var(--ink-2);box-shadow:inset 0 -.3rem 0 var(--line);color:var(--ink)}
+.node.lc.done .dot{border-color:var(--go-deep)}
+.node.lc.next .dot{border-color:var(--var)}
 .node.check .dot{background:#fff;border:2px dashed var(--line);box-shadow:none}
 .node.check .label{color:var(--ink-2)}
 .node.check span.link{display:flex;align-items:center;gap:1rem;padding:.2rem .6rem .2rem .2rem}
@@ -49,17 +52,18 @@ h1{font-size:1.7rem;line-height:1.2;margin:0 0 .3rem}
   <h1>{{TITLE}}</h1>
   <p class="intro">{{INTRO}}</p>
   <div id="units"></div>
-  <p class="foot">Ticks show lessons finished on this device and browser. A lesson can be updated without changing this map.</p>
+  <p class="foot">Ticks show lessons and Level Checks finished on this device and browser. A lesson can be updated without changing this map.</p>
 </div>
 <script>
 (() => {
 'use strict';
 const MAP = {{MAP_JSON}};
 const TICK = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const FLAG = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 17V3.5M5 4h9l-2 3.2 2 3.3H5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const done = slug => { try { return JSON.parse(localStorage.getItem('card-lesson:' + slug + ':done')); } catch (_) { return null; } };
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-const order = MAP.units.flatMap(u => u.lessons);
+const order = MAP.units.flatMap(u => u.lessons.concat(u.check ? [u.check] : []));
 const next = order.find(s => !done(s));          // suggested next lesson: the first one not finished on this device
 const host = document.getElementById('units');
 let n = 0;
@@ -72,7 +76,15 @@ MAP.units.forEach((u, ui) => {
       '<span class="dot">' + (d ? TICK : n) + '</span>' +
       '<span class="label"><b>' + esc(L.title) + '</b><small>' + esc(status) + '</small>' + (s === next ? '<br><span class="go">Start</span>' : '') + '</span></a></li>';
   }).join('');
-  const check = '<li class="node check"><span class="link"><span class="dot" aria-hidden="true">?</span><span class="label"><b>Level Check</b><small>Coming soon</small></span></span></li>';
+  // Level Check: live once the unit has one (u.check), otherwise a dashed Coming soon node.
+  let check = '<li class="node check"><span class="link"><span class="dot" aria-hidden="true">?</span><span class="label"><b>Level Check</b><small>Coming soon</small></span></span></li>';
+  if (u.check) {
+    const s = u.check, d = done(s), cls = d ? 'done' : (s === next ? 'next' : '');
+    const status = d ? (d.total ? d.first + ' of ' + d.total + ' right first time' : 'Finished') : (s === next ? 'Suggested next' : 'Mixed questions from this unit');
+    check = '<li class="node lc ' + cls + '"><a href="' + esc(MAP.lessons[s].href) + '" aria-label="' + esc('Level Check, ' + status) + '">' +
+      '<span class="dot">' + (d ? TICK : FLAG) + '</span>' +
+      '<span class="label"><b>Level Check</b><small>' + esc(status) + '</small>' + (s === next ? '<br><span class="go">Start</span>' : '') + '</span></a></li>';
+  }
   host.insertAdjacentHTML('beforeend',
     '<section class="unit"><div class="unit-head"><small>Unit ' + (ui + 1) + ' · Year ' + u.year + '</small><b>' + esc(u.title) + '</b></div>' +
     '<ol class="path">' + items + check + '</ol></section>');

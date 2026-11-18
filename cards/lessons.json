@@ -12,7 +12,8 @@
     "substitution",
     "equivalent-expressions",
     "properties-with-letters"
-   ]
+   ],
+   "check": null
   },
   {
    "id": "equations",
@@ -23,7 +24,8 @@
     "two-step-equations",
     "backtracking",
     "equations-from-stories"
-   ]
+   ],
+   "check": null
   },
   {
    "id": "patterns",
@@ -32,7 +34,8 @@
    "lessons": [
     "growing-patterns",
     "tables-to-rules"
-   ]
+   ],
+   "check": null
   },
   {
    "id": "year8",
@@ -41,7 +44,8 @@
    "lessons": [
     "like-terms",
     "area-model-expansion"
-   ]
+   ],
+   "check": null
   }
  ],
  "lessons": {
@@ -51,7 +55,8 @@
    "year": 7,
    "ac9": "AC9M7A02",
    "version": 1,
-   "href": "what-is-a-variable.html"
+   "href": "what-is-a-variable.html",
+   "kind": "lesson"
   },
   "writing-expressions": {
    "title": "Writing expressions",
@@ -59,7 +64,8 @@
    "year": 7,
    "ac9": "AC9M7A02",
    "version": 1,
-   "href": "writing-expressions.html"
+   "href": "writing-expressions.html",
+   "kind": "lesson"
   },
   "substitution": {
    "title": "Substitution",
@@ -67,7 +73,8 @@
    "year": 7,
    "ac9": "AC9M7A01",
    "version": 1,
-   "href": "substitution.html"
+   "href": "substitution.html",
+   "kind": "lesson"
   },
   "equivalent-expressions": {
    "title": "Equivalent expressions",
@@ -75,7 +82,8 @@
    "year": 7,
    "ac9": "AC9M7A02",
    "version": 1,
-   "href": "equivalent-expressions.html"
+   "href": "equivalent-expressions.html",
+   "kind": "lesson"
   },
   "properties-with-letters": {
    "title": "Properties with letters",
@@ -83,7 +91,8 @@
    "year": 7,
    "ac9": "AC9M7A02",
    "version": 1,
-   "href": "properties-with-letters.html"
+   "href": "properties-with-letters.html",
+   "kind": "lesson"
   },
   "one-step-equations": {
    "title": "One-step equations",
@@ -91,7 +100,8 @@
    "year": 7,
    "ac9": "AC9M7A03",
    "version": 1,
-   "href": "one-step-equations.html"
+   "href": "one-step-equations.html",
+   "kind": "lesson"
   },
   "two-step-equations": {
    "title": "Two-step equations",
@@ -99,7 +109,8 @@
    "year": 7,
    "ac9": "AC9M7A03",
    "version": 1,
-   "href": "two-step-equations.html"
+   "href": "two-step-equations.html",
+   "kind": "lesson"
   },
   "backtracking": {
    "title": "Backtracking",
@@ -107,7 +118,8 @@
    "year": 7,
    "ac9": "AC9M7A03",
    "version": 1,
-   "href": "backtracking.html"
+   "href": "backtracking.html",
+   "kind": "lesson"
   },
   "equations-from-stories": {
    "title": "Equations from stories",
@@ -115,7 +127,8 @@
    "year": 7,
    "ac9": "AC9M7A03",
    "version": 1,
-   "href": "equations-from-stories.html"
+   "href": "equations-from-stories.html",
+   "kind": "lesson"
   },
   "growing-patterns": {
    "title": "Growing patterns",
@@ -123,7 +136,8 @@
    "year": 7,
    "ac9": "AC9M7A05",
    "version": 1,
-   "href": "growing-patterns.html"
+   "href": "growing-patterns.html",
+   "kind": "lesson"
   },
   "tables-to-rules": {
    "title": "Tables to rules",
@@ -131,7 +145,8 @@
    "year": 7,
    "ac9": "AC9M7A05",
    "version": 1,
-   "href": "tables-to-rules.html"
+   "href": "tables-to-rules.html",
+   "kind": "lesson"
   },
   "like-terms": {
    "title": "Like terms",
@@ -139,7 +154,8 @@
    "year": 8,
    "ac9": "AC9M8A01",
    "version": 1,
-   "href": "like-terms.html"
+   "href": "like-terms.html",
+   "kind": "lesson"
   },
   "area-model-expansion": {
    "title": "Expanding with the area model",
@@ -147,7 +163,8 @@
    "year": 8,
    "ac9": "AC9M8A01",
    "version": 1,
-   "href": "area-model-expansion.html"
+   "href": "area-model-expansion.html",
+   "kind": "lesson"
   }
  }
 }

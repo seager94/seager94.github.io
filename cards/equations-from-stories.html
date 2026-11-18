@@ -340,6 +340,20 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 .why-body{line-height:1.5}
 .why-panel .primary{width:100%;margin-top:1rem}
 
+/* two-part cards: part 1, answered, shrinks to one line above part 2 */
+.part1{display:flex;gap:.45rem;align-items:flex-start;margin:0 0 .3rem;color:var(--ink-2);font-size:.92rem;line-height:1.35}
+.part1 svg{width:1.05rem;height:1.05rem;color:var(--go);flex:none;margin-top:.1rem}
+.part1[hidden]{display:none}
+.card.part2 .prompt{animation:rise .22s ease-out}
+
+/* Level Check finish */
+.lc-score{font:700 2.6rem/1 var(--body);color:var(--ink);margin:.4rem 0 .2rem}
+.lc-list{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.45rem;width:100%;max-width:30rem}
+.lc-list li{display:flex;justify-content:space-between;gap:1rem;align-items:center;border:2px solid var(--line);border-radius:.9rem;padding:.55rem .9rem;background:#fff}
+.lc-list li.miss{border-color:var(--no);background:var(--no-soft)}
+.lc-list a{color:var(--var-deep);font-weight:600}
+.lc-list small{color:var(--ink-2);white-space:nowrap}
+
 /* bridge cards: text only */
 .card.bridge .prompt{font-size:1.3rem;font-weight:600;margin-top:12vh}
 
@@ -380,6 +394,7 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
     </div>
   </div></header>
   <main id="main"><div class="wrap card" id="card">
+    <p class="part1" id="part1" hidden></p>
     <h1 class="prompt" id="prompt"></h1>
     <p class="sub" id="sub"></p>
     <div class="stage" id="stage"></div>
@@ -1098,7 +1113,12 @@ function drawFinish() {
 /* ===================== shared card engine ===================== */
 // A card is { prompt, sub, build(stage, ctl, ctx) } and build returns { check(attempt), win(), won(), solve() }.
 // Optional on a card: why (string or function: the Why? panel), reset: false (hide Start over),
-// bridge: true (a text-only screen between groups of cards; no check, not scored).
+// bridge: true (a text-only screen between groups of cards; no check, not scored),
+// then: { prompt, sub, why, reset, build(stage, ctl, ctx, part1) } (a second question on the same card, shown once
+// part 1 is right: part 1's prompt shrinks to a recap line, the stage stays, and build gets part 1's controller;
+// part 1's controller may add recap() returning HTML for that line), from: '<lesson slug>' (Level Checks: the lesson
+// the question comes from, for the review list at the end).
+// LESSON.kind === 'check' makes a Level Check: no Show me; a second wrong answer shows the answer and moves on.
 const sectionOf = i => SECTIONS.filter(s => s[0] <= i).pop() || [0, ''];
 const KEY = 'card-lesson:' + LESSON.slug + ':v' + LESSON.version;
 const DONE_KEY = 'card-lesson:' + LESSON.slug + ':done';
@@ -1107,7 +1127,7 @@ let S = fresh();
 try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && typeof saved.i === 'number' && Array.isArray(saved.done)) S = Object.assign(fresh(), saved); } catch (_) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (_) {} };
 
-const cardEl = $('#card'), promptEl = $('#prompt'), subEl = $('#sub'), stage = $('#stage'), ctl = $('#ctl'), dock = $('#dock'), fb = $('#fb');
+const part1El = $('#part1'), cardEl = $('#card'), promptEl = $('#prompt'), subEl = $('#sub'), stage = $('#stage'), ctl = $('#ctl'), dock = $('#dock'), fb = $('#fb');
 const primary = $('#primary'), showMe = $('#showMe'), skip = $('#skip'), back = $('#back'), progress = $('#progress'), count = $('#count');
 const tools = $('#startOver'), startOver = $('#startOver'), whyBtn = $('#whyBtn'), whyWrap = $('#why'), whyBody = $('#whyBody'), whyOk = $('#whyOk'), againBtn = $('#again');
 const menu = $('#menu'), menuBtn = $('#menuBtn');
@@ -1118,7 +1138,9 @@ const ICON = {
   info: '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="5" r="1.6" fill="currentColor"/><path d="M10 9v7" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>'
 };
 const VERDICT = { good: 'Correct!', bad: 'Not yet.', info: 'Here’s how it works.' };
-let ctrl = null, attempts = 0, mode = 'check', fbKind = null;
+let ctrl = null, attempts = 0, mode = 'check', fbKind = null, part = 0, partFirst = true;
+const IS_CHECK = LESSON.kind === 'check';
+const partSpec = () => { const c = cards[S.i]; return part ? c.then : c; };
 const scored = () => cards.map((_, k) => k).filter(k => !cards[k].bridge);
 
 function setFb(kind, html, verdict) {
@@ -1140,7 +1162,7 @@ const ctx = {
   },
   submit() { if (!primary.disabled && mode === 'check') primary.click(); }
 };
-const cardWhy = () => { const c = cards[S.i]; if (!c || !c.why) return ''; return typeof c.why === 'function' ? c.why() : c.why; };
+const cardWhy = () => { const c = cards[S.i] && partSpec(); if (!c || !c.why) return ''; return typeof c.why === 'function' ? c.why() : c.why; };
 
 function drawProgress() {
   const firstOpen = cards.findIndex((_, k) => !S.done[k]);
@@ -1157,7 +1179,8 @@ function drawProgress() {
 function render() {
   if (S.i >= cards.length) return renderFinish();
   const c = cards[S.i];
-  attempts = 0; mode = 'check';
+  attempts = 0; mode = 'check'; part = 0; partFirst = true;
+  part1El.hidden = true; part1El.replaceChildren(); cardEl.classList.remove('part2');
   cardEl.classList.toggle('bridge', !!c.bridge);
   promptEl.innerHTML = c.prompt;
   subEl.innerHTML = c.sub || ''; subEl.hidden = !c.sub;
@@ -1178,12 +1201,14 @@ function render() {
   $('#main').scrollTop = 0;
 }
 
-function finishCard(kind, first) {
+function finishCard(kind, first, verdict) {
   mode = 'done';
-  if (!S.done[S.i]) { S.done[S.i] = true; S.first[S.i] = first; }
+  const c = cards[S.i], more = !!c.then && part === 0;
+  if (more) partFirst = first;
+  else if (!S.done[S.i]) { S.done[S.i] = true; S.first[S.i] = !!(first && partFirst); }
   if (ctrl.won) ctrl.won();
-  setFb(kind, ctrl.win());
-  primary.textContent = S.i === cards.length - 1 ? 'Finish' : 'Continue';
+  setFb(kind, ctrl.win(), verdict);
+  primary.textContent = more || S.i < cards.length - 1 ? 'Continue' : 'Finish';
   primary.disabled = false;
   showMe.hidden = true; skip.hidden = true; tools.hidden = true;
   whyBtn.hidden = !cardWhy();
@@ -1191,13 +1216,36 @@ function finishCard(kind, first) {
   focusPrimary();
 }
 
+// Part 2 of a two-part card: part 1 shrinks to a recap line, the stage stays, new controls replace the old.
+function toPart2() {
+  const c = cards[S.i], p1 = ctrl;
+  part = 1; attempts = 0; mode = 'check';
+  part1El.innerHTML = ICON.good + '<span>' + (p1 && p1.recap ? p1.recap() : c.prompt) + '</span>';
+  part1El.hidden = false; cardEl.classList.add('part2');
+  promptEl.innerHTML = c.then.prompt;
+  subEl.innerHTML = c.then.sub || ''; subEl.hidden = !c.then.sub;
+  ctl.replaceChildren(); setFb(null);
+  primary.textContent = 'Check'; primary.disabled = true;
+  showMe.hidden = true; whyBtn.hidden = true; skip.hidden = true;
+  tools.hidden = c.then.reset === false;
+  ctrl = c.then.build(stage, ctl, ctx, p1);
+  save();
+  $('#main').scrollTop = 0;
+  focusCard();
+}
+
 function renderFinish() {
   ctrl = null; mode = 'finish';
   cardEl.classList.remove('bridge'); tools.hidden = true; whyBtn.hidden = true;
-  drawFinish();
   const ks = scored();
   const done = ks.filter(k => S.done[k]).length, firsts = ks.filter(k => S.first[k]).length;
-  setFb('good', 'You completed ' + done + ' of ' + ks.length + ' cards and got ' + firsts + ' right on the first try.', 'Lesson finished.');
+  if (IS_CHECK) {
+    checkFinish(ks, firsts);
+    setFb('good', done === ks.length ? 'Your result shows on the course map with a tick.' : 'Answer every question to get the tick on the course map.', 'Level Check finished.');
+  } else {
+    drawFinish();
+    setFb('good', 'You completed ' + done + ' of ' + ks.length + ' cards and got ' + firsts + ' right on the first try.', 'Lesson finished.');
+  }
   if (done === ks.length) {
     try { localStorage.setItem(DONE_KEY, JSON.stringify({ date: new Date().toISOString().slice(0, 10), first: firsts, total: ks.length, version: LESSON.version })); } catch (_) {}
   }
@@ -1208,19 +1256,37 @@ function renderFinish() {
   $('#main').scrollTop = 0;
 }
 
+// Level Check finish: score, then each lesson the questions came from, with the ones to revisit highlighted.
+function checkFinish(ks, firsts) {
+  promptEl.innerHTML = 'You got ' + firsts + ' of ' + ks.length + ' right first time.';
+  subEl.innerHTML = 'Questions you missed point back to the lesson they came from.'; subEl.hidden = false;
+  stage.hidden = false; stage.replaceChildren(); ctl.replaceChildren();
+  const by = {};
+  ks.forEach(k => { const f = cards[k].from || ''; (by[f] = by[f] || { n: 0, ok: 0 }).n++; if (S.first[k]) by[f].ok++; });
+  const titles = LESSON.review || {};
+  const rows = Object.keys(by).filter(f => f).map(f => {
+    const r = by[f], miss = r.ok < r.n, t = titles[f] || f;
+    return '<li class="' + (miss ? 'miss' : '') + '">' + (miss ? '<a href="' + f + '.html">' + t + '</a>' : '<span>' + t + '</span>') +
+      '<small>' + r.ok + ' of ' + r.n + (miss ? ' · revisit' : '') + '</small></li>';
+  }).join('');
+  stage.append(h('<div class="lc-score" aria-hidden="true">' + firsts + ' / ' + ks.length + '</div>'));
+  if (rows) stage.append(h('<ul class="lc-list">' + rows + '</ul>'));
+}
+
 function go(i) { S.i = Math.max(0, Math.min(cards.length, i)); render(); }
 function restart() { S = fresh(); render(); }
 
 primary.addEventListener('click', () => {
   if (mode === 'finish') { location.href = LESSON.next ? LESSON.next.href : LESSON.map; return; }
-  if (mode === 'done') return go(S.i + 1);
+  if (mode === 'done') { if (cards[S.i] && cards[S.i].then && part === 0) return toPart2(); return go(S.i + 1); }
   if (mode === 'retry') { mode = 'check'; setFb(null); primary.textContent = 'Check'; primary.disabled = true; focusCard(); return; }
   attempts++;
   const r = ctrl.check(attempts);
   if (r === true) return finishCard('good', attempts === 1);
+  if (IS_CHECK && attempts >= 2) { ctrl.solve(); return finishCard('info', false, 'Here’s the answer.'); }
   setFb('bad', r);
   mode = 'retry'; primary.textContent = 'Try again'; primary.disabled = false;
-  if (attempts >= 2) showMe.hidden = false;
+  if (attempts >= 2 && !IS_CHECK) showMe.hidden = false;
   focusPrimary();
 });
 showMe.addEventListener('click', () => { ctrl.solve(); finishCard('info', false); });
@@ -1230,9 +1296,10 @@ againBtn.addEventListener('click', () => restart());
 // Start over redraws the card. Tries already used still count, so it can't reset "Show me" or the first-try score.
 startOver.addEventListener('click', () => {
   if (mode !== 'check' && mode !== 'retry') return;
-  const used = attempts;
+  const used = attempts, inPart2 = part === 1, pf = partFirst;
   render();
-  attempts = used; showMe.hidden = !(used >= 2);
+  if (inPart2) { ctrl.solve(); if (ctrl.won) ctrl.won(); toPart2(); partFirst = pf; }
+  attempts = used; showMe.hidden = !(used >= 2) || IS_CHECK;
 });
 whyBtn.addEventListener('click', () => { whyBody.innerHTML = cardWhy(); whyWrap.hidden = false; whyOk.focus(); });
 whyOk.addEventListener('click', () => { whyWrap.hidden = true; primary.focus({ preventScroll: true }); });
@@ -1259,7 +1326,7 @@ document.addEventListener('keydown', e => {
 });
 
 // Test hook for cards/check_cards.py: only when the page is opened with ?test.
-if (/[?&]test\b/.test(location.search)) window.__T = { get cards() { return cards; }, go, get ctrl() { return ctrl; }, finishCard, get mode() { return mode; } };
+if (/[?&]test\b/.test(location.search)) window.__T = { get cards() { return cards; }, go, get ctrl() { return ctrl; }, finishCard, get mode() { return mode; }, nextPart: toPart2, get part() { return part; }, kind: LESSON.kind || 'lesson' };
 
 render();
 })();
