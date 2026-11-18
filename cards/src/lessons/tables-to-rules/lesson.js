@@ -714,7 +714,7 @@ const cards = [
           if (v === 17) return '$17 is 3 more than the row above, so it is the cost of 5 films. For 10 films, use the rule.';
           if (v === 15) return '15 is 10 + 3 + 2. Each film costs $3, so multiply 10 by 3 before you add the fee.';
           if (v === 23) return '23 is 2 × 10 + 3. The 3 is the price of each film and the 2 is the fee: 3 × 10 + 2.';
-          if (v === 60) return '60 is 3 × (10 + 2). Multiply first, then add: 3 × 10, then + 2.';
+          if (v === 36) return '36 is 3 × (10 + 2). Multiply first, then add: 3 × 10, then + 2.';
           return 'Put 10 in place of ' + mx('x') + ' in ' + mx('y = 3 × x + 2') + '. Multiply first, then add.';
         },
         win: () => '$32, because 3 × 10 + 2 = 32. The rule gave the cost without filling in the rows for 5 to 9 films.',

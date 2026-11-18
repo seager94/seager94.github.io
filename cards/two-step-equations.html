@@ -1127,7 +1127,7 @@ const cards = [
         if (isNaN(x)) return 'Type a whole number using digits. If you got a decimal, you undid the × 5 first. Undo the + 2 first.';
         if (x === 35) return '35 is what came out of the × 5 part. Undo that too: 35 ÷ 5.';
         if (x === 39) return 'To undo + 2, subtract 2. You added it.';
-        if (x === 175 || x === 183 || x === 195) return 'To undo × 5, divide by 5. You multiplied.';
+        if (x === 175 || x === 183 || x === 185 || x === 195) return 'To undo × 5, divide by 5. You multiplied.';
         return 'Test it: ' + x + ' × 5 = ' + 5 * x + ', then + 2 gives ' + (5 * x + 2) + ', not 37.';
       },
       win: () => '37 − 2 = 35, then 35 ÷ 5 = 7. The machine did + 2 last, so you undo it first. It is the same order as the balance: take off the loose marbles, then share.',

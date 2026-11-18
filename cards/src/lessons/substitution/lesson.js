@@ -384,7 +384,7 @@ const cards = [
   prompt: 'This machine works out ' + mx('3n + 2') + '. ' + mx('n = 4') + ' goes in. What will come out?',
   sub: 'Think of it as bike hire: $3 an hour for ' + mx('n') + ' hours, plus a $2 helmet fee. Type your prediction, then press Check.',
   why: () => marblePic([{ bags: 3, n: 4 }, { loose: 2 }]) +
-    wl(mx('3n') + ' counts 3 lots of ' + mx('n') + ': 4 + 4 + 4 = 12 marbles in the bags.', 'Then the 2 loose marbles: 12 + 2 = 14.'),
+    wl(mx('3n') + ' counts 3 lots of ' + mx('n') + ': 4 + 4 + 4 = 12 marbles in the bags.', 'Then the 2 loose marbles: 12 + 2 = 14. Bike hire for 4 hours costs $14 the same way.'),
   f: mx('3n + 2'), letter: 'n', n: 4,
   rule: n => 3 * n + 2, work: n => '3 × ' + n + ' + 2',
   wrong: {
@@ -542,7 +542,7 @@ const cards = [
   other: () => 'Put 6 where ' + mx('n') + ' was: 20 − 2 × 6. Multiply first, then subtract.',
   win: () => '20 − 2 × 6 = 20 − 12 = 8. Multiplying comes before subtracting too.',
   why: () => stillMach(mx('20 − 2n'), mx('n'), 'out', 6, 8) +
-    wl(mx('2n') + ' is 2 lots of 6 = 12. The minus sign takes away all of ' + mx('2n') + ', so 12 comes off.', '20 − 12 = 8. (Working out 20 − 2 first would take off only 2.)')
+    wl(mx('2n') + ' is 2 lots of 6 = 12. The minus sign takes away all of ' + mx('2n') + ', so 12 comes off.', '20 − 12 = 8. (Working out 20 − 2 first gives 18 × 6 = 108.)')
 }),
 
 /* 8 */ {

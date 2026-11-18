@@ -1281,7 +1281,7 @@ const cards = [
     };
   },
   then: {
-    prompt: 'Ella’s trip home in the same taxi is 8 km. What does it cost?',
+    prompt: 'Ella’s next trip in the same taxi is 8 km. What does it cost?',
     why: () => whyBox(stillRun(8, ['× 3', '+ 4'], { show: { 2: '$28' }, caps: ['km', '', 'cost'], mark: { 2: 'good' } }), [
       'You know the kilometres this time, so run the machine forwards: 8 × 3 = 24, then 24 + 4 = 28.',
       'The $19 trip gave you the output, so you backtracked. This trip gives you the input, so you go forwards.'

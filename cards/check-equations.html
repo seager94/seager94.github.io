@@ -1042,7 +1042,7 @@ const cards = [
 /* 4: stories, choice then typed */ {
   from: 'equations-from-stories',
   prompt: 'Which equation matches this story?',
-  why: () => whyBox(whyBar(Object.assign({ q: mx('5h') }, BIKE), null), '$5 for each of the ' + mx('h') + ' hours is ' + mx('5h') + '. The $8 is paid once, and together they make $43.', mx('5h + 8 = 43')),
+  why: () => whyBox(whyBar(Object.assign({ q: '?' }, BIKE), null), '$5 for each of the ' + mx('h') + ' hours is ' + mx('5h') + '. The $8 is paid once, and together they make $43.', mx('5h + 8 = 43')),
   build(stage, ctl, ctx) {
     story(stage, BIKE_STORY);
     const ch = makeChoices(ctl, [mx('8h + 5 = 43'), mx('5h + 8 = 43'), mx('5h = 43 + 8'), mx('h + 5 + 8 = 43')], ctx);
@@ -1064,7 +1064,7 @@ const cards = [
     prompt: 'Solve ' + mx('5h + 8 = 43') + '. How many hours did Zara hire the bike for?',
     why: () => whyBox(whyBar(BIKE, 7), 'Take off the helmet: ' + mx('5h = 43 − 8 = 35') + '.', 'Then ' + mx('h = 35 ÷ 5 = 7') + '. Check: 5 × 7 + 8 = 43.'),
     build(stage, ctl, ctx) {
-      const bar = makeBar(stage, Object.assign({ q: mx('5h') }, BIKE));
+      const bar = makeBar(stage, Object.assign({ q: '?' }, BIKE));
       bar.set(null);
       const ans = makeAnswer(ctl, mx('h') + ' =', ctx);
       return {

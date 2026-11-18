@@ -599,7 +599,7 @@ const cards = [
   prompt: 'Which expression gives the number of matchsticks in step ' + mx('n') + '?',
   sub: 'The yellow stick stays the same. The blue groups of 3 grow.',
   why: () => wy(whySticks('sq', 4, { pad: { b: 48 }, label: 'Step 4 in colour: 1 yellow stick, then 4 blue groups of 3.',
-      notes: sqNotes(4) + wyBrace(8, 152, 68) + wyN(80, 96, WY_N + ' = 4 groups of 3', 'v') }),
+      notes: sqNotes(4) + wyBrace(8, 152, 68) + wyN(80, 96, '4 groups of 3 (' + WY_N + ' = 4)', 'v') }),
     ['Step 4: ' + mx('1 + 3 + 3 + 3 + 3') + ' is ' + mx('1 + 3 × 4') + '.', 'Step ' + mx('n') + ' has ' + mx('n') + ' groups of 3, so it has ' + mx('1 + 3 × n') + ' sticks.']),
   build(stage, ctl, ctx) {
     colourPattern(stage, ctl, 4, v => mx(['1'].concat(Array(v).fill('3')).join(' + ') + ' = ' + sqRule(v)));

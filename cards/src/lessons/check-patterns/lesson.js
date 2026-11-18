@@ -640,7 +640,7 @@ const cards = [
         if (v === 40) return '40 is 5 × 8, the cost of the hours alone. Test that idea on 1 hour: 5 × 1 = 5, but it costs $11. What is missing?';
         if (v === 13) return '13 is 8 + 5. The $5 is added for every hour, not once. Test it: 1 + 5 = 6, but 1 hour costs $11.';
         if (v === 88) return '88 is 11 × 8, which charges $11 for every hour. The second hour only added $5. The $11 includes the booking fee.';
-        if (v === 56) return '56 is 21 + 7 × 5. From 3 hours to 8 hours is 5 more hours, not 7.';
+        if (v === 56) return '56 is $10 too much. Test your rule on 1 hour first: it must give $11.';
         return attempt < 2 ? 'How much does each extra hour add? Use that to build a rule, then test it on a row you know.'
                            : 'Each hour adds $5, so start with 5 × ' + mx('x') + '. How much more than 5 × 1 is the cost of 1 hour?';
       },
