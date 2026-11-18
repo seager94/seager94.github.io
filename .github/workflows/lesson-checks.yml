@@ -6,7 +6,8 @@ permissions:
   contents: read
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to 26.04, which Playwright 1.56 cannot install browsers on.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - name: Check out the PR
@@ -21,7 +22,8 @@ jobs:
         run: |
           # Added/modified/renamed .html files that carry a lesson-id meta tag.
           : > "$RUNNER_TEMP/lessons.txt"
-          git diff --name-only --diff-filter=AMR "$BASE_SHA...$HEAD_SHA" -- '*.html' |
+          # Card lessons (cards/) have their own checker, run in the next step.
+          git diff --name-only --diff-filter=AMR "$BASE_SHA...$HEAD_SHA" -- '*.html' ':!cards/**' |
           while IFS= read -r f; do
             if [ -f "$f" ] && grep -qE '<meta[[:space:]]+name="lesson-id"' "$f"; then
               echo "$f" >> "$RUNNER_TEMP/lessons.txt"
@@ -29,13 +31,22 @@ jobs:
           done
           echo "Lessons to check:"; cat "$RUNNER_TEMP/lessons.txt"
           echo "count=$(wc -l < "$RUNNER_TEMP/lessons.txt")" >> "$GITHUB_OUTPUT"
+      - name: Find card-lesson changes
+        id: cards
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          n=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- 'cards/' | wc -l)
+          echo "Card-lesson files changed: $n"
+          echo "count=$n" >> "$GITHUB_OUTPUT"
       - name: Set up Python
-        if: steps.changed.outputs.count != '0'
+        if: steps.changed.outputs.count != '0' || steps.cards.outputs.count != '0'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install Playwright + Chromium
-        if: steps.changed.outputs.count != '0'
+        if: steps.changed.outputs.count != '0' || steps.cards.outputs.count != '0'
         run: |
           # Pinned: keep in step with .claude/commands/next-lesson-auto.md (nightly routine) and next-lesson.md.
           pip install playwright==1.56.0
@@ -62,10 +73,21 @@ jobs:
           name: lesson-check-output
           path: check-output/
           if-no-files-found: warn
-      - name: Fail on any FAIL
-        if: steps.check.outputs.failed == '1'
+      - name: Build and check the card lessons
+        id: cardcheck
+        if: steps.cards.outputs.count != '0'
         run: |
-          echo "check_lesson.py reported FAIL for at least one lesson - see the job summary and the lesson-check-output artifact."
+          python cards/build_cards.py
+          if ! git diff --quiet -- cards/; then
+            echo "::error::cards/ was not rebuilt after a source change - run: py cards/build_cards.py"
+            git diff --stat -- cards/
+            echo "failed=1" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if python cards/check_cards.py; then echo "failed=0" >> "$GITHUB_OUTPUT"; else echo "failed=1" >> "$GITHUB_OUTPUT"; fi
+      - name: Fail on any FAIL
+        if: steps.check.outputs.failed == '1' || steps.cardcheck.outputs.failed == '1'
+        run: |
+          echo "A lesson check failed (check_lesson.py or cards/check_cards.py) - see the job log, summary and lesson-check-output artifact."
           exit 1
       - name: No lessons changed
         if: steps.changed.outputs.count == '0'
