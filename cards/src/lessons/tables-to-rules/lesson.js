@@ -256,7 +256,7 @@ function makeMachine(host, rule, onFeed) {
   host.append(node, log);
   const inS = $('.m-in', node), outS = $('.m-out', node), body = $('.m-body', node);
   const fed = [];
-  let busy = false;
+  let busy = false, timer = 0;
   const put = (slot, html) => { const old = $('.tile', slot); if (old) old.remove(); if (html) slot.append(h(html)); };
   return {
     fed,
@@ -265,7 +265,7 @@ function makeMachine(host, rule, onFeed) {
       busy = true;
       put(inS, numTile(n)); put(outS, null);
       body.classList.remove('run'); void body.offsetWidth; body.classList.add('run');
-      setTimeout(() => {
+      timer = setTimeout(() => {
         put(inS, null); put(outS, numTile(rule(n)));
         fed.push(n);
         log.append(h('<span class="pair pop">' + n + ' → ' + rule(n) + '</span>'));
@@ -273,7 +273,9 @@ function makeMachine(host, rule, onFeed) {
         busy = false;
         if (onFeed) onFeed();
       }, 600);
-    }
+    },
+    // Stop any run and show fixed tiles in the two slots.
+    still(inHTML, outHTML) { clearTimeout(timer); busy = false; body.classList.remove('run'); put(inS, inHTML); put(outS, outHTML); }
   };
 }
 
@@ -287,6 +289,7 @@ function makeTable(host, heads, rows) {
   host.append(t);
   return {
     set(i, j, v) { const c = trs[i].children[j]; c.className = 'pop'; c.textContent = v; },
+    insert(at, r) { const tr = h('<tr class="pop">' + r.map(cell).join('') + '<td class="step"></td></tr>'); body.insertBefore(tr, trs[at] || null); trs.splice(at, 0, tr); },
     steps(list) { trs.forEach((tr, i) => { tr.lastElementChild.innerHTML = i && list[i - 1] ? '<span>' + list[i - 1] + '</span>' : ''; }); }
   };
 }
@@ -386,11 +389,44 @@ function ruleStage(stage, ctl, ctx, heads, rows) {
   return { tb, bd: makeBuilder(row, ctl, RULE_TILES, ctx) };
 }
 
+/* ---------- still pictures for Why? panels and bridges ---------- */
+// A picture beside one or two lines of working.
+const wy = (pic, lines) => '<div class="wy"><div class="wy-pic">' + pic + '</div><div class="wy-t">' + lines.map(l => '<p>' + l + '</p>').join('') + '</div></div>';
+// The table of values, still. o.steps: labels between rows; o.ok / o.k: [row, column] cells to tint green (the answer) / yellow (a known number).
+function stillTable(heads, rows, o) {
+  o = o || {};
+  const d = document.createElement('div');
+  const tb = makeTable(d, heads, rows);
+  if (o.steps) tb.steps(o.steps);
+  const tint = (list, cls) => (list || []).forEach(c => d.querySelector('tbody').rows[c[0]].cells[c[1]].classList.add(cls));
+  tint(o.ok, 'ok'); tint(o.k, 'k');
+  return d.innerHTML;
+}
+// A table laid across the page. rows: [header HTML, values]. ok: index of the row to tint green.
+const stillAcross = (rows, ok) => '<table class="tov across">' + rows.map((r, i) => '<tr><th>' + r[0] + '</th>' + r[1].map(v => '<td' + (i === ok ? ' class="ok"' : '') + '>' + v + '</td>').join('') + '</tr>').join('') + '</table>';
+// The machine with one number in each slot.
+const qTile = '<span class="tile op still">?</span>';
+const stillMach = (a, b) => '<div class="mach" role="img" aria-label="' + a + ' goes in, ' + b + ' comes out"><div class="m-slot"><span class="cap">in</span><span class="tile num still">' + a + '</span></div><div class="m-pipe"></div>' +
+  '<div class="m-body">' + GEAR + '</div><div class="m-pipe"></div><div class="m-slot"><span class="cap">out</span><span class="tile num still">' + b + '</span></div></div>';
+// The grid with points already on it. extra: SVG drawn on top. GX and GY turn grid numbers into SVG units.
+const GX = x => 30 + x * 30, GY = y => 234 - y * 15;
+function stillGrid(fixed, extra) {
+  const d = document.createElement('div');
+  makeGrid(d, { xmax: 6, ymax: 14, fixed });
+  const svg = $('svg', d);
+  svg.classList.add('locked');
+  return svg.outerHTML.slice(0, -6) + (extra || '') + '</svg>';
+}
+
 const cards = [
 
 /* 1 */ {
   prompt: 'This machine hides a rule. Feed it the inputs 1 to 5 to fill the table.',
-  sub: 'Drag a number into the machine, or tap it.',
+  sub: 'Crack a hidden rule, like how a film site sets its prices, and you can predict any cost. Drag a number into the machine, or tap it.',
+  why: () => wy(stillMach(3, 7), [
+    'The machine does the same thing to every number, so an input always gives the same output. Feed in 3 and you get 7 every time.',
+    'Writing each pair as a row, in order, lets you compare the outputs: 3, 5, 7, 9, 11.'
+  ]),
   build(stage, ctl, ctx) {
     const duo = h('<div class="duo"><div class="grow"></div></div>');
     stage.append(duo);
@@ -414,6 +450,10 @@ const cards = [
 
 /* 2 */ {
   prompt: 'Read down the output column. How much does the output go up by each time?',
+  why: () => wy(stillTable(HEADS, ROWS5, { steps: STEPS }), [
+    'Take each output from the one below it: ' + mx('5 − 3 = 2') + ', ' + mx('7 − 5 = 2') + ', ' + mx('9 − 7 = 2') + ' and ' + mx('11 − 9 = 2') + '.',
+    'Every jump is 2. So each time 1 more goes in, 2 more comes out.'
+  ]),
   build(stage, ctl, ctx) {
     const tb = makeTable(stage, HEADS, ROWS5);
     const ans = makeAnswer(ctl, 'Each output goes up by', ctx);
@@ -437,6 +477,10 @@ const cards = [
 
 /* 3 */ {
   prompt: 'What will the machine give when 6 goes in?',
+  why: () => wy(stillTable(HEADS, ROWS5.concat([[6, 13]]), { steps: STEPS, ok: [[5, 1]] }), [
+    'The input goes up by 1 again, from 5 to 6, so the output goes up by 2 again.',
+    mx('11 + 2 = 13')
+  ]),
   build(stage, ctl, ctx) {
     const tb = makeTable(stage, HEADS, ROWS5.concat([[6, '?']]));
     tb.steps(STEPS.slice(0, 4));
@@ -462,6 +506,10 @@ const cards = [
 /* 4 */ {
   prompt: 'The outputs go up by 2, just like ' + mx('2 × x') + ' does. How much more than ' + mx('2 × x') + ' is each output?',
   sub: 'Compare across each row.',
+  why: () => wy(stillTable(['Input ' + mx('x'), mx('2 × x'), 'Output ' + mx('y')], IN5.map(x => [x, 2 * x, RULE(x)]), { steps: STEPS }), [
+    'Each time ' + mx('x') + ' goes up by 1, ' + mx('2 × x') + ' goes up by 2. The outputs go up by 2 as well, so the two columns stay the same distance apart.',
+    'That distance is 1 in every row: ' + mx('3 − 2') + ', ' + mx('5 − 4') + ', ' + mx('7 − 6') + ', ' + mx('9 − 8') + ' and ' + mx('11 − 10') + '.'
+  ]),
   build(stage, ctl, ctx) {
     const tb = makeTable(stage, ['Input ' + mx('x'), mx('2 × x'), 'Output ' + mx('y')], IN5.map(x => [x, 2 * x, RULE(x)]));
     tb.steps(STEPS);
@@ -487,6 +535,10 @@ const cards = [
 /* 5 */ {
   prompt: 'Build the machine’s rule: how do you get ' + mx('y') + ' from ' + mx('x') + '?',
   sub: 'Drag tiles into the box, or tap them. Tap a tile in the box to remove it.',
+  why: () => wy(stillTable(['Input ' + mx('x'), mx('2 × x + 1'), 'Output ' + mx('y')], IN5.map(x => [x, '2 × ' + x + ' + 1', RULE(x)]), { ok: IN5.map((x, i) => [i, 2]) }), [
+    'Test the rule on every row. It gives the machine’s output each time, so it is the machine’s rule.',
+    'A rule that fits only some rows is not the rule: ' + mx('x + 2') + ' fits row 1 (1 + 2 = 3) but not row 2 (2 + 2 = 4, not 5).'
+  ]),
   build(stage, ctl, ctx) {
     const { tb, bd } = ruleStage(stage, ctl, ctx, HEADS, ROWS5);
     tb.steps(STEPS);
@@ -509,9 +561,53 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 6 (bridge) */ {
+  bridge: true,
+  prompt: 'Your rule adds the same 1 whatever the input. A number added on its own like this is called a <b>constant</b>: it stays the same for every input.',
+  sub: 'The input and the output change from row to row, so ' + mx('x') + ' and ' + mx('y') + ' are variables.',
+  show(stage) { stage.append(h('<div class="br-pic">' + stillTable(['Input ' + mx('x'), mx('2 × x'), 'Constant', 'Output ' + mx('y')], IN5.map(x => [x, 2 * x, '+ 1', RULE(x)]), { k: IN5.map((x, i) => [i, 2]) }) + '</div>')); }
+},
+
+/* 7 */ {
   prompt: 'Use your rule to predict the output for 10. Then the machine will check.',
   sub: 'The rule is ' + mx('y = 2 × x + 1') + '.',
+  why: () => wy(stillMach(10, 21), [
+    'Put 10 in place of ' + mx('x') + ': ' + mx('y = 2 × 10 + 1') + '.',
+    'Multiply first, then add: ' + mx('20 + 1 = 21') + '.'
+  ]),
+  then: {
+    prompt: 'Now go backwards. The machine gives out 15. What number went in?',
+    sub: 'The rule is still ' + mx('y = 2 × x + 1') + '.',
+    why: () => wy(stillMach(7, 15), [
+      'Undo the rule, last thing first. Undo the adding: ' + mx('15 − 1 = 14') + '. Undo the multiplying: ' + mx('14 ÷ 2 = 7') + '.',
+      'Check by going forwards: ' + mx('2 × 7 + 1 = 15') + '.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      const { mc, tb } = p1.kit;
+      tb.set(5, 1, 21);
+      tb.insert(5, ['?', 15]);
+      mc.still(qTile, numTile(15));
+      const ans = makeAnswer(ctl, 'Out comes 15 when the input is', ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 7) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 31) return '31 is 2 × 15 + 1: you put 15 in as the input. This time 15 is the output. Which input gives 15?';
+          if (v === 30) return '30 is 2 × 15. This time 15 is the output, not the input. Which input gives 15?';
+          if (v === 8) return '8 comes from 15 + 1 = 16, then halving. The rule added 1, so undo it by taking 1 away first.';
+          if (v === 14) return '14 is 15 − 1. That undoes the adding. Now undo the multiplying by 2.';
+          if (v === 13) return '13 is 15 − 2. The 2 in the rule multiplies, so taking 2 away doesn’t undo it. Test 13: 2 × 13 + 1 = 27, not 15.';
+          if (v === 15) return '15 is the output. Test it as an input: 2 × 15 + 1 = 31, not 15.';
+          return 'Test ' + v + ': 2 × ' + v + ' + 1 = ' + RULE(v) + ', not 15. Try a ' + (v < 7 ? 'bigger' : 'smaller') + ' input.';
+        },
+        win: () => '7 went in, because 2 × 7 + 1 = 15. A rule works backwards too: take away the 1, then halve.',
+        won() { tb.set(5, 0, 7); mc.still(numTile(7), numTile(15)); ans.mark('good'); ans.lock(); },
+        solve() { ans.set(7); }
+      };
+    }
+  },
   build(stage, ctl, ctx) {
     const duo = h('<div class="duo"><div class="grow"></div></div>');
     stage.append(duo);
@@ -534,13 +630,19 @@ const cards = [
       },
       win: () => 'The machine gives 21 as well: 2 × 10 + 1 = 21. The rule jumped straight there, without feeding in 6, 7, 8 and 9 first.',
       won() { ans.mark('good'); ans.lock(); mc.feed(10); },
-      solve() { ans.set(21); }
+      solve() { ans.set(21); },
+      kit: { mc, tb },
+      recap: () => 'Input 10 gives output 21, because ' + mx('2 × 10 + 1 = 21') + '.'
     };
   }
 },
 
-/* 7 */ {
+/* 8 */ {
   prompt: 'Same machine. This table skips some inputs. What is the output for 5?',
+  why: () => wy(stillTable(HEADS, [[1, 3], [2, 5], [5, 11], [10, 21]], { ok: [[2, 1]] }), [
+    'The rule gives it straight away: ' + mx('y = 2 × 5 + 1 = 11') + '.',
+    'The steps agree. From input 2 to input 5 is 3 steps of 1, and each step adds 2 to the output: ' + mx('5 + 3 × 2 = 11') + '.'
+  ]),
   build(stage, ctl, ctx) {
     const tb = makeTable(stage, HEADS, [[1, 3], [2, 5], [5, '?'], [10, 21]]);
     const ans = makeAnswer(ctl, 'When 5 goes in, out comes', ctx);
@@ -562,7 +664,11 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 9 */ {
+  why: () => wy(stillTable(HEADS, [[1, 3], [2, 5], [5, 11], [10, 21]], { steps: ['+2', '+6', '+10'] }), [
+    'The inputs jump by 1, then 3, then 5. Each 1 in the input adds 2 to the output: ' + mx('1 × 2 = 2') + ', ' + mx('3 × 2 = 6') + ' and ' + mx('5 × 2 = 10') + '.',
+    'So the rule still multiplies by 2, and ' + mx('y = 2 × x + 1') + ' gives 3, 5, 11 and 21.'
+  ]),
   prompt: 'Down this column the outputs go up by 2, then 6, then 10. Which rule fits every row?',
   build(stage, ctl, ctx) {
     makeTable(stage, HEADS, [[1, 3], [2, 5], [5, 11], [10, 21]]).steps(['+2', '+6', '+10']);
@@ -582,7 +688,41 @@ const cards = [
   }
 },
 
-/* 9 */ {
+/* 10 */ {
+  why: () => wy(stillTable(['Films ' + mx('x'), mx('3 × x'), 'Cost ($) ' + mx('y')], [1, 2, 3, 4].map(x => [x, 3 * x, 3 * x + 2]), { steps: ['+3', '+3', '+3'] }), [
+    'The cost goes up $3 for each film, so the films alone cost ' + mx('3 × x') + ' dollars.',
+    'Every total is $2 more than that: ' + mx('5 − 3') + ', ' + mx('8 − 6') + ', ' + mx('11 − 9') + ' and ' + mx('14 − 12') + '. That $2 is the joining fee.'
+  ]),
+  then: {
+    prompt: 'Use your rule. What is the total cost of 10 films?',
+    why: () => wy(stillTable(['Films ' + mx('x'), mx('3 × x'), 'Fee ($)', 'Cost ($) ' + mx('y')], [[10, 30, 2, 32]], { ok: [[0, 3]], k: [[0, 2]] }), [
+      'Put 10 in place of ' + mx('x') + ': ' + mx('y = 3 × 10 + 2') + '.',
+      'Ten films at $3 each is $30. Add the $2 joining fee: ' + mx('30 + 2 = 32') + '.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      const tb = p1.tb;
+      tb.insert(4, [10, '?']);
+      const ans = makeAnswer(ctl, 'Total cost of 10 films: $', ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 32) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 30) return '$30 is 3 × 10, the films alone. The joining fee still has to be paid.';
+          if (v === 50) return '$50 is 10 × $5. But the $5 for one film already includes the $2 joining fee, and you pay that fee only once.';
+          if (v === 17) return '$17 is 3 more than the row above, so it is the cost of 5 films. For 10 films, use the rule.';
+          if (v === 15) return '15 is 10 + 3 + 2. Each film costs $3, so multiply 10 by 3 before you add the fee.';
+          if (v === 23) return '23 is 2 × 10 + 3. The 3 is the price of each film and the 2 is the fee: 3 × 10 + 2.';
+          if (v === 36) return '36 is 3 × (10 + 2). Multiply first, then add: 3 × 10, then + 2.';
+          return 'Put 10 in place of ' + mx('x') + ' in ' + mx('y = 3 × x + 2') + '. Multiply first, then add.';
+        },
+        win: () => '$32, because 3 × 10 + 2 = 32. The rule gave the cost without filling in the rows for 5 to 9 films.',
+        won() { tb.set(4, 1, 32); ans.mark('good'); ans.lock(); },
+        solve() { ans.set(32); }
+      };
+    }
+  },
   prompt: 'A film site charges a joining fee plus the same price for each film. Build the rule for the total cost.',
   sub: mx('x') + ' is the number of films. ' + mx('y') + ' is the total cost in dollars.',
   build(stage, ctl, ctx) {
@@ -602,12 +742,18 @@ const cards = [
       },
       win: () => mx('y = ' + bd.toks().join(' ')) + '. Each film adds $3, so multiply by 3. One film costs $5 and 3 × 1 = 3, so the joining fee is $2.',
       won() { tb.steps(['+3', '+3', '+3']); bd.lock(); },
-      solve() { bd.set(['3', '×', 'x', '+', '2']); }
+      solve() { bd.set(['3', '×', 'x', '+', '2']); },
+      tb,
+      recap: () => 'The rule is ' + mx('y = ' + bd.toks().join(' ')) + ': $3 for each film, plus a $2 joining fee.'
     };
   }
 },
 
-/* 10 */ {
+/* 11 */ {
+  why: () => wy(stillGrid(ROWS5, '<path class="wy-gd" d="M' + GX(3) + ' ' + GY(0) + 'V' + GY(7) + 'M' + GX(0) + ' ' + GY(7) + 'H' + GX(3) + '"/><text class="wy-gl" x="' + (GX(3) + 10) + '" y="' + (GY(7) + 17) + '">(3, 7)</text>'), [
+    'Take the row 3 → 7. Go across to the input, 3, then up to the output, 7. That point is ' + pt([3, 7]) + '.',
+    'The other rows work the same way: ' + pt([1, 3]) + ', ' + pt([2, 5]) + ', ' + pt([4, 9]) + ' and ' + pt([5, 11]) + '.'
+  ]),
   prompt: 'Plot each row of the machine’s table as a point.',
   sub: 'Go across to the input, then up to the output. Tap to place or remove a point. Drag to move one.',
   build(stage, ctl, ctx) {
@@ -637,7 +783,12 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 12 */ {
+  why: () => wy(stillGrid(ROWS5, '<path class="wy-gd" d="M' + GX(5) + ' ' + GY(11) + 'H' + GX(6) + 'V' + GY(13) + '"/><circle class="wy-new" r="6.5" cx="' + GX(6) + '" cy="' + GY(13) + '"/>' +
+      '<text class="wy-gs" x="' + (GX(5.5)) + '" y="' + (GY(11) + 15) + '" text-anchor="middle">+1</text><text class="wy-gs" x="' + (GX(6) + 5) + '" y="' + (GY(12) + 4) + '">+2</text>'), [
+    'Every point is 1 across and 2 up from the one before. From ' + pt([5, 11]) + ': ' + mx('5 + 1 = 6') + ' across and ' + mx('11 + 2 = 13') + ' up.',
+    'The rule gives the same point: ' + mx('2 × 6 + 1 = 13') + '.'
+  ]),
   prompt: 'These points come from ' + mx('y = 2 × x + 1') + '. Plot the point for input 6.',
   sub: 'Look at how the points step up. Tap the grid to place your point.',
   build(stage, ctl, ctx) {
@@ -660,8 +811,22 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 13 (bridge) */ {
+  bridge: true,
+  prompt: 'You went across to the input, then up to the output. The grid you plotted on is called the <b>Cartesian plane</b>.',
+  sub: mx('x') + ' is measured across and ' + mx('y') + ' is measured up.',
+  show(stage) { stage.append(h('<div class="br-pic">' + stillGrid(ROWS5) + '</div>')); }
+},
+
+/* 14 */ {
   prompt: 'Match each table to its rule.',
+  why: () => '<div class="wy-trio">' + [
+      ['A', [1, 2, 3, 4], x => 2 * x + 3, 'Inputs +1, outputs +2', 'y = 2 × x + 3'],
+      ['B', [2, 4, 6, 8], x => x + 2, 'Inputs +2, outputs +2', 'y = x + 2'],
+      ['C', [1, 2, 3, 4], x => 3 * x + 1, 'Inputs +1, outputs +3', 'y = 3 × x + 1']
+    ].map(t => '<figure><b>Table ' + t[0] + '</b>' + rowTable(t[1], t[1].map(t[2])) + '<figcaption>' + t[3] + '<br>' + mx(t[4]) + '</figcaption></figure>').join('') + '</div>' +
+    '<div class="wy-t"><p>When the inputs go up by 1, the step between outputs is the multiplier: 2 for table A and 3 for table C.</p>' +
+    '<p>In table B the inputs go up by 2 and so do the outputs. Each extra 1 in gives 1 extra out, so nothing is multiplied: ' + mx('2 + 2 = 4') + ', ' + mx('4 + 2 = 6') + '.</p></div>',
   sub: 'Drag each rule under a table, or tap a rule and then a table. Test a row before you decide.',
   build(stage, ctl, ctx) {
     const NAME = ['A', 'B', 'C'];
@@ -721,7 +886,11 @@ const cards = [
   }
 },
 
-/* 13 */ {
+/* 15 */ {
+  why: () => wy(stillAcross([[mx('x'), [1, 2, 3, 4]], [mx('4 × x'), [4, 8, 12, 16]], [mx('y'), [6, 10, 14, 18]]]), [
+    'The inputs go up by 1 and the outputs go up by 4, so the rule multiplies by 4: ' + mx('4 × x') + ' gives 4, 8, 12, 16.',
+    'Every output is 2 more than that, so ' + mx('y = 4 × x + 2') + '. Tom’s rule fits all four rows.'
+  ]),
   prompt: 'Three students give a rule for this table. Agree or disagree with each one.',
   build(stage, ctl, ctx) {
     stage.hidden = true;
@@ -769,7 +938,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'The machine'], [3, 'Finding the rule'], [6, 'Skipping inputs'], [8, 'A new table'], [9, 'Graphing'], [11, 'Wrap-up']];
+const SECTIONS = [[0, 'The machine'], [3, 'Finding the rule'], [5, 'Using the rule'], [7, 'Skipping inputs'], [9, 'A new table'], [10, 'Graphing'], [12, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

@@ -1,7 +1,7 @@
 """Click-test every card lesson in a headless browser.
 
-    py cards/check_cards.py              # all lessons
-    py cards/check_cards.py substitution # one lesson
+    py cards/check_cards.py              # all lessons and Level Checks
+    py cards/check_cards.py substitution # one page
 
 Needs Playwright for Python (py -m pip install playwright). On Windows it drives the
 installed Microsoft Edge; elsewhere it uses Playwright's Chromium.
@@ -11,8 +11,11 @@ For every card it checks that:
   - the "Show me" state is accepted by the card's own check
   - nothing needs scrolling at 1366 x 650, before or after answering
   - nothing spills sideways at 390 wide (phone)
-It also checks a wrong-then-right flow on the first typed-answer card it finds, the
-finish screen, the course map, and that no page logs an error.
+  - on a two-part card, Continue after part 1 opens part 2, and part 2 passes the same checks
+  - a Why? panel is not empty, fits at 1366 x 650 without scrolling and doesn't spill sideways on a phone
+It also checks a wrong-then-right flow on the first typed-answer card it finds (on a Level
+Check: that a second wrong answer shows the answer), the finish screen, the course map,
+and that no page logs an error.
 Exit code 1 if anything fails.
 """
 import json
@@ -40,6 +43,16 @@ def launch(p):
 CARD_PROBE = """async (k) => {
   const T = window.__T, m = document.getElementById('main');
   const wait = ms => new Promise(r => setTimeout(r, ms));
+  // Open the Why? panel if the card has one: it should fit without scrolling and not spill sideways.
+  const whyProbe = async () => {
+    const btn = document.getElementById('whyBtn');
+    if (!btn || btn.hidden) return null;
+    btn.click(); await wait(320);
+    const p = document.querySelector('.why-panel'), de = document.documentElement;
+    const r = { over: p.scrollHeight - p.clientHeight, side: Math.max(p.scrollWidth - p.clientWidth, de.scrollWidth - de.clientWidth), empty: !document.getElementById('whyBody').textContent.trim() && !document.querySelector('#whyBody svg') };
+    document.getElementById('whyOk').click(); await wait(60);
+    return r;
+  };
   T.go(k); await wait(80);
   const out = { startOff: document.getElementById('primary').disabled, bridge: !!T.cards[k].bridge };
   out.startOver = m.scrollHeight - m.clientHeight;
@@ -49,7 +62,25 @@ CARD_PROBE = """async (k) => {
     await wait(150);
   }
   out.winOver = m.scrollHeight - m.clientHeight;
+  // Nothing should cover the card once it is answered: no fixed-position element inside the card
+  // (e.g. a lesson class that collides with a frame overlay class).
+  out.covered = [...document.getElementById('card').querySelectorAll('*')].some(e => getComputedStyle(e).position === 'fixed');
+  out.why = await whyProbe();
   out.sideways = document.documentElement.scrollWidth - document.documentElement.clientWidth;
+  if (!out.bridge && T.cards[k].then) {
+    const primary = document.getElementById('primary');
+    primary.click(); await wait(120);                      // Continue after part 1 should open part 2
+    out.p2 = { opened: T.part === 1, startOff: primary.disabled, startOver: m.scrollHeight - m.clientHeight };
+    if (out.p2.opened) {
+      try { T.ctrl.solve(); await wait(80); out.p2.solveOk = T.ctrl.check(1) === true; } catch (e) { out.p2.err = String(e); }
+      try { T.finishCard('good', true); } catch (e) { out.p2.err = out.p2.err || String(e); }
+      await wait(150);
+      out.p2.winOver = m.scrollHeight - m.clientHeight;
+      out.p2.why = await whyProbe();
+      out.p2.label = primary.textContent;
+    }
+    out.sideways = Math.max(out.sideways, document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  }
   return out;
 }"""
 
@@ -78,8 +109,33 @@ def check_lesson(browser, slug):
                     problems.append('%s: needs %dpx of scrolling at 1366 x 650' % (tag, r['startOver']))
                 if r['winOver'] > SLACK:
                     problems.append('%s: needs %dpx of scrolling after answering at 1366 x 650' % (tag, r['winOver']))
-            elif r['sideways'] > SLACK:
-                problems.append('%s: %dpx wider than a 390px phone' % (tag, r['sideways']))
+                if r.get('covered'):
+                    problems.append(tag + ': something covers the card after answering')
+                for wtag, w in ((tag, r.get('why')), (tag + ' part 2', (r.get('p2') or {}).get('why'))):
+                    if w and w['over'] > SLACK:
+                        problems.append('%s: the Why? panel needs %dpx of scrolling at 1366 x 650' % (wtag, w['over']))
+                    if w and w['empty']:
+                        problems.append('%s: the Why? panel is empty' % wtag)
+                p2 = r.get('p2')
+                if p2 is not None:
+                    t2 = tag + ' part 2'
+                    if not p2['opened']:
+                        problems.append(t2 + ': Continue after part 1 did not open part 2')
+                    else:
+                        if not p2['startOff']:
+                            problems.append(t2 + ': Check is on before any answer')
+                        if not p2.get('solveOk'):
+                            problems.append(t2 + ': the Show me state is not accepted by check' + (' (' + p2['err'] + ')' if p2.get('err') else ''))
+                        if p2['startOver'] > SLACK:
+                            problems.append('%s: needs %dpx of scrolling at 1366 x 650' % (t2, p2['startOver']))
+                        if p2.get('winOver', 0) > SLACK:
+                            problems.append('%s: needs %dpx of scrolling after answering at 1366 x 650' % (t2, p2['winOver']))
+            else:
+                if r['sideways'] > SLACK:
+                    problems.append('%s: %dpx wider than a 390px phone' % (tag, r['sideways']))
+                for wtag, w in ((tag, r.get('why')), (tag + ' part 2', (r.get('p2') or {}).get('why'))):
+                    if w and w['side'] > SLACK:
+                        problems.append('%s: the Why? panel is %dpx wider than a 390px phone' % (wtag, w['side']))
         page.evaluate('window.__T.go(window.__T.cards.length)')
         page.wait_for_timeout(150)
         if vp is LAPTOP:
@@ -107,7 +163,14 @@ FLOW = """async () => {
     const dock = document.getElementById('dock').className, label = primary.textContent;
     primary.click(); await wait(80);                       // Try again
     const back = T.mode, label2 = primary.textContent;
-    return { card: k + 1, dock, label, back, label2 };
+    const res = { card: k + 1, dock, label, back, label2, kind: T.kind };
+    if (T.kind === 'check') {                              // a second wrong answer shows the answer
+      const inp2 = document.querySelector('#ctl input:not([type=range]), #stage input:not([type=range])');
+      if (inp2) { inp2.value = '987653'; inp2.dispatchEvent(new Event('input', { bubbles: true })); await wait(40); }
+      if (!primary.disabled) { primary.click(); await wait(80); }
+      res.reveal = { mode: T.mode, dock: document.getElementById('dock').className, showMe: !document.getElementById('showMe').hidden };
+    }
+    return res;
   }
   return null;
 }"""
@@ -127,6 +190,9 @@ def check_flow(browser, slug):
         out.append('card %d: a wrong typed answer does not show the amber sheet with Try again' % r['card'])
     if r['back'] != 'check' or r['label2'] != 'Check':
         out.append('card %d: Try again does not return to Check' % r['card'])
+    rv = r.get('reveal')
+    if rv is not None and (rv['mode'] != 'done' or 'info' not in rv['dock'] or rv['showMe']):
+        out.append('card %d: on a Level Check a second wrong answer should show the answer and move on' % r['card'])
     return out
 
 
@@ -142,7 +208,7 @@ def check_map(browser):
     ctx.close()
     published = json.loads((HERE / 'lessons.json').read_text(encoding='utf-8'))
     out = []
-    want = [published['lessons'][s]['href'] for u in published['units'] for s in u['lessons']]
+    want = [published['lessons'][s]['href'] for u in published['units'] for s in u['lessons'] + ([u['check']] if u.get('check') else [])]
     if links != want:
         out.append('course map links do not match lessons.json')
     if nexts != 1:
@@ -153,7 +219,7 @@ def check_map(browser):
 
 def main():
     published = json.loads((HERE / 'lessons.json').read_text(encoding='utf-8'))
-    slugs = sys.argv[1:] or [s for u in published['units'] for s in u['lessons']]
+    slugs = sys.argv[1:] or [s for u in published['units'] for s in u['lessons'] + ([u['check']] if u.get('check') else [])]
     failed = 0
     with sync_playwright() as p:
         browser = launch(p)

@@ -198,14 +198,14 @@ button.it{cursor:pointer}
 .answer input:focus{outline:3px solid var(--var);outline-offset:2px;border-color:var(--var)}
 .answer input.bad{border-color:var(--no);background:var(--no-soft)}
 .answer input.good{border-color:var(--go);background:var(--go-soft)}
-.claims{display:grid;gap:.6rem}
-.claim{background:var(--paper);border:2px solid var(--line);border-radius:1rem;padding:.65rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.5rem .9rem;align-items:center}
+.claims{display:grid;gap:.45rem}
+.claim{background:var(--paper);border:2px solid var(--line);border-radius:1rem;padding:.5rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.5rem .9rem;align-items:center}
 .av{width:2.2rem;height:2.2rem;border-radius:50%;background:#DCE1EE;display:grid;place-items:center;font:700 1.05rem var(--display)}
 .claim p{margin:0;line-height:1.4}
 .claim .who{font-weight:600}
 .claim.bad{border-color:var(--no);background:var(--no-soft)}
 .claim.good{border-color:var(--go);background:var(--go-soft)}
-.claim .why{grid-column:2 / -1;font-size:.93rem}
+.claim .why{grid-column:2 / -1;font-size:.93rem;line-height:1.35}
 .yn{display:inline-flex;border-radius:.8rem;box-shadow:inset 0 0 0 2px var(--line);background:var(--paper);overflow:hidden}
 .yn button{border:0;background:none;padding:.5rem .85rem;cursor:pointer;font-size:.93rem}
 .yn button[aria-pressed=true]{background:var(--ink);color:#fff}
@@ -319,6 +319,17 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
   .dock.good .acts,.dock.bad .acts,.dock.info .acts{width:auto;flex:none}
   .dock.good .acts .primary,.dock.bad .acts .primary,.dock.info .acts .primary{flex:none;min-width:11rem}
 }
+/* Why? sits beside the verdict ("Correct!  Why?"), so the sheet's text keeps the full width. */
+.why-chip{margin-left:.6rem;font:600 .85rem/1 var(--body);padding:.34rem .8rem;border:0;border-radius:999px;background:rgba(0,0,0,.08);color:var(--ink);cursor:pointer;vertical-align:.12rem}
+.why-chip:hover{background:rgba(0,0,0,.14)}
+.why-chip:focus-visible{outline:3px solid var(--var);outline-offset:2px}
+
+/* Phones: Start over, Show me and Try again must fit side by side in 390px. */
+@media (max-width:34rem){
+  .acts{gap:.45rem}
+  .acts .btn{padding-left:1rem;padding-right:1rem}
+  .acts .again-btn{padding-left:.25rem;padding-right:.45rem}
+}
 /* Short laptop screens: keep the answered sheet to two lines where possible, so nothing scrolls. */
 @media (min-width:34.01rem) and (max-height:760px){
   .dock.good .wrap,.dock.bad .wrap,.dock.info .wrap{gap:1rem;padding-top:.55rem;padding-bottom:.7rem}
@@ -328,14 +339,31 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 .ghost:hover{background:rgba(0,0,0,.1)}
 
 /* Why? panel */
-.why{position:fixed;inset:0;z-index:70;background:rgba(28,30,33,.35);display:flex;align-items:flex-end}
+/* the overlay is .whysheet, not .why: lesson claim cards use <p class="why"> for their notes */
+.whysheet{position:fixed;inset:0;z-index:70;background:rgba(28,30,33,.35);display:flex;align-items:flex-end}
 .why-panel{width:100%;max-height:85%;overflow:auto;background:#fff;border-radius:1.3rem 1.3rem 0 0;padding:1.1rem 0 1.2rem;animation:sheet .25s ease-out}
 .why-panel h2{margin:0 0 .6rem;font:700 1.2rem/1.3 var(--body)}
 .why-body{line-height:1.5}
 .why-panel .primary{width:100%;margin-top:1rem}
 
+/* two-part cards: part 1, answered, shrinks to one line above part 2 */
+.part1{display:flex;gap:.45rem;align-items:flex-start;margin:0 0 .3rem;color:var(--ink-2);font-size:.92rem;line-height:1.35}
+.part1 svg{width:1.05rem;height:1.05rem;color:var(--go);flex:none;margin-top:.1rem}
+.part1[hidden]{display:none}
+.card.part2 .prompt{animation:rise .22s ease-out}
+
+/* Level Check finish */
+.lc-score{font:700 2.6rem/1 var(--body);color:var(--ink);margin:.4rem 0 .2rem}
+.lc-list{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.45rem;width:100%;max-width:30rem}
+.lc-list li{display:flex;justify-content:space-between;gap:1rem;align-items:center;border:2px solid var(--line);border-radius:.9rem;padding:.55rem .9rem;background:#fff}
+.lc-list li.miss{border-color:var(--no);background:var(--no-soft)}
+.lc-list a{color:var(--var-deep);font-weight:600}
+.lc-list small{color:var(--ink-2);white-space:nowrap}
+
 /* bridge cards: text only */
 .card.bridge .prompt{font-size:1.3rem;font-weight:600;margin-top:12vh}
+.card.bridge.shows .prompt{margin-top:1.5rem}
+.card.bridge .prompt b,.card.bridge .prompt strong{font-weight:800}
 
 @keyframes sheet{from{transform:translateY(1rem);opacity:0}}
 @media (max-width:34rem){.prompt{font-size:1.25rem}}
@@ -361,6 +389,7 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
     </div>
   </div></header>
   <main id="main"><div class="wrap card" id="card">
+    <p class="part1" id="part1" hidden></p>
     <h1 class="prompt" id="prompt"></h1>
     <p class="sub" id="sub"></p>
     <div class="stage" id="stage"></div>
@@ -370,14 +399,14 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
     <div class="fb" id="fb" role="status" aria-live="polite"></div>
     <div class="acts">
       <button type="button" class="btn ghost again-btn" id="startOver"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10a5.5 5.5 0 1 0 1.7-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M5.4 2.6v3.8h3.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Start over</span></button>
-      <button type="button" class="btn ghost" id="whyBtn" hidden>Why?</button>
+      <button type="button" class="why-chip" id="whyBtn" hidden>Why?</button>
       <button type="button" class="btn ghost" id="showMe" hidden>Show me</button>
       <button type="button" class="btn ghost" id="skip" hidden>Next</button>
       <button type="button" class="btn ghost" id="again" hidden>Start again</button>
       <button type="button" class="btn primary" id="primary" disabled>Check</button>
     </div>
   </div></footer>
-  <div class="why" id="why" hidden role="dialog" aria-modal="true" aria-labelledby="whyTitle">
+  <div class="whysheet" id="why" hidden role="dialog" aria-modal="true" aria-labelledby="whyTitle">
     <div class="why-panel"><div class="wrap">
       <h2 id="whyTitle">Why</h2>
       <div class="why-body" id="whyBody"></div>
@@ -399,7 +428,13 @@ const LESSON = {{LESSON_CONFIG}};
 /* ===================== shared card engine ===================== */
 // A card is { prompt, sub, build(stage, ctl, ctx) } and build returns { check(attempt), win(), won(), solve() }.
 // Optional on a card: why (string or function: the Why? panel), reset: false (hide Start over),
-// bridge: true (a text-only screen between groups of cards; no check, not scored).
+// bridge: true (a screen between groups of cards that names the idea just met; no check, not scored; optional
+// show(stage) draws a still diagram under the text),
+// then: { prompt, sub, why, reset, build(stage, ctl, ctx, part1) } (a second question on the same card, shown once
+// part 1 is right: part 1's prompt shrinks to a recap line, the stage stays, and build gets part 1's controller;
+// part 1's controller may add recap() returning HTML for that line), from: '<lesson slug>' (Level Checks: the lesson
+// the question comes from, for the review list at the end).
+// LESSON.kind === 'check' makes a Level Check: no Show me; a second wrong answer shows the answer and moves on.
 const sectionOf = i => SECTIONS.filter(s => s[0] <= i).pop() || [0, ''];
 const KEY = 'card-lesson:' + LESSON.slug + ':v' + LESSON.version;
 const DONE_KEY = 'card-lesson:' + LESSON.slug + ':done';
@@ -408,7 +443,7 @@ let S = fresh();
 try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && typeof saved.i === 'number' && Array.isArray(saved.done)) S = Object.assign(fresh(), saved); } catch (_) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (_) {} };
 
-const cardEl = $('#card'), promptEl = $('#prompt'), subEl = $('#sub'), stage = $('#stage'), ctl = $('#ctl'), dock = $('#dock'), fb = $('#fb');
+const part1El = $('#part1'), cardEl = $('#card'), promptEl = $('#prompt'), subEl = $('#sub'), stage = $('#stage'), ctl = $('#ctl'), dock = $('#dock'), fb = $('#fb');
 const primary = $('#primary'), showMe = $('#showMe'), skip = $('#skip'), back = $('#back'), progress = $('#progress'), count = $('#count');
 const tools = $('#startOver'), startOver = $('#startOver'), whyBtn = $('#whyBtn'), whyWrap = $('#why'), whyBody = $('#whyBody'), whyOk = $('#whyOk'), againBtn = $('#again');
 const menu = $('#menu'), menuBtn = $('#menuBtn');
@@ -419,7 +454,9 @@ const ICON = {
   info: '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="5" r="1.6" fill="currentColor"/><path d="M10 9v7" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>'
 };
 const VERDICT = { good: 'Correct!', bad: 'Not yet.', info: 'Here’s how it works.' };
-let ctrl = null, attempts = 0, mode = 'check', fbKind = null;
+let ctrl = null, attempts = 0, mode = 'check', fbKind = null, part = 0, partFirst = true;
+const IS_CHECK = LESSON.kind === 'check';
+const partSpec = () => { const c = cards[S.i]; return part ? c.then : c; };
 const scored = () => cards.map((_, k) => k).filter(k => !cards[k].bridge);
 
 function setFb(kind, html, verdict) {
@@ -441,7 +478,7 @@ const ctx = {
   },
   submit() { if (!primary.disabled && mode === 'check') primary.click(); }
 };
-const cardWhy = () => { const c = cards[S.i]; if (!c || !c.why) return ''; return typeof c.why === 'function' ? c.why() : c.why; };
+const cardWhy = () => { const c = cards[S.i] && partSpec(); if (!c || !c.why) return ''; return typeof c.why === 'function' ? c.why() : c.why; };
 
 function drawProgress() {
   const firstOpen = cards.findIndex((_, k) => !S.done[k]);
@@ -458,7 +495,8 @@ function drawProgress() {
 function render() {
   if (S.i >= cards.length) return renderFinish();
   const c = cards[S.i];
-  attempts = 0; mode = 'check';
+  attempts = 0; mode = 'check'; part = 0; partFirst = true;
+  part1El.hidden = true; part1El.replaceChildren(); cardEl.classList.remove('part2');
   cardEl.classList.toggle('bridge', !!c.bridge);
   promptEl.innerHTML = c.prompt;
   subEl.innerHTML = c.sub || ''; subEl.hidden = !c.sub;
@@ -468,7 +506,9 @@ function render() {
   showMe.hidden = true; whyBtn.hidden = true; againBtn.hidden = true;
   skip.hidden = !(S.done[S.i] || S.unlocked);
   if (c.bridge) {
-    ctrl = null; mode = 'done'; stage.hidden = true; tools.hidden = true;
+    ctrl = null; mode = 'done'; tools.hidden = true;
+    stage.hidden = !c.show; if (c.show) c.show(stage);
+    cardEl.classList.toggle('shows', !!c.show);
     S.done[S.i] = true; S.first[S.i] = true;
     primary.textContent = S.i === cards.length - 1 ? 'Finish' : 'Continue'; primary.disabled = false; skip.hidden = true;
   } else {
@@ -479,26 +519,52 @@ function render() {
   $('#main').scrollTop = 0;
 }
 
-function finishCard(kind, first) {
+function finishCard(kind, first, verdict) {
   mode = 'done';
-  if (!S.done[S.i]) { S.done[S.i] = true; S.first[S.i] = first; }
+  const c = cards[S.i], more = !!c.then && part === 0;
+  if (more) partFirst = first;
+  else if (!S.done[S.i]) { S.done[S.i] = true; S.first[S.i] = !!(first && partFirst); }
   if (ctrl.won) ctrl.won();
-  setFb(kind, ctrl.win());
-  primary.textContent = S.i === cards.length - 1 ? 'Finish' : 'Continue';
+  setFb(kind, ctrl.win(), verdict);
+  primary.textContent = more || S.i < cards.length - 1 ? 'Continue' : 'Finish';
   primary.disabled = false;
   showMe.hidden = true; skip.hidden = true; tools.hidden = true;
   whyBtn.hidden = !cardWhy();
+  if (!whyBtn.hidden) { const v = fb.querySelector('.verdict'); if (v) v.append(whyBtn); }
   drawProgress(); save();
   focusPrimary();
+}
+
+// Part 2 of a two-part card: part 1 shrinks to a recap line, the stage stays, new controls replace the old.
+function toPart2() {
+  const c = cards[S.i], p1 = ctrl;
+  part = 1; attempts = 0; mode = 'check';
+  part1El.innerHTML = ICON.good + '<span>' + (p1 && p1.recap ? p1.recap() : c.prompt) + '</span>';
+  part1El.hidden = false; cardEl.classList.add('part2');
+  promptEl.innerHTML = c.then.prompt;
+  subEl.innerHTML = c.then.sub || ''; subEl.hidden = !c.then.sub;
+  ctl.replaceChildren(); setFb(null);
+  primary.textContent = 'Check'; primary.disabled = true;
+  showMe.hidden = true; whyBtn.hidden = true; skip.hidden = true;
+  tools.hidden = c.then.reset === false;
+  ctrl = c.then.build(stage, ctl, ctx, p1);
+  save();
+  $('#main').scrollTop = 0;
+  focusCard();
 }
 
 function renderFinish() {
   ctrl = null; mode = 'finish';
   cardEl.classList.remove('bridge'); tools.hidden = true; whyBtn.hidden = true;
-  drawFinish();
   const ks = scored();
   const done = ks.filter(k => S.done[k]).length, firsts = ks.filter(k => S.first[k]).length;
-  setFb('good', 'You completed ' + done + ' of ' + ks.length + ' cards and got ' + firsts + ' right on the first try.', 'Lesson finished.');
+  if (IS_CHECK) {
+    checkFinish(ks, firsts);
+    setFb('good', done === ks.length ? 'Your result shows on the course map with a tick.' : 'Answer every question to get the tick on the course map.', 'Level Check finished.');
+  } else {
+    drawFinish();
+    setFb('good', 'You completed ' + done + ' of ' + ks.length + ' cards and got ' + firsts + ' right on the first try.', 'Lesson finished.');
+  }
   if (done === ks.length) {
     try { localStorage.setItem(DONE_KEY, JSON.stringify({ date: new Date().toISOString().slice(0, 10), first: firsts, total: ks.length, version: LESSON.version })); } catch (_) {}
   }
@@ -509,19 +575,37 @@ function renderFinish() {
   $('#main').scrollTop = 0;
 }
 
+// Level Check finish: score, then each lesson the questions came from, with the ones to revisit highlighted.
+function checkFinish(ks, firsts) {
+  promptEl.innerHTML = 'You got ' + firsts + ' of ' + ks.length + ' right first time.';
+  subEl.innerHTML = 'Questions you missed point back to the lesson they came from.'; subEl.hidden = false;
+  stage.hidden = false; stage.replaceChildren(); ctl.replaceChildren();
+  const by = {};
+  ks.forEach(k => { const f = cards[k].from || ''; (by[f] = by[f] || { n: 0, ok: 0 }).n++; if (S.first[k]) by[f].ok++; });
+  const titles = LESSON.review || {};
+  const rows = Object.keys(by).filter(f => f).map(f => {
+    const r = by[f], miss = r.ok < r.n, t = titles[f] || f;
+    return '<li class="' + (miss ? 'miss' : '') + '">' + (miss ? '<a href="' + f + '.html">' + t + '</a>' : '<span>' + t + '</span>') +
+      '<small>' + r.ok + ' of ' + r.n + (miss ? ' · revisit' : '') + '</small></li>';
+  }).join('');
+  stage.append(h('<div class="lc-score" aria-hidden="true">' + firsts + ' / ' + ks.length + '</div>'));
+  if (rows) stage.append(h('<ul class="lc-list">' + rows + '</ul>'));
+}
+
 function go(i) { S.i = Math.max(0, Math.min(cards.length, i)); render(); }
 function restart() { S = fresh(); render(); }
 
 primary.addEventListener('click', () => {
   if (mode === 'finish') { location.href = LESSON.next ? LESSON.next.href : LESSON.map; return; }
-  if (mode === 'done') return go(S.i + 1);
+  if (mode === 'done') { if (cards[S.i] && cards[S.i].then && part === 0) return toPart2(); return go(S.i + 1); }
   if (mode === 'retry') { mode = 'check'; setFb(null); primary.textContent = 'Check'; primary.disabled = true; focusCard(); return; }
   attempts++;
   const r = ctrl.check(attempts);
   if (r === true) return finishCard('good', attempts === 1);
+  if (IS_CHECK && attempts >= 2) { ctrl.solve(); return finishCard('info', false, 'Here’s the answer.'); }
   setFb('bad', r);
   mode = 'retry'; primary.textContent = 'Try again'; primary.disabled = false;
-  if (attempts >= 2) showMe.hidden = false;
+  if (attempts >= 2 && !IS_CHECK) showMe.hidden = false;
   focusPrimary();
 });
 showMe.addEventListener('click', () => { ctrl.solve(); finishCard('info', false); });
@@ -531,9 +615,10 @@ againBtn.addEventListener('click', () => restart());
 // Start over redraws the card. Tries already used still count, so it can't reset "Show me" or the first-try score.
 startOver.addEventListener('click', () => {
   if (mode !== 'check' && mode !== 'retry') return;
-  const used = attempts;
+  const used = attempts, inPart2 = part === 1, pf = partFirst;
   render();
-  attempts = used; showMe.hidden = !(used >= 2);
+  if (inPart2) { ctrl.solve(); if (ctrl.won) ctrl.won(); toPart2(); partFirst = pf; }
+  attempts = used; showMe.hidden = !(used >= 2) || IS_CHECK;
 });
 whyBtn.addEventListener('click', () => { whyBody.innerHTML = cardWhy(); whyWrap.hidden = false; whyOk.focus(); });
 whyOk.addEventListener('click', () => { whyWrap.hidden = true; primary.focus({ preventScroll: true }); });
@@ -560,7 +645,7 @@ document.addEventListener('keydown', e => {
 });
 
 // Test hook for cards/check_cards.py: only when the page is opened with ?test.
-if (/[?&]test\b/.test(location.search)) window.__T = { get cards() { return cards; }, go, get ctrl() { return ctrl; }, finishCard, get mode() { return mode; } };
+if (/[?&]test\b/.test(location.search)) window.__T = { get cards() { return cards; }, go, get ctrl() { return ctrl; }, finishCard, get mode() { return mode; }, nextPart: toPart2, get part() { return part; }, kind: LESSON.kind || 'lesson' };
 
 render();
 })();

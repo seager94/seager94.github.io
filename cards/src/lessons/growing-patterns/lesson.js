@@ -346,21 +346,23 @@ function makeSticks(host, kind, n0, o) {
 }
 
 // Plus-shaped tile pattern: a yellow centre and four blue arms of n tiles. view 'lena' or 'tom' outlines how each student groups it.
-function plusSVG(n, view, max) {
+// num writes that number beside each group (in place of the letter) and 1 on the centre tile, for the Why? panels.
+function plusSVG(n, view, max, num) {
   const p = 22, c = 19, M = 26, G = (2 * max + 1) * p - (p - c), o = (max - n) * p;
   const X = k => o + k * p, mid = X(n) + c / 2;
   const cell = (r, k, cls) => '<rect class="pc ' + cls + '" x="' + X(k) + '" y="' + X(r) + '" width="' + c + '" height="' + c + '" rx="3"/>';
   const box = (k0, r0, k1, r1) => '<rect class="grp" x="' + (X(k0) - 3.5) + '" y="' + (X(r0) - 3.5) + '" width="' + ((k1 - k0) * p + c + 7) + '" height="' + ((r1 - r0) * p + c + 7) + '" rx="5"/>';
-  const lab = (x, y, a) => '<text class="plab" x="' + x + '" y="' + y + '" text-anchor="' + (a || 'middle') + '">n</text>';
+  const lab = (x, y, a) => '<text class="plab' + (num != null ? ' num' : '') + '" x="' + x + '" y="' + y + '" text-anchor="' + (a || 'middle') + '">' + (num != null ? num : 'n') + '</text>';
   let g = '<svg class="plus" viewBox="' + (-M) + ' ' + (-M) + ' ' + (G + 2 * M) + ' ' + (G + 2 * M) + '" role="img" aria-label="Step ' + n + ': a yellow centre tile with four blue arms of ' + plural(n, 'tile') + '">';
   for (let k = 0; k <= 2 * n; k++) if (k !== n) g += cell(n, k, 'v') + cell(k, n, 'v');
   g += cell(n, n, 'k');
+  if (num != null) g += '<text class="pone" x="' + mid + '" y="' + (mid + 5) + '" text-anchor="middle">1</text>';
   if (view === 'lena') {
     g += box(n, 0, n, n - 1) + box(n, n + 1, n, 2 * n) + box(0, n, n - 1, n) + box(n + 1, n, 2 * n, n);
-    g += lab(mid, X(0) - 9) + lab(mid, X(2 * n) + c + 19) + lab(X(0) - 9, mid + 5, 'end') + lab(X(2 * n) + c + 9, mid + 5, 'start');
+    g += lab(mid, X(0) - 9) + lab(mid, X(2 * n) + c + (num != null ? 23 : 19)) + lab(X(0) - 9, mid + 5, 'end') + lab(X(2 * n) + c + 9, mid + 5, 'start');
   } else if (view === 'tom') {
     g += box(0, n, 2 * n, n) + box(n, 0, n, n - 1) + box(n, n + 1, n, 2 * n);
-    g += lab(mid, X(0) - 9) + lab(mid, X(2 * n) + c + 19) + lab((X(0) + X(n - 1) + c) / 2, X(n) - 9) + lab((X(n + 1) + X(2 * n) + c) / 2, X(n) - 9);
+    g += lab(mid, X(0) - 9) + lab(mid, X(2 * n) + c + (num != null ? 23 : 19)) + lab((X(0) + X(n - 1) + c) / 2, X(n) - 9) + lab((X(n + 1) + X(2 * n) + c) / 2, X(n) - 9);
   }
   return g + '</svg>';
 }
@@ -452,11 +454,54 @@ function makeGrid(host, o) {
   };
 }
 
+/* ---------- Why? panel pictures: still, with the numbers written beside the objects ---------- */
+const wy = (pic, lines) => '<div class="wy"><div class="wy-pic">' + pic + '</div><div class="wy-t">' + lines.map(l => '<p>' + l + '</p>').join('') + '</div></div>';
+const wyN = (x, y, t, c, a) => '<text class="wy-n' + (c ? ' ' + c : '') + '" x="' + x + '" y="' + y + '"' + (a ? ' style="text-anchor:' + a + '"' : '') + '>' + t + '</text>';
+const wyW = (x, y, t, a) => '<text class="wy-w" x="' + x + '" y="' + y + '"' + (a ? ' style="text-anchor:' + a + '"' : '') + '>' + t + '</text>';
+const wyBrace = (x0, x1, y) => '<path class="wy-br" d="M' + x0 + ' ' + y + ' v6 H' + x1 + ' v-6"/>';
+const WY_N = '<tspan class="wy-v">n</tspan>';
+// Still matchstick picture. o.cls(stick) gives each stick its colour class (default: yellow start, blue groups),
+// o.gap = k leaves a gap with dots after group k (for a step too long to draw), o.notes is extra SVG, o.pad makes room for it.
+function whySticks(kind, n, o) {
+  o = o || {};
+  const P = STK_PAD, sq = kind === 'sq', GAP = o.gap ? STK : 0;
+  const pad = Object.assign({ l: 0, r: 0, t: 0, b: 0 }, o.pad);
+  const W = (sq ? n * STK : (n + 1) * STK / 2) + GAP + pad.l + pad.r + 2 * P, H = (sq ? STK : TRI_H) + pad.t + pad.b + 2 * P;
+  let g = '<svg class="sticks wy-s" viewBox="' + (-P - pad.l) + ' ' + (-P - pad.t) + ' ' + W + ' ' + H + '" style="width:' + Math.round(W * (o.scale || 1.6)) + 'px" role="img" aria-label="' + o.label + '">';
+  stickList(kind, n).forEach(st => {
+    const dx = o.gap && st.g > o.gap ? GAP : 0, c = o.cls ? o.cls(st) : (st.g ? 'v' : 'k');
+    const L = 'x1="' + (st.a[0] + dx) + '" y1="' + st.a[1] + '" x2="' + (st.a[2] + dx) + '" y2="' + st.a[3] + '"';
+    g += '<g class="stk' + (c ? ' ' + c : '') + '"><line class="st-o" ' + L + '/><line class="st-i" ' + L + '/></g>';
+  });
+  if (o.gap) g += wyN(o.gapX || o.gap * STK + GAP / 2 + 2, (sq ? STK : TRI_H) / 2 + 3, '…');
+  return g + (o.notes || '') + '</svg>';
+}
+// 1 under the yellow stick and 3 under each blue group of the squares pattern.
+const sqNotes = n => wyN(0, 62, '1', 'k') + Array.from({ length: n }, (_, k) => wyN((k + 0.5) * STK, 62, '3', 'v')).join('');
+// A step too long to draw: the yellow stick, two groups, a gap, the last group, and a count under the blue part.
+const longSq = (txt, label) => whySticks('sq', 3, { gap: 2, pad: { b: 46 }, label, notes: wyN(0, 62, '1', 'k') + wyBrace(14, 156, 52) + wyN(85, 82, txt, 'v') });
+const longTri = (txt, label) => whySticks('tri', 3, { gap: 2, gapX: 76, pad: { l: 14, r: 10, b: 44 }, label, notes: wyN(-2, 16, '1', 'k', 'end') + wyBrace(4, 116, TRI_H + 12) + wyN(60, TRI_H + 42, txt, 'v') });
+// Still graph of the squares pattern with the dashed line through it. extra is more SVG, drawn under the points.
+const GX = x => 40 + x * 50, GY = y => 12 + (16 - y) * 15;
+const SQ_PTS = { 1: 4, 2: 7, 3: 10, 4: 13 };
+function stillGrid(pts, extra) {
+  const box = document.createElement('div');
+  const gr = makeGrid(box, { xmax: 5, ymax: 16, x0: 1, x1: 4, small: true, onChange() {} });
+  gr.set(pts); gr.fit(0, 1, 5, 16); gr.lock();
+  if (extra) $('.g-fit', box).insertAdjacentHTML('beforeend', extra);
+  return box.innerHTML;
+}
+// A stair from the point at step x up 3 and across to the next point, with +3 beside the climb.
+const stair = x => '<path class="wy-gd" d="M' + GX(x) + ' ' + GY(sqRule(x)) + ' V' + GY(sqRule(x + 1)) + ' H' + GX(x + 1) + '"/>' +
+  '<text class="wy-gl" x="' + (GX(x) - 7) + '" y="' + (GY(sqRule(x) + 1.5) + 6) + '" text-anchor="end">+3</text>';
+const sqTable = (steps, mark) => '<table class="tbl wy-tbl"><tr><th scope="row">Step ' + mx('n') + '</th>' + steps.map(s => s ? '<td>' + s + '</td>' : '<td class="gap">…</td>').join('') +
+  '</tr><tr><th scope="row">Matchsticks</th>' + steps.map(s => s ? '<td' + (mark(s) ? ' class="' + mark(s) + '"' : '') + '>' + sqRule(s) + '</td>' : '<td class="gap">…</td>').join('') + '</tr></table>';
+
 /* ---------- cards ---------- */
 const sqRule = n => 1 + 3 * n;
 const triRule = n => 1 + 2 * n;
 const plusRule = n => 1 + 4 * n;
-// Squares pattern with the colours on, a slider and a live sum under it (cards 4 and 5).
+// Squares pattern with the colours on, a slider and a live sum under it (cards 4 and 6).
 function colourPattern(stage, ctl, n0, sum) {
   const pat = makeSticks(stage, 'sq', n0, { max: 8, colour: true, scale: 0.08 });
   const rd = h('<div class="readout"></div>');
@@ -472,7 +517,10 @@ const cards = [
 
 /* 1 */ {
   prompt: 'Each step of this pattern adds one more square. How many matchsticks does each new square need?',
-  sub: 'The slider sets the step number, ' + mx('n') + '. Step ' + mx('n') + ' has ' + mx('n') + ' squares in a row.',
+  sub: 'Knowing what each new square costs in matchsticks lets you work out any row without building it. The slider sets the step number, ' + mx('n') + '. Step ' + mx('n') + ' has ' + mx('n') + ' squares in a row.',
+  why: () => wy(whySticks('sq', 3, { cls: st => st.g === 3 ? 'v' : '', pad: { t: 16, b: 18, r: 14 }, label: 'Step 3. The three matchsticks of the newest square are numbered 1, 2 and 3.',
+      notes: wyN(100, -9, '1', 'v') + wyN(133, 25, '2', 'v') + wyN(100, 60, '3', 'v') }),
+    ['Step 2 has 7 matchsticks. Step 3 has 10.', mx('10 − 7 = 3') + ' new sticks. The left side of the new square was already there.']),
   build(stage, ctl, ctx) {
     const pat = makeSticks(stage, 'sq', 2, { max: 8 });
     makeSlider(ctl, 'n', 1, 8, 2, v => pat.set(v));
@@ -497,6 +545,9 @@ const cards = [
 /* 2 */ {
   prompt: 'How many matchsticks are there in step 4?',
   sub: 'Tap each matchstick as you count it, so you don’t count one twice. Tap again to undo.',
+  why: () => wy(whySticks('sq', 4, { cls: () => '', pad: { t: 16, b: 18, r: 58 }, label: 'Step 4: 4 matchsticks on top, 4 on the bottom and 5 upright.',
+      notes: wyW(80, -11, '4 on top') + wyW(80, 60, '4 on the bottom') + wyW(170, 24, '5 upright', 'start') }),
+    ['Count in three groups: ' + mx('4 + 4 + 5 = 13') + '.', 'An upright stick between two squares is used by both of them, but it is still one stick.']),
   build(stage, ctl, ctx) {
     const pat = makeSticks(stage, 'sq', 4, { max: 4, tap: true, scale: 0.12 });
     const tray = h('<div class="tray"><button type="button" class="linkbtn">Clear my taps</button></div>');
@@ -524,6 +575,8 @@ const cards = [
 
 /* 3 */ {
   prompt: 'Here is step 4 again, coloured in. Which sum matches the colours?',
+  why: () => wy(whySticks('sq', 4, { pad: { b: 22 }, notes: sqNotes(4), label: 'Step 4 in colour: 1 yellow stick, then 4 blue groups of 3.' }),
+    ['The yellow stick is 1. Each blue group is 3 sticks: a top, a bottom and a right side.', mx('1 + 3 + 3 + 3 + 3 = 13')]),
   build(stage, ctl, ctx) {
     makeSticks(stage, 'sq', 4, { max: 4, colour: true, scale: 0.12 });
     const ch = makeChoices(ctl, [mx('4 + 4 + 4 + 4'), mx('1 + 3 + 3 + 3 + 3'), mx('3 + 3 + 3 + 3'), mx('4 + 3 + 3 + 3')], ctx);
@@ -545,6 +598,9 @@ const cards = [
 /* 4 */ {
   prompt: 'Which expression gives the number of matchsticks in step ' + mx('n') + '?',
   sub: 'The yellow stick stays the same. The blue groups of 3 grow.',
+  why: () => wy(whySticks('sq', 4, { pad: { b: 48 }, label: 'Step 4 in colour: 1 yellow stick, then 4 blue groups of 3.',
+      notes: sqNotes(4) + wyBrace(8, 152, 68) + wyN(80, 96, '4 groups of 3 (' + WY_N + ' = 4)', 'v') }),
+    ['Step 4: ' + mx('1 + 3 + 3 + 3 + 3') + ' is ' + mx('1 + 3 × 4') + '.', 'Step ' + mx('n') + ' has ' + mx('n') + ' groups of 3, so it has ' + mx('1 + 3 × n') + ' sticks.']),
   build(stage, ctl, ctx) {
     colourPattern(stage, ctl, 4, v => mx(['1'].concat(Array(v).fill('3')).join(' + ') + ' = ' + sqRule(v)));
     const ch = makeChoices(ctl, [mx('n + 3'), mx('1 + 3 × n'), mx('4 × n'), mx('3 × n')], ctx);
@@ -563,9 +619,18 @@ const cards = [
   }
 },
 
-/* 5 */ {
+/* 5 (bridge) */ {
+  bridge: true,
+  prompt: 'The expression ' + mx('1 + 3 × n') + ' you just chose is called a <b>rule</b>.',
+  sub: 'A rule links the step number, ' + mx('n') + ', to the number of matchsticks in that step.',
+  show(stage) { stage.append(h('<div class="stk-box">' + whySticks('sq', 3, { pad: { b: 22 }, notes: sqNotes(3), scale: 1.7, label: 'Step 3 in colour: 1 yellow stick, then 3 blue groups of 3.' }) + '</div>')); }
+},
+
+/* 6 */ {
   prompt: 'Step 50 has 50 squares. How many matchsticks does it need?',
   sub: 'The slider stops at 8, so you can’t draw step 50. Use the rule instead.',
+  why: () => wy(longSq('50 groups of 3', 'Step 50, too long to draw in full: 1 yellow stick, then 50 blue groups of 3.'),
+    ['Blue sticks: ' + mx('3 × 50 = 150') + '.', 'Add the yellow stick: ' + mx('1 + 150 = 151') + '.']),
   build(stage, ctl, ctx) {
     colourPattern(stage, ctl, 4, v => mx('1 + 3 × ' + v + ' = ' + sqRule(v)));
     const ans = makeAnswer(ctl, 'Matchsticks in step 50', ctx);
@@ -584,14 +649,42 @@ const cards = [
       },
       win: () => mx('1 + 3 × 50 = 1 + 150 = 151') + '. You didn’t draw 50 squares. The rule takes you straight to any step.',
       won() { ans.mark('good'); ans.lock(); },
-      solve() { ans.set(151); }
+      solve() { ans.set(151); },
+      recap: () => 'Step 50 needs ' + mx('1 + 3 × 50 = 151') + ' matchsticks.'
     };
+  },
+  then: {
+    prompt: 'Another step needs 61 matchsticks. Which step is it?',
+    sub: 'Work backwards through the rule ' + mx('1 + 3 × n') + '.',
+    why: () => wy(longSq('60 sticks = 20 groups of 3', 'A step with 61 matchsticks: 1 yellow stick, then 60 blue sticks in 20 groups of 3.'),
+      ['Take off the yellow stick: ' + mx('61 − 1 = 60') + ' blue sticks.', 'Share them into groups of 3: ' + mx('60 ÷ 3 = 20') + ', so ' + mx('n = 20') + '.']),
+    build(stage, ctl, ctx) {
+      const ans = makeAnswer(ctl, 'Step number', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 20) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 184) return '184 is ' + mx('1 + 3 × 61') + '. That uses 61 as the step number. Here 61 is the matchsticks, and the step is what you are finding.';
+          if (v === 60) return '61 − 1 = 60 is the number of blue sticks. How many groups of 3 make 60?';
+          if (v === 61) return '61 is the number of matchsticks. Each step adds 3 of them, so the step number is much smaller.';
+          const tip = attempt < 2 ? '' : ' Take 1 off for the yellow stick, then count the groups of 3 in what is left.';
+          return 'Test it with the rule. Step ' + v + ' needs ' + mx('1 + 3 × ' + v + ' = ' + sqRule(v)) + ' matchsticks, not 61.' + tip;
+        },
+        win: () => 'Step 20. Check it with the rule: ' + mx('1 + 3 × 20 = 61') + '.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(20); }
+      };
+    }
   }
 },
 
-/* 6 */ {
+/* 7 */ {
   prompt: 'Fill in the table of values for the matchstick pattern.',
   sub: 'Step 1 is done for you. Step 10 is past the end of the slider.',
+  why: () => wy(sqTable([1, 2, 3, 4, 5, 0, 10], s => s > 1 ? 'ok' : ''),
+    ['Each step adds one blue group of 3, so the table climbs by 3: 4, 7, 10, 13, 16.', 'Step 10 skips ahead, so use the rule: ' + mx('1 + 3 × 10 = 31') + '.']),
   build(stage, ctl, ctx) {
     const pat = makeSticks(stage, 'sq', 2, { max: 8, colour: true, labels: true });
     makeSlider(ctl, 'n', 1, 8, 2, v => pat.set(v));
@@ -619,9 +712,15 @@ const cards = [
   }
 },
 
-/* 7 */ {
+/* 8 */ {
   prompt: 'Kai says the rule is “add 3 each time”. To reach step 50, how many times would Kai add 3?',
   sub: 'Kai starts at step 1, which has 4 matchsticks.',
+  why: () => {
+    const cell = (v, s) => '<span class="cell"><span class="pair">' + v + '</span><small>step ' + s + '</small></span>';
+    const j = k => '<span class="jump">+3<small>jump ' + k + '</small></span>';
+    return wy('<div class="chain">' + cell(4, 1) + j(1) + cell(7, 2) + j(2) + cell(10, 3) + j(3) + cell(13, 4) + '</div>',
+      ['Step 4 is 3 jumps from step 1. The number of jumps is always one less than the step number.', 'Step 50: ' + mx('50 − 1 = 49') + ' jumps.']);
+  },
   build(stage, ctl, ctx) {
     const cell = (v, s) => '<span class="cell"><span class="pair">' + v + '</span><small>' + s + '</small></span>';
     const j = '<span class="jump">+3</span>';
@@ -646,9 +745,19 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 9 (bridge) */ {
+  bridge: true,
+  prompt: 'Your table pairs each step with its matchsticks. A pair written like (2,&nbsp;7) is called an <b>ordered pair</b>.',
+  sub: 'The step number comes first, then the matchsticks.',
+  show(stage) { stage.append(h(sqTable([1, 2, 3, 4], s => s === 2 ? 'hl' : '').replace('<td>2</td>', '<td class="hl">2</td>'))); }
+},
+
+/* 10 */ {
   prompt: 'Plot the table on the grid: one point for each step from 1 to 4.',
   sub: 'Tap the grid to place a point, or drag to move it. Go across to the step, then up to the matchsticks.',
+  why: () => wy(stillGrid(SQ_PTS, '<path class="wy-gd" d="M' + GX(2) + ' ' + GY(0) + ' V' + GY(7) + ' M' + GX(0) + ' ' + GY(7) + ' H' + GX(2) + '"/>' +
+      '<text class="wy-gl" x="' + (GX(2) + 11) + '" y="' + (GY(7) + 19) + '">(2, 7)</text>'),
+    ['Step 2 has 7 matchsticks. Go across to 2, then up to 7. That point is (2,&nbsp;7).', 'The other points work the same way: (1,&nbsp;4), (3,&nbsp;10) and (4,&nbsp;13).']),
   build(stage, ctl, ctx) {
     const want = { 1: 4, 2: 7, 3: 10, 4: 13 };
     const wrap = h('<div class="gwrap"></div>');
@@ -677,11 +786,13 @@ const cards = [
   }
 },
 
-/* 9 */ {
+/* 11 */ {
   prompt: 'The points lie on a straight line. Why?',
+  why: () => wy(stillGrid(SQ_PTS, stair(1) + stair(2) + stair(3)),
+    ['From each point to the next, go across 1 step and up 3 matchsticks.', 'Every stair is the same size, so the points stay in line.']),
   build(stage, ctl, ctx) {
     const gr = makeGrid(stage, { xmax: 5, ymax: 16, x0: 1, x1: 4, small: true, onChange() {} });
-    gr.set({ 1: 4, 2: 7, 3: 10, 4: 13 }); gr.fit(0, 1, 5, 16); gr.lock();
+    gr.set(SQ_PTS); gr.fit(0, 1, 5, 16); gr.lock();
     const ch = makeChoices(ctl, ['The step numbers go up by 1 each time.', 'Each step adds the same number of matchsticks.', 'Matchsticks are straight, so the graph is straight.', 'Every pattern makes a straight line.'], ctx);
     const why = [
       'That is true for every pattern, even ones whose points curve. Look at how much higher each point is than the one before.',
@@ -693,14 +804,52 @@ const cards = [
       check() { const s = ch.sel()[0]; if (s === 1) return true; ch.mark(s, 'bad'); return why[s]; },
       win: () => 'Each step adds 3, so each point is 3 higher than the last. The same climb every time makes a straight line. Back at step 0 the line meets 1: the yellow stick.',
       won() { ch.mark(1, 'good'); ch.lock(); },
-      solve() { ch.set([1]); }
+      solve() { ch.set([1]); },
+      recap: () => 'Each step adds the same number of matchsticks, so the points lie on a straight line.',
+      gr
     };
+  },
+  then: {
+    prompt: 'The pattern keeps going. How high will the point for step 5 be?',
+    why: () => wy(stillGrid(Object.assign({ 5: 16 }, SQ_PTS), stair(4) + '<circle class="wy-new" cx="' + GX(5) + '" cy="' + GY(16) + '" r="11"/>'),
+      ['Step 4 is at 13. One more step climbs 3 more: ' + mx('13 + 3 = 16') + '.', 'The rule agrees: ' + mx('1 + 3 × 5 = 16') + '.']),
+    build(stage, ctl, ctx, p1) {
+      const ans = makeAnswer(ctl, 'Matchsticks at step 5', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 16) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 13) return '13 is the height at step 4. The line keeps climbing, so step 5 is higher.';
+          if (v === 14) return '13 + 1 goes up by 1. Look at the gap between any two points: how much higher is each one?';
+          if (v === 17) return '13 + 4 gives the new square 4 sticks of its own. It shares a side, so the climb is 3.';
+          if (v === 15) return '3 × 5 = 15 counts the five blue groups. The yellow stick is missing.';
+          if (v === 20) return '4 × 5 = 20 gives every square 4 sticks of its own. Neighbours share a stick.';
+          if (v === 5) return '5 is the step number, which is how far across the point is. How far up is it?';
+          return attempt < 2 ? 'Each point is 3 higher than the one before it. Start from the point (4,&nbsp;13).'
+                             : 'Step 4 is at 13. Step 5 is one more climb of 3.';
+        },
+        win: () => '16. The new point (5,&nbsp;16) sits on the same line, 3 higher than (4,&nbsp;13).',
+        won() { ans.mark('good'); ans.lock(); p1.gr.set({ 5: 16 }); },
+        solve() { ans.set(16); }
+      };
+    }
   }
 },
 
-/* 10 */ {
+/* 12 (bridge) */ {
+  bridge: true,
+  prompt: 'A pattern that adds the same amount at every step is called a <b>linear</b> pattern.',
+  sub: 'The matchstick squares add 3 each time, so their points lie on a straight line.',
+  show(stage) { stage.append(h('<div class="stk-box">' + stillGrid(SQ_PTS, stair(1) + stair(2) + stair(3)) + '</div>')); }
+},
+
+/* 13 */ {
   prompt: 'Lena sees a centre and four arms. Build her rule for step ' + mx('n') + '.',
   sub: 'Drag or tap tiles into the box. Tap one in the box to remove it.',
+  why: () => wy(plusSVG(3, 'lena', 3, 3),
+    ['At step 3, ' + mx('n = 3') + ': 1 centre tile and 4 arms of 3 tiles. ' + mx('1 + 4 × 3 = 13') + '.', 'At step ' + mx('n') + ' each arm has ' + mx('n') + ' tiles, so the total is ' + mx('1 + 4 × n') + '.']),
   build(stage, ctl, ctx) {
     const row = h('<div class="plus-row"><div></div><div class="readout"></div></div>'), [box, rd] = row.children;
     stage.append(row);
@@ -728,8 +877,10 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 14 */ {
   prompt: 'Tom sees one long row and two short arms. Which expression is Tom’s?',
+  why: () => wy(plusSVG(3, 'tom', 3, 3),
+    ['At step 3, ' + mx('n = 3') + '. Long row: ' + mx('3 + 1 + 3') + '. Short arms: ' + mx('3 + 3') + '. Total: ' + mx('3 + 1 + 3 + 3 + 3 = 13') + '.', 'Write ' + mx('n') + ' in place of each 3: ' + mx('n + 1 + n + n + n') + '.']),
   build(stage, ctl, ctx) {
     const row = h('<div class="plus-row"><div></div><div class="readout"></div></div>'), [box, rd] = row.children;
     stage.append(row);
@@ -752,8 +903,11 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 15 */ {
   prompt: 'Lena wrote ' + mx('1 + 4 × n') + '. Tom wrote ' + mx('n + 1 + n + n + n') + '. Do they always give the same number?',
+  why: () => wy('<div class="wy-duo"><figure>' + plusSVG(2, 'lena', 2, 2) + '<figcaption>Lena: ' + mx('1 + 4 × 2 = 9') + '</figcaption></figure><figure>' +
+      plusSVG(2, 'tom', 2, 2) + '<figcaption>Tom: ' + mx('2 + 1 + 2 + 2 + 2 = 9') + '</figcaption></figure></div>',
+    ['At step 2, both expressions give 9.', 'Both count the centre once and an arm of ' + mx('n') + ' four times, so they match at every step.']),
   build(stage, ctl, ctx) {
     const duo = h('<div class="duo"><div><div class="pl"></div><div class="readout"></div></div><div><div class="pl"></div><div class="readout"></div></div></div>');
     stage.append(duo);
@@ -780,9 +934,12 @@ const cards = [
   }
 },
 
-/* 13 */ {
+/* 16 */ {
   prompt: 'Triangles in a row. Build an expression for the matchsticks in step ' + mx('n') + '.',
   sub: 'Step ' + mx('n') + ' has ' + mx('n') + ' triangles. What stays the same, and what grows?',
+  why: () => wy(whySticks('tri', 3, { pad: { l: 14, t: 18, b: 20 }, scale: 1.7, label: 'Step 3 in colour: 1 yellow stick, then 3 blue groups of 2.',
+      notes: wyN(-2, 16, '1', 'k', 'end') + wyN(20, TRI_H + 24, '2', 'v') + wyN(40, -11, '2', 'v') + wyN(60, TRI_H + 24, '2', 'v') }),
+    ['At step 3, ' + mx('n = 3') + ': ' + mx('1 + 2 + 2 + 2') + ' is ' + mx('1 + 2 × 3 = 7') + '.', 'Each new triangle shares a side, so it adds only 2 sticks. Step ' + mx('n') + ' has ' + mx('1 + 2 × n') + '.']),
   build(stage, ctl, ctx) {
     const pat = makeSticks(stage, 'tri', 3, { max: 8, scale: 0.08 });
     makeSlider(ctl, 'n', 1, 8, 3, v => pat.set(v));
@@ -802,14 +959,44 @@ const cards = [
       },
       win: () => mx(bd.toks().join(' ')) + ' works. In colour: 1 yellow stick to start, then a blue group of 2 for each triangle.',
       won() { bd.lock(); pat.colour(true); },
-      solve() { bd.set(['1', '+', '2', '×', 'n']); }
+      solve() { bd.set(['1', '+', '2', '×', 'n']); },
+      recap: () => 'Your rule for the triangles: ' + mx(bd.toks().join(' ')) + '.'
     };
+  },
+  then: {
+    prompt: 'Use your rule. How many matchsticks does step 25 need?',
+    why: () => wy(longTri('25 groups of 2', 'Step 25, too long to draw in full: 1 yellow stick, then 25 blue groups of 2.'),
+      ['Blue sticks: ' + mx('2 × 25 = 50') + '.', 'Add the yellow stick: ' + mx('1 + 50 = 51') + '.']),
+    build(stage, ctl, ctx) {
+      const ans = makeAnswer(ctl, 'Matchsticks in step 25', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 51) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 50) return '2 × 25 = 50 is only the blue groups. Which stick is missing?';
+          if (v === 75) return '75 is 3 × 25, which gives every triangle 3 sticks of its own. Neighbours share a stick, so each triangle adds only 2.';
+          if (v === 27) return '25 + 2 adds 2 just once. Step 25 has 25 blue groups of 2, so you need 2 × 25.';
+          if (v === 52) return '52 is 2 × 26. Step 25 has 25 blue groups of 2, not 26, plus 1 yellow stick.';
+          if (v === 76) return '76 is 1 + 3 × 25, the rule for the squares. A new triangle adds only 2 sticks.';
+          return attempt < 2 ? 'Put ' + mx('n = 25') + ' into your rule.'
+                             : 'Work out 2 × 25 for the blue groups, then add 1 for the yellow stick.';
+        },
+        win: () => mx('1 + 2 × 25 = 1 + 50 = 51') + '. The rule reaches step 25 without drawing 25 triangles.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(51); }
+      };
+    }
   }
 },
 
-/* 14 */ {
+/* 17 */ {
   prompt: 'Three students wrote rules for the matchstick squares. Who is right?',
   sub: 'Choose Agree or Disagree for each one.',
+  why: () => wy(whySticks('sq', 2, { cls: () => '', pad: { t: 16, b: 18, r: 58 }, label: 'Step 2: 2 matchsticks on top, 2 on the bottom and 3 upright.',
+      notes: wyW(40, -11, '2 on top') + wyW(40, 60, '2 on the bottom') + wyW(90, 24, '3 upright', 'start') }),
+    ['Test each rule on step 2, which has 7 sticks. Leo: ' + mx('2 + 2 + 3 = 7') + ', a match.', 'Ruby: ' + mx('4 × 2 = 8') + ', one too many. Kai has to start from step 1 and add 3.']),
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const claims = [
@@ -853,7 +1040,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Matchsticks'], [4, 'Any step'], [7, 'Graph'], [9, 'Two ways'], [12, 'Wrap-up']];
+const SECTIONS = [[0, 'Matchsticks'], [4, 'Any step'], [8, 'Graph'], [11, 'Two ways'], [15, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

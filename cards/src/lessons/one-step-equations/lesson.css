@@ -34,3 +34,22 @@
 .answer .yn button{font:400 1.3rem var(--maths);padding:.3rem .85rem}
 .blank{display:inline-block;min-width:1.4rem;border-bottom:2px solid var(--ink-2);color:var(--ink-2);text-align:center;font-family:var(--body);font-size:1rem}
 .recap .art .tile.op{box-shadow:inset 0 0 0 2px var(--line)}
+/* still diagrams: Why? panels and bridges */
+.why-body .why-fig{display:flex;justify-content:center;margin:.1rem 0 .5rem}
+.why-body .why-ln{margin:.25rem 0 0}
+.fig{display:block;width:100%;height:auto}
+.still-scale{width:min(100%,21rem)}
+.still-scale .scale-wrap{width:100%}
+.still-scale .eqbar{font-size:1.05rem}
+.stage .still-scale{width:min(100%,24rem,calc(30vh * 2.42))}
+.fig-n{font:400 17px var(--maths);fill:var(--ink)}
+.fig-eq{font:400 26px var(--maths);fill:var(--ink-2)}
+.fig-num{fill:var(--num);stroke:var(--num-deep);stroke-width:1.5}
+.fig-nt{font:400 21px var(--maths);fill:var(--ink)}
+.fig-var{fill:var(--var);stroke:var(--var-deep);stroke-width:1.5}
+.fig-vt{font:400 20px var(--maths);fill:#fff}
+.fig-v{font-style:italic;fill:var(--var)}
+.fig-br{fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linejoin:round}
+.fig-cut{stroke:var(--ink-2);stroke-width:2;stroke-dasharray:5 4}
+.nl-arc.back{stroke-dasharray:6 5}
+.why-body .work{justify-content:center;font-size:1.35rem}

@@ -12,7 +12,8 @@
     "substitution",
     "equivalent-expressions",
     "properties-with-letters"
-   ]
+   ],
+   "check": "check-expressions"
   },
   {
    "id": "equations",
@@ -23,7 +24,8 @@
     "two-step-equations",
     "backtracking",
     "equations-from-stories"
-   ]
+   ],
+   "check": "check-equations"
   },
   {
    "id": "patterns",
@@ -32,7 +34,8 @@
    "lessons": [
     "growing-patterns",
     "tables-to-rules"
-   ]
+   ],
+   "check": "check-patterns"
   },
   {
    "id": "year8",
@@ -41,7 +44,8 @@
    "lessons": [
     "like-terms",
     "area-model-expansion"
-   ]
+   ],
+   "check": "check-year8"
   }
  ],
  "lessons": {
@@ -51,7 +55,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A02",
-   "version": 1
+   "version": 2
   },
   "writing-expressions": {
    "title": "Writing expressions",
@@ -59,7 +63,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A02",
-   "version": 1
+   "version": 2
   },
   "substitution": {
    "title": "Substitution",
@@ -67,7 +71,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A01",
-   "version": 1
+   "version": 2
   },
   "equivalent-expressions": {
    "title": "Equivalent expressions",
@@ -75,7 +79,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A02",
-   "version": 1
+   "version": 2
   },
   "properties-with-letters": {
    "title": "Properties with letters",
@@ -83,7 +87,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A02",
-   "version": 1
+   "version": 2
   },
   "one-step-equations": {
    "title": "One-step equations",
@@ -91,7 +95,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A03",
-   "version": 1
+   "version": 2
   },
   "two-step-equations": {
    "title": "Two-step equations",
@@ -99,7 +103,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A03",
-   "version": 1
+   "version": 2
   },
   "backtracking": {
    "title": "Backtracking",
@@ -107,7 +111,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A03",
-   "version": 1
+   "version": 2
   },
   "equations-from-stories": {
    "title": "Equations from stories",
@@ -115,7 +119,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A03",
-   "version": 1
+   "version": 2
   },
   "growing-patterns": {
    "title": "Growing patterns",
@@ -123,7 +127,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A05",
-   "version": 1
+   "version": 2
   },
   "tables-to-rules": {
    "title": "Tables to rules",
@@ -131,7 +135,7 @@
    "year": 7,
    "strand": "Algebra",
    "ac9": "AC9M7A05",
-   "version": 1
+   "version": 2
   },
   "like-terms": {
    "title": "Like terms",
@@ -139,7 +143,7 @@
    "year": 8,
    "strand": "Algebra",
    "ac9": "AC9M8A01",
-   "version": 1
+   "version": 2
   },
   "area-model-expansion": {
    "title": "Expanding with the area model",
@@ -147,7 +151,43 @@
    "year": 8,
    "strand": "Algebra",
    "ac9": "AC9M8A01",
-   "version": 1
+   "version": 2
+  },
+  "check-expressions": {
+   "title": "Level Check: Variables and expressions",
+   "description": "Level Check. Mixed questions from the five Variables and expressions lessons: what a variable is, writing expressions, substitution, equivalent expressions and properties with letters.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A01, AC9M7A02",
+   "version": 1,
+   "kind": "check"
+  },
+  "check-equations": {
+   "title": "Level Check: Equations",
+   "description": "Level Check. Mixed questions from the four Equations lessons: one-step and two-step equations, backtracking and equations from stories.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A03",
+   "version": 1,
+   "kind": "check"
+  },
+  "check-patterns": {
+   "title": "Level Check: Patterns and rules",
+   "description": "Level Check. Mixed questions from the Patterns and rules lessons: growing patterns and finding the rule from a table.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A05",
+   "version": 1,
+   "kind": "check"
+  },
+  "check-year8": {
+   "title": "Level Check: Expressions in Year 8",
+   "description": "Level Check. Mixed questions from the Year 8 lessons: like terms and expanding with the area model.",
+   "year": 8,
+   "strand": "Algebra",
+   "ac9": "AC9M8A01",
+   "version": 1,
+   "kind": "check"
   }
  }
 }

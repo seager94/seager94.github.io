@@ -307,10 +307,51 @@ const steps = arr => '<div class="steps">' + arr.map(s => '<span class="step">' 
 const receipt = last => '<div class="receipt"><div><span>' + mx('n') + ' movie tickets</span><span>$12 each</span></div>' +
   '<div><span>Booking fee</span><span>$5 per order</span></div><div class="tot"><span>Total</span><span>' + last + '</span></div></div>';
 
+// Number line 0 to 10 with n = 8 marked. done = true adds the jump down 5 to 3.
+const NX = k => 30 + k * 46;
+function nlineInner(done) {
+  let s = '<line class="nl-ax" x1="14" y1="60" x2="506" y2="60"/>';
+  for (let k = 0; k <= 10; k++) {
+    s += '<line class="nl-ax" x1="' + NX(k) + '" y1="53" x2="' + NX(k) + '" y2="67"/>';
+    s += k === 8 ? '<text class="nl-l" x="' + NX(8) + '" y="90"><tspan font-style="italic">n</tspan> = 8</text>' : '<text class="nl-t" x="' + NX(k) + '" y="90">' + k + '</text>';
+  }
+  if (done) {
+    s += '<line class="nl-dash" x1="' + NX(8) + '" y1="52" x2="' + NX(8) + '" y2="32"/><line class="nl-dash" x1="' + NX(3) + '" y1="52" x2="' + NX(3) + '" y2="32"/>' +
+      '<path class="nl-arr" d="M' + NX(8) + ' 32 H' + (NX(3) + 2) + ' M' + (NX(3) + 12) + ' 25 L' + (NX(3) + 2) + ' 32 L' + (NX(3) + 12) + ' 39"/>' +
+      '<text class="nl-t" x="' + (NX(3) + NX(8)) / 2 + '" y="22">down 5</text><circle class="nl-go" cx="' + NX(3) + '" cy="60" r="8"/>';
+  }
+  return s + '<circle class="nl-n" cx="' + NX(8) + '" cy="60" r="8"/>';
+}
+const NLINE_DONE = '<svg class="nline" viewBox="0 0 520 100" role="img" aria-label="Number line: start at n = 8 and go down 5 to reach 3">' + nlineInner(true) + '</svg>';
+
+/* ---------- Why? panels: the card's picture, still, with the values written in ---------- */
+const whyBox = (pic, lines) => '<div class="wy">' + pic + '<div class="wy-w">' + lines.map(l => '<p>' + l + '</p>').join('') + '</div></div>';
+// nb see-through bags with `inside` marbles each, then nl loose marbles. The value is written under each object.
+// o: bagLabel, looseLabel (SVG text content), fade (loose marbles drawn faint), alt.
+function whyMat(nb, inside, nl, o) {
+  o = o || {};
+  const gap = nb && nl ? 18 : 0, lw = Math.max(nl * 22, nl ? (o.looseW || 0) : 0), W = nb * 70 + gap + lw + 20;
+  let x = 10, s = '';
+  for (let k = 0; k < nb; k++) {
+    s += bagG(x + 4, 0, { inside }) + '<text class="wy-l" x="' + (x + 35) + '" y="89">' + (o.bagLabel || '<tspan class="v">b</tspan> = ' + inside) + '</text>';
+    x += 70;
+  }
+  x += gap;
+  const x0 = x + (lw - nl * 22) / 2;
+  for (let k = 0; k < nl; k++) s += marbleG(x0 + 11 + k * 22, 58, 9, o.fade ? 'wy-fade' : '');
+  if (nl) s += '<text class="wy-l" x="' + (x + lw / 2) + '" y="89">' + (o.looseLabel || nl) + '</text>';
+  return '<svg class="wy-pic" viewBox="0 0 ' + W + ' 96" style="max-width:' + Math.round(W * 1.45) + 'px" role="img" aria-label="' + o.alt + '">' + s + '</svg>';
+}
+// Small table: rows of [label, cells...]. The first row holds the values of the letter.
+const whyTable = (rows, plain) => '<table class="wy-t">' + rows.map((r, i) => '<tr><th>' + r[0] + '</th>' + r.slice(1).map(c => '<td' + (i || plain ? '' : ' class="nv"') + '>' + c + '</td>').join('') + '</tr>').join('') + '</table>';
+const whyReceipt = (n, total) => '<div class="receipt"><div><span>' + n + ' movie tickets</span><span>' + n + ' × $12 = $' + 12 * n + '</span></div>' +
+  '<div><span>Booking fee</span><span>$5</span></div><div class="tot"><span>Total</span><span>$' + total + '</span></div></div>';
+
 // A tile-builder card, marked by evaluating at several values so any equivalent form is accepted.
 // cfg: v (letter), tiles, f (target rule), ans (tokens for Show me), pic(stage), noVar,
 // wrong: [[rule, feedback]] for anticipated errors, test(k, want, got) for anything else,
-// std (usual written form), win(expression, true if it is already written the usual way).
+// std (usual written form), win(expression, true if it is already written the usual way),
+// recap() (two-part cards: the line that part 1 shrinks to).
 function tileCard(cfg) {
   return function (stage, ctl, ctx) {
     if (cfg.pic) cfg.pic(stage);
@@ -330,7 +371,8 @@ function tileCard(cfg) {
       },
       win: () => cfg.win(mx(show(bd.toks())), show(bd.toks()) === cfg.std),
       won() { bd.lock(); },
-      solve() { bd.set(cfg.ans); }
+      solve() { bd.set(cfg.ans); },
+      recap: cfg.recap
     };
   };
 }
@@ -339,7 +381,11 @@ const cards = [
 
 /* 1 */ {
   prompt: 'Each bag holds ' + mx('b') + ' marbles. Build an expression for the number of marbles on the mat.',
-  sub: 'Drag tiles into the box, or tap them. Tap a tile in the box to take it out.',
+  sub: 'A sealed bag hides its marbles, so how can you write the total without opening it? Drag tiles into the box, or tap them. Tap a tile in the box to take it out.',
+  why: () => whyBox(whyMat(1, 4, 3, { alt: 'A see-through bag holding 4 marbles, and 3 loose marbles' }), [
+    'If ' + mx('b = 4') + ', the mat holds 4 + 3 = 7 marbles. If ' + mx('b = 10') + ', it holds 10 + 3 = 13.',
+    'Whatever is in the bag, you add the 3 loose marbles: ' + mx('b + 3') + '.'
+  ]),
   build: tileCard({
     v: 'b', tiles: ['b', '+', '×', '1', '2', '3'], f: b => b + 3, ans: ['b', '+', '3'],
     pic: stage => stage.append(matOf(1, 3)),
@@ -365,13 +411,47 @@ const cards = [
       [b => b, mx('b') + ' is the marbles in one bag. There are 3 bags.']
     ],
     test: (k, want, got) => 'Test it with ' + mx('b = ' + k) + '. Three bags hold ' + k + ' + ' + k + ' + ' + k + ' = ' + want + ' marbles, but your expression gives ' + got + '.',
-    win: e => e + ' works. Three bags make 3 lots of ' + mx('b') + ', which is ' + mx('3 × b') + '. We write it ' + mx('3b') + ': the number goes first and the × sign is left out.'
-  })
+    win: e => e + ' works. Three bags make 3 lots of ' + mx('b') + ', which is ' + mx('3 × b') + '. We write it ' + mx('3b') + ': the number goes first and the × sign is left out.',
+    recap: () => '3 bags hold ' + mx('3b') + ' marbles.'
+  }),
+  why: () => whyBox(whyMat(3, 4, 0, { alt: 'Three see-through bags holding 4 marbles each' }), [
+    'If ' + mx('b = 4') + ', the bags hold 4 + 4 + 4 = 3 × 4 = 12 marbles.',
+    'For any ' + mx('b') + ': ' + mx('b + b + b = 3 × b = 3b') + '.'
+  ]),
+  then: {
+    prompt: 'One more bag goes on the mat. Which expression gives the total now?',
+    sub: 'Every bag holds ' + mx('b') + ' marbles.',
+    why: () => whyBox(whyMat(4, 5, 0, { alt: 'Four see-through bags holding 5 marbles each' }), [
+      'If ' + mx('b = 5') + ', the bags hold 5 + 5 + 5 + 5 = 4 × 5 = 20 marbles.',
+      '3 bags and 1 more bag make 4 bags: ' + mx('b + b + b + b = 4b') + '.'
+    ]),
+    build(stage, ctl, ctx) {
+      const strip = $('.strip', stage); if (strip) strip.remove();
+      $('.mat', stage).append(h('<div class="it bagit pop">' + svgBag({ tag: 'b' }) + '</div>'));
+      const ch = makeChoices(ctl, [mx('3b + 1'), mx('4b'), mx('b + 4'), mx('3b + 4')], ctx);
+      const fbk = [
+        mx('3b + 1') + ' adds 1 loose marble. The new thing on the mat is a bag, and it holds ' + mx('b') + ' marbles.',
+        '',
+        mx('b + 4') + ' is 1 bag and 4 loose marbles. Here the 4 counts bags, and each bag holds ' + mx('b') + '.',
+        mx('3b + 4') + ' adds 4 loose marbles to the 3 bags. No loose marbles went on the mat, only one more bag.'
+      ];
+      return {
+        check() { const s = ch.sel()[0]; if (s === 1) return true; ch.mark(s, 'bad'); return fbk[s]; },
+        win: () => mx('4b') + '. The number in front of ' + mx('b') + ' counts the bags. Add a bag and it goes up by one.',
+        won() { ch.mark(1, 'good'); ch.lock(); },
+        solve() { ch.set([1]); }
+      };
+    }
+  }
 },
 
 /* 3 */ {
   prompt: 'The mat holds ' + mx('3b + 2') + ' marbles. Set ' + mx('b') + ' so it holds 17.',
   sub: 'The bags are see-through. Watch the total as you drag.',
+  why: () => whyBox(whyMat(3, 5, 2, { alt: 'Three see-through bags holding 5 marbles each, and 2 loose marbles' }), [
+    'Take away the 2 loose marbles: 17 − 2 = 15 marbles are in the bags.',
+    '15 marbles shared between 3 bags is 5 in each, so ' + mx('b = 5') + '.'
+  ]),
   build(stage, ctl, ctx) {
     let b = 2;
     const mat = h('<div class="mat"></div>'), live = h('<div class="live"></div>');
@@ -394,9 +474,53 @@ const cards = [
 },
 
 /* 4 */ {
+  bridge: true,
+  prompt: 'What you just built, like ' + mx('3b + 2') + ', is called an <b>expression</b>.',
+  sub: 'It uses numbers, a letter and operations to say how to get a total. Give ' + mx('b') + ' a value and the expression gives a number.',
+  show(stage) { stage.append(matOf(3, 2), h('<div class="live">' + mx('3b + 2') + '</div>')); }
+},
+
+/* 5 */ {
   prompt: 'Build an expression for the number of marbles in this picture.',
   sub: 'Each bag holds ' + mx('b') + ' marbles.',
+  why: () => whyBox(whyMat(2, 3, 5, { alt: 'Two see-through bags holding 3 marbles each, and 5 loose marbles' }), [
+    'If ' + mx('b = 3') + ', the picture shows 3 + 3 + 5 = 2 × 3 + 5 = 11 marbles.',
+    'For any ' + mx('b') + ': ' + mx('b + b + 5 = 2b + 5') + '.'
+  ]),
+  then: {
+    prompt: 'Now you find out that each bag holds 6 marbles. How many marbles are in the picture?',
+    sub: 'Use your expression. Swap ' + mx('b') + ' for 6.',
+    why: () => whyBox(whyMat(2, 6, 5, { alt: 'Two see-through bags holding 6 marbles each, and 5 loose marbles' }), [
+      mx('2b + 5') + ' with ' + mx('b = 6') + ' is 2 × 6 + 5 = 12 + 5 = 17.',
+      'Count to check: 6 + 6 + 5 = 17 marbles.'
+    ]),
+    build(stage, ctl, ctx) {
+      stage.append(h('<div class="note">' + mx('b = 6') + '</div>'));
+      const ans = makeAnswer(ctl, 'Number of marbles', ctx);
+      const fbk = {
+        13: '13 is 6 + 2 + 5. The 2 counts bags, so it means 2 lots of 6.',
+        11: '11 is one bag of 6 and the 5 loose marbles. There are 2 bags.',
+        12: '12 is the marbles in the 2 bags. Add the 5 loose marbles.',
+        31: mx('2b') + ' means 2 × ' + mx('b') + '. It doesn’t mean writing 6 after the 2 to make 26.',
+        32: '32 is 5 × 6 + 2. The numbers have swapped: there are 2 bags of 6, plus 5 loose marbles.',
+        42: '42 is 7 × 6, which would be 7 bags. Only the 2 bags hold 6 each. The 5 marbles are loose.'
+      };
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 17) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          return fbk[v] || 'Swap ' + mx('b') + ' for 6: 2 × 6 + 5. Multiply first, then add.';
+        },
+        win: () => '17 marbles. Once you know ' + mx('b') + ', the expression turns into a number: 2 × 6 + 5 = 17.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(17); }
+      };
+    }
+  },
   build: tileCard({
+    recap: () => 'The picture holds ' + mx('2b + 5') + ' marbles.',
     v: 'b', tiles: ['b', '+', '×', '2', '5', '7'], f: b => 2 * b + 5, ans: ['2', '×', 'b', '+', '5'],
     pic: stage => stage.append(matOf(2, 5)),
     noVar: 'Your expression has no ' + mx('b') + ', so it leaves out the marbles inside the bags.',
@@ -413,8 +537,12 @@ const cards = [
   })
 },
 
-/* 5 */ {
+/* 6 */ {
   prompt: 'A bag held ' + mx('b') + ' marbles. Then 2 were taken out. Build an expression for the marbles left in the bag.',
+  why: () => whyBox(whyMat(1, 6, 2, { bagLabel: '6 left', looseLabel: '2 taken out', looseW: 84, fade: true, alt: 'A see-through bag with 6 marbles left in it, and 2 marbles taken out' }), [
+    'If the bag held ' + mx('b = 8') + ' marbles, then 8 − 2 = 6 are left.',
+    'For any ' + mx('b') + ', start with ' + mx('b') + ' and take 2 away: ' + mx('b − 2') + '.'
+  ]),
   build: tileCard({
     v: 'b', tiles: ['b', '+', '−', '2'], f: b => b - 2, ans: ['b', '−', '2'],
     pic: stage => stage.append(h('<div class="mat">' + bagIt() + '<div class="gone">' + marbles(2) + '<span class="gone-l">taken out</span></div></div>')),
@@ -429,9 +557,13 @@ const cards = [
   })
 },
 
-/* 6 */ {
+/* 7 */ {
   prompt: 'Think of a number. Add 5. Build an expression for the result.',
   sub: 'Call the number you thought of ' + mx('n') + '.',
+  why: () => whyBox(steps([mx('n = 4'), '4 + 5 = 9']), [
+    'Think of 4 and you get 9. Think of 10 and you get 10 + 5 = 15.',
+    'The result is always 5 more than ' + mx('n') + ', so it is ' + mx('n + 5') + '.'
+  ]),
   build: tileCard({
     v: 'n', tiles: ['n', '+', '−', '×', '2', '3', '5'], f: n => n + 5, ans: ['n', '+', '5'],
     pic: stage => stage.append(h(steps(['Think of a number ' + mx('n'), 'Add 5']))),
@@ -446,9 +578,13 @@ const cards = [
   })
 },
 
-/* 7 */ {
+/* 8 */ {
   prompt: 'Think of a number. Double it, then add 3. Build an expression for the result.',
   sub: 'Call the number ' + mx('n') + ' again.',
+  why: () => whyBox(steps([mx('n = 4'), '2 × 4 = 8', '8 + 3 = 11']), [
+    'Swap the 4 back for ' + mx('n') + ': doubling gives ' + mx('2 × n') + ', then adding 3 gives ' + mx('2 × n + 3') + '.',
+    'Check with 4: ' + mx('2n + 3') + ' is 2 × 4 + 3 = 11, the same as the story.'
+  ]),
   build: tileCard({
     v: 'n', tiles: ['n', '+', '−', '×', '2', '3'], f: n => 2 * n + 3, ans: ['2', '×', 'n', '+', '3'],
     pic: stage => stage.append(h(steps(['Think of a number ' + mx('n'), 'Double it', 'Add 3']))),
@@ -466,9 +602,13 @@ const cards = [
   })
 },
 
-/* 8 */ {
+/* 9 */ {
   prompt: 'Same steps, different order. How do the two results compare?',
   sub: 'Drag the slider to try different starting numbers.',
+  why: () => whyBox(whyTable([[mx('n'), 1, 4, 10], ['Double, then add 3', 5, 11, 23], ['Add 3, then double', 8, 14, 26], ['Gap', 3, 3, 3]]), [
+    'With ' + mx('n = 4') + ': 2 × 4 + 3 = 8 + 3, but 2 × (4 + 3) = 8 + 6.',
+    'Both double the number. One adds 3 and the other adds 6, so the gap is always 3.'
+  ]),
   build(stage, ctl, ctx) {
     let n = 4;
     const box = h('<div class="chains"></div>');
@@ -493,10 +633,44 @@ const cards = [
   }
 },
 
-/* 9 */ {
+/* 10 */ {
   prompt: 'Think of a number. Add 3, then double. Build an expression for the result.',
   sub: 'This time you also have bracket tiles.',
+  why: () => whyBox(steps([mx('n = 4'), '4 + 3 = 7', '7 × 2 = 14']), [
+    'The whole of ' + mx('n + 3') + ' is doubled, so it goes in brackets: ' + mx('2 × (n + 3)') + '.',
+    'Check with 4: 2 × (4 + 3) = 2 × 7 = 14, the same as the story.'
+  ]),
+  then: {
+    prompt: 'Check your expression with a number. When ' + mx('n = 5') + ', what does it give?',
+    why: () => whyBox(steps([mx('n = 5'), '5 + 3 = 8', '8 × 2 = 16']), [
+      mx('2(n + 3)') + ' with ' + mx('n = 5') + ': brackets first, 5 + 3 = 8. Then 2 × 8 = 16.',
+      'Without brackets: 5 + 3 × 2 = 5 + 6 = 11, not what the story gives.'
+    ]),
+    build(stage, ctl, ctx) {
+      stage.append(h('<div class="note">' + mx('n = 5') + '</div>'));
+      const ans = makeAnswer(ctl, 'Result', ctx);
+      const fbk = {
+        11: '11 is 5 + 3 × 2 with the × done first. The brackets say add first: 5 + 3 = 8, then double.',
+        13: '13 is double 5, then add 3. That is the other order. Here you add 3 first, then double.',
+        8: '8 is 5 + 3. Now double it.',
+        10: '10 is double 5. Add the 3 before you double.'
+      };
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 16) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          return fbk[v] || 'Swap ' + mx('n') + ' for 5: 2 × (5 + 3). Work out the brackets first, then double.';
+        },
+        win: () => '16. The story agrees: think of 5, add 3 to get 8, then double to get 16. Testing with a number is a quick way to check an expression.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(16); }
+      };
+    }
+  },
   build: tileCard({
+    recap: () => '“Add 3, then double” is ' + mx('2(n + 3)') + '.',
     v: 'n', tiles: ['n', '+', '×', '2', '3', '(', ')'], f: n => 2 * (n + 3), ans: ['2', '×', '(', 'n', '+', '3', ')'],
     pic: stage => stage.append(h(steps(['Think of a number ' + mx('n'), 'Add 3', 'Double it']))),
     noVar: 'Your expression has no ' + mx('n') + '. The result depends on the number you thought of.',
@@ -512,27 +686,26 @@ const cards = [
   })
 },
 
-/* 10 */ {
+/* 11 */ {
+  bridge: true,
+  prompt: 'The order of the steps changed the result. <b>Brackets</b> show which step comes first.',
+  sub: mx('2n + 3') + ' doubles, then adds 3. ' + mx('2(n + 3)') + ' adds 3 first, then doubles.',
+  show(stage) { stage.append(h(steps(['Think of a number ' + mx('n'), 'Add 3', 'Double it'])), h('<div class="live">' + mx('2(n + 3)') + '</div>')); }
+},
+
+/* 12 */ {
   prompt: 'Which expression means “5 less than ' + mx('n') + '”?',
   sub: 'Test each one with ' + mx('n = 8') + '. What is 5 less than 8?',
+  why: () => whyBox(NLINE_DONE, [
+    'Start at 8 and go down 5: 8 − 5 = 3. Swap the 8 back for ' + mx('n') + ' and you have ' + mx('n − 5') + '.',
+    '5 − 8 would start at 5 and go down 8, past zero.'
+  ]),
   build(stage, ctl, ctx) {
     const nl = h('<svg class="nline" viewBox="0 0 520 100" role="img" aria-label="Number line from 0 to 10 with n = 8 marked"></svg>');
     stage.append(nl);
-    const X = k => 30 + k * 46;
     function draw(done) {
-      let s = '<line class="nl-ax" x1="14" y1="60" x2="506" y2="60"/>';
-      for (let k = 0; k <= 10; k++) {
-        s += '<line class="nl-ax" x1="' + X(k) + '" y1="53" x2="' + X(k) + '" y2="67"/>';
-        s += k === 8 ? '<text class="nl-l" x="' + X(8) + '" y="90"><tspan font-style="italic">n</tspan> = 8</text>' : '<text class="nl-t" x="' + X(k) + '" y="90">' + k + '</text>';
-      }
-      if (done) {
-        s += '<line class="nl-dash" x1="' + X(8) + '" y1="52" x2="' + X(8) + '" y2="32"/><line class="nl-dash" x1="' + X(3) + '" y1="52" x2="' + X(3) + '" y2="32"/>' +
-          '<path class="nl-arr" d="M' + X(8) + ' 32 H' + (X(3) + 2) + ' M' + (X(3) + 12) + ' 25 L' + (X(3) + 2) + ' 32 L' + (X(3) + 12) + ' 39"/>' +
-          '<text class="nl-t" x="' + (X(3) + X(8)) / 2 + '" y="22">down 5</text><circle class="nl-go" cx="' + X(3) + '" cy="60" r="8"/>';
-        nl.setAttribute('aria-label', 'Number line: start at n = 8 and go down 5 to reach 3');
-      }
-      s += '<circle class="nl-n" cx="' + X(8) + '" cy="60" r="8"/>';
-      nl.innerHTML = s;
+      if (done) nl.setAttribute('aria-label', 'Number line: start at n = 8 and go down 5 to reach 3');
+      nl.innerHTML = nlineInner(done);
     }
     draw(false);
     const ch = makeChoices(ctl, [mx('n − 5'), mx('5 − n'), mx('n + 5'), mx('5 × n')], ctx);
@@ -551,9 +724,13 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 13 */ {
   prompt: 'Build an expression for “3 less than double ' + mx('n') + '”.',
   sub: 'Test your expression with a number before you check.',
+  why: () => whyBox(whyTable([[mx('n'), 5, 10], ['Double ' + mx('n'), 10, 20], ['3 less than that', 7, 17]]), [
+    'Double ' + mx('n') + ' is ' + mx('2n') + '. “3 less than” starts there and goes down 3: ' + mx('2n − 3') + '.',
+    'Check with 5: 2 × 5 − 3 = 10 − 3 = 7.'
+  ]),
   build: tileCard({
     v: 'n', tiles: ['n', '+', '−', '×', '2', '3'], f: n => 2 * n - 3, ans: ['2', '×', 'n', '−', '3'],
     noVar: 'Your expression has no ' + mx('n') + ', so it gives the same number whatever ' + mx('n') + ' is.',
@@ -570,9 +747,20 @@ const cards = [
   })
 },
 
-/* 12 */ {
+/* 14 */ {
+  bridge: true,
+  prompt: 'With “less than”, write what you start with first. <b>Order matters when you subtract</b>.',
+  sub: '“5 less than ' + mx('n') + '” starts at ' + mx('n') + ' and goes down 5, so it is ' + mx('n − 5') + ', not ' + mx('5 − n') + '.',
+  show(stage) { stage.append(h(NLINE_DONE)); }
+},
+
+/* 15 */ {
   prompt: 'Build an expression for the cost of ' + mx('n') + ' movie tickets, in dollars.',
   sub: 'The booking fee is paid once for the whole order.',
+  why: () => whyBox(whyReceipt(3, 41), [
+    '3 tickets cost 3 × $12 = $36, then the $5 fee is added once: $41.',
+    'For ' + mx('n') + ' tickets it is ' + mx('12 × n + 5') + ', written ' + mx('12n + 5') + '.'
+  ]),
   build: tileCard({
     v: 'n', tiles: ['n', '+', '×', '(', ')', '5', '12'], f: n => 12 * n + 5, ans: ['12', '×', 'n', '+', '5'],
     pic: stage => stage.append(h(receipt('?'))),
@@ -590,8 +778,12 @@ const cards = [
   })
 },
 
-/* 13 */ {
+/* 16 */ {
   prompt: 'The cost of ' + mx('n') + ' tickets is ' + mx('12n + 5') + ' dollars. How much do 4 tickets cost?',
+  why: () => whyBox(whyReceipt(4, 53), [
+    mx('12n') + ' means 12 × ' + mx('n') + ', so with ' + mx('n = 4') + ' the tickets cost 12 × 4 = 48 dollars.',
+    'The 5 has no ' + mx('n') + ' with it, so it is added once: 48 + 5 = 53.'
+  ]),
   build(stage, ctl, ctx) {
     stage.append(h(receipt(mx('12n + 5'))), h('<div class="note">' + mx('n = 4') + '</div>'));
     const ans = makeAnswer(ctl, 'Cost in dollars', ctx);
@@ -615,9 +807,12 @@ const cards = [
   }
 },
 
-/* 14 */ {
+/* 17 */ {
   prompt: 'Three students wrote an expression for the same story. Who is right?',
   sub: 'Choose Agree or Disagree for each one.',
+  why: () => whyBox(steps([mx('n = 10'), '10 − 2 = 8', '8 × 3 = 24']), [
+    'The story gives 24, so test each expression with ' + mx('n = 10') + '.'
+  ]) + '<div class="wy">' + whyTable([['Mia: 10 − 2 × 3 = 10 − 6', 4], ['Jai: 3 × (2 − 10)', '<small>below zero</small>'], ['Ava: (10 − 2) × 3 = 8 × 3', 24]], true) + '</div>',
   build(stage, ctl, ctx) {
     stage.append(h(steps(['Think of a number ' + mx('n'), 'Take away 2', 'Multiply by 3'])));
     const claims = [
@@ -657,7 +852,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Bags'], [3, 'Pictures'], [5, 'Stories'], [9, 'Less than'], [11, 'Money'], [13, 'Wrap-up']];
+const SECTIONS = [[0, 'Bags'], [3, 'Pictures'], [6, 'Stories'], [10, 'Less than'], [13, 'Money'], [16, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

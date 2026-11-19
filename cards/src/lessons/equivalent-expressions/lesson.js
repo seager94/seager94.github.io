@@ -310,6 +310,30 @@ function makeTwin(host, A, B, v0) {
   return { set(n) { v = n; draw(); }, setB(e) { ex[1] = e; draw(); } };
 }
 
+/* ---------- still pictures for Why? panels and bridges ---------- */
+const stillTwin = (A, B, v) => { const d = document.createElement('div'); makeTwin(d, A, B, v); return d.innerHTML; };
+const wl = s => '<p class="wl">' + s + '</p>';
+// n along the top, one row per expression, then either "Same?" or the difference under each column.
+function valTab(A, B, vals, diff) {
+  const row = (cls, head, cells) => '<tr class="' + cls + '"><th scope="row">' + head + '</th>' + cells.join('') + '</tr>';
+  const td = x => '<td>' + x + '</td>';
+  return '<table class="vt"><tbody>' +
+    row('vt-n', mx('n'), vals.map(td)) +
+    row('vt-o', mx(A.s), vals.map(v => td(A.f(v)))) +
+    row('vt-o', mx(B.s), vals.map(v => td(B.f(v)))) +
+    (diff ? row('vt-d', diff, vals.map(v => td(A.f(v) - B.f(v))))
+          : row('vt-s', 'Same?', vals.map(v => A.f(v) === B.f(v) ? '<td class="same">yes</td>' : '<td class="diff">no</td>'))) +
+    '</tbody></table>';
+}
+// One row per pair of expressions: both outputs at each test value, then the verdict.
+function pairTab(pairs, vals) {
+  return '<table class="pq"><thead><tr><th scope="col">Pair</th>' + vals.map(v => '<th scope="col">' + mx('n = ' + v) + '</th>').join('') + '<th scope="col"></th></tr></thead><tbody>' +
+    pairs.map(p => '<tr><th scope="row"><span>' + mx(p.a.s) + '</span> <span>' + mx(p.b.s) + '</span></th>' +
+      vals.map(v => { const x = p.a.f(v), y = p.b.f(v); return '<td>' + x + (x === y ? ' <b class="same">=</b> ' : ' <b class="diff">≠</b> ') + y + '</td>'; }).join('') +
+      '<td class="vd">' + p.v + '</td></tr>').join('') + '</tbody></table>';
+}
+const tickets = price => '<div class="wtix">' + ('<span class="tile num still">$' + price + '</span>').repeat(4) + '<span class="wcap">' + mx('n = ' + price) + '</span></div>';
+
 /* ---------- cards ---------- */
 const E = {
   nnn: { s: 'n + n + n', f: n => 3 * n },
@@ -337,12 +361,14 @@ function twinChoice(cfg) {
       check() { const s = ch.sel()[0]; if (s === cfg.ans) return true; ch.mark(s, 'bad'); return cfg.why[s]; },
       win: cfg.win,
       won() { ch.mark(cfg.ans, 'good'); ch.lock(); },
-      solve() { ch.set([cfg.ans]); }
+      solve() { ch.set([cfg.ans]); },
+      tw,
+      recap: cfg.recap
     };
   };
 }
 
-// The given expression in the left machine, the student's tile expression in the right one (cards 11 and 12).
+// The given expression in the left machine, the student's tile expression in the right one (cards 13 and 14).
 function buildTwin(cfg) {
   return function (stage, ctl, ctx) {
     const A = cfg.A;
@@ -376,19 +402,53 @@ const cards = [
 
 /* 1 */ {
   prompt: 'Two machines get the same input. Do ' + mx('n + n + n') + ' and ' + mx('3n') + ' give the same output?',
-  sub: 'One slider feeds the same ' + mx('n') + ' into both machines. Try lots of values.',
+  sub: 'Three pies at one price: one till adds the price 3 times, another multiplies it by 3. One slider feeds the same ' + mx('n') + ' into both machines. Try lots of values.',
+  why: () => stillTwin(E.nnn, E.n3, 7) +
+    wl('Adding a number 3 times and multiplying it by 3 are the same job.') +
+    wl('That works for any number, so no value of ' + mx('n') + ' can make the outputs differ.'),
   build: twinChoice({
     A: E.nnn, B: E.n3, start: 4, ans: 0,
+    recap: () => mx('n + n + n') + ' and ' + mx('3n') + ' are always equal.',
     why: ['',
       'Which value made them different? Slide from 0 to 10 and watch the sign between the two outputs.',
       'At ' + mx('n = 4') + ' both machines give 12, so they match at least once. “Never” can’t be right.'],
     win: () => 'Always. ' + mx('3n') + ' means 3 × ' + mx('n') + ', and ' + mx('n + n + n') + ' is three lots of ' + mx('n') + '. So they match for every ' + mx('n') + ', even values off the slider. Expressions like this are called <b>equivalent</b>.'
-  })
+  }),
+  then: {
+    prompt: 'The slider stops at 10. What will both machines give when ' + mx('n = 20') + '?',
+    why: () => valTab(E.nnn, E.n3, [10, 20, 100]) +
+      wl(mx('20 + 20 + 20 = 60') + ' and ' + mx('3 × 20 = 60') + '.') +
+      wl('Three lots of a number is 3 × that number, however big the number is.'),
+    build(stage, ctl, ctx, p1) {
+      p1.tw.set(10);
+      const ans = makeAnswer(ctl, 'Output of both machines', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 60) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 23) return 'That is 20 + 3. ' + mx('3n') + ' means 3 × ' + mx('n') + ', so work out 3 × 20.';
+          if (v === 30) return '30 is the output when ' + mx('n = 10') + '. Now ' + mx('n') + ' is 20.';
+          if (v === 40) return 'That is two lots of 20. ' + mx('n + n + n') + ' has three lots.';
+          if (v === 320) return mx('3n') + ' is not 3 written next to 20. It means 3 × 20.';
+          return attempt < 2 ? 'Put 20 in place of ' + mx('n') + ' in either expression.'
+                             : 'Work out 20 + 20 + 20, or 3 × 20. Both machines give the same number.';
+        },
+        win: () => '60. The slider stopped at 10, but the two expressions keep matching: 20 + 20 + 20 = 60 and 3 × 20 = 60.',
+        won() { p1.tw.set(20); ans.mark('good'); ans.lock(); },
+        solve() { ans.set(60); }
+      };
+    }
+  }
 },
 
 /* 2 */ {
   prompt: 'Do ' + mx('n + 3') + ' and ' + mx('3 + n') + ' give the same output?',
   sub: 'Slide ' + mx('n') + ' and watch both outputs.',
+  why: () => stillTwin(E.np3, E.p3n, 9) +
+    wl('Both machines add the same two numbers: ' + mx('n') + ' and 3.') +
+    wl('Swapping the order of an addition never changes the total, so they match for every ' + mx('n') + '.'),
   build: twinChoice({
     A: E.np3, B: E.p3n, start: 5, ans: 0,
     why: ['',
@@ -401,6 +461,9 @@ const cards = [
 /* 3 */ {
   prompt: 'Do ' + mx('2(n + 3)') + ' and ' + mx('2n + 3') + ' give the same output?',
   sub: 'Slide ' + mx('n') + ' and watch both outputs.',
+  why: () => stillTwin(E.br, E.nb, 4) +
+    wl('Left: ' + mx('2 × 4 + 2 × 3 = 8 + 6 = 14') + '. Right: ' + mx('2 × 4 + 3 = 8 + 3 = 11') + '.') +
+    wl('The left machine doubles the 3 as well as the 4. The right machine doubles only the 4, so it always falls short.'),
   build: twinChoice({
     A: E.br, B: E.nb, start: 1, ans: 2,
     why: [
@@ -414,6 +477,9 @@ const cards = [
 /* 4 */ {
   prompt: 'The left machine always gives more. How many more?',
   sub: 'Slide ' + mx('n') + ' and compare the two outputs each time.',
+  why: () => valTab(E.br, E.nb, [0, 1, 5, 10], 'Left − right') +
+    wl('Doubling ' + mx('n + 3') + ' gives two 3s, which is 6. ' + mx('2n + 3') + ' adds 3 once.') +
+    wl(mx('6 − 3 = 3') + ' extra, whatever ' + mx('n') + ' is.'),
   build(stage, ctl, ctx) {
     const tw = makeTwin(stage, E.br, E.nb, 4);
     makeSlider(ctl, 'n', 0, 10, 4, v => tw.set(v));
@@ -431,13 +497,52 @@ const cards = [
       },
       win: () => '3, for every value of ' + mx('n') + '. ' + mx('(n + 3) + (n + 3)') + ' has two 3s and ' + mx('2n + 3') + ' has one. A gap that never closes means the two are never equal.',
       won() { ans.mark('good'); ans.lock(); },
-      solve() { ans.set(3); }
+      solve() { ans.set(3); },
+      tw,
+      recap: () => 'The left machine always gives 3 more than the right.'
     };
+  },
+  then: {
+    prompt: 'When ' + mx('n = 20') + ', the right machine gives 43. What does the left machine give?',
+    why: () => valTab(E.br, E.nb, [10, 20, 30], 'Left − right') +
+      wl('The left output is the right output plus 3: ' + mx('43 + 3 = 46') + '.') +
+      wl('Check: ' + mx('2 × (20 + 3) = 2 × 23 = 46') + '.'),
+    build(stage, ctl, ctx, p1) {
+      const ans = makeAnswer(ctl, 'Left output', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 46) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 43) return 'The two machines never give the same output. The left one is always 3 more.';
+          if (v === 40) return 'You took 3 away. The left machine gives more than the right, so add 3.';
+          if (v === 49) return 'That is 6 more than 43. The gap you found is 3.';
+          if (v === 23) return '23 is one lot of 20 + 3. ' + mx('2(n + 3)') + ' means two lots.';
+          if (v === 26) return 'That is 20 + 3 + 3. The 2 doubles the 20 as well: 2 × (20 + 3).';
+          return attempt < 2 ? 'Use the gap you just found. The left output is always 3 more than the right output.'
+                             : 'Add 3 to the right output, 43. Or work out 2 × (20 + 3).';
+        },
+        win: () => '46. The gap of 3 holds for every ' + mx('n') + ', so 43 + 3 = 46. The machine agrees: 2 × (20 + 3) = 2 × 23 = 46.',
+        won() { p1.tw.set(20); ans.mark('good'); ans.lock(); },
+        solve() { ans.set(46); }
+      };
+    }
   }
 },
 
 /* 5 */ {
+  bridge: true,
+  prompt: 'Pairs that matched at every slider value, like ' + mx('n + n + n') + ' and ' + mx('3n') + ', are called <b>equivalent expressions</b>.',
+  sub: 'Equivalent means the same output for every value of ' + mx('n') + '. ' + mx('2(n + 3)') + ' and ' + mx('2n + 3') + ' are not equivalent.',
+  show(stage) { makeTwin(stage, E.nnn, E.n3, 4); }
+},
+
+/* 6 */ {
   prompt: 'Both machines give 4 when ' + mx('n = 2') + '. What does that tell you about ' + mx('n × 2') + ' and ' + mx('n + 2') + '?',
+  why: () => stillTwin(E.t2, E.p2, 2) +
+    wl('Doubling 2 and adding 2 to 2 both happen to make 4.') +
+    wl('That is one value of ' + mx('n') + ' out of many. Equivalent needs a match at every one.'),
   build(stage, ctl, ctx) {
     makeTwin(stage, E.t2, E.p2, 2);
     const ch = makeChoices(ctl, ['They are equivalent.', 'One match isn’t enough to tell.', 'They aren’t equivalent, because they look different.'], ctx);
@@ -455,9 +560,12 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 7 */ {
   prompt: 'Now prove that ' + mx('n × 2') + ' and ' + mx('n + 2') + ' are not equivalent.',
   sub: 'Move the slider to a value of ' + mx('n') + ' where the machines give different outputs.',
+  why: () => valTab(E.t2, E.p2, [0, 1, 2, 3, 4]) +
+    wl('Each step, ' + mx('n × 2') + ' goes up by 2 but ' + mx('n + 2') + ' goes up by 1.') +
+    wl('They meet once, at ' + mx('n = 2') + ', then move apart. Any “no” column proves they are not equivalent.'),
   build(stage, ctl, ctx) {
     let n = 2;
     const tw = makeTwin(stage, E.t2, E.p2, n);
@@ -470,8 +578,11 @@ const cards = [
   }
 },
 
-/* 7 */ {
+/* 8 */ {
   prompt: 'No machines this time. Find a value of ' + mx('n') + ' that proves ' + mx('n × 3') + ' and ' + mx('n + 6') + ' are not equivalent.',
+  why: () => valTab({ s: 'n × 3', f: n => n * 3 }, { s: 'n + 6', f: n => n + 6 }, [1, 2, 3, 4, 5]) +
+    wl('Every “no” column is a value that proves it. For example, ' + mx('1 × 3 = 3') + ' but ' + mx('1 + 6 = 7') + '.') +
+    wl('Only ' + mx('n = 3') + ' matches, so it is the one value that proves nothing.'),
   build(stage, ctl, ctx) {
     stage.append(h('<div class="tray"><span class="note">' + mx('n × 3') + '</span><span class="note">' + mx('n + 6') + '</span></div>'));
     const ans = makeAnswer(ctl, mx('n') + ' =', ctx);
@@ -489,9 +600,12 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 9 */ {
   prompt: 'These two match at exactly one whole number. Find it.',
   sub: 'Slide ' + mx('n') + ' until both machines give the same output.',
+  why: () => valTab(E.t4, E.p9, [1, 2, 3, 4, 5]) +
+    wl('Each step, ' + mx('n × 4') + ' goes up by 4 but ' + mx('n + 9') + ' goes up by 1.') +
+    wl(mx('n × 4') + ' starts behind, catches up at ' + mx('n = 3') + ', then stays ahead. So there is only one match.'),
   build(stage, ctl, ctx) {
     let n = 0;
     const tw = makeTwin(stage, E.t4, E.p9, n);
@@ -508,9 +622,25 @@ const cards = [
   }
 },
 
-/* 9 */ {
+/* 10 */ {
+  bridge: true,
+  prompt: 'A value that makes the outputs differ, like the ones you used to prove expressions are not equivalent, is called a <b>counterexample</b>.',
+  sub: 'One counterexample proves two expressions are not equivalent. Here ' + mx('n = 3') + ' is a counterexample for ' + mx('n × 2') + ' and ' + mx('n + 2') + '.',
+  show(stage) { makeTwin(stage, E.t2, E.p2, 3); }
+},
+
+/* 11 */ {
   prompt: 'Sort the pairs. Are the two expressions always, sometimes or never equal?',
   sub: 'Test values in your head. Drag each pair into a box, or tap a pair, then tap a box.',
+  why: () => pairTab([
+      { a: { s: 'n + n', f: n => n + n }, b: { s: '2n', f: n => 2 * n }, v: 'Always' },
+      { a: { s: '5 + n', f: n => 5 + n }, b: { s: 'n + 5', f: n => n + 5 }, v: 'Always' },
+      { a: { s: '3n', f: n => 3 * n }, b: { s: 'n + 8', f: n => n + 8 }, v: 'Sometimes' },
+      { a: { s: '2n', f: n => 2 * n }, b: { s: 'n + 5', f: n => n + 5 }, v: 'Sometimes' },
+      { a: { s: 'n + 1', f: n => n + 1 }, b: { s: 'n + 4', f: n => n + 4 }, v: 'Never' },
+      { a: { s: '2(n + 1)', f: n => 2 * (n + 1) }, b: { s: '2n + 1', f: n => 2 * n + 1 }, v: 'Never' }
+    ], [1, 4, 5]) +
+    wl('The Always pairs match for every ' + mx('n') + ': ' + mx('n + n') + ' is 2 lots of ' + mx('n') + ', and you can add in either order.'),
   build(stage, ctl, ctx) {
     const items = [
       { a: 'n + n', b: '2n', bin: 'always', no: {
@@ -572,8 +702,11 @@ const cards = [
   }
 },
 
-/* 10 */ {
+/* 12 */ {
   prompt: 'A cinema ticket costs ' + mx('n') + ' dollars. Tap every expression that gives the cost of 4 tickets.',
+  why: () => tickets(7) +
+    wl(mx('7 + 7 + 7 + 7 = 28') + ', ' + mx('4 × 7 = 28') + ' and ' + mx('7 × 4 = 28') + ': each counts 4 lots of the price.') +
+    wl(mx('7 + 4 = 11') + ' is one ticket and $4 more, not 4 tickets.'),
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const ch = makeChoices(ctl, [mx('n + n + n + n'), mx('4 × n'), mx('n + 4'), mx('n × 4')], ctx, true);
@@ -587,13 +720,45 @@ const cards = [
       },
       win: () => 'All three are equivalent: whatever the price, they give the same cost. If a ticket costs $10, each one gives $40. ' + mx('n + 4') + ' gives $14.',
       won() { [0, 1, 3].forEach(i => ch.mark(i, 'good')); ch.lock(); },
-      solve() { ch.set([0, 1, 3]); }
+      solve() { ch.set([0, 1, 3]); },
+      recap: () => mx('n + n + n + n') + ', ' + mx('4 × n') + ' and ' + mx('n × 4') + ' all give the cost of 4 tickets.'
     };
+  },
+  then: {
+    prompt: 'The price goes up to $12 a ticket. What do all three expressions give now?',
+    why: () => tickets(12) +
+      wl(mx('12 + 12 + 12 + 12 = 48')) +
+      wl(mx('4 × 12 = 48') + ' and ' + mx('12 × 4 = 48') + '. Equivalent expressions agree at every price.'),
+    build(stage, ctl, ctx) {
+      stage.hidden = false;
+      stage.replaceChildren(h('<div class="tray"><span class="note">' + mx('n + n + n + n') + '</span><span class="note">' + mx('4 × n') + '</span><span class="note">' + mx('n × 4') + '</span></div>'));
+      const ans = makeAnswer(ctl, 'Cost of 4 tickets ($)', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 48) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only. Leave out the $ sign.';
+          if (v === 16) return 'That is 12 + 4, which is ' + mx('n + 4') + ', the one you ruled out. 4 tickets means 4 lots of 12.';
+          if (v === 40) return '$40 was the cost when a ticket was $10. Now ' + mx('n = 12') + '.';
+          if (v === 36) return 'That is three lots of 12. There are 4 tickets.';
+          if (v === 12) return '$12 is the price of one ticket. The expressions give the cost of 4.';
+          return attempt < 2 ? 'Put 12 in place of ' + mx('n') + ' in any one of the three expressions.'
+                             : 'Work out 4 × 12, or 12 + 12 + 12 + 12.';
+        },
+        win: () => '$48. 12 + 12 + 12 + 12, 4 × 12 and 12 × 4 are all 48. Because the three are equivalent, working out one gives you all three.',
+        won() { ans.mark('good'); ans.lock(); },
+        solve() { ans.set(48); }
+      };
+    }
   }
 },
 
-/* 11 */ {
+/* 13 */ {
   prompt: 'Build an expression equivalent to ' + mx('3n + 4') + '. Test it, then check.',
+  why: () => stillTwin({ s: '3n + 4', f: n => 3 * n + 4 }, { s: 'n + n + n + 4', f: n => 3 * n + 4 }, 5) +
+    wl(mx('3n') + ' and ' + mx('n + n + n') + ' are equivalent, so swapping one for the other never changes the output.') +
+    wl('Both machines then add the same 4.'),
   build: buildTwin({
     A: { s: '3n + 4', f: n => 3 * n + 4 }, start: 2,
     tiles: ['n', '+', '×', '1', '2', '3', '4'],
@@ -606,8 +771,11 @@ const cards = [
   })
 },
 
-/* 12 */ {
+/* 14 */ {
   prompt: 'No bracket tile. Build an expression equivalent to ' + mx('2(n + 3)') + '.',
+  why: () => stillTwin(E.br, { s: 'n + 3 + n + 3', f: n => n + 3 + n + 3 }, 5) +
+    wl('Two lots of ' + mx('(n + 3)') + ' is ' + mx('(n + 3) + (n + 3)') + '.') +
+    wl('Each lot brings its own ' + mx('n') + ' and its own 3, so the answer needs two of each.'),
   build: buildTwin({
     A: E.br, start: 1,
     tiles: ['n', '+', '×', '1', '2', '3'],
@@ -621,9 +789,16 @@ const cards = [
   })
 },
 
-/* 13 */ {
+/* 15 */ {
   prompt: 'Who is right about equivalent expressions?',
   sub: 'Choose Agree or Disagree for each one.',
+  why: () => pairTab([
+      { a: E.t2, b: E.p2, v: 'Not equivalent' },
+      { a: E.br, b: E.nb, v: 'Not equivalent' },
+      { a: E.np3, b: E.p3n, v: 'Equivalent' }
+    ], [1, 2, 3]) +
+    wl('One ≠ in a row is enough to show a pair is not equivalent.') +
+    wl('Equivalent needs = for every value of ' + mx('n') + ', not only the three shown.'),
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const claims = [
@@ -671,7 +846,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Two machines'], [4, 'One value is not enough'], [8, 'Sort and build'], [12, 'Wrap-up']];
+const SECTIONS = [[0, 'Two machines'], [4, 'One value is not enough'], [9, 'Sort and build'], [14, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

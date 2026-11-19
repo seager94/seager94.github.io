@@ -306,7 +306,7 @@ function makeSubMachine(host, o) {
 // The value is already in the machine: predict the output, then a right answer runs the machine.
 function predictCard(c) {
   return {
-    prompt: c.prompt, sub: c.sub,
+    prompt: c.prompt, sub: c.sub, why: c.why, then: c.then,
     build(stage, ctl, ctx) {
       const n = c.n;
       const mc = makeSubMachine(stage, { f: c.f, inCap: mx(c.letter), outCap: c.outCap || 'out' });
@@ -323,10 +323,55 @@ function predictCard(c) {
         },
         win: c.win,
         won() { mc.run(numTile(out()), line()); ans.mark('good'); ans.lock(); },
-        solve() { ans.set(out()); }
+        solve() { ans.set(out()); },
+        mc, recap: c.recap
       };
     }
   };
+}
+
+/* ---------- still pictures for Why? panels and bridges ---------- */
+const T = (k, s) => '<span class="tile ' + k + ' still">' + s + '</span>';
+const GHOST = '<span class="tile ghost still">×</span>';      // the × that is not written in 3n
+const tgrid = (cols, cells) => '<div class="tgrid" style="grid-template-columns:repeat(' + cols + ',auto)">' + cells.join('') + '</div>';
+const wl = (...lines) => lines.map(l => '<p class="wl">' + l + '</p>').join('');
+// A machine that has already run: a went in, b came out.
+function stillMach(f, inCap, outCap, a, b) {
+  return '<div class="mach"><div class="m-slot m-in"><span class="cap">' + inCap + '</span>' + T('num', a) + '</div><div class="m-pipe"></div>' +
+    '<div class="m-body"><span class="fx">' + f + '</span></div><div class="m-pipe"></div><div class="m-slot m-out"><span class="cap">' + outCap + '</span>' + T('num', b) + '</div></div>';
+}
+// Marbles laid out in order. Each part is { bags: k, n: marbles in each bag } or { loose: m }.
+function marblePic(parts) {
+  let x = 6, g = '';
+  parts.forEach((q, i) => {
+    if (i) { g += '<text class="wp-op" x="' + (x + 15) + '" y="52" text-anchor="middle">+</text>'; x += 30; }
+    const x0 = x;
+    if (q.bags) { for (let k = 0; k < q.bags; k++) { g += bagG(x, 0, { inside: q.n }); x += 66; } x -= 4; }
+    else { x = Math.max(x, x0 + 4); for (let k = 0; k < q.loose; k++) { g += marbleG(x + 11, 58, 9.5); x += 23; } x += 3; }
+    g += '<text class="wp-t" x="' + ((x0 + x) / 2) + '" y="92" text-anchor="middle">' +
+      (q.bags ? '<tspan class="v">n</tspan> = ' + q.n + ' in each bag' : q.loose + ' loose') + '</text>';
+  });
+  const W = x + 6;
+  return '<svg class="wpic" viewBox="0 0 ' + W + ' 100" style="max-width:' + Math.round(W * 1.5) + 'px" role="img" aria-label="' +
+    parts.map(q => q.bags ? plural(q.bags, 'bag') + ' holding ' + q.n + ' marbles each' : plural(q.loose, 'loose marble')).join(' and ') + '">' + g + '</svg>';
+}
+// The 7 by 4 rectangle cut into unit squares, with the count written beside each row.
+function rectPic() {
+  const U = 20, x0 = 34, y0 = 6, W = 7 * U, H = 4 * U;
+  let g = '<rect class="r-fill open" x="' + x0 + '" y="' + y0 + '" width="' + W + '" height="' + H + '"/>';
+  for (let i = 1; i < 7; i++) g += '<line class="r-grid" x1="' + (x0 + i * U) + '" y1="' + y0 + '" x2="' + (x0 + i * U) + '" y2="' + (y0 + H) + '"/>';
+  for (let j = 1; j < 4; j++) g += '<line class="r-grid" x1="' + x0 + '" y1="' + (y0 + j * U) + '" x2="' + (x0 + W) + '" y2="' + (y0 + j * U) + '"/>';
+  for (let j = 0; j < 4; j++) g += '<text class="wp-t" x="' + (x0 - 9) + '" y="' + (y0 + j * U + 15) + '" text-anchor="end">7</text>';
+  g += '<line class="r-l" x1="' + x0 + '" y1="' + (y0 + H) + '" x2="' + (x0 + W) + '" y2="' + (y0 + H) + '"/>' +
+    '<line class="r-w" x1="' + (x0 + W) + '" y1="' + y0 + '" x2="' + (x0 + W) + '" y2="' + (y0 + H) + '"/>' +
+    '<text class="r-t" x="' + (x0 + W / 2) + '" y="' + (y0 + H + 22) + '" text-anchor="middle"><tspan class="v">l</tspan> = 7</text>' +
+    '<text class="r-t" x="' + (x0 + W + 10) + '" y="' + (y0 + H / 2 + 6) + '"><tspan class="v2">w</tspan> = 4</text>';
+  return '<svg class="wpic" viewBox="0 0 250 114" style="max-width:310px" role="img" aria-label="Rectangle cut into 4 rows of 7 unit squares">' + g + '</svg>';
+}
+// One scoreboard row. p = null leaves the points as a question mark.
+function boardRow(team, g, b, p) {
+  return '<div class="board vs"><span class="team">' + team + '</span><span class="sc">' + T('num', g) + 'goals, ' + F2('g') + '</span><span class="dot">.</span>' +
+    '<span class="sc">' + T('num', b) + 'behinds, ' + F2('b') + '</span><span class="sc pts">' + (p == null ? T('op', '?') : T('num', p)) + 'points, ' + F2('p') + '</span></div>';
 }
 
 const F2 = s => mx(s, 'b', 'p');   // AFL: g blue, b purple, p the score
@@ -337,7 +382,9 @@ const cards = [
 
 /* 1 */ predictCard({
   prompt: 'This machine works out ' + mx('3n + 2') + '. ' + mx('n = 4') + ' goes in. What will come out?',
-  sub: 'Type your prediction, then press Check.',
+  sub: 'Think of it as bike hire: $3 an hour for ' + mx('n') + ' hours, plus a $2 helmet fee. Type your prediction, then press Check.',
+  why: () => marblePic([{ bags: 3, n: 4 }, { loose: 2 }]) +
+    wl(mx('3n') + ' counts 3 lots of ' + mx('n') + ': 4 + 4 + 4 = 12 marbles in the bags.', 'Then the 2 loose marbles: 12 + 2 = 14. Bike hire for 4 hours costs $14 the same way.'),
   f: mx('3n + 2'), letter: 'n', n: 4,
   rule: n => 3 * n + 2, work: n => '3 × ' + n + ' + 2',
   wrong: {
@@ -353,6 +400,8 @@ const cards = [
 
 /* 2 */ {
   prompt: 'Which line shows ' + mx('3n + 2') + ' with 4 put in place of ' + mx('n') + '?',
+  why: () => tgrid(5, [T('num', 3), GHOST, T('var', 'n'), T('op', '+'), T('num', 2), T('num', 3), T('op', '×'), T('num', 4), T('op', '+'), T('num', 2)]) +
+    wl(mx('3n') + ' is short for 3 × ' + mx('n') + '. The × was there all along, just not written.', 'Only the ' + mx('n') + ' changes to 4. Everything else stays where it was.'),
   build(stage, ctl, ctx) {
     stage.append(h('<div class="big">' + mx('3n + 2') + '</div>'), h('<div class="note">' + mx('n = 4') + '</div>'));
     const ch = makeChoices(ctl, [mx('34 + 2'), mx('3 × 4 + 2'), mx('3 + 4 + 2'), mx('3 × (4 + 2)')], ctx);
@@ -384,10 +433,51 @@ const cards = [
     35: '35 is ' + mx('5n') + '. Now add the 1.'
   },
   other: () => 'Put 7 where ' + mx('n') + ' was: 5 × 7 + 1. Multiply first, then add.',
-  win: () => '5 × 7 + 1 = 35 + 1 = 36. The same two steps every time: put the number in and write the ×, then multiply before you add.'
+  win: () => '5 × 7 + 1 = 35 + 1 = 36. The same two steps every time: put the number in and write the ×, then multiply before you add.',
+  why: () => stillMach(mx('5n + 1'), mx('n'), 'out', 7, 36) +
+    wl(mx('5n') + ' is 5 lots of 7: 7 + 7 + 7 + 7 + 7 = 35. (57 would be 5 tens and 7 ones.)', 'Then the + 1: 35 + 1 = 36.'),
+  recap: () => 'When ' + mx('n = 7') + ', the machine gives 5 × 7 + 1 = 36.',
+  then: {
+    prompt: 'Now ' + mx('n = 8') + ' goes in. What will come out?',
+    why: () => stillMach(mx('5n + 1'), mx('n'), 'out', 8, 41) +
+      wl(mx('n') + ' went up from 7 to 8, so there is one more lot of 5: 36 + 5 = 41.', 'Check by substituting: 5 × 8 + 1 = 40 + 1 = 41.'),
+    build(stage, ctl, ctx, p1) {
+      const mc = p1.mc;
+      mc.clear(); mc.input(numTile(8));
+      const ans = makeAnswer(ctl, 'Your prediction', ctx);
+      const wrong = {
+        59: 'You read ' + mx('5n') + ' as 58, then added 1. ' + mx('5n') + ' means 5 × ' + mx('n') + ', so it is 5 × 8 = 40.',
+        58: '58 is 5 and 8 written side by side. ' + mx('5n') + ' means 5 × 8 = 40. Then add 1.',
+        14: 'You added: 5 + 8 + 1. But ' + mx('5n') + ' means 5 × ' + mx('n') + '.',
+        45: 'You added 8 + 1 first, then multiplied by 5. Multiply first: 5 × 8 = 40, then add 1.',
+        40: '40 is ' + mx('5n') + '. Now add the 1.',
+        37: 'You added 1 to the last output. ' + mx('n') + ' went up by 1, and the machine multiplies ' + mx('n') + ' by 5. Substitute 8: 5 × 8 + 1.',
+        36: '36 came out when ' + mx('n') + ' was 7. Now 8 goes in: 5 × 8 + 1.'
+      };
+      return {
+        check() {
+          const v = ans.value();
+          if (isNaN(v)) { ans.mark('bad'); return 'Type a whole number, using digits only.'; }
+          if (v === 41) return true;
+          ans.mark('bad');
+          return wrong[v] || 'Put 8 where ' + mx('n') + ' was: 5 × 8 + 1. Multiply first, then add.';
+        },
+        win: () => '5 × 8 + 1 = 40 + 1 = 41. A new value of ' + mx('n') + ' means substituting again: same rule, new number.',
+        won() { mc.run(numTile(41), '<span class="m">5 × 8 + 1 = 41</span>'); ans.mark('good'); ans.lock(); },
+        solve() { ans.set(41); }
+      };
+    }
+  }
 }),
 
-/* 4 */ predictCard({
+/* 4 */ {
+  bridge: true,
+  prompt: 'Putting a number in place of a letter is called <b>substitution</b>.',
+  sub: 'You substituted ' + mx('n = 4') + ' and ' + mx('n = 7') + '. Each time, the hidden × had to be written in: ' + mx('5n') + ' became 5 × 7.',
+  show(stage) { stage.append(h(tgrid(3, [T('num', 5), GHOST, T('var', 'n'), T('num', 5), T('op', '×'), T('num', 7)]))); }
+},
+
+/* 5 */ predictCard({
   prompt: 'This machine works out ' + mx('2 + 3n') + '. ' + mx('n = 5') + ' goes in. What will come out?',
   sub: 'The 2 comes first this time. Predict, then press Check.',
   f: mx('2 + 3n'), letter: 'n', n: 5,
@@ -399,12 +489,17 @@ const cards = [
     15: '15 is ' + mx('3n') + '. Now add the 2 at the front.'
   },
   other: () => 'Put 5 where ' + mx('n') + ' was: 2 + 3 × 5. Multiply first, then add.',
-  win: () => '2 + 3 × 5 = 2 + 15 = 17. The 3 belongs to the ' + mx('n') + ': ' + mx('3n') + ' is worked out first, wherever it sits.'
+  win: () => '2 + 3 × 5 = 2 + 15 = 17. The 3 belongs to the ' + mx('n') + ': ' + mx('3n') + ' is worked out first, wherever it sits.',
+  why: () => marblePic([{ loose: 2 }, { bags: 3, n: 5 }]) +
+    wl('The 3 counts the bags: 3 lots of 5 = 15. The 2 loose marbles are not in any bag.', 'So work out the bags first, then add the 2: 2 + 15 = 17.')
 }),
 
-/* 5 */ {
+/* 6 */ {
   prompt: 'Do ' + mx('2 + 3n') + ' and ' + mx('3n + 2') + ' always give the same number?',
   sub: 'Slide ' + mx('n') + ' to test them.',
+  why: () => '<div class="wduo"><div><div class="wcap">' + mx('2 + 3n') + '</div>' + marblePic([{ loose: 2 }, { bags: 3, n: 4 }]) + '</div>' +
+    '<div><div class="wcap">' + mx('3n + 2') + '</div>' + marblePic([{ bags: 3, n: 4 }, { loose: 2 }]) + '</div></div>' +
+    wl('The same 3 bags and 2 loose marbles in a different order: 2 + 12 = 12 + 2 = 14.', 'Whatever ' + mx('n') + ' is, both count the same marbles.'),
   build(stage, ctl, ctx) {
     let n = 1;
     const duo = h('<div class="duo"><div class="panel"><div class="big">' + mx('2 + 3n') + '</div><span class="w"></span></div>' +
@@ -433,7 +528,7 @@ const cards = [
   }
 },
 
-/* 6 */ predictCard({
+/* 7 */ predictCard({
   prompt: 'This machine works out ' + mx('20 − 2n') + '. ' + mx('n = 6') + ' goes in. What will come out?',
   sub: 'Predict, then press Check.',
   f: mx('20 − 2n'), letter: 'n', n: 6,
@@ -445,10 +540,19 @@ const cards = [
     32: 'That is 20 + 12. The sign is minus, so take 12 away from 20.'
   },
   other: () => 'Put 6 where ' + mx('n') + ' was: 20 − 2 × 6. Multiply first, then subtract.',
-  win: () => '20 − 2 × 6 = 20 − 12 = 8. Multiplying comes before subtracting too.'
+  win: () => '20 − 2 × 6 = 20 − 12 = 8. Multiplying comes before subtracting too.',
+  why: () => stillMach(mx('20 − 2n'), mx('n'), 'out', 6, 8) +
+    wl(mx('2n') + ' is 2 lots of 6 = 12. The minus sign takes away all of ' + mx('2n') + ', so 12 comes off.', '20 − 12 = 8. (Working out 20 − 2 first gives 18 × 6 = 108.)')
 }),
 
-/* 7 */ predictCard({
+/* 8 */ {
+  bridge: true,
+  prompt: 'Each time, you multiplied before you added or subtracted. That is the <b>order of operations</b>.',
+  sub: 'It still applies after you substitute. The multiplication comes first, wherever it is written.',
+  show(stage) { stage.append(h('<div class="big"><span class="m">20 − <span class="first">2 × 6</span></span></div>'), h('<div class="live"><span class="m">20 − 12 = 8</span></div>')); }
+},
+
+/* 9 */ predictCard({
   prompt: 'You earn $25 an hour, so your weekly pay in dollars is ' + mx('W = 25h') + '. You work ' + mx('h = 6') + ' hours. What is ' + mx('W') + '?',
   sub: mx('h') + ' is the number of hours you work. Predict, then press Check.',
   f: mx('25h'), letter: 'h', outCap: mx('W'), label: 'Pay in dollars, ' + mx('W'), n: 6,
@@ -459,12 +563,55 @@ const cards = [
     25: '$25 is the pay for one hour. You worked 6 hours.'
   },
   other: () => 'Each hour earns $25. Put 6 where ' + mx('h') + ' was: 25 × 6.',
-  win: () => '25 × 6 = 150, so ' + mx('W = 150') + ' and you earn $150. A formula is a rule from real life, with letters standing for numbers.'
+  win: () => '25 × 6 = 150, so ' + mx('W = 150') + ' and you earn $150. A formula is a rule from real life, with letters standing for numbers.',
+  why: () => stillMach(mx('25h'), mx('h'), mx('W'), 6, 150) +
+    wl(mx('25h') + ' means $25 for every hour worked: 25 + 25 + 25 + 25 + 25 + 25.', 'That is 6 lots of 25 = 150, so ' + mx('W = 150') + '.')
 }),
 
-/* 8 */ {
+/* 10 */ {
   prompt: 'The Crows kicked 12 goals and 8 behinds. Use ' + F2('p = 6g + b') + ' to find their score.',
   sub: 'A goal is worth 6 points and a behind is worth 1. ' + F2('g') + ' is the number of goals, ' + F2('b') + ' the number of behinds, ' + F2('p') + ' the points.',
+  why: () => boardRow('Crows', 12, 8, 80) +
+    wl('Goals: 12 lots of 6 points = 72. That is the ' + F2('6g') + '.', 'Behinds: 8 lots of 1 point = 8, so ' + F2('b') + ' needs no number in front. 72 + 8 = 80.'),
+  then: {
+    prompt: 'The Power kicked 11 goals and 15 behinds. Use the same formula to find their score.',
+    why: () => boardRow('Crows', 12, 8, 80) + boardRow('Power', 11, 15, 81) +
+      wl('Power: 6 × 11 = 66 from goals and 15 from behinds. 66 + 15 = 81.', 'One goal fewer costs 6 points, but 7 more behinds add 7.'),
+    build(stage, ctl, ctx, p1) {
+      p1.board.classList.add('vs');
+      const board = h(boardRow('Power', 11, 15, null));
+      p1.board.after(board);
+      p1.live.innerHTML = F2('p = 6g + b');
+      const ans = makeAnswer(ctl, 'Points, ' + F2('p'), ctx);
+      const why = {
+        101: 'You multiplied the behinds by 6. Goals are worth 6: put 11 where ' + F2('g') + ' is and 15 where ' + F2('b') + ' is.',
+        90: '6 × 15 multiplies the behinds by 6. Goals are worth 6: 6 × 11, then add the 15 behinds.',
+        32: 'You added: 6 + 11 + 15. ' + F2('6g') + ' means 6 × ' + F2('g') + ': each of the 11 goals is worth 6.',
+        26: '11 + 15 counts every score as 1 point. Each goal is worth 6.',
+        66: '66 is the points from goals. Add the 15 behinds.',
+        156: 'You added 11 + 15 first, then multiplied by 6. That makes behinds worth 6 too. Multiply first: 6 × 11 = 66, then add 15.',
+        626: 'You read ' + F2('6g') + ' as 611. ' + F2('6g') + ' means 6 × ' + F2('g') + ' = 6 × 11 = 66.',
+        1115: 'The scoreboard’s 11.15 is not the number 1115. It means 11 goals and 15 behinds.',
+        80: '80 is the Crows’ score. Substitute the Power’s numbers: 11 for ' + F2('g') + ' and 15 for ' + F2('b') + '.'
+      };
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 81) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          return why[v] || 'Put 11 where ' + F2('g') + ' is and 15 where ' + F2('b') + ' is: 6 × 11 + 15. Multiply first.';
+        },
+        win: () => '6 × 11 + 15 = 66 + 15 = 81 points. The Power kicked fewer goals but win 81 to 80. Same formula, new numbers.',
+        won() {
+          $('.pts .tile', board).replaceWith(h(numTile(81)));
+          p1.live.innerHTML = F2('p = 6g + b') + '<small>6 × 11 + 15 = 66 + 15 = 81</small>';
+          ans.mark('good'); ans.lock();
+        },
+        solve() { ans.set(81); }
+      };
+    }
+  },
   build(stage, ctl, ctx) {
     const board = h('<div class="board"><span class="team">Crows</span><span class="sc"><span class="tile num still">12</span>goals, ' + F2('g') + '</span><span class="dot">.</span>' +
       '<span class="sc"><span class="tile num still">8</span>behinds, ' + F2('b') + '</span><span class="sc pts"><span class="tile op still">?</span>points, ' + F2('p') + '</span></div>');
@@ -494,13 +641,16 @@ const cards = [
         live.innerHTML = F2('p = 6g + b') + '<small>6 × 12 + 8 = 72 + 8 = 80</small>';
         ans.mark('good'); ans.lock();
       },
-      solve() { ans.set(80); }
+      solve() { ans.set(80); },
+      board, live, recap: () => 'Crows: 6 × 12 + 8 = 80 points.'
     };
   }
 },
 
-/* 9 */ {
+/* 11 */ {
   prompt: 'A rectangle’s area is ' + FA('A = lw') + '. Find ' + FA('A') + ' when ' + FA('l = 7') + ' and ' + FA('w = 4') + '.',
+  why: () => rectPic() +
+    wl('Area counts the squares inside. Each row has 7, and there are 4 rows: 7 + 7 + 7 + 7.', 'That is 4 lots of 7, which is what ' + FA('lw') + ' works out: 7 × 4 = 28.'),
   build(stage, ctl, ctx) {
     const l = 7, w = 4;
     let open = false;
@@ -545,8 +695,12 @@ const cards = [
   }
 },
 
-/* 10 */ {
+/* 12 */ {
   prompt: 'Two letters at once. Find ' + FB('2a + 3b') + ' when ' + FB('a = 5') + ' and ' + FB('b = 4') + '.',
+  why: () => tgrid(7, [T('num', 2), GHOST, T('var', 'a'), T('op', '+'), T('num', 3), GHOST, T('var2', 'b'),
+      T('num', 2), T('op', '×'), T('num', 5), T('op', '+'), T('num', 3), T('op', '×'), T('num', 4),
+      '<span class="sum">10</span>', '<span class="plus">+</span>', '<span class="sum">12</span>']) +
+    wl('Each term is worked out on its own: ' + FB('2a') + ' is 2 lots of 5, and ' + FB('3b') + ' is 3 lots of 4.', 'Then add the two results: 10 + 12 = 22.'),
   build(stage, ctl, ctx) {
     const live = h('<div class="live"></div>');
     stage.append(h('<div class="big">' + FB('2a + 3b') + '</div>'), h('<div class="notes"><span class="note">' + FB('a = 5') + '</span><span class="note two">' + FB('b = 4') + '</span></div>'), live);
@@ -574,9 +728,18 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 13 */ {
+  bridge: true,
+  prompt: 'Rules like ' + mx('W = 25h') + ' and ' + F2('p = 6g + b') + ' are called <b>formulas</b>.',
+  sub: 'You substituted a number for each letter on the right, and the formula gave you the value of the letter on the left.',
+  show(stage) { stage.append(h(stillMach(mx('25h'), mx('h'), mx('W'), 6, 150))); }
+},
+
+/* 14 */ {
   prompt: 'Work backwards. Which value of ' + mx('n') + ' makes ' + mx('3n + 2') + ' give 20?',
   sub: 'Move the slider. The machine runs every time.',
+  why: () => marblePic([{ bags: 3, n: 6 }, { loose: 2 }]) +
+    wl('20 marbles altogether. Take off the 2 loose ones: 20 − 2 = 18 are in the bags.', '3 equal bags share 18: 18 ÷ 3 = 6 in each, so ' + mx('n = 6') + '.'),
   build(stage, ctl, ctx) {
     let n = 1;
     const mc = makeSubMachine(stage, { f: mx('3n + 2'), inCap: mx('n'), outCap: 'out' });
@@ -594,8 +757,39 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 15 */ {
   prompt: 'Your pay this week was $200. Use ' + mx('W = 25h') + ' to find how many hours you worked.',
+  why: () => stillMach(mx('25h'), mx('h'), mx('W'), 8, 200) +
+    wl('How many lots of $25 make $200? Count up: 25, 50, 75, 100, 125, 150, 175, 200.', 'That is 8 lots of 25, so ' + mx('h = 8') + '.'),
+  then: {
+    prompt: 'Next week your pay is $300. How many hours did you work?',
+    why: () => stillMach(mx('25h'), mx('h'), mx('W'), 12, 300) +
+      wl('Every $100 is 4 lots of $25. $300 is three $100s, so 3 × 4 = 12 lots of $25.', 'Substitute to check: 25 × 12 = 300.'),
+    build(stage, ctl, ctx, p1) {
+      const mc = p1.mc;
+      mc.input(Q); mc.show(numTile(300));
+      const ans = makeAnswer(ctl, 'Hours, ' + mx('h'), ctx);
+      const why = {
+        7500: '300 × 25 runs the machine forwards. To work backwards, undo × 25 by dividing.',
+        275: '300 − 25 takes off one hour’s pay. The machine multiplies by 25, so undo it by dividing: 300 ÷ 25.',
+        325: '300 + 25 adds another hour’s pay. Which number times 25 makes 300?',
+        8: '8 hours earned $200. This week’s pay is $300, so you worked more hours.',
+        4: '4 hours earns the extra $100. Add them to the 8 hours that earn $200.'
+      };
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 12) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          return why[v] || 'Check it: 25 × ' + v + ' = ' + 25 * v + ', not 300. Try ' + (25 * v < 300 ? 'more' : 'fewer') + ' hours.';
+        },
+        win: () => '300 ÷ 25 = 12 hours. A different output needs a different input, found the same way: undo the × 25.',
+        won() { mc.input(numTile(12)); mc.show(numTile(300), '<span class="m">25 × 12 = 300</span>'); ans.mark('good'); ans.lock(); },
+        solve() { ans.set(12); }
+      };
+    }
+  },
   build(stage, ctl, ctx) {
     const mc = makeSubMachine(stage, { f: mx('25h'), inCap: mx('h'), outCap: mx('W') });
     mc.input(Q); mc.show(numTile(200));
@@ -615,14 +809,17 @@ const cards = [
       },
       win: () => '200 ÷ 25 = 8 hours. Check by substituting: 25 × 8 = 200. Working backwards undoes the machine’s steps.',
       won() { mc.input(numTile(8)); mc.show(numTile(200), '<span class="m">25 × 8 = 200</span>'); ans.mark('good'); ans.lock(); },
-      solve() { ans.set(8); }
+      solve() { ans.set(8); },
+      mc, recap: () => 'Pay of $200 means 200 ÷ 25 = 8 hours.'
     };
   }
 },
 
-/* 13 */ {
+/* 16 */ {
   prompt: 'Three students substitute ' + mx('n = 3') + ' into ' + mx('4 + 5n') + '. Who is right?',
   sub: 'Choose Agree or Disagree for each one.',
+  why: () => marblePic([{ loose: 4 }, { bags: 5, n: 3 }]) +
+    wl(mx('5n') + ' is 5 lots of 3 = 15, and the 4 is separate: 4 + 15 = 19 marbles.', 'Zoe’s 57 would need 53 marbles in the bags. Noah’s 27 would need 9 bags.'),
   build(stage, ctl, ctx) {
     stage.hidden = true;
     const claims = [
@@ -666,7 +863,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'The machine'], [3, 'Order matters'], [6, 'Formulas'], [10, 'Backwards'], [12, 'Wrap-up']];
+const SECTIONS = [[0, 'The machine'], [3, 'Order matters'], [7, 'Formulas'], [12, 'Backwards'], [15, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

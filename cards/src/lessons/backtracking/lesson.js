@@ -364,13 +364,61 @@ function reverseWhy(fwd, out, ord) {
   return 'Undo the last step first. Step ' + (k + 1) + ' of your reverse machine should undo ' + ex(fwd[fwd.length - 1 - k]) + '.' + back;
 }
 
+/* ---------- still pictures for Why? panels and bridges ---------- */
+// A still machine, drawn as an SVG so it scales down on a phone. o.steps: the machine's steps. o.vals: what is in each
+// box ('' empty, '?' unknown). o.back: add a second row with the same numbers and, under each step, the step that
+// undoes it (arrows point left). o.from: first box of that second row (default 0). o.caps: caption over each top box.
+// o.mark / o.mark2: { box: 'good' | 'bad' } for the top / second row. o.notes: { box: text } under a top-row box.
+const SX = s => '<tspan class="sf-x">' + s + '</tspan>';
+function stillFlow(o) {
+  const n = o.steps.length, BW = 54, BH = 44, SW = 60, SH = 36, AW = n >= 3 ? 18 : 22, U = BW + SW + 2 * AW;
+  const W = BW + n * U + 2, top = o.caps ? 20 : 2, mark = o.mark || {}, mark2 = o.mark2 || {}, notes = o.notes || {};
+  const noted = Object.keys(notes).length > 0, y2 = top + BH + (noted ? 36 : 22), from = o.from || 0;
+  const H = (o.back ? y2 + BH : top + BH + (noted ? 20 : 0)) + 4;
+  const box = (i, y, v, m) => {
+    const x = 1 + i * U, q = v === '?';
+    let g = '<rect class="sf-box' + (m ? ' ' + m : '') + '" x="' + x + '" y="' + y + '" width="' + BW + '" height="' + BH + '" rx="12"/>';
+    if (v !== '' && v != null) g += '<rect class="' + (q ? 'sf-qd' : 'sf-td') + '" x="' + (x + 6) + '" y="' + (y + 9) + '" width="' + (BW - 12) + '" height="' + (BH - 15) + '" rx="8"/>' +
+      '<rect class="' + (q ? 'sf-q' : 'sf-t') + '" x="' + (x + 6) + '" y="' + (y + 6) + '" width="' + (BW - 12) + '" height="' + (BH - 15) + '" rx="8"/>' +
+      '<text class="sf-n' + (q ? ' q' : '') + (String(v).length > 2 ? ' sm' : '') + '" x="' + (x + BW / 2) + '" y="' + (y + 27) + '">' + v + '</text>';
+    return g;
+  };
+  const arrow = (x1, x2, y, left) => left
+    ? '<path class="sf-a" d="M' + x2 + ' ' + y + 'H' + (x1 + 6) + '"/><path class="sf-ah" d="M' + x1 + ' ' + y + 'l8 -6v12z"/>'
+    : '<path class="sf-a" d="M' + x1 + ' ' + y + 'H' + (x2 - 6) + '"/><path class="sf-ah" d="M' + x2 + ' ' + y + 'l-8 -6v12z"/>';
+  const step = (i, y, t, back) => {
+    const x = 1 + i * U + BW + AW, cy = y + BH / 2;
+    return arrow(x - AW + 3, x - 3, cy, back) + arrow(x + SW + 3, x + SW + AW - 3, cy, back) +
+      '<rect class="' + (back ? 'sf-u' : 'sf-s') + '" x="' + x + '" y="' + (cy - SH / 2) + '" width="' + SW + '" height="' + SH + '" rx="11"/>' +
+      '<text class="' + (back ? 'sf-ut' : 'sf-st') + '" x="' + (x + SW / 2) + '" y="' + (cy + 6.5) + '">' + t + '</text>';
+  };
+  let g = '';
+  o.vals.forEach((v, i) => {
+    if (o.caps && o.caps[i]) g += '<text class="sf-c" x="' + (1 + i * U + BW / 2) + '" y="13">' + o.caps[i] + '</text>';
+    g += box(i, top, v, mark[i]);
+    if (notes[i]) g += '<text class="sf-c" x="' + (1 + i * U + BW / 2) + '" y="' + (top + BH + 15) + '">' + notes[i] + '</text>';
+    if (i < n) g += step(i, top, o.steps[i], false);
+    if (o.back && i >= from) { g += box(i, y2, v, mark2[i]); if (i < n) g += step(i, y2, undo(o.steps[i]), true); }
+  });
+  return '<svg class="sf" viewBox="0 0 ' + W + ' ' + H + '" style="max-width:' + (W * (o.scale || 1) / 16).toFixed(2) + 'rem" role="img" aria-label="' + o.label + '">' + g + '</svg>';
+}
+// A machine run forwards from v, and (back) undone underneath. Describes itself for screen readers.
+function stillRun(v, steps, o) {
+  o = o || {};
+  const vals = [v]; steps.forEach(s => vals.push(runStep(vals[vals.length - 1], s)));
+  const shown = vals.map((x, i) => (o.show && o.show[i] != null) ? o.show[i] : String(x));
+  const label = 'Forwards: ' + trace(v, steps) + '.' + (o.back ? ' Backwards: ' + trace(vals[vals.length - 1], steps.slice(o.from || 0).map(undo).reverse()) + '.' : '');
+  return stillFlow(Object.assign({ steps, vals: shown, label }, o));
+}
+const whyBox = (fig, lines) => '<div class="wy-fig">' + fig + '</div>' + lines.map(l => '<p class="wy-ln">' + l + '</p>').join('');
+
 /* ---------- cards ---------- */
-// The machine on top, and an empty reverse machine under it that the student fills with steps (cards 4, 6, 8 and 13).
+// The machine on top, and an empty reverse machine under it that the student fills with steps (cards 5, 7, 9 and 15).
 function reverseCard(cfg) {
   return function (stage, ctl, ctx) {
     const n = cfg.fwd.length, ans = cfg.fwd.map(undo).reverse();
     stage.append(h('<p class="f-lab">The machine</p>'));
-    makeFlow(stage, { vals: cfg.fvals || [QT].concat(Array(n - 1).fill(''), [nt(cfg.out)]), steps: cfg.fwd, caps: caps(n, 'in', 'out') });
+    const fwdFlow = makeFlow(stage, { vals: cfg.fvals || [QT].concat(Array(n - 1).fill(''), [nt(cfg.out)]), steps: cfg.fwd, caps: caps(n, 'in', 'out') });
     stage.append(h('<p class="f-lab">Your reverse machine</p>'));
     const rev = makeFlow(stage, { vals: [nt(cfg.out)].concat(Array(n).fill('')), steps: ans.map(() => null), caps: caps(n, 'start', cfg.capEnd || 'went in') });
     const od = makeOrder(rev, ctl, cfg.chips, ctx, ord => {
@@ -385,7 +433,8 @@ function reverseCard(cfg) {
       check() { const ord = od.order(); return ord.join('|') === ans.join('|') ? true : reverseWhy(cfg.fwd, cfg.out, ord); },
       win: cfg.win,
       won() { od.lock(); rev.val(n, nt(runAll(cfg.out, ans)), 'good'); },
-      solve() { od.set(ans); }
+      solve() { od.set(ans); },
+      recap: cfg.recap, fwdFlow, rev
     };
   };
 }
@@ -396,7 +445,11 @@ const cards = [
 
 /* 1 */ {
   prompt: 'A number went into this machine and 17 came out. What number went in?',
-  sub: 'Drag numbers into the machine, or tap them, to test them.',
+  sub: 'You often know a final total, like a taxi fare, and need the number that went in. Drag numbers into the machine, or tap them, to test them.',
+  why: () => whyBox(stillRun(6, ['× 2', '+ 5'], { caps: ['in', '', 'out'], mark: { 2: 'good' } }), [
+    '6 × 2 = 12, then 12 + 5 = 17.',
+    'A bigger input gives a bigger output: 5 gives 15 and 7 gives 19. So 6 is the only input that gives 17.'
+  ]),
   build(stage, ctl, ctx) {
     const STEPS = ['× 2', '+ 5'];
     const fl = makeFlow(stage, { vals: ['', '', ''], steps: STEPS, caps: ['in', '', 'out'] });
@@ -443,6 +496,10 @@ const cards = [
 },
 
 /* 2 */ {
+  why: () => whyBox(stillRun(6, ['× 2', '+ 5'], { show: { 0: '?' }, back: true, from: 1, mark2: { 1: 'good' } }), [
+    'Forwards, the ' + ex('+ 5') + ' step did 12 + 5 = 17.',
+    'Backwards, 17 − 5 = 12. Subtracting 5 is the inverse operation of adding 5.'
+  ]),
   prompt: 'Work backwards from 17. What number was there just before the ' + ex('+ 5') + ' step?',
   build(stage, ctl, ctx) {
     const fl = makeFlow(stage, { vals: ['', QT, nt(17)], steps: ['× 2', '+ 5'], caps: ['in', '', 'out'] });
@@ -457,7 +514,7 @@ const cards = [
         if (v === 6) return '6 is the number that went in. This card asks for the middle number: the one that ' + ex('+ 5') + ' turned into 17.';
         return v + ' + 5 = ' + (v + 5) + ', not 17.' + (attempt >= 2 ? ' Which number plus 5 makes 17?' : '');
       },
-      win: () => '12, because 12 + 5 = 17. Taking away 5 undoes adding 5: 17 − 5 = 12. Operations that undo each other are called inverse operations.',
+      win: () => '12, because 12 + 5 = 17. Taking away 5 undoes adding 5: 17 − 5 = 12. Adding and subtracting are inverse operations.',
       won() { ans.mark('good'); ans.lock(); fl.val(1, nt(12)); },
       solve() { ans.set(12); }
     };
@@ -465,6 +522,10 @@ const cards = [
 },
 
 /* 3 */ {
+  why: () => whyBox(stillRun(6, ['× 2', '+ 5'], { back: true, mark2: { 0: 'good' } }), [
+    '12 came out of the ' + ex('× 2') + ' step, so 12 is double the input. Half of 12 is 6: 12 ÷ 2 = 6.',
+    'Check forwards: 6 × 2 = 12, then 12 + 5 = 17.'
+  ]),
   prompt: 'Now undo the ' + ex('× 2') + ' step. What number went in?',
   build(stage, ctl, ctx) {
     const fl = makeFlow(stage, { vals: [QT, nt(12), nt(17)], steps: ['× 2', '+ 5'], caps: ['in', '', 'out'] });
@@ -479,7 +540,7 @@ const cards = [
         if (v === 10) return '10 is 12 − 2. Taking away 2 undoes ' + ex('+ 2') + ', not ' + ex('× 2') + '. Check: 10 × 2 = 20, not 12.';
         return v + ' × 2 = ' + (2 * v) + ', not 12. Which number doubles to make 12?';
       },
-      win: () => '6, because 12 ÷ 2 = 6. Dividing by 2 undoes multiplying by 2. You undid ' + ex('+ 5') + ', then ' + ex('× 2') + ': the last step first. This is called backtracking.',
+      win: () => '6, because 12 ÷ 2 = 6. Dividing by 2 undoes multiplying by 2. You undid ' + ex('+ 5') + ', then ' + ex('× 2') + ': the last step first.',
       won() { ans.mark('good'); ans.lock(); fl.val(0, nt(6)); },
       solve() { ans.set(6); }
     };
@@ -487,15 +548,61 @@ const cards = [
 },
 
 /* 4 */ {
-  prompt: 'Build a reverse machine that turns 17 back into the number that went in.',
-  sub: 'Drag or tap steps into the boxes. Tap a placed step to remove it.',
-  build: reverseCard({
-    fwd: ['× 2', '+ 5'], out: 17, chips: ['+ 5', '÷ 2', '− 5', '× 2'],
-    win: () => '17 − 5 = 12, then 12 ÷ 2 = 6. The machine added 5 last, so the reverse machine takes 5 away first.'
-  })
+  bridge: true,
+  prompt: 'You undid ' + ex('+ 5') + ', then ' + ex('× 2') + ': the last step first. Working backwards through a machine like this is called <b>backtracking</b>.',
+  sub: 'Each step is undone by its inverse operation.',
+  show(stage) { stage.append(h('<div class="sf-wrap">' + stillRun(6, ['× 2', '+ 5'], { back: true, scale: 1.25 }) + '</div>')); }
 },
 
 /* 5 */ {
+  prompt: 'Build a reverse machine that turns 17 back into the number that went in.',
+  sub: 'Drag or tap steps into the boxes. Tap a placed step to remove it.',
+  why: () => whyBox(stillRun(6, ['× 2', '+ 5'], { back: true, mark2: { 0: 'good' } }), [
+    '17 is double the input, plus 5. The 5 went on last, so it comes off first: 17 − 5 = 12.',
+    'Now 12 is double the input, so 12 ÷ 2 = 6. Each undo step sits under the step it undoes.'
+  ]),
+  build: reverseCard({
+    fwd: ['× 2', '+ 5'], out: 17, chips: ['+ 5', '÷ 2', '− 5', '× 2'],
+    win: () => '17 − 5 = 12, then 12 ÷ 2 = 6. The machine added 5 last, so the reverse machine takes 5 away first.',
+    recap: () => 'Your reverse machine: ' + ex('− 5') + ', then ' + ex('÷ 2') + '. It turned 17 back into 6.'
+  }),
+  then: {
+    prompt: 'The same machine now gives 29. Use your reverse machine: what number went in?',
+    why: () => whyBox(stillRun(12, ['× 2', '+ 5'], { back: true, mark2: { 0: 'good' } }), [
+      'Backwards: 29 − 5 = 24, then 24 ÷ 2 = 12.',
+      'Check forwards: 12 × 2 = 24, then 24 + 5 = 29. The undo steps stay the same for any output. Only the numbers change.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      const FWD = ['× 2', '+ 5'];
+      p1.fwdFlow.val(2, nt(29));
+      p1.rev.val(0, nt(29)); p1.rev.val(1, ''); p1.rev.val(2, '');
+      const ans = makeAnswer(ctl, 'The number that went in', ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 12) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 24) return '24 is 29 − 5. That undoes ' + ex('+ 5') + ', but ' + ex('× 2') + ' still needs undoing. Use the ' + ex('÷ 2') + ' step as well.';
+          if (v === 6) return '6 went in when 17 came out. This time 29 came out, so start your reverse machine at 29.';
+          if (v === 34) return '34 is 29 + 5. Your reverse machine takes 5 away first.';
+          if (v === 48) return '48 is 24 × 2. Your reverse machine divides by 2 to undo ' + ex('× 2') + '.';
+          if (v === 63) return '63 is 29 run forwards: 29 × 2 = 58, then 58 + 5 = 63. 29 is what came out, so run it through your reverse machine.';
+          return 'Check it: ' + trace(v, FWD) + ', not 29. Start at 29 and follow your reverse machine: ' + ex('− 5') + ', then ' + ex('÷ 2') + '.';
+        },
+        win: () => 'Same reverse machine, new number: 29 − 5 = 24, then 24 ÷ 2 = 12. No guessing needed.',
+        won() { ans.mark('good'); ans.lock(); p1.rev.val(1, nt(24)); p1.rev.val(2, nt(12), 'good'); },
+        solve() { ans.set(12); }
+      };
+    }
+  }
+},
+
+/* 6 */ {
+  why: () => whyBox(stillRun(4, ['× 2', '+ 6'], { caps: ['in', '', 'out'], mark: { 2: 'bad' }, notes: { 2: 'not 20' } }), [
+    '4 × 2 = 8, then 8 + 6 = 14. The machine gave 20, so 4 did not go in.',
+    '20 is double the input, plus 6. Kai halved 20 while the extra 6 was still on it.'
+  ]),
   prompt: 'Kai backtracked this machine. Check Kai’s answer: what comes out when 4 goes in?',
   build(stage, ctl, ctx) {
     const fl = makeFlow(stage, { vals: [QT, '', nt(20)], steps: ['× 2', '+ 6'], caps: ['in', '', 'out'] });
@@ -519,7 +626,11 @@ const cards = [
   }
 },
 
-/* 6 */ {
+/* 7 */ {
+  why: () => whyBox(stillRun(7, ['× 2', '+ 6'], { back: true, mark2: { 0: 'good' } }), [
+    '20 is double the input, plus 6. Take the 6 off first: 20 − 6 = 14.',
+    'Now 14 is double the input: 14 ÷ 2 = 7. Kai’s order gave 4, and 4 runs forwards to 14, not 20.'
+  ]),
   prompt: 'Fix Kai’s reverse machine so it turns 20 back into the right input.',
   sub: 'Kai used ' + ex('÷ 2') + ', then ' + ex('− 6') + '. Drag or tap the steps into the boxes.',
   build: reverseCard({
@@ -528,7 +639,11 @@ const cards = [
   })
 },
 
-/* 7 */ {
+/* 8 */ {
+  why: () => whyBox(stillRun(2, ['× 3', '+ 7'], { caps: [SX('x') + ' = 2', '', ''] }), [
+    'Try any number for ' + ex('x') + ', say ' + ex('x = 2') + '. The machine gives 2 × 3 = 6, then 6 + 7 = 13.',
+    ex('3x + 7') + ' with ' + ex('x = 2') + ' is 3 × 2 + 7 = 13 as well. The machine does the same thing as the expression.'
+  ]),
   prompt: 'In ' + ex('3x + 7 = 19') + ', a number ' + ex('x') + ' goes into a machine and 19 comes out. Build the machine.',
   sub: ex('3x') + ' means 3 × ' + ex('x') + '. Drag or tap two steps into the boxes, in order.',
   build(stage, ctl, ctx) {
@@ -561,7 +676,11 @@ const cards = [
   }
 },
 
-/* 8 */ {
+/* 9 */ {
+  why: () => whyBox(stillRun(4, ['× 3', '+ 7'], { caps: [SX('x') + ' = 4', '', ''], back: true, mark2: { 0: 'good' } }), [
+    '19 is 3 lots of ' + ex('x') + ', plus 7. Take the 7 off: 19 − 7 = 12, so 3 lots of ' + ex('x') + ' make 12.',
+    '12 ÷ 3 = 4, so ' + ex('x = 4') + '.'
+  ]),
   prompt: 'Now backtrack. Build the reverse machine that turns 19 back into ' + ex('x') + '.',
   sub: 'Drag or tap steps into the boxes.',
   build: reverseCard({
@@ -570,7 +689,11 @@ const cards = [
   })
 },
 
-/* 9 */ {
+/* 10 */ {
+  why: () => whyBox(stillRun(4, ['× 3', '+ 7'], { caps: [SX('x') + ' = 4', '', ''], mark: { 2: 'good' } }), [
+    'The machine works out ' + ex('3x + 7') + ' with 4 in place of ' + ex('x') + ': 3 × 4 + 7 = 12 + 7 = 19.',
+    'The equation says ' + ex('3x + 7') + ' is 19, and with ' + ex('x = 4') + ' it is.'
+  ]),
   prompt: 'Check ' + ex('x = 4') + ' by running it forwards. What comes out?',
   build(stage, ctl, ctx) {
     const fl = makeFlow(stage, { vals: [nt(4), '', ''], steps: ['× 3', '+ 7'], caps: ['in', '', 'out'] });
@@ -593,7 +716,18 @@ const cards = [
   }
 },
 
-/* 10 */ {
+/* 11 */ {
+  bridge: true,
+  prompt: 'Running 4 forwards put it in place of ' + ex('x') + '. That is <b>substitution</b>, and it shows that ' + ex('x = 4') + ' is the <b>solution</b> of ' + ex('3x + 7 = 19') + '.',
+  sub: 'Backtrack to find a solution. Substitute to check it.',
+  show(stage) { stage.append(h('<div class="sf-wrap">' + stillRun(4, ['× 3', '+ 7'], { caps: [SX('x') + ' = 4', '', ''], mark: { 2: 'good' }, scale: 1.25 }) + '</div>')); }
+},
+
+/* 12 */ {
+  why: () => whyBox(stillRun(9, ['× 3', '+ 7'], { caps: [SX('x') + ' = 9', '', ''], mark: { 2: 'bad' }, notes: { 2: 'not 25' } }), [
+    'Put 9 in place of ' + ex('x') + ': 3 × 9 + 7 = 27 + 7 = 34.',
+    'The equation needs 25, and 34 is too big. So the solution must be smaller than 9.'
+  ]),
   prompt: 'Lena solved ' + ex('3x + 7 = 25') + ' and got ' + ex('x = 9') + '. Run 9 forwards. Is Lena right?',
   build(stage, ctl, ctx) {
     const fl = makeFlow(stage, { vals: [nt(9), '', ''], steps: ['× 3', '+ 7'], caps: ['in', '', 'out'] });
@@ -614,7 +748,11 @@ const cards = [
   }
 },
 
-/* 11 */ {
+/* 13 */ {
+  why: () => whyBox(stillRun(6, ['× 3', '+ 7'], { caps: [SX('x') + ' = 6', '', ''], back: true, mark2: { 0: 'good' } }), [
+    '25 is 3 lots of ' + ex('x') + ', plus 7. Take the 7 off: 25 − 7 = 18, so 3 lots of ' + ex('x') + ' make 18.',
+    '18 ÷ 3 = 6, so ' + ex('x = 6') + '. Substitute to check: 3 × 6 + 7 = 18 + 7 = 25.'
+  ]),
   prompt: 'So what is the right value of ' + ex('x') + ' in ' + ex('3x + 7 = 25') + '?',
   sub: 'Backtrack from 25, then check your answer forwards.',
   build(stage, ctl, ctx) {
@@ -639,7 +777,11 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 14 */ {
+  why: () => whyBox(stillRun(5, ['× 3', '+ 4'], { show: { 2: '$19' }, caps: ['km', '', 'cost'], back: true, mark2: { 0: 'good' } }), [
+    'The $19 is $3 for each kilometre, plus $4 to start. Take off the $4: 19 − 4 = 15, so the kilometres cost $15.',
+    'At $3 each, $15 pays for 15 ÷ 3 = 5 km.'
+  ]),
   prompt: 'A taxi charges $3 for each kilometre, plus $4 to start. Ella’s trip cost $19. How far did she go?',
   build(stage, ctl, ctx) {
     const STEPS = ['× 3', '+ 4'];
@@ -657,21 +799,97 @@ const cards = [
       },
       win: () => '19 − 4 = 15, then 15 ÷ 3 = 5. Ella went 5 km. Check: 5 × 3 = 15, then 15 + 4 = 19.',
       won() { ans.mark('good'); ans.lock(); fl.val(0, nt(5)); fl.val(1, nt(15)); },
-      solve() { ans.set(5); }
+      solve() { ans.set(5); },
+      recap: () => 'Ella’s $19 trip was 5 km: 19 − 4 = 15, then 15 ÷ 3 = 5.',
+      fl
     };
+  },
+  then: {
+    prompt: 'Ella’s next trip in the same taxi is 8 km. What does it cost?',
+    why: () => whyBox(stillRun(8, ['× 3', '+ 4'], { show: { 2: '$28' }, caps: ['km', '', 'cost'], mark: { 2: 'good' } }), [
+      'You know the kilometres this time, so run the machine forwards: 8 × 3 = 24, then 24 + 4 = 28.',
+      'The $19 trip gave you the output, so you backtracked. This trip gives you the input, so you go forwards.'
+    ]),
+    build(stage, ctl, ctx, p1) {
+      const fl = p1.fl;
+      fl.val(0, nt(8)); fl.val(1, ''); fl.val(2, QT);
+      const ans = makeAnswer(ctl, 'The trip costs $', ctx);
+      return {
+        check() {
+          const v = ans.value();
+          if (v === 28) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 24) return '$24 pays for the 8 kilometres: 8 × 3 = 24. The $4 to start still has to be added.';
+          if (v === 36) return '36 is (8 + 4) × 3. The machine multiplies by 3 first, then adds 4.';
+          if (v === 20) return '20 is 24 − 4. Going forwards, the $4 to start is added, not taken away.';
+          if (v === 15) return '15 is 8 + 3 + 4. Each kilometre costs $3, so 8 km costs 8 × 3.';
+          if (v === 12) return '12 is 8 + 4. The kilometres cost $3 each, so start with 8 × 3.';
+          if (v === 5 || v === 19) return 'That was the first trip. This trip is 8 km, so put 8 in and run the machine forwards.';
+          return 'This time you know the kilometres, not the cost. Put 8 in and run the machine forwards: ' + ex('× 3') + ', then ' + ex('+ 4') + '.';
+        },
+        win: () => '8 × 3 = 24, then 24 + 4 = 28, so the trip costs $28. You knew the input this time, so there was nothing to undo.',
+        won() { ans.mark('good'); ans.lock(); fl.val(1, nt(24)); fl.val(2, '<span class="tile num still">$28</span>', 'good'); },
+        solve() { ans.set(28); }
+      };
+    }
   }
 },
 
-/* 13 */ {
+/* 15 */ {
   prompt: 'Stretch: this machine has three steps, and 11 came out. Build the reverse machine.',
   sub: 'Drag or tap steps into the boxes.',
+  why: () => whyBox(stillRun(6, ['× 3', '+ 4', '÷ 2'], { back: true, mark2: { 0: 'good' } }), [
+    'The last step was ' + ex('÷ 2') + ', so 11 is half of the number before it: 11 × 2 = 22.',
+    'Then 22 − 4 = 18 and 18 ÷ 3 = 6. Each undo step sits under the step it undoes.'
+  ]),
   build: reverseCard({
     fwd: ['× 3', '+ 4', '÷ 2'], out: 11, chips: ['÷ 3', '÷ 2', '× 2', '− 4'],
-    win: () => '11 × 2 = 22, then 22 − 4 = 18, then 18 ÷ 3 = 6. Check: 6 × 3 = 18, 18 + 4 = 22, 22 ÷ 2 = 11. More steps, same rule: undo each one, last step first.'
-  })
+    win: () => '11 × 2 = 22, then 22 − 4 = 18, then 18 ÷ 3 = 6. Check: 6 × 3 = 18, 18 + 4 = 22, 22 ÷ 2 = 11. More steps, same rule: undo each one, last step first.',
+    recap: () => 'Your reverse machine: ' + ex('× 2') + ', then ' + ex('− 4') + ', then ' + ex('÷ 3') + '. It turned 11 back into 6.'
+  }),
+  then: {
+    prompt: 'A new last step, ' + ex('− 1') + ', is added to the machine, so 10 comes out. What must the reverse machine do first?',
+    why: () => whyBox(stillRun(6, ['× 3', '+ 4', '÷ 2', '− 1'], { back: true, mark2: { 0: 'good' } }), [
+      ex('− 1') + ' is now the last thing the machine does, so it is undone first: 10 + 1 = 11.',
+      'From 11, the rest is the reverse machine you built: 11 × 2 = 22, 22 − 4 = 18, 18 ÷ 3 = 6.'
+    ]),
+    build(stage, ctl, ctx) {
+      const FWD = ['× 3', '+ 4', '÷ 2', '− 1'], REV = ['+ 1', '× 2', '− 4', '÷ 3'];
+      const op = s => '<span class="tile op still">' + ex(s) + '</span>';
+      stage.replaceChildren(h('<p class="f-lab">The new machine</p>'));
+      makeFlow(stage, { vals: [QT, '', '', '', nt(10)], steps: FWD, caps: caps(4, 'in', 'out') }).node.classList.add('tight');
+      stage.append(h('<p class="f-lab">The new reverse machine</p>'));
+      const rev = makeFlow(stage, { vals: [nt(10), '', '', '', ''], steps: REV.map(() => null), caps: caps(4, 'start', 'went in') });
+      rev.node.classList.add('tight');
+      rev.steps.forEach((st, k) => { st.removeAttribute('data-drop'); if (k) st.innerHTML = op(REV[k]); });
+      const ch = makeChoices(ctl, REV.slice(0, 2).concat(['− 1', '÷ 3']).map(ex), ctx);
+      ctl.lastElementChild.classList.add('row4');
+      const why = [
+        '',
+        ex('× 2') + ' undoes ' + ex('÷ 2') + ', which used to be the last step. Now ' + ex('− 1') + ' is last, so it is undone first.',
+        ex('− 1') + ' repeats the new step instead of undoing it: 10 − 1 = 9, but the number before the ' + ex('− 1') + ' step was 11.',
+        ex('÷ 3') + ' undoes ' + ex('× 3') + ', the machine’s first step. The first step is undone last.'
+      ];
+      return {
+        check() { const s = ch.sel()[0]; if (s === 0) return true; ch.mark(s, 'bad'); return why[s]; },
+        win: () => ex('+ 1') + ' undoes ' + ex('− 1') + ', the new last step: 10 + 1 = 11. Whichever step is done last, its undo goes first.',
+        won() {
+          ch.mark(0, 'good'); ch.lock();
+          rev.steps[0].innerHTML = op(REV[0]);
+          let v = 10; REV.forEach((s, k) => { v = runStep(v, s); rev.val(k + 1, nt(v), k === 3 ? 'good' : ''); });
+        },
+        solve() { ch.set([0]); }
+      };
+    }
+  }
 },
 
-/* 14 */ {
+/* 16 */ {
+  why: () => whyBox(stillRun(6, ['× 2', '+ 8'], { back: true, mark2: { 0: 'good' } }), [
+    '20 is double the input, plus 8. Take the 8 off first: 20 − 8 = 12. Then halve: 12 ÷ 2 = 6.',
+    'Only 6 runs forwards to 20. Noah’s 2 gives 12, and Priya’s 56 gives 120.'
+  ]),
   prompt: 'A machine does ' + ex('× 2') + ', then ' + ex('+ 8') + '. 20 came out. Three students backtrack it. Who is right?',
   sub: 'Choose Agree or Disagree for each one.',
   build(stage, ctl, ctx) {
@@ -725,7 +943,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Undo a step'], [3, 'Reverse order'], [6, 'Equations'], [12, 'Three steps'], [13, 'Wrap-up']];
+const SECTIONS = [[0, 'Undo a step'], [3, 'Reverse order'], [7, 'Equations'], [10, 'Check and solve'], [14, 'Three steps'], [15, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {

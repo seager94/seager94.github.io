@@ -31,3 +31,23 @@ input[type=range]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%
 .r-t .v{font-style:italic;fill:var(--var)}
 .r-t .v2{font-style:italic;fill:var(--var2)}
 @keyframes pulse{50%{transform:scale(1.15)}}
+/* Why? panels and bridges: still pictures */
+.why-body .wl{margin:.35rem 0 0;text-align:center}
+.why-body .mach{padding-top:1.5rem;margin-bottom:.5rem}
+.wpic{display:block;width:100%;margin:0 auto .2rem}
+.wp-t{font:400 14px var(--body);fill:var(--ink-2)}
+.wp-t .v{font:italic 400 16px var(--maths);fill:var(--var)}
+.wp-op{font:400 24px var(--maths);fill:var(--ink)}
+.wduo{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem 1rem}
+.wduo>div{flex:1 1 12rem;max-width:17rem}
+.wcap{text-align:center;font-size:1.15rem}
+.tgrid{display:grid;justify-content:center;justify-items:center;align-items:center;gap:.45rem .3rem;margin:.2rem 0 .5rem}
+.tgrid .tile{min-width:2.5rem;height:2.6rem;padding:0 .4rem;font-size:1.3rem;margin:0}
+.tile.ghost{background:none;box-shadow:none;border:2px dashed #B9C0CC;color:#9AA2B1}
+.tgrid .sum{grid-column:span 3;font:400 1.35rem/1 var(--maths)}
+.tgrid .plus{font:400 1.35rem/1 var(--maths)}
+.first{display:inline-block;padding:.05em .3em;border-radius:.45rem;background:var(--num-soft);box-shadow:inset 0 0 0 2px var(--num-deep)}
+.board.vs .team{min-width:4.4rem;text-align:right}
+.board.vs+.board.vs{margin-top:.5rem}
+.why-body .board{margin-bottom:.4rem}
+.card.bridge .prompt b{font-weight:800}

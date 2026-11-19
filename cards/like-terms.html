@@ -8,7 +8,7 @@
 <meta name="description" content="Year 8 card lesson on like terms: you can only combine things of the same kind. Blue and purple bags of marbles, sliders and term sorting.">
 <meta name="lesson-id" content="like-terms">
 <meta name="lesson-format" content="card">
-<meta name="lesson-version" content="1">
+<meta name="lesson-version" content="2">
 <meta name="ac9-descriptor" content="AC9M8A01">
 <meta name="sa-year" content="8">
 <meta name="sa-strand" content="Algebra">
@@ -204,14 +204,14 @@ button.it{cursor:pointer}
 .answer input:focus{outline:3px solid var(--var);outline-offset:2px;border-color:var(--var)}
 .answer input.bad{border-color:var(--no);background:var(--no-soft)}
 .answer input.good{border-color:var(--go);background:var(--go-soft)}
-.claims{display:grid;gap:.6rem}
-.claim{background:var(--paper);border:2px solid var(--line);border-radius:1rem;padding:.65rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.5rem .9rem;align-items:center}
+.claims{display:grid;gap:.45rem}
+.claim{background:var(--paper);border:2px solid var(--line);border-radius:1rem;padding:.5rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.5rem .9rem;align-items:center}
 .av{width:2.2rem;height:2.2rem;border-radius:50%;background:#DCE1EE;display:grid;place-items:center;font:700 1.05rem var(--display)}
 .claim p{margin:0;line-height:1.4}
 .claim .who{font-weight:600}
 .claim.bad{border-color:var(--no);background:var(--no-soft)}
 .claim.good{border-color:var(--go);background:var(--go-soft)}
-.claim .why{grid-column:2 / -1;font-size:.93rem}
+.claim .why{grid-column:2 / -1;font-size:.93rem;line-height:1.35}
 .yn{display:inline-flex;border-radius:.8rem;box-shadow:inset 0 0 0 2px var(--line);background:var(--paper);overflow:hidden}
 .yn button{border:0;background:none;padding:.5rem .85rem;cursor:pointer;font-size:.93rem}
 .yn button[aria-pressed=true]{background:var(--ink);color:#fff}
@@ -325,6 +325,17 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
   .dock.good .acts,.dock.bad .acts,.dock.info .acts{width:auto;flex:none}
   .dock.good .acts .primary,.dock.bad .acts .primary,.dock.info .acts .primary{flex:none;min-width:11rem}
 }
+/* Why? sits beside the verdict ("Correct!  Why?"), so the sheet's text keeps the full width. */
+.why-chip{margin-left:.6rem;font:600 .85rem/1 var(--body);padding:.34rem .8rem;border:0;border-radius:999px;background:rgba(0,0,0,.08);color:var(--ink);cursor:pointer;vertical-align:.12rem}
+.why-chip:hover{background:rgba(0,0,0,.14)}
+.why-chip:focus-visible{outline:3px solid var(--var);outline-offset:2px}
+
+/* Phones: Start over, Show me and Try again must fit side by side in 390px. */
+@media (max-width:34rem){
+  .acts{gap:.45rem}
+  .acts .btn{padding-left:1rem;padding-right:1rem}
+  .acts .again-btn{padding-left:.25rem;padding-right:.45rem}
+}
 /* Short laptop screens: keep the answered sheet to two lines where possible, so nothing scrolls. */
 @media (min-width:34.01rem) and (max-height:760px){
   .dock.good .wrap,.dock.bad .wrap,.dock.info .wrap{gap:1rem;padding-top:.55rem;padding-bottom:.7rem}
@@ -334,14 +345,31 @@ i.v2{font-style:italic;font-weight:400;color:var(--var2);font-family:var(--maths
 .ghost:hover{background:rgba(0,0,0,.1)}
 
 /* Why? panel */
-.why{position:fixed;inset:0;z-index:70;background:rgba(28,30,33,.35);display:flex;align-items:flex-end}
+/* the overlay is .whysheet, not .why: lesson claim cards use <p class="why"> for their notes */
+.whysheet{position:fixed;inset:0;z-index:70;background:rgba(28,30,33,.35);display:flex;align-items:flex-end}
 .why-panel{width:100%;max-height:85%;overflow:auto;background:#fff;border-radius:1.3rem 1.3rem 0 0;padding:1.1rem 0 1.2rem;animation:sheet .25s ease-out}
 .why-panel h2{margin:0 0 .6rem;font:700 1.2rem/1.3 var(--body)}
 .why-body{line-height:1.5}
 .why-panel .primary{width:100%;margin-top:1rem}
 
+/* two-part cards: part 1, answered, shrinks to one line above part 2 */
+.part1{display:flex;gap:.45rem;align-items:flex-start;margin:0 0 .3rem;color:var(--ink-2);font-size:.92rem;line-height:1.35}
+.part1 svg{width:1.05rem;height:1.05rem;color:var(--go);flex:none;margin-top:.1rem}
+.part1[hidden]{display:none}
+.card.part2 .prompt{animation:rise .22s ease-out}
+
+/* Level Check finish */
+.lc-score{font:700 2.6rem/1 var(--body);color:var(--ink);margin:.4rem 0 .2rem}
+.lc-list{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.45rem;width:100%;max-width:30rem}
+.lc-list li{display:flex;justify-content:space-between;gap:1rem;align-items:center;border:2px solid var(--line);border-radius:.9rem;padding:.55rem .9rem;background:#fff}
+.lc-list li.miss{border-color:var(--no);background:var(--no-soft)}
+.lc-list a{color:var(--var-deep);font-weight:600}
+.lc-list small{color:var(--ink-2);white-space:nowrap}
+
 /* bridge cards: text only */
 .card.bridge .prompt{font-size:1.3rem;font-weight:600;margin-top:12vh}
+.card.bridge.shows .prompt{margin-top:1.5rem}
+.card.bridge .prompt b,.card.bridge .prompt strong{font-weight:800}
 
 @keyframes sheet{from{transform:translateY(1rem);opacity:0}}
 @media (max-width:34rem){.prompt{font-size:1.25rem}}
@@ -384,6 +412,38 @@ input[type=range]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%
 .choice small{display:block;color:var(--ink-2);font-size:.85rem}
 .answer input.wide{width:14rem}
 @media (max-width:34rem){.choices.four,.sl2{grid-template-columns:1fr 1fr}}
+.grp3 .bin.snug .sbag svg{width:2.85rem;height:3.1rem}
+.grp3 .bin.dense .bin-c{gap:.3rem}
+.grp3 .bin.dense .sbag svg{width:2.45rem;height:2.67rem}
+.grp3 .bin.dense .smb svg{width:1.5rem;height:1.5rem}
+.why-body .wfig,.card.bridge .wfig{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:.5rem 1.5rem;margin:.1rem 0 .6rem}
+.card.bridge .wfig{margin-top:.6rem}
+.wfig .wg{display:flex;flex-direction:column;align-items:center;gap:.25rem;min-width:0;max-width:100%}
+.wfig .wrow{display:flex;align-items:flex-end;justify-content:center;gap:.6rem;max-width:100%}
+.wfig .wrow.boxed{border:2px dashed var(--line);border-radius:.9rem;padding:.4rem .7rem}
+.wfig .wpic{display:block;height:auto;max-width:100%;flex:0 1 auto;min-width:0}
+.wfig .wcap{font-size:1.05rem;line-height:1.3;text-align:center}
+.wfig .wop{font:400 1.7rem var(--maths);align-self:center;margin-bottom:1.6rem}
+.wfig .gone{opacity:.28}
+.wfig .strike{stroke:var(--ink-2);stroke-width:3.5;stroke-linecap:round;fill:none}
+.why-body .wl{margin:.35rem 0 0;text-align:center}
+.why-body .tg{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.6rem;margin:.1rem 0 .6rem}
+.why-body .tgrp{display:flex;flex-direction:column;align-items:center;gap:.25rem}
+.why-body .tchips{display:flex;gap:.4rem}
+.why-body .tc{border-radius:.7rem;padding:.2rem .7rem .25rem;font-size:1.2rem;line-height:1.3;border:2px solid transparent}
+.why-body .tc.x{background:var(--var-soft)}
+.why-body .tc.y{background:var(--var2-soft)}
+.why-body .tc.k{background:var(--num-soft)}
+.why-body .tc.k,.why-body .tc.k .m{font-family:var(--maths);font-variant-numeric:lining-nums}
+.why-body .tc.xy{background:var(--paper);border-color:var(--line)}
+.why-body .tres{font-size:1.1rem;color:var(--ink)}
+.why-body .wtab{border-collapse:collapse;margin:.1rem auto .5rem;font-size:1.1rem}
+.why-body .wtab th{font-weight:400;text-align:right;padding:.25rem .9rem .25rem 0;white-space:nowrap}
+.why-body .wtab td{padding:.25rem .5rem;white-space:nowrap;border-left:1px solid var(--line)}
+.why-body .wtab td + td{border-left:0;padding-left:0}
+.why-body .wtab tr + tr th,.why-body .wtab tr + tr td{border-top:1px solid var(--line)}
+@media (max-width:34rem){.why-body .wtab{font-size:.9rem}.why-body .wtab th{padding-right:.4rem}.why-body .wtab td{padding:.25rem .3rem}}
+@media (max-width:34rem){.why-body .wfig{--ws:.8;gap:.5rem 1rem}.card.bridge .wfig{--ws:.6;gap:.5rem .6rem}.wfig .wop{font-size:1.4rem}}
 
 </style>
 </head>
@@ -403,6 +463,7 @@ input[type=range]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%
     </div>
   </div></header>
   <main id="main"><div class="wrap card" id="card">
+    <p class="part1" id="part1" hidden></p>
     <h1 class="prompt" id="prompt"></h1>
     <p class="sub" id="sub"></p>
     <div class="stage" id="stage"></div>
@@ -412,14 +473,14 @@ input[type=range]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%
     <div class="fb" id="fb" role="status" aria-live="polite"></div>
     <div class="acts">
       <button type="button" class="btn ghost again-btn" id="startOver"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10a5.5 5.5 0 1 0 1.7-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M5.4 2.6v3.8h3.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Start over</span></button>
-      <button type="button" class="btn ghost" id="whyBtn" hidden>Why?</button>
+      <button type="button" class="why-chip" id="whyBtn" hidden>Why?</button>
       <button type="button" class="btn ghost" id="showMe" hidden>Show me</button>
       <button type="button" class="btn ghost" id="skip" hidden>Next</button>
       <button type="button" class="btn ghost" id="again" hidden>Start again</button>
       <button type="button" class="btn primary" id="primary" disabled>Check</button>
     </div>
   </div></footer>
-  <div class="why" id="why" hidden role="dialog" aria-modal="true" aria-labelledby="whyTitle">
+  <div class="whysheet" id="why" hidden role="dialog" aria-modal="true" aria-labelledby="whyTitle">
     <div class="why-panel"><div class="wrap">
       <h2 id="whyTitle">Why</h2>
       <div class="why-body" id="whyBody"></div>
@@ -433,7 +494,7 @@ input[type=range]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%
 'use strict';
 
 /* ---------- lesson settings (written by build_cards.py) ---------- */
-const LESSON = {"slug": "like-terms", "title": "Like terms", "version": 1, "map": "index.html", "next": {"title": "Expanding with the area model", "href": "area-model-expansion.html"}};
+const LESSON = {"slug": "like-terms", "title": "Like terms", "version": 2, "map": "index.html", "next": {"title": "Expanding with the area model", "href": "area-model-expansion.html"}};
 
 /* ===================== this lesson: helpers, components, cards ===================== */
 /* ---------- helpers ---------- */
@@ -769,8 +830,9 @@ function makeExpr(host, label, ctx) {
 // "Simplify ..." card. Any equivalent answer in simplest form is accepted; wrong: [[collected terms, feedback], ...].
 function simpCard(cfg) {
   return function (stage, ctl, ctx) {
-    stage.append(h('<div class="live big">' + mx(cfg.expr) + '</div>'));
-    const ex = makeExpr(ctl, 'Simplest form', ctx);
+    if (!cfg.quiet) stage.append(h('<div class="live big">' + mx(cfg.expr) + '</div>'));
+    const ex = makeExpr(ctl, cfg.label || 'Simplest form', ctx);
+    const shown = cfg.shown || mx(cfg.expr);
     const orig = parseLin(cfg.expr), want = collect(orig);
     const letters = [...new Set(cfg.expr.replace(/[^a-z]/g, ''))].sort();
     function judge() {
@@ -779,11 +841,11 @@ function simpCard(cfg) {
       const got = collect(t);
       if (same(got, want)) return isSimple(t) ? true : 'That has the right value, but it still has like terms to combine. Write each kind of term only once.';
       if (Object.keys(got).some(k => k.length > 1)) return 'Your answer has letters multiplied together, like ' + mx('xy') + '. Adding terms never multiplies their letters. Unlike terms just stay apart.';
-      if (Object.keys(got).some(k => k && !letters.includes(k))) return 'Your answer uses a letter that isn’t in ' + mx(cfg.expr) + '.';
+      if (Object.keys(got).some(k => k && !letters.includes(k))) return 'Your answer uses a letter that isn’t in ' + shown + '.';
       const w = cfg.wrong.find(p => same(p[0], got));
       if (w) return w[1];
       const p = TESTS.find(q => evalT(t, q) !== evalT(orig, q));
-      return 'Test it with ' + at(p, letters) + '. ' + mx(cfg.expr) + ' gives ' + num(evalT(orig, p)) + ', but your answer gives ' + num(evalT(t, p)) + '.';
+      return 'Test it with ' + at(p, letters) + '. ' + shown[0].toUpperCase() + shown.slice(1) + ' gives ' + num(evalT(orig, p)) + ', but your answer gives ' + num(evalT(t, p)) + '.';
     }
     return {
       check() { const r = judge(); if (r !== true) ex.mark('bad'); return r; },
@@ -835,6 +897,36 @@ function sorter(cfg) {
   };
 }
 
+/* ---------- still pictures and working for Why? panels and bridges ---------- */
+// One group of things from a mat, drawn still: { k: 'x' | 'y' | 'm', n, inside, off, tag }.
+// inside = marbles shown in each see-through bag; off = how many (from the right) are crossed out; tag = letter tag as on the cards.
+function pic(g) {
+  const bag = g.k !== 'm', step = bag ? 66 : 27, W = bag ? g.n * step + (g.tag ? 2 : -4) : g.n * step - 2, top = g.tag ? -9 : 2;
+  let out = '';
+  for (let i = 0; i < g.n; i++) {
+    const one = bag ? bagG(i * step, 0, { y: g.k === 'y', inside: g.inside, tag: g.tag ? g.k : null }) : marbleG(i * step + 12.5, 56.5, 11.5);
+    out += i >= g.n - (g.off || 0) ? '<g class="gone">' + one + '</g><path class="strike" d="M' + (i * step + 9) + ' 64 L' + (i * step + 53) + ' 12"/>' : one;
+  }
+  return '<svg class="wpic" viewBox="0 ' + top + ' ' + W + ' ' + (71 - top) + '" style="width:calc(' + W + 'px * var(--ws, 1.1))" aria-hidden="true">' + out + '</svg>';
+}
+// A group with its caption underneath. boxed draws the dashed edge of a mat around it.
+const wg = (pics, cap, boxed) => '<div class="wg"><div class="wrow' + (boxed ? ' boxed' : '') + '">' + pics.join('') + '</div>' + (cap ? '<span class="wcap">' + cap + '</span>' : '') + '</div>';
+const fig = (...parts) => '<div class="wfig">' + parts.join('') + '</div>';
+const wop = t => '<span class="wop">' + t + '</span>';
+const wl = t => '<p class="wl">' + t + '</p>';
+// Term chips: x terms blue, y terms purple, number terms yellow. Each chip shows the sign in front of its term.
+const kindCls = v => v === '' ? 'k' : v === 'y' ? 'y' : v.length > 1 ? 'xy' : 'x';
+const termTxt = (z, lead) => { const a = Math.abs(z.c); return (z.c < 0 ? '-' : lead ? '' : '+') + (a === 1 && z.v ? '' : a) + z.v; };
+const tchip = (z, lead) => '<span class="tc ' + kindCls(z.v) + '">' + mx(termTxt(z, lead)) + '</span>';
+const tgrp = (chips, res) => '<div class="tgrp"><div class="tchips">' + chips + '</div><div class="tres">' + res + '</div></div>';
+// The terms of an expression gathered into like terms, with each group's total underneath.
+function termFig(expr) {
+  const t = parseLin(expr), sum = collect(t);
+  return '<div class="tg">' + [...new Set(t.map(z => z.v))].map(k =>
+    tgrp(t.map((z, i) => z.v === k ? tchip(z, i === 0) : '').join(''), '= ' + mx(termTxt({ c: sum[k] || 0, v: k }, true)))).join('') + '</div>';
+}
+let C1 = { x: 3, y: 5 };   // the pair the student found on card 1, for its Why? panel
+
 const SIGN_ITEMS = [
   { e: '4a', bin: 'a' }, { e: '+a', bin: 'tray' }, { e: '+3', bin: 'k' },
   { e: '-a', bin: 'a' }, { e: '+5', bin: 'tray' }, { e: '-5', bin: 'k' }
@@ -850,7 +942,10 @@ const cards = [
 
 /* 1 */ {
   prompt: 'Each blue bag holds ' + mx('x') + ' marbles. Each purple bag holds ' + mx('y') + ' marbles. Make the mat hold 10 marbles.',
-  sub: 'The bags are see-through. Use the two sliders.',
+  sub: 'A shop packs marbles in two sizes of bag. The total on the mat depends on both. The bags are see-through. Use the two sliders.',
+  why: () => fig(wg([pic({ k: 'x', n: 1, inside: C1.x })], mx('x = ' + C1.x)), wg([pic({ k: 'y', n: 1, inside: C1.y })], mx('y = ' + C1.y)), wg([pic({ k: 'm', n: 2 })], '2')) +
+    wl(mx(C1.x + ' + ' + C1.y + ' + 2 = 10') + '. The 2 loose marbles never change, so the two bags must hold ' + mx('10 − 2 = 8') + ' between them.') +
+    wl('Any pair that adds to 8 works: 3 and 5, 6 and 2, even 4 and 4. ' + mx('x') + ' and ' + mx('y') + ' are free to be different.'),
   build(stage, ctl, ctx) {
     let x = 1, y = 2;
     const mat = h('<div class="mat"></div>'), live = h('<div class="live"></div>');
@@ -869,6 +964,7 @@ const cards = [
         return t === 10 ? true : 'The mat holds ' + x + ' + ' + y + ' + 2 = ' + t + ' marbles. You need 10, so the bags need ' + (t < 10 ? 'more' : 'fewer') + ' marbles.';
       },
       win() {
+        C1 = { x, y };
         const o = x === 3 ? [6, 2] : [3, 5];
         return mx('x = ' + x) + ' and ' + mx('y = ' + y) + ' works. So does ' + mx('x = ' + o[0]) + ', ' + mx('y = ' + o[1]) + '. ' +
           mx('x') + ' and ' + mx('y') + ' are two separate numbers. They can be equal, but they don’t have to be. That is why the bags are different colours.';
@@ -881,6 +977,34 @@ const cards = [
 /* 2 */ {
   prompt: 'This mat shows ' + mx('2x + 3y + x + 2') + '. Put things of the same kind together.',
   sub: 'Drag each thing into a box, or tap it and then tap a box. Use one box for each kind.',
+  why: () => fig(wg([pic({ k: 'x', n: 3, inside: 4 })], mx('3x = 12')), wg([pic({ k: 'y', n: 3, inside: 2 })], mx('3y = 6')), wg([pic({ k: 'm', n: 2 })], '2')) +
+    wl('Say ' + mx('x = 4') + ' and ' + mx('y = 2') + '. Then ' + mx('2x + x') + ' is ' + mx('8 + 4 = 12') + ', the same as ' + mx('3x = 3 × 4') + '.') +
+    wl('Change 4 to any number and they still match, because 2 bags and 1 more bag are always 3 bags. So ' + mx('2x + x = 3x') + '.'),
+  then: {
+    prompt: 'One more blue bag and one more loose marble land on the mat. What does the whole mat show now?',
+    why: () => fig(wg([pic({ k: 'x', n: 4, inside: 4 })], mx('4x = 16')), wg([pic({ k: 'y', n: 3, inside: 2 })], mx('3y = 6')), wg([pic({ k: 'm', n: 3 })], '3')) +
+      wl('The new bag is blue, so it holds ' + mx('x') + ' marbles like the others: ' + mx('3x + x = 4x') + '. The new marble is 1 more: ' + mx('2 + 1 = 3') + '.') +
+      wl('Check with ' + mx('x = 4') + ' and ' + mx('y = 2') + ': the mat had 20 marbles and gains ' + mx('4 + 1') + '. ' + mx('4x + 3y + 3') + ' is ' + mx('16 + 6 + 3 = 25') + '.'),
+    build(stage, ctl, ctx, p1) {
+      p1.arrive();
+      const c = simpCard({
+        quiet: true, label: 'The mat shows', shown: 'the mat', expr: '3x + 3y + 2 + x + 1', ans: '4x + 3y + 3',
+        wrong: [
+          [{ x: 3, y: 3, '': 2 }, 'That is the mat before. A blue bag and a loose marble have just landed on it.'],
+          [{ x: 4, y: 3, '': 2 }, 'You counted the new bag. The new loose marble joins the 2 marbles as well.'],
+          [{ x: 3, y: 3, '': 3 }, 'You counted the new marble. The new blue bag joins the 3 blue bags as well.'],
+          [{ x: 3, y: 4, '': 3 }, 'The new bag is blue, so it holds ' + mx('x') + ' marbles. It joins the blue bags, not the purple ones.'],
+          [{ x: 4, y: 4, '': 3 }, 'Only one bag landed, and it is blue. The purple bags are still ' + mx('3y') + '.'],
+          [{ x: 3, y: 3, '': 4 }, 'You counted the new bag as a loose marble. A bag holds ' + mx('x') + ' marbles, so it joins the blue bags.'],
+          [{ x: 5, y: 3, '': 2 }, 'You counted the new marble as a bag. A marble is just 1, so it joins the loose marbles.']
+        ],
+        win: () => mx('3x + x = 4x') + ' and ' + mx('2 + 1 = 3') + ', so the mat shows ' + mx('4x + 3y + 3') + '. Each new thing joins its own kind. The purple bags did not change.'
+      })(stage, ctl, ctx);
+      const lock = c.won;
+      c.won = () => { lock(); p1.settle(); };
+      return c;
+    }
+  },
   build(stage, ctl, ctx) {
     const kinds = ['x', 'x', 'y', 'y', 'y', 'x', 'm', 'm'];
     const NAME = { x: 'blue bags', y: 'purple bags', m: 'loose marbles' };
@@ -913,6 +1037,12 @@ const cards = [
     };
     function draw() {
       items.forEach((b, i) => { const host = hostOf(place[i]); if (b.parentNode !== host) host.append(b); b.classList.toggle('sel', sel === i); });
+      // A crowded box draws its things smaller, so no box can grow taller than the screen.
+      grp.querySelectorAll('.bin').forEach(b => {
+        const g = b.getAttribute('data-drop'), n = place.filter(p => p === g).length, bags = kinds.filter((k, i) => k !== 'm' && place[i] === g).length;
+        b.classList.toggle('dense', bags > 4 || n > 4);
+        b.classList.toggle('snug', bags === 4 && n === 4);
+      });
       const empty = $('.mat-empty', tray), all = place.every(p => p !== 'tray');
       if (all && !empty) tray.append(h('<span class="mat-empty">Everything is in a box</span>'));
       if (!all && empty) empty.remove();
@@ -939,12 +1069,32 @@ const cards = [
       },
       win: () => 'The mat is ' + mx('3x + 3y + 2') + '. ' + mx('2x + x = 3x') + ' because every blue bag holds the same number. Terms like these, with the same letter, are called like terms. The purple bags and the marbles can’t join them.',
       won() { locked = true; sel = null; draw(); },
-      solve() { kinds.forEach((k, i) => { place[i] = k === 'x' ? 'g0' : k === 'y' ? 'g1' : 'g2'; }); sel = null; items.forEach(b => b.classList.remove('bad')); draw(); }
+      solve() { kinds.forEach((k, i) => { place[i] = k === 'x' ? 'g0' : k === 'y' ? 'g1' : 'g2'; }); sel = null; items.forEach(b => b.classList.remove('bad')); draw(); },
+      recap: () => 'The mat ' + mx('2x + 3y + x + 2') + ' is ' + mx('3x + 3y + 2') + '.',
+      // Part 2: one more blue bag and one more marble land on the mat, then join their own kind once it is answered.
+      arrive() {
+        ['x', 'm'].forEach(k => {
+          kinds.push(k); place.push('tray');
+          items.push(h('<div class="it pop ' + (k === 'm' ? 'smb' : 'sbag') + '">' + (k === 'm' ? SVG_MARBLE : bagSvg(k)) + '</div>'));
+        });
+        draw();
+      },
+      settle() { kinds.forEach((k, i) => { if (place[i] === 'tray') place[i] = place[kinds.indexOf(k)]; }); draw(); }
     };
   }
 },
 
 /* 3 */ {
+  bridge: true,
+  prompt: 'Terms with the same letter part, like ' + mx('2x') + ' and ' + mx('x') + ', are called <b>like terms</b>.',
+  sub: 'You put the blue bags in one box because every blue bag holds the same number. That is why like terms can be added: ' + mx('2x + x = 3x') + '.',
+  show(stage) { stage.append(h(fig(wg([pic({ k: 'x', n: 2, tag: 1 })], mx('2x')), wop('+'), wg([pic({ k: 'x', n: 1, tag: 1 })], mx('x')), wop('='), wg([pic({ k: 'x', n: 3, tag: 1 })], mx('3x'))))); }
+},
+
+/* 4 */ {
+  why: () => fig(wg([pic({ k: 'x', n: 2, inside: 1 }), pic({ k: 'm', n: 3 })], mx('2x + 3') + ' is ' + mx('2 + 3 = 5'), true), wg([pic({ k: 'x', n: 5, inside: 1 })], mx('5x') + ' is ' + mx('5 × 1 = 5'), true)) +
+    wl('When ' + mx('x = 1') + ' a bag holds 1 marble, the same as a loose marble. Both mats hold 5.') +
+    wl('Put 1 more marble in every bag. The left mat gains 2 but the right mat gains 5, so they never match again.'),
   prompt: 'Jo says ' + mx('2x + 3') + ' is the same as ' + mx('5x') + '. Drag the slider. When are they equal?',
   build(stage, ctl, ctx) {
     let x = 3;
@@ -979,7 +1129,10 @@ const cards = [
   }
 },
 
-/* 4 */ {
+/* 5 */ {
+  why: () => fig(wg([pic({ k: 'x', n: 2, inside: 2 })], mx('2x') + ' is ' + mx('2 × 2 = 4')), wg([pic({ k: 'y', n: 3, inside: 3 })], mx('3y') + ' is ' + mx('3 × 3 = 9'))) +
+    wl('With ' + mx('x = 2') + ' and ' + mx('y = 3') + ' you can count ' + mx('4 + 9 = 13') + ' marbles.') +
+    wl(mx('5xy') + ' would be ' + mx('5 × 2 × 3 = 30') + '. Two kinds of bag can’t merge into one term, so ' + mx('2x + 3y') + ' stays as it is.'),
   prompt: 'Lee says ' + mx('2x + 3y = 5xy') + '. What is ' + mx('2x + 3y') + ' in its simplest form?',
   sub: mx('5xy') + ' means 5 × ' + mx('x') + ' × ' + mx('y') + '. Use the sliders to test.',
   build(stage, ctl, ctx) {
@@ -1016,11 +1169,53 @@ const cards = [
   }
 },
 
-/* 5 */ {
+/* 6 */ {
+  bridge: true,
+  prompt: 'Terms of different kinds, like the ' + mx('2x') + ' and ' + mx('3y') + ' you just tested, are called <b>unlike terms</b>.',
+  sub: 'Unlike terms can’t be combined. ' + mx('2x + 3y') + ' and ' + mx('2x + 3') + ' are already as short as they can be.',
+  show(stage) { stage.append(h(fig(wg([pic({ k: 'x', n: 2, tag: 1 })], mx('2x')), wop('+'), wg([pic({ k: 'y', n: 3, tag: 1 })], mx('3y'))))); }
+},
+
+/* 7 */ {
   prompt: 'This mat shows ' + mx('5x + 4') + '. Take away ' + mx('2x') + '.',
   sub: 'Tap things on the mat to take them off.',
+  why: () => fig(wg([pic({ k: 'x', n: 5, off: 2 })], mx('5x − 2x = 3x')), wg([pic({ k: 'm', n: 4 })], '4')) +
+    wl('Every bag holds the same number, so taking 2 bags takes 2 lots of ' + mx('x') + ', whatever ' + mx('x') + ' is.') +
+    wl('Try ' + mx('x = 3') + ': the mat starts with ' + mx('5 × 3 + 4 = 19') + '. Take away ' + mx('2 × 3 = 6') + ' and 13 are left. ' + mx('3x + 4') + ' is ' + mx('3 × 3 + 4 = 13') + ' too.'),
+  then: {
+    prompt: 'Now look inside. Each bag holds 6 marbles. How many marbles are left on the mat?',
+    reset: false,
+    why: () => fig(wg([pic({ k: 'x', n: 3, inside: 6 })], mx('3x') + ' is ' + mx('3 × 6 = 18')), wg([pic({ k: 'm', n: 4 })], '4')) +
+      wl(mx('x = 6') + ', so ' + mx('3x + 4') + ' is ' + mx('3 × 6 + 4 = 22') + '.') +
+      wl('The long way agrees: the mat started with ' + mx('5 × 6 + 4 = 34') + ', the 2 bags took ' + mx('2 × 6 = 12') + ', and ' + mx('34 − 12 = 22') + '.'),
+    build(stage, ctl, ctx, p1) {
+      p1.reveal(6);
+      const ans = makeAnswer(ctl, 'Marbles left', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 22) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 34) return 'That is the mat before the 2 bags came off: 5 × 6 + 4. Only 3 bags are left now.';
+          if (v === 30) return 'That is 5 bags of 6. Two bags came off, and the 4 loose marbles are still there.';
+          if (v === 18) return 'That is the 3 bags: 3 × 6. The 4 loose marbles are still on the mat too.';
+          if (v === 12) return 'That is what the 2 bags took away. Count what is left: 3 bags and 4 loose marbles.';
+          if (v === 13) return mx('3x') + ' means 3 × ' + mx('x') + ', not 3 + ' + mx('x') + '. Three bags of 6 is 3 × 6.';
+          if (v === 40) return mx('3x') + ' is not 3 written next to 6. It means 3 × 6.';
+          if (v === 10) return 'That is one bag and the loose marbles. There are 3 bags left.';
+          if (v === 7) return 'That counts each bag as 1. Each bag holds 6 marbles.';
+          return attempt < 2 ? 'Count what you can see: 3 bags of 6 marbles, and 4 loose marbles.'
+                             : 'Work out 3 × 6, then add the 4 loose marbles.';
+        },
+        win: () => '22. With ' + mx('x = 6') + ', ' + mx('3x + 4') + ' is 3 × 6 + 4. The short expression counts the mat for any bag size.',
+        won() { ans.mark('good'); ans.lock(); p1.total(6); },
+        solve() { ans.set(22); }
+      };
+    }
+  },
   build(stage, ctl, ctx) {
-    let bags = 5, loose = 4, locked = false;
+    let bags = 5, loose = 4, locked = false, inside;
     const mat = h('<div class="mat"></div>'), live = h('<div class="live"></div>');
     stage.append(mat, live);
     const reset = h('<div class="tray"><button type="button" class="linkbtn">Put everything back</button></div>');
@@ -1029,7 +1224,7 @@ const cards = [
     function draw() {
       mat.replaceChildren();
       for (let i = 0; i < bags; i++) {
-        const b = h('<button type="button" class="it bagit" aria-label="Blue bag, tap to take it off">' + bagSvg('x') + '</button>');
+        const b = h('<button type="button" class="it bagit" aria-label="Blue bag' + (locked ? '' : ', tap to take it off') + '">' + bagSvg('x', inside) + '</button>');
         b.onclick = () => { if (locked) return; bags--; draw(); ctx.touch(true); };
         mat.append(b);
       }
@@ -1059,14 +1254,21 @@ const cards = [
       },
       win: () => mx('5x + 4 − 2x = 3x + 4') + '. Five bags take away two bags leaves three bags, whatever ' + mx('x') + ' is. The 4 marbles are a different kind, so they stay as they are.',
       won() { locked = true; },
-      solve() { bags = 3; loose = 4; draw(); }
+      solve() { bags = 3; loose = 4; draw(); },
+      recap: () => mx('5x + 4 − 2x = 3x + 4'),
+      // Part 2: the bags turn see-through with n marbles in each; total() then writes the count under the mat.
+      reveal(n) { inside = n; draw(); },
+      total(n) { live.innerHTML = mx('3x + 4') + '<small class="in">= 3 × ' + n + ' + 4 = <b>' + (3 * n + 4) + '</b></small>'; }
     };
   }
 },
 
-/* 6 */ {
+/* 8 */ {
   prompt: 'Simplify ' + mx('6x + 5 − 4x') + '.',
   sub: 'Combine the like terms. Type your answer.',
+  why: () => termFig('6x + 5 - 4x') +
+    wl('Put the like terms together. Each term takes its sign with it: ' + mx('6x − 4x + 5') + '.') +
+    wl('Check with ' + mx('x = 3') + ': ' + mx('18 + 5 − 12 = 11') + ', and ' + mx('2x + 5') + ' is ' + mx('6 + 5 = 11') + '.'),
   build: simpCard({
     expr: '6x + 5 - 4x', ans: '2x + 5',
     wrong: [
@@ -1080,7 +1282,17 @@ const cards = [
   })
 },
 
-/* 7 */ {
+/* 9 */ {
+  bridge: true,
+  prompt: 'Adding or taking away like terms, as you just did with ' + mx('6x − 4x') + ', is called <b>collecting like terms</b>.',
+  sub: 'Collecting like terms makes an expression shorter without changing its value. That is what “simplify” asks you to do.',
+  show(stage) { stage.append(h(fig(wg([pic({ k: 'x', n: 5, off: 2, tag: 1 })], mx('5x − 2x = 3x')), wg([pic({ k: 'm', n: 4 })], '4')))); }
+},
+
+/* 10 */ {
+  why: () => '<div class="tg one">' + tgrp(parseLin('4a + 3 - a - 5').map((z, i) => tchip(z, i === 0)).join(''), 'Four terms, each with the sign in front of it') + '</div>' +
+    wl('Read it from the left: start with ' + mx('4a') + ', add 3, take away ' + mx('a') + ', take away 5.') +
+    wl('Check with ' + mx('a = 2') + ': ' + mx('8 + 3 − 2 − 5 = 4') + '. With ' + mx('+a') + ' in place of ' + mx('-a') + ' it would be ' + mx('8 + 3 + 2 − 5 = 8') + ', a different expression.'),
   prompt: 'Split ' + mx('4a + 3 − a − 5') + ' into its terms. Each term keeps the sign in front of it.',
   sub: 'Drag each term into a box, or tap it and then tap a box. Two cards are not terms of this expression: leave them out.',
   build: sorter({
@@ -1101,7 +1313,10 @@ const cards = [
   })
 },
 
-/* 8 */ {
+/* 11 */ {
+  why: () => termFig('4a + 3 - a - 5') +
+    wl('4 lots of ' + mx('a') + ' take away 1 lot leaves 3 lots. For ' + mx('3 − 5') + ', start at 3 and go down 5: you land on ' + mx('-2') + '.') +
+    wl('Check with ' + mx('a = 2') + ': ' + mx('8 + 3 − 2 − 5 = 4') + ', and ' + mx('3a − 2') + ' is ' + mx('6 − 2 = 4') + '.'),
   prompt: 'Simplify ' + mx('4a + 3 − a − 5') + '.',
   sub: 'Use the terms you just sorted: ' + mx('4a, +3, -a, -5') + '.',
   build: simpCard({
@@ -1118,7 +1333,10 @@ const cards = [
   })
 },
 
-/* 9 */ {
+/* 12 */ {
+  why: () => termFig('3x - 2y - 5x + 6y') +
+    wl('3 lots take away 5 lots is 2 lots below zero: ' + mx('-2x') + '. For the ' + mx('y') + ' terms, start 2 below zero and go up 6: ' + mx('4y') + '.') +
+    wl('Check with ' + mx('x = 2') + ' and ' + mx('y = 3') + ': ' + mx('6 − 6 − 10 + 18 = 8') + ', and ' + mx('-2x + 4y') + ' is ' + mx('-4 + 12 = 8') + '.'),
   prompt: 'Simplify ' + mx('3x − 2y − 5x + 6y') + '.',
   sub: 'A term can end up with a negative number in front.',
   build: simpCard({
@@ -1135,7 +1353,45 @@ const cards = [
   })
 },
 
-/* 10 */ {
+/* 13 */ {
+  why: () => termFig('5x + 2y - 3x + y') +
+    wl('One matching setting is not enough. At ' + at({ x: 1, y: 1 }, ['x', 'y']) + ' the original is ' + mx('5 + 2 − 3 + 1 = 5') + ', and so is ' + mx('5xy') + '.') +
+    wl('At ' + at({ x: 2, y: 1 }, ['x', 'y']) + ' the original is ' + mx('10 + 2 − 6 + 1 = 7') + '. ' + mx('2x + 3y') + ' is 7 too, but ' + mx('5xy') + ' is 10.'),
+  then: {
+    prompt: 'The sliders stop at 10. What do both expressions give when ' + mx('x = 20') + ' and ' + mx('y = 5') + '?',
+    reset: false,
+    why: () => '<table class="wtab"><tr><th>' + mx('5x + 2y − 3x + y') + '</th><td>' + mx('100 + 10 − 60 + 5') + '</td><td>= <b>55</b></td></tr>' +
+      '<tr><th>' + mx('2x + 3y') + '</th><td>' + mx('40 + 15') + '</td><td>= <b>55</b></td></tr></table>' +
+      wl('Collecting like terms works for every value, so the two expressions match even where the sliders can’t reach.') +
+      wl('The short one is quicker: ' + mx('2 × 20 + 3 × 5 = 55') + '.'),
+    build(stage, ctl, ctx, p1) {
+      p1.pair('');
+      const ans = makeAnswer(ctl, 'Value of both', ctx);
+      return {
+        check(attempt) {
+          const v = ans.value();
+          if (v === 55) return true;
+          ans.mark('bad');
+          if (isNaN(v)) return 'Type a whole number, using digits only.';
+          if (v === 25) return 'That is 20 + 5. ' + mx('2x') + ' means 2 × 20 and ' + mx('3y') + ' means 3 × 5.';
+          if (v === 30) return 'That is 2 + 20 + 3 + 5. ' + mx('2x') + ' means 2 × 20, and ' + mx('3y') + ' means 3 × 5.';
+          if (v === 255) return mx('2x') + ' is not 2 written next to 20. It means 2 × 20. ' + mx('3y') + ' means 3 × 5.';
+          if (v === 40) return 'That is ' + mx('2x') + ' on its own: 2 × 20. Add ' + mx('3y') + ' as well.';
+          if (v === 15) return 'That is ' + mx('3y') + ' on its own: 3 × 5. Add ' + mx('2x') + ' as well.';
+          if (v === 50) return 'That is 40 + 10. There are 3 lots of ' + mx('y') + ', so ' + mx('3y') + ' is 3 × 5.';
+          if (v === 70) return 'You swapped the values. ' + mx('x') + ' is 20 and ' + mx('y') + ' is 5.';
+          if (v === 115) return 'In the original, the ' + mx('3x') + ' is taken away. 100 + 10 − 60 + 5 is less than 115.';
+          if (v === 175) return 'The ' + mx('3x') + ' has a minus in front. ' + mx('5x − 3x') + ' is ' + mx('2x') + ', and 2 × 20 = 40.';
+          if (v === 500) return 'That is 5 × 20 × 5, which is ' + mx('5xy') + '. It is not equivalent. Use ' + mx('2x + 3y') + '.';
+          return attempt < 2 ? 'Put 20 in place of ' + mx('x') + ' and 5 in place of ' + mx('y') + ' in ' + mx('2x + 3y') + '.'
+                             : 'Work out 2 × 20 and 3 × 5, then add them.';
+        },
+        win: () => '55. ' + mx('2x + 3y') + ' is 40 + 15, and the original is 100 + 10 − 60 + 5. Equivalent expressions match at values the sliders can’t reach too.',
+        won() { ans.mark('good'); ans.lock(); p1.pair('<small>Both are <b>55</b> when ' + at({ x: 20, y: 5 }, ['x', 'y']) + '</small>'); },
+        solve() { ans.set(55); }
+      };
+    }
+  },
   prompt: 'Which expression is equivalent to ' + mx('5x + 2y − 3x + y') + '?',
   sub: 'Each card shows its value for the slider settings. Try several settings.',
   build(stage, ctl, ctx) {
@@ -1168,12 +1424,18 @@ const cards = [
       },
       win: () => mx('2x + 3y') + ' matches at every setting. Sliders can only test some values, but collecting like terms shows why it works for all of them: ' + mx('5x − 3x = 2x') + ' and ' + mx('2y + y = 3y') + '.',
       won() { ch.mark(0, 'good'); ch.lock(); },
-      solve() { ch.set([0]); }
+      solve() { ch.set([0]); },
+      recap: () => mx(ORIG) + ' is equivalent to ' + mx('2x + 3y') + '.',
+      // Part 2: the stage shows the two equivalent expressions side by side, with a note underneath.
+      pair(note) { live.innerHTML = mx(ORIG) + ' = ' + mx('2x + 3y') + note; }
     };
   }
 },
 
-/* 11 */ {
+/* 14 */ {
+  why: () => termFig('4x + 3y - 2x - y') +
+    wl('The simplest form is ' + mx('2x + 2y') + '. Noah added the ' + mx('y') + ' instead of taking it away, so his ' + mx('2x + 4y') + ' is ' + mx('2y') + ' too big.') +
+    wl('When ' + mx('y = 0') + ', ' + mx('2y') + ' is 0 and the two match. Any other ' + mx('y') + ' shows a gap. At ' + at({ x: 3, y: 2 }, ['x', 'y']) + ': 10 and 14.'),
   prompt: 'Noah simplified ' + mx('4x + 3y − 2x − y') + ' and got ' + mx('2x + 4y') + '. Set the sliders to prove he is wrong.',
   sub: 'Find values of ' + mx('x') + ' and ' + mx('y') + ' where the two give different numbers.',
   build(stage, ctl, ctx) {
@@ -1203,7 +1465,14 @@ const cards = [
   }
 },
 
-/* 12 */ {
+/* 15 */ {
+  why: () => '<div class="tg">' +
+    tgrp('<span class="tc x">' + mx('-x') + '</span><span class="tc x">' + mx('7x') + '</span>', 'letter part ' + mx('x')) +
+    tgrp('<span class="tc y">' + mx('y') + '</span><span class="tc y">' + mx('-4y') + '</span>', 'letter part ' + mx('y')) +
+    tgrp('<span class="tc k">10</span><span class="tc k">' + mx('-6') + '</span>', 'no letter') +
+    tgrp('<span class="tc xy">' + mx('3xy') + '</span><span class="tc xy">' + mx('-yx') + '</span>', 'letter part ' + mx('xy')) + '</div>' +
+    wl('The letter part decides the kind. ' + mx('-x') + ' and ' + mx('7x') + ' both count lots of ' + mx('x') + ', so they can be collected: ' + mx('-x + 7x = 6x') + '.') +
+    wl(mx('yx') + ' is the same kind as ' + mx('xy') + ' because the order doesn’t matter when you multiply: ' + mx('3 × 2 = 2 × 3') + '.'),
   prompt: 'Sort the terms. Each one goes with the term it is like.',
   sub: 'Drag each card into a box, or tap it and then tap a box.',
   build: sorter({
@@ -1225,7 +1494,10 @@ const cards = [
   })
 },
 
-/* 13 */ {
+/* 16 */ {
+  why: () => termFig('6x - 2y + 3 - x + 5y') +
+    wl('So the simplest form is ' + mx('5x + 3y + 3') + '. Tom’s ' + mx('3 + 3y + 5x') + ' has the same three terms in another order.') +
+    wl('Test ' + at({ x: 2, y: 1 }, ['x', 'y']) + ': the original is ' + mx('12 − 2 + 3 − 2 + 5 = 16') + '. Tom’s gives 16 too. Lena’s gives 24 and Priya’s ' + mx('11xy') + ' gives 22.'),
   prompt: 'Three students simplify ' + mx('6x − 2y + 3 − x + 5y') + '. Who is right?',
   sub: 'Choose Agree or Disagree for each one.',
   build(stage, ctl, ctx) {
@@ -1271,7 +1543,7 @@ const cards = [
 }
 ];
 
-const SECTIONS = [[0, 'Two kinds of bag'], [2, 'Unlike terms'], [4, 'Taking away'], [6, 'Signs'], [9, 'Same or not?'], [11, 'Wrap-up']];
+const SECTIONS = [[0, 'Two kinds of bag'], [2, 'Unlike terms'], [5, 'Taking away'], [8, 'Signs'], [12, 'Same or not?'], [14, 'Wrap-up']];
 
 // Finish screen: sets the prompt, sub-line and recap for this lesson.
 function drawFinish() {
@@ -1290,7 +1562,13 @@ function drawFinish() {
 /* ===================== shared card engine ===================== */
 // A card is { prompt, sub, build(stage, ctl, ctx) } and build returns { check(attempt), win(), won(), solve() }.
 // Optional on a card: why (string or function: the Why? panel), reset: false (hide Start over),
-// bridge: true (a text-only screen between groups of cards; no check, not scored).
+// bridge: true (a screen between groups of cards that names the idea just met; no check, not scored; optional
+// show(stage) draws a still diagram under the text),
+// then: { prompt, sub, why, reset, build(stage, ctl, ctx, part1) } (a second question on the same card, shown once
+// part 1 is right: part 1's prompt shrinks to a recap line, the stage stays, and build gets part 1's controller;
+// part 1's controller may add recap() returning HTML for that line), from: '<lesson slug>' (Level Checks: the lesson
+// the question comes from, for the review list at the end).
+// LESSON.kind === 'check' makes a Level Check: no Show me; a second wrong answer shows the answer and moves on.
 const sectionOf = i => SECTIONS.filter(s => s[0] <= i).pop() || [0, ''];
 const KEY = 'card-lesson:' + LESSON.slug + ':v' + LESSON.version;
 const DONE_KEY = 'card-lesson:' + LESSON.slug + ':done';
@@ -1299,7 +1577,7 @@ let S = fresh();
 try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved && typeof saved.i === 'number' && Array.isArray(saved.done)) S = Object.assign(fresh(), saved); } catch (_) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (_) {} };
 
-const cardEl = $('#card'), promptEl = $('#prompt'), subEl = $('#sub'), stage = $('#stage'), ctl = $('#ctl'), dock = $('#dock'), fb = $('#fb');
+const part1El = $('#part1'), cardEl = $('#card'), promptEl = $('#prompt'), subEl = $('#sub'), stage = $('#stage'), ctl = $('#ctl'), dock = $('#dock'), fb = $('#fb');
 const primary = $('#primary'), showMe = $('#showMe'), skip = $('#skip'), back = $('#back'), progress = $('#progress'), count = $('#count');
 const tools = $('#startOver'), startOver = $('#startOver'), whyBtn = $('#whyBtn'), whyWrap = $('#why'), whyBody = $('#whyBody'), whyOk = $('#whyOk'), againBtn = $('#again');
 const menu = $('#menu'), menuBtn = $('#menuBtn');
@@ -1310,7 +1588,9 @@ const ICON = {
   info: '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="5" r="1.6" fill="currentColor"/><path d="M10 9v7" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>'
 };
 const VERDICT = { good: 'Correct!', bad: 'Not yet.', info: 'Here’s how it works.' };
-let ctrl = null, attempts = 0, mode = 'check', fbKind = null;
+let ctrl = null, attempts = 0, mode = 'check', fbKind = null, part = 0, partFirst = true;
+const IS_CHECK = LESSON.kind === 'check';
+const partSpec = () => { const c = cards[S.i]; return part ? c.then : c; };
 const scored = () => cards.map((_, k) => k).filter(k => !cards[k].bridge);
 
 function setFb(kind, html, verdict) {
@@ -1332,7 +1612,7 @@ const ctx = {
   },
   submit() { if (!primary.disabled && mode === 'check') primary.click(); }
 };
-const cardWhy = () => { const c = cards[S.i]; if (!c || !c.why) return ''; return typeof c.why === 'function' ? c.why() : c.why; };
+const cardWhy = () => { const c = cards[S.i] && partSpec(); if (!c || !c.why) return ''; return typeof c.why === 'function' ? c.why() : c.why; };
 
 function drawProgress() {
   const firstOpen = cards.findIndex((_, k) => !S.done[k]);
@@ -1349,7 +1629,8 @@ function drawProgress() {
 function render() {
   if (S.i >= cards.length) return renderFinish();
   const c = cards[S.i];
-  attempts = 0; mode = 'check';
+  attempts = 0; mode = 'check'; part = 0; partFirst = true;
+  part1El.hidden = true; part1El.replaceChildren(); cardEl.classList.remove('part2');
   cardEl.classList.toggle('bridge', !!c.bridge);
   promptEl.innerHTML = c.prompt;
   subEl.innerHTML = c.sub || ''; subEl.hidden = !c.sub;
@@ -1359,7 +1640,9 @@ function render() {
   showMe.hidden = true; whyBtn.hidden = true; againBtn.hidden = true;
   skip.hidden = !(S.done[S.i] || S.unlocked);
   if (c.bridge) {
-    ctrl = null; mode = 'done'; stage.hidden = true; tools.hidden = true;
+    ctrl = null; mode = 'done'; tools.hidden = true;
+    stage.hidden = !c.show; if (c.show) c.show(stage);
+    cardEl.classList.toggle('shows', !!c.show);
     S.done[S.i] = true; S.first[S.i] = true;
     primary.textContent = S.i === cards.length - 1 ? 'Finish' : 'Continue'; primary.disabled = false; skip.hidden = true;
   } else {
@@ -1370,26 +1653,52 @@ function render() {
   $('#main').scrollTop = 0;
 }
 
-function finishCard(kind, first) {
+function finishCard(kind, first, verdict) {
   mode = 'done';
-  if (!S.done[S.i]) { S.done[S.i] = true; S.first[S.i] = first; }
+  const c = cards[S.i], more = !!c.then && part === 0;
+  if (more) partFirst = first;
+  else if (!S.done[S.i]) { S.done[S.i] = true; S.first[S.i] = !!(first && partFirst); }
   if (ctrl.won) ctrl.won();
-  setFb(kind, ctrl.win());
-  primary.textContent = S.i === cards.length - 1 ? 'Finish' : 'Continue';
+  setFb(kind, ctrl.win(), verdict);
+  primary.textContent = more || S.i < cards.length - 1 ? 'Continue' : 'Finish';
   primary.disabled = false;
   showMe.hidden = true; skip.hidden = true; tools.hidden = true;
   whyBtn.hidden = !cardWhy();
+  if (!whyBtn.hidden) { const v = fb.querySelector('.verdict'); if (v) v.append(whyBtn); }
   drawProgress(); save();
   focusPrimary();
+}
+
+// Part 2 of a two-part card: part 1 shrinks to a recap line, the stage stays, new controls replace the old.
+function toPart2() {
+  const c = cards[S.i], p1 = ctrl;
+  part = 1; attempts = 0; mode = 'check';
+  part1El.innerHTML = ICON.good + '<span>' + (p1 && p1.recap ? p1.recap() : c.prompt) + '</span>';
+  part1El.hidden = false; cardEl.classList.add('part2');
+  promptEl.innerHTML = c.then.prompt;
+  subEl.innerHTML = c.then.sub || ''; subEl.hidden = !c.then.sub;
+  ctl.replaceChildren(); setFb(null);
+  primary.textContent = 'Check'; primary.disabled = true;
+  showMe.hidden = true; whyBtn.hidden = true; skip.hidden = true;
+  tools.hidden = c.then.reset === false;
+  ctrl = c.then.build(stage, ctl, ctx, p1);
+  save();
+  $('#main').scrollTop = 0;
+  focusCard();
 }
 
 function renderFinish() {
   ctrl = null; mode = 'finish';
   cardEl.classList.remove('bridge'); tools.hidden = true; whyBtn.hidden = true;
-  drawFinish();
   const ks = scored();
   const done = ks.filter(k => S.done[k]).length, firsts = ks.filter(k => S.first[k]).length;
-  setFb('good', 'You completed ' + done + ' of ' + ks.length + ' cards and got ' + firsts + ' right on the first try.', 'Lesson finished.');
+  if (IS_CHECK) {
+    checkFinish(ks, firsts);
+    setFb('good', done === ks.length ? 'Your result shows on the course map with a tick.' : 'Answer every question to get the tick on the course map.', 'Level Check finished.');
+  } else {
+    drawFinish();
+    setFb('good', 'You completed ' + done + ' of ' + ks.length + ' cards and got ' + firsts + ' right on the first try.', 'Lesson finished.');
+  }
   if (done === ks.length) {
     try { localStorage.setItem(DONE_KEY, JSON.stringify({ date: new Date().toISOString().slice(0, 10), first: firsts, total: ks.length, version: LESSON.version })); } catch (_) {}
   }
@@ -1400,19 +1709,37 @@ function renderFinish() {
   $('#main').scrollTop = 0;
 }
 
+// Level Check finish: score, then each lesson the questions came from, with the ones to revisit highlighted.
+function checkFinish(ks, firsts) {
+  promptEl.innerHTML = 'You got ' + firsts + ' of ' + ks.length + ' right first time.';
+  subEl.innerHTML = 'Questions you missed point back to the lesson they came from.'; subEl.hidden = false;
+  stage.hidden = false; stage.replaceChildren(); ctl.replaceChildren();
+  const by = {};
+  ks.forEach(k => { const f = cards[k].from || ''; (by[f] = by[f] || { n: 0, ok: 0 }).n++; if (S.first[k]) by[f].ok++; });
+  const titles = LESSON.review || {};
+  const rows = Object.keys(by).filter(f => f).map(f => {
+    const r = by[f], miss = r.ok < r.n, t = titles[f] || f;
+    return '<li class="' + (miss ? 'miss' : '') + '">' + (miss ? '<a href="' + f + '.html">' + t + '</a>' : '<span>' + t + '</span>') +
+      '<small>' + r.ok + ' of ' + r.n + (miss ? ' · revisit' : '') + '</small></li>';
+  }).join('');
+  stage.append(h('<div class="lc-score" aria-hidden="true">' + firsts + ' / ' + ks.length + '</div>'));
+  if (rows) stage.append(h('<ul class="lc-list">' + rows + '</ul>'));
+}
+
 function go(i) { S.i = Math.max(0, Math.min(cards.length, i)); render(); }
 function restart() { S = fresh(); render(); }
 
 primary.addEventListener('click', () => {
   if (mode === 'finish') { location.href = LESSON.next ? LESSON.next.href : LESSON.map; return; }
-  if (mode === 'done') return go(S.i + 1);
+  if (mode === 'done') { if (cards[S.i] && cards[S.i].then && part === 0) return toPart2(); return go(S.i + 1); }
   if (mode === 'retry') { mode = 'check'; setFb(null); primary.textContent = 'Check'; primary.disabled = true; focusCard(); return; }
   attempts++;
   const r = ctrl.check(attempts);
   if (r === true) return finishCard('good', attempts === 1);
+  if (IS_CHECK && attempts >= 2) { ctrl.solve(); return finishCard('info', false, 'Here’s the answer.'); }
   setFb('bad', r);
   mode = 'retry'; primary.textContent = 'Try again'; primary.disabled = false;
-  if (attempts >= 2) showMe.hidden = false;
+  if (attempts >= 2 && !IS_CHECK) showMe.hidden = false;
   focusPrimary();
 });
 showMe.addEventListener('click', () => { ctrl.solve(); finishCard('info', false); });
@@ -1422,9 +1749,10 @@ againBtn.addEventListener('click', () => restart());
 // Start over redraws the card. Tries already used still count, so it can't reset "Show me" or the first-try score.
 startOver.addEventListener('click', () => {
   if (mode !== 'check' && mode !== 'retry') return;
-  const used = attempts;
+  const used = attempts, inPart2 = part === 1, pf = partFirst;
   render();
-  attempts = used; showMe.hidden = !(used >= 2);
+  if (inPart2) { ctrl.solve(); if (ctrl.won) ctrl.won(); toPart2(); partFirst = pf; }
+  attempts = used; showMe.hidden = !(used >= 2) || IS_CHECK;
 });
 whyBtn.addEventListener('click', () => { whyBody.innerHTML = cardWhy(); whyWrap.hidden = false; whyOk.focus(); });
 whyOk.addEventListener('click', () => { whyWrap.hidden = true; primary.focus({ preventScroll: true }); });
@@ -1451,7 +1779,7 @@ document.addEventListener('keydown', e => {
 });
 
 // Test hook for cards/check_cards.py: only when the page is opened with ?test.
-if (/[?&]test\b/.test(location.search)) window.__T = { get cards() { return cards; }, go, get ctrl() { return ctrl; }, finishCard, get mode() { return mode; } };
+if (/[?&]test\b/.test(location.search)) window.__T = { get cards() { return cards; }, go, get ctrl() { return ctrl; }, finishCard, get mode() { return mode; }, nextPart: toPart2, get part() { return part; }, kind: LESSON.kind || 'lesson' };
 
 render();
 })();

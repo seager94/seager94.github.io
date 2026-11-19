@@ -47,11 +47,33 @@ A card is `{ prompt, sub, build(stage, ctl, ctx) }`, and `build` returns `{ chec
 
 - `why`: HTML (or a function returning HTML) for the Why? panel after a correct answer.
 - `reset: false`: hide Start over on that card.
-- `bridge: true`: a text-only screen between groups of cards (no check, not scored).
+- `bridge: true`: a screen between groups of cards that names the idea just met (no check, not scored). Optional
+  `show(stage)` draws a still diagram under the text.
+- `then: { prompt, sub, why, reset, build(stage, ctl, ctx, part1) }`: a two-part card. Once part 1 is right,
+  Continue opens part 2 on the same card: part 1's prompt shrinks to a ticked recap line, the stage (diagram)
+  stays, and part 2's controls replace part 1's. `build` gets part 1's controller, so part 2 can read or extend
+  what the student built. Part 1's controller can add `recap()` returning HTML for the recap line (default: its
+  prompt). The card counts as right first time only if both parts were.
+- `from: '<lesson slug>'`: Level Checks only. The lesson the question comes from, for the review list at the end.
+
+Every `lesson.js` starts with the `$` and `h` helpers; the frame's engine uses them.
+
+## Level Checks
+
+A unit's Level Check is a page like a lesson, with `"kind": "check"` in `src/lessons.json` and the unit's
+`"check": "<slug>"` pointing at it. It goes live on the map as soon as `src/lessons/<slug>/lesson.js` exists;
+until then the map shows a dashed Coming soon node. In a Level Check there is no Show me: a first wrong answer
+gets its feedback and Try again, a second shows the answer and moves on. The finish screen (drawn by the frame,
+so a check needs no `drawFinish`) gives the score and lists each lesson the questions came from, linking the
+ones with a miss.
+
+## Building one page
+
+`py cards/build_cards.py --only <slug>` rebuilds just that page (the map and lessons.json are left alone).
 
 ## Progress kept in the browser
 
 - `card-lesson:<slug>:v<version>`: where the student is in a lesson.
-- `card-lesson:<slug>:done`: written when every card is done (date, first-try count). The map shows a tick from this.
+- `card-lesson:<slug>:done`: written when every card is done (date, first-try count). The map shows a tick from this, for lessons and Level Checks.
 
 Both stay on one device and browser. There is no class view yet.
