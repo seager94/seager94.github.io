@@ -1,0 +1,193 @@
+{
+ "title": "Algebra card lessons",
+ "intro": "Short interactive lessons. Start anywhere: the highlighted lesson is the suggested next one.",
+ "units": [
+  {
+   "id": "expressions",
+   "title": "Variables and expressions",
+   "year": 7,
+   "lessons": [
+    "what-is-a-variable",
+    "writing-expressions",
+    "substitution",
+    "equivalent-expressions",
+    "properties-with-letters"
+   ],
+   "check": "check-expressions"
+  },
+  {
+   "id": "equations",
+   "title": "Equations",
+   "year": 7,
+   "lessons": [
+    "one-step-equations",
+    "two-step-equations",
+    "backtracking",
+    "equations-from-stories"
+   ],
+   "check": "check-equations"
+  },
+  {
+   "id": "patterns",
+   "title": "Patterns and rules",
+   "year": 7,
+   "lessons": [
+    "growing-patterns",
+    "tables-to-rules"
+   ],
+   "check": "check-patterns"
+  },
+  {
+   "id": "year8",
+   "title": "Expressions in Year 8",
+   "year": 8,
+   "lessons": [
+    "like-terms",
+    "area-model-expansion"
+   ],
+   "check": "check-year8"
+  }
+ ],
+ "lessons": {
+  "what-is-a-variable": {
+   "title": "What is a variable?",
+   "description": "Year 7 card lesson on what a variable is, built around four things students move: a balance, a mat, a tile pattern and a number machine.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A02",
+   "version": 2
+  },
+  "writing-expressions": {
+   "title": "Writing expressions",
+   "description": "Year 7 card lesson on writing expressions: an expression is a recipe for a number you do not know yet. Bags and marbles, think-of-a-number stories, brackets, less than, and a money context.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A02",
+   "version": 2
+  },
+  "substitution": {
+   "title": "Substitution",
+   "description": "Year 7 card lesson on substitution: put the number where the letter was, then follow the order of operations. A formula machine, the 3n-is-not-34 trap, AFL scores, weekly pay, rectangle area, two letters at once and working backwards.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A01",
+   "version": 2
+  },
+  "equivalent-expressions": {
+   "title": "Equivalent expressions",
+   "description": "Year 7 card lesson on equivalent expressions: two machines on one slider show when expressions give the same number for every value of the variable.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A02",
+   "version": 2
+  },
+  "properties-with-letters": {
+   "title": "Properties with letters",
+   "description": "Year 7 card lesson: letters state a rule about all numbers at once. Commutative and associative properties of addition and multiplication, and counterexamples for subtraction and division.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A02",
+   "version": 2
+  },
+  "one-step-equations": {
+   "title": "One-step equations",
+   "description": "Year 7 card lesson on one-step equations: an equation is a balance, whatever you do to one side you do to the other, and the solution is the number that makes it true.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A03",
+   "version": 2
+  },
+  "two-step-equations": {
+   "title": "Two-step equations",
+   "description": "Year 7 card lesson on solving two-step equations on a balance: undo the loose marbles first, then share.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A03",
+   "version": 2
+  },
+  "backtracking": {
+   "title": "Backtracking",
+   "description": "Year 7 card lesson on backtracking: find the input of a number machine by undoing each step in reverse order, then solve equations such as 3x + 7 = 19 and check by running forwards.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A03",
+   "version": 2
+  },
+  "equations-from-stories": {
+   "title": "Equations from stories",
+   "description": "Year 7 card lesson on writing equations from everyday money stories: name the unknown as a number, write the equation, solve it, then check the answer in the story.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A03",
+   "version": 2
+  },
+  "growing-patterns": {
+   "title": "Growing patterns",
+   "description": "Year 7 card lesson on growing patterns: see the part that stays the same and the part that grows, then use a rule to find any step without drawing it.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A05",
+   "version": 2
+  },
+  "tables-to-rules": {
+   "title": "Tables to rules",
+   "description": "Year 7 card lesson on finding the rule that links each input in a table of values to its output, built around a hidden number machine, rule tiles and a small grid.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A05",
+   "version": 2
+  },
+  "like-terms": {
+   "title": "Like terms",
+   "description": "Year 8 card lesson on like terms: you can only combine things of the same kind. Blue and purple bags of marbles, sliders and term sorting.",
+   "year": 8,
+   "strand": "Algebra",
+   "ac9": "AC9M8A01",
+   "version": 2
+  },
+  "area-model-expansion": {
+   "title": "Expanding with the area model",
+   "description": "Year 8 card lesson on expanding and factorising a(b + c) as the area of a rectangle split into two parts, built around an area model students drag.",
+   "year": 8,
+   "strand": "Algebra",
+   "ac9": "AC9M8A01",
+   "version": 2
+  },
+  "check-expressions": {
+   "title": "Level Check: Variables and expressions",
+   "description": "Level Check. Mixed questions from the five Variables and expressions lessons: what a variable is, writing expressions, substitution, equivalent expressions and properties with letters.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A01, AC9M7A02",
+   "version": 1,
+   "kind": "check"
+  },
+  "check-equations": {
+   "title": "Level Check: Equations",
+   "description": "Level Check. Mixed questions from the four Equations lessons: one-step and two-step equations, backtracking and equations from stories.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A03",
+   "version": 1,
+   "kind": "check"
+  },
+  "check-patterns": {
+   "title": "Level Check: Patterns and rules",
+   "description": "Level Check. Mixed questions from the Patterns and rules lessons: growing patterns and finding the rule from a table.",
+   "year": 7,
+   "strand": "Algebra",
+   "ac9": "AC9M7A05",
+   "version": 1,
+   "kind": "check"
+  },
+  "check-year8": {
+   "title": "Level Check: Expressions in Year 8",
+   "description": "Level Check. Mixed questions from the Year 8 lessons: like terms and expanding with the area model.",
+   "year": 8,
+   "strand": "Algebra",
+   "ac9": "AC9M8A01",
+   "version": 1,
+   "kind": "check"
+  }
+ }
+}

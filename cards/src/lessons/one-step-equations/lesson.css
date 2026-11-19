@@ -1,0 +1,55 @@
+.share{width:100%;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.pile{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.15rem;min-height:2rem}
+.pile svg{width:1.55rem;height:1.55rem}
+.pile .lab{font-size:.9rem;color:var(--ink-2);margin-right:.4rem}
+.groups{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;width:100%}
+.grp{min-height:4.4rem;border:2px dashed var(--line);border-radius:1rem;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;gap:.35rem;padding:.35rem}
+.grp > svg{width:3rem;height:3.3rem;flex:none}
+.grp .mbs{max-width:3.4rem}
+.grp .mbs svg{width:1.45rem;height:1.45rem;display:block}
+.eqs{font:400 1.4rem var(--maths);color:var(--ink-2)}
+.src.tap{cursor:pointer}
+.src:disabled{opacity:.45;cursor:default}
+.hop{display:block;width:min(100%,34rem);height:auto}
+.nl-axis{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.nl-tick{stroke:var(--ink);stroke-width:2}
+.nl-num{font:400 17px var(--maths);fill:var(--ink-2)}
+.nl-t{fill:var(--num);stroke:var(--num-deep);stroke-width:2}
+.nl-x{fill:var(--var);stroke:var(--var-deep);stroke-width:2}
+.nl-xt{font:italic 400 19px var(--maths);fill:#fff}
+.nl-arc{fill:none;stroke:var(--ink);stroke-width:2.5}
+.nl-lab{font:400 19px var(--maths);fill:var(--ink)}
+.flow{display:grid;grid-template-columns:repeat(6,auto);align-items:center;justify-items:center;justify-content:center;gap:.7rem .6rem;padding:.3rem 0}
+.flow .tile{margin-bottom:0}
+.fcap{justify-self:end;font-size:.85rem;color:var(--ink-2)}
+.farr{font-size:1.5rem;color:var(--ink-2)}
+.fop{background:var(--ink);color:#fff;border-radius:2rem;padding:.3rem 1rem;font:400 1.4rem var(--maths);white-space:nowrap}
+.fq{min-width:3rem;height:3.1rem;border:2px dashed var(--line);border-radius:.75rem;display:inline-grid;place-items:center;background:var(--paper);color:var(--ink-2);font:400 1.4rem var(--maths)}
+.fop.fq{height:auto;min-width:4.4rem;border-radius:2rem}
+.work{display:grid;grid-template-columns:auto auto auto;column-gap:.6rem;row-gap:.3rem;align-items:baseline;font:400 1.5rem/1.3 var(--maths)}
+.work .l{text-align:right}
+.work .r{text-align:left}
+.work .m{font-size:1em}
+.work .fin{color:var(--go-deep);font-weight:700}
+.answer .yn button{font:400 1.3rem var(--maths);padding:.3rem .85rem}
+.blank{display:inline-block;min-width:1.4rem;border-bottom:2px solid var(--ink-2);color:var(--ink-2);text-align:center;font-family:var(--body);font-size:1rem}
+.recap .art .tile.op{box-shadow:inset 0 0 0 2px var(--line)}
+/* still diagrams: Why? panels and bridges */
+.why-body .why-fig{display:flex;justify-content:center;margin:.1rem 0 .5rem}
+.why-body .why-ln{margin:.25rem 0 0}
+.fig{display:block;width:100%;height:auto}
+.still-scale{width:min(100%,21rem)}
+.still-scale .scale-wrap{width:100%}
+.still-scale .eqbar{font-size:1.05rem}
+.stage .still-scale{width:min(100%,24rem,calc(30vh * 2.42))}
+.fig-n{font:400 17px var(--maths);fill:var(--ink)}
+.fig-eq{font:400 26px var(--maths);fill:var(--ink-2)}
+.fig-num{fill:var(--num);stroke:var(--num-deep);stroke-width:1.5}
+.fig-nt{font:400 21px var(--maths);fill:var(--ink)}
+.fig-var{fill:var(--var);stroke:var(--var-deep);stroke-width:1.5}
+.fig-vt{font:400 20px var(--maths);fill:#fff}
+.fig-v{font-style:italic;fill:var(--var)}
+.fig-br{fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linejoin:round}
+.fig-cut{stroke:var(--ink-2);stroke-width:2;stroke-dasharray:5 4}
+.nl-arc.back{stroke-dasharray:6 5}
+.why-body .work{justify-content:center;font-size:1.35rem}

@@ -1,0 +1,63 @@
+.mini .v{fill:var(--var-soft)}
+.mini .n{fill:var(--num-soft)}
+.mini .c{fill:var(--paper);stroke:var(--num-deep);stroke-width:1.2;stroke-dasharray:3 2}
+.mini .o{fill:none;stroke:var(--ink);stroke-width:1.6}
+.am{--u:min(calc((100cqw - 4.6rem) / var(--ml)),calc(var(--ah) / var(--ma)));display:grid;grid-template-columns:2.8rem calc(var(--u) * var(--ml));grid-template-rows:1.9rem calc(var(--u) * var(--ma)) auto;column-gap:.5rem}
+.am-top,.am-side,.am-bot{position:relative}
+.am-top{grid-area:1/2}
+.am-side{grid-area:2/1}
+.am-bot{grid-area:3/2;height:1.9rem}
+.am-bot:empty{display:none}
+.track{cursor:pointer;touch-action:none}
+.am-rect{grid-area:2/2;align-self:start;position:relative;background:var(--paper);box-shadow:0 0 0 2px var(--ink)}
+.am-parts{position:absolute;inset:0}
+.am-part{position:absolute;top:0;bottom:0;display:grid;place-items:center;background-size:var(--u) var(--u);background-position:-1px -1px}
+.am-part+.am-part{box-shadow:inset 2px 0 0 var(--ink)}
+.am-part.var{background-color:var(--var-soft);background-image:linear-gradient(rgba(53,84,209,.2) 1px,transparent 1px),linear-gradient(90deg,rgba(53,84,209,.2) 1px,transparent 1px)}
+.am-part.var.plain{background-image:none}
+.am-part.num{background-color:var(--num-soft);background-image:linear-gradient(rgba(194,135,0,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(194,135,0,.3) 1px,transparent 1px)}
+.am-part.cut{background:repeating-linear-gradient(135deg,var(--num-soft) 0 .3rem,var(--paper) .3rem .6rem);box-shadow:none;border-left:2px dashed var(--ink)}
+.am-lab{position:relative;z-index:1;font:400 1.2rem/1.15 var(--maths);text-align:center;white-space:nowrap;background:rgba(255,255,255,.88);border-radius:.4rem;padding:.1rem .35rem;pointer-events:none}
+.am-lab:empty{display:none}
+.am-lab .m{font-size:1em}
+.am-lab small{display:block;font:400 .85rem/1.2 var(--body);color:var(--ink-2)}
+.am-hl{position:absolute;left:0;right:0;top:0;display:grid;place-items:center;box-shadow:inset 0 0 0 3px var(--ink);font-size:.82rem;font-weight:600;line-height:1}
+.am-tick{position:absolute;top:0;bottom:0;border-left:2px dashed var(--var-deep);pointer-events:none}
+.am-len{position:absolute;top:0;bottom:.15rem;display:flex;align-items:flex-end;justify-content:center;padding-bottom:.3rem;font:400 1.15rem/1 var(--maths);white-space:nowrap;box-shadow:inset 0 -2px 0 var(--ink-2);pointer-events:none}
+.am-len::before,.am-len::after{content:"";position:absolute;bottom:0;width:2px;height:.6rem;background:var(--ink-2)}
+.am-len::before{left:0}
+.am-len::after{right:0}
+.am-len .m{font-size:1em}
+.am-bot .am-len{top:.15rem;bottom:0;align-items:flex-start;padding:.3rem 0 0;box-shadow:inset 0 2px 0 var(--ink-2)}
+.am-bot .am-len::before,.am-bot .am-len::after{top:0;bottom:auto}
+.am-side .am-len{left:0;right:.25rem;bottom:auto;align-items:center;justify-content:flex-end;padding:0 .55rem 0 0;box-shadow:inset -2px 0 0 var(--ink-2)}
+.am-side .am-len::before,.am-side .am-len::after{left:auto;right:0;width:.6rem;height:2px}
+.am-side .am-len::before{top:0;bottom:auto}
+.am-side .am-len::after{top:auto;bottom:0}
+.am-h{position:absolute;z-index:2;border:0;padding:0;background:none;touch-action:none}
+.am-h-p,.am-h-q{top:-.5rem;bottom:-.5rem;width:1.8rem;margin-left:-.9rem;cursor:ew-resize}
+.am-h-a{left:-.5rem;right:-.5rem;height:1.8rem;margin-top:-.9rem;cursor:ns-resize}
+.am-h::before{content:"";position:absolute;background:var(--ink);border-radius:2px}
+.am-h-p::before,.am-h-q::before{left:50%;top:.5rem;bottom:.5rem;width:4px;margin-left:-2px}
+.am-h-a::before{top:50%;left:.5rem;right:.5rem;height:4px;margin-top:-2px}
+.am-h::after{content:"";position:absolute;left:50%;top:50%;width:1.35rem;height:1.35rem;margin:-.675rem 0 0 -.675rem;border-radius:50%;background:var(--paper);border:3px solid var(--ink);box-shadow:0 2px 6px rgba(28,35,64,.35)}
+.am-h-p::after{top:calc(100% - .5rem)}
+.am-h-a::after{left:1.4rem}
+.am-h:focus-visible{outline:none}
+.am-h:focus-visible::after{box-shadow:0 0 0 3px var(--var)}
+.am.locked .am-h{cursor:default}
+.am.locked .am-h::after,.am.locked .am-h::before{display:none}
+.am.locked .track{cursor:default}
+.blanks .m{font-size:1.5rem}
+.answer.blanks input{width:3.4rem;margin:0 .2rem;padding:.15rem .3rem;font-size:1.4rem;vertical-align:middle}
+/* Why? panels: the card's rectangle, small and still, beside one or two lines of working */
+.why-body .wy{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.6rem 1.6rem}
+.why-body .wy-pic{flex:0 1 auto;min-width:0;max-width:100%;display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:.4rem 1.2rem}
+.why-body .wy-am{container-type:inline-size;min-width:0;max-width:100%}
+.why-body .wy-txt{flex:1 1 15rem;min-width:0}
+.why-body p{margin:0 0 .45rem}
+.why-body p:last-child{margin-bottom:0}
+.why-body .am{margin:0 auto;width:max-content;max-width:100%}
+.why-body .am-lab{padding:.1rem .2rem}
+/* the last card's notes need a little room once the Why? button narrows the feedback */
+.claim{padding-top:.5rem;padding-bottom:.5rem}

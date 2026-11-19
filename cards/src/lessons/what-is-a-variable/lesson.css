@@ -1,0 +1,44 @@
+/* Why? panels: the card's diagram, small and still, beside one or two lines of working */
+.why-body .wy{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.6rem}
+.why-body .wy-pic{flex:0 1 17rem;min-width:0;display:flex;justify-content:center}
+.why-body .wy-txt{flex:1 1 15rem;min-width:0}
+.why-body p{margin:0 0 .45rem}
+.why-body p:last-child{margin-bottom:0}
+.wy-svg{display:block;width:100%;height:auto;overflow:visible}
+.st{font:400 17px var(--maths);fill:var(--ink)}
+.st .sv{font-style:italic;fill:var(--var)}
+.ps-e{fill:var(--num);stroke:var(--num-deep);stroke-width:1.5}
+.ps-n{fill:var(--var);stroke:var(--var-deep);stroke-width:1.5}
+.ps-br{fill:none;stroke:var(--var);stroke-width:2}
+.why-body .scale-wrap{width:100%}
+.why-body .eqbar{font-size:1.05rem;margin-top:.1rem}
+.why-body .eqbar small{font-size:.8rem}
+.why-body .eq-m{font-size:1.3rem}
+.why-body .mach{padding-top:1.5rem}
+.why-body .mach.capped{padding-bottom:1.7rem}
+.why-body .m-slot{width:4rem;height:4rem}
+.why-body .m-body{width:6.6rem;height:4.9rem}
+.why-body .m-body svg{width:2.7rem;height:2.7rem}
+.cap.under{top:auto;bottom:-1.75rem;left:-2.5rem;right:-2.5rem;font-size:1rem;color:var(--ink);white-space:nowrap}
+.wy-tab{border-collapse:collapse;font-size:1.05rem;line-height:1.3}
+.wy-tab th,.wy-tab td{border:1px solid var(--line);padding:.3rem .9rem;text-align:center;font-weight:400}
+.wy-tab th{background:var(--desk);text-align:left;white-space:nowrap}
+.wy-tab td{font-family:var(--maths);font-variant-numeric:lining-nums;min-width:3.4rem}
+.wy-tab.left{margin-bottom:.7rem}
+.wy-tab.left td{text-align:left;font-family:var(--body);font-size:.95rem}
+
+/* bridge screens */
+.card.bridge .prompt b{font-weight:800}
+.br-pic{width:100%}
+.br-duo{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;width:100%;max-width:30rem}
+.br-duo>div{background:var(--paper);border:2px solid var(--line);border-radius:1rem;padding:.6rem .7rem;text-align:center;line-height:1.3}
+.br-duo>div>.m{display:block;font-size:1.4rem}
+.br-duo small{color:var(--ink-2);font-size:.9rem}
+.card.bridge .wy-tab{font-size:1.25rem}
+.card.bridge .wy-tab th,.card.bridge .wy-tab td{padding:.4rem 1.1rem}
+
+/* three short choices in one row (card 4, part 2) */
+.choices.three{grid-template-columns:repeat(3,1fr)}
+.choices.three .choice{text-align:center;padding:.6rem .5rem}
+.choices.three .choice .m{font-size:1.15em}
+@media (max-width:34rem){.choices.three{grid-template-columns:1fr}}

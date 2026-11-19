@@ -1,0 +1,53 @@
+i.o{font-style:italic;font-weight:400;font-family:var(--maths)}
+.slider.two{--sl:var(--var2)}
+.sliders{display:grid;gap:.5rem}
+input[type=range]::-webkit-slider-runnable-track{height:.55rem;border-radius:.3rem;background:linear-gradient(90deg,var(--sl,var(--var)) var(--fill,0%),#D2D8E7 var(--fill,0%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--sl,var(--var));border:.22rem solid #fff;box-shadow:0 2px 6px rgba(28,35,64,.4);margin-top:-.63rem}
+input[type=range]::-moz-range-progress{height:.55rem;border-radius:.3rem;background:var(--sl,var(--var))}
+input[type=range]::-moz-range-thumb{width:1.4rem;height:1.4rem;border-radius:50%;background:var(--sl,var(--var));border:.22rem solid #fff;box-shadow:0 2px 6px rgba(28,35,64,.4)}
+.note.two{background:var(--var2-soft)}
+.notes{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
+.big{font-size:2rem;line-height:1.2}
+.m-body .fx{display:inline-block;font:400 1.55rem/1 var(--maths);color:#fff;white-space:nowrap}
+.m-body .fx i.v{color:#AFC0FF}
+.m-body.run .fx{animation:pulse .6s ease-in-out}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;width:100%}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:1rem;padding:.5rem .6rem;text-align:center;line-height:1.35}
+.panel .big{font-size:1.6rem}
+.panel small{display:block;color:var(--ink-2);font-size:1rem}
+.panel b{font-size:1.4rem}
+.board{display:flex;align-items:flex-start;justify-content:center;gap:.8rem 1.1rem;flex-wrap:wrap}
+.board .team{font:700 1.2rem/3.1rem var(--display)}
+.board .dot{font:700 1.6rem/2.9rem var(--maths)}
+.sc{display:flex;flex-direction:column;align-items:center;gap:.15rem;font-size:.85rem;color:var(--ink-2);text-align:center}
+.sc .tile{margin-bottom:.22rem}
+.rect{display:block;height:8.2rem;width:auto;max-width:100%}
+.r-fill{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.r-fill.open{fill:var(--num-soft)}
+.r-grid{stroke:var(--num-deep);stroke-width:1;opacity:.55}
+.r-l{stroke:var(--var);stroke-width:5;stroke-linecap:round}
+.r-w{stroke:var(--var2);stroke-width:5;stroke-linecap:round}
+.r-t{font:400 18px var(--maths);fill:var(--ink)}
+.r-t .v{font-style:italic;fill:var(--var)}
+.r-t .v2{font-style:italic;fill:var(--var2)}
+@keyframes pulse{50%{transform:scale(1.15)}}
+/* Why? panels and bridges: still pictures */
+.why-body .wl{margin:.35rem 0 0;text-align:center}
+.why-body .mach{padding-top:1.5rem;margin-bottom:.5rem}
+.wpic{display:block;width:100%;margin:0 auto .2rem}
+.wp-t{font:400 14px var(--body);fill:var(--ink-2)}
+.wp-t .v{font:italic 400 16px var(--maths);fill:var(--var)}
+.wp-op{font:400 24px var(--maths);fill:var(--ink)}
+.wduo{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem 1rem}
+.wduo>div{flex:1 1 12rem;max-width:17rem}
+.wcap{text-align:center;font-size:1.15rem}
+.tgrid{display:grid;justify-content:center;justify-items:center;align-items:center;gap:.45rem .3rem;margin:.2rem 0 .5rem}
+.tgrid .tile{min-width:2.5rem;height:2.6rem;padding:0 .4rem;font-size:1.3rem;margin:0}
+.tile.ghost{background:none;box-shadow:none;border:2px dashed #B9C0CC;color:#9AA2B1}
+.tgrid .sum{grid-column:span 3;font:400 1.35rem/1 var(--maths)}
+.tgrid .plus{font:400 1.35rem/1 var(--maths)}
+.first{display:inline-block;padding:.05em .3em;border-radius:.45rem;background:var(--num-soft);box-shadow:inset 0 0 0 2px var(--num-deep)}
+.board.vs .team{min-width:4.4rem;text-align:right}
+.board.vs+.board.vs{margin-top:.5rem}
+.why-body .board{margin-bottom:.4rem}
+.card.bridge .prompt b{font-weight:800}

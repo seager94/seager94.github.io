@@ -1,0 +1,62 @@
+:root{--yv:var(--var2);--yv-deep:var(--var2-deep)}
+i.v.y{color:var(--yv)}
+.tile.yv{background:var(--yv);color:#fff;font-style:italic;box-shadow:0 .22rem 0 var(--yv-deep)}
+.duo{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.8rem 1.6rem;width:100%}
+.duo .grow{flex:1 1 22rem;min-width:0}
+.tov{--rh:1.75rem;border-collapse:collapse;font:400 1.15rem/1 var(--maths);font-variant-numeric:lining-nums tabular-nums}
+.tov th,.tov td{height:var(--rh);min-width:3.6rem;padding:0 .6rem;text-align:center;border:1px solid var(--line);background:var(--paper)}
+.tov th{font:600 .85rem/1.1 var(--body);background:var(--desk);white-space:nowrap}
+.tov th .m{font-size:1.3rem;font-weight:400}
+.tov td.ask{color:var(--ink-2);outline:2px dashed var(--ink-2);outline-offset:-4px}
+.tov .step{border:0;background:none;min-width:2.6rem;padding:0 0 0 .35rem;text-align:left}
+.tov .step span{position:relative;top:calc(var(--rh) / -2);font:600 .85rem var(--body);color:var(--ink-2)}
+.tov.across th,.tov.across td{min-width:2rem;padding:0 .3rem;font-size:1.05rem}
+.tov.across th .m{font-size:1.2rem}
+.rule-row{flex:1 1 17rem;display:flex;align-items:center;gap:.6rem}
+.rule-row > .m{font-size:1.7rem}
+.rule-row .strip{flex:1;width:auto}
+.bins.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bin-t{font-weight:600;font-size:.95rem;text-align:center}
+.bins.three .bin{min-height:0;align-items:center}
+.bins.three .bin-c{min-height:3.6rem;align-items:center}
+.gwrap{display:flex;flex-direction:column;align-items:center;gap:.15rem}
+.grid{display:block;height:min(17rem,40vh);width:auto;max-width:100%;touch-action:none;cursor:crosshair}
+.grid.locked{cursor:default}
+.g-bg{fill:#fff}
+.g-l{stroke:#DCE1EE;stroke-width:1}
+.g-ax{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+.g-n{font:12px var(--body);fill:var(--ink-2)}
+.g-v{font:italic 17px var(--maths)}
+.gx{fill:var(--var)}
+.gy{fill:var(--yv)}
+.g-p{fill:var(--ink);stroke:#fff;stroke-width:2}
+.g-p.fx{fill:var(--ink-2)}
+@media (max-width:34rem){.bins.three{grid-template-columns:1fr}}
+
+/* Why? panels and bridge pictures */
+.wy{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem 2rem}
+.wy-pic{flex:0 1 auto;min-width:0;max-width:100%;display:flex;justify-content:center}
+.wy-t{flex:1 1 17rem;min-width:0}
+.wy-t p{margin:.3rem 0}
+.tov td.ok{background:var(--go-soft);box-shadow:inset 0 0 0 2px var(--go)}
+.tov td.k{background:var(--num-soft)}
+.why-body .tov{--rh:1.6rem;font-size:1.05rem}
+.why-body .tov th,.why-body .tov td{min-width:2.8rem;padding:0 .5rem}
+.why-body .tov.across th,.why-body .tov.across td{min-width:2rem;padding:0 .35rem}
+.why-body .mach{width:auto;padding-top:1.5rem}
+.why-body .m-slot{width:4rem;height:4rem}
+.why-body .m-pipe{flex:0 0 1.6rem}
+.why-body .m-body{width:6.6rem;height:4.9rem}
+.why-body .m-body svg{width:2.7rem;height:2.7rem}
+.wy-pic .grid{height:13rem}
+.wy-gd{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:3 4}
+.wy-gl{font:400 17px var(--maths);fill:var(--ink)}
+.wy-gs{font:600 12px var(--body);fill:var(--ink)}
+.wy-new{fill:var(--go);stroke:#fff;stroke-width:2}
+.wy-trio{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.6rem;margin-bottom:.4rem}
+.wy-trio figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:.2rem}
+.wy-trio b{font-size:.92rem}
+.wy-trio figcaption{font-size:.92rem;text-align:center;line-height:1.35}
+.br-pic{display:flex;justify-content:center;width:100%}
+.card.bridge .tov{font-size:1.2rem}
+.card.bridge .grid{height:min(15rem,38vh);cursor:default}

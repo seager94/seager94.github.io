@@ -1,0 +1,28 @@
+.story{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:1rem;padding:.55rem .9rem;font-size:1.08rem;line-height:1.4;text-align:left;-webkit-user-select:text;user-select:text}
+.bm{position:relative;width:100%;display:grid;gap:.35rem;padding:.2rem 0}
+.bm-row{display:flex;height:2.5rem}
+.bm-tot{border:2px solid var(--ink);border-radius:.6rem;background:var(--paper);display:grid;place-items:center;font-weight:600;white-space:nowrap;overflow:hidden}
+.bm-b{flex:none;height:100%;display:grid;place-items:center;font:400 min(1.1rem,3.4cqw) var(--maths);white-space:nowrap;overflow:hidden;border-radius:.5rem}
+.bm-b.f{background:var(--num);color:var(--ink);box-shadow:inset 0 -.2rem 0 var(--num-deep)}
+.bm-b.u{background:var(--var);color:#fff;box-shadow:inset 0 -.2rem 0 var(--var-deep);border-left:2px solid var(--paper)}
+.bm-b.q{background:var(--var-soft);color:var(--var);border:2px dashed var(--var);font-size:1.3rem}
+.bm-caps{display:flex;font-size:.85rem;color:var(--ink-2);line-height:1.25}
+.bm-caps span{flex:none;text-align:center}
+.bm-line{position:absolute;top:0;bottom:1.4rem;margin-left:-1px;border-left:2px dashed var(--ink-2)}
+.bm.ok .bm-line{border-color:var(--go)}
+.bm.ok .bm-tot{border-color:var(--go);background:var(--go-soft)}
+/* still pictures: Why? panels and bridges */
+.bm.still .bm-caps{line-height:1.2}
+.why-body .why-fig{container-type:inline-size;width:100%;max-width:36rem;margin:.1rem 0 .5rem}
+.why-body .why-ln{margin:.3rem 0 0}
+.why-body .wt{border-collapse:collapse;margin:.5rem 0 .2rem;font:400 1.05rem var(--maths);font-variant-numeric:lining-nums}
+.why-body .wt th,.why-body .wt td{border:1px solid var(--line);padding:.2rem .8rem;text-align:center;white-space:nowrap}
+.why-body .wt th{font-weight:400;background:var(--desk)}
+.why-body .wt.rows{margin-top:0;font-size:1rem}
+.why-body .wt.rows th{font-family:var(--body);text-align:left}
+.why-body .wt .ok{background:var(--go-soft);color:var(--go-deep);font-weight:700}
+.why-body .wt .no{background:var(--no-soft);color:var(--no-ink)}
+.why-body .wt.rows .ok,.why-body .wt.rows .no{font-family:var(--body);font-weight:600;font-size:.92rem}
+@media (max-width:34rem){.why-body .wt.rows th,.why-body .wt.rows td{padding:.2rem .4rem;font-size:.86rem}.why-body .wt.rows th{white-space:normal}}
+
+.why-body .nb{white-space:nowrap}

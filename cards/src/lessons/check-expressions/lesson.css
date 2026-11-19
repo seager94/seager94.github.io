@@ -1,0 +1,76 @@
+i.o{font-style:italic;font-weight:400;font-family:var(--maths)}
+.note.two{background:var(--var2-soft)}
+
+/* formula machine (substitution) */
+.m-body .fx{display:inline-block;font:400 1.55rem/1 var(--maths);color:#fff;white-space:nowrap}
+.m-body .fx i.v{color:#AFC0FF}
+.m-body .fx i.o{color:#fff}
+.m-body.run .fx{animation:pulse .6s ease-in-out}
+@keyframes pulse{50%{transform:scale(1.15)}}
+
+/* twin machines and pair sorter (equivalent expressions) */
+.twin{display:grid;grid-template-columns:minmax(0,1fr) 4.2rem minmax(0,1fr);justify-items:center;align-items:center;width:100%}
+.tw-body{max-width:100%;min-height:3.3rem;padding:.35rem .5rem .35rem .45rem;border-radius:1.2rem;background:var(--charcoal);display:flex;align-items:center;gap:.45rem}
+.tw-body svg{width:1.7rem;height:1.7rem;flex:none}
+.tw-lab{background:var(--paper);border-radius:.7rem;padding:.1rem .7rem;min-width:2.6rem;text-align:center;font-size:1.15rem}
+.tw-in{background:var(--var-soft);border-radius:2rem;padding:.05rem .6rem;font-size:.95rem}
+.tw-pipe{width:.6rem;height:.8rem;background:var(--charcoal)}
+.tw-out{width:4.3rem;height:3.6rem;border-radius:1rem;border:2px dashed var(--line);display:grid;place-items:center;background:rgba(255,255,255,.85)}
+.tw-out .tile{margin-bottom:0}
+.tw-sign{font:400 2rem/1 var(--maths)}
+.tw-sign.same{color:var(--go)}
+.tw-sign.diff{color:var(--no)}
+.tw-calc{min-height:1.5rem;margin-top:.25rem;color:var(--ink-2);text-align:center}
+.tw-calc .m{font-size:1rem}
+.choices.c3{grid-template-columns:repeat(3,1fr)}
+.chip.pc{display:inline-flex;align-items:baseline;gap:.35rem}
+.chip.pc .m{display:inline;font-size:1.15rem}
+.bin{min-height:7rem}
+
+/* receipt (writing expressions) */
+.receipt{width:min(100%,22rem);background:var(--paper);border:1px solid var(--line);border-radius:.8rem;padding:.35rem 1rem}
+.receipt div{display:flex;justify-content:space-between;gap:1rem;padding:.15rem 0}
+.receipt .tot{border-top:2px solid var(--ink);font-weight:700}
+
+/* jumps on a number line (properties with letters) */
+.jl{display:block;width:min(100%,30rem);height:auto;margin:0 auto}
+.jl-axis{stroke:var(--ink);stroke-width:2}
+.jl-tick{stroke:var(--ink);stroke-width:1.5}
+.jl-n{font:15px var(--body);fill:var(--ink-2)}
+.jl-arc{fill:none;stroke:var(--var);stroke-width:3}
+.jl-head{fill:var(--var)}
+.jl-lab{font:400 18px var(--maths);fill:var(--var-deep)}
+.jl .v2{--var:var(--var2);--var-deep:var(--var2-deep)}
+.jl .kn{--var:var(--num-deep);--var-deep:var(--no-ink)}
+.jl-dot{fill:var(--ink)}
+
+/* Why? panels: a small picture, then at most two lines of working */
+.wy{display:grid;gap:.35rem;justify-items:center}
+.wy p{margin:0;width:100%;line-height:1.45}
+.wy-svg{display:block;width:min(100%,var(--w,22rem));height:auto;margin-bottom:.2rem}
+.wy-t{font:400 20px var(--maths);fill:var(--ink)}
+.wy-t .tv{font-style:italic;fill:var(--var)}
+.wy-flow{display:flex;align-items:flex-start;justify-content:center;gap:.5rem;margin-bottom:.2rem}
+.wy-io{display:flex;flex-direction:column;align-items:center;gap:.1rem}
+.wy-io .tile{margin-bottom:.22rem;cursor:default}
+.wy-io small{font-size:.85rem;color:var(--ink-2)}
+.wy-box{background:var(--charcoal);color:#fff;border-radius:.9rem;padding:0 .9rem;height:3.1rem;display:grid;place-items:center;font:400 1.3rem/1 var(--maths);white-space:nowrap}
+.wy-arr{line-height:3.1rem;color:var(--ink-2);font-size:1.2rem}
+.wy-duo{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:.2rem 1.2rem}
+.wy-ne{font:400 1.8rem/3.1rem var(--maths);color:var(--no)}
+.wy-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem 1rem;width:100%;margin-bottom:.2rem}
+.wy-jl{display:flex;gap:.6rem;justify-content:center}
+.wy-jl .note{font-size:1rem}
+.wy-tab{border-collapse:collapse;margin-bottom:.3rem;font-family:var(--maths);font-variant-numeric:lining-nums;font-size:1.1rem}
+.wy-tab th,.wy-tab td{border:1px solid var(--line);padding:.12rem .8rem;text-align:center;font-weight:400}
+.wy-tab th{text-align:left;background:var(--desk)}
+.wy-tab td.hit{background:var(--go-soft);color:var(--go-deep);font-weight:700}
+.wy-tab td.miss{background:var(--no-soft);color:var(--no-ink)}
+.wy-tab.wide td{white-space:nowrap}
+@media (max-width:34rem){
+  .choices.c3{grid-template-columns:1fr}
+  .wy-tab{font-size:1rem}
+  .wy-tab th,.wy-tab td{padding:.1rem .4rem}
+  .wy-box{font-size:1.1rem;padding:0 .5rem}
+  .wy-flow{gap:.3rem}
+}
